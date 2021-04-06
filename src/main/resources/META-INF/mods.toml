@@ -1,0 +1,33 @@
+modLoader="javafml"
+loaderVersion="[36,)"
+license="All rights reserved"
+
+    [[mods]]
+      modId="elementalamulets"
+      version="1.0.0.0"
+      displayName="Elemental Amulets"
+      authors="Frostygames0"
+      description='''
+      This mod adds lots of new jewelry(mainly amulets)! Control death, live, fire, water!
+      '''
+
+      [[dependencies.elementalamulets]]
+        modId="forge"
+        mandatory=true
+        versionRange="[36,)"
+        ordering="NONE"
+        side="BOTH"
+
+      [[dependencies.elementalamulets]]
+        modId="minecraft"
+        mandatory=true
+        versionRange="[1.16.3]"
+        ordering="NONE"
+        side="BOTH"
+      [[dependencies.elementalamulets]]
+              modId="curios"
+              mandatory=true
+              versionRange="[1.16.5-4.0.5.0,)"
+              ordering="NONE"
+              side="BOTH"
+

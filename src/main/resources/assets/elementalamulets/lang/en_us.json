@@ -1,0 +1,11 @@
+{
+  "item.elementalamulets.fire_amulet": "Fire Amulet",
+  "item.elementalamulets.fire_amulet.tooltip": "%sProtects you from%s %1$sfire%1$s",
+  "item.elementalamulets.speed_amulet": "Speed Amulet",
+  "item.elementalamulets.speed_amulet.tooltip": "%sSpeeds up you%s",
+  "item.elementalamulets.jump_amulet": "Jump-Boost amulet",
+  "item.elementalamulets.jump_amulet.tooltip": "%sMakes you%s %1$sjump%1$s %shigher%s",
+  "item.elementalamulets.invisibility_amulet": "Invisibility Amulet",
+  "item.elementalamulets.invisibility_amulet.tooltip": "%sHides you from your enemies%s",
+  "itemGroup.elementalamulets": "Elemental Amulets"
+}
