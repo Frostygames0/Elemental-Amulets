@@ -1,6 +1,9 @@
 package frostygames0.elementalamulets;
 
+import frostygames0.elementalamulets.core.init.ModBlocks;
+import frostygames0.elementalamulets.core.init.ModContainers;
 import frostygames0.elementalamulets.core.init.ModItems;
+import frostygames0.elementalamulets.core.init.ModTiles;
 import frostygames0.elementalamulets.items.JumpAmulet;
 import net.minecraft.item.ItemGroup;
 import net.minecraftforge.common.MinecraftForge;
@@ -20,7 +23,12 @@ public class ElementalAmulets {
     public static final ItemGroup GROUP = new ElementalAmuletsGroup();
     public ElementalAmulets() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+
         ModItems.ITEMS.register(bus);
+        ModBlocks.BLOCKS.register(bus);
+        ModTiles.TILES.register(bus);
+        ModContainers.CONTAINERS.register(bus);
+
         bus.addListener(this::enqueueIMC);
         MinecraftForge.EVENT_BUS.register(this);
     }
