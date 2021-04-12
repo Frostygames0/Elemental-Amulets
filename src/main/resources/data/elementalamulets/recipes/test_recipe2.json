@@ -1,0 +1,6 @@
+{
+  "type": "elementalamulets:elemental_separation",
+  "ingredient": {"item": "minecraft:gold_ingot"},
+  "elemental": {"item": "minecraft:dirt"},
+  "result": "elementalamulets:speed_amulet"
+}

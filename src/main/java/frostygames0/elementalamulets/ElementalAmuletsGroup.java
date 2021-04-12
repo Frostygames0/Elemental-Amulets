@@ -1,5 +1,6 @@
 package frostygames0.elementalamulets;
 
+import frostygames0.elementalamulets.core.init.ModItems;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -12,6 +13,6 @@ public class ElementalAmuletsGroup extends ItemGroup {
 
     @Override
     public ItemStack createIcon() {
-        return new ItemStack(Items.GRASS_BLOCK);
+        return new ItemStack(ModItems.FIRE_AMULET.get());
     }
 }

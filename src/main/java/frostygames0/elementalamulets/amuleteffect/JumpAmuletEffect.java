@@ -1,6 +1,6 @@
-package frostygames0.elementalamulets.effects;
+package frostygames0.elementalamulets.amuleteffect;
 
-import frostygames0.elementalamulets.items.IJumpItem;
+import frostygames0.elementalamulets.items.interfaces.IJumpItem;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
@@ -51,7 +51,7 @@ public class JumpAmuletEffect {
             }
         }
     }
-    // This event is to cancel damage animation
+    // This is to cancel damage animation
     public static void onLivingAttack(LivingAttackEvent event) {
         float fallResist = calculateFallResist(event, event.getEntityLiving());
         if(!event.isCanceled() && fallResist > 0) {
@@ -61,7 +61,7 @@ public class JumpAmuletEffect {
             }
         }
     }
-    // This event is make player jump higher
+    // This is make player jump higher
     public static void onLivingJump(LivingEvent.LivingJumpEvent event) {
         LivingEntity livingEntity = event.getEntityLiving();
         LazyOptional<ICuriosItemHandler> opt = CuriosApi.getCuriosHelper().getCuriosHandler(livingEntity);

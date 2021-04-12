@@ -4,6 +4,7 @@ import frostygames0.elementalamulets.blocks.containers.ElementalCrafterContainer
 import frostygames0.elementalamulets.blocks.tiles.ElementalCrafterTile;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.material.PushReaction;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -19,6 +20,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nullable;
 
@@ -29,7 +31,7 @@ public class ElementalCrafter extends Block {
 
     @Override
     public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if(worldIn.isRemote) {
+        if(!worldIn.isRemote) {
             TileEntity te = worldIn.getTileEntity(pos);
             if(te instanceof ElementalCrafterTile) {
                 INamedContainerProvider provider = new INamedContainerProvider() {
@@ -45,12 +47,31 @@ public class ElementalCrafter extends Block {
                     }
                 };
                 NetworkHooks.openGui((ServerPlayerEntity) player, provider, te.getPos());
-                return ActionResultType.SUCCESS;
             } else {
                 throw new IllegalStateException("Missing container!");
             }
         }
-        return ActionResultType.FAIL;
+        return ActionResultType.PASS;
+    }
+
+    @Override
+    public PushReaction getPushReaction(BlockState state) {
+        return PushReaction.BLOCK;
+    }
+
+    @Override
+    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+        if(state.getBlock() != newState.getBlock()) {
+            TileEntity tileEntity = worldIn.getTileEntity(pos);
+            if(tileEntity != null) {
+                tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+                    for (int i = 0; i < h.getSlots()-1; i++) {
+                        spawnAsEntity(worldIn, pos, h.getStackInSlot(i));
+                    }
+                });
+                worldIn.removeTileEntity(pos);
+            }
+        }
     }
 
     @Override

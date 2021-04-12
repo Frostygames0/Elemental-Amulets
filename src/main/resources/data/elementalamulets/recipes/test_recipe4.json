@@ -1,0 +1,6 @@
+{
+  "type": "elementalamulets:elemental_separation",
+  "ingredient": {"item": "minecraft:stick"},
+  "elemental": {"item": "minecraft:cobblestone"},
+  "result": "elementalamulets:invisibility_amulet"
+}

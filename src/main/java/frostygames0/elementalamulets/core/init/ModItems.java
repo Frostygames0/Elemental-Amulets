@@ -1,10 +1,7 @@
 package frostygames0.elementalamulets.core.init;
 
 import frostygames0.elementalamulets.ElementalAmulets;
-import frostygames0.elementalamulets.items.FireAmulet;
-import frostygames0.elementalamulets.items.InvisibilityAmulet;
-import frostygames0.elementalamulets.items.JumpAmulet;
-import frostygames0.elementalamulets.items.SpeedAmulet;
+import frostygames0.elementalamulets.items.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Rarity;
@@ -26,6 +23,8 @@ public class ModItems {
             () -> new JumpAmulet(new Item.Properties().group(ElementalAmulets.GROUP).rarity(Rarity.RARE).maxDamage(1000).isImmuneToFire()));
     public static final RegistryObject<Item> INVISIBILITY_AMULET = ITEMS.register("invisibility_amulet",
             () -> new InvisibilityAmulet(new Item.Properties().group(ElementalAmulets.GROUP).rarity(Rarity.RARE).maxDamage(1000).isImmuneToFire()));
+    public static final RegistryObject<Item> CURSED_AMULET = ITEMS.register("cursed_amulet",
+            () -> new CursedAmulet(new Item.Properties().group(ElementalAmulets.GROUP).rarity(Rarity.RARE).maxDamage(1000).isImmuneToFire()));
 
     // Mod BlockItems
     public static final RegistryObject<BlockItem> ELEMENTAL_CRAFTER_BLOCK = ITEMS.register("elemental_crafter",

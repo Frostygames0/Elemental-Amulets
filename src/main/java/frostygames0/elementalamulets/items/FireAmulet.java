@@ -2,6 +2,7 @@ package frostygames0.elementalamulets.items;
 
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
+import frostygames0.elementalamulets.items.interfaces.IFireItem;
 import javafx.scene.control.Tooltip;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.util.ITooltipFlag;
@@ -36,7 +37,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class FireAmulet extends AbstractAmuletItem {
+public class FireAmulet extends AbstractAmuletItem implements IFireItem {
+    private final float fireResist = 1f;
+    private final float lavaResist = 0.5f;
     public FireAmulet(Properties p_i48487_1_) {
         super(p_i48487_1_);
     }
@@ -54,19 +57,20 @@ public class FireAmulet extends AbstractAmuletItem {
                 PlayerEntity player = (PlayerEntity) livingEntity;
                 if(player.isBurning()) {
                     player.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 40, 0));
-                    stack.damageItem(1, livingEntity,livingEntity1 -> CuriosApi.getCuriosHelper().onBrokenCurio(identifier, index, livingEntity1));
+                    stack.damageItem(1, livingEntity, livingEntity1 -> CuriosApi.getCuriosHelper().onBrokenCurio(identifier, index, livingEntity1));
                 }
 
             }
         }
     }
-    /* FIXME not working for some reasons :/ */
+
     @Override
-    public void curioBreak(ItemStack stack, LivingEntity livingEntity) {
-            livingEntity.playSound(SoundEvents.BLOCK_BEACON_DEACTIVATE, 100, 1);
-            if(livingEntity instanceof PlayerEntity) {
-                PlayerEntity player = (PlayerEntity) livingEntity;
-                player.sendStatusMessage(new StringTextComponent("Your amulet just got destroyed!"), true);
-            }
+    public float getFireResist() {
+        return this.fireResist;
+    }
+
+    @Override
+    public float getLavaResist() {
+        return this.lavaResist;
     }
 }

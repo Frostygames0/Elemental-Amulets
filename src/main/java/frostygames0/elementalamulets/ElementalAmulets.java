@@ -1,10 +1,6 @@
 package frostygames0.elementalamulets;
 
-import frostygames0.elementalamulets.core.init.ModBlocks;
-import frostygames0.elementalamulets.core.init.ModContainers;
-import frostygames0.elementalamulets.core.init.ModItems;
-import frostygames0.elementalamulets.core.init.ModTiles;
-import frostygames0.elementalamulets.items.JumpAmulet;
+import frostygames0.elementalamulets.core.init.*;
 import net.minecraft.item.ItemGroup;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -28,6 +24,7 @@ public class ElementalAmulets {
         ModBlocks.BLOCKS.register(bus);
         ModTiles.TILES.register(bus);
         ModContainers.CONTAINERS.register(bus);
+        ModRecipes.SERIALIZERS.register(bus);
 
         bus.addListener(this::enqueueIMC);
         MinecraftForge.EVENT_BUS.register(this);

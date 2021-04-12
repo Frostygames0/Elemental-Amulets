@@ -1,0 +1,6 @@
+{
+  "type": "elementalamulets:elemental_separation",
+  "ingredient": {"item": "minecraft:golden_apple"},
+  "elemental": {"item": "minecraft:apple"},
+  "result": "elementalamulets:fire_amulet"
+}
