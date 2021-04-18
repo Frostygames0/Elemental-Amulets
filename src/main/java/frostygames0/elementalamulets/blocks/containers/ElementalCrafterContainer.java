@@ -6,6 +6,10 @@ import frostygames0.elementalamulets.core.init.ModBlocks;
 import frostygames0.elementalamulets.core.init.ModContainers;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.CraftResultInventory;
+import net.minecraft.inventory.CraftingInventory;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -15,8 +19,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
+import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 public class ElementalCrafterContainer extends Container {
     private TileEntity tileEntity;
@@ -35,9 +41,11 @@ public class ElementalCrafterContainer extends Container {
                 addSlot(new ResultSlot(h, 2, 134, 47));
             });
         }
+        /*this.addSlot(new ElementalOnlySlot(inventory,0, 26, 47));
+        this.addSlot(new SlotItemHandler(inventory, 1, 62, 47));
+        this.addSlot(new ResultSlot(inventory, 2, 134, 47));*/
         bindPlayerInventory(8,83);
     }
-
 
     @Override
     public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
@@ -80,6 +88,7 @@ public class ElementalCrafterContainer extends Container {
     public boolean canInteractWith(PlayerEntity playerIn) {
         return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, ModBlocks.ELEMENTAL_CRAFTER.get());
     }
+
     private int addSlotRange(IItemHandler handler, int index, int x, int y, int amount, int dx) {
         for (int i = 0 ; i < amount ; i++) {
             addSlot(new SlotItemHandler(handler, index, x, y));

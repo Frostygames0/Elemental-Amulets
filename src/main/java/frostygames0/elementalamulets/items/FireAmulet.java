@@ -2,6 +2,7 @@ package frostygames0.elementalamulets.items;
 
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
+import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.items.interfaces.IFireItem;
 import javafx.scene.control.Tooltip;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
@@ -41,7 +42,7 @@ public class FireAmulet extends AbstractAmuletItem implements IFireItem {
     private final float fireResist = 1f;
     private final float lavaResist = 0.5f;
     public FireAmulet(Properties p_i48487_1_) {
-        super(p_i48487_1_);
+        super(p_i48487_1_,1);
     }
 
     @Override
@@ -50,6 +51,7 @@ public class FireAmulet extends AbstractAmuletItem implements IFireItem {
         tooltip.add(new TranslationTextComponent("item.elementalamulets.fire_amulet.tooltip", TextFormatting.GRAY, TextFormatting.RED));
     }
 
+    /*
     @Override
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
         if (!livingEntity.getEntityWorld().isRemote()) {
@@ -57,11 +59,16 @@ public class FireAmulet extends AbstractAmuletItem implements IFireItem {
                 PlayerEntity player = (PlayerEntity) livingEntity;
                 if(player.isBurning()) {
                     player.addPotionEffect(new EffectInstance(Effects.FIRE_RESISTANCE, 40, 0));
-                    stack.damageItem(1, livingEntity, livingEntity1 -> CuriosApi.getCuriosHelper().onBrokenCurio(identifier, index, livingEntity1));
+                    stack.damageItem(getDamageOnUse(), livingEntity, ent -> CuriosApi.getCuriosHelper().onBrokenCurio(identifier, index, ent));
                 }
 
             }
         }
+    }*/
+
+    @Override
+    public int getDamageOnUse() {
+        return ModConfig.cached.FIRE_AMULET_USAGE_DMG*getTier();
     }
 
     @Override
@@ -72,5 +79,10 @@ public class FireAmulet extends AbstractAmuletItem implements IFireItem {
     @Override
     public float getLavaResist() {
         return this.lavaResist;
+    }
+
+    @Override
+    public int getTier() {
+        return 1;
     }
 }

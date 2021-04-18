@@ -9,7 +9,7 @@ import net.minecraft.potion.Potions;
 
 public class CursedAmulet extends AbstractAmuletItem {
     public CursedAmulet(Properties properties) {
-        super(properties);
+        super(properties, 1);
     }
 
     @Override

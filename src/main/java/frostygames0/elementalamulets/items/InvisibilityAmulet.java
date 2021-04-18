@@ -1,5 +1,6 @@
 package frostygames0.elementalamulets.items;
 
+import frostygames0.elementalamulets.config.ModConfig;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.SimpleAnimatedParticle;
 import net.minecraft.client.util.ITooltipFlag;
@@ -35,7 +36,7 @@ public class InvisibilityAmulet extends AbstractAmuletItem{
         if(!world.isRemote()) {
             if (livingEntity.isSneaking() && !livingEntity.isPotionActive(Effects.INVISIBILITY)) {
                 livingEntity.setInvisible(true);
-                stack.damageItem(1, livingEntity, livingEntity1 -> CuriosApi.getCuriosHelper().onBrokenCurio(identifier, index, livingEntity1));
+                stack.damageItem(getDamageOnUse(), livingEntity, livingEntity1 -> CuriosApi.getCuriosHelper().onBrokenCurio(identifier, index, livingEntity1));
             } else if(livingEntity.isPotionActive(Effects.INVISIBILITY)) {
                 livingEntity.setInvisible(true);
             } else {
@@ -44,11 +45,22 @@ public class InvisibilityAmulet extends AbstractAmuletItem{
         }
     }
 
+
     @Override
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
         LivingEntity entity = slotContext.getWearer();
         if(entity.isInvisible() && !entity.isPotionActive(Effects.INVISIBILITY)) {
             entity.setInvisible(false);
         }
+    }
+
+    @Override
+    public int getDamageOnUse() {
+        return ModConfig.cached.INVISIBILITY_AMULET_USAGE_DMG;
+    }
+
+    @Override
+    public int getTier() {
+        return 1;
     }
 }

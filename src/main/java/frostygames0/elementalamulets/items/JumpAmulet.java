@@ -1,7 +1,9 @@
 package frostygames0.elementalamulets.items;
 
+import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.items.interfaces.IJumpItem;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -12,10 +14,8 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class JumpAmulet extends AbstractAmuletItem implements IJumpItem {
-    private final float jumpBoost = 0.3f;
-    private final float fallResist = 1f;
-    public JumpAmulet(Properties properties) {
-        super(properties);
+    public JumpAmulet(Properties properties, int tier) {
+        super(properties, tier);
     }
 
     @Override
@@ -25,12 +25,23 @@ public class JumpAmulet extends AbstractAmuletItem implements IJumpItem {
     }
 
     @Override
+    public void curioBreak(ItemStack stack, LivingEntity livingEntity) {
+        super.curioBreak(stack, livingEntity);
+    }
+
+    @Override
     public float getJump() {
-        return jumpBoost;
+        return 0.3f*getTier();
     }
 
     @Override
     public float getFallResist() {
-        return fallResist;
+        return getJump()*10-1f;
     }
+
+    @Override
+    public int getDamageOnUse() {
+        return ModConfig.cached.JUMP_AMULET_USAGE_DMG*getTier();
+    }
+
 }

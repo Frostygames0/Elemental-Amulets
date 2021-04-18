@@ -3,6 +3,7 @@ package frostygames0.elementalamulets.items;
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 import frostygames0.elementalamulets.ElementalAmulets;
+import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.items.interfaces.ISpeedItem;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
@@ -22,8 +23,8 @@ import java.util.UUID;
 
 public class SpeedAmulet extends AbstractAmuletItem implements ISpeedItem {
     private final float speedFactor = 1.25f;
-    public SpeedAmulet(Properties properties) {
-        super(properties);
+    public SpeedAmulet(Properties properties, int tier) {
+        super(properties,tier);
     }
 
     @Override
@@ -39,7 +40,7 @@ public class SpeedAmulet extends AbstractAmuletItem implements ISpeedItem {
     @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid, ItemStack stack) {
         Multimap<Attribute, AttributeModifier> map = LinkedHashMultimap.create();
-        map.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(uuid, ElementalAmulets.MOD_ID + ":speed_bonus", speedFactor, AttributeModifier.Operation.MULTIPLY_TOTAL));
+        map.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(uuid, ElementalAmulets.MOD_ID + ":speed_bonus", speedFactor*getTier(), AttributeModifier.Operation.MULTIPLY_TOTAL));
         return map;
     }
 
@@ -47,4 +48,10 @@ public class SpeedAmulet extends AbstractAmuletItem implements ISpeedItem {
     public float getSpeed() {
         return speedFactor;
     }
+
+    @Override
+    public int getDamageOnUse() {
+        return ModConfig.cached.SPEED_AMULET_USAGE_DMG*getTier();
+    }
+
 }
