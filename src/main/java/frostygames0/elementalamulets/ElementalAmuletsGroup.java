@@ -8,12 +8,13 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fml.RegistryObject;
 
 public class ElementalAmuletsGroup extends ItemGroup {
     public ElementalAmuletsGroup() {
-        super("elementalamulets");
+        super(ElementalAmulets.MOD_ID);
     }
 
     @Override

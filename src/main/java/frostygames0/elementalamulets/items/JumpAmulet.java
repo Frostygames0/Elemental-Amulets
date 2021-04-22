@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class JumpAmulet extends AbstractAmuletItem implements IJumpItem {
+public class JumpAmulet extends AmuletItem implements IJumpItem {
     public JumpAmulet(Properties properties, int tier) {
         super(properties, tier);
     }
@@ -21,12 +21,7 @@ public class JumpAmulet extends AbstractAmuletItem implements IJumpItem {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
-        tooltip.add(new TranslationTextComponent("item.elementalamulets.jump_amulet.tooltip", TextFormatting.GRAY, TextFormatting.GREEN));
-    }
-
-    @Override
-    public void curioBreak(ItemStack stack, LivingEntity livingEntity) {
-        super.curioBreak(stack, livingEntity);
+        tooltip.add(new TranslationTextComponent("item.elementalamulets.jump_amulet.tooltip").mergeStyle(TextFormatting.GRAY));
     }
 
     @Override
@@ -41,7 +36,8 @@ public class JumpAmulet extends AbstractAmuletItem implements IJumpItem {
 
     @Override
     public int getDamageOnUse() {
-        return ModConfig.cached.JUMP_AMULET_USAGE_DMG*getTier();
+        int damageOnUse = ModConfig.cached.JUMP_AMULET_USAGE_DMG * getTier();
+        return Math.min(damageOnUse, this.getMaxDamage());
     }
 
 }

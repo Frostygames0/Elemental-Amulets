@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 
-public class SpeedAmulet extends AbstractAmuletItem implements ISpeedItem {
+public class SpeedAmulet extends AmuletItem implements ISpeedItem {
     private final float speedFactor = 1.25f;
     public SpeedAmulet(Properties properties, int tier) {
         super(properties,tier);

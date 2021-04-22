@@ -1,51 +1,37 @@
 package frostygames0.elementalamulets.items;
 
-import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.config.ModConfig;
-import frostygames0.elementalamulets.items.interfaces.IAmuletItem;
-import io.netty.util.SuppressForbidden;
-import net.minecraft.block.AbstractBlock;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.renderer.entity.layers.BipedArmorLayer;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.item.Rarity;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.registries.ForgeRegistries;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
 
-/**
- * Basic Implementation of amulet
- */
-public class AbstractAmuletItem extends Item implements ICurioItem, IAmuletItem {
-    private int tier;
+public abstract class AmuletItem extends Item implements ICurioItem{
+    private final int tier;
 
-    /**
-     * AbstractAmuletItem is basic implementation of all amulets that shares all common things.
-     * @param properties Item Properties
-     * @param tier Tier of amulet (used in ability's power calculation)
-     */
-    public AbstractAmuletItem(Properties properties, int tier) {
+    public AmuletItem(Properties properties, int tier) {
         super(properties);
         this.tier = tier;
     }
 
-    /**
-     * Overload of {@link AbstractAmuletItem} when amulet has no tiers
-     * @param properties Item Properties
-     */
-    public AbstractAmuletItem(Properties properties) {
+    public AmuletItem(Properties properties) {
         this(properties, 0);
     }
 
@@ -54,11 +40,6 @@ public class AbstractAmuletItem extends Item implements ICurioItem, IAmuletItem 
         return true;
     }
 
-    /**
-     * super this if you want breaking animation and sound effect to play
-     * @param stack curio stack
-     * @param livingEntity wearer
-     */
     @Override
     public void curioBreak(ItemStack stack, LivingEntity livingEntity) {
         World world = livingEntity.getEntityWorld();
@@ -70,6 +51,13 @@ public class AbstractAmuletItem extends Item implements ICurioItem, IAmuletItem 
                 Minecraft.getInstance().gameRenderer.displayItemActivation(stack);
             }
         }
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        super.addInformation(stack, worldIn, tooltip, flagIn);
+         if(this.hasTier()) tooltip.add(new TranslationTextComponent("item.adventuretomagium.common_amulet.tooltip.tier").mergeStyle(TextFormatting.GOLD)
+                .appendSibling(new StringTextComponent(""+this.getTier()).mergeStyle(TextFormatting.YELLOW)));
     }
 
     @Nonnull
@@ -84,13 +72,17 @@ public class AbstractAmuletItem extends Item implements ICurioItem, IAmuletItem 
         return new ICurio.SoundInfo(SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1f,1f);
     }
 
-    @Override
     public int getDamageOnUse() {
         return this.tier;
     }
 
-    @Override
     public int getTier() {
         return this.tier;
     }
+
+    public boolean hasTier() {
+        return this.getTier() > 0;
+    }
+
+
 }

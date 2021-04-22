@@ -1,19 +1,23 @@
 package frostygames0.elementalamulets.amuleteffect;
 
 import frostygames0.elementalamulets.ElementalAmulets;
-import frostygames0.elementalamulets.items.interfaces.IAmuletItem;
+import frostygames0.elementalamulets.config.ModConfig;
+import frostygames0.elementalamulets.items.AmuletItem;
+import frostygames0.elementalamulets.items.JumpAmulet;
 import frostygames0.elementalamulets.items.interfaces.IJumpItem;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
+import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.type.util.ICuriosHelper;
 
-import java.util.Iterator;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class JumpAmuletEffect {
@@ -70,23 +74,27 @@ public class JumpAmuletEffect {
 
     // This is to decrease(or cancel) fall damage
     public static void onLivingHurt(LivingHurtEvent event) {
-        float fallResist = calculateFallResist(event, event.getEntityLiving());
-        if(!event.isCanceled() && fallResist > 0) {
-            float finalDamage = Math.max(0, (event.getAmount()-fallResist));
-            if(finalDamage == 0) {
-                event.setCanceled(true);
-            } else {
-                event.setAmount(finalDamage);
+        if(event.getSource() == DamageSource.FALL) {
+            float fallResist = calculateFallResist(event, event.getEntityLiving());
+            if (!event.isCanceled() && fallResist > 0) {
+                float finalDamage = Math.max(0, (event.getAmount() - fallResist));
+                if (finalDamage == 0) {
+                    event.setCanceled(true);
+                } else {
+                    event.setAmount(finalDamage);
+                }
             }
         }
     }
     // This is to cancel damage animation
     public static void onLivingAttack(LivingAttackEvent event) {
-        float fallResist = calculateFallResist(event, event.getEntityLiving());
-        if(!event.isCanceled() && fallResist > 0) {
-            float finalDamage = Math.max(0, (event.getAmount()-fallResist));
-            if(finalDamage == 0) {
-                event.setCanceled(true);
+        if(event.getSource() == DamageSource.FALL) {
+            float fallResist = calculateFallResist(event, event.getEntityLiving());
+            if (!event.isCanceled() && fallResist > 0) {
+                float finalDamage = Math.max(0, (event.getAmount() - fallResist));
+                if (finalDamage == 0) {
+                    event.setCanceled(true);
+                }
             }
         }
     }
@@ -137,17 +145,19 @@ public class JumpAmuletEffect {
 
     public static void onLivingJump(LivingEvent.LivingJumpEvent event) {
         LivingEntity livingEntity = event.getEntityLiving();
-        ICuriosHelper helper = CuriosApi.getCuriosHelper();
-        helper.findEquippedCurio(itemStack -> itemStack.getItem() instanceof IJumpItem, livingEntity).ifPresent(triple -> {
-            ItemStack stack = triple.getRight();
-            IJumpItem item = (IJumpItem) stack.getItem();
-            livingEntity.setMotion(livingEntity.getMotion().add(0, item.getJump(), 0));
-            if(item instanceof IAmuletItem) {
-                IAmuletItem amulet1 = (IAmuletItem) item;
-                stack.damageItem(amulet1.getDamageOnUse(), livingEntity, ent -> helper.onBrokenCurio(triple.getLeft(), triple.getMiddle(), ent));
+            if (!livingEntity.isInWater() && !livingEntity.isSwimming()) {
+                ICuriosHelper helper = CuriosApi.getCuriosHelper();
+                helper.findEquippedCurio(itemStack -> itemStack.getItem() instanceof IJumpItem, livingEntity).ifPresent(triple -> {
+                    ItemStack stack = triple.getRight();
+                    IJumpItem item = (IJumpItem) stack.getItem();
+                    livingEntity.setMotion(livingEntity.getMotion().add(0, item.getJump(), 0));
+                    if (item instanceof AmuletItem) {
+                        AmuletItem amulet1 = (AmuletItem) item;
+                        stack.damageItem(amulet1.getDamageOnUse(), livingEntity, ent -> CuriosApi.getCuriosHelper().onBrokenCurio(triple.getLeft(), triple.getMiddle(), ent));
+                    }
+                });
             }
-        });
-
     }
+
 
 }

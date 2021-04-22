@@ -1,25 +1,23 @@
 package frostygames0.elementalamulets.items;
 
 import frostygames0.elementalamulets.config.ModConfig;
-import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.SimpleAnimatedParticle;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.goal.FollowMobGoal;
+import net.minecraft.entity.passive.CowEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class InvisibilityAmulet extends AbstractAmuletItem{
+public class InvisibilityAmulet extends AmuletItem {
     public InvisibilityAmulet(Properties properties) {
         super(properties);
     }
@@ -34,13 +32,15 @@ public class InvisibilityAmulet extends AbstractAmuletItem{
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
         World world = livingEntity.getEntityWorld();
         if(!world.isRemote()) {
-            if (livingEntity.isSneaking() && !livingEntity.isPotionActive(Effects.INVISIBILITY)) {
-                livingEntity.setInvisible(true);
-                stack.damageItem(getDamageOnUse(), livingEntity, livingEntity1 -> CuriosApi.getCuriosHelper().onBrokenCurio(identifier, index, livingEntity1));
-            } else if(livingEntity.isPotionActive(Effects.INVISIBILITY)) {
-                livingEntity.setInvisible(true);
+            if(livingEntity.isSneaking()) {
+                if(!livingEntity.isInvisible()) {
+                    livingEntity.setInvisible(true);
+                }
+                stack.damageItem(getDamageOnUse(),livingEntity, ent -> CuriosApi.getCuriosHelper().onBrokenCurio(identifier, index, ent));
             } else {
-                livingEntity.setInvisible(false);
+                if(!livingEntity.isPotionActive(Effects.INVISIBILITY)) {
+                    livingEntity.setInvisible(false);
+                }
             }
         }
     }
@@ -57,10 +57,5 @@ public class InvisibilityAmulet extends AbstractAmuletItem{
     @Override
     public int getDamageOnUse() {
         return ModConfig.cached.INVISIBILITY_AMULET_USAGE_DMG;
-    }
-
-    @Override
-    public int getTier() {
-        return 1;
     }
 }

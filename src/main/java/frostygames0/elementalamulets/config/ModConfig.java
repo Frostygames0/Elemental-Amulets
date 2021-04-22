@@ -28,13 +28,13 @@ public class ModConfig {
         public Server(ForgeConfigSpec.Builder builder) {
             builder.push("General");
             builder.push("Amulets");
-            FIRE_AMULET_USAGE_DMG = builder.comment("Defines damage that fire amulet will receive on it's usage")
+            FIRE_AMULET_USAGE_DMG = builder.comment("Defines damage that fire amulet will receive on it's usage [WARNING! Setting this too high can cause unexpected behaviour!]")
                     .defineInRange("fire_amulet_usage_dmg", 1, 0, 1000);
-            SPEED_AMULET_USAGE_DMG = builder.comment("Defines damage that speed amulet will receive on it's usage")
+            SPEED_AMULET_USAGE_DMG = builder.comment("Defines damage that speed amulet will receive on it's usage [WARNING! Setting this too high can cause unexpected behaviour!]")
                     .defineInRange("speed_amulet_usage_dmg", 1, 0, 1000);
-            JUMP_AMULET_USAGE_DMG = builder.comment("Defines damage that jump amulet will receive on it's usage")
+            JUMP_AMULET_USAGE_DMG = builder.comment("Defines damage that jump amulet will receive on it's usage [WARNING! Setting this too high can cause unexpected behaviour!]")
                     .defineInRange("jump_amulet_usage_dmg", 5, 0, 1000);
-            INVISIBILITY_AMULET_USAGE_DMG = builder.comment("Defines damage that invisibility amulet will receive on it's usage")
+            INVISIBILITY_AMULET_USAGE_DMG = builder.comment("Defines damage that invisibility amulet will receive on it's usage [WARNING! Setting this too high can cause unexpected behaviour!]")
                     .defineInRange("invisibility_amulet_usage_dmg", 1, 0, 1000);
             builder.pop();
 

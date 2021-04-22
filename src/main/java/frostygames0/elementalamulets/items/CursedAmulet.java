@@ -5,9 +5,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
-import net.minecraft.potion.Potions;
 
-public class CursedAmulet extends AbstractAmuletItem {
+public class CursedAmulet extends AmuletItem {
     public CursedAmulet(Properties properties) {
         super(properties, 1);
     }

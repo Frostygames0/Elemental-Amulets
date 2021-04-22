@@ -1,23 +1,15 @@
 package frostygames0.elementalamulets.amuleteffect;
 
-import frostygames0.elementalamulets.items.interfaces.IAmuletItem;
+import frostygames0.elementalamulets.items.AmuletItem;
 import frostygames0.elementalamulets.items.interfaces.IFireItem;
-import frostygames0.elementalamulets.items.interfaces.IJumpItem;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Effects;
-import net.minecraft.potion.Potions;
 import net.minecraft.util.DamageSource;
-import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import top.theillusivec4.curios.api.CuriosApi;
-import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
-import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
 
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class FireAmuletEffect {
@@ -76,8 +68,8 @@ public class FireAmuletEffect {
                 CuriosApi.getCuriosHelper().findEquippedCurio(itemStack -> itemStack.getItem() instanceof IFireItem, event.getEntityLiving()).ifPresent(triple -> {
                     ItemStack itemStack = triple.getRight();
                     Item item = itemStack.getItem();
-                    if(item instanceof IAmuletItem) {
-                        IAmuletItem amulet = (IAmuletItem) item;
+                    if(item instanceof AmuletItem) {
+                        AmuletItem amulet = (AmuletItem) item;
                         itemStack.damageItem(amulet.getDamageOnUse(), event.getEntityLiving(), e -> CuriosApi.getCuriosHelper().onBrokenCurio(triple.getLeft(), triple.getMiddle(), event.getEntityLiving()));
                     }
                 });
