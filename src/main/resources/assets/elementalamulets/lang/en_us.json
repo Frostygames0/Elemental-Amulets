@@ -1,13 +1,17 @@
 {
   "itemGroup.elementalamulets": "Elemental Amulets",
-  "item.adventuretomagium.common_amulet.tooltip.tier": "%sTier: ",
+
+  "item.elementalamulets.common_amulet.tooltip.tier": "%sTier: ",
+
   "item.elementalamulets.fire_amulet": "Fire amulet",
   "item.elementalamulets.fire_amulet_tier2": "Fire amulet",
   "item.elementalamulets.fire_amulet_tier3": "Fire amulet",
   "item.elementalamulets.fire_amulet_tier4": "Fire amulet",
   "item.elementalamulets.fire_amulet.tooltip": "%sProtects you from%s %1$sfire%1$s",
+
   "item.elementalamulets.speed_amulet": "Speed Amulet",
   "item.elementalamulets.speed_amulet.tooltip": "%sSpeeds up you%s",
+
   "item.elementalamulets.jump_amulet": "Jump-Boost amulet",
   "item.elementalamulets.jump_amulet_tier2": "Jump-Boost amulet",
   "item.elementalamulets.jump_amulet_tier3": "Jump-Boost amulet",
@@ -17,5 +21,9 @@
   "item.elementalamulets.invisibility_amulet": "Invisibility Amulet",
   "item.elementalamulets.invisibility_amulet.tooltip": "%sHides you from your enemies%s",
 
-  "player.elementalamulets.brokenamulet.warn": "Your %s just got broken!"
+  "block.elementalamulets.elemental_combinator": "Elemental Combinator",
+
+  "player.elementalamulets.brokenamulet.warn": "Your %s just got broken!",
+
+  "entity.minecraft.villager.elementalamulets.jeweller": "Jeweller [PLACEHOLDER]"
 }

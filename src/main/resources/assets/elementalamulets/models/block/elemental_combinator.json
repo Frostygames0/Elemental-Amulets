@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "minecraft:block/furnace_top",
+    "down": "minecraft:block/furnace_top",
+    "up": "elementalamulets:block/elemental_combinator_up_2.0",
+    "north": "elementalamulets:block/elemental_combinator_side",
+    "south": "elementalamulets:block/elemental_combinator_side",
+    "west": "elementalamulets:block/elemental_combinator_side",
+    "east": "elementalamulets:block/elemental_combinator_side"
+  }
+}

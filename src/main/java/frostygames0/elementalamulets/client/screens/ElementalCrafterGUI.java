@@ -3,19 +3,18 @@ package frostygames0.elementalamulets.client.screens;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import frostygames0.elementalamulets.ElementalAmulets;
-import frostygames0.elementalamulets.blocks.containers.ElementalCrafterContainer;
-import net.minecraft.client.Minecraft;
+import frostygames0.elementalamulets.blocks.containers.ElementalCombinatorContainer;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 
-public class ElementalCrafterGUI extends ContainerScreen<ElementalCrafterContainer> {
-    private static final ResourceLocation GUI = new ResourceLocation(ElementalAmulets.MOD_ID, "textures/gui/elemental_craft.png");
-    public ElementalCrafterGUI(ElementalCrafterContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+public class ElementalCrafterGUI extends ContainerScreen<ElementalCombinatorContainer> {
+    private static final ResourceLocation GUI = new ResourceLocation(ElementalAmulets.MOD_ID, "textures/gui/elemental_separator_redesign.png");
+    public ElementalCrafterGUI(ElementalCombinatorContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
+        this.playerInventoryTitleX += 97;
+        this.titleX += 102;
     }
 
     @Override

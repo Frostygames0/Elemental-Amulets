@@ -1,6 +1,6 @@
 package frostygames0.elementalamulets.amuleteffect;
 
-import frostygames0.elementalamulets.items.AmuletItem;
+import frostygames0.elementalamulets.items.interfaces.IAmuletItem;
 import frostygames0.elementalamulets.items.interfaces.IFireItem;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
@@ -68,8 +68,8 @@ public class FireAmuletEffect {
                 CuriosApi.getCuriosHelper().findEquippedCurio(itemStack -> itemStack.getItem() instanceof IFireItem, event.getEntityLiving()).ifPresent(triple -> {
                     ItemStack itemStack = triple.getRight();
                     Item item = itemStack.getItem();
-                    if(item instanceof AmuletItem) {
-                        AmuletItem amulet = (AmuletItem) item;
+                    if(item instanceof IAmuletItem) {
+                        IAmuletItem amulet = (IAmuletItem) item;
                         itemStack.damageItem(amulet.getDamageOnUse(), event.getEntityLiving(), e -> CuriosApi.getCuriosHelper().onBrokenCurio(triple.getLeft(), triple.getMiddle(), event.getEntityLiving()));
                     }
                 });

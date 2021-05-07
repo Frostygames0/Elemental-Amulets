@@ -1,0 +1,5 @@
+
+[General]
+	#Display totem like animation when amulet gets destroyed?
+	amulet_totem_like_anim = true
+

@@ -1,13 +1,8 @@
 package frostygames0.elementalamulets.amuleteffect;
 
-import frostygames0.elementalamulets.ElementalAmulets;
-import frostygames0.elementalamulets.config.ModConfig;
-import frostygames0.elementalamulets.items.AmuletItem;
-import frostygames0.elementalamulets.items.JumpAmulet;
+import frostygames0.elementalamulets.items.interfaces.IAmuletItem;
 import frostygames0.elementalamulets.items.interfaces.IJumpItem;
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
@@ -17,7 +12,6 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.type.util.ICuriosHelper;
 
-import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class JumpAmuletEffect {
@@ -145,19 +139,19 @@ public class JumpAmuletEffect {
 
     public static void onLivingJump(LivingEvent.LivingJumpEvent event) {
         LivingEntity livingEntity = event.getEntityLiving();
-            if (!livingEntity.isInWater() && !livingEntity.isSwimming()) {
+        World world = livingEntity.getEntityWorld();
+            if (world.getFluidState(livingEntity.getPosition()).isEmpty()) {
                 ICuriosHelper helper = CuriosApi.getCuriosHelper();
                 helper.findEquippedCurio(itemStack -> itemStack.getItem() instanceof IJumpItem, livingEntity).ifPresent(triple -> {
                     ItemStack stack = triple.getRight();
                     IJumpItem item = (IJumpItem) stack.getItem();
                     livingEntity.setMotion(livingEntity.getMotion().add(0, item.getJump(), 0));
-                    if (item instanceof AmuletItem) {
-                        AmuletItem amulet1 = (AmuletItem) item;
+                    if (item instanceof IAmuletItem) {
+                        IAmuletItem amulet1 = (IAmuletItem) item;
                         stack.damageItem(amulet1.getDamageOnUse(), livingEntity, ent -> CuriosApi.getCuriosHelper().onBrokenCurio(triple.getLeft(), triple.getMiddle(), ent));
                     }
                 });
             }
     }
-
 
 }

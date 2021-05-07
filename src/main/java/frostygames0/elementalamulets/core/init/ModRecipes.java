@@ -11,10 +11,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModRecipes {
 
-    public static final IRecipeType<ElementalSeparation> ELEMENTAL_SEPARATION_RECIPE = IRecipeType.register("elemental_separation");
+    public static final IRecipeType<ElementalSeparation> ELEMENTAL_SEPARATION_RECIPE = IRecipeType.register("elemental_combination");
 
     public static final DeferredRegister<IRecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, ElementalAmulets.MOD_ID);
 
-    public static final RegistryObject<IRecipeSerializer<ElementalSeparation>> ELEMENTAL_SEPARATION = SERIALIZERS.register("elemental_separation",
+    public static final RegistryObject<IRecipeSerializer<ElementalSeparation>> ELEMENTAL_SEPARATION = SERIALIZERS.register("elemental_combination",
             () -> new ElementalSeparationSerializer<>(ElementalSeparation::new));
 }

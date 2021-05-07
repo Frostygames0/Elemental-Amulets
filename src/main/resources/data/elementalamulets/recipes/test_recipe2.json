@@ -1,6 +1,15 @@
 {
-  "type": "elementalamulets:elemental_separation",
-  "ingredient": {"item": "minecraft:gold_ingot"},
-  "elemental": {"item": "minecraft:dirt"},
-  "result": "elementalamulets:speed_amulet"
+  "type": "elementalamulets:elemental_combination",
+  "elemental": {"item": "minecraft:iron_ingot"},
+  "ingredients": [
+    {"item": "minecraft:dirt"},
+    {"item": "minecraft:dirt"},
+    {"item": "minecraft:dirt"},
+    {"item": "minecraft:dirt"},
+    {"item": "minecraft:dirt"},
+    {"item": "minecraft:dirt"},
+    {"item": "minecraft:dirt"},
+    {"item": "minecraft:dirt"}
+  ],
+  "result": {"item":"minecraft:diamond"}
 }

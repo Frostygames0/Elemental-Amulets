@@ -7,27 +7,39 @@ import net.minecraft.item.crafting.*;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.RecipeMatcher;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ElementalSeparation implements IRecipe<RecipeWrapper> {
 
-    private final IRecipeType<?> type;
-    final ResourceLocation id;
-    final Ingredient ingredient;
-    final Ingredient elemental;
-    final ItemStack result;
+    protected final ResourceLocation id;
+    protected final NonNullList<Ingredient> ingredients;
+    protected final Ingredient elemental;
+    protected final ItemStack result;
 
-    public ElementalSeparation(ResourceLocation idIn, Ingredient ingredientIn, Ingredient elementalIn, ItemStack resultIn) {
-        this.type = ModRecipes.ELEMENTAL_SEPARATION_RECIPE;
+    public ElementalSeparation(ResourceLocation idIn, NonNullList<Ingredient> ingredientsIn, Ingredient elementalIn, ItemStack resultIn) {
         this.id = idIn;
-        this.ingredient = ingredientIn;
+        this.ingredients = ingredientsIn;
         this.elemental = elementalIn;
         this.result = resultIn;
     }
 
     @Override
     public boolean matches(RecipeWrapper inv, World worldIn) {
-        return this.ingredient.test(inv.getStackInSlot(0)) && this.elemental.test(inv.getStackInSlot(1));
+        List<ItemStack> inputs = new ArrayList<>();
+        int size = 0;
+        for(int i = 2; i < inv.getSizeInventory(); ++i) {
+            ItemStack stack = inv.getStackInSlot(i);
+            if(!stack.isEmpty()) {
+                inputs.add(stack);
+                ++size;
+            }
+
+        }
+        return elemental.test(inv.getStackInSlot(1)) && size == this.ingredients.size() && RecipeMatcher.findMatches(inputs, ingredients) != null;
     }
 
     @Override
@@ -37,7 +49,7 @@ public class ElementalSeparation implements IRecipe<RecipeWrapper> {
 
     @Override
     public boolean canFit(int width, int height) {
-        return true;
+        return width*height >= this.ingredients.size();
     }
 
     @Override
@@ -45,12 +57,25 @@ public class ElementalSeparation implements IRecipe<RecipeWrapper> {
         return this.result;
     }
 
+    /**
+     * Returns list of ingredients
+     * WARNING! This list does not contain elemental.
+     * To get it use {@link this#getElemental()}
+     * @return NonNullList of ingredients
+     */
     @Override
     public NonNullList<Ingredient> getIngredients() {
-        NonNullList<Ingredient> list = NonNullList.withSize(2, Ingredient.EMPTY);
-        list.add(this.ingredient);
-        list.add(this.elemental);
-        return list;
+        return this.ingredients;
+    }
+
+    /**
+     * Returns elemental ingredient
+     * WARNING! This list does not contain other ingredients
+     * To get them use {@link this#getIngredients()}
+     * @return Ingredient of elemental
+     */
+    public Ingredient getElemental() {
+        return this.elemental;
     }
 
     @Override
@@ -70,6 +95,6 @@ public class ElementalSeparation implements IRecipe<RecipeWrapper> {
 
     @Override
     public IRecipeType<?> getType() {
-        return this.type;
+        return ModRecipes.ELEMENTAL_SEPARATION_RECIPE;
     }
 }

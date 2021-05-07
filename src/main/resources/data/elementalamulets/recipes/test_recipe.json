@@ -1,6 +1,13 @@
-{
-  "type": "elementalamulets:elemental_separation",
-  "ingredient": {"item": "minecraft:slime_block"},
-  "elemental": {"item": "minecraft:diamond"},
-  "result": "elementalamulets:jump_amulet"
+
+  "type": "elementalamulets:elemental_combination",
+  "elemental": {"item": "minecraft:slime_block"},
+  "ingredients": [
+    {"item": "minecraft:diamond"},
+    {"item": "minecraft:stick"},
+    {"item": "minecraft:grass_block"},
+    {"item": "minecraft:gold_ingot"},
+    {"item": "minecraft:iron_ingot"},
+    {"item": "minecraft:apple"}
+  ],
+  "result": {"item":"elementalamulets:jump_amulet"}
 }

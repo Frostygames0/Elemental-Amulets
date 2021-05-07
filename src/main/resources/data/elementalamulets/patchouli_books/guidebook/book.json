@@ -1,0 +1,7 @@
+{
+  "name": "Guide for Elemental Jewellers",
+  "landing_text": "ABOBA",
+  "version": 1,
+  "dont_generate_book": true,
+  "custom_book_item": "elementalamulets:guide_book"
+}

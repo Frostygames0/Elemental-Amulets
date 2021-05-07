@@ -1,16 +1,15 @@
 package frostygames0.elementalamulets.recipes;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
+import com.google.gson.*;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CookingRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.ShapedRecipe;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 
@@ -22,43 +21,55 @@ public class ElementalSeparationSerializer<T extends ElementalSeparation> extend
     @Override
     public T read(ResourceLocation recipeId, JsonObject json) {
         // Ingredient
-        JsonElement jsonelement1 = (JsonElement)(JSONUtils.isJsonArray(json, "ingredient") ? JSONUtils.getJsonArray(json, "ingredient") : JSONUtils.getJsonObject(json, "ingredient"));
-        Ingredient ingredient = Ingredient.deserialize(jsonelement1);
-        // Cookie
-        JsonElement jsonelement2 = (JsonElement)(JSONUtils.isJsonArray(json, "elemental") ? JSONUtils.getJsonArray(json, "elemental") : JSONUtils.getJsonObject(json, "elemental"));
-        Ingredient elemental = Ingredient.deserialize(jsonelement2);
+        JsonElement jsonelement = JSONUtils.isJsonArray(json, "elemental") ? JSONUtils.getJsonArray(json, "elemental") : JSONUtils.getJsonObject(json, "elemental");
+        Ingredient elemental = Ingredient.deserialize(jsonelement);
 
-        ItemStack resultStack;
-        if(!json.has("result")) {
-            throw new JsonSyntaxException("Result can't be null!");
-        }
-        else if (json.get("result").isJsonObject()) {
-            resultStack = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "result"));
+        NonNullList<Ingredient> nonNullList = readIngredients(JSONUtils.getJsonArray(json, "ingredients"));
+        if(nonNullList.isEmpty()) {
+            throw new JsonParseException("No ingredients for elemental recipe");
+        } else if(nonNullList.size() > 8) {
+            throw new JsonParseException("Array is too large! Should be <= 8!");
         } else {
-            String resultString = JSONUtils.getString(json, "result");
-            ResourceLocation resultRS = new ResourceLocation(resultString);
-            resultStack = new ItemStack(ForgeRegistries.ITEMS.getValue(resultRS));
+            ItemStack resultStack = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "result"));
+            return this.factory.create(recipeId, nonNullList, elemental,  resultStack);
         }
-        return this.factory.create(recipeId, ingredient, elemental, resultStack);
+    }
+
+    private static NonNullList<Ingredient> readIngredients(JsonArray jsonArray) {
+            NonNullList<Ingredient> nonnulllist = NonNullList.create();
+            for(int i = 0; i < jsonArray.size(); ++i) {
+                Ingredient ingredient = Ingredient.deserialize(jsonArray.get(i));
+                if (!ingredient.hasNoMatchingItems()) {
+                    nonnulllist.add(ingredient);
+                }
+            }
+            return nonnulllist;
     }
 
     @Nullable
     @Override
     public T read(ResourceLocation recipeId, PacketBuffer buffer) {
-        Ingredient ingredient = Ingredient.read(buffer);
         Ingredient elemental = Ingredient.read(buffer);
+        int i = buffer.readVarInt();
+        NonNullList<Ingredient> nonNullList = NonNullList.withSize(i, Ingredient.EMPTY);
+        for(int j = 0; j < nonNullList.size(); ++j) {
+            nonNullList.set(j, Ingredient.read(buffer));
+        }
         ItemStack resultStack = buffer.readItemStack();
-        return this.factory.create(recipeId, ingredient, elemental, resultStack);
+        return this.factory.create(recipeId, nonNullList, elemental, resultStack);
     }
 
     @Override
     public void write(PacketBuffer buffer, T recipe) {
-        recipe.ingredient.write(buffer);
         recipe.elemental.write(buffer);
+        buffer.writeVarInt(recipe.ingredients.size());
+        for(Ingredient ingr : recipe.ingredients) {
+            ingr.write(buffer);
+        }
         buffer.writeItemStack(recipe.result);
 
     }
     public interface IFactory<T extends ElementalSeparation> {
-        T create(ResourceLocation id, Ingredient ingredient, Ingredient elemental, ItemStack result);
+        T create(ResourceLocation idIn, NonNullList<Ingredient> ingredientsIn, Ingredient elementalIn, ItemStack resultIn);
     }
 }

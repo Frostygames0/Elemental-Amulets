@@ -114,15 +114,20 @@ accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
-    maven {
-        url = "https://maven.theillusivec4.top/"
-    }
+    maven { url "https://maven.theillusivec4.top/"}
+    maven { url 'https://maven.blamejared.com' }
 }
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.1.0'
+
+    // Curios API
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.0")
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.0:api")
+
+    //Patchouli API
+    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-51")
+    compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-51:api")
 
 }
 

@@ -3,6 +3,7 @@ package frostygames0.elementalamulets.datagen;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.ShapedRecipeBuilder;
+import net.minecraft.data.ShapelessRecipeBuilder;
 
 import java.util.function.Consumer;
 

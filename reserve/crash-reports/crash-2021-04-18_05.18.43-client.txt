@@ -1,0 +1,165 @@
+---- Minecraft Crash Report ----
+// Don't be sad, have a hug! <3
+
+Time: 18.04.21 5:18
+Description: Ticking entity
+
+java.lang.RuntimeException: Slot -1 not in valid range - [0,3)
+	at net.minecraftforge.items.ItemStackHandler.validateSlotIndex(ItemStackHandler.java:221) ~[forge-1.16.5-36.1.0_mapped_snapshot_20210309-1.16.5-recomp.jar:?] {re:classloading}
+	at net.minecraftforge.items.ItemStackHandler.getStackInSlot(ItemStackHandler.java:73) ~[forge-1.16.5-36.1.0_mapped_snapshot_20210309-1.16.5-recomp.jar:?] {re:classloading}
+	at frostygames0.elementalamulets.amuleteffect.JumpAmuletEffect.lambda$null$4(JumpAmuletEffect.java:113) ~[main/:?] {re:classloading}
+	at java.util.LinkedHashMap.forEach(LinkedHashMap.java:684) ~[?:1.8.0_271] {}
+	at java.util.Collections$UnmodifiableMap.forEach(Collections.java:1507) ~[?:1.8.0_271] {}
+	at frostygames0.elementalamulets.amuleteffect.JumpAmuletEffect.lambda$onLivingJump$5(JumpAmuletEffect.java:110) ~[main/:?] {re:classloading}
+	at net.minecraftforge.common.util.LazyOptional.ifPresent(LazyOptional.java:165) ~[forge-1.16.5-36.1.0_mapped_snapshot_20210309-1.16.5-recomp.jar:?] {re:classloading}
+	at frostygames0.elementalamulets.amuleteffect.JumpAmuletEffect.onLivingJump(JumpAmuletEffect.java:109) ~[main/:?] {re:classloading}
+	at frostygames0.elementalamulets.amuleteffect.EffectEventHandler.onJump(EffectEventHandler.java:51) ~[main/:?] {re:classloading}
+	at net.minecraftforge.eventbus.ASMEventHandler_8_EffectEventHandler_onJump_LivingJumpEvent.invoke(.dynamic) ~[?:?] {}
+	at net.minecraftforge.eventbus.ASMEventHandler.invoke(ASMEventHandler.java:85) ~[eventbus-4.0.0.jar:?] {}
+	at net.minecraftforge.eventbus.EventBus.post(EventBus.java:302) ~[eventbus-4.0.0.jar:?] {}
+	at net.minecraftforge.eventbus.EventBus.post(EventBus.java:283) ~[eventbus-4.0.0.jar:?] {}
+	at net.minecraftforge.common.ForgeHooks.onLivingJump(ForgeHooks.java:459) ~[forge-1.16.5-36.1.0_mapped_snapshot_20210309-1.16.5-recomp.jar:?] {re:classloading}
+	at net.minecraft.entity.LivingEntity.jump(LivingEntity.java:2015) ~[forge-1.16.5-36.1.0_mapped_snapshot_20210309-1.16.5-recomp.jar:?] {re:classloading}
+	at net.minecraft.entity.player.PlayerEntity.jump(PlayerEntity.java:1422) ~[forge-1.16.5-36.1.0_mapped_snapshot_20210309-1.16.5-recomp.jar:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.entity.LivingEntity.livingTick(LivingEntity.java:2581) ~[forge-1.16.5-36.1.0_mapped_snapshot_20210309-1.16.5-recomp.jar:?] {re:classloading}
+	at net.minecraft.entity.player.PlayerEntity.livingTick(PlayerEntity.java:516) ~[forge-1.16.5-36.1.0_mapped_snapshot_20210309-1.16.5-recomp.jar:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.client.entity.player.ClientPlayerEntity.livingTick(ClientPlayerEntity.java:831) ~[forge-1.16.5-36.1.0_mapped_snapshot_20210309-1.16.5-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
+	at net.minecraft.entity.LivingEntity.tick(LivingEntity.java:2305) ~[forge-1.16.5-36.1.0_mapped_snapshot_20210309-1.16.5-recomp.jar:?] {re:classloading}
+	at net.minecraft.entity.player.PlayerEntity.tick(PlayerEntity.java:227) ~[forge-1.16.5-36.1.0_mapped_snapshot_20210309-1.16.5-recomp.jar:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.client.entity.player.ClientPlayerEntity.tick(ClientPlayerEntity.java:217) ~[forge-1.16.5-36.1.0_mapped_snapshot_20210309-1.16.5-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
+	at net.minecraft.client.world.ClientWorld.updateEntity(ClientWorld.java:198) ~[forge-1.16.5-36.1.0_mapped_snapshot_20210309-1.16.5-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
+	at net.minecraft.world.World.guardEntityTick(World.java:601) ~[forge-1.16.5-36.1.0_mapped_snapshot_20210309-1.16.5-recomp.jar:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.client.world.ClientWorld.tickEntities(ClientWorld.java:167) ~[forge-1.16.5-36.1.0_mapped_snapshot_20210309-1.16.5-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
+	at net.minecraft.client.Minecraft.runTick(Minecraft.java:1530) ~[forge-1.16.5-36.1.0_mapped_snapshot_20210309-1.16.5-recomp.jar:?] {re:classloading,pl:accesstransformer:B,pl:runtimedistcleaner:A}
+	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:979) ~[forge-1.16.5-36.1.0_mapped_snapshot_20210309-1.16.5-recomp.jar:?] {re:classloading,pl:accesstransformer:B,pl:runtimedistcleaner:A}
+	at net.minecraft.client.Minecraft.run(Minecraft.java:612) ~[forge-1.16.5-36.1.0_mapped_snapshot_20210309-1.16.5-recomp.jar:?] {re:classloading,pl:accesstransformer:B,pl:runtimedistcleaner:A}
+	at net.minecraft.client.main.Main.main(Main.java:184) ~[forge-1.16.5-36.1.0_mapped_snapshot_20210309-1.16.5-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_271] {}
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_271] {}
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_271] {}
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_271] {}
+	at net.minecraftforge.userdev.FMLUserdevClientLaunchProvider.lambda$launchService$0(FMLUserdevClientLaunchProvider.java:52) ~[forge-1.16.5-36.1.0_mapped_snapshot_20210309-1.16.5-recomp.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandlerDecorator.launch(LaunchServiceHandlerDecorator.java:37) [modlauncher-8.0.9.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:54) [modlauncher-8.0.9.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:72) [modlauncher-8.0.9.jar:?] {}
+	at cpw.mods.modlauncher.Launcher.run(Launcher.java:82) [modlauncher-8.0.9.jar:?] {}
+	at cpw.mods.modlauncher.Launcher.main(Launcher.java:66) [modlauncher-8.0.9.jar:?] {}
+	at net.minecraftforge.userdev.LaunchTesting.main(LaunchTesting.java:105) [forge-1.16.5-36.1.0_mapped_snapshot_20210309-1.16.5-recomp.jar:?] {}
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Thread: Render thread
+Stacktrace:
+	at net.minecraftforge.items.ItemStackHandler.validateSlotIndex(ItemStackHandler.java:221) ~[forge-1.16.5-36.1.0_mapped_snapshot_20210309-1.16.5-recomp.jar:?] {re:classloading}
+	at net.minecraftforge.items.ItemStackHandler.getStackInSlot(ItemStackHandler.java:73) ~[forge-1.16.5-36.1.0_mapped_snapshot_20210309-1.16.5-recomp.jar:?] {re:classloading}
+	at frostygames0.elementalamulets.amuleteffect.JumpAmuletEffect.lambda$null$4(JumpAmuletEffect.java:113) ~[main/:?] {re:classloading}
+	at java.util.LinkedHashMap.forEach(LinkedHashMap.java:684) ~[?:1.8.0_271] {}
+	at java.util.Collections$UnmodifiableMap.forEach(Collections.java:1507) ~[?:1.8.0_271] {}
+	at frostygames0.elementalamulets.amuleteffect.JumpAmuletEffect.lambda$onLivingJump$5(JumpAmuletEffect.java:110) ~[main/:?] {re:classloading}
+	at net.minecraftforge.common.util.LazyOptional.ifPresent(LazyOptional.java:165) ~[forge-1.16.5-36.1.0_mapped_snapshot_20210309-1.16.5-recomp.jar:?] {re:classloading}
+	at frostygames0.elementalamulets.amuleteffect.JumpAmuletEffect.onLivingJump(JumpAmuletEffect.java:109) ~[main/:?] {re:classloading}
+	at frostygames0.elementalamulets.amuleteffect.EffectEventHandler.onJump(EffectEventHandler.java:51) ~[main/:?] {re:classloading}
+	at net.minecraftforge.eventbus.ASMEventHandler_8_EffectEventHandler_onJump_LivingJumpEvent.invoke(.dynamic) ~[?:?] {}
+	at net.minecraftforge.eventbus.ASMEventHandler.invoke(ASMEventHandler.java:85) ~[eventbus-4.0.0.jar:?] {}
+	at net.minecraftforge.eventbus.EventBus.post(EventBus.java:302) ~[eventbus-4.0.0.jar:?] {}
+	at net.minecraftforge.eventbus.EventBus.post(EventBus.java:283) ~[eventbus-4.0.0.jar:?] {}
+	at net.minecraftforge.common.ForgeHooks.onLivingJump(ForgeHooks.java:459) ~[forge:?] {re:classloading}
+	at net.minecraft.entity.LivingEntity.jump(LivingEntity.java:2015) ~[forge:?] {re:classloading}
+	at net.minecraft.entity.player.PlayerEntity.jump(PlayerEntity.java:1422) ~[forge:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.entity.LivingEntity.livingTick(LivingEntity.java:2581) ~[forge:?] {re:classloading}
+	at net.minecraft.entity.player.PlayerEntity.livingTick(PlayerEntity.java:516) ~[forge:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.client.entity.player.ClientPlayerEntity.livingTick(ClientPlayerEntity.java:831) ~[forge:?] {re:classloading,pl:runtimedistcleaner:A}
+	at net.minecraft.entity.LivingEntity.tick(LivingEntity.java:2305) ~[forge:?] {re:classloading}
+	at net.minecraft.entity.player.PlayerEntity.tick(PlayerEntity.java:227) ~[forge:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.client.entity.player.ClientPlayerEntity.tick(ClientPlayerEntity.java:217) ~[forge:?] {re:classloading,pl:runtimedistcleaner:A}
+	at net.minecraft.client.world.ClientWorld.updateEntity(ClientWorld.java:198) ~[forge:?] {re:classloading,pl:runtimedistcleaner:A}
+-- Entity being ticked --
+Details:
+	Entity Type: minecraft:player (net.minecraft.client.entity.player.ClientPlayerEntity)
+	Entity ID: 38
+	Entity Name: Frostygames0
+	Entity's Exact location: -83.30, 3.00, -90.30
+	Entity's Block location: World: (-84,3,-91), Chunk: (at 12,0,5 in -6,-6; contains blocks -96,0,-96 to -81,255,-81), Region: (-1,-1; contains chunks -32,-32 to -1,-1, blocks -512,0,-512 to -1,255,-1)
+	Entity's Momentum: 0.11, 0.42, 0.00
+	Entity's Passengers: []
+	Entity's Vehicle: ~~ERROR~~ NullPointerException: null
+Stacktrace:
+	at net.minecraft.world.World.guardEntityTick(World.java:601) ~[forge:?] {re:classloading,pl:accesstransformer:B}
+	at net.minecraft.client.world.ClientWorld.tickEntities(ClientWorld.java:167) ~[forge:?] {re:classloading,pl:runtimedistcleaner:A}
+
+
+-- Affected level --
+Details:
+	All players: 1 total; [ClientPlayerEntity['Frostygames0'/38, l='ClientLevel', x=-83.30, y=3.00, z=-90.30]]
+	Chunk stats: Client Chunk Cache: 289, 169
+	Level dimension: minecraft:overworld
+	Level spawn location: World: (-96,4,-96), Chunk: (at 0,0,0 in -6,-6; contains blocks -96,0,-96 to -81,255,-81), Region: (-1,-1; contains chunks -32,-32 to -1,-1, blocks -512,0,-512 to -1,255,-1)
+	Level time: 251672 game time, 251672 day time
+	Server brand: forge
+	Server type: Integrated singleplayer server
+Stacktrace:
+	at net.minecraft.client.world.ClientWorld.fillCrashReport(ClientWorld.java:465) ~[forge-1.16.5-36.1.0_mapped_snapshot_20210309-1.16.5-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
+	at net.minecraft.client.Minecraft.addGraphicsAndWorldToCrashReport(Minecraft.java:2091) ~[forge-1.16.5-36.1.0_mapped_snapshot_20210309-1.16.5-recomp.jar:?] {re:classloading,pl:accesstransformer:B,pl:runtimedistcleaner:A}
+	at net.minecraft.client.Minecraft.run(Minecraft.java:628) ~[forge-1.16.5-36.1.0_mapped_snapshot_20210309-1.16.5-recomp.jar:?] {re:classloading,pl:accesstransformer:B,pl:runtimedistcleaner:A}
+	at net.minecraft.client.main.Main.main(Main.java:184) ~[forge-1.16.5-36.1.0_mapped_snapshot_20210309-1.16.5-recomp.jar:?] {re:classloading,pl:runtimedistcleaner:A}
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_271] {}
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_271] {}
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_271] {}
+	at java.lang.reflect.Method.invoke(Method.java:498) ~[?:1.8.0_271] {}
+	at net.minecraftforge.userdev.FMLUserdevClientLaunchProvider.lambda$launchService$0(FMLUserdevClientLaunchProvider.java:52) ~[forge-1.16.5-36.1.0_mapped_snapshot_20210309-1.16.5-recomp.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandlerDecorator.launch(LaunchServiceHandlerDecorator.java:37) [modlauncher-8.0.9.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:54) [modlauncher-8.0.9.jar:?] {}
+	at cpw.mods.modlauncher.LaunchServiceHandler.launch(LaunchServiceHandler.java:72) [modlauncher-8.0.9.jar:?] {}
+	at cpw.mods.modlauncher.Launcher.run(Launcher.java:82) [modlauncher-8.0.9.jar:?] {}
+	at cpw.mods.modlauncher.Launcher.main(Launcher.java:66) [modlauncher-8.0.9.jar:?] {}
+	at net.minecraftforge.userdev.LaunchTesting.main(LaunchTesting.java:105) [forge-1.16.5-36.1.0_mapped_snapshot_20210309-1.16.5-recomp.jar:?] {}
+
+
+-- System Details --
+Details:
+	Minecraft Version: 1.16.5
+	Minecraft Version ID: 1.16.5
+	Operating System: Windows 10 (amd64) version 10.0
+	Java Version: 1.8.0_271, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode), Oracle Corporation
+	Memory: 281447584 bytes (268 MB) / 788004864 bytes (751 MB) up to 1420820480 bytes (1355 MB)
+	CPUs: 8
+	JVM Flags: 1 total; -XX:HeapDumpPath=MojangTricksIntelDriversForPerformance_javaw.exe_minecraft.exe.heapdump
+	ModLauncher: 8.0.9+86+master.3cf110c
+	ModLauncher launch target: fmluserdevclient
+	ModLauncher naming: mcp
+	ModLauncher services: 
+		/mixin-0.8.2.jar mixin PLUGINSERVICE 
+		/eventbus-4.0.0.jar eventbus PLUGINSERVICE 
+		/forge-1.16.5-36.1.0_mapped_snapshot_20210309-1.16.5-launcher.jar object_holder_definalize PLUGINSERVICE 
+		/forge-1.16.5-36.1.0_mapped_snapshot_20210309-1.16.5-launcher.jar runtime_enum_extender PLUGINSERVICE 
+		/accesstransformers-3.0.1.jar accesstransformer PLUGINSERVICE 
+		/forge-1.16.5-36.1.0_mapped_snapshot_20210309-1.16.5-launcher.jar capability_inject_definalize PLUGINSERVICE 
+		/forge-1.16.5-36.1.0_mapped_snapshot_20210309-1.16.5-launcher.jar runtimedistcleaner PLUGINSERVICE 
+		/mixin-0.8.2.jar mixin TRANSFORMATIONSERVICE 
+		/forge-1.16.5-36.1.0_mapped_snapshot_20210309-1.16.5-launcher.jar fml TRANSFORMATIONSERVICE 
+	FML: 36.1
+	Forge: net.minecraftforge:36.1.0
+	FML Language Providers: 
+		javafml@36.1
+		minecraft@1
+	Mod List: 
+		client-extra.jar                                  |Minecraft                     |minecraft                     |1.16.5              |DONE      |a1:d4:5e:04:4f:d3:d6:e0:7b:37:97:cf:77:b0:de:ad:4a:47:ce:8c:96:49:5f:0a:cf:8c:ae:b2:6d:4b:8a:3f
+		forge-1.16.5-36.1.0_mapped_snapshot_20210309-1.16.|Forge                         |forge                         |36.1.0              |DONE      |NOSIGNATURE
+		curios-forge-1.16.5-4.0.5.0_mapped_snapshot_202103|Curios API                    |curios                        |1.16.5-4.0.5.0      |DONE      |NOSIGNATURE
+		main                                              |Elemental Amulets             |elementalamulets              |1.0.0.0             |DONE      |NOSIGNATURE
+	Crash Report UUID: 080d3354-2acc-4e26-93c6-db123968eaac
+	Launched Version: MOD_DEV
+	Backend library: LWJGL version 3.2.2 build 10
+	Backend API: AMD Radeon(TM) RX Vega 11 Graphics GL version 4.6.14757 Compatibility Profile Context 20.11.2 27.20.14501.18003, ATI Technologies Inc.
+	GL Caps: Using framebuffer using OpenGL 3.0
+	Using VBOs: Yes
+	Is Modded: Definitely; Client brand changed to 'forge'
+	Type: Client (map_client.txt)
+	Graphics mode: fancy
+	Resource Packs: vanilla, mod_resources
+	Current Language: English (US)
+	CPU: 8x AMD Ryzen 5 2400G with Radeon Vega Graphics 

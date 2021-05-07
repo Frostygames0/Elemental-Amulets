@@ -1,10 +1,12 @@
 package frostygames0.elementalamulets.items;
 
+import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.items.interfaces.IJumpItem;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -14,7 +16,8 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class JumpAmulet extends AmuletItem implements IJumpItem {
-    public JumpAmulet(Properties properties, int tier) {
+    private final ResourceLocation MODEL_TEXTURE = new ResourceLocation(ElementalAmulets.MOD_ID, "textures/entity/jump_amulet_"+this.getTier()+"_model.png");
+    public JumpAmulet(Item.Properties properties, int tier) {
         super(properties, tier);
     }
 
@@ -36,8 +39,7 @@ public class JumpAmulet extends AmuletItem implements IJumpItem {
 
     @Override
     public int getDamageOnUse() {
-        int damageOnUse = ModConfig.cached.JUMP_AMULET_USAGE_DMG * getTier();
-        return Math.min(damageOnUse, this.getMaxDamage());
+        return ModConfig.cached.JUMP_AMULET_USAGE_DMG * getTier();
     }
 
 }
