@@ -2,14 +2,11 @@
   "type": "elementalamulets:elemental_combination",
   "elemental": {"item": "minecraft:iron_ingot"},
   "ingredients": [
-    {"item": "minecraft:dirt"},
-    {"item": "minecraft:dirt"},
-    {"item": "minecraft:dirt"},
-    {"item": "minecraft:dirt"},
-    {"item": "minecraft:dirt"},
-    {"item": "minecraft:dirt"},
-    {"item": "minecraft:dirt"},
-    {"item": "minecraft:dirt"}
+    {"tag": "minecraft:piglin_loved"},
+    {"tag": "minecraft:piglin_loved"},
+    {"tag": "minecraft:piglin_loved"},
+    {"tag": "minecraft:piglin_loved"},
+    {"tag": "minecraft:piglin_loved"}
   ],
-  "result": {"item":"minecraft:diamond"}
+  "result": {"item":"elementalamulets:guide_book"}
 }

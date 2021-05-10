@@ -1,0 +1,6 @@
+{
+  "name": "Amulets",
+  "description": "Sub-Category of Items. All about amulets and their abilities",
+  "icon": "elementalamulets:fire_amulet",
+  "parent": "elementalamulets:items"
+}

@@ -1,0 +1,58 @@
+package frostygames0.elementalamulets.blocks.tiles;
+
+import frostygames0.elementalamulets.core.init.ModRecipes;
+import frostygames0.elementalamulets.recipes.ElementalSeparation;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.world.World;
+import net.minecraftforge.items.IItemHandlerModifiable;
+
+import javax.annotation.Nonnull;
+
+/**
+ * This ItemHandler wraps another handler and allows me to change methods for public but retain default version of them inside
+ */
+public class AutomationItemHandler implements IItemHandlerModifiable {
+    private final IItemHandlerModifiable handler;
+    public AutomationItemHandler(IItemHandlerModifiable handler) {
+        this.handler = handler;
+    }
+    @Override
+    public void setStackInSlot(int slot, @Nonnull ItemStack stack) {
+        handler.setStackInSlot(slot, stack);
+    }
+
+    @Override
+    public int getSlots() {
+        return handler.getSlots();
+    }
+
+    @Nonnull
+    @Override
+    public ItemStack getStackInSlot(int slot) {
+        return handler.getStackInSlot(slot);
+    }
+
+    @Nonnull
+    @Override
+    public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+        return slot == 0 ? stack : handler.insertItem(slot, stack, simulate);
+    }
+
+    @Nonnull
+    @Override
+    public ItemStack extractItem(int slot, int amount, boolean simulate) {
+        return handler.extractItem(slot, amount, simulate);
+    }
+
+    @Override
+    public int getSlotLimit(int slot) {
+        return handler.getSlotLimit(slot);
+    }
+
+    @Override
+    public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
+        return slot != 0;
+    }
+}

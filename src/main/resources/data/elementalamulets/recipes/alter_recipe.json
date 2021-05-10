@@ -1,0 +1,10 @@
+{
+  "type": "elementalamulets:elemental_combination",
+  "elemental": {"item":"minecraft:book"},
+  "ingredients": [
+    {"item": "elementalamulets:elemental_shards"}
+  ],
+  "cooldown": 100,
+  "tag_transfer": true,
+  "result": {"item": "elementalamulets:guide_book"}
+}

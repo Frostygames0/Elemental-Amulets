@@ -1,15 +1,10 @@
 {
   "type": "elementalamulets:elemental_combination",
-  "elemental": {"item": "minecraft:netherite_ingot"},
+  "elemental": {"item": "minecraft:diamond_pickaxe"},
   "ingredients": [
-    {"item": "minecraft:diamond"},
-    {"item": "minecraft:diamond"},
-    {"item": "minecraft:diamond"},
-    {"item": "minecraft:diamond"},
-    {"item": "minecraft:diamond"},
-    {"item": "minecraft:diamond"},
-    {"item": "minecraft:diamond"},
-    {"item": "minecraft:diamond"}
+    {"item": "minecraft:netherite_ingot"}
   ],
-  "result": {"item":"minecraft:bedrock"}
+  "cooldown": 400,
+  "tag_transfer": true,
+  "result": {"item":"minecraft:netherite_pickaxe"}
 }

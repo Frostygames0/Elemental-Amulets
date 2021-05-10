@@ -33,6 +33,12 @@ minecraft {
     // Simply re-run your setup task after changing the mappings to update your workspace.
     mappings channel: 'snapshot', version: '20210309-1.16.5'
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+    runs {
+        client {
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+        }
+    }
     
 accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
@@ -116,6 +122,16 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 repositories {
     maven { url "https://maven.theillusivec4.top/"}
     maven { url 'https://maven.blamejared.com' }
+    maven {
+        // location of the maven that hosts JEI files
+        name = "Progwml6 maven"
+        url = "https://dvs1.progwml6.com/files/maven/"
+    }
+    maven {
+        // location of a maven mirror for JEI files, as a fallback
+        name = "ModMaven"
+        url = "https://modmaven.k-4u.nl"
+    }
 }
 
 dependencies {
@@ -126,8 +142,12 @@ dependencies {
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.0:api")
 
     //Patchouli API
-    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-51")
     compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-51:api")
+    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-51")
+
+    // Just Enough Items
+    compileOnly fg.deobf("mezz.jei:jei-1.16.5:7.6.4.90:api")
+    runtimeOnly fg.deobf("mezz.jei:jei-1.16.5:7.6.4.90")
 
 }
 

@@ -1,6 +1,9 @@
 {
   "itemGroup.elementalamulets": "Elemental Amulets",
 
+  "item.elementalamulets.guide_book": "Guide for Elemental Jewellers",
+  "item.elementalamulets.elemental_shards": "Elemental Shards",
+
   "item.elementalamulets.common_amulet.tooltip.tier": "%sTier: ",
 
   "item.elementalamulets.fire_amulet": "Fire amulet",
@@ -22,8 +25,12 @@
   "item.elementalamulets.invisibility_amulet.tooltip": "%sHides you from your enemies%s",
 
   "block.elementalamulets.elemental_combinator": "Elemental Combinator",
+  "block.elementalamulets.combinator.cooldown": "Combinator is recharging! %ss left",
 
   "player.elementalamulets.brokenamulet.warn": "Your %s just got broken!",
+
+  "jei.elementalamulets.cooldown": "Cooldown - %ss",
+  "jei.elementalamulets.elemental_separation": "Elemental Combination",
 
   "entity.minecraft.villager.elementalamulets.jeweller": "Jeweller [PLACEHOLDER]"
 }

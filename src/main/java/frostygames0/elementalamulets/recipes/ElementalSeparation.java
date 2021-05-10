@@ -2,8 +2,11 @@ package frostygames0.elementalamulets.recipes;
 
 import frostygames0.elementalamulets.core.init.ModBlocks;
 import frostygames0.elementalamulets.core.init.ModRecipes;
+import net.minecraft.block.ShulkerBoxBlock;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.*;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -13,22 +16,27 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ElementalSeparation implements IRecipe<RecipeWrapper> {
+public class ElementalSeparation implements IRecipe<IInventory> {
 
     protected final ResourceLocation id;
     protected final NonNullList<Ingredient> ingredients;
     protected final Ingredient elemental;
     protected final ItemStack result;
+    protected final int cooldown;
+    protected final boolean tagTransfer;
 
-    public ElementalSeparation(ResourceLocation idIn, NonNullList<Ingredient> ingredientsIn, Ingredient elementalIn, ItemStack resultIn) {
+    public ElementalSeparation(ResourceLocation idIn, NonNullList<Ingredient> ingredientsIn, Ingredient elementalIn, ItemStack resultIn,
+                               int cooldown, boolean tagTransfer) {
         this.id = idIn;
         this.ingredients = ingredientsIn;
         this.elemental = elementalIn;
         this.result = resultIn;
+        this.cooldown = cooldown;
+        this.tagTransfer = tagTransfer;
     }
 
     @Override
-    public boolean matches(RecipeWrapper inv, World worldIn) {
+    public boolean matches(IInventory inv, World worldIn) {
         List<ItemStack> inputs = new ArrayList<>();
         int size = 0;
         for(int i = 2; i < inv.getSizeInventory(); ++i) {
@@ -43,8 +51,13 @@ public class ElementalSeparation implements IRecipe<RecipeWrapper> {
     }
 
     @Override
-    public ItemStack getCraftingResult(RecipeWrapper inv) {
-        return this.result.copy();
+    public ItemStack getCraftingResult(IInventory inv) {
+        ItemStack stack = this.result.copy();
+        if(this.tagTransfer) {
+            CompoundNBT nbt = inv.getStackInSlot(1).getTag();
+            if(nbt != null) stack.setTag(nbt);
+        }
+        return stack;
     }
 
     @Override
@@ -58,24 +71,39 @@ public class ElementalSeparation implements IRecipe<RecipeWrapper> {
     }
 
     /**
-     * Returns list of ingredients
-     * WARNING! This list does not contain elemental.
-     * To get it use {@link this#getElemental()}
-     * @return NonNullList of ingredients
+     * Returns list of ingredients+elemental
+     * @return NonNullList of ingredients+elemental
      */
     @Override
     public NonNullList<Ingredient> getIngredients() {
-        return this.ingredients;
+        NonNullList<Ingredient> full = NonNullList.create();
+        full.add(this.elemental);
+        full.addAll(this.ingredients);
+        return full;
     }
 
     /**
-     * Returns elemental ingredient
-     * WARNING! This list does not contain other ingredients
-     * To get them use {@link this#getIngredients()}
+     * Returns elemental ingredient separately
      * @return Ingredient of elemental
      */
     public Ingredient getElemental() {
         return this.elemental;
+    }
+
+    /**
+     * Returns only ingredients!
+     * @return Ingredients - elemental
+     */
+    public NonNullList<Ingredient> getOnlyIngredients() {
+        return this.ingredients;
+    }
+
+    public int getCooldown() {
+        return this.cooldown;
+    }
+
+    public boolean isTagTransferred() {
+        return this.tagTransfer;
     }
 
     @Override

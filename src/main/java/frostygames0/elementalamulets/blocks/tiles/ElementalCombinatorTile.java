@@ -1,44 +1,37 @@
 package frostygames0.elementalamulets.blocks.tiles;
 
-import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.core.init.ModRecipes;
 import frostygames0.elementalamulets.core.init.ModTiles;
 import frostygames0.elementalamulets.recipes.ElementalSeparation;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.effect.LightningBoltEntity;
-import net.minecraft.entity.merchant.villager.VillagerProfession;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.container.WorkbenchContainer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.tileentity.HopperTileEntity;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.items.*;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class ElementalCombinatorTile extends TileEntity implements ITickableTileEntity {
-    private ItemStackHandler handler = createHandler(10);
-    private LazyOptional<IItemHandler> optional = LazyOptional.of(() -> handler);
+    private final ItemStackHandler handler = createHandler(10);
+    private final LazyOptional<IItemHandler> optional = LazyOptional.of(() -> new AutomationItemHandler(handler));
+    private int cooldown;
 
     public ElementalCombinatorTile() {
         super(ModTiles.ELEMENTAL_CRAFTER_TILE.get());
@@ -46,41 +39,65 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
 
     @Override
     public void tick() {
-    }
-
-    public void combineElemental() {
-        if(!world.isRemote()) {
-            LightningBoltEntity lightbolt = new LightningBoltEntity(EntityType.LIGHTNING_BOLT, world);
-            lightbolt.moveForced(Vector3d.copyCenteredHorizontally(this.pos.add(0, 1, 0)));
-            lightbolt.setEffectOnly(true);
-            IRecipe<RecipeWrapper> recipe = this.world.getRecipeManager().getRecipe(ModRecipes.ELEMENTAL_SEPARATION_RECIPE, new RecipeWrapper(handler), this.world).orElse(null);
-            ItemStack result;
-            if (recipe != null) {
-                result = recipe.getCraftingResult(new RecipeWrapper(handler));
-                ElementalAmulets.LOGGER.debug(result);
-                if (!result.isEmpty()) {
-                    if(handler.insertItem(0, result, true).isEmpty()) {
-                        handler.insertItem(0, result, false);
-                        for (int i = 1; i < handler.getSlots(); ++i) {
-                            handler.extractItem(i, 1, false);
-                        }
-                        world.addEntity(lightbolt);
-                        world.playSound(null, pos, SoundEvents.BLOCK_BEACON_ACTIVATE, SoundCategory.BLOCKS, 100, 1);
-                    }
-                }
+        if(world != null && !world.isRemote()) {
+            if (this.cooldown > 0) {
+                this.cooldown -= 1;
             }
         }
     }
 
+    /**
+     * Used to "combine" ingredients and elemental into result and put it into slot 0
+     * @param player player that combined elementals.
+     * @return TRUE - if combining was successful, otherwise FALSE;
+     */
+    public boolean combineElemental(PlayerEntity player) {
+        if(world != null && !world.isRemote()) {
+                if (this.cooldown <= 0) {
+                    if (this.world.canBlockSeeSky(this.pos.up())) {
+                        LightningBoltEntity lightbolt = new LightningBoltEntity(EntityType.LIGHTNING_BOLT, world);
+                        lightbolt.moveForced(Vector3d.copyCenteredHorizontally(this.pos.add(0, 1, 0)));
+                        lightbolt.setEffectOnly(true);
+                        ElementalSeparation recipe = this.world.getRecipeManager().getRecipe(ModRecipes.ELEMENTAL_SEPARATION_RECIPE, new RecipeWrapper(handler), this.world).orElse(null);
+                        ItemStack result;
+                        if (recipe != null) {
+                            result = recipe.getCraftingResult(new RecipeWrapper(handler));
+                            if (!result.isEmpty()) {
+                                if (handler.insertItem(0,result, true).isEmpty()) {
+                                    handler.insertItem(0,result, false);
+                                    for (int i = 1; i < handler.getSlots(); ++i) {
+                                        handler.extractItem(i, 1, false);
+                                    }
+                                    world.addEntity(lightbolt);
+                                    world.playSound(null, pos, SoundEvents.BLOCK_BEACON_ACTIVATE, SoundCategory.BLOCKS, 100, 1);
+                                    this.cooldown += recipe.getCooldown();
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    player.sendStatusMessage(new TranslationTextComponent("block.elementalamulets.combinator.cooldown", this.cooldown/20).mergeStyle(TextFormatting.RED), true);
+                }
+        }
+        return false;
+    }
+
+    public int getCooldown() {
+        return this.cooldown;
+    }
+
     @Override
     public CompoundNBT write(CompoundNBT compound) {
-        compound.put("contents", handler.serializeNBT());
+        compound.put("Contents", handler.serializeNBT());
+        compound.putInt("Cooldown", this.cooldown);
         return super.write(compound);
     }
 
     @Override
     public void read(BlockState state, CompoundNBT nbt) {
-        handler.deserializeNBT(nbt.getCompound("contents"));
+        handler.deserializeNBT(nbt.getCompound("Contents"));
+        this.cooldown = nbt.getInt("Cooldown");
         super.read(state, nbt);
     }
 

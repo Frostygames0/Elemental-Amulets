@@ -4,8 +4,10 @@ import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.items.interfaces.IJumpItem;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -41,5 +43,4 @@ public class JumpAmulet extends AmuletItem implements IJumpItem {
     public int getDamageOnUse() {
         return ModConfig.cached.JUMP_AMULET_USAGE_DMG * getTier();
     }
-
 }

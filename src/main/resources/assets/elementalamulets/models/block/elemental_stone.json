@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "particle": "elementalamulets:block/elemental_stone",
+    "all": "elementalamulets:block/elemental_stone"
+  }
+}

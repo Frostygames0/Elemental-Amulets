@@ -1,0 +1,20 @@
+{
+  "name": "Getting Started",
+  "category": "elementalamulets:getting_started",
+  "icon": "elementalamulets:elemental_combinator",
+  "pages": [
+    {
+      "type": "text",
+      "text": "TEST"
+    },
+    {
+      "type": "elemental_combination",
+      "recipe": "test_recipe2",
+      "text": "HELLO I'M SHIT ASS OMEGA BULLY 228 HAHAHAHHAHA DIE YOU LITTLE SHET"
+    },
+    {
+      "type": "crafting",
+      "recipe": "lime_bed"
+    }
+  ]
+}

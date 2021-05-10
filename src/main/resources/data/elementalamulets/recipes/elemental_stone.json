@@ -1,0 +1,5 @@
+{
+  "type": "smelting",
+  "ingredient": {"item": "elementalamulets:elemental_stone"},
+  "result": "elementalamulets:elemental_shards"
+}

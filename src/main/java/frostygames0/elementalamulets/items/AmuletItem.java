@@ -33,7 +33,7 @@ public abstract class AmuletItem extends Item implements ICurioItem, IAmuletItem
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
-        tooltip.add(AmuletUtil.getFormattedTierTooltip(this));
+        AmuletUtil.getFormattedTierTooltip(this, tooltip);
     }
 
     @Override

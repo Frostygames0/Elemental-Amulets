@@ -22,6 +22,8 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 
+import java.util.List;
+
 public final class AmuletUtil {
     private AmuletUtil() {}
 
@@ -47,12 +49,14 @@ public final class AmuletUtil {
 
     /**
      * Use it to add cool tooltip about tier :)
-     * @param item instance of {@code IAmuletItem} !
-     * @return ITextComponent formatted and ready to use!
+     * @param item amulet
+     * @param tooltip tooltip
      */
-    public static ITextComponent getFormattedTierTooltip(IAmuletItem item) {
-        return new TranslationTextComponent("item.elementalamulets.common_amulet.tooltip.tier").mergeStyle(TextFormatting.GOLD)
-                .appendSibling(new StringTextComponent("" + item.getTier()).mergeStyle(TextFormatting.YELLOW));
+    public static void getFormattedTierTooltip(IAmuletItem item, List<ITextComponent> tooltip) {
+        if(item.getTier() > 0) {
+            tooltip.add(new TranslationTextComponent("item.elementalamulets.common_amulet.tooltip.tier").mergeStyle(TextFormatting.GOLD)
+                    .appendSibling(new StringTextComponent("" + item.getTier()).mergeStyle(TextFormatting.YELLOW)));
+        }
     }
 
     /**
@@ -71,7 +75,7 @@ public final class AmuletUtil {
 
     /**
      * gets ResourceLocation of texture
-     * @param item
+     * @param item aboba
      * @return ResourceLocation
      */
     public static ResourceLocation getTextureBasedOnTier(AmuletItem item) {

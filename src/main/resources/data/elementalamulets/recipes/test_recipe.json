@@ -1,4 +1,4 @@
-
+{
   "type": "elementalamulets:elemental_combination",
   "elemental": {"item": "minecraft:slime_block"},
   "ingredients": [

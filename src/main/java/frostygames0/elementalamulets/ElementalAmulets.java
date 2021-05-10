@@ -37,8 +37,6 @@ public class ElementalAmulets {
         ModTiles.TILES.register(bus);
         ModContainers.CONTAINERS.register(bus);
         ModRecipes.SERIALIZERS.register(bus);
-        ModVillagerProfessions.POI_TYPES.register(bus);
-        ModVillagerProfessions.PROFESSIONS.register(bus);
 
         ModLoadingContext.get().registerConfig(net.minecraftforge.fml.config.ModConfig.Type.SERVER, ModConfig.SERVER_SPEC);
         ModLoadingContext.get().registerConfig(net.minecraftforge.fml.config.ModConfig.Type.CLIENT, ModConfig.CLIENT_SPEC);
@@ -59,16 +57,14 @@ public class ElementalAmulets {
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {
-        event.enqueueWork(() ->{
-            ModItems.ITEMS.getEntries().stream().map(RegistryObject::get).filter(item -> item instanceof IAmuletItem).forEach(item -> {
-                ItemModelsProperties.registerProperty(item, new ResourceLocation(ElementalAmulets.MOD_ID, "amulet_durability"), (stack, world, living) -> {
-                    if (stack.getDamage() <= 200) return 0.0f;
-                    else if (stack.getDamage() <= 400) return 0.4f;
-                    else if (stack.getDamage() <= 600) return 0.6f;
-                    else if (stack.getDamage() <= 800) return 0.8f;
-                    else return 1.0f;
-                });
+        event.enqueueWork(() -> ModItems.ITEMS.getEntries().stream().map(RegistryObject::get).filter(item -> item instanceof IAmuletItem).forEach(item -> {
+            ItemModelsProperties.registerProperty(item, new ResourceLocation(ElementalAmulets.MOD_ID, "amulet_durability"), (stack, world, living) -> {
+                if (stack.getDamage() <= 200) return 0.0f;
+                else if (stack.getDamage() <= 400) return 0.4f;
+                else if (stack.getDamage() <= 600) return 0.6f;
+                else if (stack.getDamage() <= 800) return 0.8f;
+                else return 1.0f;
             });
-        });
+        }));
     }
 }

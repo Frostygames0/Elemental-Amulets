@@ -2,7 +2,7 @@
   "type": "elementalamulets:elemental_combination",
   "elemental": {"item": "minecraft:stick"},
   "ingredients": [
-    {"item": "minecraft:air"}
+    {"item": "minecraft:stick"}
   ],
-  "result": {"item":"minecraft:stick"}
+  "result": {"item":"minecraft:stick", "count": 2}
 }

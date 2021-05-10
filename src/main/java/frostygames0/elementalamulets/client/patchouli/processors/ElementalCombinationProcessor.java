@@ -1,19 +1,19 @@
 package frostygames0.elementalamulets.client.patchouli.processors;
 
 import frostygames0.elementalamulets.ElementalAmulets;
-import frostygames0.elementalamulets.core.init.ModRecipes;
 import frostygames0.elementalamulets.recipes.ElementalSeparation;
-import frostygames0.elementalamulets.recipes.ElementalSeparationSerializer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.RecipeManager;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
 import vazkii.patchouli.api.IComponentProcessor;
 import vazkii.patchouli.api.IVariable;
 import vazkii.patchouli.api.IVariableProvider;
+
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class ElementalCombinationProcessor implements IComponentProcessor {
     private ElementalSeparation recipe;
@@ -26,19 +26,22 @@ public class ElementalCombinationProcessor implements IComponentProcessor {
 
     @Override
     public IVariable process(String key) {
-        if (key.startsWith("ingredient")) {
-            int index = Integer.parseInt(key.substring(10));
-            Ingredient ingredient = recipe.getIngredients().get(index);
-            ItemStack[] stacks = ingredient.getMatchingStacks();
-            ItemStack stack = stacks.length == 0 ? ItemStack.EMPTY : stacks[0];
-            return IVariable.from(stack);
-        } else if(key.equals("elemental")) {
-            Ingredient elemental = recipe.getElemental();
-            ItemStack[] stacks = elemental.getMatchingStacks();
-            ItemStack stack = stacks.length == 0 ? ItemStack.EMPTY : stacks[0];
-            return IVariable.from(stack);
-        } else if (key.equals("result")) {
-            return null;
+        if(recipe != null) {
+            if (key.startsWith("item")) {
+                int index = Integer.parseInt(key.substring(4)) - 1;
+                if(!(index >= recipe.getOnlyIngredients().size())) {
+                    Ingredient ingredient = recipe.getOnlyIngredients().get(index);
+                    return IVariable.wrapList(Arrays.stream(ingredient.getMatchingStacks()).map(IVariable::from).collect(Collectors.toList()));
+                }
+                return IVariable.from(ItemStack.EMPTY);
+            } else if (key.equals("elemental")) {
+                Ingredient ingredient = recipe.getElemental();
+                return IVariable.wrapList(Arrays.stream(ingredient.getMatchingStacks()).map(IVariable::from).collect(Collectors.toList()));
+            } else if(key.equals("result")) {
+                return IVariable.from(recipe.getRecipeOutput());
+            } else if(key.equals("icon")) {
+                return IVariable.from(recipe.getIcon());
+            }
         }
         return null;
     }

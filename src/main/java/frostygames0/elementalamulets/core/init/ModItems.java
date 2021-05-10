@@ -3,8 +3,11 @@ package frostygames0.elementalamulets.core.init;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.core.util.ElementalColors;
 import frostygames0.elementalamulets.items.*;
+import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.advancements.criterion.ConsumeItemTrigger;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.Rarity;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -12,10 +15,19 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ElementalAmulets.MOD_ID);
 
+    // Mod's guide book
+    public static final RegistryObject<Item> GUIDE_BOOK = ITEMS.register("guide_book",
+            () -> new GuideBook(new Item.Properties().group(ElementalAmulets.GROUP).rarity(Rarity.COMMON).isImmuneToFire().maxStackSize(1)));
+    public static final RegistryObject<Item> ELEMENTAL_SHARDS = ITEMS.register("elemental_shards",
+            () -> new Item(new Item.Properties().group(ElementalAmulets.GROUP)));
     // Mod BlockItems
     public static final RegistryObject<BlockItem> ELEMENTAL_CRAFTER_BLOCK = ITEMS.register("elemental_combinator",
             () -> new BlockItem(ModBlocks.ELEMENTAL_CRAFTER.get(), new Item.Properties().group(ElementalAmulets.GROUP)));
+    public static final RegistryObject<BlockItem> ELEMENTAL_STONE = ITEMS.register("elemental_stone",
+            () -> new BlockItem(ModBlocks.ELEMENTAL_STONE.get(), new Item.Properties().group(ElementalAmulets.GROUP)));
     // Fire amulet and it's tiers
+    public static final RegistryObject<Item> CONTROL_AMULET = ITEMS.register("control_amulet",
+            () -> new ControlAmulet(new Item.Properties().group(ElementalAmulets.GROUP).maxStackSize(1).maxDamage(1000).setNoRepair()));
     public static final RegistryObject<Item> FIRE_AMULET = ITEMS.register("fire_amulet",
             () -> new FireAmulet(new Item.Properties().group(ElementalAmulets.GROUP).rarity(ElementalColors.FIRE).maxDamage(1000).isImmuneToFire()));
     public static final RegistryObject<Item> FIRE_AMULET_TIER2 = ITEMS.register("fire_amulet_tier2",

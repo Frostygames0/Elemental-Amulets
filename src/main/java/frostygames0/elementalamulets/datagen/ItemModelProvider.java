@@ -14,11 +14,6 @@ public class ItemModelProvider extends net.minecraftforge.client.model.generator
 
     @Override
     protected void registerModels() {
-        singleTexture(ModItems.FIRE_AMULET.get().getRegistryName().getPath(), new ResourceLocation("item/generated"), "layer0", new ResourceLocation(ElementalAmulets.MOD_ID, "item/fire_amulet"));
-        singleTexture(ModItems.JUMP_AMULET.get().getRegistryName().getPath(), new ResourceLocation("item/generated"), "layer0", new ResourceLocation(ElementalAmulets.MOD_ID, "item/jump_amulet"));
-        singleTexture(ModItems.SPEED_AMULET.get().getRegistryName().getPath(), new ResourceLocation("item/generated"), "layer0", new ResourceLocation(ElementalAmulets.MOD_ID, "item/water_amulet"));
-        singleTexture(ModItems.INVISIBILITY_AMULET.get().getRegistryName().getPath(), new ResourceLocation("item/generated"), "layer0", new ResourceLocation(ElementalAmulets.MOD_ID, "item/invisibility_amulet"));
-
-        withExistingParent(ModBlocks.ELEMENTAL_CRAFTER.get().getRegistryName().getPath(), new ResourceLocation(ElementalAmulets.MOD_ID, "block/elemental_crafter"));
+        singleTexture(ModItems.GUIDE_BOOK.get().getRegistryName().getPath(), new ResourceLocation("item/generated"), "layer0", new ResourceLocation(ElementalAmulets.MOD_ID, "item/guide_book"));
     }
 }

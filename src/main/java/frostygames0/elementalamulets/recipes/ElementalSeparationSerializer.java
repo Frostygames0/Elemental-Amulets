@@ -31,7 +31,9 @@ public class ElementalSeparationSerializer<T extends ElementalSeparation> extend
             throw new JsonParseException("Array is too large! Should be <= 8!");
         } else {
             ItemStack resultStack = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "result"));
-            return this.factory.create(recipeId, nonNullList, elemental,  resultStack);
+            int cooldown = JSONUtils.getInt(json, "cooldown", 40);
+            boolean tagTransfer = JSONUtils.getBoolean(json, "tag_transfer", false);
+            return this.factory.create(recipeId, nonNullList, elemental,  resultStack, cooldown, tagTransfer);
         }
     }
 
@@ -56,7 +58,9 @@ public class ElementalSeparationSerializer<T extends ElementalSeparation> extend
             nonNullList.set(j, Ingredient.read(buffer));
         }
         ItemStack resultStack = buffer.readItemStack();
-        return this.factory.create(recipeId, nonNullList, elemental, resultStack);
+        int cooldown = buffer.readVarInt();
+        boolean tagTransfer = buffer.readBoolean();
+        return this.factory.create(recipeId, nonNullList, elemental, resultStack, cooldown, tagTransfer);
     }
 
     @Override
@@ -67,9 +71,11 @@ public class ElementalSeparationSerializer<T extends ElementalSeparation> extend
             ingr.write(buffer);
         }
         buffer.writeItemStack(recipe.result);
+        buffer.writeVarInt(recipe.cooldown);
+        buffer.writeBoolean(recipe.tagTransfer);
 
     }
     public interface IFactory<T extends ElementalSeparation> {
-        T create(ResourceLocation idIn, NonNullList<Ingredient> ingredientsIn, Ingredient elementalIn, ItemStack resultIn);
+        T create(ResourceLocation idIn, NonNullList<Ingredient> ingredientsIn, Ingredient elementalIn, ItemStack resultIn, int cooldown, boolean tagTransfer);
     }
 }

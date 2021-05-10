@@ -2,23 +2,14 @@ package frostygames0.elementalamulets.core.init;
 
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.blocks.ElementalCombinator;
-import frostygames0.elementalamulets.recipes.ElementalSeparation;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.item.crafting.AbstractCookingRecipe;
-import net.minecraft.potion.PotionUtils;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeGenerationSettings;
 import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.Features;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
-import net.minecraft.world.gen.feature.template.RuleTest;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.placement.TopSolidRangeConfig;
 import net.minecraftforge.common.ToolType;
@@ -35,14 +26,17 @@ public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ElementalAmulets.MOD_ID);
 
     public static final RegistryObject<Block> ELEMENTAL_CRAFTER = BLOCKS.register("elemental_combinator",
-            () -> new ElementalCombinator(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(3.5f).sound(SoundType.STONE).setRequiresTool()));
+            () -> new ElementalCombinator(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(3.5f).sound(SoundType.STONE).setRequiresTool().harvestTool(ToolType.PICKAXE).harvestLevel(0).setLightLevel(s -> 5)));
+    public static final RegistryObject<Block> ELEMENTAL_STONE = BLOCKS.register("elemental_stone",
+            () -> new Block(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(5f).sound(SoundType.STONE).setRequiresTool().harvestTool(ToolType.PICKAXE).harvestLevel(1)));
 
+    @SubscribeEvent
     public static void oreGeneration(BiomeLoadingEvent event) {
         BiomeGenerationSettingsBuilder gen = event.getGeneration();
         if(!event.getCategory().equals(Biome.Category.NETHER) && !event.getCategory().equals(Biome.Category.THEEND)) {
             gen.withFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(
-                    new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, null, 4))
-                    .withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(10, 0, 30)).square().count(5)));
+                    new OreFeatureConfig(OreFeatureConfig.FillerBlockType.BASE_STONE_OVERWORLD, ELEMENTAL_STONE.get().getDefaultState(), 5))
+                    .withPlacement(Placement.RANGE.configure(new TopSolidRangeConfig(10, 0, 40))).square().count(6));
         }
     }
 }

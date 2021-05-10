@@ -1,0 +1,91 @@
+{
+  "processor": "frostygames0.elementalamulets.client.patchouli.processors.ElementalCombinationProcessor",
+  "components": [
+    {
+      "type": "header",
+      "text": "#result->iname",
+      "x": -1,
+      "y": -5
+    },
+    {
+      "type": "image",
+      "image": "elementalamulets:textures/gui/patchouli/elemental_separation_things.png",
+      "width": 85,
+      "height": 70,
+      "y": 5,
+      "x": 3
+    },
+    {
+      "type": "text",
+      "text":"#text",
+      "y": 80
+    },
+    {
+      "type": "item",
+      "item": "#elemental",
+      "x": 30,
+      "y": 32
+    },
+    {
+      "type": "item",
+      "item": "#item1",
+      "x": 30,
+      "y": 8
+    },
+    {
+      "type": "item",
+      "item": "#item2",
+      "x": 50,
+      "y": 12
+    },
+    {
+      "type": "item",
+      "item": "#item3",
+      "x": 54,
+      "y": 32
+    },
+    {
+      "type": "item",
+      "item": "#item4",
+      "x": 50,
+      "y": 52
+    },
+    {
+      "type": "item",
+      "item": "#item5",
+      "x": 30,
+      "y": 55
+    },
+    {
+      "type": "item",
+      "item": "#item6",
+      "x": 10,
+      "y": 52
+    },
+    {
+      "type": "item",
+      "item": "#item7",
+      "x": 6,
+      "y": 32
+    },
+    {
+      "type": "item",
+      "item": "#item8",
+      "x": 10,
+      "y": 12
+    },
+    {
+      "type": "item",
+      "item": "#result",
+      "framed": true,
+      "x": 95,
+      "y": 32
+    },
+    {
+      "type": "item",
+      "item": "#icon",
+      "x": 95,
+      "y": 52
+    }
+  ]
+}

@@ -12,6 +12,5 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
 
     @Override
     protected void registerStatesAndModels() {
-        simpleBlock(ModBlocks.ELEMENTAL_CRAFTER.get(), cubeAll(ModBlocks.ELEMENTAL_CRAFTER.get()));
     }
 }

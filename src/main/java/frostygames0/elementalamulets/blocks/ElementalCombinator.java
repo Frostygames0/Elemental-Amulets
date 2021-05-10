@@ -1,22 +1,16 @@
 package frostygames0.elementalamulets.blocks;
 
-import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.blocks.containers.ElementalCombinatorContainer;
 import frostygames0.elementalamulets.blocks.tiles.ElementalCombinatorTile;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.BrewingStandBlock;
-import net.minecraft.block.ChestBlock;
+import net.minecraft.block.*;
 import net.minecraft.block.material.PushReaction;
-import net.minecraft.entity.Pose;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.particles.ParticleTypes;
+import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -24,19 +18,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.GameType;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 @SuppressWarnings("deprecation")
 public class ElementalCombinator extends Block {
+    public static final BooleanProperty ENABLED = BlockStateProperties.ENABLED;
     public ElementalCombinator(Properties properties) {
         super(properties);
     }
@@ -65,10 +56,10 @@ public class ElementalCombinator extends Block {
                 };
                 NetworkHooks.openGui((ServerPlayerEntity) player, provider, elementalCombinatorTile.getPos());
             } else {
-                elementalCombinatorTile.combineElemental();
+                elementalCombinatorTile.combineElemental(player);
             }
         } else {
-            throw new IllegalStateException("Missing container!");
+            throw new IllegalStateException("TileEntity is not correct! Cannot open block's GUI!");
         }
         return ActionResultType.CONSUME;
     }
