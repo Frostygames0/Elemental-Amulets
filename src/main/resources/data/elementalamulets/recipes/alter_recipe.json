@@ -1,8 +1,14 @@
 {
   "type": "elementalamulets:elemental_combination",
-  "elemental": {"item":"minecraft:book"},
+  "elemental": [
+    {"item":"minecraft:book"},
+    {"item": "minecraft:writable_book"}
+  ],
   "ingredients": [
-    {"item": "elementalamulets:elemental_shards"}
+    [
+      {"item": "elementalamulets:elemental_shards"},
+      {"item": "minecraft:diamond"}
+    ]
   ],
   "cooldown": 100,
   "tag_transfer": true,

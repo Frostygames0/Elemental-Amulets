@@ -1,10 +1,9 @@
 package frostygames0.elementalamulets.client.patchouli.processors;
 
 import frostygames0.elementalamulets.ElementalAmulets;
-import frostygames0.elementalamulets.recipes.ElementalSeparation;
+import frostygames0.elementalamulets.recipes.ElementalCombination;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.RecipeManager;
 import net.minecraft.util.ResourceLocation;
@@ -16,12 +15,12 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class ElementalCombinationProcessor implements IComponentProcessor {
-    private ElementalSeparation recipe;
+    private ElementalCombination recipe;
     @Override
     public void setup(IVariableProvider variables) {
         String recipeId = variables.get("recipe").asString();
         RecipeManager manager = Minecraft.getInstance().world.getRecipeManager();
-        recipe = (ElementalSeparation) manager.getRecipe(new ResourceLocation(ElementalAmulets.MOD_ID, recipeId)).orElseThrow(IllegalArgumentException::new);
+        recipe = (ElementalCombination) manager.getRecipe(new ResourceLocation(ElementalAmulets.MOD_ID, recipeId)).orElseThrow(IllegalArgumentException::new);
     }
 
     @Override

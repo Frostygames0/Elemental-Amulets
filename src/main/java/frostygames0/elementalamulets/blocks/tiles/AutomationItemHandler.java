@@ -1,11 +1,6 @@
 package frostygames0.elementalamulets.blocks.tiles;
 
-import frostygames0.elementalamulets.core.init.ModRecipes;
-import frostygames0.elementalamulets.recipes.ElementalSeparation;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
 import javax.annotation.Nonnull;

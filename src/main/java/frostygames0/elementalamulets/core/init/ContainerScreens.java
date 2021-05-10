@@ -3,12 +3,10 @@ package frostygames0.elementalamulets.core.init;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.client.screens.ElementalCrafterGUI;
 import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.command.Commands;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 @Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ContainerScreens {

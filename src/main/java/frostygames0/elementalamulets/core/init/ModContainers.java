@@ -2,7 +2,6 @@ package frostygames0.elementalamulets.core.init;
 
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.blocks.containers.ElementalCombinatorContainer;
-import frostygames0.elementalamulets.recipes.ElementalSeparation;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;

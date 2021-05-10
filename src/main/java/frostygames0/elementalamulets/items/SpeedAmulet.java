@@ -30,7 +30,7 @@ public class SpeedAmulet extends AmuletItem implements ISpeedItem {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
-        tooltip.add(new TranslationTextComponent("item.elementalamulets.speed_amulet.tooltip", TextFormatting.GRAY));
+        tooltip.add(new TranslationTextComponent("item.elementalamulets.speed_amulet.tooltip").mergeStyle(TextFormatting.GRAY));
     }
 
     @Override

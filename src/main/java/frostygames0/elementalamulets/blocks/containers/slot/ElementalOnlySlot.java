@@ -1,6 +1,5 @@
 package frostygames0.elementalamulets.blocks.containers.slot;
 
-import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 

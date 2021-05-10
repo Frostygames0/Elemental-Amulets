@@ -13,8 +13,9 @@ public class ElementalCrafterGUI extends ContainerScreen<ElementalCombinatorCont
     private static final ResourceLocation GUI = new ResourceLocation(ElementalAmulets.MOD_ID, "textures/gui/elemental_separator_redesign.png");
     public ElementalCrafterGUI(ElementalCombinatorContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
-        this.playerInventoryTitleX += 97;
-        this.titleX += 102;
+        this.playerInventoryTitleX += 92;
+        this.titleX = this.guiLeft+85;
+        this.titleY = this.guiTop+8;
     }
 
     @Override

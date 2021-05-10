@@ -9,15 +9,13 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -27,7 +25,6 @@ import javax.annotation.Nullable;
 
 @SuppressWarnings("deprecation")
 public class ElementalCombinator extends Block {
-    public static final BooleanProperty ENABLED = BlockStateProperties.ENABLED;
     public ElementalCombinator(Properties properties) {
         super(properties);
     }
@@ -45,7 +42,7 @@ public class ElementalCombinator extends Block {
 
                     @Override
                     public ITextComponent getDisplayName() {
-                        return new StringTextComponent("Combine!");
+                        return new TranslationTextComponent("block.elementalamulets.elemental_combinator.guititle");
                     }
 
                     @Nullable

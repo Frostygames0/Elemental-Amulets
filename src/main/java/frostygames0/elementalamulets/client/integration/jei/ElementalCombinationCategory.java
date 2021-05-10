@@ -3,7 +3,7 @@ package frostygames0.elementalamulets.client.integration.jei;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.core.init.ModItems;
-import frostygames0.elementalamulets.recipes.ElementalSeparation;
+import frostygames0.elementalamulets.recipes.ElementalCombination;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -18,7 +18,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 
-public class ElementalCombinationCategory implements IRecipeCategory<ElementalSeparation> {
+public class ElementalCombinationCategory implements IRecipeCategory<ElementalCombination> {
     private static final int OUTPUT_SLOT = 0;
     private static final int ELEMENTAL_SLOT = 1;
 
@@ -29,7 +29,7 @@ public class ElementalCombinationCategory implements IRecipeCategory<ElementalSe
 
     public ElementalCombinationCategory(IGuiHelper helper) {
         this.background = helper.drawableBuilder(new ResourceLocation(ElementalAmulets.MOD_ID, "textures/gui/jei/elemental_separation.png"), 0, 0, 147, 70)
-        .addPadding(0, 1, 0, 0).build();
+        .addPadding(0, 10, 0, 0).build();
         this.icon = helper.createDrawableIngredient(new ItemStack(ModItems.ELEMENTAL_CRAFTER_BLOCK.get()));
         this.localizedName = new TranslationTextComponent("jei.elementalamulets.elemental_separation");
 
@@ -40,8 +40,8 @@ public class ElementalCombinationCategory implements IRecipeCategory<ElementalSe
     }
 
     @Override
-    public Class<? extends ElementalSeparation> getRecipeClass() {
-        return ElementalSeparation.class;
+    public Class<? extends ElementalCombination> getRecipeClass() {
+        return ElementalCombination.class;
     }
 
     @Override
@@ -65,13 +65,13 @@ public class ElementalCombinationCategory implements IRecipeCategory<ElementalSe
     }
 
     @Override
-    public void setIngredients(ElementalSeparation recipe, IIngredients ingredients) {
+    public void setIngredients(ElementalCombination recipe, IIngredients ingredients) {
         ingredients.setInputIngredients(recipe.getIngredients());
         ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
     }
 
     @Override
-    public void setRecipe(IRecipeLayout recipeLayout, ElementalSeparation recipe, IIngredients ingredients) {
+    public void setRecipe(IRecipeLayout recipeLayout, ElementalCombination recipe, IIngredients ingredients) {
         IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
         // Elemental Slot
         guiItemStacks.init(ELEMENTAL_SLOT, true, 26, 26);
@@ -93,10 +93,10 @@ public class ElementalCombinationCategory implements IRecipeCategory<ElementalSe
     }
 
     @Override
-    public void draw(ElementalSeparation recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
+    public void draw(ElementalCombination recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
         matrixStack.push();
         ITextComponent cooldown = new TranslationTextComponent("jei.elementalamulets.cooldown", recipe.getCooldown()/20);
-        Minecraft.getInstance().fontRenderer.drawTextWithShadow(matrixStack, cooldown, 73, 60, TextFormatting.WHITE.getColor());
+        Minecraft.getInstance().fontRenderer.drawTextWithShadow(matrixStack, cooldown, 4, 72, TextFormatting.WHITE.getColor());
         matrixStack.pop();
     }
 

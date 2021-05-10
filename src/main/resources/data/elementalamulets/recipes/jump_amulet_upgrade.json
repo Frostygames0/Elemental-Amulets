@@ -1,0 +1,13 @@
+{
+  "type": "elementalamulets:elemental_combination",
+  "elemental": {"item": "elementalamulets:jump_amulet"},
+  "ingredients": [
+    {"item": "minecraft:netherite_ingot"},
+    {"item": "minecraft:netherite_ingot"},
+    {"item": "minecraft:netherite_ingot"},
+    {"item": "minecraft:netherite_ingot"},
+    {"item": "minecraft:diamond"}
+  ],
+  "tag_transfer": true,
+  "result": {"item":"elementalamulets:jump_amulet_tier2"}
+}

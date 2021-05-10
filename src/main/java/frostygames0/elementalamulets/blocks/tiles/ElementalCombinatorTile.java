@@ -2,22 +2,19 @@ package frostygames0.elementalamulets.blocks.tiles;
 
 import frostygames0.elementalamulets.core.init.ModRecipes;
 import frostygames0.elementalamulets.core.init.ModTiles;
-import frostygames0.elementalamulets.recipes.ElementalSeparation;
+import frostygames0.elementalamulets.recipes.ElementalCombination;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.HopperTileEntity;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
@@ -58,7 +55,7 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
                         LightningBoltEntity lightbolt = new LightningBoltEntity(EntityType.LIGHTNING_BOLT, world);
                         lightbolt.moveForced(Vector3d.copyCenteredHorizontally(this.pos.add(0, 1, 0)));
                         lightbolt.setEffectOnly(true);
-                        ElementalSeparation recipe = this.world.getRecipeManager().getRecipe(ModRecipes.ELEMENTAL_SEPARATION_RECIPE, new RecipeWrapper(handler), this.world).orElse(null);
+                        ElementalCombination recipe = this.world.getRecipeManager().getRecipe(ModRecipes.ELEMENTAL_SEPARATION_RECIPE, new RecipeWrapper(handler), this.world).orElse(null);
                         ItemStack result;
                         if (recipe != null) {
                             result = recipe.getCraftingResult(new RecipeWrapper(handler));
@@ -77,7 +74,7 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
                         }
                     }
                 } else {
-                    player.sendStatusMessage(new TranslationTextComponent("block.elementalamulets.combinator.cooldown", this.cooldown/20).mergeStyle(TextFormatting.RED), true);
+                    player.sendStatusMessage(new TranslationTextComponent("block.elementalamulets.elemental_combinator.cooldown", this.cooldown/20).mergeStyle(TextFormatting.RED), true);
                 }
         }
         return false;

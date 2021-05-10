@@ -2,14 +2,9 @@ package frostygames0.elementalamulets.client.models;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
-import frostygames0.elementalamulets.ElementalAmulets;
-import frostygames0.elementalamulets.items.AmuletItem;
-import frostygames0.elementalamulets.items.interfaces.IAmuletItem;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.Item;
-import net.minecraft.util.ResourceLocation;
 
 public class AmuletModel<T extends LivingEntity> extends EntityModel<T> {
 	private final ModelRenderer amulet;

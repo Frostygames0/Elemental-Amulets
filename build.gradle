@@ -138,16 +138,16 @@ dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.1.0'
 
     // Curios API
-    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.0")
-    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.0:api")
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curios_version}")
+    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curios_version}:api")
 
     //Patchouli API
-    compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-51:api")
-    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-51")
+    compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")
+    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
 
     // Just Enough Items
-    compileOnly fg.deobf("mezz.jei:jei-1.16.5:7.6.4.90:api")
-    runtimeOnly fg.deobf("mezz.jei:jei-1.16.5:7.6.4.90")
+    compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api")
+    runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
 
 }
 

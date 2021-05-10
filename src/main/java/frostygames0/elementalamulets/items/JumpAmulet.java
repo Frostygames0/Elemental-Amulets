@@ -1,14 +1,10 @@
 package frostygames0.elementalamulets.items;
 
-import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.items.interfaces.IJumpItem;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -18,7 +14,6 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class JumpAmulet extends AmuletItem implements IJumpItem {
-    private final ResourceLocation MODEL_TEXTURE = new ResourceLocation(ElementalAmulets.MOD_ID, "textures/entity/jump_amulet_"+this.getTier()+"_model.png");
     public JumpAmulet(Item.Properties properties, int tier) {
         super(properties, tier);
     }

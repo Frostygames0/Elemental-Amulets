@@ -8,7 +8,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.*;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockPos;
@@ -19,9 +18,9 @@ import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
 public class ElementalCombinatorContainer extends Container {
-    private TileEntity tileEntity;
-    private PlayerEntity playerEntity;
-    private IItemHandler playerInventory;
+    private final TileEntity tileEntity;
+    private final PlayerEntity playerEntity;
+    private final IItemHandler playerInventory;
 
     public ElementalCombinatorContainer(int id, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
         super(ModContainers.ELEMENTAL_CRAFTER_CONTAINER.get(), id);
@@ -55,23 +54,26 @@ public class ElementalCombinatorContainer extends Container {
         if(slot != null && slot.getHasStack()) {
             ItemStack itemStack1 = slot.getStack();
             itemStack = itemStack1.copy();
-            if(index == 2) {
-                /*if(!this.mergeItemStack(itemStack1, 3,39, true)) {
-                    return ItemStack.EMPTY;
-                }*/
-            } else {
-                if(itemStack1.getItem() == Items.GOLD_INGOT) {
-                    if(!this.mergeItemStack(itemStack1, 0, 1, false)) {
-                        return ItemStack.EMPTY;
-                    }
-                } else if(index < 30) {
-                    if(!this.mergeItemStack(itemStack1, 30, 39, false)) {
-                        return ItemStack.EMPTY;
-                    }
-                } else if(index < 39 && !this.mergeItemStack(itemStack1, 3, 30, false)) {
+            if(index == 0) {
+                itemStack1.getItem().onCreated(itemStack1,tileEntity.getWorld(), playerIn);
+                if(!this.mergeItemStack(itemStack1, 10, 46, true)) {
                     return ItemStack.EMPTY;
                 }
+                slot.onSlotChange(itemStack1, itemStack);
+            } else if(index >= 10 && index < 46) {
+                if (!this.mergeItemStack(itemStack1, 1, 10, false)) {
+                    if (index < 37) {
+                        if (!this.mergeItemStack(itemStack1, 37, 46, false)) {
+                            return ItemStack.EMPTY;
+                        }
+                    } else if (!this.mergeItemStack(itemStack1, 10, 37, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                }
+            } else if (!this.mergeItemStack(itemStack1, 10, 46, false)) {
+                return ItemStack.EMPTY;
             }
+
             if(itemStack1.isEmpty()) {
                 slot.putStack(ItemStack.EMPTY);
             } else {

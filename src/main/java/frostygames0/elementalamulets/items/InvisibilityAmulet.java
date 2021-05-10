@@ -26,7 +26,7 @@ public class InvisibilityAmulet extends Item implements IAmuletItem, ICurioItem 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
-        tooltip.add(new TranslationTextComponent("item.elementalamulets.invisibility_amulet.tooltip", TextFormatting.GRAY));
+        tooltip.add(new TranslationTextComponent("item.elementalamulets.invisibility_amulet.tooltip").mergeStyle(TextFormatting.GRAY));
     }
 
     @Override

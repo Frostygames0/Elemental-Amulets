@@ -4,8 +4,10 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.client.models.AmuletModel;
+import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.items.AmuletItem;
 import frostygames0.elementalamulets.items.interfaces.IAmuletItem;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -39,11 +41,11 @@ public final class AmuletUtil {
             PlayerEntity player = (PlayerEntity) entity;
             world.playSound(player, player.getPosition(), SoundEvents.BLOCK_RESPAWN_ANCHOR_DEPLETE, SoundCategory.NEUTRAL, 100, 1f);
             player.sendStatusMessage(new TranslationTextComponent("player.elementalamulets.brokenamulet.warn", new TranslationTextComponent(stack.getTranslationKey())), true);
-            /*if(world.isRemote()) {
+            if(world.isRemote()) {
                 if(ModConfig.cached.DISPLAY_TOTEM_LIKE_ANIM_ONBREAK || ignoreConfig) {
                     Minecraft.getInstance().gameRenderer.displayItemActivation(stack);
                 }
-            }*/
+            }
         }
     }
 

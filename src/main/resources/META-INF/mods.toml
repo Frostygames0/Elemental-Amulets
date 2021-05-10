@@ -5,6 +5,8 @@ license="All rights reserved"
     [[mods]]
       modId="elementalamulets"
       version="1.0.0.0"
+      displayURL="https://www.curseforge.com/minecraft/mc-mods/elemental-amulets"
+      updateJSONURL="https://raw.githubusercontent.com/Frostygames0/elemental-amulets/master/update.json"
       displayName="Elemental Amulets"
       authors="Frostygames0"
       description='''
@@ -29,13 +31,9 @@ license="All rights reserved"
         modId="curios"
         mandatory=true
         versionRange="[1.16.5-4.0.5.0,)"
-        ordering="NONE"
-        side="BOTH"
 
       [[dependencies.elementalamulets]]
         modId="patchouli"
         mandatory=false
         versionRange="[1.16.4-51,)"
-        ordering="NONE"
-        side="BOTH"
 
