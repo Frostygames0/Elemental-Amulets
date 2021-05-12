@@ -19,6 +19,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nullable;
@@ -38,20 +39,7 @@ public class ElementalCombinator extends Block {
         if(te instanceof ElementalCombinatorTile) {
             ElementalCombinatorTile elementalCombinatorTile = (ElementalCombinatorTile) te;
             if(!player.isSneaking()) {
-                INamedContainerProvider provider = new INamedContainerProvider() {
-
-                    @Override
-                    public ITextComponent getDisplayName() {
-                        return new TranslationTextComponent("block.elementalamulets.elemental_combinator.guititle");
-                    }
-
-                    @Nullable
-                    @Override
-                    public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_) {
-                        return new ElementalCombinatorContainer(p_createMenu_1_, worldIn, pos, p_createMenu_2_, p_createMenu_3_);
-                    }
-                };
-                NetworkHooks.openGui((ServerPlayerEntity) player, provider, elementalCombinatorTile.getPos());
+                NetworkHooks.openGui((ServerPlayerEntity) player, state.getContainer(worldIn, pos), elementalCombinatorTile.getPos());
             } else {
                 elementalCombinatorTile.combineElemental(player);
             }
@@ -64,6 +52,24 @@ public class ElementalCombinator extends Block {
     @Override
     public PushReaction getPushReaction(BlockState state) {
         return PushReaction.BLOCK;
+    }
+
+    @Nullable
+    @Override
+    public INamedContainerProvider getContainer(BlockState state, World worldIn, BlockPos pos) {
+        return new INamedContainerProvider() {
+
+            @Override
+            public ITextComponent getDisplayName() {
+                return new TranslationTextComponent("block.elementalamulets.elemental_combinator.guititle");
+            }
+
+            @Nullable
+            @Override
+            public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_) {
+                return new ElementalCombinatorContainer(p_createMenu_1_, worldIn, pos, p_createMenu_2_, p_createMenu_3_);
+            }
+        };
     }
 
     @Override

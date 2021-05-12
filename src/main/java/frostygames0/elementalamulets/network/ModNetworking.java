@@ -21,10 +21,15 @@ public class ModNetworking {
                 () -> PROTOCOL_VERSION,
                 PROTOCOL_VERSION::equals,
                 PROTOCOL_VERSION::equals);
+        INSTANCE.messageBuilder(AmuletAnimationPacket.class, nextInt())
+                .encoder(AmuletAnimationPacket::toBytes)
+                .decoder(AmuletAnimationPacket::new)
+                .consumer(AmuletAnimationPacket::handle)
+                .add();
     }
 
     public static void sendToClient(Object packet, ServerPlayerEntity player) {
-        INSTANCE.sendTo(packet, player.connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+        INSTANCE.sendTo(packet, player.connection.getNetworkManager(), NetworkDirection.PLAY_TO_CLIENT);
     }
 
     public static void sendToServer(Object packet) {

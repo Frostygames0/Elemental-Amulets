@@ -3,6 +3,7 @@ package frostygames0.elementalamulets.items;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.items.interfaces.IJumpItem;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
@@ -22,6 +23,16 @@ public class JumpAmulet extends AmuletItem implements IJumpItem {
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
         tooltip.add(new TranslationTextComponent("item.elementalamulets.jump_amulet.tooltip").mergeStyle(TextFormatting.GRAY));
+    }
+
+    @Override
+    public String getTranslationKey() {
+        return "item.elementalamulets.jump_amulet";
+    }
+
+    @Override
+    public void curioBreak(ItemStack stack, LivingEntity livingEntity) {
+        super.curioBreak(stack, livingEntity);
     }
 
     @Override

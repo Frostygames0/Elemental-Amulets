@@ -1,25 +1,19 @@
 {
   "itemGroup.elementalamulets": "Elemental Amulets",
 
-  "item.elementalamulets.guide_book": "Guide for Elemental Jewellers",
+  "item.elementalamulets.guide_book": "Elemental Guide",
   "item.elementalamulets.guide_book.subtitle": "Contains all knowledge about Elemental Amulets",
   "item.elementalamulets.elemental_shards": "Elemental Shards",
 
   "item.elementalamulets.common_amulet.tooltip.tier": "%sTier: ",
 
   "item.elementalamulets.fire_amulet": "Fire amulet",
-  "item.elementalamulets.fire_amulet_tier2": "Fire amulet",
-  "item.elementalamulets.fire_amulet_tier3": "Fire amulet",
-  "item.elementalamulets.fire_amulet_tier4": "Fire amulet",
   "item.elementalamulets.fire_amulet.tooltip": "%sProtects you from%s %1$sfire%1$s",
 
   "item.elementalamulets.speed_amulet": "Speed Amulet",
   "item.elementalamulets.speed_amulet.tooltip": "%sSpeeds up you%s",
 
   "item.elementalamulets.jump_amulet": "Jump-Boost amulet",
-  "item.elementalamulets.jump_amulet_tier2": "Jump-Boost amulet",
-  "item.elementalamulets.jump_amulet_tier3": "Jump-Boost amulet",
-  "item.elementalamulets.jump_amulet_tier4": "Jump-Boost amulet",
   "item.elementalamulets.jump_amulet.tooltip": "%sMakes you%s %1$sjump%1$s %shigher%s",
 
   "item.elementalamulets.invisibility_amulet": "Invisibility Amulet",
@@ -28,13 +22,13 @@
   "block.elementalamulets.elemental_combinator": "Elemental Combinator",
   "block.elementalamulets.elemental_combinator.guititle": "Combination",
   "block.elementalamulets.elemental_combinator.cooldown": "Combinator is recharging! %ss left",
-  "block.elementalamulets.elemental_stone": "Elemental Stone",
+  "block.elementalamulets.elemental_ore": "Elemental Ore",
 
   "player.elementalamulets.brokenamulet.warn": "Your %s just got broken!",
 
   "jei.elementalamulets.cooldown": "Cooldown - %ss",
   "jei.elementalamulets.elemental_separation": "Elemental Combination",
-
-
-  "entity.minecraft.villager.elementalamulets.jeweller": "Jeweller [PLACEHOLDER]"
+  "jei.elementalamulets.amulets.description": "Amulets - are magical jewels that grant you a variety of powers.\n More about them you can read in Elemental Guide",
+  "jei.elementalamulets.guide_book.description": "A book with all information about this mod, to access it you need Patchouli!",
+  "jei.elementalamulets.elemental_combinator.description": "Allows you to combine things and get unique and powerful items!\n More about it you can read in Elemental Guide"
 }

@@ -1,5 +1,6 @@
 package frostygames0.elementalamulets.blocks.containers.slot;
 
+import net.minecraft.inventory.container.CraftingResultSlot;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 

@@ -2,6 +2,7 @@ package frostygames0.elementalamulets.blocks.containers;
 
 import frostygames0.elementalamulets.blocks.containers.slot.ElementalOnlySlot;
 import frostygames0.elementalamulets.blocks.containers.slot.ResultSlot;
+import frostygames0.elementalamulets.blocks.tiles.ElementalCombinatorTile;
 import frostygames0.elementalamulets.core.init.ModBlocks;
 import frostygames0.elementalamulets.core.init.ModContainers;
 import net.minecraft.entity.player.PlayerEntity;
@@ -10,6 +11,7 @@ import net.minecraft.inventory.container.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IWorldPosCallable;
+import net.minecraft.util.IntReferenceHolder;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -23,7 +25,7 @@ public class ElementalCombinatorContainer extends Container {
     private final IItemHandler playerInventory;
 
     public ElementalCombinatorContainer(int id, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
-        super(ModContainers.ELEMENTAL_CRAFTER_CONTAINER.get(), id);
+        super(ModContainers.ELEMENTAL_COMBINATOR_CONTAINER.get(), id);
         tileEntity = world.getTileEntity(pos);
         this.playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);
@@ -55,7 +57,6 @@ public class ElementalCombinatorContainer extends Container {
             ItemStack itemStack1 = slot.getStack();
             itemStack = itemStack1.copy();
             if(index == 0) {
-                itemStack1.getItem().onCreated(itemStack1,tileEntity.getWorld(), playerIn);
                 if(!this.mergeItemStack(itemStack1, 10, 46, true)) {
                     return ItemStack.EMPTY;
                 }
@@ -89,7 +90,7 @@ public class ElementalCombinatorContainer extends Container {
 
     @Override
     public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, ModBlocks.ELEMENTAL_CRAFTER.get());
+        return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, ModBlocks.ELEMENTAL_COMBINATOR.get());
     }
 
     private int addSlotRange(IItemHandler handler, int index, int x, int y, int amount, int dx) {

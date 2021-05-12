@@ -19,7 +19,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class GuideBook extends Item {
-    public static final ResourceLocation PATCHOULI_BOOK_ID = new ResourceLocation(ElementalAmulets.MOD_ID, "guidebook");
+    public static final ResourceLocation BOOK_ID = new ResourceLocation(ElementalAmulets.MOD_ID, "guidebook");
 
     public GuideBook(Properties properties) {
         super(properties);
@@ -33,9 +33,9 @@ public class GuideBook extends Item {
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        if(!worldIn.isRemote() && playerIn instanceof ServerPlayerEntity) {
+        if(!worldIn.isRemote()) {
             if(ModList.get().isLoaded("patchouli")) {
-                PatchouliAPI.get().openBookGUI((ServerPlayerEntity) playerIn, PATCHOULI_BOOK_ID);
+                PatchouliAPI.get().openBookGUI((ServerPlayerEntity) playerIn, BOOK_ID);
                 return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
             } else {
                 playerIn.sendStatusMessage(new StringTextComponent("Patchouli is not detected! Please install it in order to get access to the guide").mergeStyle(TextFormatting.RED), true);
@@ -44,4 +44,5 @@ public class GuideBook extends Item {
         }
         return ActionResult.resultConsume(playerIn.getHeldItem(handIn));
     }
+
 }

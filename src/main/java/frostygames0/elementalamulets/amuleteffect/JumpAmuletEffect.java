@@ -1,6 +1,6 @@
 package frostygames0.elementalamulets.amuleteffect;
 
-import frostygames0.elementalamulets.items.interfaces.IAmuletItem;
+import frostygames0.elementalamulets.items.AmuletItem;
 import frostygames0.elementalamulets.items.interfaces.IJumpItem;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
@@ -146,8 +146,8 @@ public class JumpAmuletEffect {
                     ItemStack stack = triple.getRight();
                     IJumpItem item = (IJumpItem) stack.getItem();
                     livingEntity.setMotion(livingEntity.getMotion().add(0, item.getJump(), 0));
-                    if (item instanceof IAmuletItem) {
-                        IAmuletItem amulet1 = (IAmuletItem) item;
+                    if (item instanceof AmuletItem) {
+                        AmuletItem amulet1 = (AmuletItem) item;
                         stack.damageItem(amulet1.getDamageOnUse(), livingEntity, ent -> CuriosApi.getCuriosHelper().onBrokenCurio(triple.getLeft(), triple.getMiddle(), ent));
                     }
                 });

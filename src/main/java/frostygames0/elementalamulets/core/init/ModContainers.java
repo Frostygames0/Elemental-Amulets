@@ -13,7 +13,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ModContainers {
     public static final DeferredRegister<ContainerType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, ElementalAmulets.MOD_ID);
 
-    public static final RegistryObject<ContainerType<ElementalCombinatorContainer>> ELEMENTAL_CRAFTER_CONTAINER = CONTAINERS.register("elemental_combinator", () -> IForgeContainerType.create(
+    public static final RegistryObject<ContainerType<ElementalCombinatorContainer>> ELEMENTAL_COMBINATOR_CONTAINER = CONTAINERS.register("elemental_combinator", () -> IForgeContainerType.create(
             ((windowId, inv, data) -> {
                 BlockPos pos = data.readBlockPos();
                 World world = inv.player.getEntityWorld();

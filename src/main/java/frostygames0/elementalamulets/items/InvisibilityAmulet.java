@@ -1,10 +1,8 @@
 package frostygames0.elementalamulets.items;
 
 import frostygames0.elementalamulets.config.ModConfig;
-import frostygames0.elementalamulets.items.interfaces.IAmuletItem;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.text.ITextComponent;
@@ -13,12 +11,11 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
-import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class InvisibilityAmulet extends Item implements IAmuletItem, ICurioItem {
+public class InvisibilityAmulet extends AmuletItem {
     public InvisibilityAmulet(Properties properties) {
         super(properties);
     }

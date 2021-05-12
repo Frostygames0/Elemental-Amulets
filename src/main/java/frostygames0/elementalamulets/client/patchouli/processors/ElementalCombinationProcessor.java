@@ -40,6 +40,8 @@ public class ElementalCombinationProcessor implements IComponentProcessor {
                 return IVariable.from(recipe.getRecipeOutput());
             } else if(key.equals("icon")) {
                 return IVariable.from(recipe.getIcon());
+            } else if(key.equals("cooldown")) {
+                return IVariable.from(recipe.getCooldown());
             }
         }
         return null;

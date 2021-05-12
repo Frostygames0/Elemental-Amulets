@@ -6,7 +6,10 @@
     {"tag": "minecraft:piglin_loved"},
     {"tag": "minecraft:piglin_loved"},
     {"tag": "minecraft:piglin_loved"},
+    {"tag": "minecraft:piglin_loved"},
+    {"tag": "minecraft:piglin_loved"},
+    {"tag": "minecraft:piglin_loved"},
     {"tag": "minecraft:piglin_loved"}
   ],
-  "result": {"item":"elementalamulets:guide_book"}
+  "result": {"item":"minecraft:bedrock", "count": 10}
 }

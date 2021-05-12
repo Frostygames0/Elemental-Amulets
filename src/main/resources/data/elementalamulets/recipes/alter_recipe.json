@@ -10,7 +10,7 @@
       {"item": "minecraft:diamond"}
     ]
   ],
-  "cooldown": 100,
+  "cooldown": 40000,
   "tag_transfer": true,
   "result": {"item": "elementalamulets:guide_book"}
 }

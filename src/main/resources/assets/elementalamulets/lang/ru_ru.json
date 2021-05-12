@@ -1,25 +1,19 @@
 {
   "itemGroup.elementalamulets": "Elemental Amulets",
 
-  "item.elementalamulets.guide_book": "Руководство для Элементальных Ювелиров",
+  "item.elementalamulets.guide_book": "Элементальный руководство",
   "item.elementalamulets.guide_book.subtitle": "Содержит в себе все знания о элементальныъ амулетов",
   "item.elementalamulets.elemental_shards": "Элементальные осколки",
 
   "item.elementalamulets.common_amulet.tooltip.tier": "%sУровень: ",
 
-  "item.elementalamulets.fire_amulet": "Огненный амулет",
-  "item.elementalamulets.fire_amulet_tier2": "Огненный амулет",
-  "item.elementalamulets.fire_amulet_tier3": "Огненный амулет",
-  "item.elementalamulets.fire_amulet_tier4": "Огненный амулет",
+  "item.elementalamulets.fire_amulet": "Амулет огня",
   "item.elementalamulets.fire_amulet.tooltip": "%sЗащищает от%s %1$sогня%1$s",
 
   "item.elementalamulets.speed_amulet": "Амулет скорости",
-  "item.elementalamulets.speed_amulet.tooltip": "%sSpeeds up you%s",
+  "item.elementalamulets.speed_amulet.tooltip": "%sУскоряет вас%s",
 
   "item.elementalamulets.jump_amulet": "Амулет прыгучести",
-  "item.elementalamulets.jump_amulet_tier2": "Амулет прыгучести",
-  "item.elementalamulets.jump_amulet_tier3": "Амулет прыгучести",
-  "item.elementalamulets.jump_amulet_tier4": "Амулет прыгучести",
   "item.elementalamulets.jump_amulet.tooltip": "%sПозволяет%s %1$sпрыгать%1$s %sвысоко%s",
 
   "item.elementalamulets.invisibility_amulet": "Амулет невидимости",
@@ -28,12 +22,13 @@
   "block.elementalamulets.elemental_combinator": "Элементальный комбинатор",
   "block.elementalamulets.elemental_combinator.guititle": "Объединение",
   "block.elementalamulets.elemental_combinator.cooldown": "Комбинатор перезаряжается! %s сек. осталось",
-  "block.elementalamulets.elemental_stone": "Elemental Stone",
+  "block.elementalamulets.elemental_ore": "Элементальный руда",
 
   "player.elementalamulets.brokenamulet.warn": "Ваш %s был сломан!",
 
   "jei.elementalamulets.cooldown": "Перезарядка - %s сек",
   "jei.elementalamulets.elemental_separation": "Элементальное комбинирование",
-
-  "entity.minecraft.villager.elementalamulets.jeweller": "Jeweller [PLACEHOLDER]"
+  "jei.elementalamulets.amulets.description": "Амулеты - это магические украшения, которые дают вам разнообразные способности\n Побольше о них вы может почитать в Элементальном Руководстве",
+  "jei.elementalamulets.guide_book.description": "Книга с информацией об этом моде, чтобы иметь доступ к ней вам нужен Patchouli!",
+  "jei.elementalamulets.elemental_combinator.description": "Позволяет комбинровать(Объединять) раличные штуки, чтобы получать еще круче штуки!\n Побольше о них вы может почитать в Элементальном Руководстве"
 }

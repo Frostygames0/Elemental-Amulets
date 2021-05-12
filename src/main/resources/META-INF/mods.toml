@@ -7,6 +7,7 @@ license="All rights reserved"
       version="1.0.0.0"
       displayURL="https://www.curseforge.com/minecraft/mc-mods/elemental-amulets"
       updateJSONURL="https://raw.githubusercontent.com/Frostygames0/elemental-amulets/master/update.json"
+      logoFile="logo.png"
       displayName="Elemental Amulets"
       authors="Frostygames0"
       description='''

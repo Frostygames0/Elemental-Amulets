@@ -26,6 +26,12 @@ public class FireAmulet extends AmuletItem implements IFireItem {
     }
 
     @Override
+    public String getTranslationKey() {
+        return "item.elementalamulets.fire_amulet";
+    }
+
+
+    @Override
     public int getDamageOnUse() {
         return ModConfig.cached.FIRE_AMULET_USAGE_DMG*getTier();
     }

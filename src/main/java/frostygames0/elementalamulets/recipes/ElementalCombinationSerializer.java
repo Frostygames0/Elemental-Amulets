@@ -36,6 +36,11 @@ public class ElementalCombinationSerializer<T extends ElementalCombination> exte
         }
     }
 
+    /**
+     * Reads JsonArray and deserializes each element of it
+     * @param jsonArray that is made out of ingredients
+     * @return NonNullList made out of ingredients
+     */
     private static NonNullList<Ingredient> readIngredients(JsonArray jsonArray) {
             NonNullList<Ingredient> nonnulllist = NonNullList.create();
             for(int i = 0; i < jsonArray.size(); ++i) {

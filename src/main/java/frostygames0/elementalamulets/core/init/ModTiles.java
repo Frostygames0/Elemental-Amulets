@@ -10,6 +10,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ModTiles {
     public static final DeferredRegister<TileEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, ElementalAmulets.MOD_ID);
 
-    public static final RegistryObject<TileEntityType<ElementalCombinatorTile>> ELEMENTAL_CRAFTER_TILE = TILES.register("elemental_combinator",
-            () -> TileEntityType.Builder.create(ElementalCombinatorTile::new, ModBlocks.ELEMENTAL_CRAFTER.get()).build(null));
+    public static final RegistryObject<TileEntityType<ElementalCombinatorTile>> ELEMENTAL_COMBINATOR_TILE = TILES.register("elemental_combinator",
+            () -> TileEntityType.Builder.create(ElementalCombinatorTile::new, ModBlocks.ELEMENTAL_COMBINATOR.get()).build(null));
 }

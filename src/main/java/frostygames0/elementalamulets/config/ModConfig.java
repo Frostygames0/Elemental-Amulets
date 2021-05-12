@@ -1,10 +1,16 @@
 package frostygames0.elementalamulets.config;
 
 import frostygames0.elementalamulets.ElementalAmulets;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.apache.commons.lang3.tuple.Pair;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModConfig {
@@ -35,6 +41,7 @@ public class ModConfig {
                     .defineInRange("jump_amulet_usage_dmg", 5, 0, 1000);
             INVISIBILITY_AMULET_USAGE_DMG = builder.comment("Defines damage that invisibility amulet will receive on it's usage [WARNING! Setting this too high can cause unexpected behaviour!]")
                     .defineInRange("invisibility_amulet_usage_dmg", 1, 0, 1000);
+
             builder.pop();
 
         }

@@ -2,11 +2,12 @@ package frostygames0.elementalamulets;
 
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.core.init.*;
-import frostygames0.elementalamulets.items.interfaces.IAmuletItem;
+import frostygames0.elementalamulets.items.AmuletItem;
 import frostygames0.elementalamulets.network.ModNetworking;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.*;
 import net.minecraftforge.fml.common.Mod;
@@ -28,6 +29,7 @@ public class ElementalAmulets {
 
     public ElementalAmulets() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus(); // Only for mod specific events
+        IEventBus forgeBus = MinecraftForge.EVENT_BUS;
 
         ModItems.ITEMS.register(bus);
         ModBlocks.BLOCKS.register(bus);
@@ -52,7 +54,7 @@ public class ElementalAmulets {
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {
-        event.enqueueWork(() -> ModItems.ITEMS.getEntries().stream().map(RegistryObject::get).filter(item -> item instanceof IAmuletItem).forEach(item -> {
+        event.enqueueWork(() -> ModItems.ITEMS.getEntries().stream().map(RegistryObject::get).filter(item -> item instanceof AmuletItem).forEach(item -> {
             ItemModelsProperties.registerProperty(item, new ResourceLocation(ElementalAmulets.MOD_ID, "amulet_durability"), (stack, world, living) -> {
                 if (stack.getDamage() <= 200) return 0.0f;
                 else if (stack.getDamage() <= 400) return 0.4f;

@@ -32,7 +32,6 @@ public class ElementalCombination implements IRecipe<IInventory> {
         this.cooldown = cooldown;
         this.tagTransfer = tagTransfer;
     }
-
     @Override
     public boolean matches(IInventory inv, World worldIn) {
         List<ItemStack> inputs = new ArrayList<>();
@@ -41,11 +40,11 @@ public class ElementalCombination implements IRecipe<IInventory> {
             ItemStack stack = inv.getStackInSlot(i);
             if(!stack.isEmpty()) {
                 inputs.add(stack);
-                ++size;
+                size++;
             }
 
         }
-        return elemental.test(inv.getStackInSlot(1)) && size == this.ingredients.size() && RecipeMatcher.findMatches(inputs, ingredients) != null;
+        return elemental.test(inv.getStackInSlot(1)) && RecipeMatcher.findMatches(inputs, ingredients) != null;
     }
 
     @Override
@@ -60,7 +59,7 @@ public class ElementalCombination implements IRecipe<IInventory> {
 
     @Override
     public boolean canFit(int width, int height) {
-        return width*height >= this.ingredients.size();
+        return true;
     }
 
     @Override
@@ -106,7 +105,7 @@ public class ElementalCombination implements IRecipe<IInventory> {
 
     @Override
     public ItemStack getIcon() {
-        return new ItemStack(ModBlocks.ELEMENTAL_CRAFTER.get());
+        return new ItemStack(ModBlocks.ELEMENTAL_COMBINATOR.get());
     }
 
     @Override

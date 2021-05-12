@@ -19,8 +19,8 @@ public class ModItems {
     public static final RegistryObject<Item> ELEMENTAL_SHARDS = ITEMS.register("elemental_shards",
             () -> new Item(new Item.Properties().group(ElementalAmulets.GROUP)));
     // Mod BlockItems
-    public static final RegistryObject<BlockItem> ELEMENTAL_CRAFTER_BLOCK = ITEMS.register("elemental_combinator",
-            () -> new BlockItem(ModBlocks.ELEMENTAL_CRAFTER.get(), new Item.Properties().group(ElementalAmulets.GROUP)));
+    public static final RegistryObject<BlockItem> ELEMENTAL_COMBINATOR_BLOCK = ITEMS.register("elemental_combinator",
+            () -> new BlockItem(ModBlocks.ELEMENTAL_COMBINATOR.get(), new Item.Properties().group(ElementalAmulets.GROUP)));
     public static final RegistryObject<BlockItem> ELEMENTAL_STONE = ITEMS.register("elemental_stone",
             () -> new BlockItem(ModBlocks.ELEMENTAL_STONE.get(), new Item.Properties().group(ElementalAmulets.GROUP)));
     // Fire amulet and it's tiers

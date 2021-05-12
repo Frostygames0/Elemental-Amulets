@@ -19,6 +19,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.minecraftforge.items.*;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
@@ -31,7 +32,7 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
     private int cooldown;
 
     public ElementalCombinatorTile() {
-        super(ModTiles.ELEMENTAL_CRAFTER_TILE.get());
+        super(ModTiles.ELEMENTAL_COMBINATOR_TILE.get());
     }
 
     @Override

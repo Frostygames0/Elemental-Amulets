@@ -4,7 +4,7 @@
   "ingredients": [
     {"item": "minecraft:diamond"},
     {"item": "minecraft:stick"},
-    {"item": "minecraft:grass_block"},
+    {"item": "minecraft:water_bucket"},
     {"item": "minecraft:gold_ingot"},
     {"item": "minecraft:iron_ingot"},
     {"item": "minecraft:apple"}

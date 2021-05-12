@@ -34,6 +34,12 @@ public class SpeedAmulet extends AmuletItem implements ISpeedItem {
     }
 
     @Override
+    public String getTranslationKey() {
+        return "item.elementalamulets.speed_amulet";
+    }
+
+
+    @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid, ItemStack stack) {
         Multimap<Attribute, AttributeModifier> map = LinkedHashMultimap.create();
         map.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(uuid, ElementalAmulets.MOD_ID + ":speed_bonus", speedFactor*getTier(), AttributeModifier.Operation.MULTIPLY_TOTAL));

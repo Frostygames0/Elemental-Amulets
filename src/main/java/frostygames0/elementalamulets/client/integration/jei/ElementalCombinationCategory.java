@@ -30,7 +30,7 @@ public class ElementalCombinationCategory implements IRecipeCategory<ElementalCo
     public ElementalCombinationCategory(IGuiHelper helper) {
         this.background = helper.drawableBuilder(new ResourceLocation(ElementalAmulets.MOD_ID, "textures/gui/jei/elemental_separation.png"), 0, 0, 147, 70)
         .addPadding(0, 10, 0, 0).build();
-        this.icon = helper.createDrawableIngredient(new ItemStack(ModItems.ELEMENTAL_CRAFTER_BLOCK.get()));
+        this.icon = helper.createDrawableIngredient(new ItemStack(ModItems.ELEMENTAL_COMBINATOR_BLOCK.get()));
         this.localizedName = new TranslationTextComponent("jei.elementalamulets.elemental_separation");
 
     }

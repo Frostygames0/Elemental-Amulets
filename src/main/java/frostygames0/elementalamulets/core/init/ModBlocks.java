@@ -25,9 +25,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ElementalAmulets.MOD_ID);
 
-    public static final RegistryObject<Block> ELEMENTAL_CRAFTER = BLOCKS.register("elemental_combinator",
+    public static final RegistryObject<Block> ELEMENTAL_COMBINATOR = BLOCKS.register("elemental_combinator",
             () -> new ElementalCombinator(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(3.5f).sound(SoundType.STONE).setRequiresTool().harvestTool(ToolType.PICKAXE).harvestLevel(0).setLightLevel(s -> 5)));
-    public static final RegistryObject<Block> ELEMENTAL_STONE = BLOCKS.register("elemental_stone",
+    public static final RegistryObject<Block> ELEMENTAL_STONE = BLOCKS.register("elemental_ore",
             () -> new Block(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(5f).sound(SoundType.STONE).setRequiresTool().harvestTool(ToolType.PICKAXE).harvestLevel(1)));
 
     @SubscribeEvent
