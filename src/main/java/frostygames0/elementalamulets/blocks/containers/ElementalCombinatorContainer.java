@@ -1,8 +1,5 @@
 package frostygames0.elementalamulets.blocks.containers;
 
-import frostygames0.elementalamulets.blocks.containers.slot.ElementalOnlySlot;
-import frostygames0.elementalamulets.blocks.containers.slot.ResultSlot;
-import frostygames0.elementalamulets.blocks.tiles.ElementalCombinatorTile;
 import frostygames0.elementalamulets.core.init.ModBlocks;
 import frostygames0.elementalamulets.core.init.ModContainers;
 import net.minecraft.entity.player.PlayerEntity;
@@ -11,7 +8,6 @@ import net.minecraft.inventory.container.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.IntReferenceHolder;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -31,9 +27,9 @@ public class ElementalCombinatorContainer extends Container {
         this.playerInventory = new InvWrapper(playerInventory);
         if (tileEntity != null) {
             tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-                addSlot(new ResultSlot(h, 0, 134, 34)); // Output slot
+                addSlot(new SlotItemHandler(h, 0, 134, 34)); // Output slot
 
-                addSlot(new ElementalOnlySlot(h, 1, 35, 34)); // Elemental Slot
+                addSlot(new SlotItemHandler(h, 1, 35, 34)); // Elemental Slot
 
                 addSlot(new SlotItemHandler(h, 2, 35, 10)); // Other slots
                 addSlot(new SlotItemHandler(h, 3, 55, 14));

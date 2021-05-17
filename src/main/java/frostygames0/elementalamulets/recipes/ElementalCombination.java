@@ -44,7 +44,7 @@ public class ElementalCombination implements IRecipe<IInventory> {
             }
 
         }
-        return elemental.test(inv.getStackInSlot(1)) && RecipeMatcher.findMatches(inputs, ingredients) != null;
+        return size == ingredients.size() && this.elemental.test(inv.getStackInSlot(1)) && RecipeMatcher.findMatches(inputs, ingredients) != null; // I don't know exactly if this is correct way but it works fine
     }
 
     @Override
@@ -52,7 +52,9 @@ public class ElementalCombination implements IRecipe<IInventory> {
         ItemStack stack = this.result.copy();
         if(this.tagTransfer) {
             CompoundNBT nbt = inv.getStackInSlot(1).getTag();
-            if(nbt != null) stack.setTag(nbt);
+            if(nbt != null) {
+                stack.setTag(nbt);
+            }
         }
         return stack;
     }
@@ -63,13 +65,18 @@ public class ElementalCombination implements IRecipe<IInventory> {
     }
 
     @Override
+    public boolean isDynamic() {
+        return true;
+    }
+
+    @Override
     public ItemStack getRecipeOutput() {
         return this.result;
     }
 
     /**
-     * Returns list of ingredients+elemental
-     * @return NonNullList of ingredients+elemental
+     * Returns list of all ingredients (elemental+ingredients)
+     * @return NonNullList of elemental+ingredients
      */
     @Override
     public NonNullList<Ingredient> getIngredients() {
@@ -95,10 +102,18 @@ public class ElementalCombination implements IRecipe<IInventory> {
         return this.ingredients;
     }
 
+    /**
+     * Returns cooldown
+     * @return int cooldown
+     */
     public int getCooldown() {
         return this.cooldown;
     }
 
+    /**
+     * Can tag be transferred?
+     * @return boolean tagTransfer
+     */
     public boolean isTagTransferred() {
         return this.tagTransfer;
     }

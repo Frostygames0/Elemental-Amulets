@@ -1,5 +1,6 @@
 package frostygames0.elementalamulets.blocks.tiles;
 
+import frostygames0.elementalamulets.capability.AutomationItemHandler;
 import frostygames0.elementalamulets.core.init.ModRecipes;
 import frostygames0.elementalamulets.core.init.ModTiles;
 import frostygames0.elementalamulets.recipes.ElementalCombination;
@@ -19,7 +20,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.minecraftforge.items.*;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 

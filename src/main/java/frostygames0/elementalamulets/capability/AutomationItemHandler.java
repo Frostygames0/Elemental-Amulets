@@ -1,4 +1,4 @@
-package frostygames0.elementalamulets.blocks.tiles;
+package frostygames0.elementalamulets.capability;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandlerModifiable;

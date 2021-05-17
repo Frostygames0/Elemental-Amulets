@@ -25,7 +25,7 @@ public class ElementalCombinationCategory implements IRecipeCategory<ElementalCo
     public static final ResourceLocation CATEGORY_ID = new ResourceLocation(ElementalAmulets.MOD_ID, "elemental_combination_category");
     private final IDrawable background;
     private final IDrawable icon;
-    private ITextComponent localizedName;
+    private final ITextComponent localizedName;
 
     public ElementalCombinationCategory(IGuiHelper helper) {
         this.background = helper.drawableBuilder(new ResourceLocation(ElementalAmulets.MOD_ID, "textures/gui/jei/elemental_separation.png"), 0, 0, 147, 70)

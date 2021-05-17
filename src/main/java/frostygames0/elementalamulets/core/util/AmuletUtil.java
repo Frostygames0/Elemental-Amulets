@@ -4,7 +4,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.client.models.AmuletModel;
-import frostygames0.elementalamulets.items.AmuletItem;
+import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -19,6 +19,12 @@ import top.theillusivec4.curios.api.type.capability.ICurio;
 
 import java.util.List;
 
+// TODO remove
+/**
+ * Utility class for amulets
+ * @deprecated Since they were used only once in {@link AmuletItem} I just moved them into them in to that class
+ */
+@Deprecated
 public final class AmuletUtil {
     private AmuletUtil() {}
 
@@ -26,7 +32,9 @@ public final class AmuletUtil {
      * Use it to add cool tooltip about tier :)
      * @param item amulet
      * @param tooltip tooltip
+     * @deprecated
      */
+    @Deprecated
     public static void getFormattedTierTooltip(AmuletItem item, List<ITextComponent> tooltip) {
         if(item.getTier() > 0) {
             tooltip.add(new TranslationTextComponent("item.elementalamulets.common_amulet.tooltip.tier").mergeStyle(TextFormatting.GOLD)
@@ -37,6 +45,7 @@ public final class AmuletUtil {
     /**
      * Use to render amulet where you need it
      */
+    @Deprecated
     public static void renderAmuletOnEntity(String identifier, int index, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int light, LivingEntity livingEntity,
                                             float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw,
                                             float headPitch, ItemStack stack, ResourceLocation resloc) {
@@ -53,6 +62,7 @@ public final class AmuletUtil {
      * @param item aboba
      * @return ResourceLocation
      */
+    @Deprecated
     public static ResourceLocation getTextureBasedOnTier(AmuletItem item) {
         return new ResourceLocation(ElementalAmulets.MOD_ID, "textures/entity/amulets/tier_"+item.getTier()+"/"+item.getRegistryName().getPath()+"_model.png");
     }

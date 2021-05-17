@@ -1,4 +1,4 @@
-package frostygames0.elementalamulets.items.interfaces;
+package frostygames0.elementalamulets.items.amulets.interfaces;
 
 //For all amulets that somehow alter player's speed
 public interface ISpeedItem {

@@ -1,10 +1,11 @@
-package frostygames0.elementalamulets.items;
+package frostygames0.elementalamulets.items.amulets;
 
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.config.ModConfig;
-import frostygames0.elementalamulets.items.interfaces.ISpeedItem;
+import frostygames0.elementalamulets.items.amulets.AmuletItem;
+import frostygames0.elementalamulets.items.amulets.interfaces.ISpeedItem;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;

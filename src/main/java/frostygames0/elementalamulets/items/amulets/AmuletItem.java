@@ -1,4 +1,4 @@
-package frostygames0.elementalamulets.items;
+package frostygames0.elementalamulets.items.amulets;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
@@ -13,11 +13,12 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.item.TippedArrowItem;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.potion.Potion;
+import net.minecraft.util.*;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -32,6 +33,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public abstract class AmuletItem extends Item implements ICurioItem {
+    public static final String TIER_TAG = (ElementalAmulets.MOD_ID+":tier");
     private final int tier;
     public AmuletItem(Properties properties, int tier) {
         super(properties);
@@ -100,4 +102,5 @@ public abstract class AmuletItem extends Item implements ICurioItem {
     public int getTier() {
         return tier;
     }
+
 }

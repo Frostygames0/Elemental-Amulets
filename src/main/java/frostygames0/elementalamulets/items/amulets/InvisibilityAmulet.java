@@ -1,6 +1,7 @@
-package frostygames0.elementalamulets.items;
+package frostygames0.elementalamulets.items.amulets;
 
 import frostygames0.elementalamulets.config.ModConfig;
+import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;

@@ -1,12 +1,11 @@
 package frostygames0.elementalamulets;
 
+import frostygames0.elementalamulets.client.screens.ElementalCrafterGUI;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.core.init.*;
-import frostygames0.elementalamulets.items.AmuletItem;
 import frostygames0.elementalamulets.network.ModNetworking;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemModelsProperties;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.*;
@@ -36,6 +35,7 @@ public class ElementalAmulets {
         ModTiles.TILES.register(bus);
         ModContainers.CONTAINERS.register(bus);
         ModRecipes.SERIALIZERS.register(bus);
+        ModVillagers.register(bus);
 
         ModLoadingContext.get().registerConfig(net.minecraftforge.fml.config.ModConfig.Type.SERVER, ModConfig.SERVER_SPEC);
         ModLoadingContext.get().registerConfig(net.minecraftforge.fml.config.ModConfig.Type.CLIENT, ModConfig.CLIENT_SPEC);
@@ -50,18 +50,11 @@ public class ElementalAmulets {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
+        ModVillagers.Structures.init();
         event.enqueueWork(ModNetworking::registerMessages);
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {
-        event.enqueueWork(() -> ModItems.ITEMS.getEntries().stream().map(RegistryObject::get).filter(item -> item instanceof AmuletItem).forEach(item -> {
-            ItemModelsProperties.registerProperty(item, new ResourceLocation(ElementalAmulets.MOD_ID, "amulet_durability"), (stack, world, living) -> {
-                if (stack.getDamage() <= 200) return 0.0f;
-                else if (stack.getDamage() <= 400) return 0.4f;
-                else if (stack.getDamage() <= 600) return 0.6f;
-                else if (stack.getDamage() <= 800) return 0.8f;
-                else return 1.0f;
-            });
-        }));
+        ScreenManager.registerFactory(ModContainers.ELEMENTAL_COMBINATOR_CONTAINER.get(), ElementalCrafterGUI::new);
     }
 }

@@ -1,9 +1,6 @@
 {
   "type": "elementalamulets:elemental_combination",
-  "elemental": [
-    {"item":"minecraft:book"},
-    {"item": "minecraft:writable_book"}
-  ],
+  "elemental": {"item":"minecraft:book"},
   "ingredients": [
     [
       {"item": "elementalamulets:elemental_shards"},

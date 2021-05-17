@@ -5,14 +5,15 @@ import frostygames0.elementalamulets.config.ModConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.registry.Registry;
 import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
 /**
- * This packet is meant to be
+ * This packet is meant to be used for displaying amulet totem like animation
+ * but since all ICurio items have curioBreak method that client side only
+ * I don't need this :/
  */
 public class AmuletAnimationPacket {
     private final ItemStack stack;

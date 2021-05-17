@@ -35,4 +35,5 @@ public class ModNetworking {
     public static void sendToServer(Object packet) {
         INSTANCE.sendToServer(packet);
     }
+
 }

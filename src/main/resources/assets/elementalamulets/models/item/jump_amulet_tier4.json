@@ -7,25 +7,25 @@
   "overrides": [
     {
       "predicate": {
-        "elementalamulets:amulet_durability": 0.40
+        "damage": 0.20
       },
       "model": "elementalamulets:item/damaged_variations/tier4/jump_amulet_damage1"
     },
     {
       "predicate": {
-        "elementalamulets:amulet_durability": 0.60
+        "damage": 0.40
       },
       "model": "elementalamulets:item/damaged_variations/tier4/jump_amulet_damage2"
     },
     {
       "predicate": {
-        "elementalamulets:amulet_durability": 0.80
+        "damage": 0.60
       },
       "model": "elementalamulets:item/damaged_variations/tier4/jump_amulet_damage3"
     },
     {
       "predicate": {
-        "elementalamulets:amulet_durability": 1.00
+        "damage": 0.80
       },
       "model": "elementalamulets:item/damaged_variations/tier4/jump_amulet_damage4"
     }
