@@ -4,7 +4,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.client.models.AmuletModel;
-import frostygames0.elementalamulets.core.util.AmuletUtil;
+import frostygames0.elementalamulets.config.ModConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
@@ -13,12 +13,10 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.TippedArrowItem;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.potion.Potion;
-import net.minecraft.util.*;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -60,7 +58,7 @@ public abstract class AmuletItem extends Item implements ICurioItem {
                 PlayerEntity player = (PlayerEntity) livingEntity;
                 world.playSound(player, livingEntity.getPosition(), SoundEvents.BLOCK_RESPAWN_ANCHOR_DEPLETE, SoundCategory.NEUTRAL, 100, 1);
                 player.sendStatusMessage(new TranslationTextComponent("player.elementalamulets.brokenamulet.warn", new TranslationTextComponent(stack.getTranslationKey())), true);
-                Minecraft.getInstance().gameRenderer.displayItemActivation(stack);
+                if(ModConfig.cached.DISPLAY_TOTEM_LIKE_ANIM_ONBREAK) Minecraft.getInstance().gameRenderer.displayItemActivation(stack);
             }
     }
 

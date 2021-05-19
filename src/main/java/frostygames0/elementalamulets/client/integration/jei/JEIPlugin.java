@@ -9,7 +9,10 @@ import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.registration.*;
+import mezz.jei.api.registration.IRecipeCatalystRegistration;
+import mezz.jei.api.registration.IRecipeCategoryRegistration;
+import mezz.jei.api.registration.IRecipeRegistration;
+import mezz.jei.api.registration.IRecipeTransferRegistration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -23,7 +26,7 @@ import java.util.stream.Collectors;
 public class JEIPlugin implements IModPlugin {
     @Override
     public ResourceLocation getPluginUid() {
-        return new ResourceLocation(ElementalAmulets.MOD_ID, "jei_plugin");
+        return new ResourceLocation(ElementalAmulets.MOD_ID, ElementalAmulets.MOD_ID);
     }
 
     @Override

@@ -15,6 +15,7 @@ import net.minecraft.village.PointOfInterestType;
 import net.minecraft.world.gen.feature.jigsaw.JigsawPattern;
 import net.minecraft.world.gen.feature.jigsaw.JigsawPiece;
 import net.minecraft.world.gen.feature.structure.*;
+import net.minecraft.world.gen.feature.template.ProcessorLists;
 import net.minecraftforge.common.BasicTrade;
 import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -34,7 +35,7 @@ public class ModVillagers{
     public static final DeferredRegister<PointOfInterestType> POI_TYPES = DeferredRegister.create(ForgeRegistries.POI_TYPES, ElementalAmulets.MOD_ID);
 
     public static final RegistryObject<PointOfInterestType> JEWELLER_POI = POI_TYPES.register("jeweller",
-            () -> new PointOfInterestType("jeweller", PointOfInterestType.getAllStates(ModBlocks.ELEMENTAL_COMBINATOR.get()), 1, 10));
+            () -> new PointOfInterestType("jeweller", PointOfInterestType.getAllStates(ModBlocks.ELEMENTAL_COMBINATOR.get()), 1, 1));
     public static final RegistryObject<VillagerProfession> JEWELLER = PROFESSIONS.register("jeweller",
             () -> new VillagerProfession("jeweller", JEWELLER_POI.get(), ImmutableSet.of(ModItems.ELEMENTAL_STONE.get()), ImmutableSet.of(), SoundEvents.BLOCK_BEACON_ACTIVATE));
 
@@ -46,23 +47,38 @@ public class ModVillagers{
     @SubscribeEvent
     public static void registerTrades(final VillagerTradesEvent event) {
         if(event.getType() == JEWELLER.get()) {
+            // Level 1 trades
             List<VillagerTrades.ITrade> trades1 = event.getTrades().get(1);
-            trades1.add(new BasicTrade(new ItemStack(ModItems.ELEMENTAL_SHARDS.get(), ThreadLocalRandom.current().nextInt(10)), new ItemStack(Items.EMERALD), 15, 1, 1.2f));
+            trades1.add(new BasicTrade(new ItemStack(ModItems.ELEMENTAL_SHARDS.get(), 5), new ItemStack(Items.EMERALD), 10, 1, 1f));
+
+            // Level 2 trades
+            List<VillagerTrades.ITrade> trades2 = event.getTrades().get(2);
+            trades2.add(new BasicTrade(5, new ItemStack(ModItems.GUIDE_BOOK.get()), 3, 2, 1.3F));
+            trades2.add(new BasicTrade(15, new ItemStack(ModBlocks.ELEMENTAL_COMBINATOR.get().asItem()), 2, 5, 1.5f));
+
+            trades2.add(new BasicTrade(8, new ItemStack(ModItems.FIRE_ELEMENT.get(), 5), 15, 1, 1.1f));
+            trades2.add(new BasicTrade(8, new ItemStack(ModItems.WATER_ELEMENT.get(), 5), 15, 1, 1.2f));
+            trades2.add(new BasicTrade(8, new ItemStack(ModItems.EARTH_ELEMENT.get(), 5), 15, 1, 1.1f));
+            trades2.add(new BasicTrade(8, new ItemStack(ModItems.AIR_ELEMENT.get(), 5), 15, 1, 1.2F));
+
+            List<VillagerTrades.ITrade> trades3 = event.getTrades().get(3);
+            trades3.add(new BasicTrade(64, new ItemStack(Items.DIRT), 10, 10000, 10));
+
         }
     }
 
     public static class Structures {
         public static void init() {
-            PlainsVillagePools.init();
-            SavannaVillagePools.init();
-            TaigaVillagePools.init();
-            DesertVillagePools.init();
-            SnowyVillagePools.init();
-            for (String biome : new String[]{"plains", "savanna", "desert", "taiga", "snowy"}) {
-                addHouseToPool(new ResourceLocation("village/" + biome + "/houses"),
-                        ElementalAmulets.MOD_ID + ":villages/jeweller_house_" + biome, 20);
-            }
-            ElementalAmulets.LOGGER.debug("Jeweller's house was added to all existing vanilla villages successfully");
+                PlainsVillagePools.init();
+                SavannaVillagePools.init();
+                TaigaVillagePools.init();
+                DesertVillagePools.init();
+                SnowyVillagePools.init();
+                for (String biome : new String[]{"plains"}) {
+                    addHouseToPool(new ResourceLocation("village/" + biome + "/houses"),
+                            ElementalAmulets.MOD_ID + ":villages/jeweller_house_" + biome, 12);
+                }
+                ElementalAmulets.LOGGER.debug("Jeweller's house was successfully added to all existing vanilla villages");
         }
 
         private static void addHouseToPool(ResourceLocation pool, String houseToAdd, int weight) {
@@ -73,7 +89,7 @@ public class ModVillagers{
             }
             List<JigsawPiece> pieces = old.getShuffledPieces(ThreadLocalRandom.current());
             List<Pair<JigsawPiece, Integer>> newPieces = pieces.stream().map(p -> Pair.of(p, 1)).collect(Collectors.toList());
-            JigsawPiece newPiece = JigsawPiece.func_242849_a(houseToAdd).apply(JigsawPattern.PlacementBehaviour.RIGID);
+            JigsawPiece newPiece = JigsawPiece.func_242851_a(houseToAdd, ProcessorLists.MOSSIFY_10_PERCENT).apply(JigsawPattern.PlacementBehaviour.RIGID);
             newPieces.add(Pair.of(newPiece, weight));
             Registry.register(WorldGenRegistries.JIGSAW_POOL, pool, new JigsawPattern(pool, old.getName(), newPieces));
         }

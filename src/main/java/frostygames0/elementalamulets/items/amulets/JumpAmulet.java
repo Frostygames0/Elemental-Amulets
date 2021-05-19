@@ -1,13 +1,10 @@
 package frostygames0.elementalamulets.items.amulets;
 
 import frostygames0.elementalamulets.config.ModConfig;
-import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import frostygames0.elementalamulets.items.amulets.interfaces.IJumpItem;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;

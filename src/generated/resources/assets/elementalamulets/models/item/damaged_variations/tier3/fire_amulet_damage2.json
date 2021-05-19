@@ -1,0 +1,6 @@
+{
+  "parent": "elementalamulets:item/fire_amulet_tier3",
+  "textures": {
+    "layer0": "elementalamulets:item/fire_amulet_damage2"
+  }
+}

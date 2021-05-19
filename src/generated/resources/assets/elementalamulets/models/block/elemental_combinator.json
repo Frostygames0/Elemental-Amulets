@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "side": "elementalamulets:block/elemental_combinator_side",
+    "bottom": "minecraft:block/furnace_top",
+    "top": "elementalamulets:block/elemental_combinator_up_2.0"
+  }
+}

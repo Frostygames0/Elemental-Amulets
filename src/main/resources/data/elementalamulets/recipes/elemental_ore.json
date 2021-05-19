@@ -1,5 +1,0 @@
-{
-  "type": "smelting",
-  "ingredient": {"item": "elementalamulets:elemental_ore"},
-  "result": "elementalamulets:elemental_shards"
-}

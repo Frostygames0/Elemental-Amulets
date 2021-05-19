@@ -15,7 +15,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public class ElementalCombinationCategory implements IRecipeCategory<ElementalCombination> {
@@ -96,7 +95,7 @@ public class ElementalCombinationCategory implements IRecipeCategory<ElementalCo
     public void draw(ElementalCombination recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
         matrixStack.push();
         ITextComponent cooldown = new TranslationTextComponent("jei.elementalamulets.cooldown", recipe.getCooldown()/20);
-        Minecraft.getInstance().fontRenderer.drawTextWithShadow(matrixStack, cooldown, 4, 72, TextFormatting.WHITE.getColor());
+        Minecraft.getInstance().fontRenderer.drawText(matrixStack, cooldown, 4, 72, 0xFF808080);
         matrixStack.pop();
     }
 

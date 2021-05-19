@@ -6,7 +6,6 @@ import frostygames0.elementalamulets.items.amulets.interfaces.IFireItem;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import org.apache.commons.lang3.tuple.ImmutableTriple;

@@ -1,0 +1,18 @@
+{
+  "replace": false,
+  "values": [
+    "elementalamulets:fire_amulet",
+    "elementalamulets:fire_amulet_tier2",
+    "elementalamulets:fire_amulet_tier3",
+    "elementalamulets:fire_amulet_tier4",
+    "elementalamulets:speed_amulet",
+    "elementalamulets:speed_amulet_tier2",
+    "elementalamulets:speed_amulet_tier3",
+    "elementalamulets:speed_amulet_tier4",
+    "elementalamulets:jump_amulet",
+    "elementalamulets:jump_amulet_tier2",
+    "elementalamulets:jump_amulet_tier3",
+    "elementalamulets:jump_amulet_tier4",
+    "elementalamulets:invisibility_amulet"
+  ]
+}

@@ -14,5 +14,9 @@ public class DataGenerators {
             generator.addProvider(new ItemModelProvider(generator, event.getExistingFileHelper()));
             generator.addProvider(new BlockStateProvider(generator, event.getExistingFileHelper()));
         }
+        if(event.includeServer()) {
+            generator.addProvider(new RecipeProvider(generator));
+            generator.addProvider(new TagProvider(generator, event.getExistingFileHelper()));
+        }
     }
 }

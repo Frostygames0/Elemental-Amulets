@@ -1,0 +1,15 @@
+{
+  "type": "elementalamulets:elemental_combination",
+  "elemental": {"item": "elementalamulets:elemental_shards"},
+  "ingredients": [
+    {"item": "minecraft:blaze_powder"},
+    {"item": "minecraft:blaze_powder"},
+    {"item": "minecraft:blaze_powder"},
+    {"item": "minecraft:blaze_powder"},
+    {"item": "minecraft:blaze_powder"},
+    {"item": "minecraft:blaze_powder"}
+  ],
+  "result": {
+    "item": "elementalamulets:fire_element"
+  }
+}

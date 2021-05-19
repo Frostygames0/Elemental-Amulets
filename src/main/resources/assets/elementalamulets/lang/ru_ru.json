@@ -3,7 +3,12 @@
 
   "item.elementalamulets.guide_book": "Элементальный руководство",
   "item.elementalamulets.guide_book.subtitle": "Содержит в себе все знания о элементальныъ амулетов",
+
   "item.elementalamulets.elemental_shards": "Элементальные осколки",
+  "item.elementalamulets.fire_element": "Элемент огня",
+  "item.elementalamulets.water_element": "Элемент воды",
+  "item.elementalamulets.earth_element": "Элемент земли",
+  "item.elementalamulets.air_element": "Элемент воздуха",
 
   "item.elementalamulets.common_amulet.tooltip.tier": "%sУровень: ",
 
@@ -25,6 +30,7 @@
   "block.elementalamulets.elemental_ore": "Элементальный руда",
 
   "player.elementalamulets.brokenamulet.warn": "Ваш %s был сломан!",
+  "entity.minecraft.villager.elementalamulets.jeweller": "Ювелир",
 
   "jei.elementalamulets.cooldown": "Перезарядка - %s сек",
   "jei.elementalamulets.elemental_separation": "Элементальное комбинирование",

@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "elementalamulets:item/fire_amulet",
+    "layer1": "elementalamulets:item/amulet_tiers/level1"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "minecraft:damage": 0.2
+      },
+      "model": "elementalamulets:item/damaged_variations/tier1/fire_amulet_damage1"
+    },
+    {
+      "predicate": {
+        "minecraft:damage": 0.4
+      },
+      "model": "elementalamulets:item/damaged_variations/tier1/fire_amulet_damage2"
+    },
+    {
+      "predicate": {
+        "minecraft:damage": 0.6
+      },
+      "model": "elementalamulets:item/damaged_variations/tier1/fire_amulet_damage3"
+    },
+    {
+      "predicate": {
+        "minecraft:damage": 0.8
+      },
+      "model": "elementalamulets:item/damaged_variations/tier1/fire_amulet_damage4"
+    }
+  ]
+}

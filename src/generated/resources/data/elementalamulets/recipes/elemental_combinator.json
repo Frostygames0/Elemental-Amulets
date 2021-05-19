@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "_\u003d_",
+    "#4#",
+    "000"
+  ],
+  "key": {
+    "_": {
+      "item": "minecraft:red_carpet"
+    },
+    "\u003d": {
+      "item": "minecraft:iron_ingot"
+    },
+    "4": {
+      "item": "elementalamulets:elemental_shards"
+    },
+    "0": {
+      "tag": "minecraft:stone_crafting_materials"
+    },
+    "#": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "result": {
+    "item": "elementalamulets:elemental_combinator"
+  }
+}

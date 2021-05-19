@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "elementalamulets:elemental_ore"
+  },
+  "result": "elementalamulets:elemental_shards",
+  "experience": 1.0,
+  "cookingtime": 120
+}

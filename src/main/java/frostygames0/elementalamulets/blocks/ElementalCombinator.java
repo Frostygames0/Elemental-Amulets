@@ -2,10 +2,8 @@ package frostygames0.elementalamulets.blocks;
 
 import frostygames0.elementalamulets.blocks.containers.ElementalCombinatorContainer;
 import frostygames0.elementalamulets.blocks.tiles.ElementalCombinatorTile;
-import frostygames0.elementalamulets.core.init.ModBlocks;
-import frostygames0.elementalamulets.network.AmuletAnimationPacket;
-import frostygames0.elementalamulets.network.ModNetworking;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.material.PushReaction;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -13,10 +11,10 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
@@ -24,11 +22,9 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
-import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nullable;
-import java.util.List;
 
 @SuppressWarnings("deprecation")
 public class ElementalCombinator extends Block {

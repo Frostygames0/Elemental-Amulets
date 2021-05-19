@@ -3,7 +3,12 @@
 
   "item.elementalamulets.guide_book": "Elemental Guide",
   "item.elementalamulets.guide_book.subtitle": "Contains all knowledge about Elemental Amulets",
+
   "item.elementalamulets.elemental_shards": "Elemental Shards",
+  "item.elementalamulets.fire_element": "Fire Element",
+  "item.elementalamulets.water_element": "Water Element",
+  "item.elementalamulets.earth_element": "Earth Element",
+  "item.elementalamulets.air_element": "Air Element",
 
   "item.elementalamulets.common_amulet.tooltip.tier": "%sTier: ",
 
@@ -25,6 +30,7 @@
   "block.elementalamulets.elemental_ore": "Elemental Ore",
 
   "player.elementalamulets.brokenamulet.warn": "Your %s just got broken!",
+  "entity.minecraft.villager.elementalamulets.jeweller": "Jeweller",
 
   "jei.elementalamulets.cooldown": "Cooldown - %ss",
   "jei.elementalamulets.elemental_separation": "Elemental Combination",

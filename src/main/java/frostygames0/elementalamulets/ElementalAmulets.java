@@ -6,9 +6,11 @@ import frostygames0.elementalamulets.core.init.*;
 import frostygames0.elementalamulets.network.ModNetworking;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.item.ItemGroup;
-import net.minecraftforge.common.MinecraftForge;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.*;
+import net.minecraftforge.fml.InterModComms;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -28,7 +30,6 @@ public class ElementalAmulets {
 
     public ElementalAmulets() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus(); // Only for mod specific events
-        IEventBus forgeBus = MinecraftForge.EVENT_BUS;
 
         ModItems.ITEMS.register(bus);
         ModBlocks.BLOCKS.register(bus);
@@ -43,10 +44,14 @@ public class ElementalAmulets {
         bus.addListener(this::enqueueIMC);
         bus.addListener(this::commonSetup);
         bus.addListener(this::clientSetup);
+        bus.addListener(this::textureStitch);
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event) {
-        InterModComms.sendTo(CuriosApi.MODID, SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("necklace").size(1).cosmetic().build());
+        InterModComms.sendTo(CuriosApi.MODID, SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("necklace")
+                .cosmetic()
+                .icon(new ResourceLocation(ElementalAmulets.MOD_ID, "item/necklace_slot"))
+                .build());
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
@@ -56,5 +61,9 @@ public class ElementalAmulets {
 
     private void clientSetup(final FMLClientSetupEvent event) {
         ScreenManager.registerFactory(ModContainers.ELEMENTAL_COMBINATOR_CONTAINER.get(), ElementalCrafterGUI::new);
+    }
+
+    private void textureStitch(final TextureStitchEvent.Pre event) {
+        event.addSprite(new ResourceLocation(ElementalAmulets.MOD_ID, "item/necklace_slot"));
     }
 }

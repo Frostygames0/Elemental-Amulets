@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:book"
+    },
+    {
+      "item": "elementalamulets:elemental_shards"
+    }
+  ],
+  "result": {
+    "item": "elementalamulets:guide_book"
+  }
+}
