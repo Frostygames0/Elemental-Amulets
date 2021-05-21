@@ -24,6 +24,6 @@ public class EffectEventHandler {
     @SubscribeEvent
     public static void onAttack(LivingAttackEvent event) {
         JumpAmuletEffect.onLivingAttack(event);
-        //FireAmuletEffect.onLivingAttack(event);
+        FireAmuletEffect.onLivingAttack(event);
     }
  }

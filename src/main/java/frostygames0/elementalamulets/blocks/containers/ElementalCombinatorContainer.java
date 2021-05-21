@@ -113,4 +113,8 @@ public class ElementalCombinatorContainer extends Container {
         y += 58;
         addSlotRange(playerInventory, 0, x, y, 9, 18);
     }
+
+    public TileEntity getTileEntity() {
+        return this.tileEntity;
+    }
 }

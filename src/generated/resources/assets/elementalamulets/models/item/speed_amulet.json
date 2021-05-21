@@ -1,33 +1,32 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "elementalamulets:item/speed_amulet",
-    "layer1": "elementalamulets:item/amulet_tiers/level1"
+    "layer0": "elementalamulets:item/speed_amulet"
   },
   "overrides": [
     {
       "predicate": {
-        "minecraft:damage": 0.2
+        "elementalamulets:tier": 1.0
       },
-      "model": "elementalamulets:item/damaged_variations/tier1/speed_amulet_damage1"
+      "model": "elementalamulets:item/speed_amulet_tier1"
     },
     {
       "predicate": {
-        "minecraft:damage": 0.4
+        "elementalamulets:tier": 2.0
       },
-      "model": "elementalamulets:item/damaged_variations/tier1/speed_amulet_damage2"
+      "model": "elementalamulets:item/speed_amulet_tier2"
     },
     {
       "predicate": {
-        "minecraft:damage": 0.6
+        "elementalamulets:tier": 3.0
       },
-      "model": "elementalamulets:item/damaged_variations/tier1/speed_amulet_damage3"
+      "model": "elementalamulets:item/speed_amulet_tier3"
     },
     {
       "predicate": {
-        "minecraft:damage": 0.8
+        "elementalamulets:tier": 4.0
       },
-      "model": "elementalamulets:item/damaged_variations/tier1/speed_amulet_damage4"
+      "model": "elementalamulets:item/speed_amulet_tier4"
     }
   ]
 }

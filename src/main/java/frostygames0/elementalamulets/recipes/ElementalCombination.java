@@ -2,6 +2,8 @@ package frostygames0.elementalamulets.recipes;
 
 import frostygames0.elementalamulets.core.init.ModBlocks;
 import frostygames0.elementalamulets.core.init.ModRecipes;
+import frostygames0.elementalamulets.items.amulets.AmuletItem;
+import frostygames0.elementalamulets.recipes.ingredient.AmuletIngredient;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -21,12 +23,12 @@ public class ElementalCombination implements IRecipe<IInventory> {
 
     protected final ResourceLocation id;
     protected final NonNullList<Ingredient> ingredients;
-    protected final Ingredient elemental;
+    protected final AmuletIngredient elemental;
     protected final ItemStack result;
     protected final int cooldown;
     protected final boolean tagTransfer;
 
-    public ElementalCombination(ResourceLocation idIn, NonNullList<Ingredient> ingredientsIn, Ingredient elementalIn, ItemStack resultIn,
+    public ElementalCombination(ResourceLocation idIn, NonNullList<Ingredient> ingredientsIn, AmuletIngredient elementalIn, ItemStack resultIn,
                                 int cooldown, boolean tagTransfer) {
         this.id = idIn;
         this.ingredients = ingredientsIn;
@@ -56,6 +58,13 @@ public class ElementalCombination implements IRecipe<IInventory> {
         if(this.tagTransfer) {
             CompoundNBT nbt = inv.getStackInSlot(1).getTag();
             if(nbt != null) {
+                if(nbt.contains(AmuletItem.TIER_TAG)) {
+                    if(stack.hasTag() && stack.getTag().contains(AmuletItem.TIER_TAG)) {
+                        nbt.putInt(AmuletItem.TIER_TAG, stack.getTag().getInt(AmuletItem.TIER_TAG));
+                    } else {
+                        nbt.remove(AmuletItem.TIER_TAG);
+                    }
+                }
                 stack.setTag(nbt);
             }
         }
@@ -67,6 +76,7 @@ public class ElementalCombination implements IRecipe<IInventory> {
         return true;
     }
 
+    // Need to override this so vanilla's recipe book would ignore my recipes
     @Override
     public boolean isDynamic() {
         return true;
@@ -93,7 +103,7 @@ public class ElementalCombination implements IRecipe<IInventory> {
      * Returns elemental ingredient separately
      * @return Ingredient of elemental
      */
-    public Ingredient getElemental() {
+    public AmuletIngredient getElemental() {
         return this.elemental;
     }
 

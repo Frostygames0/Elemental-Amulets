@@ -2,6 +2,6 @@
   "parent": "elementalamulets:item/fire_amulet",
   "textures": {
     "layer0": "elementalamulets:item/fire_amulet",
-    "layer1": "elementalamulets:item/amulet_tiers/level4"
+    "layer1": "elementalamulets:item/amulet_tiers/level1"
   }
 }

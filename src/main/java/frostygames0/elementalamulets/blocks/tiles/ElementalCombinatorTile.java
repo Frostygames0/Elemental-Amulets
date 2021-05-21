@@ -13,6 +13,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.vector.Vector3d;
@@ -31,6 +32,7 @@ import javax.annotation.Nullable;
 public class ElementalCombinatorTile extends TileEntity implements ITickableTileEntity {
     private final ItemStackHandler handler = createHandler(10);
     private final LazyOptional<IItemHandler> optional = LazyOptional.of(() -> new AutomationItemHandler(handler));
+
     private int cooldown;
 
     public ElementalCombinatorTile() {
@@ -53,26 +55,26 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
      */
     public boolean combineElemental(PlayerEntity player) {
         if(world != null && !world.isRemote()) {
-                if (this.cooldown <= 0) {
-                    if (this.world.canBlockSeeSky(this.pos.up())) {
-                        LightningBoltEntity lightbolt = new LightningBoltEntity(EntityType.LIGHTNING_BOLT, world);
-                        lightbolt.moveForced(Vector3d.copyCenteredHorizontally(this.pos.add(0, 1, 0)));
-                        lightbolt.setEffectOnly(true);
-                        ElementalCombination recipe = this.world.getRecipeManager().getRecipe(ModRecipes.ELEMENTAL_SEPARATION_RECIPE, new RecipeWrapper(handler), this.world).orElse(null);
-                        ItemStack result;
-                        if (recipe != null) {
-                            result = recipe.getCraftingResult(new RecipeWrapper(handler));
-                            if (!result.isEmpty()) {
-                                if (handler.insertItem(0,result, true).isEmpty()) {
-                                    handler.insertItem(0,result, false);
-                                    for (int i = 1; i < handler.getSlots(); ++i) {
-                                        handler.extractItem(i, 1, false);
-                                    }
-                                    world.addEntity(lightbolt);
-                                    world.playSound(null, pos, SoundEvents.BLOCK_BEACON_ACTIVATE, SoundCategory.BLOCKS, 100, 1);
-                                    this.cooldown += recipe.getCooldown();
-                                    return true;
+                if (this.cooldown <= 0 && this.world.canBlockSeeSky(this.pos.up())) {
+                    LightningBoltEntity lightbolt = new LightningBoltEntity(EntityType.LIGHTNING_BOLT, world);
+                    lightbolt.moveForced(Vector3d.copyCenteredHorizontally(this.pos.add(0, 1, 0)));
+                    lightbolt.setEffectOnly(true);
+                    ElementalCombination recipe = this.world.getRecipeManager().getRecipe(ModRecipes.ELEMENTAL_SEPARATION_RECIPE, new RecipeWrapper(handler), this.world).orElse(null);
+                    ItemStack result;
+                    if (recipe != null) {
+                        result = recipe.getCraftingResult(new RecipeWrapper(handler)); // Result
+                        NonNullList<ItemStack> remainingItems = recipe.getRemainingItems(new RecipeWrapper(handler)); // A list of item with container item like buckets
+                        if (!result.isEmpty()) {
+                            if (handler.insertItem(0,result, true).isEmpty()) {
+                                handler.insertItem(0,result, false);
+                                for (int i = 1; i < handler.getSlots(); ++i) {
+                                    handler.extractItem(i, 1, false);
+                                    handler.insertItem(i, remainingItems.get(i), false);
                                 }
+                                world.addEntity(lightbolt);
+                                world.playSound(null, pos, SoundEvents.BLOCK_BEACON_ACTIVATE, SoundCategory.BLOCKS, 100, 1);
+                                this.cooldown += recipe.getCooldown();
+                                return true;
                             }
                         }
                     }

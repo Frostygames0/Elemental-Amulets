@@ -46,5 +46,4 @@ public class GuideBook extends Item {
         }
         return ActionResult.resultConsume(playerIn.getHeldItem(handIn));
     }
-
 }

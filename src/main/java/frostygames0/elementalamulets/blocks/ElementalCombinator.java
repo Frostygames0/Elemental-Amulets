@@ -46,7 +46,7 @@ public class ElementalCombinator extends Block {
                 elementalCombinatorTile.combineElemental(player);
             }
         } else {
-            throw new IllegalStateException("TileEntity is not correct! Cannot open block's GUI!");
+            throw new IllegalStateException("TileEntity is not correct! Cannot do any action!");
         }
         return ActionResultType.CONSUME;
     }

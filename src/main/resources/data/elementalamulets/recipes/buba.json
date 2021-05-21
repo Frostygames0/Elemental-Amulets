@@ -1,0 +1,9 @@
+{
+  "type": "elementalamulets:elemental_combination",
+  "elemental": {"item": "elementalamulets:jump_amulet", "tier": 1},
+  "ingredients": [
+    {"item": "minecraft:dirt"}
+  ],
+  "tag_transfer": true,
+  "result": {"item": "elementalamulets:jump_amulet", "nbt": {"elementalamulets:tier": 2}}
+}

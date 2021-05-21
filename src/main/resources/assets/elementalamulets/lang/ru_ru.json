@@ -36,5 +36,7 @@
   "jei.elementalamulets.elemental_separation": "Элементальное комбинирование",
   "jei.elementalamulets.amulets.description": "Амулеты - это магические украшения, которые дают вам разнообразные способности\n Побольше о них вы может почитать в Элементальном Руководстве",
   "jei.elementalamulets.guide_book.description": "Книга с информацией об этом моде, чтобы иметь доступ к ней вам нужен Patchouli!",
-  "jei.elementalamulets.elemental_combinator.description": "Позволяет комбинровать(Объединять) раличные штуки, чтобы получать еще круче штуки!\n Побольше о них вы может почитать в Элементальном Руководстве"
+  "jei.elementalamulets.elemental_combinator.description": "Позволяет комбинровать(Объединять) раличные штуки, чтобы получать еще круче штуки!\n Побольше о них вы может почитать в Элементальном Руководстве",
+
+  "patchouli.elementalamulets.not_present": "Patchouli не обнаружен!! Пожалуйста установите Patchouli, если вы хотите открыть книгу"
 }

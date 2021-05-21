@@ -4,10 +4,14 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.blocks.containers.ElementalCombinatorContainer;
+import frostygames0.elementalamulets.network.CombineElementalPacket;
+import frostygames0.elementalamulets.network.ModNetworking;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 
 public class ElementalCrafterGUI extends ContainerScreen<ElementalCombinatorContainer> {
     private static final ResourceLocation GUI = new ResourceLocation(ElementalAmulets.MOD_ID, "textures/gui/elemental_separator_redesign.png");
@@ -37,5 +41,12 @@ public class ElementalCrafterGUI extends ContainerScreen<ElementalCombinatorCont
         int centerX = (this.width - this.xSize)/2;
         int centerY = (this.height - this.ySize)/2;
         this.blit(matrixStack, centerX, centerY, 0, 0, this.xSize, this.ySize);
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+        this.addButton(new Button(this.guiLeft+82, this.guiTop+32, 45, 20, new StringTextComponent("Combine"),
+                (button) -> ModNetworking.sendToServer(new CombineElementalPacket(container.getTileEntity().getPos()))));
     }
 }

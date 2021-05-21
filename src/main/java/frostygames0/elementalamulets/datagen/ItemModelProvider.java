@@ -30,25 +30,29 @@ public class ItemModelProvider extends net.minecraftforge.client.model.generator
     }
 
     private void amuletTexture(AmuletItem item) {
-        if(item.getTier() > 0) {
+        if(item.hasTier()) {
             withExistingParent(name(item), "item/generated")
-                    .texture("layer0", modLoc("item/" + removeTier(item)))
-                    .texture("layer1", modLoc("item/amulet_tiers/level" + item.getTier()))
-                    .override().predicate(mcLoc("damage"), 0.20f).model(withExistingParent("item/damaged_variations/tier" + item.getTier() + "/" + removeTier(item) + "_damage1", modLoc("item/" + name(item))).texture("layer0", modLoc("item/" + removeTier(item) + "_damage1"))).end()
-                    .override().predicate(mcLoc("damage"), 0.40f).model(withExistingParent("item/damaged_variations/tier" + item.getTier() + "/" + removeTier(item) + "_damage2", modLoc("item/" + name(item))).texture("layer0", modLoc("item/" + removeTier(item) + "_damage2"))).end()
-                    .override().predicate(mcLoc("damage"), 0.60f).model(withExistingParent("item/damaged_variations/tier" + item.getTier() + "/" + removeTier(item) + "_damage3", modLoc("item/" + name(item))).texture("layer0", modLoc("item/" + removeTier(item) + "_damage3"))).end()
-                    .override().predicate(mcLoc("damage"), 0.80f).model(withExistingParent("item/damaged_variations/tier" + item.getTier() + "/" + removeTier(item) + "_damage4", modLoc("item/" + name(item))).texture("layer0", modLoc("item/" + removeTier(item) + "_damage4"))).end();
+                    .texture("layer0", modLoc("item/" + name(item)))
+                    .override().predicate(modLoc("tier"), 1).model(withExistingParent("item/" + addTierSuffix(item, 1), modLoc("item/" + name(item))).texture("layer0", modLoc("item/" + name(item))).texture("layer1", modLoc("item/amulet_tiers/level" + 1))).end()
+                    .override().predicate(modLoc("tier"), 2).model(withExistingParent("item/" + addTierSuffix(item, 2), modLoc("item/" + name(item))).texture("layer0", modLoc("item/" + name(item))).texture("layer1", modLoc("item/amulet_tiers/level" + 2))).end()
+                    .override().predicate(modLoc("tier"), 3).model(withExistingParent("item/" + addTierSuffix(item, 3), modLoc("item/" + name(item))).texture("layer0", modLoc("item/" + name(item))).texture("layer1", modLoc("item/amulet_tiers/level" + 3))).end()
+                    .override().predicate(modLoc("tier"), 4).model(withExistingParent("item/" + addTierSuffix(item, 4), modLoc("item/" + name(item))).texture("layer0", modLoc("item/" + name(item))).texture("layer1", modLoc("item/amulet_tiers/level" + 4))).end();
+        } else {
+            singleTexture(name(item), mcLoc("item/generated"), "layer0", modLoc("item/"+name(item)));
         }
+            //.texture("layer1", modLoc("item/amulet_tiers/level" + item.getTier(null)));
+                    //.override().predicate(mcLoc("damage"), 0.20f).model(withExistingParent("item/damaged_variations/tier" + item.getTier(null) + "/" + removeTier(item) + "_damage1", modLoc("item/" + name(item))).texture("layer0", modLoc("item/" + removeTier(item) + "_damage1"))).end()
+                    //.override().predicate(mcLoc("damage"), 0.40f).model(withExistingParent("item/damaged_variations/tier" + item.getTier(null) + "/" + removeTier(item) + "_damage2", modLoc("item/" + name(item))).texture("layer0", modLoc("item/" + removeTier(item) + "_damage2"))).end()
+                    //.override().predicate(mcLoc("damage"), 0.60f).model(withExistingParent("item/damaged_variations/tier" + item.getTier(null) + "/" + removeTier(item) + "_damage3", modLoc("item/" + name(item))).texture("layer0", modLoc("item/" + removeTier(item) + "_damage3"))).end()
+                    //.override().predicate(mcLoc("damage"), 0.80f).model(withExistingParent("item/damaged_variations/tier" + item.getTier(null) + "/" + removeTier(item) + "_damage4", modLoc("item/" + name(item))).texture("layer0", modLoc("item/" + removeTier(item) + "_damage4"))).end();
     }
 
     private String name(Item item) {
         return item.getRegistryName().getPath();
     }
 
-    private String removeTier(AmuletItem item) {
-        String s = item.getRegistryName().getPath();
-        int a = s.indexOf("tier");
-        if(a > -1) return s.substring(0, a-1);
-        return s;
+    private String addTierSuffix(Item item, int tier) {
+        String s = name(item);
+        return s+"_tier"+tier;
     }
 }

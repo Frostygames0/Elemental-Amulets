@@ -1,7 +1,6 @@
 package frostygames0.elementalamulets.amuleteffect;
 
 import frostygames0.elementalamulets.ElementalAmulets;
-import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import frostygames0.elementalamulets.items.amulets.interfaces.IFireItem;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
@@ -24,17 +23,12 @@ public class FireAmuletEffect {
         if (optional.isPresent()) {
             ItemStack stack = optional.get().getRight();
             IFireItem item = (IFireItem) stack.getItem();
-            fireResistMulti *= 1-item.getFireResist();
-            lavaResistMulti *= 1-item.getLavaResist();
+            fireResistMulti *= 1-item.getFireResist(stack);
+            lavaResistMulti *= 1-item.getLavaResist(stack);
         }
         return new float[] {fireResistMulti, lavaResistMulti};
     }
 
-    /*
-     * Unfortunately cancelling it also cancels LivingHurtEvent
-     * and that means that it will not take any effect
-     * so i need to find workaround
-     */
     public static void onLivingAttack(LivingAttackEvent event) {
         if(event.getEntity().getEntityWorld().isRemote()) return;
         if(event.getSource().isFireDamage()) {
@@ -61,9 +55,6 @@ public class FireAmuletEffect {
                 float fire = multis[0];
                 float lava = multis[1];
                 float finalDamage = 1f;
-                if(stack.getItem() instanceof AmuletItem) {
-                    stack.damageItem(((AmuletItem) stack.getItem()).getDamageOnUse(), entity, (e) -> CuriosApi.getCuriosHelper().onBrokenCurio(tr.getLeft(), tr.getMiddle(), e));
-                }
                 if (event.getSource() == DamageSource.IN_FIRE || event.getSource() == DamageSource.ON_FIRE) {
                     if (fire < 0.999f) {
                         if (fire < 0.001f) {

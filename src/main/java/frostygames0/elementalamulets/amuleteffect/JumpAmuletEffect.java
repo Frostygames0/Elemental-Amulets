@@ -1,6 +1,5 @@
 package frostygames0.elementalamulets.amuleteffect;
 
-import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import frostygames0.elementalamulets.items.amulets.interfaces.IJumpItem;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
@@ -18,9 +17,9 @@ public class JumpAmuletEffect {
 
     private static float calculateFallResist(LivingEntity entity) {
         AtomicReference<Float> fallResist = new AtomicReference<>(0f);
-        CuriosApi.getCuriosHelper().findEquippedCurio(itemStack -> itemStack.getItem() instanceof IJumpItem, entity).map(item -> item.getRight().getItem()).ifPresent(item -> {
-            IJumpItem amulet = (IJumpItem) item;
-            fallResist.updateAndGet(v -> (float) (v + Math.max(amulet.getFallResist(), 0)));
+        CuriosApi.getCuriosHelper().findEquippedCurio(itemStack -> itemStack.getItem() instanceof IJumpItem, entity).map(item -> item.getRight()).ifPresent(item -> {
+            IJumpItem amulet = (IJumpItem) item.getItem();
+            fallResist.updateAndGet(v -> (float) (v + Math.max(amulet.getFallResist(item), 0)));
         });
         return fallResist.get();
     }
@@ -61,12 +60,8 @@ public class JumpAmuletEffect {
                 helper.findEquippedCurio(itemStack -> itemStack.getItem() instanceof IJumpItem, livingEntity).ifPresent(triple -> {
                     ItemStack stack = triple.getRight();
                     IJumpItem item = (IJumpItem) stack.getItem();
-                    livingEntity.addVelocity(0, item.getJump(), 0);
+                    livingEntity.addVelocity(0, item.getJump(stack), 0);
                     livingEntity.velocityChanged = true;
-                    if (item instanceof AmuletItem) {
-                        AmuletItem amulet1 = (AmuletItem) item;
-                        stack.damageItem(amulet1.getDamageOnUse(), livingEntity, ent -> CuriosApi.getCuriosHelper().onBrokenCurio(triple.getLeft(), triple.getMiddle(), ent));
-                    }
                 });
             }
     }

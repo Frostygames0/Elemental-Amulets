@@ -26,6 +26,11 @@ public class ModNetworking {
                 .decoder(AmuletAnimationPacket::new)
                 .consumer(AmuletAnimationPacket::handle)
                 .add();
+        INSTANCE.messageBuilder(CombineElementalPacket.class, nextInt())
+                .encoder(CombineElementalPacket::toBytes)
+                .decoder(CombineElementalPacket::new)
+                .consumer(CombineElementalPacket::handle)
+                .add();
     }
 
     public static void sendToClient(Object packet, ServerPlayerEntity player) {

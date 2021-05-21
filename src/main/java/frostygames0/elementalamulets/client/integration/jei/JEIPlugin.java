@@ -9,11 +9,9 @@ import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.registration.IRecipeCatalystRegistration;
-import mezz.jei.api.registration.IRecipeCategoryRegistration;
-import mezz.jei.api.registration.IRecipeRegistration;
-import mezz.jei.api.registration.IRecipeTransferRegistration;
+import mezz.jei.api.registration.*;
 import net.minecraft.client.Minecraft;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -37,6 +35,16 @@ public class JEIPlugin implements IModPlugin {
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addRecipeCatalyst(new ItemStack(ModBlocks.ELEMENTAL_COMBINATOR.get()), ElementalCombinationCategory.CATEGORY_ID);
+    }
+
+    @Override
+    public void registerItemSubtypes(ISubtypeRegistration registration) {
+        for(RegistryObject<Item> reg : ModItems.ITEMS.getEntries()) {
+            Item item = reg.get();
+            if(item instanceof AmuletItem) {
+                registration.registerSubtypeInterpreter(item, AmuletTierSubtypeInterpreter.INSTANCE);
+            }
+        }
     }
 
     @Override

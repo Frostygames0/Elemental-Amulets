@@ -3,9 +3,11 @@ package frostygames0.elementalamulets;
 import frostygames0.elementalamulets.client.screens.ElementalCrafterGUI;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.core.init.*;
+import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import frostygames0.elementalamulets.network.ModNetworking;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -61,6 +63,9 @@ public class ElementalAmulets {
 
     private void clientSetup(final FMLClientSetupEvent event) {
         ScreenManager.registerFactory(ModContainers.ELEMENTAL_COMBINATOR_CONTAINER.get(), ElementalCrafterGUI::new);
+        ModItems.ITEMS.getEntries().stream().map(reg -> reg.get()).filter(item -> item instanceof AmuletItem).forEach(
+                item -> ItemModelsProperties.registerProperty(item, new ResourceLocation(ElementalAmulets.MOD_ID, "tier"),
+                        (stack, world, entity) -> ((AmuletItem)item).getTier(stack)));
     }
 
     private void textureStitch(final TextureStitchEvent.Pre event) {

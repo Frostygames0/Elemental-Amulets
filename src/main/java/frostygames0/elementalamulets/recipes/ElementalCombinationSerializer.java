@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import frostygames0.elementalamulets.recipes.ingredient.AmuletIngredient;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
@@ -24,7 +25,7 @@ public class ElementalCombinationSerializer<T extends ElementalCombination> exte
     public T read(ResourceLocation recipeId, JsonObject json) {
         // Ingredient
         JsonElement jsonelement = JSONUtils.isJsonArray(json, "elemental") ? JSONUtils.getJsonArray(json, "elemental") : JSONUtils.getJsonObject(json, "elemental");
-        Ingredient elemental = Ingredient.deserialize(jsonelement);
+        AmuletIngredient elemental = AmuletIngredient.Serializer.INSTANCE.parse(JSONUtils.getJsonObject(json, "elemental"));
 
         NonNullList<Ingredient> nonNullList = readIngredients(JSONUtils.getJsonArray(json, "ingredients"));
         if(nonNullList.isEmpty()) { // There must be at least 1 ingredient
@@ -58,7 +59,7 @@ public class ElementalCombinationSerializer<T extends ElementalCombination> exte
     @Nullable
     @Override
     public T read(ResourceLocation recipeId, PacketBuffer buffer) {
-        Ingredient elemental = Ingredient.read(buffer);
+        AmuletIngredient elemental = AmuletIngredient.Serializer.INSTANCE.parse(buffer);
         int i = buffer.readVarInt();
         NonNullList<Ingredient> nonNullList = NonNullList.withSize(i, Ingredient.EMPTY);
         for(int j = 0; j < nonNullList.size(); ++j) {
@@ -72,7 +73,7 @@ public class ElementalCombinationSerializer<T extends ElementalCombination> exte
 
     @Override
     public void write(PacketBuffer buffer, T recipe) {
-        recipe.elemental.write(buffer);
+        AmuletIngredient.Serializer.INSTANCE.write(buffer, recipe.elemental);
         buffer.writeVarInt(recipe.ingredients.size());
         for(Ingredient ingr : recipe.ingredients) {
             ingr.write(buffer);
@@ -83,6 +84,6 @@ public class ElementalCombinationSerializer<T extends ElementalCombination> exte
 
     }
     public interface IFactory<T extends ElementalCombination> {
-        T create(ResourceLocation idIn, NonNullList<Ingredient> ingredientsIn, Ingredient elementalIn, ItemStack resultIn, int cooldown, boolean tagTransfer);
+        T create(ResourceLocation idIn, NonNullList<Ingredient> ingredientsIn, AmuletIngredient elementalIn, ItemStack resultIn, int cooldown, boolean tagTransfer);
     }
 }
