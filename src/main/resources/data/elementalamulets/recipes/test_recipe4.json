@@ -2,5 +2,5 @@
   "type": "elementalamulets:elemental_combination",
   "elemental": {"item": "minecraft:stick"},
   "ingredients": [{"item": "minecraft:bedrock"}],
-  "result": {"item":"minecraft:stick", "count": 2}
+  "result": "minecraft:stick"
 }

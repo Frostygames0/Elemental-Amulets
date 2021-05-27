@@ -6,5 +6,5 @@
   ],
   "cooldown": 400,
   "tag_transfer": true,
-  "result": {"item":"minecraft:netherite_pickaxe"}
+  "result": "minecraft:netherite_pickaxe"
 }

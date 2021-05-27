@@ -9,5 +9,5 @@
     {"item": "minecraft:iron_ingot"},
     {"item": "minecraft:apple"}
   ],
-  "result": {"item":"elementalamulets:jump_amulet"}
+  "result": "elementalamulets:jump_amulet"
 }

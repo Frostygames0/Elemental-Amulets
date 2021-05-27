@@ -9,5 +9,5 @@
   ],
   "cooldown": 40000,
   "tag_transfer": true,
-  "result": {"item": "elementalamulets:guide_book"}
+  "result": "elementalamulets:guide_book"
 }

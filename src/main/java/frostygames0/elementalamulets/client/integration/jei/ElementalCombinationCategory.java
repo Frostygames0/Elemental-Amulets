@@ -17,6 +17,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
+import java.util.Collections;
+import java.util.List;
+
 public class ElementalCombinationCategory implements IRecipeCategory<ElementalCombination> {
     private static final int OUTPUT_SLOT = 0;
     private static final int ELEMENTAL_SLOT = 1;
@@ -27,11 +30,10 @@ public class ElementalCombinationCategory implements IRecipeCategory<ElementalCo
     private final ITextComponent localizedName;
 
     public ElementalCombinationCategory(IGuiHelper helper) {
-        this.background = helper.drawableBuilder(new ResourceLocation(ElementalAmulets.MOD_ID, "textures/gui/jei/elemental_separation.png"), 0, 0, 147, 70)
+        this.background = helper.drawableBuilder(new ResourceLocation(ElementalAmulets.MOD_ID, "textures/gui/elemental_separator_redesign.png"), 6, 5, 149, 74)
         .addPadding(0, 10, 0, 0).build();
         this.icon = helper.createDrawableIngredient(new ItemStack(ModItems.ELEMENTAL_COMBINATOR_BLOCK.get()));
         this.localizedName = new TranslationTextComponent("jei.elementalamulets.elemental_separation");
-
     }
     @Override
     public ResourceLocation getUid() {
@@ -73,18 +75,18 @@ public class ElementalCombinationCategory implements IRecipeCategory<ElementalCo
     public void setRecipe(IRecipeLayout recipeLayout, ElementalCombination recipe, IIngredients ingredients) {
         IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
         // Elemental Slot
-        guiItemStacks.init(ELEMENTAL_SLOT, true, 26, 26);
+        guiItemStacks.init(ELEMENTAL_SLOT, true, 28, 28);
         // Ingredient slots
-        guiItemStacks.init(2, true, 26, 2);
-        guiItemStacks.init(3, true, 46, 6);
-        guiItemStacks.init(4, true, 50, 26);
-        guiItemStacks.init(5, true, 46, 46);
-        guiItemStacks.init(6, true, 26, 50);
-        guiItemStacks.init(7, true, 6, 46);
-        guiItemStacks.init(8, true, 2, 26);
-        guiItemStacks.init(9, true,6, 6);
+        guiItemStacks.init(2, true, 28, 4);
+        guiItemStacks.init(3, true, 48, 8);
+        guiItemStacks.init(4, true, 52, 28);
+        guiItemStacks.init(5, true, 48, 48);
+        guiItemStacks.init(6, true, 28, 52);
+        guiItemStacks.init(7, true, 8, 48);
+        guiItemStacks.init(8, true, 4, 28);
+        guiItemStacks.init(9, true,8, 8);
         // Output slot
-        guiItemStacks.init(OUTPUT_SLOT, false, 125, 26);
+        guiItemStacks.init(OUTPUT_SLOT, false, 127, 28);
 
         guiItemStacks.set(ingredients);
 
@@ -95,9 +97,15 @@ public class ElementalCombinationCategory implements IRecipeCategory<ElementalCo
     public void draw(ElementalCombination recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
         matrixStack.push();
         ITextComponent cooldown = new TranslationTextComponent("jei.elementalamulets.cooldown", recipe.getCooldown()/20);
-        Minecraft.getInstance().fontRenderer.drawText(matrixStack, cooldown, 4, 72, 0xFF808080);
+        Minecraft.getInstance().fontRenderer.drawText(matrixStack, cooldown, 4, 75, 0xFF808080);
         matrixStack.pop();
     }
 
-
+    @Override
+    public List<ITextComponent> getTooltipStrings(ElementalCombination recipe, double mouseX, double mouseY) {
+        if(mouseX >= 139 && mouseX <= 148 && mouseY <= 5 && mouseY >= 0) {
+            return Collections.singletonList(new TranslationTextComponent("jei.elementalamulets.shapeless"));
+        }
+        return Collections.emptyList();
+    }
 }

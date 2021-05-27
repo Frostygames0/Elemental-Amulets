@@ -4,21 +4,17 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.client.models.AmuletModel;
-import frostygames0.elementalamulets.config.ModConfig;
-import net.minecraft.client.Minecraft;
+import frostygames0.elementalamulets.core.util.NBTUtil;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -34,7 +30,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public abstract class AmuletItem extends Item implements ICurioItem {
-    private boolean hasTier;
+    private final boolean hasTier;
     public static final String TIER_TAG = (ElementalAmulets.MOD_ID+":tier");
     public AmuletItem(Properties properties, boolean hasTier) {
         super(properties);
@@ -58,16 +54,10 @@ public abstract class AmuletItem extends Item implements ICurioItem {
         return getStackWithTier(new ItemStack(this), 1);
     }
 
-    // TODO Maybe move all helper methods to a different class
     public static ItemStack getStackWithTier(ItemStack stack, int tier) {
         if(stack.getItem() instanceof AmuletItem) {
             if(((AmuletItem) stack.getItem()).hasTier) {
-                CompoundNBT nbt = new CompoundNBT();
-                if (stack.hasTag()) {
-                    nbt = stack.getTag();
-                }
-                nbt.putInt(TIER_TAG, tier);
-                stack.setTag(nbt);
+                NBTUtil.putInteger(stack, TIER_TAG, tier);
             }
         }
         return stack;
@@ -87,7 +77,7 @@ public abstract class AmuletItem extends Item implements ICurioItem {
         }
     }
 
-    @Override
+    /*@Override
     public void curioBreak(ItemStack stack, LivingEntity livingEntity) {
         World world = livingEntity.getEntityWorld();
             if(livingEntity instanceof PlayerEntity) {
@@ -96,7 +86,7 @@ public abstract class AmuletItem extends Item implements ICurioItem {
                 player.sendStatusMessage(new TranslationTextComponent("player.elementalamulets.brokenamulet.warn", new TranslationTextComponent(stack.getTranslationKey())), true);
                 if(ModConfig.cached.DISPLAY_TOTEM_LIKE_ANIM_ONBREAK) Minecraft.getInstance().gameRenderer.displayItemActivation(stack);
             }
-    }
+    }*/
 
     @Override
     public boolean canRender(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
@@ -133,10 +123,7 @@ public abstract class AmuletItem extends Item implements ICurioItem {
 
     public int getTier(ItemStack stack) {
         if(this.hasTier()) {
-            if (stack.hasTag() && stack.getTag().contains(TIER_TAG)) {
-                int tier = stack.getTag().getInt(TIER_TAG);
-                return Math.max(tier, 0);
-            }
+            return Math.max(NBTUtil.getInteger(stack, TIER_TAG), 0);
         }
         return 0;
     }

@@ -59,7 +59,7 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
                     LightningBoltEntity lightbolt = new LightningBoltEntity(EntityType.LIGHTNING_BOLT, world);
                     lightbolt.moveForced(Vector3d.copyCenteredHorizontally(this.pos.add(0, 1, 0)));
                     lightbolt.setEffectOnly(true);
-                    ElementalCombination recipe = this.world.getRecipeManager().getRecipe(ModRecipes.ELEMENTAL_SEPARATION_RECIPE, new RecipeWrapper(handler), this.world).orElse(null);
+                    ElementalCombination recipe = this.world.getRecipeManager().getRecipe(ModRecipes.ELEMENTAL_COMBINATION_TYPE, new RecipeWrapper(handler), this.world).orElse(null);
                     ItemStack result;
                     if (recipe != null) {
                         result = recipe.getCraftingResult(new RecipeWrapper(handler)); // Result
@@ -122,7 +122,6 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
         return new ItemStackHandler(size) {
             @Override
             protected void onContentsChanged(int slot) {
-                super.onContentsChanged(slot);
                 markDirty();
             }
         };

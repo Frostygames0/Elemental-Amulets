@@ -19,8 +19,6 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 
-;
-
 public class SpeedAmulet extends AmuletItem implements ISpeedItem {
     public static UUID MODIFIER_UUID = UUID.fromString("06c06b38-3779-4ca2-b678-7c111c77faef");
     public SpeedAmulet(Properties properties) {
@@ -36,11 +34,10 @@ public class SpeedAmulet extends AmuletItem implements ISpeedItem {
 
     @Override
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
-        LivingEntity entity = livingEntity;
-        if(!entity.world.isRemote()) {
+        if(!livingEntity.world.isRemote()) {
             ModifiableAttributeInstance att = livingEntity.getAttribute(Attributes.MOVEMENT_SPEED);
             AttributeModifier attMod = new AttributeModifier(MODIFIER_UUID, new ResourceLocation(ElementalAmulets.MOD_ID, "speed").toString(),
-                    this.getSpeed(stack), AttributeModifier.Operation.MULTIPLY_TOTAL);
+                    this.getSpeed(stack), AttributeModifier.Operation.MULTIPLY_BASE);
             if(livingEntity.isSprinting()) {
                 if (!att.hasModifier(attMod)) {
                     att.applyNonPersistentModifier(attMod);
@@ -66,7 +63,7 @@ public class SpeedAmulet extends AmuletItem implements ISpeedItem {
 
     @Override
     public float getSpeed(ItemStack stack) {
-        return 1.25f*this.getTier(stack);
+        return 1.2f*this.getTier(stack);
     }
 
 

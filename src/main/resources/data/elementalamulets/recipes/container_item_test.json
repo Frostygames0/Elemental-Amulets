@@ -11,5 +11,5 @@
     {"item": "minecraft:coarse_dirt"},
     {"item": "minecraft:stick"}
   ],
-  "result": {"item": "minecraft:obsidian"}
+  "result": "minecraft:obsidian"
 }

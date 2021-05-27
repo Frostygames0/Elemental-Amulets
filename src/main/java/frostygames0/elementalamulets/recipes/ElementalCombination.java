@@ -2,6 +2,7 @@ package frostygames0.elementalamulets.recipes;
 
 import frostygames0.elementalamulets.core.init.ModBlocks;
 import frostygames0.elementalamulets.core.init.ModRecipes;
+import frostygames0.elementalamulets.core.util.NBTUtil;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import frostygames0.elementalamulets.recipes.ingredient.AmuletIngredient;
 import net.minecraft.inventory.IInventory;
@@ -40,33 +41,31 @@ public class ElementalCombination implements IRecipe<IInventory> {
     @Override
     public boolean matches(IInventory inv, World worldIn) {
         List<ItemStack> inputs = new ArrayList<>();
-        int size = 0;
         for(int i = 2; i < inv.getSizeInventory(); ++i) {
             ItemStack stack = inv.getStackInSlot(i);
             if(!stack.isEmpty()) {
                 inputs.add(stack);
-                size++;
             }
 
         }
-        return size == ingredients.size() && this.elemental.test(inv.getStackInSlot(1)) && RecipeMatcher.findMatches(inputs, ingredients) != null; // I don't know exactly if this is correct way but it works fine
+        return inputs.size() == ingredients.size() && this.elemental.test(inv.getStackInSlot(1))
+                && RecipeMatcher.findMatches(inputs, ingredients) != null; // I don't know exactly if this is correct way but it works fine
     }
 
     @Override
     public ItemStack getCraftingResult(IInventory inv) {
         ItemStack stack = this.result.copy();
         if(this.tagTransfer) {
-            CompoundNBT nbt = inv.getStackInSlot(1).getTag();
-            if(nbt != null) {
-                if(nbt.contains(AmuletItem.TIER_TAG)) {
-                    if(stack.hasTag() && stack.getTag().contains(AmuletItem.TIER_TAG)) {
-                        nbt.putInt(AmuletItem.TIER_TAG, stack.getTag().getInt(AmuletItem.TIER_TAG));
-                    } else {
-                        nbt.remove(AmuletItem.TIER_TAG);
-                    }
+            CompoundNBT nbt = inv.getStackInSlot(1).getOrCreateTag();
+            CompoundNBT tag = nbt.copy();
+            if(tag.contains(AmuletItem.TIER_TAG)) {
+                if(NBTUtil.isSafeToGet(stack, AmuletItem.TIER_TAG)) {
+                    tag.putInt(AmuletItem.TIER_TAG, stack.getOrCreateTag().getInt(AmuletItem.TIER_TAG));
+                } else {
+                    tag.remove(AmuletItem.TIER_TAG);
                 }
-                stack.setTag(nbt);
             }
+            stack.setTag(tag);
         }
         return stack;
     }
@@ -143,11 +142,11 @@ public class ElementalCombination implements IRecipe<IInventory> {
 
     @Override
     public IRecipeSerializer<?> getSerializer() {
-        return ModRecipes.ELEMENTAL_SEPARATION.get();
+        return ModRecipes.ELEMENTAL_COMBINATION.get();
     }
 
     @Override
     public IRecipeType<?> getType() {
-        return ModRecipes.ELEMENTAL_SEPARATION_RECIPE;
+        return ModRecipes.ELEMENTAL_COMBINATION_TYPE;
     }
 }

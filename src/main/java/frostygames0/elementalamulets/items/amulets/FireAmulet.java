@@ -35,7 +35,6 @@ public class FireAmulet extends AmuletItem implements IFireItem {
 
     @Override
     public float getLavaResist(ItemStack stack) {
-        return 0.2f*this.getTier(stack);
+        return 0.25f*this.getTier(stack);
     }
-
 }

@@ -51,7 +51,7 @@ public class JEIPlugin implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
 
         //Elemental combination JEI category
-        registration.addRecipes(Minecraft.getInstance().world.getRecipeManager().getRecipesForType(ModRecipes.ELEMENTAL_SEPARATION_RECIPE), ElementalCombinationCategory.CATEGORY_ID);
+        registration.addRecipes(ModRecipes.getRecipes(Minecraft.getInstance().world), ElementalCombinationCategory.CATEGORY_ID);
 
         // Item descriptions
         List<ItemStack> amulets = ModItems.ITEMS.getEntries().stream().map(RegistryObject::get).filter(item -> item instanceof AmuletItem).map(ItemStack::new).collect(Collectors.toList());

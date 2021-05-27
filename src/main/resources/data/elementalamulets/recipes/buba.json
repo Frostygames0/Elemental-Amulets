@@ -1,9 +1,16 @@
 {
   "type": "elementalamulets:elemental_combination",
-  "elemental": {"item": "elementalamulets:jump_amulet", "tier": 1},
+  "elemental": {"item": "elementalamulets:jump_amulet", "tier": 2},
   "ingredients": [
-    {"item": "minecraft:dirt"}
+    {"tag": "elementalamulets:elements"},
+    {"tag": "elementalamulets:elements"},
+    {"tag": "elementalamulets:elements"},
+    {"tag": "elementalamulets:elements"},
+    {"tag": "elementalamulets:elements"},
+    {"tag": "elementalamulets:elements"},
+    {"tag": "elementalamulets:elements"},
+    {"tag": "elementalamulets:elements"}
   ],
   "tag_transfer": true,
-  "result": {"item": "elementalamulets:jump_amulet", "nbt": {"elementalamulets:tier": 2}}
+  "result": {"item": "elementalamulets:jump_amulet", "nbt": {"elementalamulets:tier": 4}}
 }

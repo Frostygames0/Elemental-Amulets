@@ -10,8 +10,6 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -87,22 +85,6 @@ public class ElementalCombinator extends Block {
             }
             super.onReplaced(state,worldIn,pos, newState, isMoving);
         }
-    }
-
-    @Override
-    public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
-        TileEntity te = worldIn.getTileEntity(pos);
-        if(te instanceof ElementalCombinatorTile) {
-            ElementalCombinatorTile tile = (ElementalCombinatorTile) te;
-            if(!worldIn.isRemote() && tile.getCooldown() > 0) {
-                ItemStack stackToDrop = new ItemStack(this.asItem());
-                CompoundNBT nbt = new CompoundNBT();
-                nbt.putInt("cooldown", tile.getCooldown());
-                stackToDrop.setTagInfo("BlockEntityTag", nbt);
-                spawnAsEntity(worldIn, pos, stackToDrop);
-            }
-        }
-        super.onBlockHarvested(worldIn, pos, state, player);
     }
 
     @Override

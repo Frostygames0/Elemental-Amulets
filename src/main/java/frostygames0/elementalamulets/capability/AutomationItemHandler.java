@@ -50,4 +50,6 @@ public class AutomationItemHandler implements IItemHandlerModifiable {
     public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
         return slot != 0;
     }
+
+
 }

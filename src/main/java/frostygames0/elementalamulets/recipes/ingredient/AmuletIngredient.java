@@ -2,6 +2,7 @@ package frostygames0.elementalamulets.recipes.ingredient;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import frostygames0.elementalamulets.core.util.NBTUtil;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -32,25 +33,24 @@ public class AmuletIngredient extends Ingredient {
         return this.stack.getItem() == test.getItem();
     }
 
+    public ItemStack getMatchingStack() {
+        return this.stack;
+    }
+
     @Override
     public IIngredientSerializer<? extends Ingredient> getSerializer() {
         return Serializer.INSTANCE;
     }
 
     private boolean compareAmuletTiers(ItemStack stack, ItemStack other) {
-        if (stack.hasTag() && stack.getTag().contains(AmuletItem.TIER_TAG) && other.hasTag() && other.getTag().contains(AmuletItem.TIER_TAG)) {
-            int tier1 = stack.getTag().getInt(AmuletItem.TIER_TAG);
-            int tier2 = other.getTag().getInt(AmuletItem.TIER_TAG);
-            return tier1 == tier2;
-        }
-        return false;
+        return NBTUtil.getInteger(stack, AmuletItem.TIER_TAG) == NBTUtil.getInteger(other, AmuletItem.TIER_TAG);
     }
 
     private static ItemStack getAmuletFromJson(JsonObject json) {
         String itemName = JSONUtils.getString(json, "item");
 
         Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemName));
-        if (item == null) throw new JsonSyntaxException("Unknown item '" + itemName + "'");
+        if (item == null) throw new JsonSyntaxException("Item: "+itemName+" does not exist!");
         if (item instanceof AmuletItem) {
             int tier = JSONUtils.getInt(json, "tier", 1);
             if (tier > 4 || tier < 0) {
@@ -64,19 +64,16 @@ public class AmuletIngredient extends Ingredient {
         public static class Serializer implements IIngredientSerializer<AmuletIngredient> {
             public static final Serializer INSTANCE = new Serializer();
 
-            // Use this to read it from buffer;
             @Override
             public AmuletIngredient parse(PacketBuffer buffer) {
                 return new AmuletIngredient(buffer.readItemStack());
             }
 
-            // Use this to read it from json;
             @Override
             public AmuletIngredient parse(JsonObject json) {
                 return new AmuletIngredient(getAmuletFromJson(json));
             }
 
-            // Use this to write to buffer
             @Override
             public void write(PacketBuffer buffer, AmuletIngredient ingredient) {
                 buffer.writeItemStack(ingredient.stack);
