@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "elementalamuletselemental_shards": {
+    "elementalamulets:elemental_shards": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -25,7 +25,7 @@
   },
   "requirements": [
     [
-      "elementalamuletselemental_shards",
+      "elementalamulets:elemental_shards",
       "has_the_recipe"
     ]
   ]

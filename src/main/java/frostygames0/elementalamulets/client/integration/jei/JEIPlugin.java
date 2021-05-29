@@ -5,19 +5,19 @@ import frostygames0.elementalamulets.blocks.containers.ElementalCombinatorContai
 import frostygames0.elementalamulets.core.init.ModBlocks;
 import frostygames0.elementalamulets.core.init.ModItems;
 import frostygames0.elementalamulets.core.init.ModRecipes;
+import frostygames0.elementalamulets.core.init.ModTags;
+import frostygames0.elementalamulets.core.util.NBTUtil;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.registration.*;
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.fml.RegistryObject;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 @JeiPlugin
@@ -34,16 +34,13 @@ public class JEIPlugin implements IModPlugin {
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        registration.addRecipeCatalyst(new ItemStack(ModBlocks.ELEMENTAL_COMBINATOR.get()), ElementalCombinationCategory.CATEGORY_ID);
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.ELEMENTAL_COMBINATOR.get()), ElementalCombinationCategory.ID);
     }
 
     @Override
     public void registerItemSubtypes(ISubtypeRegistration registration) {
-        for(RegistryObject<Item> reg : ModItems.ITEMS.getEntries()) {
-            Item item = reg.get();
-            if(item instanceof AmuletItem) {
-                registration.registerSubtypeInterpreter(item, AmuletTierSubtypeInterpreter.INSTANCE);
-            }
+        for(AmuletItem item : ModItems.getAmulets()) {
+            registration.registerSubtypeInterpreter(item, (stack, ctx) -> String.valueOf(NBTUtil.getInteger(stack, AmuletItem.TIER_TAG)));
         }
     }
 
@@ -51,17 +48,24 @@ public class JEIPlugin implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
 
         //Elemental combination JEI category
-        registration.addRecipes(ModRecipes.getRecipes(Minecraft.getInstance().world), ElementalCombinationCategory.CATEGORY_ID);
+        registration.addRecipes(ModRecipes.getRecipes(Minecraft.getInstance().world), ElementalCombinationCategory.ID);
 
         // Item descriptions
-        List<ItemStack> amulets = ModItems.ITEMS.getEntries().stream().map(RegistryObject::get).filter(item -> item instanceof AmuletItem).map(ItemStack::new).collect(Collectors.toList());
-        registration.addIngredientInfo(amulets, VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.amulets.description"));
+        registration.addIngredientInfo(ModItems.getAmulets().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.amulets.description"));
+        registration.addIngredientInfo(ModTags.ELEMENTS.getAllElements().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new StringTextComponent("PLACEHOLDER TEXT"));
+
+        registration.addIngredientInfo(ModTags.AIR_ELEMENT_CONVERTIBLE.getAllElements().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new StringTextComponent("AIR ABOBA"));
+        registration.addIngredientInfo(ModTags.WATER_ELEMENT_CONVERTIBLE.getAllElements().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new StringTextComponent("WATER ABOBA"));
+        registration.addIngredientInfo(ModTags.FIRE_ELEMENT_CONVERTIBLE.getAllElements().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new StringTextComponent("FIRE ABOBA"));
+        registration.addIngredientInfo(ModTags.EARTH_ELEMENT_CONVERTIBLE.getAllElements().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new StringTextComponent("EARTH ABOBA"));
+
+
         registration.addIngredientInfo(new ItemStack(ModItems.GUIDE_BOOK.get()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.guide_book.description"));
         registration.addIngredientInfo(new ItemStack(ModItems.ELEMENTAL_COMBINATOR_BLOCK.get()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.elemental_combinator.description"));
     }
 
     @Override
     public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
-        registration.addRecipeTransferHandler(ElementalCombinatorContainer.class, ElementalCombinationCategory.CATEGORY_ID, 1, 9, 10, 36);
+        registration.addRecipeTransferHandler(ElementalCombinatorContainer.class, ElementalCombinationCategory.ID, 1, 9, 10, 36);
     }
 }

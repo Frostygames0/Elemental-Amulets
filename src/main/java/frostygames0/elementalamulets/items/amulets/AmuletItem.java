@@ -31,7 +31,7 @@ import java.util.List;
 
 public abstract class AmuletItem extends Item implements ICurioItem {
     private final boolean hasTier;
-    public static final String TIER_TAG = (ElementalAmulets.MOD_ID+":tier");
+    public static final String TIER_TAG = ElementalAmulets.MOD_ID+":tier";
     public AmuletItem(Properties properties, boolean hasTier) {
         super(properties);
         this.hasTier = hasTier;
@@ -44,7 +44,7 @@ public abstract class AmuletItem extends Item implements ICurioItem {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
-        if(this.getTier(stack) < 1 || !this.hasTier) return;
+        if(this.getTier(stack) == 0) return;
         tooltip.add(new TranslationTextComponent("item.elementalamulets.common_amulet.tooltip.tier").mergeStyle(TextFormatting.GOLD)
                 .appendSibling(new StringTextComponent("" + this.getTier(stack)).mergeStyle(TextFormatting.YELLOW)));
     }

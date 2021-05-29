@@ -60,6 +60,7 @@ public class ElementalAmulets {
         event.enqueueWork(ModNetworking::registerMessages);
     }
 
+
     private void clientSetup(final FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
             ScreenManager.registerFactory(ModContainers.ELEMENTAL_COMBINATOR_CONTAINER.get(), ElementalCrafterGUI::new);

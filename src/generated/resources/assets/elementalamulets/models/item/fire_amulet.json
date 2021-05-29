@@ -1,32 +1,33 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "elementalamulets:item/fire_amulet"
+    "layer0": "elementalamulets:item/fire_amulet",
+    "layer1": "elementalamulets:item/amulet_tiers/no_tier"
   },
   "overrides": [
     {
       "predicate": {
         "elementalamulets:tier": 1.0
       },
-      "model": "elementalamulets:item/fire_amulet_tier1"
+      "model": "elementalamulets:item/subtypes/fire_amulet_tier1"
     },
     {
       "predicate": {
         "elementalamulets:tier": 2.0
       },
-      "model": "elementalamulets:item/fire_amulet_tier2"
+      "model": "elementalamulets:item/subtypes/fire_amulet_tier2"
     },
     {
       "predicate": {
         "elementalamulets:tier": 3.0
       },
-      "model": "elementalamulets:item/fire_amulet_tier3"
+      "model": "elementalamulets:item/subtypes/fire_amulet_tier3"
     },
     {
       "predicate": {
         "elementalamulets:tier": 4.0
       },
-      "model": "elementalamulets:item/fire_amulet_tier4"
+      "model": "elementalamulets:item/subtypes/fire_amulet_tier4"
     }
   ]
 }

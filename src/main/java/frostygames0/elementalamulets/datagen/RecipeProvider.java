@@ -27,16 +27,16 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .key('4', ModItems.ELEMENTAL_SHARDS.get())
                 .key('0', ItemTags.STONE_CRAFTING_MATERIALS)
                 .key('#', ItemTags.PLANKS)
-                .addCriterion(ElementalAmulets.MOD_ID+"elemental_shards", InventoryChangeTrigger.Instance.forItems(ModItems.ELEMENTAL_SHARDS.get()))
+                .addCriterion(ElementalAmulets.MOD_ID+":elemental_shards", InventoryChangeTrigger.Instance.forItems(ModItems.ELEMENTAL_SHARDS.get()))
                 .build(consumer);
         ShapelessRecipeBuilder.shapelessRecipe(ModItems.GUIDE_BOOK.get())
                 .addIngredient(Items.BOOK)
                 .addIngredient(ModItems.ELEMENTAL_SHARDS.get())
-                .addCriterion(ElementalAmulets.MOD_ID+"elemental_shards", InventoryChangeTrigger.Instance.forItems(ModItems.ELEMENTAL_SHARDS.get()))
+                .addCriterion(ElementalAmulets.MOD_ID+":elemental_shards", InventoryChangeTrigger.Instance.forItems(ModItems.ELEMENTAL_SHARDS.get()))
                 .build(consumer);
         CookingRecipeBuilder.cookingRecipe(Ingredient.fromItems(ModItems.ELEMENTAL_STONE.get()),
                 ModItems.ELEMENTAL_SHARDS.get(), 1, 120, IRecipeSerializer.SMELTING)
-                .addCriterion(ElementalAmulets.MOD_ID+"elemental_ore", InventoryChangeTrigger.Instance.forItems(ModItems.ELEMENTAL_STONE.get()))
+                .addCriterion(ElementalAmulets.MOD_ID+":elemental_ore", InventoryChangeTrigger.Instance.forItems(ModItems.ELEMENTAL_STONE.get()))
                 .build(consumer);
     }
 }

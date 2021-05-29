@@ -32,11 +32,11 @@ public class ItemModelProvider extends net.minecraftforge.client.model.generator
     private void amuletTexture(AmuletItem item) {
         if(item.hasTier()) {
             withExistingParent(name(item), "item/generated")
-                    .texture("layer0", modLoc("item/" + name(item)))
-                    .override().predicate(modLoc("tier"), 1).model(withExistingParent("item/subtypes/" + addTierSuffix(item, 1), modLoc("item/" + name(item))).texture("layer0", modLoc("item/" + name(item))).texture("layer1", modLoc("item/amulet_tiers/level" + 1))).end()
-                    .override().predicate(modLoc("tier"), 2).model(withExistingParent("item/subtypes/" + addTierSuffix(item, 2), modLoc("item/" + name(item))).texture("layer0", modLoc("item/" + name(item))).texture("layer1", modLoc("item/amulet_tiers/level" + 2))).end()
-                    .override().predicate(modLoc("tier"), 3).model(withExistingParent("item/subtypes/" + addTierSuffix(item, 3), modLoc("item/" + name(item))).texture("layer0", modLoc("item/" + name(item))).texture("layer1", modLoc("item/amulet_tiers/level" + 3))).end()
-                    .override().predicate(modLoc("tier"), 4).model(withExistingParent("item/subtypes/" + addTierSuffix(item, 4), modLoc("item/" + name(item))).texture("layer0", modLoc("item/" + name(item))).texture("layer1", modLoc("item/amulet_tiers/level" + 4))).end();
+                    .texture("layer0", modLoc("item/" + name(item))).texture("layer1", modLoc("item/amulet_tiers/no_tier"))
+                    .override().predicate(modLoc("tier"), 1).model(withExistingParent("item/subtypes/" + addTierSuffix(item, 1), modLoc("item/" + name(item))).texture("layer1", modLoc("item/amulet_tiers/level" + 1))).end()
+                    .override().predicate(modLoc("tier"), 2).model(withExistingParent("item/subtypes/" + addTierSuffix(item, 2), modLoc("item/" + name(item))).texture("layer1", modLoc("item/amulet_tiers/level" + 2))).end()
+                    .override().predicate(modLoc("tier"), 3).model(withExistingParent("item/subtypes/" + addTierSuffix(item, 3), modLoc("item/" + name(item))).texture("layer1", modLoc("item/amulet_tiers/level" + 3))).end()
+                    .override().predicate(modLoc("tier"), 4).model(withExistingParent("item/subtypes/" + addTierSuffix(item, 4), modLoc("item/" + name(item))).texture("layer1", modLoc("item/amulet_tiers/level" + 4))).end();
         } else {
             singleTexture(name(item), mcLoc("item/generated"), "layer0", modLoc("item/"+name(item)));
         }

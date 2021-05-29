@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:blaze_powder",
+    "minecraft:blaze_rod",
+    "minecraft:netherite_ingot",
+    "minecraft:netherite_block",
+    "minecraft:netherite_scrap",
+    "minecraft:ancient_debris",
+    "minecraft:lava_bucket"
+  ]
+}

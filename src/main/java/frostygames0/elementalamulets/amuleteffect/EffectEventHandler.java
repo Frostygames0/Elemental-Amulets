@@ -24,5 +24,4 @@ public class EffectEventHandler {
         JumpAmuletEffect.onLivingAttack(event);
         FireAmuletEffect.onLivingAttack(event);
     }
-
  }

@@ -63,7 +63,7 @@ public class SpeedAmulet extends AmuletItem implements ISpeedItem {
 
     @Override
     public float getSpeed(ItemStack stack) {
-        return 1.2f*this.getTier(stack);
+        return 1.08f*this.getTier(stack);
     }
 
 

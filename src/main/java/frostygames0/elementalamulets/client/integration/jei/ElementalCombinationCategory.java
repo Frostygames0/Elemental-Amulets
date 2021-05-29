@@ -24,7 +24,7 @@ public class ElementalCombinationCategory implements IRecipeCategory<ElementalCo
     private static final int OUTPUT_SLOT = 0;
     private static final int ELEMENTAL_SLOT = 1;
 
-    public static final ResourceLocation CATEGORY_ID = new ResourceLocation(ElementalAmulets.MOD_ID, "elemental_combination_category");
+    public static final ResourceLocation ID = new ResourceLocation(ElementalAmulets.MOD_ID, "elemental_combination");
     private final IDrawable background;
     private final IDrawable icon;
     private final ITextComponent localizedName;
@@ -37,7 +37,7 @@ public class ElementalCombinationCategory implements IRecipeCategory<ElementalCo
     }
     @Override
     public ResourceLocation getUid() {
-        return CATEGORY_ID;
+        return ID;
     }
 
     @Override

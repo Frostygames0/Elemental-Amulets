@@ -3,15 +3,15 @@ package frostygames0.elementalamulets.core.init;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.core.util.ElementalColors;
 import frostygames0.elementalamulets.items.GuideBook;
-import frostygames0.elementalamulets.items.amulets.FireAmulet;
-import frostygames0.elementalamulets.items.amulets.InvisibilityAmulet;
-import frostygames0.elementalamulets.items.amulets.JumpAmulet;
-import frostygames0.elementalamulets.items.amulets.SpeedAmulet;
+import frostygames0.elementalamulets.items.amulets.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ElementalAmulets.MOD_ID);
@@ -37,6 +37,10 @@ public class ModItems {
     public static final RegistryObject<Item> AIR_ELEMENT = ITEMS.register("air_element",
             () -> new Item(new Item.Properties().group(ElementalAmulets.GROUP).rarity(ElementalColors.AIR)));
 
+    // Sub-Elements
+    public static final RegistryObject<Item> JUMP_ELEMENT = ITEMS.register("jump_element",
+            () -> new Item(new Item.Properties().group(ElementalAmulets.GROUP).rarity(ElementalColors.JUMP)));
+
     // Amulets
     public static final RegistryObject<Item> EMPTY_AMULET = ITEMS.register("empty_amulet",
             () -> new Item(new Item.Properties().group(ElementalAmulets.GROUP).maxStackSize(1)));
@@ -48,6 +52,15 @@ public class ModItems {
             () -> new JumpAmulet(new Item.Properties().group(ElementalAmulets.GROUP).rarity(ElementalColors.JUMP).maxDamage(1000)));
     public static final RegistryObject<Item> INVISIBILITY_AMULET = ITEMS.register("invisibility_amulet",
             () -> new InvisibilityAmulet(new Item.Properties().group(ElementalAmulets.GROUP).rarity(ElementalColors.AIR).maxDamage(1000)));
+
+    public static List<AmuletItem> getAmulets() {
+        List<AmuletItem> items = new ArrayList<>();
+        for(RegistryObject<Item> reg : ITEMS.getEntries()) {
+            Item item = reg.get();
+            if(item instanceof AmuletItem) items.add((AmuletItem) item);
+        }
+        return items;
+    }
 
 
 
