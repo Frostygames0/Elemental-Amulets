@@ -24,9 +24,12 @@ public class ModConfig {
         private final ForgeConfigSpec.IntValue JUMP_AMULET_USAGE_DMG;
         private final ForgeConfigSpec.IntValue INVISIBILITY_AMULET_USAGE_DMG;
 
+        private final ForgeConfigSpec.BooleanValue GIVE_GUIDE_ON_FIRST_JOIN;
+
         public Server(ForgeConfigSpec.Builder builder) {
             builder.push("General");
-            builder.push("Amulets");
+            GIVE_GUIDE_ON_FIRST_JOIN = builder.comment("Will player receive guide on first join").define("give_guide_on_join", false);
+            builder.push("Amulets [NOT WORKING]");
             FIRE_AMULET_USAGE_DMG = builder.comment("Defines damage that fire amulet will receive on it's usage [WARNING! Setting this too high can cause unexpected behaviour!]")
                     .defineInRange("fire_amulet_usage_dmg", 1, 0, 1000);
             SPEED_AMULET_USAGE_DMG = builder.comment("Defines damage that speed amulet will receive on it's usage [WARNING! Setting this too high can cause unexpected behaviour!]")
@@ -65,11 +68,13 @@ public class ModConfig {
         public static int SPEED_AMULET_USAGE_DMG;
         public static int JUMP_AMULET_USAGE_DMG;
         public static int INVISIBILITY_AMULET_USAGE_DMG;
+        public static boolean GIVE_GUIDE_ON_FIRST_JOIN;
         private static void bakeServerConfig() {
             FIRE_AMULET_USAGE_DMG = SERVER.FIRE_AMULET_USAGE_DMG.get();
             SPEED_AMULET_USAGE_DMG = SERVER.SPEED_AMULET_USAGE_DMG.get();
             JUMP_AMULET_USAGE_DMG = SERVER.JUMP_AMULET_USAGE_DMG.get();
             INVISIBILITY_AMULET_USAGE_DMG = SERVER.INVISIBILITY_AMULET_USAGE_DMG.get();
+            GIVE_GUIDE_ON_FIRST_JOIN = SERVER.GIVE_GUIDE_ON_FIRST_JOIN.get();
 
         }
         public static boolean DISPLAY_TOTEM_LIKE_ANIM_ONBREAK;

@@ -10,22 +10,22 @@ import net.minecraftforge.fml.network.NetworkEvent;
 import java.util.Objects;
 import java.util.function.Supplier;
 
-public class CombineElementalPacket {
+public class SCombineElementalPacket {
     private BlockPos pos;
 
-    public CombineElementalPacket(BlockPos pos) {
+    public SCombineElementalPacket(BlockPos pos) {
         this.pos = pos;
     }
 
-    public CombineElementalPacket(PacketBuffer buffer) {
+    public SCombineElementalPacket(PacketBuffer buffer) {
         this.pos = buffer.readBlockPos();
     }
 
-    public static void toBytes(CombineElementalPacket pkt, PacketBuffer buffer) {
+    public static void toBytes(SCombineElementalPacket pkt, PacketBuffer buffer) {
         buffer.writeBlockPos(pkt.pos);
     }
 
-    public static void handle(CombineElementalPacket msg, Supplier<NetworkEvent.Context> sup) {
+    public static void handle(SCombineElementalPacket msg, Supplier<NetworkEvent.Context> sup) {
         NetworkEvent.Context ctx = sup.get();
         World world = Objects.requireNonNull(ctx.getSender()).world;
         ctx.enqueueWork(() -> {

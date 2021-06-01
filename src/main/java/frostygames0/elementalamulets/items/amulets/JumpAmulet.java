@@ -35,7 +35,7 @@ public class JumpAmulet extends AmuletItem implements IJumpItem {
 
     @Override
     public float getFallResist(ItemStack stack) {
-        return getJump(stack)*10-1f;
+        return getJump(stack)*10;
     }
 
 }

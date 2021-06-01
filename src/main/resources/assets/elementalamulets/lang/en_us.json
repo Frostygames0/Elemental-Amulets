@@ -10,6 +10,10 @@
   "item.elementalamulets.earth_element": "Earth Element",
   "item.elementalamulets.air_element": "Air Element",
 
+  "item.elementalamulets.jump_element": "Jump Element",
+
+  "item.elementalamulets.empty_amulet": "Empty Amulet",
+
   "item.elementalamulets.common_amulet.tooltip.tier": "%sTier: ",
 
   "item.elementalamulets.fire_amulet": "Fire amulet",
@@ -34,10 +38,12 @@
 
   "jei.elementalamulets.cooldown": "Cooldown - %ss",
   "jei.elementalamulets.elemental_separation": "Elemental Combination",
-  "jei.elementalamulets.shapeless": "All ingredients except elemental(middle slot) can be placed however you like.",
+  "jei.elementalamulets.shapeless": "Shapeless recipe (except central slot).",
   "jei.elementalamulets.amulets.description": "Amulets - are magical jewels that grant you a variety of powers.\n More about them you can read in Elemental Guide",
   "jei.elementalamulets.guide_book.description": "A book with all information about this mod, to access it you need Patchouli!",
   "jei.elementalamulets.elemental_combinator.description": "Allows you to combine things and get unique and powerful items!\n More about it you can read in Elemental Guide",
+  "jei.elementalamulets.elements.description": "Elements are four main powers in Minecraft's world!",
+  "jei.elementalamulets.convertibles.description": "When 6 of these are combined with empty element(Elemental Shards) they produce %s ",
 
   "patchouli.elementalamulets.not_present": "Patchouli is not detected! Please install patchouli in order to get access to this book"
 }

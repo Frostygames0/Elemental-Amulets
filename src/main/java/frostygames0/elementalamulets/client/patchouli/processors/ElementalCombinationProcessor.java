@@ -1,13 +1,11 @@
 package frostygames0.elementalamulets.client.patchouli.processors;
 
 import com.google.gson.JsonSyntaxException;
-import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.recipes.ElementalCombination;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.item.crafting.RecipeManager;
 import net.minecraft.util.ResourceLocation;
 import vazkii.patchouli.api.IComponentProcessor;
 import vazkii.patchouli.api.IVariable;
@@ -18,14 +16,18 @@ import java.util.stream.Collectors;
 
 public class ElementalCombinationProcessor implements IComponentProcessor {
     private ElementalCombination recipe;
+
     @Override
     public void setup(IVariableProvider variables) {
         String recipeId = variables.get("recipe").asString();
-        RecipeManager manager = Minecraft.getInstance().world.getRecipeManager();
-        IRecipe<?> recipe1 = manager.getRecipe(new ResourceLocation(ElementalAmulets.MOD_ID, recipeId)).orElseThrow(IllegalArgumentException::new);
-        if(recipe1 instanceof ElementalCombination) {
-            recipe = (ElementalCombination) recipe1;
-        } else throw new JsonSyntaxException("Expected to find Elemental Combination recipe!");
+        ClientWorld world = Minecraft.getInstance().world;
+        if(world != null) {
+            try {
+                recipe = (ElementalCombination) world.getRecipeManager().getRecipe(new ResourceLocation(recipeId)).orElseThrow(IllegalArgumentException::new);
+            } catch (ClassCastException e) {
+                throw new JsonSyntaxException("Provided recipe is not Elemental Combination");
+            }
+        }
     }
 
     @Override

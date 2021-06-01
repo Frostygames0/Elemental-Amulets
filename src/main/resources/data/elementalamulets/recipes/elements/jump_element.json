@@ -1,0 +1,15 @@
+{
+  "type": "elementalamulets:elemental_combination",
+  "elemental": {"item":"elementalamulets:elemental_shards"},
+  "ingredients": [
+    {"item": "minecraft:slime_ball"},
+    {"item": "minecraft:slime_ball"},
+    {"item": "minecraft:slime_ball"},
+    {"item": "minecraft:slime_ball"},
+    {"item": "minecraft:slime_ball"},
+    {"item": "minecraft:slime_ball"},
+    {"item": "minecraft:slime_ball"},
+    {"item": "minecraft:slime_ball"}
+  ],
+  "result": "elementalamulets:jump_element"
+}

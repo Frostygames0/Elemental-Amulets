@@ -12,5 +12,4 @@ public class ModTags {
     public static final ITag.INamedTag<Item> WATER_ELEMENT_CONVERTIBLE = ItemTags.makeWrapperTag("elementalamulets:water_element_convertible");
     public static final ITag.INamedTag<Item> AIR_ELEMENT_CONVERTIBLE = ItemTags.makeWrapperTag("elementalamulets:air_element_convertible");
     public static final ITag.INamedTag<Item> EARTH_ELEMENT_CONVERTIBLE = ItemTags.makeWrapperTag("elementalamulets:earth_element_convertible");
-
 }

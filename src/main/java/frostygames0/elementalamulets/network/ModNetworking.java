@@ -21,15 +21,15 @@ public class ModNetworking {
                 () -> PROTOCOL_VERSION,
                 PROTOCOL_VERSION::equals,
                 PROTOCOL_VERSION::equals);
-        INSTANCE.messageBuilder(AmuletAnimationPacket.class, nextInt())
-                .encoder(AmuletAnimationPacket::toBytes)
-                .decoder(AmuletAnimationPacket::new)
-                .consumer(AmuletAnimationPacket::handle)
+        INSTANCE.messageBuilder(CAmuletAnimationPacket.class, nextInt())
+                .encoder(CAmuletAnimationPacket::toBytes)
+                .decoder(CAmuletAnimationPacket::new)
+                .consumer(CAmuletAnimationPacket::handle)
                 .add();
-        INSTANCE.messageBuilder(CombineElementalPacket.class, nextInt())
-                .encoder(CombineElementalPacket::toBytes)
-                .decoder(CombineElementalPacket::new)
-                .consumer(CombineElementalPacket::handle)
+        INSTANCE.messageBuilder(SCombineElementalPacket.class, nextInt())
+                .encoder(SCombineElementalPacket::toBytes)
+                .decoder(SCombineElementalPacket::new)
+                .consumer(SCombineElementalPacket::handle)
                 .add();
     }
 

@@ -2,14 +2,14 @@
   "type": "elementalamulets:elemental_combination",
   "elemental": {"item": "elementalamulets:elemental_shards"},
   "ingredients": [
-    {"tag": "minecraft:fishes"},
-    {"tag": "minecraft:fishes"},
-    {"tag": "minecraft:fishes"},
-    {"tag": "minecraft:fishes"},
-    {"tag": "minecraft:fishes"},
-    {"tag": "minecraft:fishes"}
+    {"tag": "elementalamulets:water_element_convertible"},
+    {"tag": "elementalamulets:water_element_convertible"},
+    {"tag": "elementalamulets:water_element_convertible"},
+    {"tag": "elementalamulets:water_element_convertible"},
+    {"tag": "elementalamulets:water_element_convertible"},
+    {"tag": "elementalamulets:water_element_convertible"},
+    {"tag": "elementalamulets:water_element_convertible"},
+    {"tag": "elementalamulets:water_element_convertible"}
   ],
-  "result": {
-    "item": "elementalamulets:water_element"
-  }
+  "result": "elementalamulets:water_element"
 }

@@ -15,7 +15,7 @@ import mezz.jei.api.registration.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.stream.Collectors;
@@ -47,19 +47,20 @@ public class JEIPlugin implements IModPlugin {
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
 
-        //Elemental combination JEI category
+        // Adding list of my recipes to jei
         registration.addRecipes(ModRecipes.getRecipes(Minecraft.getInstance().world), ElementalCombinationCategory.ID);
 
         // Item descriptions
         registration.addIngredientInfo(ModItems.getAmulets().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.amulets.description"));
-        registration.addIngredientInfo(ModTags.ELEMENTS.getAllElements().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new StringTextComponent("PLACEHOLDER TEXT"));
+        registration.addIngredientInfo(ModTags.ELEMENTS.getAllElements().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.elements.description"));
 
-        registration.addIngredientInfo(ModTags.AIR_ELEMENT_CONVERTIBLE.getAllElements().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new StringTextComponent("AIR ABOBA"));
-        registration.addIngredientInfo(ModTags.WATER_ELEMENT_CONVERTIBLE.getAllElements().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new StringTextComponent("WATER ABOBA"));
-        registration.addIngredientInfo(ModTags.FIRE_ELEMENT_CONVERTIBLE.getAllElements().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new StringTextComponent("FIRE ABOBA"));
-        registration.addIngredientInfo(ModTags.EARTH_ELEMENT_CONVERTIBLE.getAllElements().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new StringTextComponent("EARTH ABOBA"));
+        // Elements description
+        registration.addIngredientInfo(ModTags.AIR_ELEMENT_CONVERTIBLE.getAllElements().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.convertibles.description", new TranslationTextComponent(ModItems.AIR_ELEMENT.get().getTranslationKey()).mergeStyle(TextFormatting.GRAY)));
+        registration.addIngredientInfo(ModTags.WATER_ELEMENT_CONVERTIBLE.getAllElements().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.convertibles.description", new TranslationTextComponent(ModItems.WATER_ELEMENT.get().getTranslationKey()).mergeStyle(TextFormatting.AQUA)));
+        registration.addIngredientInfo(ModTags.FIRE_ELEMENT_CONVERTIBLE.getAllElements().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.convertibles.description"), new TranslationTextComponent(ModItems.FIRE_ELEMENT.get().getTranslationKey()).mergeStyle(TextFormatting.RED));
+        registration.addIngredientInfo(ModTags.EARTH_ELEMENT_CONVERTIBLE.getAllElements().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.convertibles.description"), new TranslationTextComponent(ModItems.EARTH_ELEMENT.get().getTranslationKey()).mergeStyle(TextFormatting.DARK_GREEN));
 
-
+        // Misc. Description
         registration.addIngredientInfo(new ItemStack(ModItems.GUIDE_BOOK.get()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.guide_book.description"));
         registration.addIngredientInfo(new ItemStack(ModItems.ELEMENTAL_COMBINATOR_BLOCK.get()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.elemental_combinator.description"));
     }

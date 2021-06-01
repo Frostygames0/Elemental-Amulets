@@ -32,6 +32,7 @@ import java.util.List;
 public abstract class AmuletItem extends Item implements ICurioItem {
     private final boolean hasTier;
     public static final String TIER_TAG = ElementalAmulets.MOD_ID+":tier";
+    public static final int MAX_TIER = 4;
     public AmuletItem(Properties properties, boolean hasTier) {
         super(properties);
         this.hasTier = hasTier;
@@ -57,6 +58,7 @@ public abstract class AmuletItem extends Item implements ICurioItem {
     public static ItemStack getStackWithTier(ItemStack stack, int tier) {
         if(stack.getItem() instanceof AmuletItem) {
             if(((AmuletItem) stack.getItem()).hasTier) {
+                if(tier > MAX_TIER) throw new IllegalArgumentException("Tier can't be higher than "+MAX_TIER+"! Your tier is "+tier);
                 NBTUtil.putInteger(stack, TIER_TAG, tier);
             }
         }
@@ -65,28 +67,16 @@ public abstract class AmuletItem extends Item implements ICurioItem {
 
     @Override
     public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
-        if(!this.hasTier) {
-            super.fillItemGroup(group, items);
-        } else {
+        if(!this.hasTier) super.fillItemGroup(group, items);
+        else {
             if (isInGroup(group)) {
-                for (int i = 1; i <= 4; ++i) {
+                for (int i = 1; i <= MAX_TIER; ++i) {
                     ItemStack stack = new ItemStack(this);
                     items.add(getStackWithTier(stack, i));
                 }
             }
         }
     }
-
-    /*@Override
-    public void curioBreak(ItemStack stack, LivingEntity livingEntity) {
-        World world = livingEntity.getEntityWorld();
-            if(livingEntity instanceof PlayerEntity) {
-                PlayerEntity player = (PlayerEntity) livingEntity;
-                world.playSound(player, livingEntity.getPosition(), SoundEvents.BLOCK_RESPAWN_ANCHOR_DEPLETE, SoundCategory.NEUTRAL, 100, 1);
-                player.sendStatusMessage(new TranslationTextComponent("player.elementalamulets.brokenamulet.warn", new TranslationTextComponent(stack.getTranslationKey())), true);
-                if(ModConfig.cached.DISPLAY_TOTEM_LIKE_ANIM_ONBREAK) Minecraft.getInstance().gameRenderer.displayItemActivation(stack);
-            }
-    }*/
 
     @Override
     public boolean canRender(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {

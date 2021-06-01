@@ -47,7 +47,6 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
             }
         }
     }
-
     /**
      * Used to "combine" ingredients and elemental into result and put it into slot 0
      * @param player player that combined elementals.
@@ -57,7 +56,7 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
         if(world != null && !world.isRemote()) {
                 if (this.cooldown <= 0 && this.world.canBlockSeeSky(this.pos.up())) {
                     LightningBoltEntity lightbolt = new LightningBoltEntity(EntityType.LIGHTNING_BOLT, world);
-                    lightbolt.moveForced(Vector3d.copyCenteredHorizontally(this.pos.add(0, 1, 0)));
+                    lightbolt.moveForced(Vector3d.copyCenteredHorizontally(this.pos.up()));
                     lightbolt.setEffectOnly(true);
                     ElementalCombination recipe = this.world.getRecipeManager().getRecipe(ModRecipes.ELEMENTAL_COMBINATION_TYPE, new RecipeWrapper(handler), this.world).orElse(null);
                     ItemStack result;

@@ -9,12 +9,13 @@
     },
     {
       "type": "elemental_combination",
-      "recipe": "buba",
-      "text": "HELLO I'M SHIT ASS OMEGA BULLY 228 HAHAHAHHAHA DIE YOU LITTLE SHET"
+      "recipe": "elements/fire_element",
+      "text": "Fire element is poop :)"
     },
     {
-      "type": "crafting",
-      "recipe": "lime_bed"
+      "type": "elemental_combination",
+      "recipe": "guide_book",
+      "text": "Test about penises"
     }
   ]
 }

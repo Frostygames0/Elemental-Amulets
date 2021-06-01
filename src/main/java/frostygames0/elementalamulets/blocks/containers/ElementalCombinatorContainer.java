@@ -44,6 +44,7 @@ public class ElementalCombinatorContainer extends Container {
             });
         }
         bindPlayerInventory(8,83);
+
     }
 
     @Override
@@ -87,7 +88,7 @@ public class ElementalCombinatorContainer extends Container {
 
     @Override
     public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, ModBlocks.ELEMENTAL_COMBINATOR.get());
+        return this.isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, ModBlocks.ELEMENTAL_COMBINATOR.get());
     }
 
     private int addSlotRange(IItemHandler handler, int index, int x, int y, int amount, int dx) {

@@ -1,0 +1,172 @@
+package frostygames0.elementalamulets.datagen.recipes;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import frostygames0.elementalamulets.ElementalAmulets;
+import frostygames0.elementalamulets.core.init.ModRecipes;
+import frostygames0.elementalamulets.recipes.ingredient.AmuletIngredient;
+import net.minecraft.data.IFinishedRecipe;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tags.ITag;
+import net.minecraft.util.IItemProvider;
+import net.minecraft.util.ResourceLocation;
+
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
+
+/**
+ * @author Frostygames0
+ * @date 31.05.2021 23:28
+ */
+public class ElementalCombinationBuilder {
+    private final ItemStack result;
+    private AmuletIngredient elemental;
+    private final List<Ingredient> ingredients = new ArrayList<>();
+    private int cooldown;
+    private boolean tagTransfer;
+    private ElementalCombinationBuilder(ItemStack item) {
+        this.result = item;
+    }
+
+    public static ElementalCombinationBuilder create(IItemProvider item) {
+        return new ElementalCombinationBuilder(new ItemStack(item.asItem()));
+    }
+
+    public static ElementalCombinationBuilder create(ItemStack stack) {
+        return new ElementalCombinationBuilder(stack);
+    }
+
+    public ElementalCombinationBuilder addElemental(ItemStack stack) {
+        this.elemental = AmuletIngredient.fromStack(stack);
+        return this;
+    }
+
+    public ElementalCombinationBuilder addElemental(IItemProvider item) {
+        this.addElemental(new ItemStack(item.asItem()));
+        return this;
+    }
+
+    public ElementalCombinationBuilder addIngredient(ITag<Item> tag, int quantity) {
+        for(int i = 0; i < quantity; i++) {
+            this.ingredients.add(Ingredient.fromTag(tag));
+        }
+        return this;
+    }
+
+    public ElementalCombinationBuilder addIngredient(int quantity, IItemProvider... item) {
+        for(int i = 0; i < quantity; i++) {
+            this.ingredients.add(Ingredient.fromItems(item));
+        }
+        return this;
+    }
+
+    public ElementalCombinationBuilder addIngredient(IItemProvider... item) {
+        this.addIngredient(1, item);
+        return this;
+    }
+
+    public ElementalCombinationBuilder setCooldown(int value) {
+        this.cooldown = value;
+        return this;
+    }
+
+    public ElementalCombinationBuilder isTagTransferred() {
+        this.tagTransfer = true;
+        return this;
+    }
+
+    public void build(Consumer<IFinishedRecipe> consumerIn) {
+        ResourceLocation id = new ResourceLocation(ElementalAmulets.MOD_ID, this.result.getItem().getRegistryName().getPath());
+        this.build(consumerIn, id);
+    }
+
+    public void build(Consumer<IFinishedRecipe> consumerIn, ResourceLocation id) {
+        this.validate();
+        consumerIn.accept(new Result(id, elemental, ingredients, result, cooldown, tagTransfer));
+    }
+
+    private void validate() {
+        if(this.elemental.getMatchingStack().isEmpty()) throw new IllegalStateException("Elemental cannot be empty!");
+        if(this.ingredients.size() > 8) throw new IllegalStateException("Elemental combinator has only 8 ingredient slots!");
+        if(this.ingredients.isEmpty()) throw new IllegalStateException("Ingredients cannot be empty!");
+    }
+
+
+
+    public static class Result implements IFinishedRecipe {
+        private final ResourceLocation id;
+        private final AmuletIngredient elemental;
+        private final List<Ingredient> ingredients;
+        private final ItemStack result;
+        private final int cooldown;
+        private final boolean tagTransfer;
+        public Result(ResourceLocation id, AmuletIngredient elemental, List<Ingredient> ingredients, ItemStack result, int cooldown, boolean tagTransfer) {
+            this.id = id;
+            this.elemental = elemental;
+            this.ingredients = ingredients;
+            this.result = result;
+            this.cooldown = cooldown;
+            this.tagTransfer = tagTransfer;
+        }
+
+        @Override
+        public void serialize(JsonObject json) {
+            // Elemental
+            json.add("elemental", elemental.serialize());
+
+            // Ingredients
+            JsonArray array = new JsonArray();
+            for(Ingredient ingr : this.ingredients) {
+                array.add(ingr.serialize());
+            }
+            json.add("ingredients", array);
+
+            // Misc settings
+            if (this.cooldown > 0) {
+                json.addProperty("cooldown", cooldown);
+            }
+            if(tagTransfer) {
+                json.addProperty("tag_transfer", tagTransfer);
+            }
+
+            // Result
+            JsonObject resultJson = new JsonObject();
+            resultJson.addProperty("item", result.getItem().getRegistryName().toString());
+            if(result.getCount() > 1) resultJson.addProperty("count", result.getCount());
+            if(result.hasTag()) {
+                CompoundNBT copy = result.getTag().copy();
+                if (copy.contains("Damage")) copy.remove("Damage"); // Please don't ask why am I removing damage's tag
+                resultJson.addProperty("nbt", copy.toString());
+            }
+            json.add("result", resultJson);
+        }
+
+        @Override
+        public ResourceLocation getID() {
+            return id;
+        }
+
+        @Override
+        public IRecipeSerializer<?> getSerializer() {
+            return ModRecipes.ELEMENTAL_COMBINATION.get();
+        }
+
+        @Nullable
+        @Override
+        public JsonObject getAdvancementJson() {
+            return null;
+        }
+
+        @Nullable
+        @Override
+        public ResourceLocation getAdvancementID() {
+            return null;
+        }
+    }
+}

@@ -15,29 +15,29 @@ import java.util.function.Supplier;
  * but since all ICurio items have curioBreak method that client side only
  * I don't need this :/
  */
-public class AmuletAnimationPacket {
+public class CAmuletAnimationPacket {
     private final ItemStack stack;
 
-    public AmuletAnimationPacket(PacketBuffer buffer) {
+    public CAmuletAnimationPacket(PacketBuffer buffer) {
         stack = buffer.readItemStack();
     }
 
-    public AmuletAnimationPacket(ItemStack stack) {
+    public CAmuletAnimationPacket(ItemStack stack) {
         this.stack = stack;
     }
 
-    public static void toBytes(AmuletAnimationPacket msg, PacketBuffer buffer) {
+    public static void toBytes(CAmuletAnimationPacket msg, PacketBuffer buffer) {
         buffer.writeItemStack(msg.stack);
     }
 
-    public static void handle(AmuletAnimationPacket msg, Supplier<NetworkEvent.Context> ctx) {
+    public static void handle(CAmuletAnimationPacket msg, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
             if(ctx.get().getDirection() == NetworkDirection.PLAY_TO_CLIENT) {
                 if(ModConfig.cached.DISPLAY_TOTEM_LIKE_ANIM_ONBREAK) {
                     Minecraft.getInstance().gameRenderer.displayItemActivation(msg.stack);
                 }
             } else {
-                ElementalAmulets.LOGGER.error("AmuletAnimationPacket is meant to be sent to client!");
+                ElementalAmulets.LOGGER.error("CAmuletAnimationPacket is meant to be sent to client!");
             }
         });
         ctx.get().setPacketHandled(true);

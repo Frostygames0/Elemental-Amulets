@@ -2,14 +2,14 @@
   "type": "elementalamulets:elemental_combination",
   "elemental": {"item": "elementalamulets:elemental_shards"},
   "ingredients": [
-    {"item": "minecraft:feather"},
-    {"item": "minecraft:feather"},
-    {"item": "minecraft:feather"},
-    {"item": "minecraft:feather"},
-    {"item": "minecraft:feather"},
-    {"item": "minecraft:feather"}
+    {"tag": "elementalamulets:air_element_convertible"},
+    {"tag": "elementalamulets:air_element_convertible"},
+    {"tag": "elementalamulets:air_element_convertible"},
+    {"tag": "elementalamulets:air_element_convertible"},
+    {"tag": "elementalamulets:air_element_convertible"},
+    {"tag": "elementalamulets:air_element_convertible"},
+    {"tag": "elementalamulets:air_element_convertible"},
+    {"tag": "elementalamulets:air_element_convertible"}
   ],
-  "result": {
-    "item": "elementalamulets:air_element"
-  }
+  "result": "elementalamulets:air_element"
 }

@@ -2,14 +2,14 @@
   "type": "elementalamulets:elemental_combination",
   "elemental": {"item": "elementalamulets:elemental_shards"},
   "ingredients": [
-    {"item": "minecraft:blaze_powder"},
-    {"item": "minecraft:blaze_powder"},
-    {"item": "minecraft:blaze_powder"},
-    {"item": "minecraft:blaze_powder"},
-    {"item": "minecraft:blaze_powder"},
-    {"item": "minecraft:blaze_powder"}
+    {"tag": "elementalamulets:fire_element_convertible"},
+    {"tag": "elementalamulets:fire_element_convertible"},
+    {"tag": "elementalamulets:fire_element_convertible"},
+    {"tag": "elementalamulets:fire_element_convertible"},
+    {"tag": "elementalamulets:fire_element_convertible"},
+    {"tag": "elementalamulets:fire_element_convertible"},
+    {"tag": "elementalamulets:fire_element_convertible"},
+    {"tag": "elementalamulets:fire_element_convertible"}
   ],
-  "result": {
-    "item": "elementalamulets:fire_element"
-  }
+  "result": "elementalamulets:fire_element"
 }

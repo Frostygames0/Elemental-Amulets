@@ -7,7 +7,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class ClientEvents {
+public class ClientSetup {
     @SubscribeEvent
     public static void textureStitch(final TextureStitchEvent.Pre event) {
         event.addSprite(new ResourceLocation(ElementalAmulets.MOD_ID, "item/necklace_slot"));

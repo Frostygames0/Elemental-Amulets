@@ -3,6 +3,7 @@ package frostygames0.elementalamulets.core.init;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
 import frostygames0.elementalamulets.ElementalAmulets;
+import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import net.minecraft.entity.merchant.villager.VillagerProfession;
 import net.minecraft.entity.merchant.villager.VillagerTrades;
 import net.minecraft.item.ItemStack;
@@ -18,6 +19,7 @@ import net.minecraft.world.gen.feature.structure.*;
 import net.minecraft.world.gen.feature.template.ProcessorLists;
 import net.minecraftforge.common.BasicTrade;
 import net.minecraftforge.event.village.VillagerTradesEvent;
+import net.minecraftforge.event.village.WandererTradesEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
@@ -26,6 +28,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
@@ -65,6 +68,12 @@ public class ModVillagers{
             trades3.add(new BasicTrade(64, new ItemStack(Items.DIRT), 10, 10000, 10));
 
         }
+    }
+
+    @SubscribeEvent
+    public static void registerWandererTrades(final WandererTradesEvent event) {
+        Random rand = new Random(8080);
+        event.getRareTrades().add(new BasicTrade(45, AmuletItem.getStackWithTier(new ItemStack(ModItems.getAmulets().get(rand.nextInt(ModItems.getAmulets().size()))), 4), 1, 25, 1.5f));
     }
 
     public static class Structures {

@@ -113,13 +113,17 @@ repositories {
     maven { url 'https://maven.blamejared.com' }
     maven {
         // location of the maven that hosts JEI files
-        name = "Progwml6 maven"
-        url = "https://dvs1.progwml6.com/files/maven/"
+        name "Progwml6 maven"
+        url "https://dvs1.progwml6.com/files/maven/"
     }
     maven {
         // location of a maven mirror for JEI files, as a fallback
-        name = "ModMaven"
-        url = "https://modmaven.k-4u.nl"
+        name "ModMaven"
+        url "https://modmaven.k-4u.nl"
+    }
+    maven { // TOP
+        name 'tterrag maven'
+        url "http://maven.tterrag.com/"
     }
 }
 
@@ -138,6 +142,9 @@ dependencies {
     compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
 
+    // The One Probe
+    runtimeOnly fg.deobf("mcjty.theoneprobe:TheOneProbe-1.16:1.16-3.1.4-22")
+
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
@@ -149,7 +156,7 @@ jar {
             "Specification-Version": "1", // We are version 1 of ourselves
             "Implementation-Title": project.name,
             "Implementation-Version": "${version}",
-            "Implementation-Vendor" :"examplemodsareus",
+            "Implementation-Vendor" :"Frostygames0",
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }

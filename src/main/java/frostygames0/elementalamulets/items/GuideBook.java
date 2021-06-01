@@ -1,6 +1,8 @@
 package frostygames0.elementalamulets.items;
 
 import frostygames0.elementalamulets.ElementalAmulets;
+import frostygames0.elementalamulets.config.ModConfig;
+import frostygames0.elementalamulets.core.init.ModItems;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -10,16 +12,21 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.items.ItemHandlerHelper;
 import vazkii.patchouli.api.PatchouliAPI;
 
 import javax.annotation.Nullable;
+import java.util.Collections;
 import java.util.List;
 
+@Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class GuideBook extends Item {
     public static final ResourceLocation BOOK_ID = new ResourceLocation(ElementalAmulets.MOD_ID, "guidebook");
 
@@ -40,10 +47,24 @@ public class GuideBook extends Item {
                 PatchouliAPI.get().openBookGUI((ServerPlayerEntity) playerIn, BOOK_ID);
                 return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
             } else {
-                playerIn.sendStatusMessage(new StringTextComponent("Patchouli is not detected! Please install it in order to get access to the guide").mergeStyle(TextFormatting.RED), true);
+                playerIn.sendStatusMessage(new TranslationTextComponent("patchouli.elementalamulets.not_present").mergeStyle(TextFormatting.RED), true);
                 return ActionResult.resultFail(playerIn.getHeldItem(handIn));
             }
         }
         return ActionResult.resultConsume(playerIn.getHeldItem(handIn));
     }
+
+    @SubscribeEvent
+    public static void giveGuideOnJoin(PlayerEvent.PlayerLoggedInEvent event) {
+        if(!event.getPlayer().world.isRemote()) {
+            if(ModConfig.cached.GIVE_GUIDE_ON_FIRST_JOIN && ModList.get().isLoaded("patchouli")) {
+                if (!event.getPlayer().inventory.hasAny(Collections.singleton(ModItems.GUIDE_BOOK.get()))) {
+                    ItemHandlerHelper.giveItemToPlayer(event.getPlayer(), new ItemStack(ModItems.GUIDE_BOOK.get()));
+                }
+            }
+        }
+    }
+
+
+
 }

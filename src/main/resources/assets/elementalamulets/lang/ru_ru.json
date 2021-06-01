@@ -1,14 +1,18 @@
 {
   "itemGroup.elementalamulets": "Elemental Amulets",
 
-  "item.elementalamulets.guide_book": "Элементальный руководство",
-  "item.elementalamulets.guide_book.subtitle": "Содержит в себе все знания о элементальныъ амулетов",
+  "item.elementalamulets.guide_book": "Элементальное руководство",
+  "item.elementalamulets.guide_book.subtitle": "Содержит в себе все знания о элементальных амулетах",
 
   "item.elementalamulets.elemental_shards": "Элементальные осколки",
   "item.elementalamulets.fire_element": "Элемент огня",
   "item.elementalamulets.water_element": "Элемент воды",
   "item.elementalamulets.earth_element": "Элемент земли",
   "item.elementalamulets.air_element": "Элемент воздуха",
+
+  "item.elementalamulets.jump_element": "Элемент прыгучести",
+
+  "item.elementalamulets.empty_amulet": "Пустой амулет",
 
   "item.elementalamulets.common_amulet.tooltip.tier": "%sУровень: ",
 
@@ -24,19 +28,22 @@
   "item.elementalamulets.invisibility_amulet": "Амулет невидимости",
   "item.elementalamulets.invisibility_amulet.tooltip": "%sПрячет вас от противников%s",
 
-  "block.elementalamulets.elemental_combinator": "Элементальный комбинатор",
+  "block.elementalamulets.elemental_combinator": "Объединитель элементаля",
   "block.elementalamulets.elemental_combinator.guititle": "Объединение",
-  "block.elementalamulets.elemental_combinator.cooldown": "Комбинатор перезаряжается! %s сек. осталось",
-  "block.elementalamulets.elemental_ore": "Элементальный руда",
+  "block.elementalamulets.elemental_combinator.cooldown": "Объединитель перезаряжается! %s сек. осталось",
+  "block.elementalamulets.elemental_ore": "Элементальная руда",
 
   "player.elementalamulets.brokenamulet.warn": "Ваш %s был сломан!",
   "entity.minecraft.villager.elementalamulets.jeweller": "Ювелир",
 
   "jei.elementalamulets.cooldown": "Перезарядка - %s сек",
-  "jei.elementalamulets.elemental_separation": "Элементальное комбинирование",
+  "jei.elementalamulets.elemental_separation": "Элементальное объединение",
+  "jei.elementalamulets.shapeless": "Бесформенный рецепт (за исключением центр. слота).",
   "jei.elementalamulets.amulets.description": "Амулеты - это магические украшения, которые дают вам разнообразные способности\n Побольше о них вы может почитать в Элементальном Руководстве",
   "jei.elementalamulets.guide_book.description": "Книга с информацией об этом моде, чтобы иметь доступ к ней вам нужен Patchouli!",
   "jei.elementalamulets.elemental_combinator.description": "Позволяет комбинровать(Объединять) раличные штуки, чтобы получать еще круче штуки!\n Побольше о них вы может почитать в Элементальном Руководстве",
+  "jei.elementalamulets.elements.description": "Элементы это четыре главных силы в мире Minecraft",
+  "jei.elementalamulets.convertibles.description": "Когда 6 этих предметов объединены с пустым элементов(Элементальные осколки) они создают %s ",
 
   "patchouli.elementalamulets.not_present": "Patchouli не обнаружен!! Пожалуйста установите Patchouli, если вы хотите открыть книгу"
 }

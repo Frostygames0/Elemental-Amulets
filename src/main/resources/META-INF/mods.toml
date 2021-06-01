@@ -11,9 +11,8 @@ issueTrackerURL="https://github.com/Frostygames0/elemental-amulets/issues"
       logoFile="logo.png"
       displayName="Elemental Amulets"
       authors="Frostygames0"
-      description='''
-      This mod adds amulets! Do everything better!
-      '''
+      description= "This mod adds amulets! Do everything better!"
+
 
       [[dependencies.elementalamulets]]
         modId="forge"

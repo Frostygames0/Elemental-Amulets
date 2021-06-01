@@ -1,5 +1,6 @@
 package frostygames0.elementalamulets.recipes.ingredient;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import frostygames0.elementalamulets.core.util.NBTUtil;
@@ -8,6 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.IItemProvider;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.IIngredientSerializer;
@@ -19,9 +21,17 @@ import java.util.stream.Stream;
 public class AmuletIngredient extends Ingredient {
     private final ItemStack stack;
 
-    protected AmuletIngredient(ItemStack stack) {
+    public AmuletIngredient(ItemStack stack) {
         super(Stream.of(new Ingredient.SingleItemList(stack)));
         this.stack = stack;
+    }
+
+    public static AmuletIngredient fromItem(IItemProvider itemIn) {
+        return new AmuletIngredient(new ItemStack(itemIn.asItem()));
+    }
+
+    public static AmuletIngredient fromStack(ItemStack stack) {
+        return new AmuletIngredient(stack);
     }
 
     @Override
@@ -37,13 +47,21 @@ public class AmuletIngredient extends Ingredient {
         return this.stack;
     }
 
-    @Override
-    public IIngredientSerializer<? extends Ingredient> getSerializer() {
-        return Serializer.INSTANCE;
-    }
-
     private boolean compareAmuletTiers(ItemStack stack, ItemStack other) {
         return NBTUtil.getInteger(stack, AmuletItem.TIER_TAG) == NBTUtil.getInteger(other, AmuletItem.TIER_TAG);
+    }
+
+    @Override
+    public JsonElement serialize() {
+        JsonObject json = new JsonObject();
+        json.addProperty("item", stack.getItem().getRegistryName().toString());
+        if(stack.getItem() instanceof AmuletItem) {
+            AmuletItem item = (AmuletItem) stack.getItem();
+            if(item.hasTier()) {
+                json.addProperty("tier", item.getTier(stack));
+            }
+        }
+        return json;
     }
 
     private static ItemStack getAmuletFromJson(JsonObject json) {
@@ -61,19 +79,22 @@ public class AmuletIngredient extends Ingredient {
         return new ItemStack(item, 1);
     }
 
-        public static class Serializer implements IIngredientSerializer<AmuletIngredient> {
-            public static final Serializer INSTANCE = new Serializer();
+    @Override
+    public IIngredientSerializer<? extends Ingredient> getSerializer() {
+        return Serializer.INSTANCE;
+    }
 
-            @Override
-            public AmuletIngredient parse(PacketBuffer buffer) {
+    public static class Serializer implements IIngredientSerializer<AmuletIngredient> {
+        public static final Serializer INSTANCE = new Serializer();
+
+        @Override
+        public AmuletIngredient parse(PacketBuffer buffer) {
                 return new AmuletIngredient(buffer.readItemStack());
             }
-
             @Override
             public AmuletIngredient parse(JsonObject json) {
                 return new AmuletIngredient(getAmuletFromJson(json));
             }
-
             @Override
             public void write(PacketBuffer buffer, AmuletIngredient ingredient) {
                 buffer.writeItemStack(ingredient.stack);

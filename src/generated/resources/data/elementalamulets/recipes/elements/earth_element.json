@@ -1,0 +1,35 @@
+{
+  "type": "elementalamulets:elemental_combination",
+  "elemental": {
+    "item": "elementalamulets:elemental_shards"
+  },
+  "ingredients": [
+    {
+      "tag": "elementalamulets:earth_element_convertible"
+    },
+    {
+      "tag": "elementalamulets:earth_element_convertible"
+    },
+    {
+      "tag": "elementalamulets:earth_element_convertible"
+    },
+    {
+      "tag": "elementalamulets:earth_element_convertible"
+    },
+    {
+      "tag": "elementalamulets:earth_element_convertible"
+    },
+    {
+      "tag": "elementalamulets:earth_element_convertible"
+    },
+    {
+      "tag": "elementalamulets:earth_element_convertible"
+    },
+    {
+      "tag": "elementalamulets:earth_element_convertible"
+    }
+  ],
+  "result": {
+    "item": "elementalamulets:earth_element"
+  }
+}

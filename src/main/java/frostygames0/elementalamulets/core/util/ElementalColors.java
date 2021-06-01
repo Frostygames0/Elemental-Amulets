@@ -8,7 +8,7 @@ public class ElementalColors {
     // Main elements
     public static final Rarity FIRE = Rarity.create(ElementalAmulets.MOD_ID+":fire_rarity", TextFormatting.RED);
     public static final Rarity WATER = Rarity.create(ElementalAmulets.MOD_ID+":water_rarity", TextFormatting.AQUA);
-    public static final Rarity EARTH = Rarity.create(ElementalAmulets.MOD_ID+":earth_rarity", TextFormatting.BLACK);
+    public static final Rarity EARTH = Rarity.create(ElementalAmulets.MOD_ID+":earth_rarity", TextFormatting.DARK_GREEN);
     public static final Rarity AIR = Rarity.create(ElementalAmulets.MOD_ID+":air_rarity", TextFormatting.WHITE);
 
     // Sub-elements
