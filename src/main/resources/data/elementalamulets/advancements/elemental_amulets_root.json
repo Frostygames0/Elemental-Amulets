@@ -1,0 +1,25 @@
+{
+  "display": {
+    "icon": {
+      "item": "elementalamulets:guide_book"
+    },
+    "title": {
+      "translate": "advancements.elementalamulets.guide"
+    },
+    "description": {
+      "translate": "advancements.elementalamulets.guide.desc"
+    }
+  },
+  "parent": "elementalamulets:root",
+  "criteria": {
+    "guide_used": {
+      "trigger": "elementalamulets:success_use_item",
+      "conditions": {
+        "item": {"item":"elementalamulets:guide_book"}
+      }
+    }
+  },
+  "requirements": [[
+    "guide_used"
+  ]]
+}

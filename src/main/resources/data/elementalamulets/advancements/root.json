@@ -1,0 +1,29 @@
+{
+  "display": {
+    "icon": {
+      "item": "elementalamulets:elemental_combinator"
+    },
+    "title": {
+      "translate": "itemGroup.elementalamulets"
+    },
+    "description": {
+      "translate": "advancements.elementalamulets.desc"
+    },
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false,
+    "background": "minecraft:textures/gui/advancements/backgrounds/adventure.png"
+  },
+  "criteria": {
+    "guide_used": {
+      "trigger": "elementalamulets:success_use_item",
+      "conditions": {
+        "item": {"item":"elementalamulets:guide_book"}
+      }
+    }
+  },
+  "requirements": [[
+    "guide_used"
+  ]]
+}

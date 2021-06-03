@@ -14,6 +14,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tags.ITag;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -59,6 +60,11 @@ public class ElementalCombinationBuilder {
         return this;
     }
 
+    public ElementalCombinationBuilder addIngredient(ITag<Item> tag) {
+        this.addIngredient(tag, 1);
+        return this;
+    }
+
     public ElementalCombinationBuilder addIngredient(int quantity, IItemProvider... item) {
         for(int i = 0; i < quantity; i++) {
             this.ingredients.add(Ingredient.fromItems(item));
@@ -82,7 +88,7 @@ public class ElementalCombinationBuilder {
     }
 
     public void build(Consumer<IFinishedRecipe> consumerIn) {
-        ResourceLocation id = new ResourceLocation(ElementalAmulets.MOD_ID, this.result.getItem().getRegistryName().getPath());
+        ResourceLocation id = new ResourceLocation(ElementalAmulets.MOD_ID, ForgeRegistries.ITEMS.getKey(this.result.getItem()).getPath()); // Replacing namespace so recipe would go to correct folder
         this.build(consumerIn, id);
     }
 
@@ -91,8 +97,12 @@ public class ElementalCombinationBuilder {
         consumerIn.accept(new Result(id, elemental, ingredients, result, cooldown, tagTransfer));
     }
 
+    public void build(Consumer<IFinishedRecipe> consumerIn, String id) {
+        this.build(consumerIn, new ResourceLocation(id));
+    }
+
     private void validate() {
-        if(this.elemental.getMatchingStack().isEmpty()) throw new IllegalStateException("Elemental cannot be empty!");
+        if(this.elemental == null || this.elemental.getMatchingStack().isEmpty()) throw new IllegalStateException("Elemental cannot be empty!");
         if(this.ingredients.size() > 8) throw new IllegalStateException("Elemental combinator has only 8 ingredient slots!");
         if(this.ingredients.isEmpty()) throw new IllegalStateException("Ingredients cannot be empty!");
     }

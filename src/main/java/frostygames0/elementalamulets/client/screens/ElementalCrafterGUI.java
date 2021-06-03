@@ -7,6 +7,7 @@ import frostygames0.elementalamulets.blocks.containers.ElementalCombinatorContai
 import frostygames0.elementalamulets.network.ModNetworking;
 import frostygames0.elementalamulets.network.SCombineElementalPacket;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
@@ -16,6 +17,7 @@ import net.minecraft.util.text.StringTextComponent;
 public class ElementalCrafterGUI extends ContainerScreen<ElementalCombinatorContainer> {
     private static final ResourceLocation GUI = new ResourceLocation(ElementalAmulets.MOD_ID, "textures/gui/elemental_separator_redesign.png");
     private Button craftButton;
+    private TextFieldWidget text;
     public ElementalCrafterGUI(ElementalCombinatorContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
         this.playerInventoryTitleX += 92;

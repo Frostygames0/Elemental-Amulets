@@ -4,6 +4,7 @@ import frostygames0.elementalamulets.client.screens.ElementalCrafterGUI;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.core.init.*;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
+import frostygames0.elementalamulets.items.triggers.ModCriteriaTriggers;
 import frostygames0.elementalamulets.network.ModNetworking;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.item.ItemGroup;
@@ -57,7 +58,10 @@ public class ElementalAmulets {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         ModVillagers.Structures.init();
-        event.enqueueWork(ModNetworking::registerMessages);
+        event.enqueueWork(() -> {
+            ModNetworking.registerMessages();
+            ModCriteriaTriggers.register();
+        });
     }
 
 

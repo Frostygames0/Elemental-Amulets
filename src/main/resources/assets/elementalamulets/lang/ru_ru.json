@@ -5,10 +5,15 @@
   "item.elementalamulets.guide_book.subtitle": "Содержит в себе все знания о элементальных амулетах",
 
   "item.elementalamulets.elemental_shards": "Элементальные осколки",
-  "item.elementalamulets.fire_element": "Элемент огня",
-  "item.elementalamulets.water_element": "Элемент воды",
-  "item.elementalamulets.earth_element": "Элемент земли",
-  "item.elementalamulets.air_element": "Элемент воздуха",
+  "item.elementalamulets.elemental_shards.latin_variant": "Элементальные осколки",
+  "item.elementalamulets.fire_element": "Стихия огня",
+  "item.elementalamulets.fire_element.latin_variant": "Игнис элементум",
+  "item.elementalamulets.water_element": "Стихия воды",
+  "item.elementalamulets.water_element.latin_variant": "Аква элементум",
+  "item.elementalamulets.earth_element": "Стихия земли",
+  "item.elementalamulets.earth_element.latin_variant": "Терра элементум",
+  "item.elementalamulets.air_element": "Стихия воздуха",
+  "item.elementalamulets.air_element.latin_variant": "Аэр элементум",
 
   "item.elementalamulets.jump_element": "Элемент прыгучести",
 

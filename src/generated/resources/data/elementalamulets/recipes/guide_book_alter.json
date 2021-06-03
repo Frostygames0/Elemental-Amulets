@@ -1,0 +1,14 @@
+{
+  "type": "elementalamulets:elemental_combination",
+  "elemental": {
+    "item": "minecraft:book"
+  },
+  "ingredients": [
+    {
+      "tag": "elementalamulets:elements"
+    }
+  ],
+  "result": {
+    "item": "elementalamulets:guide_book"
+  }
+}

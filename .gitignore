@@ -8,3 +8,5 @@ build
 .gradle
 run
 /uselessShit/
+/docsOut
+/src/generated/resources/.cache/

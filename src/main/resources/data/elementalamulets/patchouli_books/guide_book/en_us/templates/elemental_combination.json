@@ -5,7 +5,8 @@
       "type": "header",
       "text": "#result->iname",
       "x": -1,
-      "y": -5
+      "y": -5,
+      "guard": "#result->iexists"
     },
     {
       "type": "image",

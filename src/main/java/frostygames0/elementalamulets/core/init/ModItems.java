@@ -2,10 +2,14 @@ package frostygames0.elementalamulets.core.init;
 
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.core.util.ElementalColors;
+import frostygames0.elementalamulets.items.ElementItem;
 import frostygames0.elementalamulets.items.GuideBook;
 import frostygames0.elementalamulets.items.amulets.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.Rarity;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -27,15 +31,15 @@ public class ModItems {
 
     // Elements
     public static final RegistryObject<Item> ELEMENTAL_SHARDS = ITEMS.register("elemental_shards",
-            () -> new Item(new Item.Properties().group(ElementalAmulets.GROUP)));
+            () -> new ElementItem(Rarity.COMMON));
     public static final RegistryObject<Item> FIRE_ELEMENT = ITEMS.register("fire_element",
-            () -> new Item(new Item.Properties().group(ElementalAmulets.GROUP).rarity(ElementalColors.FIRE)));
+            () -> new ElementItem(ElementalColors.FIRE, new TranslationTextComponent("item.elementalamulets.fire_element.tooltip").mergeStyle(TextFormatting.GRAY)));
     public static final RegistryObject<Item> WATER_ELEMENT = ITEMS.register("water_element",
-            () -> new Item(new Item.Properties().group(ElementalAmulets.GROUP).rarity(ElementalColors.WATER)));
+            () -> new ElementItem(ElementalColors.WATER, new TranslationTextComponent("item.elementalamulets.water_element.tooltip").mergeStyle(TextFormatting.GRAY)));
     public static final RegistryObject<Item> EARTH_ELEMENT = ITEMS.register("earth_element",
-            () -> new Item(new Item.Properties().group(ElementalAmulets.GROUP).rarity(ElementalColors.EARTH)));
+            () -> new ElementItem(ElementalColors.EARTH, new TranslationTextComponent("item.elementalamulets.earth_element.tooltip").mergeStyle(TextFormatting.GRAY)));
     public static final RegistryObject<Item> AIR_ELEMENT = ITEMS.register("air_element",
-            () -> new Item(new Item.Properties().group(ElementalAmulets.GROUP).rarity(ElementalColors.AIR)));
+            () -> new ElementItem(ElementalColors.AIR, new TranslationTextComponent("item.elementalamulets.air_element.tooltip").mergeStyle(TextFormatting.GRAY)));
 
     // Sub-Elements
     public static final RegistryObject<Item> JUMP_ELEMENT = ITEMS.register("jump_element",

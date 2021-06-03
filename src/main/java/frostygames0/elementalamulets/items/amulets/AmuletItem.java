@@ -5,11 +5,13 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.client.models.AmuletModel;
 import frostygames0.elementalamulets.core.util.NBTUtil;
+import frostygames0.elementalamulets.items.triggers.ModCriteriaTriggers;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -48,6 +50,13 @@ public abstract class AmuletItem extends Item implements ICurioItem {
         if(this.getTier(stack) == 0) return;
         tooltip.add(new TranslationTextComponent("item.elementalamulets.common_amulet.tooltip.tier").mergeStyle(TextFormatting.GOLD)
                 .appendSibling(new StringTextComponent("" + this.getTier(stack)).mergeStyle(TextFormatting.YELLOW)));
+    }
+
+    @Override
+    public void onEquip(SlotContext slotContext, ItemStack prevStack, ItemStack stack) {
+        if(prevStack.getItem() != stack.getItem()) {
+            if(!slotContext.getWearer().world.isRemote() && slotContext.getWearer() instanceof ServerPlayerEntity) ModCriteriaTriggers.SUCCESS_USE.trigger((ServerPlayerEntity) slotContext.getWearer(), stack);
+        }
     }
 
     @Override

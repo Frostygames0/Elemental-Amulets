@@ -3,11 +3,14 @@ package frostygames0.elementalamulets.blocks.tiles;
 import frostygames0.elementalamulets.capability.AutomationItemHandler;
 import frostygames0.elementalamulets.core.init.ModRecipes;
 import frostygames0.elementalamulets.core.init.ModTiles;
+import frostygames0.elementalamulets.items.triggers.ModCriteriaTriggers;
 import frostygames0.elementalamulets.recipes.ElementalCombination;
+import frostygames0.elementalamulets.recipes.ItemCombinedEvent;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -19,6 +22,7 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -62,16 +66,21 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
                     ItemStack result;
                     if (recipe != null) {
                         result = recipe.getCraftingResult(new RecipeWrapper(handler)); // Result
-                        NonNullList<ItemStack> remainingItems = recipe.getRemainingItems(new RecipeWrapper(handler)); // A list of item with container item like buckets
+                        NonNullList<ItemStack> remainingItems = recipe.getRemainingItems(new RecipeWrapper(handler)); // A list of items with container item like buckets
                         if (!result.isEmpty()) {
                             if (handler.insertItem(0,result, true).isEmpty()) {
                                 handler.insertItem(0,result, false);
                                 for (int i = 1; i < handler.getSlots(); ++i) {
                                     handler.extractItem(i, 1, false);
-                                    handler.insertItem(i, remainingItems.get(i), false);
+                                    handler.insertItem(i, remainingItems.get(i), false); // inserting remaining items
                                 }
+                                // Trigger stuff
+                                ItemCombinedEvent.eventPost(player, handler); // Launches event
+                                ModCriteriaTriggers.ITEM_COMBINED.trigger((ServerPlayerEntity) player, result,(ServerWorld) world, this.pos.getX(), this.pos.getY(), this.pos.getZ()); // Triggers advancement trigger
+                                // Decoration stuff
                                 world.addEntity(lightbolt);
                                 world.playSound(null, pos, SoundEvents.BLOCK_BEACON_ACTIVATE, SoundCategory.BLOCKS, 100, 1);
+                                // Cooldown
                                 this.cooldown += recipe.getCooldown();
                                 return true;
                             }

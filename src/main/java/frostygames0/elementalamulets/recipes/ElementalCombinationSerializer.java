@@ -28,7 +28,7 @@ public class ElementalCombinationSerializer extends net.minecraftforge.registrie
         NonNullList<Ingredient> nonNullList = readIngredients(JSONUtils.getJsonArray(json, "ingredients"));
         if(nonNullList.isEmpty()) { // There must be at least 1 ingredient
             throw new JsonParseException("No ingredients found!");
-        } else if(nonNullList.size() > 8) { // There must be only 8 or lower ingredients
+        } else if(nonNullList.size() > ElementalCombination.MAX_INGREDIENTS) { // There must be only 8 or lower ingredients
             throw new JsonParseException("Too many ingredients! Should be <= 8!");
         } else {
             if(!json.has("result")) throw new JsonSyntaxException("Missing result, expected to find an a string or object");

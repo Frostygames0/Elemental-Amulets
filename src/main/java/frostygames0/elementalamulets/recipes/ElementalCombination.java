@@ -22,6 +22,8 @@ import java.util.List;
 
 public class ElementalCombination implements IRecipe<IInventory> {
 
+    public static final int MAX_INGREDIENTS = 8;
+
     protected final ResourceLocation id;
     protected final NonNullList<Ingredient> ingredients;
     protected final AmuletIngredient elemental;

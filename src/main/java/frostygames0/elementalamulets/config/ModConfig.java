@@ -57,9 +57,11 @@ public class ModConfig {
 
     public static class Client {
         private final ForgeConfigSpec.BooleanValue DISPLAY_TOTEM_LIKE_ANIM_ONBREAK;
+        private final ForgeConfigSpec.BooleanValue USE_LATIN_ELEMENT_NAMES;
         public Client(ForgeConfigSpec.Builder builder) {
             builder.push("General");
             DISPLAY_TOTEM_LIKE_ANIM_ONBREAK = builder.comment("Display totem like animation when amulet gets destroyed?").define("amulet_totem_like_anim", true);
+            USE_LATIN_ELEMENT_NAMES = builder.comment("If true, elements names will be in latin (Ignis, Aer, Aqua and Terra)").define("elements_latin_variant", false);
             builder.pop();
         }
     }
@@ -78,8 +80,10 @@ public class ModConfig {
 
         }
         public static boolean DISPLAY_TOTEM_LIKE_ANIM_ONBREAK;
+        public static boolean USE_LATIN_ELEMENT_NAMES;
         private static void bakeClientConfig() {
             DISPLAY_TOTEM_LIKE_ANIM_ONBREAK = CLIENT.DISPLAY_TOTEM_LIKE_ANIM_ONBREAK.get();
+            USE_LATIN_ELEMENT_NAMES = CLIENT.USE_LATIN_ELEMENT_NAMES.get();
         }
     }
 
