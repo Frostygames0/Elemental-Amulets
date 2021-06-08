@@ -51,7 +51,8 @@ public class ElementalAmulets {
         bus.addListener(this::clientSetup);
     }
 
-    public static ResourceLocation prefix(String name) {
+    // Prefer to use this instead when you need ResourceLocation with mod's id
+    public static ResourceLocation modPrefix(String name) {
         return new ResourceLocation(MOD_ID, name);
     }
 

@@ -25,13 +25,16 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import vazkii.patchouli.api.PatchouliAPI;
 
+
 import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 
+import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
+
 @Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class GuideBook extends Item {
-    public static final ResourceLocation BOOK_ID = new ResourceLocation(ElementalAmulets.MOD_ID, "guide_book");
+    public static final ResourceLocation BOOK_ID = modPrefix("guide_book");
 
     public GuideBook(Properties properties) {
         super(properties);

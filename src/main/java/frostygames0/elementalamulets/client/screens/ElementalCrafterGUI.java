@@ -2,7 +2,6 @@ package frostygames0.elementalamulets.client.screens;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.blocks.containers.ElementalCombinatorContainer;
 import frostygames0.elementalamulets.network.ModNetworking;
 import frostygames0.elementalamulets.network.SCombineElementalPacket;
@@ -13,8 +12,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 
+
+import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
+
 public class ElementalCrafterGUI extends ContainerScreen<ElementalCombinatorContainer> {
-    private static final ResourceLocation GUI = new ResourceLocation(ElementalAmulets.MOD_ID, "textures/gui/elemental_separator_redesign.png");
+    private static final ResourceLocation GUI = modPrefix("textures/gui/elemental_separator_redesign.png");
     private Button craftButton;
     public ElementalCrafterGUI(ElementalCombinatorContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);

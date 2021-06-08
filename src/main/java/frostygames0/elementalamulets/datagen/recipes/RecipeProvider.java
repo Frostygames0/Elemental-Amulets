@@ -1,6 +1,5 @@
 package frostygames0.elementalamulets.datagen.recipes;
 
-import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.core.init.ModItems;
 import frostygames0.elementalamulets.core.init.ModTags;
 import frostygames0.elementalamulets.recipes.ElementalCombination;
@@ -13,9 +12,11 @@ import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.ResourceLocation;
 
 import java.util.function.Consumer;
+
+import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
+
 
 public class RecipeProvider extends net.minecraft.data.RecipeProvider {
     public RecipeProvider(DataGenerator generatorIn) {
@@ -58,7 +59,7 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
         elementRecipe(ModItems.FIRE_ELEMENT.get(), ModTags.FIRE_ELEMENT_CONVERTIBLE, consumer);
         elementRecipe(ModItems.WATER_ELEMENT.get(), ModTags.WATER_ELEMENT_CONVERTIBLE, consumer);
         elementRecipe(ModItems.EARTH_ELEMENT.get(), ModTags.EARTH_ELEMENT_CONVERTIBLE, consumer);
-        oneIngredientRecipe(new ResourceLocation(ElementalAmulets.MOD_ID, "guide_book_alternative").toString(), new ItemStack(Items.BOOK), ModTags.ELEMENTS, new ItemStack(ModItems.GUIDE_BOOK.get()), consumer);
+        oneIngredientRecipe(modPrefix("guide_book_alternative").toString(), new ItemStack(Items.BOOK), ModTags.ELEMENTS, new ItemStack(ModItems.GUIDE_BOOK.get()), consumer);
     }
 
     /* Helper Methods! */
@@ -73,6 +74,6 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
         ElementalCombinationBuilder.create(elementIn)
                 .addElemental(ModItems.ELEMENTAL_SHARDS.get())
                 .addIngredient(convertibles, ElementalCombination.MAX_INGREDIENTS)
-                .build(consumerIn, new ResourceLocation(ElementalAmulets.MOD_ID, "elements/"+elementIn.getItem().getRegistryName().getPath()));
+                .build(consumerIn, modPrefix("elements/"+elementIn.getItem().getRegistryName().getPath()));
     }
 }

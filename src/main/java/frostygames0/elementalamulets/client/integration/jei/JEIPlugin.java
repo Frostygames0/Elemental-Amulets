@@ -18,13 +18,16 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 
+
 import java.util.stream.Collectors;
+
+import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 @JeiPlugin
 public class JEIPlugin implements IModPlugin {
     @Override
     public ResourceLocation getPluginUid() {
-        return new ResourceLocation(ElementalAmulets.MOD_ID, ElementalAmulets.MOD_ID);
+        return modPrefix(ElementalAmulets.MOD_ID);
     }
 
     @Override

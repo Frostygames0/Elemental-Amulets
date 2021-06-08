@@ -1,7 +1,6 @@
 package frostygames0.elementalamulets.items.triggers;
 
 import com.google.gson.JsonObject;
-import frostygames0.elementalamulets.ElementalAmulets;
 import net.minecraft.advancements.criterion.*;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -9,13 +8,16 @@ import net.minecraft.loot.ConditionArrayParser;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.server.ServerWorld;
 
+
+import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
+
 /**
  * Triggers when combination happens.
  * @author Frostygames0
  * @date 02.06.2021 10:19
  */
 public class ItemCombinedTrigger extends AbstractCriterionTrigger<ItemCombinedTrigger.Instance> {
-    public static final ResourceLocation ID = new ResourceLocation(ElementalAmulets.MOD_ID, "item_elemental_combined");
+    public static final ResourceLocation ID = modPrefix("item_elemental_combined");
     @Override
     protected Instance deserializeTrigger(JsonObject json, EntityPredicate.AndPredicate entityPredicate, ConditionArrayParser conditionsParser) {
         return new ItemCombinedTrigger.Instance(entityPredicate, ItemPredicate.deserialize(json.get("item")), LocationPredicate.deserialize(json.get("location")));

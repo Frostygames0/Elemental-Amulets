@@ -11,6 +11,7 @@ import net.minecraft.item.Items;
 import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
+
 import javax.annotation.Nullable;
 
 public class TagProvider extends ItemTagsProvider {
@@ -27,7 +28,7 @@ public class TagProvider extends ItemTagsProvider {
         getOrCreateBuilder(ModTags.ELEMENTS).add(ModItems.AIR_ELEMENT.get(), ModItems.EARTH_ELEMENT.get(), ModItems.FIRE_ELEMENT.get(), ModItems.WATER_ELEMENT.get(), ModItems.ELEMENTAL_SHARDS.get());
         // Fire
         getOrCreateBuilder(ModTags.FIRE_ELEMENT_CONVERTIBLE).add(Items.BLAZE_POWDER, Items.BLAZE_ROD, Items.NETHERITE_INGOT,
-                Items.NETHERITE_BLOCK, Items.NETHERITE_SCRAP, Items.ANCIENT_DEBRIS, Items.LAVA_BUCKET);
+                Items.NETHERITE_BLOCK, Items.NETHERITE_SCRAP, Items.ANCIENT_DEBRIS, Items.LAVA_BUCKET, Items.FIRE_CHARGE);
         // Water
         getOrCreateBuilder(ModTags.WATER_ELEMENT_CONVERTIBLE).add(Items.WATER_BUCKET, Items.WET_SPONGE, Items.HEART_OF_THE_SEA,
                 Items.PRISMARINE, Items.PRISMARINE_BRICK_SLAB, Items.PRISMARINE_BRICK_STAIRS,

@@ -28,13 +28,16 @@ import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
+
 public abstract class AmuletItem extends Item implements ICurioItem {
     private final boolean hasTier;
-    public static final String TIER_TAG = ElementalAmulets.MOD_ID+":tier";
+    public static final String TIER_TAG = modPrefix("tier").toString();
     public static final int MAX_TIER = 4;
     public AmuletItem(Properties properties, boolean hasTier) {
         super(properties);
