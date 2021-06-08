@@ -23,6 +23,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
@@ -55,7 +56,9 @@ public abstract class AmuletItem extends Item implements ICurioItem {
     @Override
     public void onEquip(SlotContext slotContext, ItemStack prevStack, ItemStack stack) {
         if(prevStack.getItem() != stack.getItem()) {
-            if(!slotContext.getWearer().world.isRemote() && slotContext.getWearer() instanceof ServerPlayerEntity) ModCriteriaTriggers.SUCCESS_USE.trigger((ServerPlayerEntity) slotContext.getWearer(), stack);
+            LivingEntity entity = slotContext.getWearer();
+            if(!entity.world.isRemote() && entity instanceof ServerPlayerEntity)
+                ModCriteriaTriggers.SUCCESS_USE.trigger((ServerPlayerEntity) entity, stack, (ServerWorld) entity.world, entity.getPosX(), entity.getPosY(), entity.getPosZ());
         }
     }
 

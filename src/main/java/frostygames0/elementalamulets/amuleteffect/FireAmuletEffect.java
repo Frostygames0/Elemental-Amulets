@@ -14,8 +14,6 @@ import java.util.Optional;
 
 public class FireAmuletEffect {
 
-    private static boolean stackDamaged;
-
     private static float[] calcFireResistance(LivingEntity entity) {
         Optional<ImmutableTriple<String, Integer, ItemStack>> optional = CuriosApi.getCuriosHelper().findEquippedCurio(item -> item.getItem() instanceof IFireItem, entity);
         float fireResistMulti = 1;

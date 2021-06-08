@@ -3,6 +3,7 @@ package frostygames0.elementalamulets.datagen.recipes;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.core.init.ModItems;
 import frostygames0.elementalamulets.core.init.ModTags;
+import frostygames0.elementalamulets.recipes.ElementalCombination;
 import net.minecraft.advancements.criterion.InventoryChangeTrigger;
 import net.minecraft.data.*;
 import net.minecraft.item.Item;
@@ -39,16 +40,16 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .key('4', ModItems.ELEMENTAL_SHARDS.get())
                 .key('0', ItemTags.STONE_CRAFTING_MATERIALS)
                 .key('#', ItemTags.PLANKS)
-                .addCriterion(ElementalAmulets.MOD_ID+":elemental_shards", InventoryChangeTrigger.Instance.forItems(ModItems.ELEMENTAL_SHARDS.get()))
+                .addCriterion("has_item", InventoryChangeTrigger.Instance.forItems(ModItems.ELEMENTAL_SHARDS.get()))
                 .build(consumer);
         ShapelessRecipeBuilder.shapelessRecipe(ModItems.GUIDE_BOOK.get())
                 .addIngredient(Items.BOOK)
                 .addIngredient(ModTags.ELEMENTS)
-                .addCriterion(ElementalAmulets.MOD_ID+":elemental_shards", InventoryChangeTrigger.Instance.forItems(ModItems.ELEMENTAL_SHARDS.get()))
+                .addCriterion("has_item", InventoryChangeTrigger.Instance.forItems(ModItems.ELEMENTAL_SHARDS.get()))
                 .build(consumer);
         CookingRecipeBuilder.cookingRecipe(Ingredient.fromItems(ModItems.ELEMENTAL_STONE.get()),
                 ModItems.ELEMENTAL_SHARDS.get(), 1, 120, IRecipeSerializer.SMELTING)
-                .addCriterion(ElementalAmulets.MOD_ID+":elemental_ore", InventoryChangeTrigger.Instance.forItems(ModItems.ELEMENTAL_STONE.get()))
+                .addCriterion("has_item", InventoryChangeTrigger.Instance.forItems(ModItems.ELEMENTAL_STONE.get()))
                 .build(consumer);
     }
     // Elemental Combination recipes
@@ -57,21 +58,21 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
         elementRecipe(ModItems.FIRE_ELEMENT.get(), ModTags.FIRE_ELEMENT_CONVERTIBLE, consumer);
         elementRecipe(ModItems.WATER_ELEMENT.get(), ModTags.WATER_ELEMENT_CONVERTIBLE, consumer);
         elementRecipe(ModItems.EARTH_ELEMENT.get(), ModTags.EARTH_ELEMENT_CONVERTIBLE, consumer);
-        ElementalCombinationBuilder.create(ModItems.GUIDE_BOOK.get()).addElemental(Items.BOOK).addIngredient(ModTags.ELEMENTS).build(consumer, new ResourceLocation(ElementalAmulets.MOD_ID, "guide_book_alter"));
+        oneIngredientRecipe(new ResourceLocation(ElementalAmulets.MOD_ID, "guide_book_alternative").toString(), new ItemStack(Items.BOOK), ModTags.ELEMENTS, new ItemStack(ModItems.GUIDE_BOOK.get()), consumer);
     }
 
     /* Helper Methods! */
-    private static void oneIngredientRecipe(String id, ItemStack elemental, Item item, ItemStack result, Consumer<IFinishedRecipe> supplier) {
+    private static void oneIngredientRecipe(String id, ItemStack elemental, ITag<Item> tag, ItemStack result, Consumer<IFinishedRecipe> supplier) {
         ElementalCombinationBuilder.create(result)
                 .addElemental(elemental)
-                .addIngredient(item)
+                .addIngredient(tag)
                 .build(supplier, id);
     }
 
     private static void elementRecipe(Item elementIn, ITag<Item> convertibles, Consumer<IFinishedRecipe> consumerIn) {
         ElementalCombinationBuilder.create(elementIn)
                 .addElemental(ModItems.ELEMENTAL_SHARDS.get())
-                .addIngredient(convertibles, 8)
+                .addIngredient(convertibles, ElementalCombination.MAX_INGREDIENTS)
                 .build(consumerIn, new ResourceLocation(ElementalAmulets.MOD_ID, "elements/"+elementIn.getItem().getRegistryName().getPath()));
     }
 }

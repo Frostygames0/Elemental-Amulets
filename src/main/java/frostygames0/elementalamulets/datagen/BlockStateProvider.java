@@ -5,6 +5,7 @@ import frostygames0.elementalamulets.core.init.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.fml.RegistryObject;
 
 import java.util.stream.Collectors;
 
@@ -25,8 +26,8 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         // Elemental Stone
         simpleBlock(ModBlocks.ELEMENTAL_STONE.get());
 
-        for(Block block : ModBlocks.BLOCKS.getEntries().stream().map(reg -> reg.get()).collect(Collectors.toList())) {
-            simpleBlockItem(block, itemModels().withExistingParent(name(block), modLoc("block/"+name(block))));
+        for(Block block : ModBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).collect(Collectors.toList())) {
+            simpleBlockItem(block, models().getExistingFile(modLoc("block/"+name(block))));
         }
     }
 

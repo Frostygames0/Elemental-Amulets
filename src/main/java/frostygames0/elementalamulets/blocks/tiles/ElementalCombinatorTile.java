@@ -1,11 +1,11 @@
 package frostygames0.elementalamulets.blocks.tiles;
 
 import frostygames0.elementalamulets.capability.AutomationItemHandler;
+import frostygames0.elementalamulets.client.particles.ModParticles;
 import frostygames0.elementalamulets.core.init.ModRecipes;
 import frostygames0.elementalamulets.core.init.ModTiles;
 import frostygames0.elementalamulets.items.triggers.ModCriteriaTriggers;
 import frostygames0.elementalamulets.recipes.ElementalCombination;
-import frostygames0.elementalamulets.recipes.ItemCombinedEvent;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.effect.LightningBoltEntity;
@@ -51,14 +51,11 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
             }
         }
     }
-    /**
-     * Used to "combine" ingredients and elemental into result and put it into slot 0
-     * @param player player that combined elementals.
-     * @return TRUE - if combining was successful, otherwise FALSE;
-     */
+    // TODO: I think it can be smaller and more optimized
     public boolean combineElemental(PlayerEntity player) {
         if(world != null && !world.isRemote()) {
-                if (this.cooldown <= 0 && this.world.canBlockSeeSky(this.pos.up())) {
+            if(this.world.canBlockSeeSky(this.pos.up())) {
+                if (this.cooldown <= 0) {
                     LightningBoltEntity lightbolt = new LightningBoltEntity(EntityType.LIGHTNING_BOLT, world);
                     lightbolt.moveForced(Vector3d.copyCenteredHorizontally(this.pos.up()));
                     lightbolt.setEffectOnly(true);
@@ -68,27 +65,26 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
                         result = recipe.getCraftingResult(new RecipeWrapper(handler)); // Result
                         NonNullList<ItemStack> remainingItems = recipe.getRemainingItems(new RecipeWrapper(handler)); // A list of items with container item like buckets
                         if (!result.isEmpty()) {
-                            if (handler.insertItem(0,result, true).isEmpty()) {
-                                handler.insertItem(0,result, false);
+                            if (handler.insertItem(0, result, true).isEmpty()) {
+                                handler.insertItem(0, result, false);
                                 for (int i = 1; i < handler.getSlots(); ++i) {
                                     handler.extractItem(i, 1, false);
                                     handler.insertItem(i, remainingItems.get(i), false); // inserting remaining items
                                 }
                                 // Trigger stuff
-                                ItemCombinedEvent.eventPost(player, handler); // Launches event
-                                ModCriteriaTriggers.ITEM_COMBINED.trigger((ServerPlayerEntity) player, result,(ServerWorld) world, this.pos.getX(), this.pos.getY(), this.pos.getZ()); // Triggers advancement trigger
+                                ModCriteriaTriggers.ITEM_COMBINED.trigger((ServerPlayerEntity) player, result, (ServerWorld) world, this.pos.getX(), this.pos.getY(), this.pos.getZ()); // Triggers advancement trigger
                                 // Decoration stuff
                                 world.addEntity(lightbolt);
                                 world.playSound(null, pos, SoundEvents.BLOCK_BEACON_ACTIVATE, SoundCategory.BLOCKS, 100, 1);
+                                ((ServerWorld) world).spawnParticle(ModParticles.COMBINATION_PARTICLE.get(), pos.getX() + 0.5, pos.up().getY(), pos.getZ() + 0.5, 200, 0, 0, 0, 6);
                                 // Cooldown
-                                this.cooldown += recipe.getCooldown();
+                                this.cooldown += 30;
                                 return true;
                             }
                         }
                     }
-                } else {
-                    player.sendStatusMessage(new TranslationTextComponent("block.elementalamulets.elemental_combinator.cooldown", this.cooldown/20).mergeStyle(TextFormatting.RED), true);
-                }
+                } else player.sendStatusMessage(new TranslationTextComponent("block.elementalamulets.elemental_combinator.cooldown", this.getBlockState().getBlock().getTranslatedName(), this.cooldown / 20).mergeStyle(TextFormatting.RED), true);
+            } else player.sendStatusMessage(new TranslationTextComponent("block.elementalamulets.elemental_combinator.no_sky", this.getBlockState().getBlock().getTranslatedName()).mergeStyle(TextFormatting.RED), true);
         }
         return false;
     }

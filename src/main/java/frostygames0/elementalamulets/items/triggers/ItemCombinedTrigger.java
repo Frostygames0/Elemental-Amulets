@@ -10,6 +10,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.server.ServerWorld;
 
 /**
+ * Triggers when combination happens.
  * @author Frostygames0
  * @date 02.06.2021 10:19
  */

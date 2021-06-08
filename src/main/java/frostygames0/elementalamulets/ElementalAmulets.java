@@ -1,5 +1,6 @@
 package frostygames0.elementalamulets;
 
+import frostygames0.elementalamulets.client.particles.ModParticles;
 import frostygames0.elementalamulets.client.screens.ElementalCrafterGUI;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.core.init.*;
@@ -40,6 +41,7 @@ public class ElementalAmulets {
         ModContainers.CONTAINERS.register(bus);
         ModRecipes.SERIALIZERS.register(bus);
         ModVillagers.register(bus);
+        ModParticles.PARTICLES.register(bus);
 
         ModLoadingContext.get().registerConfig(net.minecraftforge.fml.config.ModConfig.Type.SERVER, ModConfig.SERVER_SPEC);
         ModLoadingContext.get().registerConfig(net.minecraftforge.fml.config.ModConfig.Type.CLIENT, ModConfig.CLIENT_SPEC);
@@ -47,6 +49,10 @@ public class ElementalAmulets {
         bus.addListener(this::enqueueIMC);
         bus.addListener(this::commonSetup);
         bus.addListener(this::clientSetup);
+    }
+
+    public static ResourceLocation prefix(String name) {
+        return new ResourceLocation(MOD_ID, name);
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event) {
@@ -64,9 +70,9 @@ public class ElementalAmulets {
         });
     }
 
-
     private void clientSetup(final FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
+            ModParticles.register();
             ScreenManager.registerFactory(ModContainers.ELEMENTAL_COMBINATOR_CONTAINER.get(), ElementalCrafterGUI::new);
             ModItems.ITEMS.getEntries().stream().map(RegistryObject::get).filter(item -> item instanceof AmuletItem).forEach(
                     item -> ItemModelsProperties.registerProperty(item, new ResourceLocation(AmuletItem.TIER_TAG),

@@ -39,7 +39,8 @@
 
   "block.elementalamulets.elemental_combinator": "Elemental Combinator",
   "block.elementalamulets.elemental_combinator.guititle": "Combination",
-  "block.elementalamulets.elemental_combinator.cooldown": "Combinator is recharging! %ss left",
+  "block.elementalamulets.elemental_combinator.cooldown": "%s is recharging! %1$ss left",
+  "block.elementalamulets.elemental_combinator.no_sky": "%s can't see sky!",
   "block.elementalamulets.elemental_ore": "Elemental Ore",
 
   "player.elementalamulets.brokenamulet.warn": "Your %s just got broken!",
@@ -58,5 +59,11 @@
 
   "advancements.elementalamulets.desc": "Things that you will achieve in your adventure",
   "advancements.elementalamulets.guide": "Great source of knowledge!",
-  "advancements.elementalamulets.guide.desc": "Obtain the elemental guide."
+  "advancements.elementalamulets.guide.desc": "Obtain the elemental guide.",
+  "advancements.elementalamulets.amulet": "Stylish!",
+  "advancements.elementalamulets.amulet.desc": "Wear any elemental amulet!",
+  "advancements.elementalamulets.combine": "Elemental Combination",
+  "advancements.elementalamulets.combine.desc": "Use Elemental Combinator for the first time!",
+  "advancements.elementalamulets.amulet_max": "Max power!",
+  "advancements.elementalamulets.amulet_max.desc": "Upgrade amulet to the highest tier"
 }

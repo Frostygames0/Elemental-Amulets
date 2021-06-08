@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "elementalamulets:elemental_ore": {
+    "elemental_ore": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -25,7 +25,7 @@
   },
   "requirements": [
     [
-      "elementalamulets:elemental_ore",
+      "elemental_ore",
       "has_the_recipe"
     ]
   ]

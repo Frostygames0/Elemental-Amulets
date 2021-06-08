@@ -23,27 +23,25 @@ public class ElementalCombinatorContainer extends Container {
 
     public ElementalCombinatorContainer(int id, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
         super(ModContainers.ELEMENTAL_COMBINATOR_CONTAINER.get(), id);
-        tileEntity = world.getTileEntity(pos);
+        this.tileEntity = world.getTileEntity(pos);
         this.playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);
-        if (tileEntity != null) {
+        if (this.tileEntity != null) {
             tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-                addSlot(new SlotItemHandler(h, 0, 134, 34)); // Output slot
+                this.addSlot(new SlotItemHandler(h, 0, 134, 34));
 
-                addSlot(new SlotItemHandler(h, 1, 35, 34)); // Elemental Slot
-
-                addSlot(new SlotItemHandler(h, 2, 35, 10)); // Other slots
-                addSlot(new SlotItemHandler(h, 3, 55, 14));
-                addSlot(new SlotItemHandler(h, 4, 59, 34));
-                addSlot(new SlotItemHandler(h, 5, 55, 54));
-                addSlot(new SlotItemHandler(h, 6, 35, 58));
-                addSlot(new SlotItemHandler(h, 7, 15, 54));
-                addSlot(new SlotItemHandler(h, 8, 11, 34));
-                addSlot(new SlotItemHandler(h, 9, 15, 14));
-
+                this.addSlot(new SlotItemHandler(h, 1, 35, 34));
+                this.addSlot(new SlotItemHandler(h, 2, 35, 10));
+                this.addSlot(new SlotItemHandler(h, 3, 55, 14));
+                this.addSlot(new SlotItemHandler(h, 4, 59, 34));
+                this.addSlot(new SlotItemHandler(h, 5, 55, 54));
+                this.addSlot(new SlotItemHandler(h, 6, 35, 58));
+                this.addSlot(new SlotItemHandler(h, 7, 15, 54));
+                this.addSlot(new SlotItemHandler(h, 8, 11, 34));
+                this.addSlot(new SlotItemHandler(h, 9, 15, 14));
             });
         }
-        bindPlayerInventory(8,83);
+        this.bindPlayerInventory(8,83);
 
     }
 
@@ -88,12 +86,12 @@ public class ElementalCombinatorContainer extends Container {
 
     @Override
     public boolean canInteractWith(PlayerEntity playerIn) {
-        return this.isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, ModBlocks.ELEMENTAL_COMBINATOR.get());
+        return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, ModBlocks.ELEMENTAL_COMBINATOR.get());
     }
 
     private int addSlotRange(IItemHandler handler, int index, int x, int y, int amount, int dx) {
         for (int i = 0 ; i < amount ; i++) {
-            addSlot(new SlotItemHandler(handler, index, x, y));
+            this.addSlot(new SlotItemHandler(handler, index, x, y));
             x += dx;
             index++;
         }
@@ -110,9 +108,9 @@ public class ElementalCombinatorContainer extends Container {
 
 
     private void bindPlayerInventory(int x, int y) {
-        addSlotBox(playerInventory, 9, x, y, 9, 18, 3, 18);
+        this.addSlotBox(playerInventory, 9, x, y, 9, 18, 3, 18);
         y += 58;
-        addSlotRange(playerInventory, 0, x, y, 9, 18);
+        this.addSlotRange(playerInventory, 0, x, y, 9, 18);
     }
 
     public TileEntity getTileEntity() {

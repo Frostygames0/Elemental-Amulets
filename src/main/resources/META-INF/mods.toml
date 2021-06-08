@@ -5,7 +5,7 @@ issueTrackerURL="https://github.com/Frostygames0/elemental-amulets/issues"
 
     [[mods]]
       modId="elementalamulets"
-      version="${file.jarVersion}"
+      version="${file.jarVersion}" # NONE only in dev environment
       displayURL="https://www.curseforge.com/minecraft/mc-mods/elemental-amulets"
       updateJSONURL="https://raw.githubusercontent.com/Frostygames0/elemental-amulets/master/update.json"
       logoFile="logo.png"

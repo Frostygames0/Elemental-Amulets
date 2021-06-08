@@ -16,6 +16,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
@@ -51,7 +52,7 @@ public class GuideBook extends Item {
         if(playerIn instanceof ServerPlayerEntity) {
             if(ModList.get().isLoaded("patchouli")) {
                 PatchouliAPI.get().openBookGUI((ServerPlayerEntity) playerIn, BOOK_ID);
-                ModCriteriaTriggers.SUCCESS_USE.trigger((ServerPlayerEntity)playerIn, playerIn.getHeldItem(handIn));
+                ModCriteriaTriggers.SUCCESS_USE.trigger((ServerPlayerEntity)playerIn, playerIn.getHeldItem(handIn), (ServerWorld) worldIn, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ());
                 return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
             } else {
                 playerIn.sendStatusMessage(new TranslationTextComponent("patchouli.elementalamulets.not_present").mergeStyle(TextFormatting.RED), true);

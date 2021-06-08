@@ -50,5 +50,13 @@
   "jei.elementalamulets.elements.description": "Элементы это четыре главных силы в мире Minecraft",
   "jei.elementalamulets.convertibles.description": "Когда 6 этих предметов объединены с пустым элементов(Элементальные осколки) они создают %s ",
 
-  "patchouli.elementalamulets.not_present": "Patchouli не обнаружен!! Пожалуйста установите Patchouli, если вы хотите открыть книгу"
+  "patchouli.elementalamulets.not_present": "Patchouli не обнаружен!! Пожалуйста установите Patchouli, если вы хотите открыть книгу",
+
+  "advancements.elementalamulets.desc": "Things that you will achieve in your adventure",
+  "advancements.elementalamulets.guide": "Great source of knowledge!",
+  "advancements.elementalamulets.guide.desc": "Obtain the elemental guide.",
+  "advancements.elementalamulets.amulet": "Stylish!",
+  "advancements.elementalamulets.amulet.desc": "Wear any elemental amulet!",
+  "advancements.elementalamulets.combine": "Elemental Combination",
+  "advancements.elementalamulets.combine.desc": "Use Elemental Combinator for the first time!"
 }

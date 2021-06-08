@@ -1,0 +1,26 @@
+{
+  "parent": "elementalamulets:source_of_knowledge",
+  "display": {
+    "icon": {
+      "item": "elementalamulets:fire_amulet"
+    },
+    "title": {
+      "translate": "advancements.elementalamulets.amulet"
+    },
+    "description": {
+      "translate": "advancements.elementalamulets.amulet.desc"
+    }
+  },
+  "criteria": {
+    "amulet_worn": {
+      "trigger": "elementalamulets:success_use_item",
+      "conditions": {
+        "item": {"tag":"curios:necklace"},
+        "location": {}
+      }
+    }
+  },
+  "requirements": [[
+    "amulet_worn"
+  ]]
+}
