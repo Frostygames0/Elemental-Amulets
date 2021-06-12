@@ -20,7 +20,6 @@ public class ElementalCrafterGUI extends ContainerScreen<ElementalCombinatorCont
         this.playerInventoryTitleX += 92;
         this.titleX = this.guiLeft+85;
         this.titleY = this.guiTop+8;
-        this.xSize += 16;
     }
 
     @Override
