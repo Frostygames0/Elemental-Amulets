@@ -1,5 +1,6 @@
 package frostygames0.elementalamulets.datagen;
 
+import frostygames0.elementalamulets.datagen.loottables.LootTableProvider;
 import frostygames0.elementalamulets.datagen.recipes.RecipeProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -18,6 +19,7 @@ public class DataGenerators {
         if(event.includeServer()) {
             generator.addProvider(new TagProvider(generator, event.getExistingFileHelper()));
             generator.addProvider(new RecipeProvider(generator));
+            generator.addProvider(new LootTableProvider(generator));
         }
     }
 }

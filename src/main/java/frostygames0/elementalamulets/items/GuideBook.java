@@ -1,8 +1,5 @@
 package frostygames0.elementalamulets.items;
 
-import frostygames0.elementalamulets.ElementalAmulets;
-import frostygames0.elementalamulets.config.ModConfig;
-import frostygames0.elementalamulets.core.init.ModItems;
 import frostygames0.elementalamulets.items.triggers.ModCriteriaTriggers;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,22 +14,16 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import vazkii.patchouli.api.PatchouliAPI;
 
 
 import javax.annotation.Nullable;
-import java.util.Collections;
 import java.util.List;
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
-@Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class GuideBook extends Item {
     public static final ResourceLocation BOOK_ID = modPrefix("guide_book");
 
@@ -64,18 +55,4 @@ public class GuideBook extends Item {
         }
         return ActionResult.resultConsume(playerIn.getHeldItem(handIn));
     }
-
-    @SubscribeEvent
-    public static void giveGuideOnJoin(PlayerEvent.PlayerLoggedInEvent event) {
-        if(!event.getPlayer().world.isRemote()) {
-            if(ModConfig.cached.GIVE_GUIDE_ON_FIRST_JOIN && ModList.get().isLoaded("patchouli")) {
-                if (!event.getPlayer().inventory.hasAny(Collections.singleton(ModItems.GUIDE_BOOK.get()))) {
-                    ItemHandlerHelper.giveItemToPlayer(event.getPlayer(), new ItemStack(ModItems.GUIDE_BOOK.get()));
-                }
-            }
-        }
-    }
-
-
-
 }

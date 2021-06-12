@@ -64,8 +64,8 @@ public class ElementalAmulets {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-        ModVillagers.Structures.init();
         event.enqueueWork(() -> {
+            ModVillagers.Structures.init();
             ModNetworking.registerMessages();
             ModCriteriaTriggers.register();
         });

@@ -6,6 +6,8 @@ import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.item.DyeColor;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.Feature;
@@ -26,9 +28,12 @@ public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ElementalAmulets.MOD_ID);
 
     public static final RegistryObject<Block> ELEMENTAL_COMBINATOR = BLOCKS.register("elemental_combinator",
-            () -> new ElementalCombinator(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(3.5f).sound(SoundType.STONE).setRequiresTool().harvestTool(ToolType.PICKAXE).harvestLevel(0).setLightLevel(s -> 5)));
+            () -> new ElementalCombinator(AbstractBlock.Properties.create(Material.ROCK, DyeColor.GRAY).hardnessAndResistance(3.5f).sound(SoundType.STONE).setRequiresTool().harvestTool(ToolType.PICKAXE).harvestLevel(0)
+                    .setLightLevel(state -> state.get(BlockStateProperties.ENABLED) ? 15 : 5)
+                    .setNeedsPostProcessing((state, blockReader, pos) -> true)));
+
     public static final RegistryObject<Block> ELEMENTAL_STONE = BLOCKS.register("elemental_ore",
-            () -> new Block(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(4.5f).sound(SoundType.STONE).setRequiresTool().harvestTool(ToolType.PICKAXE).harvestLevel(1)));
+            () -> new Block(AbstractBlock.Properties.create(Material.ROCK).hardnessAndResistance(3.5f).sound(SoundType.STONE).setRequiresTool().harvestTool(ToolType.PICKAXE).harvestLevel(1)));
 
     @SubscribeEvent
     public static void oreGeneration(BiomeLoadingEvent event) {

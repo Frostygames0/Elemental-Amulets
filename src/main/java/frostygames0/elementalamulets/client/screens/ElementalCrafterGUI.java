@@ -3,14 +3,11 @@ package frostygames0.elementalamulets.client.screens;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import frostygames0.elementalamulets.blocks.containers.ElementalCombinatorContainer;
-import frostygames0.elementalamulets.network.ModNetworking;
-import frostygames0.elementalamulets.network.SCombineElementalPacket;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
@@ -42,18 +39,21 @@ public class ElementalCrafterGUI extends ContainerScreen<ElementalCombinatorCont
     protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
         RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
         this.minecraft.getTextureManager().bindTexture(GUI);
-        int centerX = (this.width - this.xSize)/2;
-        int centerY = (this.height - this.ySize)/2;
-        this.blit(matrixStack, centerX, centerY, 0, 0, this.xSize, this.ySize);
+        this.blit(matrixStack, this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
+        int l = this.container.getCombinationTimeScaled();
+        this.blit(matrixStack, this.guiLeft+90, this.guiTop+34, 176, 0, l+1, 17);
     }
 
     @Override
     protected void init() {
         super.init();
-        this.craftButton = this.addButton(new Button(this.guiLeft+82, this.guiTop+32, 45, 20, new StringTextComponent("Combine"),
-                button -> ModNetworking.sendToServer(new SCombineElementalPacket(container.getTileEntity().getPos()))));
-        this.craftButton.visible = false; // Hiding it cuz I'm evil guy lol
+        /*this.craftButton = this.addButton(new Button(this.guiLeft+82, this.guiTop+32, 45, 20, new StringTextComponent("Combine"),
+                button -> ModNetworking.sendToServer(new SCombineElementalPacket(container.getTileEntity().getPos()))));*/
     }
 
-
+    @Override
+    public void tick() {
+        super.tick();
+        //this.craftButton.active = false;
+    }
 }

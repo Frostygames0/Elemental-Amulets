@@ -8,6 +8,7 @@
       "tag": "elementalamulets:elements"
     }
   ],
+  "cooldown": 800,
   "result": {
     "item": "elementalamulets:guide_book"
   }

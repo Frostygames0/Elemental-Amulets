@@ -1,7 +1,10 @@
 {
   "variants": {
-    "": {
+    "enabled=false": {
       "model": "elementalamulets:block/elemental_combinator"
+    },
+    "enabled=true": {
+      "model": "elementalamulets:block/elemental_combinator_on"
     }
   }
 }

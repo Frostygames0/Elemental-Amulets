@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.function.Supplier;
 
 public class SCombineElementalPacket {
-    private BlockPos pos;
+    private final BlockPos pos;
 
     public SCombineElementalPacket(BlockPos pos) {
         this.pos = pos;
@@ -31,10 +31,13 @@ public class SCombineElementalPacket {
         World world = Objects.requireNonNull(ctx.getSender()).world;
         ctx.enqueueWork(() -> {
             if(world != null) {
-                TileEntity te = world.getTileEntity(msg.pos);
-                if(te instanceof ElementalCombinatorTile) {
-                    ElementalCombinatorTile tile = (ElementalCombinatorTile) te;
-                    tile.combineElemental(ctx.getSender());
+                if(world.isBlockPresent(msg.pos)){
+                    TileEntity te = world.getTileEntity(msg.pos);
+                    if (te instanceof ElementalCombinatorTile) {
+                        ElementalCombinatorTile tile = (ElementalCombinatorTile) te;
+                        //tile.combineElemental(ctx.getSender());
+                        tile.startCombination();
+                    }
                 }
             }
         });

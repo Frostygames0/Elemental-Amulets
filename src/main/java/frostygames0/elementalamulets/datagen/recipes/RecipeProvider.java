@@ -1,17 +1,20 @@
 package frostygames0.elementalamulets.datagen.recipes;
 
+import frostygames0.elementalamulets.core.init.ModBlocks;
 import frostygames0.elementalamulets.core.init.ModItems;
 import frostygames0.elementalamulets.core.init.ModTags;
 import frostygames0.elementalamulets.recipes.ElementalCombination;
 import net.minecraft.advancements.criterion.InventoryChangeTrigger;
+import net.minecraft.block.Block;
 import net.minecraft.data.*;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.util.IItemProvider;
+
 
 import java.util.function.Consumer;
 
@@ -48,10 +51,7 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .addIngredient(ModTags.ELEMENTS)
                 .addCriterion("has_item", InventoryChangeTrigger.Instance.forItems(ModItems.ELEMENTAL_SHARDS.get()))
                 .build(consumer);
-        CookingRecipeBuilder.cookingRecipe(Ingredient.fromItems(ModItems.ELEMENTAL_STONE.get()),
-                ModItems.ELEMENTAL_SHARDS.get(), 1, 120, IRecipeSerializer.SMELTING)
-                .addCriterion("has_item", InventoryChangeTrigger.Instance.forItems(ModItems.ELEMENTAL_STONE.get()))
-                .build(consumer);
+        oreSmelting(ModBlocks.ELEMENTAL_STONE.get(), ModItems.ELEMENTAL_SHARDS.get(), 2, 230, consumer);
     }
     // Elemental Combination recipes
     private void registerModRecipes(Consumer<IFinishedRecipe> consumer) {
@@ -70,10 +70,21 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .build(supplier, id);
     }
 
-    private static void elementRecipe(Item elementIn, ITag<Item> convertibles, Consumer<IFinishedRecipe> consumerIn) {
+    private static void elementRecipe(IItemProvider elementIn, ITag<Item> convertibles, Consumer<IFinishedRecipe> consumerIn) {
         ElementalCombinationBuilder.create(elementIn)
                 .addElemental(ModItems.ELEMENTAL_SHARDS.get())
                 .addIngredient(convertibles, ElementalCombination.MAX_INGREDIENTS)
-                .build(consumerIn, modPrefix("elements/"+elementIn.getItem().getRegistryName().getPath()));
+                .build(consumerIn, modPrefix("elements/"+elementIn.asItem().getRegistryName().getPath()));
+    }
+
+    private static void oreSmelting(Block oreBlock, Item resultOre, int exp, int cookTime, Consumer<IFinishedRecipe> consumerIn) {
+        CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(oreBlock),
+                resultOre, exp, cookTime)
+                .addCriterion("has_item", InventoryChangeTrigger.Instance.forItems(oreBlock))
+                .build(consumerIn, resultOre.getRegistryName()+"_smelting");
+        CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(oreBlock),
+                resultOre, exp, cookTime-50)
+                .addCriterion("has_item", InventoryChangeTrigger.Instance.forItems(oreBlock))
+                .build(consumerIn, resultOre.getRegistryName()+"_blasting");
     }
 }

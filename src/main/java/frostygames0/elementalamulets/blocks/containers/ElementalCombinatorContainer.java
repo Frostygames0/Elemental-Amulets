@@ -8,6 +8,7 @@ import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.IIntArray;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -20,12 +21,14 @@ public class ElementalCombinatorContainer extends Container {
     private final TileEntity tileEntity;
     private final PlayerEntity playerEntity;
     private final IItemHandler playerInventory;
+    private final IIntArray data;
 
-    public ElementalCombinatorContainer(int id, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player) {
+    public ElementalCombinatorContainer(int id, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player, IIntArray data) {
         super(ModContainers.ELEMENTAL_COMBINATOR_CONTAINER.get(), id);
         this.tileEntity = world.getTileEntity(pos);
         this.playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);
+        this.data = data;
         if (this.tileEntity != null) {
             tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
                 this.addSlot(new SlotItemHandler(h, 0, 134, 34));
@@ -42,7 +45,11 @@ public class ElementalCombinatorContainer extends Container {
             });
         }
         this.bindPlayerInventory(8,83);
+        this.trackIntArray(data);
+    }
 
+    public IIntArray getCombinatorData() {
+        return this.data;
     }
 
     @Override
@@ -111,6 +118,12 @@ public class ElementalCombinatorContainer extends Container {
         this.addSlotBox(playerInventory, 9, x, y, 9, 18, 3, 18);
         y += 58;
         this.addSlotRange(playerInventory, 0, x, y, 9, 18);
+    }
+
+    public int getCombinationTimeScaled() {
+        int i = this.getCombinatorData().get(0);
+        int j = this.getCombinatorData().get(1);
+        return j != 0 && i != 0 ? i * 25 / j : 0;
     }
 
     public TileEntity getTileEntity() {

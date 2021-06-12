@@ -43,7 +43,10 @@ accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
         }
 
         server {
-            workingDirectory project.file('run')
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+
+            workingDirectory project.file('runServer')
 
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
@@ -147,14 +150,6 @@ jar {
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
-}
-
-task apiJar(type: Jar) {
-    from(sourceSets.main.allJava)
-    from(sourceSets.main.output)
-    include 'frostygames0/elementalamulets/api/**'
-
-    classifier('api')
 }
 // Example configuration to allow publishing using the maven-publish task
 // This is the preferred method to reobfuscate your jar file

@@ -1,0 +1,13 @@
+{
+  "type": "elementalamulets:elemental_combination",
+  "elemental": {
+    "item": "minecraft:coarse_dirt"
+  },
+  "ingredients": [
+    {"item": "minecraft:diamond"},
+    {"item": "minecraft:diamond"},
+    {"item": "minecraft:diamond"}
+  ],
+  "result": "elementalamulets:guide_book",
+  "cooldown": -100
+}

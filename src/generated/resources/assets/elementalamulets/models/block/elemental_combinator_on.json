@@ -3,6 +3,6 @@
   "textures": {
     "side": "elementalamulets:block/elemental_combinator_side",
     "bottom": "minecraft:block/furnace_top",
-    "top": "elementalamulets:block/elemental_combinator_up_off"
+    "top": "elementalamulets:block/elemental_combinator_up_on"
   }
 }

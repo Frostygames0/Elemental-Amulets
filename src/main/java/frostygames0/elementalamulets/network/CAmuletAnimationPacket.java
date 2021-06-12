@@ -1,8 +1,6 @@
 package frostygames0.elementalamulets.network;
 
 import frostygames0.elementalamulets.ElementalAmulets;
-import frostygames0.elementalamulets.config.ModConfig;
-import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkDirection;
@@ -34,9 +32,9 @@ public class CAmuletAnimationPacket {
     public static void handle(CAmuletAnimationPacket msg, Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
             if(ctx.get().getDirection() == NetworkDirection.PLAY_TO_CLIENT) {
-                if(ModConfig.cached.DISPLAY_TOTEM_LIKE_ANIM_ONBREAK) {
+               /* if(ModConfig.cached.DISPLAY_TOTEM_LIKE_ANIM_ONBREAK) {
                     Minecraft.getInstance().gameRenderer.displayItemActivation(msg.stack);
-                }
+                }*/
             } else {
                 ElementalAmulets.LOGGER.error("CAmuletAnimationPacket is meant to be sent to client!");
             }
