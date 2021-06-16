@@ -1,0 +1,23 @@
+{
+  "name": "Introduction",
+  "category": "elementalamulets:getting_started",
+  "icon": "elementalamulets:elemental_combinator",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Hello, $(thing)$(playername)$()! This page will introduce you into Elemental Amulets mod! $(br2)First, you need to do some mining! To find $(item)Elemental Shards$() They can spawn underground between ~40 - ~20 Y coordinates! In this example it spawned in the mineshaft next to the iron ore"
+    },
+    {
+      "type": "image",
+      "title": "Elemental Ore",
+      "images": ["elementalamulets:textures/gui/patchouli/elemental_ore_showcase.png"],
+      "border": true
+    },
+    {
+      "type": "smelting",
+      "title": "Alternative Method",
+      "recipe": "elementalamulets:elemental_shards_smelting",
+      "text": "You can also smelt it into shards, if you found $(item)Elemental Ore$() block"
+    }
+  ]
+}

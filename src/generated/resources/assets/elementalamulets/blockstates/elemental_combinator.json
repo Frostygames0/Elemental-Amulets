@@ -1,9 +1,9 @@
 {
   "variants": {
-    "enabled=false": {
+    "combining=false": {
       "model": "elementalamulets:block/elemental_combinator"
     },
-    "enabled=true": {
+    "combining=true": {
       "model": "elementalamulets:block/elemental_combinator_on"
     }
   }

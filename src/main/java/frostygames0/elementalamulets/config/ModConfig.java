@@ -19,30 +19,25 @@ public class ModConfig {
     }
 
     public static class Server {
-        /*private final ForgeConfigSpec.IntValue FIRE_AMULET_USAGE_DMG;
-        private final ForgeConfigSpec.IntValue SPEED_AMULET_USAGE_DMG;
-        private final ForgeConfigSpec.IntValue JUMP_AMULET_USAGE_DMG;
-        private final ForgeConfigSpec.IntValue INVISIBILITY_AMULET_USAGE_DMG;
-
-        private final ForgeConfigSpec.BooleanValue GIVE_GUIDE_ON_FIRST_JOIN;*/
+        private final ForgeConfigSpec.BooleanValue FANCY_COMBINATION;
+        private final ForgeConfigSpec.DoubleValue JUMP_AMULET_BOOST;
+        private final ForgeConfigSpec.DoubleValue FIRE_AMULET_FIRE_RESISTANCE;
+        private final ForgeConfigSpec.DoubleValue FIRE_AMULET_LAVA_RESISTANCE;
+        private final ForgeConfigSpec.DoubleValue SPEED_AMULET_BOOST;
 
         public Server(ForgeConfigSpec.Builder builder) {
             builder.push("General");
-            /*GIVE_GUIDE_ON_FIRST_JOIN = builder.comment("Will player receive guide on first join").define("give_guide_on_join", false);
-            builder.push("Amulets [NOT WORKING]");
-            FIRE_AMULET_USAGE_DMG = builder.comment("Defines damage that fire amulet will receive on it's usage [WARNING! Setting this too high can cause unexpected behaviour!]")
-                    .defineInRange("fire_amulet_usage_dmg", 1, 0, 1000);
-            SPEED_AMULET_USAGE_DMG = builder.comment("Defines damage that speed amulet will receive on it's usage [WARNING! Setting this too high can cause unexpected behaviour!]")
-                    .defineInRange("speed_amulet_usage_dmg", 1, 0, 1000);
-            JUMP_AMULET_USAGE_DMG = builder.comment("Defines damage that jump amulet will receive on it's usage [WARNING! Setting this too high can cause unexpected behaviour!]")
-                    .defineInRange("jump_amulet_usage_dmg", 5, 0, 1000);
-            INVISIBILITY_AMULET_USAGE_DMG = builder.comment("Defines damage that invisibility amulet will receive on it's usage [WARNING! Setting this too high can cause unexpected behaviour!]")
-                    .defineInRange("invisibility_amulet_usage_dmg", 1, 0, 1000);*/
+            FANCY_COMBINATION = builder.comment("Add special effects when Elemental Combinator is working [DEFAULT: true]").define("elemental_combinator_special_effects", true);
 
-            //builder.pop();
+            builder.comment("Anything that is related to the amulets [WARNING! Setting any of these values too high may cause bugs, lags and even crashes]")
+                    .push("Amulets");
+            JUMP_AMULET_BOOST = builder.comment("How high will players jump with Jump Amulet [DEFAULT: 0.3]").defineInRange("jump_amulet_boost", 0.3, 0, Integer.MAX_VALUE);
+            FIRE_AMULET_FIRE_RESISTANCE = builder.comment("How good will Fire Amulet protect from fire [DEFAULT: 0.5]").defineInRange("fire_amulet_fire_resistance", 0.5, 0, Integer.MAX_VALUE);
+            FIRE_AMULET_LAVA_RESISTANCE = builder.comment("How good will Fire Amulet protect from lava [DEFAULT: 0.25]").defineInRange("fire_amulet_lava_resistance", 0.25, 0, Integer.MAX_VALUE);
+            SPEED_AMULET_BOOST = builder.comment("How fast will players run with Speed Amulet [DEFAULT: 1.08]").defineInRange("speed_amulet_boost", 1.08, 0, Integer.MAX_VALUE);
             builder.pop();
 
-
+            builder.pop();
         }
     }
 
@@ -56,34 +51,51 @@ public class ModConfig {
     }
 
     public static class Client {
-        //private final ForgeConfigSpec.BooleanValue DISPLAY_TOTEM_LIKE_ANIM_ONBREAK;
         private final ForgeConfigSpec.BooleanValue USE_LATIN_ELEMENT_NAMES;
+        private final ForgeConfigSpec.BooleanValue AMULETS_TIER_DIFFERENCE;
+        private final ForgeConfigSpec.IntValue COMBINATOR_STACK_ROTATION_SPEED;
+        private final ForgeConfigSpec.BooleanValue RENDER_COMBINATOR_STACK;
         public Client(ForgeConfigSpec.Builder builder) {
             builder.push("General");
-            //DISPLAY_TOTEM_LIKE_ANIM_ONBREAK = builder.comment("Display totem like animation when amulet gets destroyed?").define("amulet_totem_like_anim", true);
-            USE_LATIN_ELEMENT_NAMES = builder.comment("If true, elements names will be in latin (Ignis, Aer, Aqua and Terra)").define("elements_latin_variant", false);
+            USE_LATIN_ELEMENT_NAMES = builder.comment("If true, elements names will be in latin (Ignis, Aer, Aqua and Terra) [DEFAULT: false]").define("elements_latin_variant", false);
+
+            builder.push("Rendering");
+            RENDER_COMBINATOR_STACK = builder.comment("Display output slot on Elemental Combinator? [DEFAULT: true]").define("elemental_combinator_stack_display", true);
+            COMBINATOR_STACK_ROTATION_SPEED = builder.comment("Defines speed of item that is rendered above Elemental Combinator [LOWER - better] [DEFAULT: 20]").defineInRange("elemental_combinator_stack_speed", 20, 1, Integer.MAX_VALUE);
+
+            builder.push("Amulets");
+            AMULETS_TIER_DIFFERENCE = builder.comment("Set to true, if you want amulets to be different based on their tier [DEFAULT: false]").define("amulets_tier_difference", true);
+            builder.pop();
+
+            builder.pop();
+
             builder.pop();
         }
     }
     public static class cached {
-        public static int FIRE_AMULET_USAGE_DMG;
-        public static int SPEED_AMULET_USAGE_DMG;
-        public static int JUMP_AMULET_USAGE_DMG;
-        public static int INVISIBILITY_AMULET_USAGE_DMG;
-        public static boolean GIVE_GUIDE_ON_FIRST_JOIN;
-        private static void bakeServerConfig() {
-            /*FIRE_AMULET_USAGE_DMG = SERVER.FIRE_AMULET_USAGE_DMG.get();
-            SPEED_AMULET_USAGE_DMG = SERVER.SPEED_AMULET_USAGE_DMG.get();
-            JUMP_AMULET_USAGE_DMG = SERVER.JUMP_AMULET_USAGE_DMG.get();
-            INVISIBILITY_AMULET_USAGE_DMG = SERVER.INVISIBILITY_AMULET_USAGE_DMG.get();
-            GIVE_GUIDE_ON_FIRST_JOIN = SERVER.GIVE_GUIDE_ON_FIRST_JOIN.get();*/
+        public static boolean FANCY_COMBINATION;
+        public static double JUMP_AMULET_BOOST;
+        public static double FIRE_AMULET_FIRE_RESISTANCE;
+        public static double FIRE_AMULET_LAVA_RESISTANCE;
+        public static double SPEED_AMULET_BOOST;
 
+        private static void bakeServerConfig() {
+            FANCY_COMBINATION = SERVER.FANCY_COMBINATION.get();
+            JUMP_AMULET_BOOST = SERVER.JUMP_AMULET_BOOST.get();
+            FIRE_AMULET_FIRE_RESISTANCE = SERVER.FIRE_AMULET_FIRE_RESISTANCE.get();
+            FIRE_AMULET_LAVA_RESISTANCE = SERVER.FIRE_AMULET_LAVA_RESISTANCE.get();
+            SPEED_AMULET_BOOST = SERVER.SPEED_AMULET_BOOST.get();
         }
-        //public static boolean DISPLAY_TOTEM_LIKE_ANIM_ONBREAK;
+
+        public static boolean AMULETS_TIER_DIFFERENCE;
         public static boolean USE_LATIN_ELEMENT_NAMES;
+        public static int COMBINATOR_STACK_ROTATION_SPEED;
+        public static boolean RENDER_COMBINATOR_STACK;
         private static void bakeClientConfig() {
-            //DISPLAY_TOTEM_LIKE_ANIM_ONBREAK = CLIENT.DISPLAY_TOTEM_LIKE_ANIM_ONBREAK.get();
             USE_LATIN_ELEMENT_NAMES = CLIENT.USE_LATIN_ELEMENT_NAMES.get();
+            AMULETS_TIER_DIFFERENCE = CLIENT.AMULETS_TIER_DIFFERENCE.get();
+            COMBINATOR_STACK_ROTATION_SPEED = CLIENT.COMBINATOR_STACK_ROTATION_SPEED.get();
+            RENDER_COMBINATOR_STACK = CLIENT.RENDER_COMBINATOR_STACK.get();
         }
     }
 

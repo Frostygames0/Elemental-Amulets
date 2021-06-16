@@ -8,7 +8,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -24,10 +23,10 @@ import javax.annotation.Nullable;
 
 @SuppressWarnings("deprecation")
 public class ElementalCombinator extends Block {
-    public static final BooleanProperty ENABLED = BlockStateProperties.ENABLED;
+    public static final BooleanProperty COMBINING = BooleanProperty.create("combining");
     public ElementalCombinator(Properties properties) {
         super(properties);
-        this.setDefaultState(this.getDefaultState().with(ENABLED, false));
+        this.setDefaultState(this.getDefaultState().with(COMBINING, false));
     }
 
     @Override
@@ -41,7 +40,6 @@ public class ElementalCombinator extends Block {
             if(!player.isSneaking()) {
                 NetworkHooks.openGui((ServerPlayerEntity) player, elementalCombinatorTile, elementalCombinatorTile.getPos());
             } else {
-                //elementalCombinatorTile.combineElemental(player);
                 elementalCombinatorTile.startCombination();
             }
         } else {
@@ -83,6 +81,6 @@ public class ElementalCombinator extends Block {
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(ENABLED);
+        builder.add(COMBINING);
     }
 }

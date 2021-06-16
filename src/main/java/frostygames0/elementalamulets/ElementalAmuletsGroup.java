@@ -13,8 +13,4 @@ public class ElementalAmuletsGroup extends ItemGroup {
     public ItemStack createIcon() {
         return new ItemStack(ModItems.FIRE_AMULET.get());
     }
-
-
-
-
 }

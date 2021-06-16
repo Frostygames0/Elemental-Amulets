@@ -45,7 +45,7 @@ public class ElementalCombinationProcessor implements IComponentProcessor {
             } else if(key.equals("icon")) {
                 return IVariable.from(recipe.getIcon());
             } else if(key.equals("cooldown")) {
-                return IVariable.from(recipe.getCooldown());
+                return IVariable.from(recipe.getCombinationTime());
             }
         }
         return null;

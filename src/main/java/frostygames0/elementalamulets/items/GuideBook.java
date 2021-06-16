@@ -1,6 +1,6 @@
 package frostygames0.elementalamulets.items;
 
-import frostygames0.elementalamulets.items.triggers.ModCriteriaTriggers;
+import frostygames0.elementalamulets.advancements.triggers.ModCriteriaTriggers;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -38,6 +39,7 @@ public class GuideBook extends Item {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
+        if(ModList.get().isLoaded("patchouli")) tooltip.add(((IFormattableTextComponent)PatchouliAPI.get().getSubtitle(BOOK_ID)).mergeStyle(TextFormatting.GOLD));
         tooltip.add(new TranslationTextComponent("item.elementalamulets.guide_book.subtitle").mergeStyle(TextFormatting.GRAY));
     }
 

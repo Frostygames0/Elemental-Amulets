@@ -1,4 +1,4 @@
-package frostygames0.elementalamulets.items.triggers;
+package frostygames0.elementalamulets.advancements.triggers;
 
 import net.minecraft.advancements.CriteriaTriggers;
 

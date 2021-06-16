@@ -41,7 +41,7 @@
   "player.elementalamulets.brokenamulet.warn": "Ваш %s был сломан!",
   "entity.minecraft.villager.elementalamulets.jeweller": "Ювелир",
 
-  "jei.elementalamulets.cooldown": "Перезарядка - %s сек",
+  "jei.elementalamulets.cooldown": "Время комбинации - %s сек",
   "jei.elementalamulets.elemental_separation": "Элементальное объединение",
   "jei.elementalamulets.shapeless": "Бесформенный рецепт (за исключением центр. слота).",
   "jei.elementalamulets.amulets.description": "Амулеты - это магические украшения, которые дают вам разнообразные способности\n Побольше о них вы может почитать в Элементальном Руководстве",

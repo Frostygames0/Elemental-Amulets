@@ -16,7 +16,7 @@
       "item": "elementalamulets:elemental_shards"
     },
     "0": {
-      "tag": "minecraft:stone_crafting_materials"
+      "tag": "forge:cobblestone"
     },
     "#": {
       "tag": "minecraft:planks"

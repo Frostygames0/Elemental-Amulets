@@ -30,7 +30,7 @@ public class ElementalCombinationBuilder {
     private final ItemStack result;
     private AmuletIngredient elemental;
     private final List<Ingredient> ingredients = new ArrayList<>();
-    private int cooldown;
+    private int combinationTime;
     private boolean tagTransfer;
     private ElementalCombinationBuilder(ItemStack item) {
         this.result = item;
@@ -78,8 +78,8 @@ public class ElementalCombinationBuilder {
         return this;
     }
 
-    public ElementalCombinationBuilder setCooldown(int value) {
-        this.cooldown = value;
+    public ElementalCombinationBuilder setCombinationTime(int value) {
+        this.combinationTime = value;
         return this;
     }
 
@@ -95,7 +95,7 @@ public class ElementalCombinationBuilder {
 
     public void build(Consumer<IFinishedRecipe> consumerIn, ResourceLocation id) {
         this.validate();
-        consumerIn.accept(new Result(id, elemental, ingredients, result, cooldown, tagTransfer));
+        consumerIn.accept(new Result(id, elemental, ingredients, result, combinationTime, tagTransfer));
     }
 
     public void build(Consumer<IFinishedRecipe> consumerIn, String id) {
@@ -115,14 +115,14 @@ public class ElementalCombinationBuilder {
         private final AmuletIngredient elemental;
         private final List<Ingredient> ingredients;
         private final ItemStack result;
-        private final int cooldown;
+        private final int combinationTime;
         private final boolean tagTransfer;
-        public Result(ResourceLocation id, AmuletIngredient elemental, List<Ingredient> ingredients, ItemStack result, int cooldown, boolean tagTransfer) {
+        public Result(ResourceLocation id, AmuletIngredient elemental, List<Ingredient> ingredients, ItemStack result, int combinationTime, boolean tagTransfer) {
             this.id = id;
             this.elemental = elemental;
             this.ingredients = ingredients;
             this.result = result;
-            this.cooldown = cooldown;
+            this.combinationTime = combinationTime;
             this.tagTransfer = tagTransfer;
         }
 
@@ -139,8 +139,8 @@ public class ElementalCombinationBuilder {
             json.add("ingredients", array);
 
             // Misc settings
-            if (this.cooldown > 0) {
-                json.addProperty("cooldown", cooldown);
+            if (this.combinationTime > 0) {
+                json.addProperty("combination_time", combinationTime);
             }
             if(tagTransfer) {
                 json.addProperty("tag_transfer", tagTransfer);

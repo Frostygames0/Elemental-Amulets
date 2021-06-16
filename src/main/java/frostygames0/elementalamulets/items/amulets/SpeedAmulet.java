@@ -1,6 +1,7 @@
 package frostygames0.elementalamulets.items.amulets;
 
 import frostygames0.elementalamulets.ElementalAmulets;
+import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.items.amulets.interfaces.ISpeedItem;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
@@ -64,7 +65,7 @@ public class SpeedAmulet extends AmuletItem implements ISpeedItem {
 
     @Override
     public float getSpeed(ItemStack stack) {
-        return 1.08f*this.getTier(stack);
+        return (float) ModConfig.cached.SPEED_AMULET_BOOST*this.getTier(stack);
     }
 
 

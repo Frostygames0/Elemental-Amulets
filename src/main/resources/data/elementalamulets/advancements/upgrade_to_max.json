@@ -14,7 +14,7 @@
   },
   "criteria": {
     "amulet_worn": {
-      "trigger": "elementalamulets:item_elemental_combined",
+      "trigger": "elementalamulets:success_use_item",
       "conditions": {
         "tag": "curios:necklace",
         "nbt": "{\"elementalamulets:tier\":4}"

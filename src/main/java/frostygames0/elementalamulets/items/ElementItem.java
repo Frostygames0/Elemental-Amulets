@@ -6,7 +6,6 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 
@@ -42,9 +41,4 @@ public class ElementItem extends Item {
         return super.getTranslationKey();
     }
 
-    @Nullable
-    @Override
-    public CompoundNBT getShareTag(ItemStack stack) {
-        return null;
-    }
 }

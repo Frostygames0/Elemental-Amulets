@@ -2,10 +2,9 @@ package frostygames0.elementalamulets.items.amulets;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
-import frostygames0.elementalamulets.ElementalAmulets;
+import frostygames0.elementalamulets.advancements.triggers.ModCriteriaTriggers;
 import frostygames0.elementalamulets.client.models.AmuletModel;
 import frostygames0.elementalamulets.core.util.NBTUtil;
-import frostygames0.elementalamulets.items.triggers.ModCriteriaTriggers;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -16,8 +15,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -73,8 +72,7 @@ public abstract class AmuletItem extends Item implements ICurioItem {
     public static ItemStack getStackWithTier(ItemStack stack, int tier) {
         if(stack.getItem() instanceof AmuletItem) {
             if(((AmuletItem) stack.getItem()).hasTier) {
-                if(tier > MAX_TIER) throw new IllegalArgumentException("Tier can't be higher than "+MAX_TIER+"! Your tier is "+tier);
-                NBTUtil.putInteger(stack, TIER_TAG, tier);
+                NBTUtil.putInteger(stack, TIER_TAG, MathHelper.clamp(tier, 1, MAX_TIER));
             }
         }
         return stack;
@@ -100,12 +98,11 @@ public abstract class AmuletItem extends Item implements ICurioItem {
 
     @Override
     public void render(String identifier, int index, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int light, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack stack) {
-        ResourceLocation texture = new ResourceLocation(ElementalAmulets.MOD_ID, "textures/entity/amulets/tier_"+this.getTier(stack)+"/"+this.getRegistryName().getPath()+"_model.png");
         ICurio.RenderHelper.translateIfSneaking(matrixStack, livingEntity);
         ICurio.RenderHelper.rotateIfSneaking(matrixStack, livingEntity);
 
         AmuletModel<?> amuletModel = new AmuletModel<>();
-        IVertexBuilder vertexBuilder = ItemRenderer.getBuffer(renderTypeBuffer, amuletModel.getRenderType(texture), false, stack.hasEffect());
+        IVertexBuilder vertexBuilder = ItemRenderer.getBuffer(renderTypeBuffer, amuletModel.getRenderType(AmuletModel.getTexture(this, stack)), false, stack.hasEffect());
         amuletModel.render(matrixStack, vertexBuilder, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
     }
 
@@ -128,7 +125,7 @@ public abstract class AmuletItem extends Item implements ICurioItem {
 
     public int getTier(ItemStack stack) {
         if(this.hasTier()) {
-            return Math.max(NBTUtil.getInteger(stack, TIER_TAG), 0);
+            return NBTUtil.getInteger(stack, TIER_TAG);
         }
         return 0;
     }

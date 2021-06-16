@@ -3,6 +3,7 @@ package frostygames0.elementalamulets.datagen.recipes;
 import frostygames0.elementalamulets.core.init.ModBlocks;
 import frostygames0.elementalamulets.core.init.ModItems;
 import frostygames0.elementalamulets.core.init.ModTags;
+import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import frostygames0.elementalamulets.recipes.ElementalCombination;
 import net.minecraft.advancements.criterion.InventoryChangeTrigger;
 import net.minecraft.block.Block;
@@ -14,6 +15,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.IItemProvider;
+import net.minecraftforge.common.Tags;
 
 
 import java.util.function.Consumer;
@@ -31,7 +33,6 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
     protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
         this.registerVanillaRecipes(consumer);
         this.registerModRecipes(consumer);
-
     }
     // Vanilla recipes(crafting, smelting, etc.)
     private void registerVanillaRecipes(Consumer<IFinishedRecipe> consumer) {
@@ -42,13 +43,21 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .key('_', Items.RED_CARPET)
                 .key('=', Items.IRON_INGOT)
                 .key('4', ModItems.ELEMENTAL_SHARDS.get())
-                .key('0', ItemTags.STONE_CRAFTING_MATERIALS)
+                .key('0', Tags.Items.COBBLESTONE)
                 .key('#', ItemTags.PLANKS)
                 .addCriterion("has_item", InventoryChangeTrigger.Instance.forItems(ModItems.ELEMENTAL_SHARDS.get()))
                 .build(consumer);
         ShapelessRecipeBuilder.shapelessRecipe(ModItems.GUIDE_BOOK.get())
                 .addIngredient(Items.BOOK)
                 .addIngredient(ModTags.ELEMENTS)
+                .addCriterion("has_item", InventoryChangeTrigger.Instance.forItems(ModItems.ELEMENTAL_SHARDS.get()))
+                .build(consumer);
+        ShapedRecipeBuilder.shapedRecipe(ModItems.EMPTY_AMULET.get())
+                .patternLine(" ##")
+                .patternLine("xx#")
+                .patternLine("xx ")
+                .key('#', Tags.Items.STRING)
+                .key('x', ModItems.ELEMENTAL_SHARDS.get())
                 .addCriterion("has_item", InventoryChangeTrigger.Instance.forItems(ModItems.ELEMENTAL_SHARDS.get()))
                 .build(consumer);
         oreSmelting(ModBlocks.ELEMENTAL_STONE.get(), ModItems.ELEMENTAL_SHARDS.get(), 2, 230, consumer);
@@ -59,10 +68,24 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
         elementRecipe(ModItems.FIRE_ELEMENT.get(), ModTags.FIRE_ELEMENT_CONVERTIBLE, consumer);
         elementRecipe(ModItems.WATER_ELEMENT.get(), ModTags.WATER_ELEMENT_CONVERTIBLE, consumer);
         elementRecipe(ModItems.EARTH_ELEMENT.get(), ModTags.EARTH_ELEMENT_CONVERTIBLE, consumer);
-        oneIngredientRecipe(modPrefix("guide_book_alternative").toString(), new ItemStack(Items.BOOK), ModTags.ELEMENTS, new ItemStack(ModItems.GUIDE_BOOK.get()), consumer);
+        ElementalCombinationBuilder.create(AmuletItem.getStackWithTier(new ItemStack(ModItems.FIRE_AMULET.get()), 1))
+                .addElemental(ModItems.EMPTY_AMULET.get())
+                .addIngredient(8, ModItems.FIRE_ELEMENT.get())
+                .setCombinationTime(300)
+                .build(consumer);
+        ElementalCombinationBuilder.create(AmuletItem.getStackWithTier(new ItemStack(ModItems.JUMP_AMULET.get()), 1))
+                .addElemental(ModItems.EMPTY_AMULET.get())
+                .addIngredient(8, ModItems.JUMP_ELEMENT.get())
+                .setCombinationTime(300)
+                .build(consumer);
     }
 
     /* Helper Methods! */
+
+    private static void oneIngredientRecipe(ItemStack elemental, ITag<Item> tag, ItemStack result, Consumer<IFinishedRecipe> consumer) {
+        oneIngredientRecipe(elemental.getItem().getRegistryName().toString(), elemental, tag, result, consumer);
+    }
+
     private static void oneIngredientRecipe(String id, ItemStack elemental, ITag<Item> tag, ItemStack result, Consumer<IFinishedRecipe> supplier) {
         ElementalCombinationBuilder.create(result)
                 .addElemental(elemental)

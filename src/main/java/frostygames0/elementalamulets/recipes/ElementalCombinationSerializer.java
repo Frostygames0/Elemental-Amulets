@@ -42,9 +42,9 @@ public class ElementalCombinationSerializer extends net.minecraftforge.registrie
                 if(item == null) throw new JsonSyntaxException("Item: "+s1+" does not exist!");
                 resultStack = new ItemStack(item);
             }
-            int cooldown = JSONUtils.getInt(json, "cooldown", 40); // How long combinator will recharge
+            int combinationTime = JSONUtils.getInt(json, "combination_time", 30); // How long combinator will recharge
             boolean tagTransfer = JSONUtils.getBoolean(json, "tag_transfer", false); // Does name, damage, enchantments etc move onto result? Made it for "upgrade" recipes
-            return new ElementalCombination(recipeId, nonNullList, elemental,  resultStack, cooldown, tagTransfer);
+            return new ElementalCombination(recipeId, nonNullList, elemental,  resultStack, combinationTime, tagTransfer);
         }
     }
 
@@ -69,9 +69,9 @@ public class ElementalCombinationSerializer extends net.minecraftforge.registrie
             nonNullList.set(j, Ingredient.read(buffer));
         }
         ItemStack resultStack = buffer.readItemStack();
-        int cooldown = buffer.readVarInt();
+        int combinationTime = buffer.readVarInt();
         boolean tagTransfer = buffer.readBoolean();
-        return new ElementalCombination(recipeId, nonNullList, elemental, resultStack, cooldown, tagTransfer);
+        return new ElementalCombination(recipeId, nonNullList, elemental, resultStack, combinationTime, tagTransfer);
     }
 
     @Override
@@ -82,11 +82,11 @@ public class ElementalCombinationSerializer extends net.minecraftforge.registrie
             ingr.write(buffer);
         }
         buffer.writeItemStack(recipe.result);
-        buffer.writeVarInt(recipe.cooldown);
+        buffer.writeVarInt(recipe.combinationTime);
         buffer.writeBoolean(recipe.tagTransfer);
 
     }
     /*public interface IFactory<T extends ElementalCombination> {
-        T create(ResourceLocation idIn, NonNullList<Ingredient> ingredientsIn, AmuletIngredient elementalIn, ItemStack resultIn, int cooldown, boolean tagTransfer);
+        T create(ResourceLocation idIn, NonNullList<Ingredient> ingredientsIn, AmuletIngredient elementalIn, ItemStack resultIn, int combinationTime, boolean tagTransfer);
     }*/
 }

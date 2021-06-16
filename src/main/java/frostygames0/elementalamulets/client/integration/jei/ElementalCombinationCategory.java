@@ -54,7 +54,7 @@ public class ElementalCombinationCategory implements IRecipeCategory<ElementalCo
     }
 
     private IDrawableAnimated getArrow(ElementalCombination recipe) {
-        int cookTime = recipe.getCooldown();
+        int cookTime = recipe.getCombinationTime();
         if(cookTime < 1) {
             cookTime = 80;
         }
@@ -123,8 +123,8 @@ public class ElementalCombinationCategory implements IRecipeCategory<ElementalCo
     public void draw(ElementalCombination recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
         matrixStack.push();
         this.getArrow(recipe).draw(matrixStack, 84, 29);
-        ITextComponent cooldown = new TranslationTextComponent("jei.elementalamulets.cooldown", recipe.getCooldown()/20.0f);
-        Minecraft.getInstance().fontRenderer.drawText(matrixStack, cooldown, 4, 75, 0xFF808080);
+        ITextComponent cooldown = new TranslationTextComponent("jei.elementalamulets.cooldown", recipe.getCombinationTime()/20.0f);
+        Minecraft.getInstance().fontRenderer.drawText(matrixStack, cooldown, 4, 77, 0xFF808080);
         matrixStack.pop();
     }
 

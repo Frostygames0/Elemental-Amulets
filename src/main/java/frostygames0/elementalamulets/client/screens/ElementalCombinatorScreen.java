@@ -12,10 +12,10 @@ import net.minecraft.util.text.ITextComponent;
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
-public class ElementalCrafterGUI extends ContainerScreen<ElementalCombinatorContainer> {
+public class ElementalCombinatorScreen extends ContainerScreen<ElementalCombinatorContainer> {
     private static final ResourceLocation GUI = modPrefix("textures/gui/elemental_separator_redesign.png");
     private Button craftButton;
-    public ElementalCrafterGUI(ElementalCombinatorContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+    public ElementalCombinatorScreen(ElementalCombinatorContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
         this.playerInventoryTitleX += 92;
         this.titleX = this.guiLeft+85;

@@ -5,13 +5,13 @@ issueTrackerURL="https://github.com/Frostygames0/elemental-amulets/issues"
 
     [[mods]]
       modId="elementalamulets"
-      version="${file.jarVersion}" # NONE only in dev environment
+      version="${file.jarVersion}"
       displayURL="https://www.curseforge.com/minecraft/mc-mods/elemental-amulets"
       updateJSONURL="https://raw.githubusercontent.com/Frostygames0/elemental-amulets/master/update.json"
       logoFile="logo.png"
       displayName="Elemental Amulets"
       authors="Frostygames0"
-      description= "This mod adds amulets! Do everything better!"
+      description= "This mod adds new Jewels that give you powers such as Jump-Boost, Fire-Resistance, Protection and other!"
 
 
       [[dependencies.elementalamulets]]

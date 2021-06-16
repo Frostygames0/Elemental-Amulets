@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " ##",
+    "xx#",
+    "xx "
+  ],
+  "key": {
+    "#": {
+      "tag": "forge:string"
+    },
+    "x": {
+      "item": "elementalamulets:elemental_shards"
+    }
+  },
+  "result": {
+    "item": "elementalamulets:empty_amulet"
+  }
+}

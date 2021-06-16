@@ -1,16 +1,18 @@
 package frostygames0.elementalamulets;
 
+import frostygames0.elementalamulets.advancements.triggers.ModCriteriaTriggers;
 import frostygames0.elementalamulets.client.particles.ModParticles;
-import frostygames0.elementalamulets.client.screens.ElementalCrafterGUI;
+import frostygames0.elementalamulets.client.renderer.ElementalCombinatorRenderer;
+import frostygames0.elementalamulets.client.screens.ElementalCombinatorScreen;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.core.init.*;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
-import frostygames0.elementalamulets.items.triggers.ModCriteriaTriggers;
 import frostygames0.elementalamulets.network.ModNetworking;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -34,6 +36,7 @@ public class ElementalAmulets {
 
     public ElementalAmulets() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus(); // Only for mod specific events
+        IEventBus forgeBus = MinecraftForge.EVENT_BUS;
 
         ModItems.ITEMS.register(bus);
         ModBlocks.BLOCKS.register(bus);
@@ -49,6 +52,8 @@ public class ElementalAmulets {
         bus.addListener(this::enqueueIMC);
         bus.addListener(this::commonSetup);
         bus.addListener(this::clientSetup);
+
+        forgeBus.addListener(ModCommands::registerCommandsEvent); // Commands don't deserve EventBusSubscriber >:D
     }
 
     // Prefer to use this instead when you need ResourceLocation with mod's id
@@ -73,11 +78,12 @@ public class ElementalAmulets {
 
     private void clientSetup(final FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
-            ModParticles.register();
-            ScreenManager.registerFactory(ModContainers.ELEMENTAL_COMBINATOR_CONTAINER.get(), ElementalCrafterGUI::new);
+            ElementalCombinatorRenderer.register();
+            ScreenManager.registerFactory(ModContainers.ELEMENTAL_COMBINATOR_CONTAINER.get(), ElementalCombinatorScreen::new);
+
             ModItems.ITEMS.getEntries().stream().map(RegistryObject::get).filter(item -> item instanceof AmuletItem).forEach(
                     item -> ItemModelsProperties.registerProperty(item, new ResourceLocation(AmuletItem.TIER_TAG),
-                            (stack, world, entity) -> ((AmuletItem)item).getTier(stack)));
+                            (stack, world, entity) -> ModConfig.cached.AMULETS_TIER_DIFFERENCE ? ((AmuletItem)item).getTier(stack) : 0));
         });
     }
 }

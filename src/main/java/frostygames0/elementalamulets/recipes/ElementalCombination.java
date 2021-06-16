@@ -29,16 +29,16 @@ public class ElementalCombination implements IRecipe<IInventory> {
     protected final NonNullList<Ingredient> ingredients;
     protected final AmuletIngredient elemental;
     protected final ItemStack result;
-    protected final int cooldown;
+    protected final int combinationTime;
     protected final boolean tagTransfer;
 
     public ElementalCombination(ResourceLocation idIn, NonNullList<Ingredient> ingredientsIn, AmuletIngredient elementalIn, ItemStack resultIn,
-                                int cooldown, boolean tagTransfer) {
+                                int combinationTime, boolean tagTransfer) {
         this.id = idIn;
         this.ingredients = ingredientsIn;
         this.elemental = elementalIn;
         this.result = resultIn;
-        this.cooldown = cooldown;
+        this.combinationTime = combinationTime;
         this.tagTransfer = tagTransfer;
     }
     @Override
@@ -121,8 +121,8 @@ public class ElementalCombination implements IRecipe<IInventory> {
      * Returns cooldown
      * @return int cooldown
      */
-    public int getCooldown() {
-        return this.cooldown;
+    public int getCombinationTime() {
+        return this.combinationTime;
     }
 
     /**

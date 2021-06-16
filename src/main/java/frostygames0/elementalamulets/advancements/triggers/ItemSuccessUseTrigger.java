@@ -1,4 +1,4 @@
-package frostygames0.elementalamulets.items.triggers;
+package frostygames0.elementalamulets.advancements.triggers;
 
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.criterion.*;
@@ -12,24 +12,26 @@ import net.minecraft.world.server.ServerWorld;
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 /**
- * Triggers when combination happens.
+ * Works like ConsumeItemTrigger but triggers ONLY when action was successful
+ * E.G: When amulet is worn or guide is opened
  * @author Frostygames0
- * @date 02.06.2021 10:19
+ * @date 02.06.2021 10:01
  */
-public class ItemCombinedTrigger extends AbstractCriterionTrigger<ItemCombinedTrigger.Instance> {
-    public static final ResourceLocation ID = modPrefix("item_elemental_combined");
+public class ItemSuccessUseTrigger extends AbstractCriterionTrigger<ItemSuccessUseTrigger.Instance> {
+    public static final ResourceLocation ID = modPrefix("success_use_item");
+
     @Override
     protected Instance deserializeTrigger(JsonObject json, EntityPredicate.AndPredicate entityPredicate, ConditionArrayParser conditionsParser) {
-        return new ItemCombinedTrigger.Instance(entityPredicate, ItemPredicate.deserialize(json.get("item")), LocationPredicate.deserialize(json.get("location")));
-    }
-
-    public void trigger(ServerPlayerEntity player, ItemStack stack, ServerWorld world, double x, double y, double z) {
-        triggerListeners(player, instance -> instance.test(stack, world, x, y, z));
+        return new ItemSuccessUseTrigger.Instance(entityPredicate, ItemPredicate.deserialize(json.get("item")), LocationPredicate.deserialize(json.get("location")));
     }
 
     @Override
     public ResourceLocation getId() {
         return ID;
+    }
+
+    public void trigger(ServerPlayerEntity player, ItemStack stack, ServerWorld world, double x, double y, double z) {
+        triggerListeners(player, instance -> instance.test(stack, world, x, y, z));
     }
 
     public static class Instance extends CriterionInstance {
@@ -43,7 +45,7 @@ public class ItemCombinedTrigger extends AbstractCriterionTrigger<ItemCombinedTr
         }
 
         boolean test(ItemStack stack, ServerWorld world, double x, double y, double z) {
-            return item.test(stack) && location.test(world, x, y, z);
+            return this.item.test(stack) && this.location.test(world, x, y, z);
         }
 
         public ItemPredicate getItem() {
@@ -51,7 +53,7 @@ public class ItemCombinedTrigger extends AbstractCriterionTrigger<ItemCombinedTr
         }
 
         public LocationPredicate getLocation() {
-            return this.location;
+            return location;
         }
     }
 }

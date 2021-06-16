@@ -1,0 +1,37 @@
+{
+  "type": "elementalamulets:elemental_combination",
+  "elemental": {
+    "item": "elementalamulets:empty_amulet"
+  },
+  "ingredients": [
+    {
+      "item": "elementalamulets:jump_element"
+    },
+    {
+      "item": "elementalamulets:jump_element"
+    },
+    {
+      "item": "elementalamulets:jump_element"
+    },
+    {
+      "item": "elementalamulets:jump_element"
+    },
+    {
+      "item": "elementalamulets:jump_element"
+    },
+    {
+      "item": "elementalamulets:jump_element"
+    },
+    {
+      "item": "elementalamulets:jump_element"
+    },
+    {
+      "item": "elementalamulets:jump_element"
+    }
+  ],
+  "combination_time": 300,
+  "result": {
+    "item": "elementalamulets:jump_amulet",
+    "nbt": "{\"elementalamulets:tier\":1}"
+  }
+}

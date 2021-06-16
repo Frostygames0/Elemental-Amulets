@@ -1,5 +1,6 @@
 package frostygames0.elementalamulets.items.amulets;
 
+import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.items.amulets.interfaces.IFireItem;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
@@ -31,11 +32,11 @@ public class FireAmulet extends AmuletItem implements IFireItem {
 
     @Override
     public float getFireResist(ItemStack stack) {
-        return 0.5f*this.getTier(stack);
+        return (float) (ModConfig.cached.FIRE_AMULET_FIRE_RESISTANCE * this.getTier(stack));
     }
 
     @Override
     public float getLavaResist(ItemStack stack) {
-        return 0.25f*this.getTier(stack);
+        return (float) (ModConfig.cached.FIRE_AMULET_LAVA_RESISTANCE * this.getTier(stack));
     }
 }

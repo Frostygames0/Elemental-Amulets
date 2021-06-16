@@ -2,9 +2,16 @@ package frostygames0.elementalamulets.client.models;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
+
+
+import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 public class AmuletModel<T extends LivingEntity> extends EntityModel<T> {
 	private final ModelRenderer amulet;
@@ -44,5 +51,10 @@ public class AmuletModel<T extends LivingEntity> extends EntityModel<T> {
 		modelRenderer.rotateAngleX = x;
 		modelRenderer.rotateAngleY = y;
 		modelRenderer.rotateAngleZ = z;
+	}
+
+	public static ResourceLocation getTexture(AmuletItem item, ItemStack stack) {
+		int tier = MathHelper.clamp(item.getTier(stack), 0, AmuletItem.MAX_TIER);
+		return modPrefix("textures/entity/amulets/tier_"+tier+"/"+item.getRegistryName().getPath()+".png");
 	}
 }

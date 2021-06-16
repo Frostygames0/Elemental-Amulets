@@ -41,7 +41,7 @@ public class ModVillagers{
     public static final RegistryObject<PointOfInterestType> JEWELLER_POI = POI_TYPES.register("jeweller",
             () -> new PointOfInterestType("jeweller", PointOfInterestType.getAllStates(ModBlocks.ELEMENTAL_COMBINATOR.get()), 1, 1));
     public static final RegistryObject<VillagerProfession> JEWELLER = PROFESSIONS.register("jeweller",
-            () -> new VillagerProfession("jeweller", JEWELLER_POI.get(), ImmutableSet.of(ModItems.ELEMENTAL_STONE.get()), ImmutableSet.of(), SoundEvents.BLOCK_BEACON_ACTIVATE));
+            () -> new VillagerProfession("jeweller", JEWELLER_POI.get(), ImmutableSet.of(ModItems.ELEMENTAL_ORE.get(), ModItems.FIRE_ELEMENT.get(), ModItems.EARTH_ELEMENT.get(), ModItems.WATER_ELEMENT.get(), ModItems.AIR_ELEMENT.get()), ImmutableSet.of(), SoundEvents.BLOCK_BEACON_ACTIVATE));
 
     public static void register(IEventBus bus) {
         POI_TYPES.register(bus);
@@ -59,15 +59,6 @@ public class ModVillagers{
             List<VillagerTrades.ITrade> trades2 = event.getTrades().get(2);
             trades2.add(new BasicTrade(5, new ItemStack(ModItems.GUIDE_BOOK.get()), 3, 2, 1.3F));
             trades2.add(new BasicTrade(15, new ItemStack(ModBlocks.ELEMENTAL_COMBINATOR.get().asItem()), 2, 5, 1.5f));
-
-            trades2.add(new BasicTrade(8, new ItemStack(ModItems.FIRE_ELEMENT.get(), 5), 15, 1, 1.1f));
-            trades2.add(new BasicTrade(8, new ItemStack(ModItems.WATER_ELEMENT.get(), 5), 15, 1, 1.2f));
-            trades2.add(new BasicTrade(8, new ItemStack(ModItems.EARTH_ELEMENT.get(), 5), 15, 1, 1.1f));
-            trades2.add(new BasicTrade(8, new ItemStack(ModItems.AIR_ELEMENT.get(), 5), 15, 1, 1.2F));
-
-            List<VillagerTrades.ITrade> trades3 = event.getTrades().get(3);
-            trades3.add(new BasicTrade(64, new ItemStack(Items.DIRT), 10, 10000, 10));
-
         }
     }
 

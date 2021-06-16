@@ -79,6 +79,7 @@
       "type": "item",
       "item": "#result",
       "framed": true,
+      "link_recipe": true,
       "x": 95,
       "y": 32
     },

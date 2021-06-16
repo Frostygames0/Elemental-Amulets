@@ -18,7 +18,6 @@ public class CombinationParticle extends PortalParticle {
         this.particleRed = 1;
         this.particleGreen = 1;
         this.particleBlue = 1;
-        this.particleAlpha = 1;
     }
 
     public static class Factory implements IParticleFactory<BasicParticleType> {

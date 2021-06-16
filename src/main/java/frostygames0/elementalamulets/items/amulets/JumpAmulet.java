@@ -1,5 +1,6 @@
 package frostygames0.elementalamulets.items.amulets;
 
+import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.items.amulets.interfaces.IJumpItem;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
@@ -31,7 +32,7 @@ public class JumpAmulet extends AmuletItem implements IJumpItem {
 
     @Override
     public float getJump(ItemStack stack) {
-        return 0.3f*getTier(stack);
+        return (float) (ModConfig.cached.JUMP_AMULET_BOOST *getTier(stack));
     }
 
     @Override

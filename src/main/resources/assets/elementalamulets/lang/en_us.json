@@ -7,17 +7,17 @@
   "item.elementalamulets.elemental_shards": "Elemental Shards",
   "item.elementalamulets.elemental_shards.latin_variant": "Elemental Shards",
   "item.elementalamulets.fire_element": "Element of Fire",
-  "item.elementalamulets.fire_element.latin_variant": "Ignis Elementum",
+  "item.elementalamulets.fire_element.latin_variant": "Elementum Ignis",
   "item.elementalamulets.fire_element.tooltip": "Violent, chaotic but beautiful",
   "item.elementalamulets.water_element": "Element of Water",
   "item.elementalamulets.water_element.tooltip": "Elegant, clear but can be chaotic too",
-  "item.elementalamulets.water_element.latin_variant": "Aqua Elementum",
+  "item.elementalamulets.water_element.latin_variant": "Elementum Aqua",
   "item.elementalamulets.earth_element": "Element of Earth",
   "item.elementalamulets.earth_element.tooltip": "Strong, powerful and filled with life",
-  "item.elementalamulets.earth_element.latin_variant": "Terra Elementum",
+  "item.elementalamulets.earth_element.latin_variant": "Elementum Terra",
   "item.elementalamulets.air_element": "Element of Air",
   "item.elementalamulets.air_element.tooltip": "Carefree, clear",
-  "item.elementalamulets.air_element.latin_variant": "Aer Elementum",
+  "item.elementalamulets.air_element.latin_variant": "Elementum Aer",
 
   "item.elementalamulets.jump_element": "Element of Jumping",
 
@@ -25,16 +25,16 @@
 
   "item.elementalamulets.common_amulet.tooltip.tier": "%sTier: ",
 
-  "item.elementalamulets.fire_amulet": "Fire amulet",
+  "item.elementalamulets.fire_amulet": "Amulet of Fire-Resistance",
   "item.elementalamulets.fire_amulet.tooltip": "%sProtects you from%s %1$sfire%1$s",
 
-  "item.elementalamulets.speed_amulet": "Speed-Boost amulet",
+    "item.elementalamulets.speed_amulet": "Amulet of Speed-Boost",
   "item.elementalamulets.speed_amulet.tooltip": "%sSpeeds up you%s",
 
-  "item.elementalamulets.jump_amulet": "Jump-Boost amulet",
+  "item.elementalamulets.jump_amulet": "Amulet of Jump-Boost",
   "item.elementalamulets.jump_amulet.tooltip": "%sMakes you%s %1$sjump%1$s %shigher%s",
 
-  "item.elementalamulets.invisibility_amulet": "Invisibility Amulet",
+  "item.elementalamulets.invisibility_amulet": "Amulet of Invisibility",
   "item.elementalamulets.invisibility_amulet.tooltip": "%sHides you from your enemies%s",
 
   "block.elementalamulets.elemental_combinator": "Elemental Combinator",
@@ -46,10 +46,10 @@
   "player.elementalamulets.brokenamulet.warn": "Your %s just got broken!",
   "entity.minecraft.villager.elementalamulets.jeweller": "Jeweller",
 
-  "jei.elementalamulets.cooldown": "Cooldown - %ss",
+  "jei.elementalamulets.cooldown": "Time to combine - %ss",
   "jei.elementalamulets.elemental_separation": "Elemental Combination",
   "jei.elementalamulets.shapeless": "Shapeless recipe (except central slot).",
-  "jei.elementalamulets.amulets.description": "Amulets - are magical jewels(in this case necklaces) that grant you a variety of powers.\n More about them you can read in Elemental Guide",
+  "jei.elementalamulets.amulets.description": "Amulets - are magical jewels(in our case necklaces) that grant you a variety of powers.\n More about them you can read in Elemental Guide",
   "jei.elementalamulets.guide_book.description": "A book with all information about this mod, to access it you need Patchouli!",
   "jei.elementalamulets.elemental_combinator.description": "Allows you to combine things and get unique and powerful items!\n More about it you can read in Elemental Guide",
   "jei.elementalamulets.elements.description": "Elements are four main powers in Minecraft's world!",
@@ -65,5 +65,8 @@
   "advancements.elementalamulets.combine": "Elemental Combination",
   "advancements.elementalamulets.combine.desc": "Use Elemental Combinator for the first time!",
   "advancements.elementalamulets.amulet_max": "Max power!",
-  "advancements.elementalamulets.amulet_max.desc": "Upgrade amulet to the highest tier"
+  "advancements.elementalamulets.amulet_max.desc": "Upgrade amulet to the highest tier",
+
+  "commands.elementalamulets.give.success": "Successfully gave Tier %s %2$s to: %3$s",
+  "commands.elementalamulets.give.failure": "Error! %s is not an elemental amulet!"
 }

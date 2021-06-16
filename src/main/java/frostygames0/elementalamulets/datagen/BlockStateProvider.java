@@ -1,11 +1,11 @@
 package frostygames0.elementalamulets.datagen;
 
 import frostygames0.elementalamulets.ElementalAmulets;
+import frostygames0.elementalamulets.blocks.ElementalCombinator;
 import frostygames0.elementalamulets.core.init.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -30,7 +30,7 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
                 modLoc("block/"+name(ModBlocks.ELEMENTAL_COMBINATOR.get())+"_up_2.0")));*/
 
         blockstateBlock(ModBlocks.ELEMENTAL_COMBINATOR.get(), state -> {
-            if(state.get(BlockStateProperties.ENABLED)) {
+            if(state.get(ElementalCombinator.COMBINING)) {
                 return models().cubeBottomTop(name(ModBlocks.ELEMENTAL_COMBINATOR.get())+"_on",
                         modLoc( "block/"+name(ModBlocks.ELEMENTAL_COMBINATOR.get())+"_side"),
                         mcLoc("block/furnace_top"),
