@@ -56,7 +56,7 @@ public class ElementalCombinationCategory implements IRecipeCategory<ElementalCo
     private IDrawableAnimated getArrow(ElementalCombination recipe) {
         int cookTime = recipe.getCombinationTime();
         if(cookTime < 1) {
-            cookTime = 80;
+            cookTime = 30;
         }
         return this.cachedArrows.getUnchecked(cookTime);
     }
