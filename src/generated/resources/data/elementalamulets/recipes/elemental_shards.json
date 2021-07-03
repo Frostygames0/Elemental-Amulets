@@ -4,6 +4,6 @@
     "item": "elementalamulets:elemental_ore"
   },
   "result": "elementalamulets:elemental_shards",
-  "experience": 2.0,
-  "cookingtime": 230
+  "experience": 0.7,
+  "cookingtime": 200
 }

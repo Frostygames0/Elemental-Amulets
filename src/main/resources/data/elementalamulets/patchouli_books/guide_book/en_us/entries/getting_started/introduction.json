@@ -16,8 +16,13 @@
     {
       "type": "smelting",
       "title": "Alternative Method",
-      "recipe": "elementalamulets:elemental_shards_smelting",
+      "recipe": "elementalamulets:elemental_shards",
       "text": "You can also smelt it into shards, if you found $(item)Elemental Ore$() block"
+    },
+    {
+      "type": "elemental_combination",
+      "recipe": "elementalamulets:elements/jump_element",
+      "text": "It's A poo!!! Because according to statistics only 10% of you are actually subscribed! Monster, how should I feel it? I'll have two number nine! All you had to do is to follow the damn train CJ! AMOGUS - SUS corporation"
     }
   ]
 }

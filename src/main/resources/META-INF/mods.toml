@@ -13,7 +13,6 @@ issueTrackerURL="https://github.com/Frostygames0/elemental-amulets/issues"
       authors="Frostygames0"
       description= "This mod adds new Jewels that give you powers such as Jump-Boost, Fire-Resistance, Protection and other!"
 
-
       [[dependencies.elementalamulets]]
         modId="forge"
         mandatory=true

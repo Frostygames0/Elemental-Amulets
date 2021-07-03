@@ -43,7 +43,7 @@ public class ElementalCombinator extends Block {
                 elementalCombinatorTile.startCombination();
             }
         } else {
-            throw new IllegalStateException("TileEntity is not correct! Cannot do any action!");
+            throw new IllegalStateException("Tile Entity is not correct! Cannot do any action!");
         }
         return ActionResultType.CONSUME;
     }

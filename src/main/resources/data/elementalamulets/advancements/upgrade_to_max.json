@@ -10,14 +10,17 @@
     },
     "description": {
       "translate": "advancements.elementalamulets.amulet_max.desc"
-    }
+    },
+    "frame": "challenge"
   },
   "criteria": {
     "amulet_worn": {
       "trigger": "elementalamulets:success_use_item",
       "conditions": {
-        "tag": "curios:necklace",
-        "nbt": "{\"elementalamulets:tier\":4}"
+        "item": {
+          "tag": "curios:necklace",
+          "nbt": "{'elementalamulets:tier':4}"
+        }
       }
     }
   },

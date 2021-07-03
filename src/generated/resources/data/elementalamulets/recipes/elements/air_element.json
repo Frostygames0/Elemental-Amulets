@@ -5,31 +5,32 @@
   },
   "ingredients": [
     {
-      "tag": "elementalamulets:air_element_convertible"
+      "tag": "forge:elementalamulets/air_element_convertible"
     },
     {
-      "tag": "elementalamulets:air_element_convertible"
+      "tag": "forge:elementalamulets/air_element_convertible"
     },
     {
-      "tag": "elementalamulets:air_element_convertible"
+      "tag": "forge:elementalamulets/air_element_convertible"
     },
     {
-      "tag": "elementalamulets:air_element_convertible"
+      "tag": "forge:elementalamulets/air_element_convertible"
     },
     {
-      "tag": "elementalamulets:air_element_convertible"
+      "tag": "forge:elementalamulets/air_element_convertible"
     },
     {
-      "tag": "elementalamulets:air_element_convertible"
+      "tag": "forge:elementalamulets/air_element_convertible"
     },
     {
-      "tag": "elementalamulets:air_element_convertible"
+      "tag": "forge:elementalamulets/air_element_convertible"
     },
     {
-      "tag": "elementalamulets:air_element_convertible"
+      "tag": "forge:elementalamulets/air_element_convertible"
     }
   ],
   "result": {
-    "item": "elementalamulets:air_element"
+    "item": "elementalamulets:air_element",
+    "count": 2
   }
 }

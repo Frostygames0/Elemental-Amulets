@@ -9,7 +9,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.IItemProvider;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.IIngredientSerializer;
@@ -25,14 +24,6 @@ public class AmuletIngredient extends Ingredient {
     public AmuletIngredient(ItemStack stack) {
         super(Stream.of(new Ingredient.SingleItemList(stack)));
         this.stack = stack;
-    }
-
-    public static AmuletIngredient fromItem(IItemProvider itemIn) {
-        return new AmuletIngredient(new ItemStack(itemIn.asItem()));
-    }
-
-    public static AmuletIngredient fromStack(ItemStack stack) {
-        return new AmuletIngredient(stack);
     }
 
     @Override

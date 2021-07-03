@@ -24,7 +24,7 @@ public class ElementItem extends Item {
 
     public ElementItem(Rarity color, @Nullable ITextComponent... description) {
         super(new Item.Properties().group(ElementalAmulets.GROUP).rarity(color));
-        this.description = Arrays.asList(description.clone());
+        this.description = Arrays.asList(description);
     }
 
     @Override

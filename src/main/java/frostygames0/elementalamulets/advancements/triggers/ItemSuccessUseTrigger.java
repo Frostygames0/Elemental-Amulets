@@ -1,12 +1,14 @@
 package frostygames0.elementalamulets.advancements.triggers;
 
 import com.google.gson.JsonObject;
-import net.minecraft.advancements.criterion.*;
+import net.minecraft.advancements.criterion.AbstractCriterionTrigger;
+import net.minecraft.advancements.criterion.CriterionInstance;
+import net.minecraft.advancements.criterion.EntityPredicate;
+import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.ConditionArrayParser;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.server.ServerWorld;
 
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
@@ -22,7 +24,7 @@ public class ItemSuccessUseTrigger extends AbstractCriterionTrigger<ItemSuccessU
 
     @Override
     protected Instance deserializeTrigger(JsonObject json, EntityPredicate.AndPredicate entityPredicate, ConditionArrayParser conditionsParser) {
-        return new ItemSuccessUseTrigger.Instance(entityPredicate, ItemPredicate.deserialize(json.get("item")), LocationPredicate.deserialize(json.get("location")));
+        return new ItemSuccessUseTrigger.Instance(entityPredicate, ItemPredicate.deserialize(json.get("item")));
     }
 
     @Override
@@ -30,30 +32,24 @@ public class ItemSuccessUseTrigger extends AbstractCriterionTrigger<ItemSuccessU
         return ID;
     }
 
-    public void trigger(ServerPlayerEntity player, ItemStack stack, ServerWorld world, double x, double y, double z) {
-        triggerListeners(player, instance -> instance.test(stack, world, x, y, z));
+    public void trigger(ServerPlayerEntity player, ItemStack stack) {
+        triggerListeners(player, instance -> instance.test(stack));
     }
 
     public static class Instance extends CriterionInstance {
         private final ItemPredicate item;
-        private final LocationPredicate location;
 
-        public Instance(EntityPredicate.AndPredicate playerCondition, ItemPredicate item, LocationPredicate location) {
+        public Instance(EntityPredicate.AndPredicate playerCondition, ItemPredicate item) {
             super(ID, playerCondition);
             this.item = item;
-            this.location = location;
         }
 
-        boolean test(ItemStack stack, ServerWorld world, double x, double y, double z) {
-            return this.item.test(stack) && this.location.test(world, x, y, z);
+        boolean test(ItemStack stack) {
+            return this.item.test(stack);
         }
 
         public ItemPredicate getItem() {
             return this.item;
-        }
-
-        public LocationPredicate getLocation() {
-            return location;
         }
     }
 }

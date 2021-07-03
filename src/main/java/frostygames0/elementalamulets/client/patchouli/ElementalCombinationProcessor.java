@@ -1,4 +1,4 @@
-package frostygames0.elementalamulets.client.patchouli.processors;
+package frostygames0.elementalamulets.client.patchouli;
 
 import com.google.gson.JsonSyntaxException;
 import frostygames0.elementalamulets.core.init.ModRecipes;
@@ -21,7 +21,7 @@ public class ElementalCombinationProcessor implements IComponentProcessor {
     public void setup(IVariableProvider variables) {
         String recipeId = variables.get("recipe").asString();
             try {
-                recipe = (ElementalCombination) PatchouliUtils.getRecipe(ModRecipes.ELEMENTAL_COMBINATION_TYPE, new ResourceLocation(recipeId));
+                recipe = PatchouliUtils.getRecipe(ModRecipes.ELEMENTAL_COMBINATION_TYPE, new ResourceLocation(recipeId));
             } catch (ClassCastException e) {
                 throw new JsonSyntaxException("Provided recipe is not Elemental Combination");
             }
@@ -38,16 +38,17 @@ public class ElementalCombinationProcessor implements IComponentProcessor {
                 }
                 return IVariable.from(ItemStack.EMPTY);
             } else if (key.equals("elemental")) {
-                //AmuletIngredient ingredient = recipe.getElemental();
-                return IVariable.from(recipe.getElemental().getMatchingStack());//IVariable.wrapList(Arrays.stream(ingredient.getMatchingStacks()).map(IVariable::from).collect(Collectors.toList()));
+                return IVariable.from(recipe.getElemental().getMatchingStack());
             } else if(key.equals("result")) {
                 return IVariable.from(recipe.getRecipeOutput());
             } else if(key.equals("icon")) {
                 return IVariable.from(recipe.getIcon());
-            } else if(key.equals("cooldown")) {
-                return IVariable.from(recipe.getCombinationTime());
+            } else if(key.equals("combination_time")) {
+                return IVariable.wrap(recipe.getCombinationTime()/20);
             }
         }
         return null;
     }
+
+
 }

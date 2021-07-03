@@ -10,10 +10,10 @@ public class ModTags {
     public static final ITag.INamedTag<Item> NECKLACE = ItemTags.makeWrapperTag("curios:necklace");
     public static final ITag.INamedTag<Item> ELEMENTS = tag("elements");
 
-    public static final ITag.INamedTag<Item> FIRE_ELEMENT_CONVERTIBLE = tag("fire_element_convertible");
-    public static final ITag.INamedTag<Item> WATER_ELEMENT_CONVERTIBLE = tag("water_element_convertible");
-    public static final ITag.INamedTag<Item> AIR_ELEMENT_CONVERTIBLE = tag("air_element_convertible");
-    public static final ITag.INamedTag<Item> EARTH_ELEMENT_CONVERTIBLE = tag("earth_element_convertible");
+    public static final ITag.INamedTag<Item> FIRE_ELEMENT_CONVERTIBLE = forge(ElementalAmulets.MOD_ID+"/fire_element_convertible");
+    public static final ITag.INamedTag<Item> WATER_ELEMENT_CONVERTIBLE = forge(ElementalAmulets.MOD_ID+"/water_element_convertible");
+    public static final ITag.INamedTag<Item> AIR_ELEMENT_CONVERTIBLE = forge(ElementalAmulets.MOD_ID+"/air_element_convertible");
+    public static final ITag.INamedTag<Item> EARTH_ELEMENT_CONVERTIBLE = forge(ElementalAmulets.MOD_ID+"/earth_element_convertible");
 
     private static ITag.INamedTag<Item> tag(String name) {
         return ItemTags.makeWrapperTag(new ResourceLocation(ElementalAmulets.MOD_ID, name).toString());

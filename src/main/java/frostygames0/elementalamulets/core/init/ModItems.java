@@ -31,6 +31,7 @@ public class ModItems {
             () -> new BlockItem(ModBlocks.ELEMENTAL_STONE.get(), new Item.Properties().group(ElementalAmulets.GROUP)));
 
     // Elements
+    // TODO Re-Do this rarity nonsense for changing colors
     public static final RegistryObject<Item> ELEMENTAL_SHARDS = ITEMS.register("elemental_shards",
             () -> new ElementItem(Rarity.COMMON));
     public static final RegistryObject<Item> FIRE_ELEMENT = ITEMS.register("fire_element",
@@ -43,8 +44,13 @@ public class ModItems {
             () -> new ElementItem(ElementalColors.AIR, new TranslationTextComponent("item.elementalamulets.air_element.tooltip").mergeStyle(TextFormatting.GRAY)));
 
     // Sub-Elements
+    // TODO Re-Do nonsense here too
     public static final RegistryObject<Item> JUMP_ELEMENT = ITEMS.register("jump_element",
-            () -> new Item(new Item.Properties().group(ElementalAmulets.GROUP).rarity(ElementalColors.JUMP)));
+            () -> new ElementItem(ElementalColors.JUMP, new TranslationTextComponent("item.elementalamulets.sub_element.tooltip")));
+    public static final RegistryObject<Item> INVISIBLE_ELEMENT = ITEMS.register("invisible_element",
+            () -> new ElementItem(Rarity.COMMON, new TranslationTextComponent("item.elementalamulets.sub_element.tooltip")));
+    public static final RegistryObject<Item> SPEED_ELEMENT = ITEMS.register("speed_element",
+            () -> new ElementItem(ElementalColors.SPEED, new TranslationTextComponent("item.elementalamulets.sub_element.tooltip")));
 
     // Amulets
     public static final RegistryObject<Item> EMPTY_AMULET = ITEMS.register("empty_amulet",

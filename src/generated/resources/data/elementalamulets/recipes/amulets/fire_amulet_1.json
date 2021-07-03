@@ -14,7 +14,7 @@
       "item": "elementalamulets:fire_element"
     },
     {
-      "item": "elementalamulets:fire_element"
+      "item": "minecraft:lapis_lazuli"
     },
     {
       "item": "elementalamulets:fire_element"
@@ -26,10 +26,11 @@
       "item": "elementalamulets:fire_element"
     },
     {
-      "item": "elementalamulets:fire_element"
+      "item": "minecraft:lapis_lazuli"
     }
   ],
-  "combination_time": 300,
+  "combination_time": 200,
+  "tag_transfer": true,
   "result": {
     "item": "elementalamulets:fire_amulet",
     "nbt": "{\"elementalamulets:tier\":1}"

@@ -45,13 +45,5 @@ public class ItemCombinedTrigger extends AbstractCriterionTrigger<ItemCombinedTr
         boolean test(ItemStack stack, ServerWorld world, double x, double y, double z) {
             return item.test(stack) && location.test(world, x, y, z);
         }
-
-        public ItemPredicate getItem() {
-            return this.item;
-        }
-
-        public LocationPredicate getLocation() {
-            return this.location;
-        }
     }
 }

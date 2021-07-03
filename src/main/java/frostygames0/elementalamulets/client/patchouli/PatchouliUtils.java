@@ -1,4 +1,4 @@
-package frostygames0.elementalamulets.client.patchouli.processors;
+package frostygames0.elementalamulets.client.patchouli;
 
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.core.init.ModRecipes;

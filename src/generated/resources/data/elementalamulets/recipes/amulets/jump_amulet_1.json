@@ -14,7 +14,7 @@
       "item": "elementalamulets:jump_element"
     },
     {
-      "item": "elementalamulets:jump_element"
+      "item": "minecraft:lapis_lazuli"
     },
     {
       "item": "elementalamulets:jump_element"
@@ -26,10 +26,11 @@
       "item": "elementalamulets:jump_element"
     },
     {
-      "item": "elementalamulets:jump_element"
+      "item": "minecraft:lapis_lazuli"
     }
   ],
-  "combination_time": 300,
+  "combination_time": 200,
+  "tag_transfer": true,
   "result": {
     "item": "elementalamulets:jump_amulet",
     "nbt": "{\"elementalamulets:tier\":1}"

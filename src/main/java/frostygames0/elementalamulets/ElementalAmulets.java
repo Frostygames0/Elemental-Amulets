@@ -7,7 +7,6 @@ import frostygames0.elementalamulets.client.screens.ElementalCombinatorScreen;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.core.init.*;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
-import frostygames0.elementalamulets.network.ModNetworking;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemModelsProperties;
@@ -56,7 +55,7 @@ public class ElementalAmulets {
         forgeBus.addListener(ModCommands::registerCommandsEvent); // Commands don't deserve EventBusSubscriber >:D
     }
 
-    // Prefer to use this instead when you need ResourceLocation with mod's id
+    // use this instead, when you need ResourceLocation with mod's id
     public static ResourceLocation modPrefix(String name) {
         return new ResourceLocation(MOD_ID, name);
     }
@@ -71,14 +70,13 @@ public class ElementalAmulets {
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             ModVillagers.Structures.init();
-            ModNetworking.registerMessages();
             ModCriteriaTriggers.register();
         });
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {
+        ElementalCombinatorRenderer.register();
         event.enqueueWork(() -> {
-            ElementalCombinatorRenderer.register();
             ScreenManager.registerFactory(ModContainers.ELEMENTAL_COMBINATOR_CONTAINER.get(), ElementalCombinatorScreen::new);
 
             ModItems.ITEMS.getEntries().stream().map(RegistryObject::get).filter(item -> item instanceof AmuletItem).forEach(

@@ -5,31 +5,32 @@
   },
   "ingredients": [
     {
-      "tag": "elementalamulets:fire_element_convertible"
+      "tag": "forge:elementalamulets/fire_element_convertible"
     },
     {
-      "tag": "elementalamulets:fire_element_convertible"
+      "tag": "forge:elementalamulets/fire_element_convertible"
     },
     {
-      "tag": "elementalamulets:fire_element_convertible"
+      "tag": "forge:elementalamulets/fire_element_convertible"
     },
     {
-      "tag": "elementalamulets:fire_element_convertible"
+      "tag": "forge:elementalamulets/fire_element_convertible"
     },
     {
-      "tag": "elementalamulets:fire_element_convertible"
+      "tag": "forge:elementalamulets/fire_element_convertible"
     },
     {
-      "tag": "elementalamulets:fire_element_convertible"
+      "tag": "forge:elementalamulets/fire_element_convertible"
     },
     {
-      "tag": "elementalamulets:fire_element_convertible"
+      "tag": "forge:elementalamulets/fire_element_convertible"
     },
     {
-      "tag": "elementalamulets:fire_element_convertible"
+      "tag": "forge:elementalamulets/fire_element_convertible"
     }
   ],
   "result": {
-    "item": "elementalamulets:fire_element"
+    "item": "elementalamulets:fire_element",
+    "count": 2
   }
 }

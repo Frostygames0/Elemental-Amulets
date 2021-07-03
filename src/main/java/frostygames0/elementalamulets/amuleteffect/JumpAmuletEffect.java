@@ -20,12 +20,12 @@ public class JumpAmuletEffect {
         AtomicReference<Float> fallResist = new AtomicReference<>(0f);
         CuriosApi.getCuriosHelper().findEquippedCurio(itemStack -> itemStack.getItem() instanceof IJumpItem, entity).map(item -> item.getRight()).ifPresent(item -> {
             IJumpItem amulet = (IJumpItem) item.getItem();
-            fallResist.updateAndGet(v -> (float) (v + Math.max(amulet.getFallResist(item), 0)));
+            fallResist.updateAndGet(v -> v + Math.max(amulet.getFallResist(item), 0));
         });
         return fallResist.get();
     }
 
-    public static void onLivingHurt(LivingHurtEvent event) {
+    static void onLivingHurt(LivingHurtEvent event) {
         if(event.getEntity().getEntityWorld().isRemote()) return;
         if(event.getSource() == DamageSource.FALL) {
             float fallResist = calculateFallResist(event.getEntityLiving());
@@ -39,7 +39,7 @@ public class JumpAmuletEffect {
             }
         }
     }
-    public static void onLivingAttack(LivingAttackEvent event) {
+    static void onLivingAttack(LivingAttackEvent event) {
         if(event.getEntity().getEntityWorld().isRemote()) return;
         if(event.getSource() == DamageSource.FALL) {
             float fallResist = calculateFallResist(event.getEntityLiving());
@@ -52,7 +52,7 @@ public class JumpAmuletEffect {
         }
     }
 
-    public static void onLivingJump(LivingEvent.LivingJumpEvent event) {
+    static void onLivingJump(LivingEvent.LivingJumpEvent event) {
         if(event.getEntity().getEntityWorld().isRemote()) return;
         LivingEntity livingEntity = event.getEntityLiving();
         World world = livingEntity.getEntityWorld();

@@ -24,6 +24,7 @@ import java.util.List;
 public class ElementalCombination implements IRecipe<IInventory> {
 
     public static final int MAX_INGREDIENTS = 8;
+    public static final int DEFAULT_COMBINATION = 30;
 
     protected final ResourceLocation id;
     protected final NonNullList<Ingredient> ingredients;
@@ -89,10 +90,6 @@ public class ElementalCombination implements IRecipe<IInventory> {
         return this.result;
     }
 
-    /**
-     * Returns list of all ingredients (elemental+ingredients)
-     * @return NonNullList of elemental+ingredients
-     */
     @Override
     public NonNullList<Ingredient> getIngredients() {
         NonNullList<Ingredient> full = NonNullList.create();
@@ -101,36 +98,16 @@ public class ElementalCombination implements IRecipe<IInventory> {
         return full;
     }
 
-    /**
-     * Returns elemental ingredient separately
-     * @return Ingredient of elemental
-     */
     public AmuletIngredient getElemental() {
         return this.elemental;
     }
 
-    /**
-     * Returns only ingredients!
-     * @return Ingredients - elemental
-     */
     public NonNullList<Ingredient> getOnlyIngredients() {
         return this.ingredients;
     }
 
-    /**
-     * Returns cooldown
-     * @return int cooldown
-     */
     public int getCombinationTime() {
         return this.combinationTime;
-    }
-
-    /**
-     * Can tag be transferred?
-     * @return boolean tagTransfer
-     */
-    public boolean isTagTransferred() {
-        return this.tagTransfer;
     }
 
     @Override

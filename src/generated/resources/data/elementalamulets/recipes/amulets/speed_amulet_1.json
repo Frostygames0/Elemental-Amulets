@@ -1,0 +1,38 @@
+{
+  "type": "elementalamulets:elemental_combination",
+  "elemental": {
+    "item": "elementalamulets:empty_amulet"
+  },
+  "ingredients": [
+    {
+      "item": "elementalamulets:speed_element"
+    },
+    {
+      "item": "elementalamulets:speed_element"
+    },
+    {
+      "item": "elementalamulets:speed_element"
+    },
+    {
+      "item": "minecraft:lapis_lazuli"
+    },
+    {
+      "item": "elementalamulets:speed_element"
+    },
+    {
+      "item": "elementalamulets:speed_element"
+    },
+    {
+      "item": "elementalamulets:speed_element"
+    },
+    {
+      "item": "minecraft:lapis_lazuli"
+    }
+  ],
+  "combination_time": 200,
+  "tag_transfer": true,
+  "result": {
+    "item": "elementalamulets:speed_amulet",
+    "nbt": "{\"elementalamulets:tier\":1}"
+  }
+}

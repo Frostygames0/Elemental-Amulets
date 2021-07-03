@@ -5,31 +5,32 @@
   },
   "ingredients": [
     {
-      "tag": "elementalamulets:water_element_convertible"
+      "tag": "forge:elementalamulets/water_element_convertible"
     },
     {
-      "tag": "elementalamulets:water_element_convertible"
+      "tag": "forge:elementalamulets/water_element_convertible"
     },
     {
-      "tag": "elementalamulets:water_element_convertible"
+      "tag": "forge:elementalamulets/water_element_convertible"
     },
     {
-      "tag": "elementalamulets:water_element_convertible"
+      "tag": "forge:elementalamulets/water_element_convertible"
     },
     {
-      "tag": "elementalamulets:water_element_convertible"
+      "tag": "forge:elementalamulets/water_element_convertible"
     },
     {
-      "tag": "elementalamulets:water_element_convertible"
+      "tag": "forge:elementalamulets/water_element_convertible"
     },
     {
-      "tag": "elementalamulets:water_element_convertible"
+      "tag": "forge:elementalamulets/water_element_convertible"
     },
     {
-      "tag": "elementalamulets:water_element_convertible"
+      "tag": "forge:elementalamulets/water_element_convertible"
     }
   ],
   "result": {
-    "item": "elementalamulets:water_element"
+    "item": "elementalamulets:water_element",
+    "count": 2
   }
 }

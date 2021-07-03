@@ -35,7 +35,7 @@ public class ModCommands {
         );
     }
 
-    static class GiveAmuletCommand {
+    private static class GiveAmuletCommand {
         private static final DynamicCommandExceptionType ISNT_AMULET = new DynamicCommandExceptionType(item -> new TranslationTextComponent("commands.elementalamulets.give.failure", ((ItemStack)item).getTextComponent()));
         static ArgumentBuilder<CommandSource, ?> register() {
             return Commands.literal("give")

@@ -20,16 +20,13 @@ import net.minecraftforge.registries.ForgeRegistries;
 import javax.annotation.Nullable;
 
 public class ElementalCombinationSerializer extends net.minecraftforge.registries.ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<ElementalCombination>{
-    //private final ElementalCombinationSerializer.IFactory<T> factory;
     @Override
     public ElementalCombination read(ResourceLocation recipeId, JsonObject json) {
-        // Ingredient
-        //JsonElement jsonelement = JSONUtils.isJsonArray(json, "elemental") ? JSONUtils.getJsonArray(json, "elemental") : JSONUtils.getJsonObject(json, "elemental");
         AmuletIngredient elemental = AmuletIngredient.Serializer.INSTANCE.parse(JSONUtils.getJsonObject(json, "elemental"));
         NonNullList<Ingredient> nonNullList = readIngredients(JSONUtils.getJsonArray(json, "ingredients"));
-        if(nonNullList.isEmpty()) { // There must be at least 1 ingredient
+        if(nonNullList.isEmpty()) {
             throw new JsonParseException("No ingredients found!");
-        } else if(nonNullList.size() > ElementalCombination.MAX_INGREDIENTS) { // There must be only 8 or lower ingredients
+        } else if(nonNullList.size() > ElementalCombination.MAX_INGREDIENTS) {
             throw new JsonParseException("Too many ingredients! Should be <= 8!");
         } else {
             if(!json.has("result")) throw new JsonSyntaxException("Missing result, expected to find an a string or object");
@@ -42,7 +39,7 @@ public class ElementalCombinationSerializer extends net.minecraftforge.registrie
                 if(item == null) throw new JsonSyntaxException("Item: "+s1+" does not exist!");
                 resultStack = new ItemStack(item);
             }
-            int combinationTime = JSONUtils.getInt(json, "combination_time", 30); // How long combinator will recharge
+            int combinationTime = JSONUtils.getInt(json, "combination_time", ElementalCombination.DEFAULT_COMBINATION); // How long combinator will recharge
             boolean tagTransfer = JSONUtils.getBoolean(json, "tag_transfer", false); // Does name, damage, enchantments etc move onto result? Made it for "upgrade" recipes
             return new ElementalCombination(recipeId, nonNullList, elemental,  resultStack, combinationTime, tagTransfer);
         }
@@ -86,7 +83,4 @@ public class ElementalCombinationSerializer extends net.minecraftforge.registrie
         buffer.writeBoolean(recipe.tagTransfer);
 
     }
-    /*public interface IFactory<T extends ElementalCombination> {
-        T create(ResourceLocation idIn, NonNullList<Ingredient> ingredientsIn, AmuletIngredient elementalIn, ItemStack resultIn, int combinationTime, boolean tagTransfer);
-    }*/
 }

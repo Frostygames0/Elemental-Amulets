@@ -45,20 +45,20 @@ public class ElementalCombinationCategory implements IRecipeCategory<ElementalCo
                 .maximumSize(25)
                 .build(new CacheLoader<Integer, IDrawableAnimated>() {
                     @Override
-                    public IDrawableAnimated load(Integer cookTime) {
+                    public IDrawableAnimated load(Integer combinationTime) {
                         return helper.drawableBuilder(TEXTURE, 176, 0, 26, 16)
-                                .buildAnimated(cookTime, IDrawableAnimated.StartDirection.LEFT, false);
+                                .buildAnimated(combinationTime, IDrawableAnimated.StartDirection.LEFT, false);
                     }
                 });
         this.localizedName = new TranslationTextComponent("jei.elementalamulets.elemental_separation");
     }
 
     private IDrawableAnimated getArrow(ElementalCombination recipe) {
-        int cookTime = recipe.getCombinationTime();
-        if(cookTime < 1) {
-            cookTime = 30;
+        int combinationTime = recipe.getCombinationTime();
+        if(combinationTime < 1) {
+            combinationTime = 30;
         }
-        return this.cachedArrows.getUnchecked(cookTime);
+        return this.cachedArrows.getUnchecked(combinationTime);
     }
 
     @Override

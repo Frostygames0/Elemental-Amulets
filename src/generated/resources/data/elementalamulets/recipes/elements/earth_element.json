@@ -5,31 +5,32 @@
   },
   "ingredients": [
     {
-      "tag": "elementalamulets:earth_element_convertible"
+      "tag": "forge:elementalamulets/earth_element_convertible"
     },
     {
-      "tag": "elementalamulets:earth_element_convertible"
+      "tag": "forge:elementalamulets/earth_element_convertible"
     },
     {
-      "tag": "elementalamulets:earth_element_convertible"
+      "tag": "forge:elementalamulets/earth_element_convertible"
     },
     {
-      "tag": "elementalamulets:earth_element_convertible"
+      "tag": "forge:elementalamulets/earth_element_convertible"
     },
     {
-      "tag": "elementalamulets:earth_element_convertible"
+      "tag": "forge:elementalamulets/earth_element_convertible"
     },
     {
-      "tag": "elementalamulets:earth_element_convertible"
+      "tag": "forge:elementalamulets/earth_element_convertible"
     },
     {
-      "tag": "elementalamulets:earth_element_convertible"
+      "tag": "forge:elementalamulets/earth_element_convertible"
     },
     {
-      "tag": "elementalamulets:earth_element_convertible"
+      "tag": "forge:elementalamulets/earth_element_convertible"
     }
   ],
   "result": {
-    "item": "elementalamulets:earth_element"
+    "item": "elementalamulets:earth_element",
+    "count": 2
   }
 }

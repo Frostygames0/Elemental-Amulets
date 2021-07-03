@@ -1,6 +1,5 @@
 package frostygames0.elementalamulets.amuleteffect;
 
-import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.items.amulets.interfaces.IFireItem;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
@@ -28,7 +27,7 @@ public class FireAmuletEffect {
         return new float[] {fireResistMulti, lavaResistMulti};
     }
 
-    public static void onLivingAttack(LivingAttackEvent event) {
+    static void onLivingAttack(LivingAttackEvent event) {
         if(event.getEntity().getEntityWorld().isRemote()) return;
         if(event.getSource().isFireDamage()) {
             LivingEntity entity = event.getEntityLiving();
@@ -44,23 +43,20 @@ public class FireAmuletEffect {
 
     }
 
-    public static void onLivingHurt(LivingHurtEvent event) {
+    static void onLivingHurt(LivingHurtEvent event) {
         if(event.getEntity().getEntityWorld().isRemote()) return;
         if(event.getSource().isFireDamage()) {
             LivingEntity entity = event.getEntityLiving();
             CuriosApi.getCuriosHelper().findEquippedCurio(item -> item.getItem() instanceof IFireItem, entity).ifPresent((tr) -> {
-                ItemStack stack = tr.getRight();
                 float[] multis = calcFireResistance(entity);
                 float fire = multis[0];
                 float lava = multis[1];
-                float finalDamage = 1f;
                 if (event.getSource() == DamageSource.IN_FIRE || event.getSource() == DamageSource.ON_FIRE) {
                     if (fire < 0.999f) {
                         if (fire < 0.001f) {
                             event.setCanceled(true);
                         }
                         event.setAmount(event.getAmount() * fire);
-                        ElementalAmulets.LOGGER.debug("After fire damage is - "+event.getAmount());
                     }
                 } else {
                     if (lava < 0.999f) {
@@ -68,7 +64,6 @@ public class FireAmuletEffect {
                             event.setCanceled(true);
                         }
                         event.setAmount(event.getAmount() * lava);
-                        ElementalAmulets.LOGGER.debug("After lava damage is - "+event.getAmount());
                     }
                 }
             });

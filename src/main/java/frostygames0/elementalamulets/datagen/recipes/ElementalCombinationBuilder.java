@@ -45,7 +45,7 @@ public class ElementalCombinationBuilder {
     }
 
     public ElementalCombinationBuilder addElemental(ItemStack stack) {
-        this.elemental = AmuletIngredient.fromStack(stack);
+        this.elemental = new AmuletIngredient(stack);
         return this;
     }
 

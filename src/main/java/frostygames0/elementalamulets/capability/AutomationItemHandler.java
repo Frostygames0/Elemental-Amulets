@@ -6,9 +6,6 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 
 import javax.annotation.Nonnull;
 
-/**
- * This ItemHandler wraps another handler and allows me to change methods for public but retain default version of them inside
- */
 public class AutomationItemHandler implements IItemHandlerModifiable {
     private final IItemHandlerModifiable handler;
     public AutomationItemHandler(IItemHandlerModifiable handler) {

@@ -14,9 +14,8 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.ModList;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import vazkii.patchouli.api.PatchouliAPI;
 
 
@@ -32,10 +31,6 @@ public class GuideBook extends Item {
         super(properties);
     }
 
-    public boolean isOpen() {
-        return ModList.get().isLoaded("patchouli") && ForgeRegistries.ITEMS.getKey(this).equals(PatchouliAPI.get().getOpenBookGui());
-    }
-
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
@@ -46,13 +41,17 @@ public class GuideBook extends Item {
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
         if(playerIn instanceof ServerPlayerEntity) {
-            if(ModList.get().isLoaded("patchouli")) {
-                PatchouliAPI.get().openBookGUI((ServerPlayerEntity) playerIn, BOOK_ID);
-                ModCriteriaTriggers.SUCCESS_USE.trigger((ServerPlayerEntity)playerIn, playerIn.getHeldItem(handIn), (ServerWorld) worldIn, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ());
-                return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
+            if(!FMLEnvironment.production) { // Isn't not finished, so locking it for players
+                if (ModList.get().isLoaded("patchouli")) {
+                    PatchouliAPI.get().openBookGUI((ServerPlayerEntity) playerIn, BOOK_ID);
+                    ModCriteriaTriggers.SUCCESS_USE.trigger((ServerPlayerEntity) playerIn, playerIn.getHeldItem(handIn));
+                    return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
+                } else {
+                    playerIn.sendStatusMessage(new TranslationTextComponent("patchouli.elementalamulets.not_present").mergeStyle(TextFormatting.RED), true);
+                    return ActionResult.resultFail(playerIn.getHeldItem(handIn));
+                }
             } else {
-                playerIn.sendStatusMessage(new TranslationTextComponent("patchouli.elementalamulets.not_present").mergeStyle(TextFormatting.RED), true);
-                return ActionResult.resultFail(playerIn.getHeldItem(handIn));
+                playerIn.sendStatusMessage(new TranslationTextComponent("patchouli.elementalamulets.no_ide").mergeStyle(TextFormatting.GOLD), true);
             }
         }
         return ActionResult.resultConsume(playerIn.getHeldItem(handIn));
