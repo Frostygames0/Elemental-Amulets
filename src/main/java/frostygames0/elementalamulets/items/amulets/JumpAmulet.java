@@ -1,7 +1,6 @@
 package frostygames0.elementalamulets.items.amulets;
 
 import frostygames0.elementalamulets.config.ModConfig;
-import frostygames0.elementalamulets.items.amulets.interfaces.IJumpItem;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -13,7 +12,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class JumpAmulet extends AmuletItem implements IJumpItem {
+public class JumpAmulet extends AmuletItem {
     public JumpAmulet(Item.Properties properties) {
         super(properties);
     }
@@ -29,12 +28,10 @@ public class JumpAmulet extends AmuletItem implements IJumpItem {
         return "item.elementalamulets.jump_amulet";
     }
 
-    @Override
     public float getJump(ItemStack stack) {
         return (float) (ModConfig.cached.JUMP_AMULET_BOOST *getTier(stack));
     }
 
-    @Override
     public float getFallResist(ItemStack stack) {
         return getJump(stack)*10;
     }

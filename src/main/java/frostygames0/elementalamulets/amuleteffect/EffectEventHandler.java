@@ -18,10 +18,13 @@ public class EffectEventHandler {
     public static void onHurt(final LivingHurtEvent event) {
         JumpAmuletEffect.onLivingHurt(event);
         FireAmuletEffect.onLivingHurt(event);
+        TerraProtectionAmuletEffect.onLivingHurt(event);
     }
     @SubscribeEvent
     public static void onAttack(final LivingAttackEvent event) {
         JumpAmuletEffect.onLivingAttack(event);
         FireAmuletEffect.onLivingAttack(event);
+        TerraProtectionAmuletEffect.onLivingAttack(event);
+
     }
  }

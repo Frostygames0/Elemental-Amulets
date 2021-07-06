@@ -2,7 +2,6 @@ package frostygames0.elementalamulets.items.amulets;
 
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.config.ModConfig;
-import frostygames0.elementalamulets.items.amulets.interfaces.ISpeedItem;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -20,7 +19,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 
-public class SpeedAmulet extends AmuletItem implements ISpeedItem {
+public class SpeedAmulet extends AmuletItem {
     public static UUID MODIFIER_UUID = UUID.fromString("06c06b38-3779-4ca2-b678-7c111c77faef");
     public SpeedAmulet(Properties properties) {
         super(properties);
@@ -62,7 +61,6 @@ public class SpeedAmulet extends AmuletItem implements ISpeedItem {
         }
     }
 
-    @Override
     public float getSpeed(ItemStack stack) {
         return (float) ModConfig.cached.SPEED_AMULET_BOOST*this.getTier(stack);
     }

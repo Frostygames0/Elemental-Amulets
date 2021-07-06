@@ -1,71 +1,59 @@
 package frostygames0.elementalamulets.amuleteffect;
 
-import frostygames0.elementalamulets.items.amulets.interfaces.IFireItem;
+import frostygames0.elementalamulets.items.amulets.FireAmulet;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import org.apache.commons.lang3.tuple.ImmutableTriple;
 import top.theillusivec4.curios.api.CuriosApi;
-
-import java.util.Optional;
 
 public class FireAmuletEffect {
 
-    private static float[] calcFireResistance(LivingEntity entity) {
-        Optional<ImmutableTriple<String, Integer, ItemStack>> optional = CuriosApi.getCuriosHelper().findEquippedCurio(item -> item.getItem() instanceof IFireItem, entity);
-        float fireResistMulti = 1;
-        float lavaResistMulti = 1;
-        if (optional.isPresent()) {
-            ItemStack stack = optional.get().getRight();
-            IFireItem item = (IFireItem) stack.getItem();
-            fireResistMulti *= 1-item.getFireResist(stack);
-            lavaResistMulti *= 1-item.getLavaResist(stack);
-        }
-        return new float[] {fireResistMulti, lavaResistMulti};
-    }
-
     static void onLivingAttack(LivingAttackEvent event) {
-        if(event.getEntity().getEntityWorld().isRemote()) return;
-        if(event.getSource().isFireDamage()) {
-            LivingEntity entity = event.getEntityLiving();
-            float[] multis = calcFireResistance(entity);
-            float fire = multis[0];
-            float lava = multis[1];
-            if (event.getSource() == DamageSource.IN_FIRE || event.getSource() == DamageSource.ON_FIRE) {
-                if (fire < 0.001f) event.setCanceled(true);
-            } else {
-                if (lava < 0.001f) event.setCanceled(true);
+        LivingEntity entity = event.getEntityLiving();
+        DamageSource source = event.getSource();
+        if(entity.world.isRemote()) {
+            if (source.isFireDamage()) {
+                CuriosApi.getCuriosHelper().findEquippedCurio(item -> item.getItem() instanceof FireAmulet, entity).ifPresent((triple) -> {
+                    FireAmulet amulet = (FireAmulet) triple.getRight().getItem();
+                    float fire = amulet.getFireResist(triple.getRight());
+                    float lava = amulet.getLavaResist(triple.getRight());
+                    if (source == DamageSource.IN_FIRE || source == DamageSource.ON_FIRE) {
+                        if (fire < 0.001f) event.setCanceled(true);
+                    } else {
+                        if (lava < 0.001f) event.setCanceled(true);
+                    }
+                });
             }
         }
-
     }
 
     static void onLivingHurt(LivingHurtEvent event) {
-        if(event.getEntity().getEntityWorld().isRemote()) return;
-        if(event.getSource().isFireDamage()) {
-            LivingEntity entity = event.getEntityLiving();
-            CuriosApi.getCuriosHelper().findEquippedCurio(item -> item.getItem() instanceof IFireItem, entity).ifPresent((tr) -> {
-                float[] multis = calcFireResistance(entity);
-                float fire = multis[0];
-                float lava = multis[1];
-                if (event.getSource() == DamageSource.IN_FIRE || event.getSource() == DamageSource.ON_FIRE) {
-                    if (fire < 0.999f) {
-                        if (fire < 0.001f) {
-                            event.setCanceled(true);
+        LivingEntity entity = event.getEntityLiving();
+        DamageSource source = event.getSource();
+        if(entity.world.isRemote()) {
+            if (source.isFireDamage()) {
+                CuriosApi.getCuriosHelper().findEquippedCurio(item -> item.getItem() instanceof FireAmulet, entity).ifPresent((triple) -> {
+                    FireAmulet amulet = (FireAmulet) triple.getRight().getItem();
+                    float fire = amulet.getFireResist(triple.getRight());
+                    float lava = amulet.getLavaResist(triple.getRight());
+                    if (source == DamageSource.IN_FIRE || source == DamageSource.ON_FIRE) {
+                        if (fire < 0.999f) {
+                            if (fire < 0.001f) {
+                                event.setCanceled(true);
+                            }
+                            event.setAmount(event.getAmount() * fire);
                         }
-                        event.setAmount(event.getAmount() * fire);
-                    }
-                } else {
-                    if (lava < 0.999f) {
-                        if (lava < 0.001f) {
-                            event.setCanceled(true);
+                    } else {
+                        if (lava < 0.999f) {
+                            if (lava < 0.001f) {
+                                event.setCanceled(true);
+                            }
+                            event.setAmount(event.getAmount() * lava);
                         }
-                        event.setAmount(event.getAmount() * lava);
                     }
-                }
-            });
+                });
+            }
         }
     }
 
