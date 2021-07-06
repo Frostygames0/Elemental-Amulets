@@ -11,7 +11,6 @@ import net.minecraft.item.Items;
 import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
-
 import javax.annotation.Nullable;
 
 public class TagProvider extends ItemTagsProvider {

@@ -10,7 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 
-
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 public class AmuletModel<T extends LivingEntity> extends EntityModel<T> {

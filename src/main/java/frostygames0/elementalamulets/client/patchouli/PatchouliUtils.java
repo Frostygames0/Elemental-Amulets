@@ -2,13 +2,10 @@ package frostygames0.elementalamulets.client.patchouli;
 
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.core.init.ModRecipes;
+import frostygames0.elementalamulets.recipes.ElementalCombination;
 import net.minecraft.client.Minecraft;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.ModList;
-
 
 import java.util.Map;
 
@@ -26,14 +23,14 @@ public class PatchouliUtils {
      * If there is no replacement, it will be logged;
      * P.S: and yes I looked how botania does it :p Also use only for patchouli related stuff!
      */
-    public static <T extends IRecipe<C>, C extends IInventory> T getRecipe(IRecipeType<T> recipeType, ResourceLocation name) {
-        Map<ResourceLocation, T> recipes = ModRecipes.getRecipesMap(recipeType, Minecraft.getInstance().world);
-        T defaultRecipe = recipes.get(name);
+    public static ElementalCombination getRecipe(ResourceLocation name) {
+        Map<ResourceLocation, ElementalCombination> recipes = ModRecipes.getRecipesMap(ModRecipes.ELEMENTAL_COMBINATION_TYPE, Minecraft.getInstance().world);
+        ElementalCombination defaultRecipe = recipes.get(name);
         if(defaultRecipe != null) return defaultRecipe; //
-        T craftTweakedRecipe = recipes.get(new ResourceLocation("crafttweaker", name.getPath()));
+        ElementalCombination craftTweakedRecipe = recipes.get(new ResourceLocation("crafttweaker", name.getPath()));
         if(craftTweakedRecipe != null) return craftTweakedRecipe;
 
-        ElementalAmulets.LOGGER.warn("Template references nonexistent recipe {} of {}", name, recipeType);
+        ElementalAmulets.LOGGER.warn("Template references nonexistent recipe {} of {}", name, ModRecipes.ELEMENTAL_COMBINATION_TYPE);
 
         if(!userNotified) {
             userNotified = true;

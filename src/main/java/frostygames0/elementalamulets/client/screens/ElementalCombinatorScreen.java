@@ -8,7 +8,6 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
-
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 public class ElementalCombinatorScreen extends ContainerScreen<ElementalCombinatorContainer> {

@@ -26,7 +26,6 @@ import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
@@ -49,9 +48,9 @@ public abstract class AmuletItem extends Item implements ICurioItem {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
-        if(this.getTier(stack) == 0) return;
-        tooltip.add(new TranslationTextComponent("item.elementalamulets.common_amulet.tooltip.tier").mergeStyle(TextFormatting.GOLD)
-                .appendSibling(new StringTextComponent("" + this.getTier(stack)).mergeStyle(TextFormatting.YELLOW)));
+        if(this.getTier(stack) > 0)
+            tooltip.add(new TranslationTextComponent("item.elementalamulets.common_amulet.tooltip.tier").mergeStyle(TextFormatting.GOLD)
+                    .appendSibling(new StringTextComponent("" + this.getTier(stack)).mergeStyle(TextFormatting.YELLOW)));
     }
 
     @Override
@@ -109,7 +108,6 @@ public abstract class AmuletItem extends Item implements ICurioItem {
     public boolean canEquipFromUse(SlotContext slotContext, ItemStack stack) {
         return true;
     }
-
 
     @Nonnull
     @Override

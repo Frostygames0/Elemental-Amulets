@@ -14,7 +14,6 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +62,8 @@ public class ModItems {
             () -> new JumpAmulet(new Item.Properties().group(ElementalAmulets.GROUP).rarity(ElementalColors.JUMP).maxDamage(1000)));
     public static final RegistryObject<Item> INVISIBILITY_AMULET = ITEMS.register("invisibility_amulet",
             () -> new InvisibilityAmulet(new Item.Properties().group(ElementalAmulets.GROUP).rarity(ElementalColors.AIR).maxDamage(1000)));
+    public static final RegistryObject<Item> TERRA_PROTECTION_AMULET = ITEMS.register("protection_amulet",
+            () -> new TerraProtectionAmulet(new Item.Properties().group(null).rarity(ElementalColors.EARTH).maxDamage(1000)));
 
     public static List<AmuletItem> getAmulets() {
         List<AmuletItem> items = new ArrayList<>();

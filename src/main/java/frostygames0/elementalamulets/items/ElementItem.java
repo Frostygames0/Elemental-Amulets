@@ -9,7 +9,6 @@ import net.minecraft.item.Rarity;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 
-
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;

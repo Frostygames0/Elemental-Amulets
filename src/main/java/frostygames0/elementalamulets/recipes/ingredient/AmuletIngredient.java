@@ -14,7 +14,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.IIngredientSerializer;
 import net.minecraftforge.registries.ForgeRegistries;
 
-
 import javax.annotation.Nullable;
 import java.util.stream.Stream;
 

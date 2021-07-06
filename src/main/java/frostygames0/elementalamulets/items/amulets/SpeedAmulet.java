@@ -16,7 +16,6 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import top.theillusivec4.curios.api.SlotContext;
 
-
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;

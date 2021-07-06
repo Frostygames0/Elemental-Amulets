@@ -16,7 +16,6 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.util.IItemProvider;
 import net.minecraftforge.common.Tags;
 
-
 import java.util.function.Consumer;
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
@@ -95,12 +94,6 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .setCombinationTime(200)
                 .isTagTransferred()
                 .build(consumer, modPrefix("amulets/"+amulet.getItem().getRegistryName().getPath()+"_1"));
-    }
-    private static void oneIngredientRecipe(String id, ItemStack elemental, ITag<Item> tag, ItemStack result, Consumer<IFinishedRecipe> supplier) {
-        ElementalCombinationBuilder.create(result)
-                .addElemental(elemental)
-                .addIngredient(tag)
-                .build(supplier, id);
     }
 
     private static void classicElementRecipe(IItemProvider elementIn, ITag<Item> convertibles, Consumer<IFinishedRecipe> consumerIn) {

@@ -27,7 +27,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -72,7 +71,7 @@ public class ModVillagers{
     @SubscribeEvent
     public static void registerWandererTrades(final WandererTradesEvent event) {
         Random rand = new Random(8080);
-        event.getRareTrades().add(new BasicTrade(45, AmuletItem.getStackWithTier(new ItemStack(ModItems.getAmulets().get(rand.nextInt(ModItems.getAmulets().size()))), 4), 1, 25, 1.5f));
+        event.getRareTrades().add(new BasicTrade(45, AmuletItem.getStackWithTier(new ItemStack(ModItems.getAmulets().get(rand.nextInt(ModItems.getAmulets().size()))), 3), 1, 25, 1.5f));
     }
 
     public static class Structures {
@@ -99,6 +98,7 @@ public class ModVillagers{
             List<Pair<JigsawPiece, Integer>> newPieces = pieces.stream().map(p -> Pair.of(p, 1)).collect(Collectors.toList());
             JigsawPiece newPiece = JigsawPiece.func_242851_a(houseToAdd, ProcessorLists.MOSSIFY_10_PERCENT).apply(JigsawPattern.PlacementBehaviour.RIGID);
             newPieces.add(Pair.of(newPiece, weight));
+            // I'm getting old pool and then add my house and just register it with same name, so it replaces the old one. Hacky but works good
             Registry.register(WorldGenRegistries.JIGSAW_POOL, pool, new JigsawPattern(pool, old.getName(), newPieces));
         }
     }

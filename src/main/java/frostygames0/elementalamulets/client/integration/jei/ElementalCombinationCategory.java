@@ -20,7 +20,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
-
 import java.util.Collections;
 import java.util.List;
 

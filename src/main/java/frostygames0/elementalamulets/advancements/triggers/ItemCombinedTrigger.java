@@ -8,7 +8,6 @@ import net.minecraft.loot.ConditionArrayParser;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.server.ServerWorld;
 
-
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 /**

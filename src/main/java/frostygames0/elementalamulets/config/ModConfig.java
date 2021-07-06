@@ -60,8 +60,8 @@ public class ModConfig {
             USE_LATIN_ELEMENT_NAMES = builder.comment("If true, elements names will be in latin (Ignis, Aer, Aqua and Terra) [DEFAULT: false]").translation("config.elementalamulets.elements_latin_variant").define("elements_latin_variant", false);
 
             builder.push("Rendering");
-            RENDER_COMBINATOR_STACK = builder.comment("Display output slot on Elemental Combinator? [DEFAULT: true]").translation("config.elementalamulets.elemental_combinator_stack_display").define("elemental_combinator_stack_display", true);
-            COMBINATOR_STACK_ROTATION_SPEED = builder.comment("Display output slot on Elemental Combinator? [DEFAULT: true]").translation("config.elementalamulets.elemental_combinator_stack_speed").defineInRange("elemental_combinator_stack_speed", 20, 1, Integer.MAX_VALUE);
+            RENDER_COMBINATOR_STACK = builder.comment("Render output slot on top Elemental Combinator? [DEFAULT: true]").translation("config.elementalamulets.elemental_combinator_stack_display").define("elemental_combinator_stack_display", true);
+            COMBINATOR_STACK_ROTATION_SPEED = builder.comment("How fast does rendered item spins? [DEFAULT: true]").translation("config.elementalamulets.elemental_combinator_stack_speed").defineInRange("elemental_combinator_stack_speed", 20, 1, Integer.MAX_VALUE);
 
             builder.push("Amulets");
             AMULETS_TIER_DIFFERENCE = builder.comment("Set to true, if you want amulets to be different based on their tier [DEFAULT: false]").translation("config.elementalamulets.amulets_tier_difference").define("amulets_tier_difference", true);

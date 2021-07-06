@@ -11,7 +11,6 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.type.util.ICuriosHelper;
 
-
 import java.util.concurrent.atomic.AtomicReference;
 
 public class JumpAmuletEffect {

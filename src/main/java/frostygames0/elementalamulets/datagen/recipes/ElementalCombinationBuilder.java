@@ -16,7 +16,6 @@ import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
-
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;

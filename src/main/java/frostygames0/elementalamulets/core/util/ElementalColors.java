@@ -3,7 +3,6 @@ package frostygames0.elementalamulets.core.util;
 import net.minecraft.item.Rarity;
 import net.minecraft.util.text.TextFormatting;
 
-
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 public class ElementalColors {

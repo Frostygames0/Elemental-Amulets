@@ -3,7 +3,6 @@ package frostygames0.elementalamulets.capability;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
-
 import javax.annotation.Nonnull;
 
 public class AutomationItemHandler implements IItemHandlerModifiable {

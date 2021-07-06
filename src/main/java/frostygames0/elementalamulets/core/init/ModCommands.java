@@ -19,7 +19,6 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.items.ItemHandlerHelper;
 
-
 import java.util.Collection;
 
 /**
