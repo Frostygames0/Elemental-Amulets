@@ -16,8 +16,8 @@ public class FireAmuletEffect {
             if (source.isFireDamage()) {
                 CuriosApi.getCuriosHelper().findEquippedCurio(item -> item.getItem() instanceof FireAmulet, entity).ifPresent((triple) -> {
                     FireAmulet amulet = (FireAmulet) triple.getRight().getItem();
-                    float fire = amulet.getFireResist(triple.getRight());
-                    float lava = amulet.getLavaResist(triple.getRight());
+                    float fire = 1-amulet.getFireResist(triple.getRight());
+                    float lava = 1-amulet.getLavaResist(triple.getRight());
                     if (source == DamageSource.IN_FIRE || source == DamageSource.ON_FIRE) {
                         if (fire < 0.001f) event.setCanceled(true);
                     } else {
@@ -35,8 +35,8 @@ public class FireAmuletEffect {
             if (source.isFireDamage()) {
                 CuriosApi.getCuriosHelper().findEquippedCurio(item -> item.getItem() instanceof FireAmulet, entity).ifPresent((triple) -> {
                     FireAmulet amulet = (FireAmulet) triple.getRight().getItem();
-                    float fire = amulet.getFireResist(triple.getRight());
-                    float lava = amulet.getLavaResist(triple.getRight());
+                    float fire = 1-amulet.getFireResist(triple.getRight());
+                    float lava = 1-amulet.getLavaResist(triple.getRight());
                     if (source == DamageSource.IN_FIRE || source == DamageSource.ON_FIRE) {
                         if (fire < 0.999f) {
                             if (fire < 0.001f) {

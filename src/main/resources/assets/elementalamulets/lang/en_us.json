@@ -31,7 +31,7 @@
   "item.elementalamulets.fire_amulet": "Amulet of Fire-Resistance",
   "item.elementalamulets.fire_amulet.tooltip": "%sProtects you from%s %1$sfire%1$s",
 
-    "item.elementalamulets.speed_amulet": "Amulet of Speed-Boost",
+  "item.elementalamulets.speed_amulet": "Amulet of Speed-Boost",
   "item.elementalamulets.speed_amulet.tooltip": "%sSpeeds up you%s",
 
   "item.elementalamulets.jump_amulet": "Amulet of Jump-Boost",
@@ -39,6 +39,9 @@
 
   "item.elementalamulets.invisibility_amulet": "Amulet of Invisibility",
   "item.elementalamulets.invisibility_amulet.tooltip": "%sHides you from your enemies%s",
+
+  "item.elementalamulets.protection_amulet": "Amulet of Terra Protection",
+  "item.elementalamulets.protection_amulet.tooltip": "%sCreates powerful Leaf Shield around you!",
 
   "block.elementalamulets.elemental_combinator": "Elemental Combinator",
   "block.elementalamulets.elemental_combinator.guititle": "Combination",

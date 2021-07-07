@@ -1,6 +1,7 @@
 package frostygames0.elementalamulets.amuleteffect;
 
 import frostygames0.elementalamulets.ElementalAmulets;
+import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -26,5 +27,9 @@ public class EffectEventHandler {
         FireAmuletEffect.onLivingAttack(event);
         TerraProtectionAmuletEffect.onLivingAttack(event);
 
+    }
+    @SubscribeEvent
+    public static void onProjectileImpact(final ProjectileImpactEvent event) {
+        TerraProtectionAmuletEffect.onProjectileImpact(event);
     }
  }

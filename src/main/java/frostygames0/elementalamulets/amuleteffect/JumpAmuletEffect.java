@@ -17,7 +17,7 @@ public class JumpAmuletEffect {
         if(entity.world.isRemote()) return;
         if(event.getSource() == DamageSource.FALL) {
             CuriosApi.getCuriosHelper().findEquippedCurio(item -> item.getItem() instanceof JumpAmulet, entity).ifPresent((triple) -> {
-                float fallResist = ((JumpAmulet) triple.getRight().getItem()).getJump(triple.getRight());
+                float fallResist = ((JumpAmulet) triple.getRight().getItem()).getFallResist(triple.getRight());
                 if (!event.isCanceled() && fallResist > 0) {
                     float finalDamage = Math.max(0, (event.getAmount() - fallResist));
                     if (finalDamage == 0) {
@@ -34,7 +34,7 @@ public class JumpAmuletEffect {
         if(entity.world.isRemote()) return;
         if(event.getSource() == DamageSource.FALL) {
             CuriosApi.getCuriosHelper().findEquippedCurio(item -> item.getItem() instanceof JumpAmulet, entity).ifPresent((triple) -> {
-                float fallResist = ((JumpAmulet) triple.getRight().getItem()).getJump(triple.getRight());
+                float fallResist = ((JumpAmulet) triple.getRight().getItem()).getFallResist(triple.getRight());
                 if (!event.isCanceled() && fallResist > 0) {
                     float finalDamage = Math.max(0, (event.getAmount() - fallResist));
                     if (finalDamage == 0) {

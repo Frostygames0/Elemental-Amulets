@@ -1,0 +1,38 @@
+{
+  "type": "elementalamulets:elemental_combination",
+  "elemental": {
+    "item": "elementalamulets:empty_amulet"
+  },
+  "ingredients": [
+    {
+      "item": "elementalamulets:earth_element"
+    },
+    {
+      "item": "elementalamulets:earth_element"
+    },
+    {
+      "item": "elementalamulets:earth_element"
+    },
+    {
+      "item": "minecraft:lapis_lazuli"
+    },
+    {
+      "item": "elementalamulets:earth_element"
+    },
+    {
+      "item": "minecraft:shield"
+    },
+    {
+      "item": "elementalamulets:earth_element"
+    },
+    {
+      "item": "minecraft:lapis_lazuli"
+    }
+  ],
+  "combination_time": 350,
+  "tag_transfer": true,
+  "result": {
+    "item": "elementalamulets:protection_amulet",
+    "nbt": "{}"
+  }
+}

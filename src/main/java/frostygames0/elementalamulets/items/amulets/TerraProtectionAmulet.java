@@ -14,10 +14,13 @@ import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import java.util.List;
+
+import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 public class TerraProtectionAmulet extends AmuletItem {
     public TerraProtectionAmulet(Properties properties) {
@@ -27,6 +30,7 @@ public class TerraProtectionAmulet extends AmuletItem {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
+        tooltip.add(new TranslationTextComponent("item.elementalamulets.protection_amulet.tooltip"));
         tooltip.add(new StringTextComponent("This amulet is not finished and may not work properly!").mergeStyle(TextFormatting.GOLD));
         tooltip.add(new StringTextComponent("Use it at your own risk").mergeStyle(TextFormatting.RED, TextFormatting.UNDERLINE));
     }
@@ -34,17 +38,19 @@ public class TerraProtectionAmulet extends AmuletItem {
     @Override
     public void render(String identifier, int index, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int light, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack stack) {
         LeafShield model = new LeafShield();
-        float angle = (System.currentTimeMillis() / 20) % 360;
+        float angle = (System.currentTimeMillis() / 15) % 360;
 
-        matrixStack.push();
+        if(ModConfig.cached.RENDER_LEAF_SHIELD) {
+            matrixStack.push();
 
-        matrixStack.scale(2.0f, 2.0f, 2.0f);
-        matrixStack.translate(0, -0.7, 0);
-        matrixStack.rotate(Vector3f.YP.rotationDegrees(angle));
+            matrixStack.scale(2.0f, 2.0f, 2.0f);
+            matrixStack.translate(0, -0.7, 0);
+            matrixStack.rotate(Vector3f.YP.rotationDegrees(angle));
 
-        model.render(matrixStack, renderTypeBuffer.getBuffer(RenderType.getEntityTranslucent(new ResourceLocation("poop_gang"))), light, OverlayTexture.NO_OVERLAY, 1.0f, 1.0f, 1.0f, 1.0f);
+            model.render(matrixStack, renderTypeBuffer.getBuffer(RenderType.getEntityTranslucent(modPrefix("textures/entity/amulets/leaf_shield_colored.png"))), light, OverlayTexture.NO_OVERLAY, 1.0f, 1.0f, 1.0f, 1.0f);
 
-        matrixStack.pop();
+            matrixStack.pop();
+        }
 
         // Calling super is important since super class renders amulet here
         super.render(identifier, index, matrixStack, renderTypeBuffer, light, livingEntity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, stack);
