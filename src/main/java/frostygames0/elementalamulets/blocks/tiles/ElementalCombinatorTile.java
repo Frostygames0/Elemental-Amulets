@@ -146,19 +146,19 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
 
     public void startCombination() {
         if (!this.isCrafting()) {
-            this.combinationTime = 1;
+            this.combinationTime = 0;
         }
     }
 
     private void stopCombination() {
         if(this.isCrafting()) {
-            this.combinationTime = 0;
+            this.combinationTime = -1;
             this.world.setBlockState(pos, this.getBlockState().with(ElementalCombinator.COMBINING, false));
         }
     }
 
     public boolean isCrafting() {
-        return this.combinationTime > 0;
+        return this.combinationTime >= 0;
     }
 
     private void playSound(SoundEvent sound) {

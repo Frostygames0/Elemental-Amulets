@@ -26,7 +26,7 @@
 
   "item.elementalamulets.empty_amulet": "Пустой амулет",
 
-  "item.elementalamulets.common_amulet.tooltip.tier": "%sУровень: ",
+  "item.elementalamulets.common_amulet.tooltip.tier": "Уровень: %s",
 
   "item.elementalamulets.fire_amulet": "Амулет огня",
   "item.elementalamulets.fire_amulet.tooltip": "%sЗащищает от%s %1$sогня%1$s",

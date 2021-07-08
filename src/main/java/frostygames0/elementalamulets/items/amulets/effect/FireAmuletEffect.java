@@ -1,4 +1,4 @@
-package frostygames0.elementalamulets.amuleteffect;
+package frostygames0.elementalamulets.items.amulets.effect;
 
 import frostygames0.elementalamulets.items.amulets.FireAmulet;
 import net.minecraft.entity.LivingEntity;

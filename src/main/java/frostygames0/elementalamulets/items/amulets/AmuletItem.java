@@ -49,8 +49,7 @@ public abstract class AmuletItem extends Item implements ICurioItem {
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
         if(this.getTier(stack) > 0)
-            tooltip.add(new TranslationTextComponent("item.elementalamulets.common_amulet.tooltip.tier").mergeStyle(TextFormatting.GOLD)
-                    .appendSibling(new StringTextComponent("" + this.getTier(stack)).mergeStyle(TextFormatting.YELLOW)));
+            tooltip.add(new TranslationTextComponent("item.elementalamulets.common_amulet.tooltip.tier", new StringTextComponent(String.valueOf(this.getTier(stack))).mergeStyle(TextFormatting.YELLOW)).mergeStyle(TextFormatting.GOLD));
     }
 
     @Override
