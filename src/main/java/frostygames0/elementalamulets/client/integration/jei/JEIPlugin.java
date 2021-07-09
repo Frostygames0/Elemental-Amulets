@@ -11,15 +11,12 @@ import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.registration.*;
-import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
@@ -72,14 +69,5 @@ public class JEIPlugin implements IModPlugin {
     @Override
     public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
         registration.addRecipeTransferHandler(ElementalCombinatorContainer.class, ElementalCombinationCategory.ID, 1, 9, 10, 36);
-    }
-
-    @Override
-    public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
-        List<ItemStack> amuletsRemove = new ArrayList<>();
-        for(int i = 1; i <= AmuletItem.MAX_TIER; i++) {
-            amuletsRemove.add(AmuletItem.getStackWithTier(new ItemStack(ModItems.TERRA_PROTECTION_AMULET.get()), i));
-        }
-        jeiRuntime.getIngredientManager().removeIngredientsAtRuntime(VanillaTypes.ITEM, amuletsRemove);
     }
 }

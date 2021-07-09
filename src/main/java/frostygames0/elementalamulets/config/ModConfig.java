@@ -25,7 +25,7 @@ public class ModConfig {
         private final ForgeConfigSpec.DoubleValue FIRE_AMULET_FIRE_RESISTANCE;
         private final ForgeConfigSpec.DoubleValue FIRE_AMULET_LAVA_RESISTANCE;
         private final ForgeConfigSpec.DoubleValue SPEED_AMULET_BOOST;
-        private final ForgeConfigSpec.DoubleValue PROTECTION_AMULET_ABSORPTION;
+        private final ForgeConfigSpec.DoubleValue PROTECTION_AMULET_REFLECT_DAMAGE_MULT;
         private final ForgeConfigSpec.IntValue PROTECTION_AMULET_CHARGE_TIME;
 
         public Server(ForgeConfigSpec.Builder builder) {
@@ -38,7 +38,7 @@ public class ModConfig {
             FIRE_AMULET_FIRE_RESISTANCE = builder.comment("How good will Fire Amulet protect from fire [DEFAULT: 0.5]").defineInRange("fire_amulet_fire_resistance", 0.5, 0, Integer.MAX_VALUE);
             FIRE_AMULET_LAVA_RESISTANCE = builder.comment("How good will Fire Amulet protect from lava [DEFAULT: 0.25]").defineInRange("fire_amulet_lava_resistance", 0.25, 0, Integer.MAX_VALUE);
             SPEED_AMULET_BOOST = builder.comment("How fast will players run with Speed Amulet [DEFAULT: 1.08]").defineInRange("speed_amulet_boost", 1.08, 0, Integer.MAX_VALUE);
-            PROTECTION_AMULET_ABSORPTION = builder.comment("How much damage will Leaf Shild absorb? [DEFAULT: 3.0]") .defineInRange("protection_amulet_absorption", 3f, 0, Integer.MAX_VALUE);
+            PROTECTION_AMULET_REFLECT_DAMAGE_MULT = builder.comment("How much damage will Leaf Shild absorb? [DEFAULT: 3.0]") .defineInRange("protection_amulet_absorption", 0.3f, 0, Integer.MAX_VALUE);
             PROTECTION_AMULET_CHARGE_TIME = builder.comment("How long will leaf shield recharge one bar? [DEFAULT: 80]").defineInRange("protection_amulet_recharge_time", 80, 0, Integer.MAX_VALUE);
             builder.pop();
 
@@ -85,7 +85,7 @@ public class ModConfig {
         public static double FIRE_AMULET_FIRE_RESISTANCE;
         public static double FIRE_AMULET_LAVA_RESISTANCE;
         public static double SPEED_AMULET_BOOST;
-        public static double PROTECTION_AMULET_ABSORPTION;
+        public static double PROTECTION_AMULET_REFLECT_DAMAGE_MULT;
         public static int PROTECTION_AMULET_CHARGE_TIME;
 
         private static void bakeServerConfig() {
@@ -94,7 +94,7 @@ public class ModConfig {
             FIRE_AMULET_FIRE_RESISTANCE = SERVER.FIRE_AMULET_FIRE_RESISTANCE.get();
             FIRE_AMULET_LAVA_RESISTANCE = SERVER.FIRE_AMULET_LAVA_RESISTANCE.get();
             SPEED_AMULET_BOOST = SERVER.SPEED_AMULET_BOOST.get();
-            PROTECTION_AMULET_ABSORPTION = SERVER.PROTECTION_AMULET_ABSORPTION.get();
+            PROTECTION_AMULET_REFLECT_DAMAGE_MULT = SERVER.PROTECTION_AMULET_REFLECT_DAMAGE_MULT.get();
             PROTECTION_AMULET_CHARGE_TIME = SERVER.PROTECTION_AMULET_CHARGE_TIME.get();
         }
 

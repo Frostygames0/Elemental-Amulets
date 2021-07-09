@@ -1,0 +1,16 @@
+{
+  "parent": "elementalamulets:root",
+  "criteria": {
+    "obtain_item": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {"item": "elementalamulets:air_element"}
+        ]
+      }
+    }
+  },
+  "requirements": [[
+    "obtain_item"
+  ]]
+}

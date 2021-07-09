@@ -1,0 +1,27 @@
+{
+  "name": "Amulets!",
+  "category": "elementalamulets:items/amulets",
+  "icon": "elementalamulets:empty_amulet",
+  "turnin": "elementalamulets:patchouli:craft_empty_amulet",
+  "priority": true,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Amulets$() are magical jewels that $(m)give$() the user the power of the element from which it was made!"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "elementalamulets:empty_amulet",
+      "text": "This is 'empty' amulet,  a shell for all other amulets! It is made of $(item)$(l:elementalamulets:getting_started/introduction)elemental shards$(). Here is recipe for it!"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "elementalamulets:empty_amulet"
+    },
+    {
+      "type": "patchouli:quest",
+      "trigger": "elementalamulets:patchouli/craft_empty_amulet",
+      "text": "Craft empty amulet! $(br2)To make an amulet, you need an empty amulet! So it's time to $(thing)craft$() it!"
+    }
+  ]
+}

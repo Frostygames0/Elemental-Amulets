@@ -1,0 +1,14 @@
+{
+  "parent": "elementalamulets:root",
+  "criteria": {
+    "placed_block": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "block": "elementalamulets:elemental_combinator"
+      }
+    }
+  },
+  "requirements": [[
+    "placed_block"
+  ]]
+}

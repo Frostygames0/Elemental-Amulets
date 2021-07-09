@@ -1,7 +1,6 @@
 package frostygames0.elementalamulets.items.amulets;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.client.models.LeafShield;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.core.util.NBTUtil;
@@ -43,7 +42,6 @@ public class TerraProtectionAmulet extends AmuletItem {
         super.curioTick(identifier, index, livingEntity, stack);
         if(!livingEntity.world.isRemote()) {
             if(livingEntity.ticksExisted % ModConfig.cached.PROTECTION_AMULET_CHARGE_TIME == 0) {
-                ElementalAmulets.LOGGER.debug(ModConfig.cached.PROTECTION_AMULET_CHARGE_TIME);
                 if(getCharges(stack) < 4 * getTier(stack)) {
                     NBTUtil.putInteger(stack, CHARGES_TAG, getCharges(stack)+1);
                 }
@@ -72,8 +70,8 @@ public class TerraProtectionAmulet extends AmuletItem {
         super.render(identifier, index, matrixStack, renderTypeBuffer, light, livingEntity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, stack);
     }
 
-    public float getDamageAbsorption(ItemStack stack) {
-        return (float) (this.getTier(stack) * ModConfig.cached.PROTECTION_AMULET_ABSORPTION);
+    public float getReflectedDamageMulti(ItemStack stack) {
+        return (float) (this.getTier(stack) * ModConfig.cached.PROTECTION_AMULET_REFLECT_DAMAGE_MULT);
     }
 
     public int getCharges(ItemStack stack) {

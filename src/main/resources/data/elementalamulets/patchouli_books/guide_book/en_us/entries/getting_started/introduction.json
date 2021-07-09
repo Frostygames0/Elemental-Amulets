@@ -4,25 +4,25 @@
   "icon": "elementalamulets:elemental_combinator",
   "pages": [
     {
-      "type": "text",
+      "type": "patchouli:text",
       "text": "Hello, $(thing)$(playername)$()! This page will introduce you into Elemental Amulets mod! $(br2)First, you need to do some mining! To find $(item)Elemental Shards$() They can spawn underground between ~40 - ~20 Y coordinates! In this example it spawned in the mineshaft next to the iron ore"
     },
     {
-      "type": "image",
+      "type": "patchouli:image",
       "title": "Elemental Ore",
       "images": ["elementalamulets:textures/gui/patchouli/elemental_ore_showcase.png"],
       "border": true
     },
     {
-      "type": "smelting",
+      "type": "patchouli:smelting",
       "title": "Alternative Method",
       "recipe": "elementalamulets:elemental_shards",
       "text": "You can also smelt it into shards, if you found $(item)Elemental Ore$() block"
     },
     {
-      "type": "elemental_combination",
-      "recipe": "elementalamulets:elements/jump_element",
-      "text": "It's A poo!!! Because according to statistics only 10% of you are actually subscribed! Monster, how should I feel it? I'll have two number nine! All you had to do is to follow the damn train CJ! AMOGUS - SUS corporation"
+      "type": "patchouli:quest",
+      "trigger": "elementalamulets:patchouli/mine_elemental_shards",
+      "text": "Obtain elemental shards! $(br2)To move forward you will need elemental shards!"
     }
   ]
 }

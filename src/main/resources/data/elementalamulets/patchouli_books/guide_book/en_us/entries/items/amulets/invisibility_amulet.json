@@ -1,0 +1,13 @@
+{
+  "name": "Amulet of Invisibility",
+  "category": "elementalamulets:items/amulets",
+  "icon": "elementalamulets:invisibility_amulet",
+  "pages": [
+    {
+      "type": "elementalamulets:elemental_combination",
+      "recipe": "elementalamulets:amulets/invisibility_amulet_1",
+      "text": "$(l)$(m)$(thing)Sample Text",
+      "advancement": "elementalamulets:patchouli/place_combinator"
+    }
+  ]
+}
