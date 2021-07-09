@@ -2,34 +2,29 @@ package frostygames0.elementalamulets.items.amulets;
 
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.config.ModConfig;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import top.theillusivec4.curios.api.SlotContext;
 
-import javax.annotation.Nullable;
-import java.util.List;
 import java.util.UUID;
 
 public class SpeedAmulet extends AmuletItem {
     public static UUID MODIFIER_UUID = UUID.fromString("06c06b38-3779-4ca2-b678-7c111c77faef");
+
     public SpeedAmulet(Properties properties) {
         super(properties);
     }
 
-
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        super.addInformation(stack, worldIn, tooltip, flagIn);
-        tooltip.add(new TranslationTextComponent("item.elementalamulets.speed_amulet.tooltip").mergeStyle(TextFormatting.GRAY));
+    public IFormattableTextComponent getDescription(ItemStack stack, World worldIn) {
+        return new TranslationTextComponent("item.elementalamulets.speed_amulet.tooltip");
     }
 
     @Override

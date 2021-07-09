@@ -17,10 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio;
@@ -50,7 +47,10 @@ public abstract class AmuletItem extends Item implements ICurioItem {
         super.addInformation(stack, worldIn, tooltip, flagIn);
         if(this.getTier(stack) > 0)
             tooltip.add(new TranslationTextComponent("item.elementalamulets.common_amulet.tooltip.tier", new StringTextComponent(String.valueOf(this.getTier(stack))).mergeStyle(TextFormatting.YELLOW)).mergeStyle(TextFormatting.GOLD));
+        tooltip.add(getDescription(stack, worldIn).mergeStyle(TextFormatting.GRAY));
     }
+
+    protected abstract IFormattableTextComponent getDescription(ItemStack stack, World worldIn);
 
     @Override
     public void onEquip(SlotContext slotContext, ItemStack prevStack, ItemStack stack) {
@@ -121,11 +121,6 @@ public abstract class AmuletItem extends Item implements ICurioItem {
         return 0;
     }
 
-    /**
-     * If amulet has tier - true, else false
-     * NOTE: It's not individual for every stack of amulet
-     * @return hasTier
-     */
     public boolean hasTier() {
         return this.hasTier;
     }

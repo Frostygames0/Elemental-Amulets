@@ -125,8 +125,4 @@ public class ElementalCombinatorContainer extends Container {
         int j = this.getCombinatorData().get(1);
         return j != 0 && i != 0 ? i * 25 / j : 0;
     }
-
-    public TileEntity getTileEntity() {
-        return this.tileEntity;
-    }
 }

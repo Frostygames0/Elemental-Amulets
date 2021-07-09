@@ -10,17 +10,9 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -39,9 +31,11 @@ public class TerraProtectionAmulet extends AmuletItem {
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
         tooltip.add(new TranslationTextComponent("item.elementalamulets.protection_amulet.charges", new StringTextComponent(this.getCharges(stack) + "/" + 4 * this.getTier(stack)).mergeStyle(TextFormatting.YELLOW)).mergeStyle(TextFormatting.GOLD));
-        tooltip.add(new TranslationTextComponent("item.elementalamulets.protection_amulet.tooltip"));
-        /*tooltip.add(new StringTextComponent("This amulet is not finished and may not work properly!").mergeStyle(TextFormatting.GOLD));
-        tooltip.add(new StringTextComponent("Use it at your own risk").mergeStyle(TextFormatting.RED, TextFormatting.UNDERLINE));*/
+    }
+
+    @Override
+    protected IFormattableTextComponent getDescription(ItemStack stack, World worldIn) {
+        return new TranslationTextComponent("item.elementalamulets.protection_amulet.tooltip");
     }
 
     @Override

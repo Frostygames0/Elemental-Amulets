@@ -129,9 +129,10 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
                 handler.insertItem(i, remainingItems.get(i), false); // inserting remaining items
             }
             // TODO Maybe I should give it only to the closest player or the one who started combination idk
-            ((ServerWorld)world).getChunkProvider().chunkManager.getTrackingPlayers(new ChunkPos(pos), false)
-                    .filter(player -> player.getDistanceSq(pos.getX(), pos.getY(), pos.getZ()) <= 100)
-                    .forEach(player -> ModCriteriaTriggers.ITEM_COMBINED.trigger(player, result, (ServerWorld) world, pos.getX(), pos.getY(), pos.getZ()));
+            if(world instanceof ServerWorld)
+                ((ServerWorld)world).getChunkProvider().chunkManager.getTrackingPlayers(new ChunkPos(pos), false)
+                        .filter(player -> player.getDistanceSq(pos.getX(), pos.getY(), pos.getZ()) <= 100)
+                        .forEach(player -> ModCriteriaTriggers.ITEM_COMBINED.trigger(player, result, (ServerWorld) world, pos.getX(), pos.getY(), pos.getZ()));
         }
     }
 

@@ -1,17 +1,12 @@
 package frostygames0.elementalamulets.items.amulets;
 
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Effects;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import top.theillusivec4.curios.api.SlotContext;
-
-import javax.annotation.Nullable;
-import java.util.List;
 
 public class InvisibilityAmulet extends AmuletItem {
     public InvisibilityAmulet(Properties properties) {
@@ -19,9 +14,8 @@ public class InvisibilityAmulet extends AmuletItem {
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        super.addInformation(stack, worldIn, tooltip, flagIn);
-        tooltip.add(new TranslationTextComponent("item.elementalamulets.invisibility_amulet.tooltip").mergeStyle(TextFormatting.GRAY));
+    protected IFormattableTextComponent getDescription(ItemStack stack, World worldIn) {
+        return new TranslationTextComponent("item.elementalamulets.invisibility_amulet.tooltip");
     }
 
     @Override
