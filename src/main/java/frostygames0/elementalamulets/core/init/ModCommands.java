@@ -40,7 +40,7 @@ public class ModCommands {
             return Commands.literal("give")
                     .requires(s -> s.hasPermissionLevel(2))
                     .then(Commands.argument("player", EntityArgument.players())
-                    .then(Commands.argument("amulet", ItemArgument.item()).suggests((ctx, builder) -> ISuggestionProvider.suggest(ModItems.getAmulets().stream().map(item -> item.getRegistryName().toString()), builder))
+                    .then(Commands.argument("amulet", ItemArgument.item()).suggests((ctx, builder) -> ISuggestionProvider.suggest(ModItems.getAmulets().stream().map(item -> item.getRegistryName().toString()), builder)).executes(ctx -> execute(ctx.getSource(), EntityArgument.getPlayers(ctx, "player"), ItemArgument.getItem(ctx, "amulet"), 1))
                     .then(Commands.argument("tier", IntegerArgumentType.integer(1, AmuletItem.MAX_TIER))
                     .executes(ctx -> execute(ctx.getSource(), EntityArgument.getPlayers(ctx, "player"), ItemArgument.getItem(ctx, "amulet"), IntegerArgumentType.getInteger(ctx, "tier"))))));
         }

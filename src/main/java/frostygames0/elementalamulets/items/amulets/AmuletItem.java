@@ -96,12 +96,13 @@ public abstract class AmuletItem extends Item implements ICurioItem {
     @Override
     public void render(String identifier, int index, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int light, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack stack) {
         matrixStack.push();
-
-        ICurio.RenderHelper.rotateIfSneaking(matrixStack, livingEntity);
         ICurio.RenderHelper.translateIfSneaking(matrixStack, livingEntity);
+        ICurio.RenderHelper.rotateIfSneaking(matrixStack, livingEntity);
+
+        matrixStack.scale(0.7f, 0.7f, 0.7f);
 
         AmuletModel amuletModel = new AmuletModel();
-        IVertexBuilder vertexBuilder = ItemRenderer.getBuffer(renderTypeBuffer, amuletModel.getRenderType(modPrefix("textures/entity/amulets/tier_0/reference_texture.png")), false, stack.hasEffect());
+        IVertexBuilder vertexBuilder = ItemRenderer.getBuffer(renderTypeBuffer, amuletModel.getRenderType(AmuletModel.getTexture(this, stack)), false, stack.hasEffect());
         amuletModel.render(matrixStack, vertexBuilder, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
         matrixStack.pop();
     }
