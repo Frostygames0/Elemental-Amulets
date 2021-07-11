@@ -7,7 +7,7 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "$(thing)Amulets$() are magical jewels that $(m)give$() the user the power of the element from which it was made!"
+      "text": "$(thing)Amulets$() are magical jewels that $(m)give$() the user the power of the element from which it was made! $(br2)All amulets $(l)have$() 4 tiers, $(#a52a2a)WOODEN$(), $(7)IRON$(), $(6)GOLD$() and $(b)DIAMOND$() (or 1, 2, 3, 4)! Same amulet $(l)can have$() different powers on other tier!"
     },
     {
       "type": "patchouli:spotlight",
