@@ -1,6 +1,5 @@
 package frostygames0.elementalamulets.client.patchouli;
 
-import com.google.gson.JsonSyntaxException;
 import frostygames0.elementalamulets.recipes.ElementalCombination;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
@@ -18,12 +17,8 @@ public class ElementalCombinationProcessor implements IComponentProcessor {
     @Override
     public void setup(IVariableProvider variables) {
         String recipeId = variables.get("recipe").asString();
-            try {
-                recipe = PatchouliUtils.getRecipe(new ResourceLocation(recipeId));
-            } catch (ClassCastException e) {
-                throw new JsonSyntaxException("Provided recipe is not Elemental Combination");
-            }
-        }
+        recipe = PatchouliUtils.getRecipe(new ResourceLocation(recipeId));
+    }
 
     @Override
     public IVariable process(String key) {
@@ -47,6 +42,4 @@ public class ElementalCombinationProcessor implements IComponentProcessor {
         }
         return null;
     }
-
-
 }
