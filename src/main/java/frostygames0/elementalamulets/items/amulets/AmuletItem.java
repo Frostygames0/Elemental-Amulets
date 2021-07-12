@@ -99,7 +99,7 @@ public abstract class AmuletItem extends Item implements ICurioItem {
         ICurio.RenderHelper.translateIfSneaking(matrixStack, livingEntity);
         ICurio.RenderHelper.rotateIfSneaking(matrixStack, livingEntity);
 
-        matrixStack.scale(0.7f, 0.7f, 0.7f);
+        matrixStack.scale(0.7f, 0.7f, 0.7f); // Makes amulet smaller gugugaga
 
         AmuletModel amuletModel = new AmuletModel();
         IVertexBuilder vertexBuilder = ItemRenderer.getBuffer(renderTypeBuffer, amuletModel.getRenderType(AmuletModel.getTexture(this, stack)), false, stack.hasEffect());

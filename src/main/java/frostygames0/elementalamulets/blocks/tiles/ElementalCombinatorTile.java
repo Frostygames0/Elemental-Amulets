@@ -170,15 +170,24 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
     public CompoundNBT write(CompoundNBT compound) {
         compound.putInt("CombinationTime", this.combinationTime);
         compound.putInt("TotalCombinationTime", this.totalTime);
-        compound.put("Contents", handler.serializeNBT());
+        this.writeInventory(compound);
         return super.write(compound);
+    }
+
+    private CompoundNBT writeInventory(CompoundNBT compound) {
+        compound.put("Contents", handler.serializeNBT());
+        return compound;
+    }
+
+    private void readInventory(BlockState state, CompoundNBT nbt) {
+        handler.deserializeNBT(nbt.getCompound("Contents"));
     }
 
     @Override
     public void read(BlockState state, CompoundNBT nbt) {
         this.combinationTime = nbt.getInt("CombinationTime");
         this.totalTime = nbt.getInt("TotalCombinationTime");
-        handler.deserializeNBT(nbt.getCompound("Contents"));
+        this.readInventory(state, nbt);
         super.read(state, nbt);
     }
 
@@ -204,12 +213,12 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
 
     @Override
     public void handleUpdateTag(BlockState state, CompoundNBT tag) {
-        this.read(state, tag);
+        this.readInventory(state, tag);
     }
 
     @Override
     public CompoundNBT getUpdateTag() {
-        return this.write(new CompoundNBT());
+        return this.writeInventory(new CompoundNBT());
     }
 
     @Override
