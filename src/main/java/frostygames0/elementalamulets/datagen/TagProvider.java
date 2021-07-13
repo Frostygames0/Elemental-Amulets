@@ -22,7 +22,11 @@ public class TagProvider extends ItemTagsProvider {
     protected void registerTags() {
         //Amulets
         AmuletItem[] amulets = ModItems.getAmulets().toArray(new AmuletItem[0]);
-        this.getOrCreateBuilder(ModTags.NECKLACE).add(amulets);
+        this.getOrCreateBuilder(ModTags.NECKLACES).add(amulets);
+
+        // Curios tag
+        this.getOrCreateBuilder(ItemTags.makeWrapperTag("curios:necklace")).addTag(ModTags.NECKLACES);
+
         // Elements
         this.getOrCreateBuilder(ModTags.ELEMENTS).add(ModItems.AIR_ELEMENT.get(), ModItems.EARTH_ELEMENT.get(), ModItems.FIRE_ELEMENT.get(), ModItems.WATER_ELEMENT.get(), ModItems.JUMP_ELEMENT.get(), ModItems.ELEMENTAL_SHARDS.get());
         // Fire

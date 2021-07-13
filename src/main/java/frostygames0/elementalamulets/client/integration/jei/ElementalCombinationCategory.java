@@ -121,7 +121,10 @@ public class ElementalCombinationCategory implements IRecipeCategory<ElementalCo
     @Override
     public void draw(ElementalCombination recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
         matrixStack.push();
+        // Drawing arrow
         this.getArrow(recipe).draw(matrixStack, 84, 29);
+
+        // Drawing text
         ITextComponent cooldown = new TranslationTextComponent("jei.elementalamulets.cooldown", recipe.getCombinationTime()/20.0f);
         Minecraft.getInstance().fontRenderer.drawText(matrixStack, cooldown, 4, 77, 0xFF808080);
         matrixStack.pop();

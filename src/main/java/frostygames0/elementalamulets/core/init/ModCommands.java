@@ -36,7 +36,7 @@ public class ModCommands {
 
     private static class GiveAmuletCommand {
         private static final DynamicCommandExceptionType ISNT_AMULET = new DynamicCommandExceptionType(item -> new TranslationTextComponent("commands.elementalamulets.give.failure", ((ItemStack)item).getTextComponent()));
-        static ArgumentBuilder<CommandSource, ?> register() {
+        private static ArgumentBuilder<CommandSource, ?> register() {
             return Commands.literal("give")
                     .requires(s -> s.hasPermissionLevel(2))
                     .then(Commands.argument("player", EntityArgument.players())

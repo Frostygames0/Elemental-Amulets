@@ -7,7 +7,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 
 public class ModTags {
-    public static final ITag.INamedTag<Item> NECKLACE = ItemTags.makeWrapperTag("curios:necklace");
+    public static final ITag.INamedTag<Item> NECKLACES = tag("necklaces");
     public static final ITag.INamedTag<Item> ELEMENTS = tag("elements");
 
     public static final ITag.INamedTag<Item> FIRE_ELEMENT_CONVERTIBLE = forge(ElementalAmulets.MOD_ID+"/fire_element_convertible");

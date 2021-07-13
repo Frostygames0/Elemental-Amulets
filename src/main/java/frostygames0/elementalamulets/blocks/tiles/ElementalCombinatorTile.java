@@ -107,8 +107,6 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
                             lightbolt.setEffectOnly(true);
                             lightbolt.moveForced(Vector3d.copyCenteredHorizontally(pos.up()));
                             this.world.addEntity(lightbolt);
-
-                            this.playSound(SoundEvents.ENTITY_LIGHTNING_BOLT_IMPACT); // Since lightning that's effect only has no sound, I need to manually play it
                         }
                     }
                 } else {
@@ -179,16 +177,16 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
         return compound;
     }
 
-    private void readInventory(BlockState state, CompoundNBT nbt) {
-        handler.deserializeNBT(nbt.getCompound("Contents"));
-    }
-
     @Override
     public void read(BlockState state, CompoundNBT nbt) {
         this.combinationTime = nbt.getInt("CombinationTime");
         this.totalTime = nbt.getInt("TotalCombinationTime");
         this.readInventory(state, nbt);
         super.read(state, nbt);
+    }
+
+    private void readInventory(BlockState state, CompoundNBT nbt) {
+        handler.deserializeNBT(nbt.getCompound("Contents"));
     }
 
     @Nonnull
