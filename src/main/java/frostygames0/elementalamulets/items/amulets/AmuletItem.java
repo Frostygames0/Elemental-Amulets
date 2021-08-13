@@ -2,6 +2,7 @@ package frostygames0.elementalamulets.items.amulets;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.advancements.triggers.ModCriteriaTriggers;
 import frostygames0.elementalamulets.client.models.AmuletModel;
 import frostygames0.elementalamulets.core.util.NBTUtil;
@@ -27,11 +28,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
-
 public abstract class AmuletItem extends Item implements ICurioItem {
     private final boolean hasTier;
-    public static final String TIER_TAG = modPrefix("tier").toString();
+    public static final String TIER_TAG = ElementalAmulets.MOD_ID+":tier";
     public static final int MAX_TIER = 4;
     public AmuletItem(Properties properties, boolean hasTier) {
         super(properties);

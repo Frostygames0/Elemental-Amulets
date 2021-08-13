@@ -23,14 +23,9 @@ public class InvisibilityAmulet extends AmuletItem {
         World world = livingEntity.getEntityWorld();
         if(!world.isRemote()) {
             if(livingEntity.isSneaking()) {
-                if(!livingEntity.isInvisible()) {
-                    livingEntity.setInvisible(true);
-                }
-                //if(livingEntity.ticksExisted % 20 == 0) stack.damageItem(10, livingEntity, livingEntity1 -> livingEntity1.sendBreakAnimation(EquipmentSlotType.CHEST));
+                if(!livingEntity.isInvisible()) livingEntity.setInvisible(true);
             } else {
-                if(!livingEntity.isPotionActive(Effects.INVISIBILITY)) {
-                    livingEntity.setInvisible(false);
-                }
+                if(!livingEntity.isPotionActive(Effects.INVISIBILITY)) livingEntity.setInvisible(false);
             }
         }
     }

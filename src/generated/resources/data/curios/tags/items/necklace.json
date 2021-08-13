@@ -1,10 +1,6 @@
 {
   "replace": false,
   "values": [
-    "elementalamulets:fire_amulet",
-    "elementalamulets:speed_amulet",
-    "elementalamulets:jump_amulet",
-    "elementalamulets:invisibility_amulet",
-    "elementalamulets:protection_amulet"
+    "#elementalamulets:necklaces"
   ]
 }

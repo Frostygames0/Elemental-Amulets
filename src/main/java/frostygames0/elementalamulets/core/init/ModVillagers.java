@@ -81,11 +81,11 @@ public class ModVillagers{
                 TaigaVillagePools.init();
                 DesertVillagePools.init();
                 SnowyVillagePools.init();
-                for (String biome : new String[]{"plains"}) {
+                for (String biome : new String[]{"plains"}) { // This is because it should be all village biomes but for now there is only plains
                     addHouseToPool(new ResourceLocation("village/" + biome + "/houses"),
                             ElementalAmulets.MOD_ID + ":villages/jeweller_house_" + biome, 12);
                 }
-                ElementalAmulets.LOGGER.debug("Jeweller's house was successfully added to all existing vanilla villages");
+                ElementalAmulets.LOGGER.debug("Jeweller's house was successfully added to all existing vanilla plains villages");
         }
 
         private static void addHouseToPool(ResourceLocation pool, String houseToAdd, int weight) {

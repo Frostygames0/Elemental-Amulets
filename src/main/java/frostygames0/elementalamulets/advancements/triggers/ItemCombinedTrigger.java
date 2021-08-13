@@ -11,7 +11,7 @@ import net.minecraft.world.server.ServerWorld;
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 /**
- * Triggers when combination happens.
+ * Triggered when combination happens.
  * @author Frostygames0
  * @date 02.06.2021 10:19
  */

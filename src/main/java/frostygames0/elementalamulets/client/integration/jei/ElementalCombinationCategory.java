@@ -4,6 +4,7 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.mojang.blaze3d.matrix.MatrixStack;
+import frostygames0.elementalamulets.client.screens.ElementalCombinatorScreen;
 import frostygames0.elementalamulets.core.init.ModItems;
 import frostygames0.elementalamulets.recipes.ElementalCombination;
 import mezz.jei.api.constants.VanillaTypes;
@@ -30,14 +31,13 @@ public class ElementalCombinationCategory implements IRecipeCategory<ElementalCo
     private static final int ELEMENTAL_SLOT = 1;
 
     public static final ResourceLocation ID = modPrefix("elemental_combination");
-    private static final ResourceLocation TEXTURE = modPrefix("textures/gui/elemental_separator_redesign.png");
     private final IDrawable background;
     private final IDrawable icon;
     private final LoadingCache<Integer, IDrawableAnimated> cachedArrows;
     private final ITextComponent localizedName;
 
     public ElementalCombinationCategory(IGuiHelper helper) {
-        this.background = helper.drawableBuilder(TEXTURE, 6, 5, 149, 74)
+        this.background = helper.drawableBuilder(ElementalCombinatorScreen.GUI, 6, 5, 149, 74)
         .addPadding(0, 10, 0, 0).build();
         this.icon = helper.createDrawableIngredient(new ItemStack(ModItems.ELEMENTAL_COMBINATOR_BLOCK.get()));
         this.cachedArrows = CacheBuilder.newBuilder()
@@ -45,7 +45,7 @@ public class ElementalCombinationCategory implements IRecipeCategory<ElementalCo
                 .build(new CacheLoader<Integer, IDrawableAnimated>() {
                     @Override
                     public IDrawableAnimated load(Integer combinationTime) {
-                        return helper.drawableBuilder(TEXTURE, 176, 0, 26, 16)
+                        return helper.drawableBuilder(ElementalCombinatorScreen.GUI, 176, 0, 26, 16)
                                 .buildAnimated(combinationTime, IDrawableAnimated.StartDirection.LEFT, false);
                     }
                 });

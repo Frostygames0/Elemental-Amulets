@@ -50,6 +50,8 @@ public class ModItems {
             () -> new ElementItem(Rarity.COMMON, new TranslationTextComponent("item.elementalamulets.sub_element.tooltip")));
     public static final RegistryObject<Item> SPEED_ELEMENT = ITEMS.register("speed_element",
             () -> new ElementItem(ElementalRarity.SPEED, new TranslationTextComponent("item.elementalamulets.sub_element.tooltip")));
+    /*public static final RegistryObject<Item> FREEZE_ELEMENT = ITEMS.register("freeze_element",
+            () -> new Item(new Item.Properties().group(null)));*/
 
     // Amulets
     public static final RegistryObject<Item> EMPTY_AMULET = ITEMS.register("empty_amulet",
@@ -64,6 +66,14 @@ public class ModItems {
             () -> new InvisibilityAmulet(new Item.Properties().group(ElementalAmulets.GROUP).rarity(ElementalRarity.AIR).maxDamage(1000)));
     public static final RegistryObject<Item> TERRA_PROTECTION_AMULET = ITEMS.register("protection_amulet",
             () -> new TerraProtectionAmulet(new Item.Properties().group(ElementalAmulets.GROUP).rarity(ElementalRarity.EARTH).maxDamage(1000)));
+    public static final RegistryObject<Item> WATER_AMULET = ITEMS.register("water_amulet",
+            () -> new WaterAmulet(new Item.Properties().group(null).maxDamage(1000)));
+    public static final RegistryObject<Item> AIR_AMULET = ITEMS.register("air_amulet",
+            () -> new AirAmulet(new Item.Properties().group(ElementalAmulets.GROUP).maxDamage(1000)));
+
+    // Unfinished amulets
+    /*public static final RegistryObject<Item> WATER_FREEZING_AMULET = ITEMS.register("water_freeze_amulet",
+         () -> new UnfinishedAmulets(new Item.Properties().group(null).maxDamage(1000)));*/
 
     public static List<AmuletItem> getAmulets() {
         List<AmuletItem> items = new ArrayList<>();

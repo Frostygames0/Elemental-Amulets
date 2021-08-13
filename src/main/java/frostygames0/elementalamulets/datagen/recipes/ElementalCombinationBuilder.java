@@ -97,10 +97,6 @@ public class ElementalCombinationBuilder {
         consumerIn.accept(new Result(id, elemental, ingredients, result, combinationTime, tagTransfer));
     }
 
-    public void build(Consumer<IFinishedRecipe> consumerIn, String id) {
-        this.build(consumerIn, new ResourceLocation(id));
-    }
-
     private void validate() {
         if(this.elemental == null || this.elemental.getMatchingStack().isEmpty()) throw new IllegalStateException("Elemental cannot be empty!");
         if(this.ingredients.size() > 8) throw new IllegalStateException("Elemental combinator has only 8 ingredient slots!");

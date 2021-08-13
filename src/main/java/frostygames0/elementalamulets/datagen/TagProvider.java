@@ -19,6 +19,7 @@ public class TagProvider extends ItemTagsProvider {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     protected void registerTags() {
         //Amulets
         AmuletItem[] amulets = ModItems.getAmulets().toArray(new AmuletItem[0]);
@@ -28,7 +29,7 @@ public class TagProvider extends ItemTagsProvider {
         this.getOrCreateBuilder(ItemTags.makeWrapperTag("curios:necklace")).addTag(ModTags.NECKLACES);
 
         // Elements
-        this.getOrCreateBuilder(ModTags.ELEMENTS).add(ModItems.AIR_ELEMENT.get(), ModItems.EARTH_ELEMENT.get(), ModItems.FIRE_ELEMENT.get(), ModItems.WATER_ELEMENT.get(), ModItems.JUMP_ELEMENT.get(), ModItems.ELEMENTAL_SHARDS.get());
+        this.getOrCreateBuilder(ModTags.ELEMENTS).add(ModItems.AIR_ELEMENT.get(), ModItems.EARTH_ELEMENT.get(), ModItems.FIRE_ELEMENT.get(), ModItems.WATER_ELEMENT.get(), ModItems.JUMP_ELEMENT.get(), ModItems.INVISIBLE_ELEMENT.get(), ModItems.SPEED_ELEMENT.get(), ModItems.ELEMENTAL_SHARDS.get());
         // Fire
         this.getOrCreateBuilder(ModTags.FIRE_ELEMENT_CONVERTIBLE).add(Items.BLAZE_POWDER, Items.NETHERITE_SCRAP, Items.LAVA_BUCKET, Items.FIRE_CHARGE);
         // Water

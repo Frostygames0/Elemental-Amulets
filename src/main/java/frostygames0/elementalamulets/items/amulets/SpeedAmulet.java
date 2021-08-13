@@ -17,7 +17,6 @@ import java.util.UUID;
 
 public class SpeedAmulet extends AmuletItem {
     public static UUID MODIFIER_UUID = UUID.fromString("06c06b38-3779-4ca2-b678-7c111c77faef");
-
     public SpeedAmulet(Properties properties) {
         super(properties);
     }

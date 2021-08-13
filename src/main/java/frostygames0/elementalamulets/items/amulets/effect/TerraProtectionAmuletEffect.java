@@ -14,7 +14,6 @@ import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import top.theillusivec4.curios.api.CuriosApi;
 
-// TODO Finish effect (make so it's not op)
 public class TerraProtectionAmuletEffect {
 
     static void onLivingHurt(LivingHurtEvent event) {

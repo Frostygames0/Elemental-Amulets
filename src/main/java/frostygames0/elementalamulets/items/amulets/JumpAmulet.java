@@ -17,11 +17,6 @@ public class JumpAmulet extends AmuletItem {
         return new TranslationTextComponent("item.elementalamulets.jump_amulet.tooltip");
     }
 
-    @Override
-    public String getTranslationKey() {
-        return "item.elementalamulets.jump_amulet";
-    }
-
     public float getJump(ItemStack stack) {
         return (float) (ModConfig.cached.JUMP_AMULET_BOOST *getTier(stack));
     }

@@ -59,16 +59,16 @@ public class ElementalCombination implements IRecipe<IInventory> {
     public ItemStack getCraftingResult(IInventory inv) {
         ItemStack stack = this.result.copy();
         if(this.tagTransfer) {
-            CompoundNBT nbt = inv.getStackInSlot(1).getOrCreateTag();
-            CompoundNBT tag = nbt.copy();
-            if(tag.contains(AmuletItem.TIER_TAG)) {
-                if(NBTUtil.isSafeToGet(stack, AmuletItem.TIER_TAG)) {
-                    tag.putInt(AmuletItem.TIER_TAG, stack.getOrCreateTag().getInt(AmuletItem.TIER_TAG));
-                } else {
-                    tag.remove(AmuletItem.TIER_TAG);
+            CompoundNBT nbt = inv.getStackInSlot(1).getTag();
+            if(nbt != null) {
+                CompoundNBT tag = nbt.copy();
+                if (tag.contains(AmuletItem.TIER_TAG)) {
+                    if (NBTUtil.isSafeToGet(stack, AmuletItem.TIER_TAG))
+                        tag.putInt(AmuletItem.TIER_TAG, NBTUtil.getInteger(stack, AmuletItem.TIER_TAG));
+                    else tag.remove(AmuletItem.TIER_TAG);
                 }
+                stack.setTag(tag);
             }
-            stack.setTag(tag);
         }
         return stack;
     }

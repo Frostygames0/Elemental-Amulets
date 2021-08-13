@@ -26,7 +26,7 @@ public class PatchouliUtils {
     public static ElementalCombination getRecipe(ResourceLocation name) {
         Map<ResourceLocation, ElementalCombination> recipes = ModRecipes.getRecipesMap(ModRecipes.ELEMENTAL_COMBINATION_TYPE, Minecraft.getInstance().world);
         ElementalCombination defaultRecipe = recipes.get(name);
-        if(defaultRecipe != null) return defaultRecipe; //
+        if(defaultRecipe != null) return defaultRecipe;
         ElementalCombination craftTweakedRecipe = recipes.get(new ResourceLocation("crafttweaker", name.getPath()));
         if(craftTweakedRecipe != null) return craftTweakedRecipe;
 

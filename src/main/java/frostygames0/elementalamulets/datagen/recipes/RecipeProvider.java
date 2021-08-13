@@ -80,20 +80,24 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
         amuletRecipeTier1(ModItems.FIRE_AMULET.get().getDefaultInstance(), ModItems.FIRE_ELEMENT.get(), consumer);
         amuletRecipeTier1(ModItems.SPEED_AMULET.get().getDefaultInstance(), ModItems.SPEED_ELEMENT.get(), consumer);
         amuletRecipeTier1(ModItems.INVISIBILITY_AMULET.get().getDefaultInstance(), ModItems.INVISIBLE_ELEMENT.get(), consumer);
-        ElementalCombinationBuilder.create(ModItems.TERRA_PROTECTION_AMULET.get())
-                .addElemental(ModItems.EMPTY_AMULET.get())
-                .addIngredient(3, ModItems.EARTH_ELEMENT.get())
-                .addIngredient(Items.LAPIS_LAZULI)
-                .addIngredient(ModItems.EARTH_ELEMENT.get())
-                .addIngredient(Items.SHIELD)
-                .addIngredient(ModItems.EARTH_ELEMENT.get())
-                .addIngredient(Items.LAPIS_LAZULI)
-                .setCombinationTime(350)
-                .isTagTransferred()
-                .build(consumer, modPrefix("amulets/"+ModItems.TERRA_PROTECTION_AMULET.getId().getPath()+"_1"));
+        amuletRecipeSpecial(ModItems.TERRA_PROTECTION_AMULET.get().getDefaultInstance(), Items.SHIELD, ModItems.EARTH_ELEMENT.get(), consumer);
     }
 
     /* Helper Methods! */
+
+    private static void amuletRecipeSpecial(ItemStack amulet, IItemProvider specialStack, IItemProvider element, Consumer <IFinishedRecipe> consumer) {
+        ElementalCombinationBuilder.create(amulet)
+                .addElemental(ModItems.EMPTY_AMULET.get())
+                .addIngredient(3, element)
+                .addIngredient(Items.LAPIS_LAZULI)
+                .addIngredient(element)
+                .addIngredient(specialStack)
+                .addIngredient(element)
+                .addIngredient(Items.LAPIS_LAZULI)
+                .setCombinationTime(350)
+                .isTagTransferred()
+                .build(consumer, modPrefix("amulets/"+amulet.getItem().getRegistryName().getPath()+"_1"));
+    }
 
     private static void amuletRecipeTier1(ItemStack amulet, IItemProvider element, Consumer<IFinishedRecipe> consumer) {
         ElementalCombinationBuilder.create(amulet)
@@ -105,6 +109,15 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .setCombinationTime(200)
                 .isTagTransferred()
                 .build(consumer, modPrefix("amulets/"+amulet.getItem().getRegistryName().getPath()+"_1"));
+    }
+
+    private static void amuletRecipeTier2(ItemStack amulet, IItemProvider element, Consumer<IFinishedRecipe> consumer) {
+    }
+
+    private static void amuletRecipeTier3(ItemStack amulet, IItemProvider element, Consumer<IFinishedRecipe> consumer) {
+    }
+
+    private static void amuletRecipeTier4(ItemStack amulet, IItemProvider element, Consumer<IFinishedRecipe> consumer) {
     }
 
     private static void classicElementRecipe(IItemProvider elementIn, ITag<Item> convertibles, Consumer<IFinishedRecipe> consumerIn) {

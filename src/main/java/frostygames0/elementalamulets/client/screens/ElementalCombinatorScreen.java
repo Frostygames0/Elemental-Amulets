@@ -11,7 +11,7 @@ import net.minecraft.util.text.ITextComponent;
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 public class ElementalCombinatorScreen extends ContainerScreen<ElementalCombinatorContainer> {
-    private static final ResourceLocation GUI = modPrefix("textures/gui/elemental_separator_redesign.png");
+    public static final ResourceLocation GUI = modPrefix("textures/gui/elemental_combinator_gui.png");
     public ElementalCombinatorScreen(ElementalCombinatorContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
         this.playerInventoryTitleX += 92;

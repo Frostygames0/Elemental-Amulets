@@ -40,7 +40,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class ElementalCombinatorTile extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
-    private final ItemStackHandler handler = createHandler(10);
+    private final ItemStackHandler handler = createHandler();
     private final LazyOptional<IItemHandler> optional = LazyOptional.of(() -> new AutomationItemHandler(handler));
 
     private int combinationTime;
@@ -181,11 +181,11 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
     public void read(BlockState state, CompoundNBT nbt) {
         this.combinationTime = nbt.getInt("CombinationTime");
         this.totalTime = nbt.getInt("TotalCombinationTime");
-        this.readInventory(state, nbt);
+        this.readInventory(nbt);
         super.read(state, nbt);
     }
 
-    private void readInventory(BlockState state, CompoundNBT nbt) {
+    private void readInventory(CompoundNBT nbt) {
         handler.deserializeNBT(nbt.getCompound("Contents"));
     }
 
@@ -211,7 +211,7 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
 
     @Override
     public void handleUpdateTag(BlockState state, CompoundNBT tag) {
-        this.readInventory(state, tag);
+        this.readInventory(tag);
     }
 
     @Override
@@ -230,8 +230,8 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
         optional.invalidate();
     }
 
-    private ItemStackHandler createHandler(int size) {
-        return new ItemStackHandler(size) {
+    private ItemStackHandler createHandler() {
+        return new ItemStackHandler(10) {
             @Override
             protected void onContentsChanged(int slot) {
                 markDirty();
