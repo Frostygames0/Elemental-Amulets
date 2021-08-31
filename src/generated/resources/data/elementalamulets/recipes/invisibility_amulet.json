@@ -1,0 +1,38 @@
+{
+  "type": "elementalamulets:elemental_combination",
+  "elemental": {
+    "item": "elementalamulets:empty_amulet"
+  },
+  "ingredients": [
+    {
+      "item": "elementalamulets:water_element"
+    },
+    {
+      "item": "elementalamulets:water_element"
+    },
+    {
+      "item": "minecraft:lapis_lazuli"
+    },
+    {
+      "item": "elementalamulets:fire_element"
+    },
+    {
+      "item": "elementalamulets:fire_element"
+    },
+    {
+      "item": "elementalamulets:fire_element"
+    },
+    {
+      "item": "minecraft:lapis_lazuli"
+    },
+    {
+      "item": "elementalamulets:water_element"
+    }
+  ],
+  "combination_time": 200,
+  "tag_transfer": true,
+  "result": {
+    "item": "elementalamulets:invisibility_amulet",
+    "nbt": "{}"
+  }
+}

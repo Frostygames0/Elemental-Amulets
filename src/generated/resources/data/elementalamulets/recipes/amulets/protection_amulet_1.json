@@ -33,6 +33,6 @@
   "tag_transfer": true,
   "result": {
     "item": "elementalamulets:protection_amulet",
-    "nbt": "{}"
+    "nbt": "{\"elementalamulets:tier\":1}"
   }
 }

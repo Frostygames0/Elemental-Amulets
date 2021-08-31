@@ -1,35 +1,36 @@
 {
   "type": "elementalamulets:elemental_combination",
   "elemental": {
-    "item": "elementalamulets:empty_amulet"
+    "item": "elementalamulets:air_amulet",
+    "tier": 1
   },
   "ingredients": [
     {
-      "item": "elementalamulets:jump_element"
+      "item": "minecraft:slime_ball"
     },
     {
-      "item": "elementalamulets:jump_element"
+      "item": "minecraft:slime_ball"
     },
     {
-      "item": "elementalamulets:jump_element"
+      "item": "minecraft:rabbit_foot"
     },
     {
-      "item": "minecraft:lapis_lazuli"
+      "item": "minecraft:slime_ball"
     },
     {
-      "item": "elementalamulets:jump_element"
+      "item": "minecraft:slime_ball"
     },
     {
-      "item": "elementalamulets:jump_element"
+      "item": "minecraft:slime_ball"
     },
     {
-      "item": "elementalamulets:jump_element"
+      "item": "minecraft:rabbit_foot"
     },
     {
-      "item": "minecraft:lapis_lazuli"
+      "item": "minecraft:slime_ball"
     }
   ],
-  "combination_time": 200,
+  "combination_time": 350,
   "tag_transfer": true,
   "result": {
     "item": "elementalamulets:jump_amulet",

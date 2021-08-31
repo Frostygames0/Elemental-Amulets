@@ -1,0 +1,39 @@
+{
+  "type": "elementalamulets:elemental_combination",
+  "elemental": {
+    "item": "elementalamulets:fire_amulet",
+    "tier": 2
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:ghast_tear"
+    },
+    {
+      "item": "elementalamulets:fire_element"
+    },
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "elementalamulets:fire_element"
+    },
+    {
+      "item": "minecraft:ghast_tear"
+    },
+    {
+      "item": "elementalamulets:fire_element"
+    },
+    {
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "elementalamulets:fire_element"
+    }
+  ],
+  "combination_time": 400,
+  "tag_transfer": true,
+  "result": {
+    "item": "elementalamulets:fire_amulet",
+    "nbt": "{\"elementalamulets:tier\":3}"
+  }
+}

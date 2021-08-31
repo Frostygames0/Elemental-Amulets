@@ -1,0 +1,22 @@
+public VoxelShape makeShape(){
+	VoxelShape shape = VoxelShapes.empty();
+	shape = VoxelShapes.combineAndSimplify(shape, VoxelShapes.create(0, 0, 0, 0.125, 1, 0.125);
+	shape = VoxelShapes.combineAndSimplify(shape, VoxelShapes.create(0.3125, 0.625, 0.3125, 0.6875, 0.6875, 0.6875);
+	shape = VoxelShapes.combineAndSimplify(shape, VoxelShapes.create(0.625, 0.6875, 0.3125, 0.6875, 0.953125, 0.375);
+	shape = VoxelShapes.combineAndSimplify(shape, VoxelShapes.create(0.625, 0.6875, 0.625, 0.6875, 0.953125, 0.6875);
+	shape = VoxelShapes.combineAndSimplify(shape, VoxelShapes.create(0.3125, 0.6875, 0.625, 0.375, 0.953125, 0.6875);
+	shape = VoxelShapes.combineAndSimplify(shape, VoxelShapes.create(0.3125, 0.6875, 0.3125, 0.375, 0.953125, 0.375);
+	shape = VoxelShapes.combineAndSimplify(shape, VoxelShapes.create(-0.03125, 0.90625, 0.125, 0.03125, 0.96875, 0.53125);
+	shape = VoxelShapes.combineAndSimplify(shape, VoxelShapes.create(0.875, 0, 0, 1, 1, 0.125);
+	shape = VoxelShapes.combineAndSimplify(shape, VoxelShapes.create(0.46875, 0.90625, -0.03125, 0.875, 0.96875, 0.03125);
+	shape = VoxelShapes.combineAndSimplify(shape, VoxelShapes.create(0.875, 0, 0.875, 1, 1, 1);
+	shape = VoxelShapes.combineAndSimplify(shape, VoxelShapes.create(0.96875, 0.90625, 0.46875, 1.03125, 0.96875, 0.875);
+	shape = VoxelShapes.combineAndSimplify(shape, VoxelShapes.create(0.00390625, 0, 0.875, 0.12890625, 1, 1);
+	shape = VoxelShapes.combineAndSimplify(shape, VoxelShapes.create(0.12890625, 0.90625, 0.96875, 0.53515625, 0.96875, 1.03125);
+	shape = VoxelShapes.combineAndSimplify(shape, VoxelShapes.create(0, 0.5, 0.125, 0.125, 0.625, 0.875);
+	shape = VoxelShapes.combineAndSimplify(shape, VoxelShapes.create(0.875, 0.5, 0.125, 1, 0.625, 0.875);
+	shape = VoxelShapes.combineAndSimplify(shape, VoxelShapes.create(0.125, 0.5, 0.875, 0.875, 0.625, 1);
+	shape = VoxelShapes.combineAndSimplify(shape, VoxelShapes.create(0.125, 0.5, 0, 0.875, 0.625, 0.125);
+
+	return shape;
+}

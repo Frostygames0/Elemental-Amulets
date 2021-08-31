@@ -1,0 +1,39 @@
+{
+  "type": "elementalamulets:elemental_combination",
+  "elemental": {
+    "item": "elementalamulets:protection_amulet",
+    "tier": 1
+  },
+  "ingredients": [
+    {
+      "item": "elementalamulets:earth_element"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "elementalamulets:earth_element"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "elementalamulets:earth_element"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    }
+  ],
+  "combination_time": 400,
+  "tag_transfer": true,
+  "result": {
+    "item": "elementalamulets:protection_amulet",
+    "nbt": "{\"elementalamulets:tier\":2}"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "type": "elementalamulets:elemental_combination",
+  "elemental": {
+    "item": "elementalamulets:jump_amulet",
+    "tier": 1
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "elementalamulets:air_element"
+    },
+    {
+      "item": "minecraft:slime_ball"
+    },
+    {
+      "item": "elementalamulets:air_element"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "elementalamulets:air_element"
+    },
+    {
+      "item": "minecraft:slime_ball"
+    },
+    {
+      "item": "elementalamulets:air_element"
+    }
+  ],
+  "combination_time": 400,
+  "tag_transfer": true,
+  "result": {
+    "item": "elementalamulets:jump_amulet",
+    "nbt": "{\"elementalamulets:tier\":2}"
+  }
+}

@@ -6,6 +6,7 @@ import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.OreFeatureConfig;
 
+
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 public class ModFeatures {

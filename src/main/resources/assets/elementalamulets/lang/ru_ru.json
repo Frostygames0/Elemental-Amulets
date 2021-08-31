@@ -40,6 +40,18 @@
   "item.elementalamulets.invisibility_amulet": "Амулет невидимости",
   "item.elementalamulets.invisibility_amulet.tooltip": "%sПрячет вас от противников%s",
 
+  "item.elementalamulets.protection_amulet": "Амулет Терра защиты",
+  "item.elementalamulets.protection_amulet.tooltip": "%sСоздают могучий листяной щит вокруг вас",
+  "item.elementalamulets.protection_amulet.charges": "Зарядов - %s",
+
+  "item.elementalamulets.water_amulet": "Амулет воды",
+  "item.elementalamulets.water_amulet.tooltip": "Дает усиления под водой",
+
+  "item.elementalamulets.air_amulet": "Амулет воздуха",
+  "item.elementalamulets.air_amulet.tooltip": "Управляйте воздухом!",
+
+  "item.elementalamulets.wip": "Данный предмет сейчас не работает! Прощу прощения за это :/",
+
   "block.elementalamulets.elemental_combinator": "Объединитель элементаля",
   "block.elementalamulets.elemental_combinator.guititle": "Объединение",
   "block.elementalamulets.elemental_combinator.cooldown": "Объединитель перезаряжается! %s сек. осталось",

@@ -17,6 +17,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 
+
 import java.util.stream.Collectors;
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
@@ -60,7 +61,7 @@ public class JEIPlugin implements IModPlugin {
         registration.addIngredientInfo(ModTags.WATER_ELEMENT_CONVERTIBLE.getAllElements().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.convertibles.description", new TranslationTextComponent(ModItems.WATER_ELEMENT.get().getTranslationKey()).mergeStyle(TextFormatting.AQUA)));
         registration.addIngredientInfo(ModTags.FIRE_ELEMENT_CONVERTIBLE.getAllElements().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.convertibles.description"), new TranslationTextComponent(ModItems.FIRE_ELEMENT.get().getTranslationKey()).mergeStyle(TextFormatting.RED));
         registration.addIngredientInfo(ModTags.EARTH_ELEMENT_CONVERTIBLE.getAllElements().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.convertibles.description"), new TranslationTextComponent(ModItems.EARTH_ELEMENT.get().getTranslationKey()).mergeStyle(TextFormatting.DARK_GREEN));
-
+        registration.addIngredientInfo(ModItems.AETHER_ELEMENT.get().getDefaultInstance(), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.aether_element.description"));
         // Misc. Description
         registration.addIngredientInfo(new ItemStack(ModItems.GUIDE_BOOK.get()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.guide_book.description"));
         registration.addIngredientInfo(new ItemStack(ModItems.ELEMENTAL_COMBINATOR_BLOCK.get()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.elemental_combinator.description"));

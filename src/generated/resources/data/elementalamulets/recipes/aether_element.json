@@ -1,0 +1,36 @@
+{
+  "type": "elementalamulets:elemental_combination",
+  "elemental": {
+    "item": "elementalamulets:elemental_shards"
+  },
+  "ingredients": [
+    {
+      "item": "elementalamulets:fire_element"
+    },
+    {
+      "item": "minecraft:emerald"
+    },
+    {
+      "item": "elementalamulets:air_element"
+    },
+    {
+      "item": "minecraft:emerald"
+    },
+    {
+      "item": "elementalamulets:water_element"
+    },
+    {
+      "item": "minecraft:emerald"
+    },
+    {
+      "item": "elementalamulets:earth_element"
+    },
+    {
+      "item": "minecraft:emerald"
+    }
+  ],
+  "combination_time": 600,
+  "result": {
+    "item": "elementalamulets:aether_element"
+  }
+}

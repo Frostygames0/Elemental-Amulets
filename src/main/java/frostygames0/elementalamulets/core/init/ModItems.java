@@ -14,6 +14,7 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,16 +42,18 @@ public class ModItems {
             () -> new ElementItem(ElementalRarity.EARTH, new TranslationTextComponent("item.elementalamulets.earth_element.tooltip").mergeStyle(TextFormatting.GRAY)));
     public static final RegistryObject<Item> AIR_ELEMENT = ITEMS.register("air_element",
             () -> new ElementItem(ElementalRarity.AIR, new TranslationTextComponent("item.elementalamulets.air_element.tooltip").mergeStyle(TextFormatting.GRAY)));
+    public static final RegistryObject<Item> AETHER_ELEMENT = ITEMS.register("aether_element",
+            () -> new ElementItem(Rarity.RARE, new TranslationTextComponent("item.elementalamulets.aether_element.tooltip").mergeStyle(TextFormatting.GRAY)));
 
     // Sub-Elements
-    // TODO Re-Do nonsense here too
+    /*
     public static final RegistryObject<Item> JUMP_ELEMENT = ITEMS.register("jump_element",
             () -> new ElementItem(ElementalRarity.JUMP, new TranslationTextComponent("item.elementalamulets.sub_element.tooltip")));
     public static final RegistryObject<Item> INVISIBLE_ELEMENT = ITEMS.register("invisible_element",
             () -> new ElementItem(Rarity.COMMON, new TranslationTextComponent("item.elementalamulets.sub_element.tooltip")));
     public static final RegistryObject<Item> SPEED_ELEMENT = ITEMS.register("speed_element",
             () -> new ElementItem(ElementalRarity.SPEED, new TranslationTextComponent("item.elementalamulets.sub_element.tooltip")));
-    /*public static final RegistryObject<Item> FREEZE_ELEMENT = ITEMS.register("freeze_element",
+    public static final RegistryObject<Item> FREEZE_ELEMENT = ITEMS.register("freeze_element",
             () -> new Item(new Item.Properties().group(null)));*/
 
     // Amulets
@@ -67,7 +70,7 @@ public class ModItems {
     public static final RegistryObject<Item> TERRA_PROTECTION_AMULET = ITEMS.register("protection_amulet",
             () -> new TerraProtectionAmulet(new Item.Properties().group(ElementalAmulets.GROUP).rarity(ElementalRarity.EARTH).maxDamage(1000)));
     public static final RegistryObject<Item> WATER_AMULET = ITEMS.register("water_amulet",
-            () -> new WaterAmulet(new Item.Properties().group(null).maxDamage(1000)));
+            () -> new WaterAmulet(new Item.Properties().group(ElementalAmulets.GROUP).maxDamage(1000)));
     public static final RegistryObject<Item> AIR_AMULET = ITEMS.register("air_amulet",
             () -> new AirAmulet(new Item.Properties().group(ElementalAmulets.GROUP).maxDamage(1000)));
 

@@ -12,7 +12,7 @@ public class FireAmuletEffect {
     static void onLivingAttack(LivingAttackEvent event) {
         LivingEntity entity = event.getEntityLiving();
         DamageSource source = event.getSource();
-        if(entity.world.isRemote()) {
+        if(!entity.world.isRemote()) {
             if (source.isFireDamage()) {
                 CuriosApi.getCuriosHelper().findEquippedCurio(item -> item.getItem() instanceof FireAmulet, entity).ifPresent((triple) -> {
                     FireAmulet amulet = (FireAmulet) triple.getRight().getItem();
@@ -31,7 +31,7 @@ public class FireAmuletEffect {
     static void onLivingHurt(LivingHurtEvent event) {
         LivingEntity entity = event.getEntityLiving();
         DamageSource source = event.getSource();
-        if(entity.world.isRemote()) {
+        if(!entity.world.isRemote()) {
             if (source.isFireDamage()) {
                 CuriosApi.getCuriosHelper().findEquippedCurio(item -> item.getItem() instanceof FireAmulet, entity).ifPresent((triple) -> {
                     FireAmulet amulet = (FireAmulet) triple.getRight().getItem();

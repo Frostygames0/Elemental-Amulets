@@ -6,6 +6,8 @@
     "minecraft:grass_block",
     "#minecraft:flowers",
     "#minecraft:leaves",
-    "#minecraft:logs"
+    "#minecraft:logs",
+    "#forge:seeds",
+    "#forge:crops"
   ]
 }

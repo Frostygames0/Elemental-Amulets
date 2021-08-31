@@ -1,0 +1,39 @@
+{
+  "type": "elementalamulets:elemental_combination",
+  "elemental": {
+    "item": "elementalamulets:speed_amulet",
+    "tier": 1
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "elementalamulets:water_element"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "elementalamulets:water_element"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "elementalamulets:water_element"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "elementalamulets:water_element"
+    }
+  ],
+  "combination_time": 400,
+  "tag_transfer": true,
+  "result": {
+    "item": "elementalamulets:speed_amulet",
+    "nbt": "{\"elementalamulets:tier\":2}"
+  }
+}

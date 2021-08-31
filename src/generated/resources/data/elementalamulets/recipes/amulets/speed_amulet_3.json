@@ -1,0 +1,39 @@
+{
+  "type": "elementalamulets:elemental_combination",
+  "elemental": {
+    "item": "elementalamulets:speed_amulet",
+    "tier": 2
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:packed_ice"
+    },
+    {
+      "item": "elementalamulets:water_element"
+    },
+    {
+      "item": "minecraft:packed_ice"
+    },
+    {
+      "item": "elementalamulets:water_element"
+    },
+    {
+      "item": "minecraft:packed_ice"
+    },
+    {
+      "item": "elementalamulets:water_element"
+    },
+    {
+      "item": "minecraft:packed_ice"
+    },
+    {
+      "item": "elementalamulets:water_element"
+    }
+  ],
+  "combination_time": 400,
+  "tag_transfer": true,
+  "result": {
+    "item": "elementalamulets:speed_amulet",
+    "nbt": "{\"elementalamulets:tier\":3}"
+  }
+}

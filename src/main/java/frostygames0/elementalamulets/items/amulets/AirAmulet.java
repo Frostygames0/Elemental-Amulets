@@ -1,18 +1,15 @@
 package frostygames0.elementalamulets.items.amulets;
 
-import frostygames0.elementalamulets.ElementalAmulets;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.IFormattableTextComponent;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeMod;
-import top.theillusivec4.curios.api.SlotContext;
 
+
+import javax.annotation.Nullable;
+import java.util.List;
 import java.util.UUID;
 
 public class AirAmulet extends AmuletItem {
@@ -22,15 +19,16 @@ public class AirAmulet extends AmuletItem {
     }
 
     @Override
-    protected IFormattableTextComponent getDescription(ItemStack stack, World worldIn) {
-        return new TranslationTextComponent(this.getDefaultTranslationKey());
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        super.addInformation(stack, worldIn, tooltip, flagIn);
+        tooltip.add(new TranslationTextComponent("item.elementalamulets.wip").mergeStyle(TextFormatting.RED));
     }
 
-    @Override
+    /*@Override
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
         ModifiableAttributeInstance gravity = livingEntity.getAttribute(ForgeMod.ENTITY_GRAVITY.get());
         AttributeModifier attMod = new AttributeModifier(MODIFIER_UUID, new ResourceLocation(ElementalAmulets.MOD_ID, "speed").toString(),
-                this.getFloating(stack), AttributeModifier.Operation.MULTIPLY_BASE);
+                this.getFloating(stack), AttributeModifier.Operation.ADDITION);
         boolean flag = livingEntity.getMotion().y <= 0.0D;
         if (flag) {
             if (!gravity.hasModifier(attMod)) gravity.applyNonPersistentModifier(attMod);
@@ -48,9 +46,9 @@ public class AirAmulet extends AmuletItem {
                 att.removeModifier(MODIFIER_UUID);
             }
         }
-    }
+    }*/
 
     public float getFloating(ItemStack stack) {
-        return this.getTier(stack);
+        return -0.1f*this.getTier(stack);
     }
 }

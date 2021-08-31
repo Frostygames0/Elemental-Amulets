@@ -2,7 +2,6 @@
   "replace": false,
   "values": [
     "minecraft:feather",
-    "minecraft:firework_rocket",
     "#minecraft:sand",
     "#minecraft:wool"
   ]

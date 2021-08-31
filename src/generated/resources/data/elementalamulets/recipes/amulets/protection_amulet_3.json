@@ -1,0 +1,39 @@
+{
+  "type": "elementalamulets:elemental_combination",
+  "elemental": {
+    "item": "elementalamulets:protection_amulet",
+    "tier": 2
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:obsidian"
+    },
+    {
+      "item": "elementalamulets:earth_element"
+    },
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "item": "elementalamulets:earth_element"
+    },
+    {
+      "item": "minecraft:obsidian"
+    },
+    {
+      "item": "elementalamulets:earth_element"
+    },
+    {
+      "item": "minecraft:diamond"
+    },
+    {
+      "item": "elementalamulets:earth_element"
+    }
+  ],
+  "combination_time": 400,
+  "tag_transfer": true,
+  "result": {
+    "item": "elementalamulets:protection_amulet",
+    "nbt": "{\"elementalamulets:tier\":3}"
+  }
+}

@@ -18,6 +18,9 @@
   "item.elementalamulets.air_element": "Element of Air",
   "item.elementalamulets.air_element.tooltip": "Carefree and clear",
   "item.elementalamulets.air_element.latin_variant": "Elementum Aer",
+  "item.elementalamulets.aether_element": "Element of Aether",
+  "item.elementalamulets.aether_element.tooltip": "The legendary fifth element! Well at least something",
+  "item.elementalamulets.aether_element.latin_variant": "Elementum Aether",
 
   "item.elementalamulets.jump_element": "Element of Jumping",
   "item.elementalamulets.speed_element": "Element of Speed",
@@ -44,6 +47,14 @@
   "item.elementalamulets.protection_amulet.tooltip": "%sCreates powerful Leaf Shield around you!",
   "item.elementalamulets.protection_amulet.charges": "Charges - %s",
 
+  "item.elementalamulets.water_amulet": "Amulet of Water",
+  "item.elementalamulets.water_amulet.tooltip": "Gives you buffs in water",
+
+  "item.elementalamulets.air_amulet": "Amulet of Air",
+  "item.elementalamulets.air_amulet.tooltip": "Control air!",
+
+  "item.elementalamulets.wip": "This item is currently not working! Sorry for that :/",
+
   "block.elementalamulets.elemental_combinator": "Elemental Combinator",
   "block.elementalamulets.elemental_combinator.guititle": "Combination",
   "block.elementalamulets.elemental_combinator.cooldown": "%s is recharging! %1$ss left",
@@ -61,10 +72,11 @@
   "jei.elementalamulets.elemental_combinator.description": "Allows you to combine things and get unique and powerful items!\n More about it you can read in Elemental Guide",
   "jei.elementalamulets.elements.description": "Elements are four main powers in Minecraft's world!",
   "jei.elementalamulets.convertibles.description": "When 6 of these are combined with empty element(Elemental Shards) they produce %s ",
+  "jei.elementalamulets.aether_element.description": "Small amount of aether magnetized to a shard. Used in upgrade combinations",
 
   "patchouli.elementalamulets.landing": "Hello $(thing)$(playername)!$() This $(l)magical guide $() will provide you with all knowledge you need! $(br)Book will expand itself when a new knowledge is acquired! Everything(almost) about this mod is described here!",
   "patchouli.elementalamulets.not_present": "Patchouli is not detected! Please install patchouli in order to get access to this book",
-  "patchouli.elementalamulets.no_ide": "You want to open it, but magical lock on it prevents you from doing it! Book is sealed and may not be opened! (Book is work in progress)",
+  "patchouli.elementalamulets.no_ide": "You want to open it, but the magical lock on it prevents you from doing it! Book is sealed and may not be opened! (Book is work in progress)",
 
   "advancements.elementalamulets.desc": "Things that you will achieve in your adventure",
   "advancements.elementalamulets.guide": "Great source of knowledge!",

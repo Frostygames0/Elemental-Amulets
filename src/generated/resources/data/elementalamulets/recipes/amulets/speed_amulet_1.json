@@ -1,35 +1,36 @@
 {
   "type": "elementalamulets:elemental_combination",
   "elemental": {
-    "item": "elementalamulets:empty_amulet"
+    "item": "elementalamulets:water_amulet",
+    "tier": 1
   },
   "ingredients": [
     {
-      "item": "elementalamulets:speed_element"
+      "item": "minecraft:ice"
     },
     {
-      "item": "elementalamulets:speed_element"
+      "item": "minecraft:ice"
     },
     {
-      "item": "elementalamulets:speed_element"
+      "item": "minecraft:sugar"
     },
     {
-      "item": "minecraft:lapis_lazuli"
+      "item": "minecraft:ice"
     },
     {
-      "item": "elementalamulets:speed_element"
+      "item": "minecraft:ice"
     },
     {
-      "item": "elementalamulets:speed_element"
+      "item": "minecraft:ice"
     },
     {
-      "item": "elementalamulets:speed_element"
+      "item": "minecraft:sugar"
     },
     {
-      "item": "minecraft:lapis_lazuli"
+      "item": "minecraft:ice"
     }
   ],
-  "combination_time": 200,
+  "combination_time": 350,
   "tag_transfer": true,
   "result": {
     "item": "elementalamulets:speed_amulet",

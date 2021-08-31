@@ -1,0 +1,39 @@
+{
+  "type": "elementalamulets:elemental_combination",
+  "elemental": {
+    "item": "elementalamulets:fire_amulet",
+    "tier": 1
+  },
+  "ingredients": [
+    {
+      "item": "elementalamulets:fire_element"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "elementalamulets:fire_element"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "elementalamulets:fire_element"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "item": "minecraft:iron_ingot"
+    }
+  ],
+  "combination_time": 400,
+  "tag_transfer": true,
+  "result": {
+    "item": "elementalamulets:fire_amulet",
+    "nbt": "{\"elementalamulets:tier\":2}"
+  }
+}

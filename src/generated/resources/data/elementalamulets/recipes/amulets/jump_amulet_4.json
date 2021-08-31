@@ -1,0 +1,39 @@
+{
+  "type": "elementalamulets:elemental_combination",
+  "elemental": {
+    "item": "elementalamulets:jump_amulet",
+    "tier": 3
+  },
+  "ingredients": [
+    {
+      "item": "elementalamulets:air_element"
+    },
+    {
+      "item": "elementalamulets:aether_element"
+    },
+    {
+      "item": "elementalamulets:air_element"
+    },
+    {
+      "item": "elementalamulets:aether_element"
+    },
+    {
+      "item": "elementalamulets:air_element"
+    },
+    {
+      "item": "elementalamulets:aether_element"
+    },
+    {
+      "item": "elementalamulets:air_element"
+    },
+    {
+      "item": "elementalamulets:aether_element"
+    }
+  ],
+  "combination_time": 800,
+  "tag_transfer": true,
+  "result": {
+    "item": "elementalamulets:jump_amulet",
+    "nbt": "{\"elementalamulets:tier\":4}"
+  }
+}

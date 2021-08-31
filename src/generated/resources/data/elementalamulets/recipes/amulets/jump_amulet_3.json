@@ -1,0 +1,39 @@
+{
+  "type": "elementalamulets:elemental_combination",
+  "elemental": {
+    "item": "elementalamulets:jump_amulet",
+    "tier": 2
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:slime_block"
+    },
+    {
+      "item": "elementalamulets:air_element"
+    },
+    {
+      "item": "minecraft:rabbit_hide"
+    },
+    {
+      "item": "elementalamulets:air_element"
+    },
+    {
+      "item": "minecraft:slime_block"
+    },
+    {
+      "item": "elementalamulets:air_element"
+    },
+    {
+      "item": "minecraft:rabbit_hide"
+    },
+    {
+      "item": "elementalamulets:air_element"
+    }
+  ],
+  "combination_time": 400,
+  "tag_transfer": true,
+  "result": {
+    "item": "elementalamulets:jump_amulet",
+    "nbt": "{\"elementalamulets:tier\":3}"
+  }
+}

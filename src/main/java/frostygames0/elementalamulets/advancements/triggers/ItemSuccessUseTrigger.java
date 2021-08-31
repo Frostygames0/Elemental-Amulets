@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.loot.ConditionArrayParser;
 import net.minecraft.util.ResourceLocation;
 
+
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 /**
