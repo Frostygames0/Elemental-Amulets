@@ -1,6 +1,8 @@
 # Elemental Amulets
-This mod adds new magical jewels.
-They are giving you new abilities!
+Elemental Amulets — is a small mod, that adds amulets, the powerful and cool looking necklaces!!
 
-Sorry if my code is not super efficient.
-I'm still new to Minecraft Modding :)
+This mod is currently in stable beta! Almost all core features are working! Nothing is going to be removed but added! :)
+
+Your feedback is very important
+
+## This mod is licensed with LGPL(GNU Lesser General Public License) V2.1
