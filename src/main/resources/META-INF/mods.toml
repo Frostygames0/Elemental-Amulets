@@ -1,6 +1,6 @@
 modLoader="javafml"
 loaderVersion="[36,)"
-license="All rights reserved"
+license="GNU Lesser General Public License (LGPL) V2.1"
 issueTrackerURL="https://github.com/Frostygames0/elemental-amulets/issues"
 
     [[mods]]
@@ -11,7 +11,7 @@ issueTrackerURL="https://github.com/Frostygames0/elemental-amulets/issues"
       logoFile="logo.png"
       displayName="Elemental Amulets"
       authors="Frostygames0"
-      description= "This mod adds new Jewels that give you powers such as Jump-Boost, Fire-Resistance, Protection and other!"
+      description= "This mod adds necklaces that give you powers such as Jump-Boost, Fire-Resistance, Protection and other!"
 
       [[dependencies.elementalamulets]]
         modId="forge"
