@@ -1,10 +1,11 @@
 {
   "homepage": "https://www.curseforge.com/minecraft/mc-mods/elemental-amulets",
   "1.16.5": {
-    "0.5": "First public release."
+    "0.5": "First public release.",
+    "0.5.1": "Optimized amulet's code, added functionality for air amulet, fixed russian translation, other small changes"
   },
   "promos": {
-    "1.16.5-latest": "0.5",
-    "1.16.5-recommended": "0.5"
+    "1.16.5-latest": "0.5.1",
+    "1.16.5-recommended": "0.5.1"
   }
 }
