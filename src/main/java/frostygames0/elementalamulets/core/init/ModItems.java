@@ -75,7 +75,7 @@ public class ModItems {
     public static final RegistryObject<Item> AIR_AMULET = ITEMS.register("air_amulet",
             () -> new AirAmulet(new Item.Properties().group(ElementalAmulets.GROUP).maxDamage(1000)));
 
-    public static final RegistryObject<Item> AMULET_BAG = ITEMS.register("amulet_bag",
+    public static final RegistryObject<Item> AMULET_BELT = ITEMS.register("amulet_belt",
             () -> new AmuletBelt(new Item.Properties().group(null).maxStackSize(1)));
 
     // Unfinished amulets
