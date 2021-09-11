@@ -2,6 +2,7 @@ package frostygames0.elementalamulets.core.init;
 
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.core.util.ElementalRarity;
+import frostygames0.elementalamulets.items.AmuletBelt;
 import frostygames0.elementalamulets.items.ElementItem;
 import frostygames0.elementalamulets.items.GuideBook;
 import frostygames0.elementalamulets.items.amulets.*;
@@ -73,6 +74,9 @@ public class ModItems {
             () -> new WaterAmulet(new Item.Properties().group(ElementalAmulets.GROUP).maxDamage(1000)));
     public static final RegistryObject<Item> AIR_AMULET = ITEMS.register("air_amulet",
             () -> new AirAmulet(new Item.Properties().group(ElementalAmulets.GROUP).maxDamage(1000)));
+
+    public static final RegistryObject<Item> AMULET_BAG = ITEMS.register("amulet_bag",
+            () -> new AmuletBelt(new Item.Properties().group(null).maxStackSize(1)));
 
     // Unfinished amulets
     /*public static final RegistryObject<Item> WATER_FREEZING_AMULET = ITEMS.register("water_freeze_amulet",

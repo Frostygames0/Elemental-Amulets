@@ -25,7 +25,6 @@ public class EffectEventHandler {
     public static void onAttack(final LivingAttackEvent event) {
         JumpAmuletEffect.onLivingAttack(event);
         FireAmuletEffect.onLivingAttack(event);
-
     }
     @SubscribeEvent
     public static void onProjectileImpact(final ProjectileImpactEvent event) {

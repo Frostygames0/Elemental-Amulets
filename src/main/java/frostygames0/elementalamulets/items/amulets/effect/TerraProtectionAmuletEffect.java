@@ -17,20 +17,22 @@ import top.theillusivec4.curios.api.CuriosApi;
 public class TerraProtectionAmuletEffect {
 
     static void onLivingHurt(LivingHurtEvent event) {
-        LivingEntity entity = event.getEntityLiving();
-        if(!entity.world.isRemote()) {
-            CuriosApi.getCuriosHelper().findEquippedCurio(item -> item.getItem() instanceof TerraProtectionAmulet, entity).ifPresent(triple -> {
-                ItemStack stack = triple.getRight();
-                TerraProtectionAmulet amulet = (TerraProtectionAmulet) stack.getItem();
-                if(amulet.canProtect(stack)) {
-                    if (event.getSource().getTrueSource() instanceof LivingEntity) {
-                        LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
-                        event.setCanceled(true);
-                        amulet.removeOneCharge(stack);
-                        attacker.attackEntityFrom(DamageSource.MAGIC, amulet.getReflectedDamageMulti(stack));
+        if(event.getEntityLiving() instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+            if (!player.world.isRemote()) {
+                CuriosApi.getCuriosHelper().findEquippedCurio(item -> item.getItem() instanceof TerraProtectionAmulet, player).ifPresent(triple -> {
+                    ItemStack stack = triple.getRight();
+                    TerraProtectionAmulet amulet = (TerraProtectionAmulet) stack.getItem();
+                    if (amulet.canProtect(stack)) {
+                        if (event.getSource().getTrueSource() instanceof LivingEntity) {
+                            LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
+                            event.setCanceled(true);
+                            amulet.removeOneCharge(stack);
+                            attacker.attackEntityFrom(DamageSource.MAGIC, amulet.getReflectedDamageMulti(stack));
+                        }
                     }
-                }
-            });
+                });
+            }
         }
     }
 

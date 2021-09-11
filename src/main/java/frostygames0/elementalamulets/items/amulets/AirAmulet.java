@@ -1,11 +1,18 @@
 package frostygames0.elementalamulets.items.amulets;
 
+import frostygames0.elementalamulets.ElementalAmulets;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeMod;
+import top.theillusivec4.curios.api.SlotContext;
 
 
 import javax.annotation.Nullable;
@@ -21,34 +28,36 @@ public class AirAmulet extends AmuletItem {
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
-        tooltip.add(new TranslationTextComponent("item.elementalamulets.wip").mergeStyle(TextFormatting.RED));
+        tooltip.add(new TranslationTextComponent("item.elementalamulets.wip").mergeStyle(TextFormatting.YELLOW));
     }
 
-    /*@Override
+    @Override
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
-        ModifiableAttributeInstance gravity = livingEntity.getAttribute(ForgeMod.ENTITY_GRAVITY.get());
-        AttributeModifier attMod = new AttributeModifier(MODIFIER_UUID, new ResourceLocation(ElementalAmulets.MOD_ID, "speed").toString(),
-                this.getFloating(stack), AttributeModifier.Operation.ADDITION);
-        boolean flag = livingEntity.getMotion().y <= 0.0D;
-        if (flag) {
-            if (!gravity.hasModifier(attMod)) gravity.applyNonPersistentModifier(attMod);
-            livingEntity.fallDistance = 0.0F;
-        } else if (gravity.hasModifier(attMod)) {
-            gravity.removeModifier(attMod);
+        if(!livingEntity.world.isRemote()) {
+            ModifiableAttributeInstance gravity = livingEntity.getAttribute(ForgeMod.ENTITY_GRAVITY.get());
+            AttributeModifier attMod = new AttributeModifier(MODIFIER_UUID, new ResourceLocation(ElementalAmulets.MOD_ID, "speed").toString(),
+                    this.getFloating(stack), AttributeModifier.Operation.ADDITION);
+            boolean flag = livingEntity.getMotion().y <= 0.0D && !livingEntity.isSneaking();
+            if (flag) {
+                if (!gravity.hasModifier(attMod)) gravity.applyNonPersistentModifier(attMod);
+                livingEntity.fallDistance = 0.0F;
+            } else if (gravity.hasModifier(attMod)) {
+                gravity.removeModifier(attMod);
+            }
         }
     }
 
     @Override
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
-        ModifiableAttributeInstance att = slotContext.getWearer().getAttribute(Attributes.MOVEMENT_SPEED);
+        ModifiableAttributeInstance att = slotContext.getWearer().getAttribute(ForgeMod.ENTITY_GRAVITY.get());
         if(stack.getItem() != newStack.getItem()) {
             if (att.getModifier(MODIFIER_UUID) != null) {
                 att.removeModifier(MODIFIER_UUID);
             }
         }
-    }*/
+    }
 
     public float getFloating(ItemStack stack) {
-        return -0.1f*this.getTier(stack);
+        return -0.01f*(this.getTier(stack)*1.75f);
     }
 }

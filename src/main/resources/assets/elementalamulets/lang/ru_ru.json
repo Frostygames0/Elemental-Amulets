@@ -8,24 +8,19 @@
   "item.elementalamulets.elemental_shards.latin_variant": "Элементал Шардс",
   "item.elementalamulets.fire_element": "Стихия огня",
   "item.elementalamulets.fire_element.latin_variant": "Элементум Игнис",
-  "item.elementalamulets.fire_element.tooltip": "Жесток, хаотичен, но красив",
+  "item.elementalamulets.fire_element.tooltip": "Жестока, хаотична, но красива",
   "item.elementalamulets.water_element": "Стихия воды",
-  "item.elementalamulets.water_element.tooltip": "Элегантный, чистый, но может быть хаотичным",
+  "item.elementalamulets.water_element.tooltip": "Элегантная, чистая, но может быть хаотичной",
   "item.elementalamulets.water_element.latin_variant": "Элементум Аква",
   "item.elementalamulets.earth_element": "Стихия земли",
-  "item.elementalamulets.earth_element.tooltip": "Сильный, могучий и полный жизни",
+  "item.elementalamulets.earth_element.tooltip": "Сильная, могучая и полная жизни",
   "item.elementalamulets.earth_element.latin_variant": "Элементум Терра",
   "item.elementalamulets.air_element": "Стихия воздуха",
-  "item.elementalamulets.air_element.tooltip": "Беззаботный, прозрачный",
+  "item.elementalamulets.air_element.tooltip": "Беззаботная, прозрачная",
   "item.elementalamulets.air_element.latin_variant": "Элементум Аэр",
   "item.elementalamulets.aether_element": "Элемент эфира",
   "item.elementalamulets.aether_element.tooltip": "Легендарный пятый элемент! Ну хотя бы что-то",
   "item.elementalamulets.aether_element.latin_variant": "Элементум Аэзер",
-
-  "item.elementalamulets.jump_element": "Стихия прыгучести",
-  "item.elementalamulets.speed_element": "Стихия скорости",
-  "item.elementalamulets.invisible_element": "Стихия невидимости",
-  "item.elementalamulets.sub_element.tooltip": "Хотя эти стихии и неклассические, все же это стихии",
 
   "item.elementalamulets.empty_amulet": "Пустой амулет",
 
@@ -51,9 +46,9 @@
   "item.elementalamulets.water_amulet.tooltip": "Дает усиления под водой",
 
   "item.elementalamulets.air_amulet": "Амулет воздуха",
-  "item.elementalamulets.air_amulet.tooltip": "Управляйте воздухом!",
+  "item.elementalamulets.air_amulet.tooltip": "Управляйте воздухом! Удерживайте SHIFT чтобы остановиться",
 
-  "item.elementalamulets.wip": "Данный предмет сейчас не работает! Прощу прощения за это :/",
+  "item.elementalamulets.wip": "Данный предмет сейчас немного баганный! Прощу прощения за это :/",
 
   "block.elementalamulets.elemental_combinator": "Объединитель элементаля",
   "block.elementalamulets.elemental_combinator.guititle": "Объединение",

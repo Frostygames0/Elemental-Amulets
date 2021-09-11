@@ -2,6 +2,7 @@ package frostygames0.elementalamulets;
 
 import frostygames0.elementalamulets.client.particles.ModParticles;
 import frostygames0.elementalamulets.client.renderer.ElementalCombinatorRenderer;
+import frostygames0.elementalamulets.client.screens.AmuletBeltScreen;
 import frostygames0.elementalamulets.client.screens.ElementalCombinatorScreen;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.core.init.ModContainers;
@@ -27,6 +28,7 @@ public class ClientSetup {
         ElementalCombinatorRenderer.register();
         event.enqueueWork(() -> {
             ScreenManager.registerFactory(ModContainers.ELEMENTAL_COMBINATOR_CONTAINER.get(), ElementalCombinatorScreen::new);
+            ScreenManager.registerFactory(ModContainers.AMULET_BELT_CONTAINER.get(), AmuletBeltScreen::new);
 
             ModItems.ITEMS.getEntries().stream().map(RegistryObject::get).filter(item -> item instanceof AmuletItem).forEach(
                     item -> ItemModelsProperties.registerProperty(item, new ResourceLocation(AmuletItem.TIER_TAG),

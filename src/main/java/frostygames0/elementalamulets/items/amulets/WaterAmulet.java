@@ -1,6 +1,7 @@
 package frostygames0.elementalamulets.items.amulets;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -20,5 +21,10 @@ public class WaterAmulet extends AmuletItem {
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
         tooltip.add(new TranslationTextComponent("item.elementalamulets.wip").mergeStyle(TextFormatting.RED));
+    }
+
+    @Override
+    public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
+        super.curioTick(identifier, index, livingEntity, stack);
     }
 }
