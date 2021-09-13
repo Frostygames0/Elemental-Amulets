@@ -39,9 +39,9 @@ public class ModVillagers{
     public static final DeferredRegister<PointOfInterestType> POI_TYPES = DeferredRegister.create(ForgeRegistries.POI_TYPES, ElementalAmulets.MOD_ID);
 
     public static final RegistryObject<PointOfInterestType> JEWELLER_POI = POI_TYPES.register("jeweller",
-            () -> new PointOfInterestType("jeweller", PointOfInterestType.getAllStates(ModBlocks.ELEMENTAL_COMBINATOR.get()), 1, 1));
+            () -> new PointOfInterestType("jeweller", PointOfInterestType.getBlockStates(ModBlocks.ELEMENTAL_COMBINATOR.get()), 1, 1));
     public static final RegistryObject<VillagerProfession> JEWELLER = PROFESSIONS.register("jeweller",
-            () -> new VillagerProfession("jeweller", JEWELLER_POI.get(), ImmutableSet.of(ModItems.ELEMENTAL_ORE.get(), ModItems.FIRE_ELEMENT.get(), ModItems.EARTH_ELEMENT.get(), ModItems.WATER_ELEMENT.get(), ModItems.AIR_ELEMENT.get()), ImmutableSet.of(), SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE));
+            () -> new VillagerProfession("jeweller", JEWELLER_POI.get(), ImmutableSet.of(ModItems.ELEMENTAL_ORE.get(), ModItems.FIRE_ELEMENT.get(), ModItems.EARTH_ELEMENT.get(), ModItems.WATER_ELEMENT.get(), ModItems.AIR_ELEMENT.get()), ImmutableSet.of(), SoundEvents.ENCHANTMENT_TABLE_USE));
 
     public static void register(IEventBus bus) {
         POI_TYPES.register(bus);
@@ -77,11 +77,11 @@ public class ModVillagers{
 
     public static class Structures {
         public static void init() {
-                PlainsVillagePools.init();
-                SavannaVillagePools.init();
-                TaigaVillagePools.init();
-                DesertVillagePools.init();
-                SnowyVillagePools.init();
+                PlainsVillagePools.bootstrap();
+                SavannaVillagePools.bootstrap();
+                TaigaVillagePools.bootstrap();
+                DesertVillagePools.bootstrap();
+                SnowyVillagePools.bootstrap();
                 for (String biome : new String[]{"plains"}) { // This is because it should be all village biomes but for now there is only plains
                     addHouseToPool(new ResourceLocation("village/" + biome + "/houses"),
                             ElementalAmulets.MOD_ID + ":villages/jeweller_house_" + biome, 12);
@@ -90,17 +90,17 @@ public class ModVillagers{
         }
 
         private static void addHouseToPool(ResourceLocation pool, String houseToAdd, int weight) {
-            JigsawPattern old = WorldGenRegistries.JIGSAW_POOL.getOrDefault(pool);
+            JigsawPattern old = WorldGenRegistries.TEMPLATE_POOL.get(pool);
             if (old == null) {
                 ElementalAmulets.LOGGER.warn("Jigsaw pool " + pool + " is not found! Skipping Jeweller's house generation");
                 return;
             }
-            List<JigsawPiece> pieces = old.getShuffledPieces(ThreadLocalRandom.current());
+            List<JigsawPiece> pieces = old.getShuffledTemplates(ThreadLocalRandom.current());
             List<Pair<JigsawPiece, Integer>> newPieces = pieces.stream().map(p -> Pair.of(p, 1)).collect(Collectors.toList());
-            JigsawPiece newPiece = JigsawPiece.func_242851_a(houseToAdd, ProcessorLists.MOSSIFY_10_PERCENT).apply(JigsawPattern.PlacementBehaviour.RIGID);
+            JigsawPiece newPiece = JigsawPiece.legacy(houseToAdd, ProcessorLists.MOSSIFY_10_PERCENT).apply(JigsawPattern.PlacementBehaviour.RIGID);
             newPieces.add(Pair.of(newPiece, weight));
             // I'm getting old pool and then add my house and just register it with same name, so it replaces the old one. Hacky but works good
-            Registry.register(WorldGenRegistries.JIGSAW_POOL, pool, new JigsawPattern(pool, old.getName(), newPieces));
+            Registry.register(WorldGenRegistries.TEMPLATE_POOL, pool, new JigsawPattern(pool, old.getName(), newPieces));
         }
     }
 }

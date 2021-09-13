@@ -71,7 +71,7 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
             }
         }
         @Override
-        public int size() {
+        public int getCount() {
             return 2;
         }
     };
@@ -82,37 +82,37 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
 
     @Override
     public void tick() {
-        if(world != null && !world.isRemote()) {
+        if(level != null && !level.isClientSide()) {
             if(this.isCrafting()) {
-                ElementalCombination recipe = this.world.getRecipeManager().getRecipe(ModRecipes.ELEMENTAL_COMBINATION_TYPE, new RecipeWrapper(handler), this.world).orElse(null);
+                ElementalCombination recipe = this.level.getRecipeManager().getRecipeFor(ModRecipes.ELEMENTAL_COMBINATION_TYPE, new RecipeWrapper(handler), this.level).orElse(null);
                 if(this.canCombine(recipe)) {
                     this.totalTime = recipe.getCombinationTime();
                     this.combinationTime++;
                     if(ModConfig.cached.FANCY_COMBINATION) {
                         if (this.combinationTime % 80 == 0) {
-                            this.playSound(SoundEvents.BLOCK_BEACON_AMBIENT);
-                            ((ServerWorld) world).spawnParticle(ModParticles.COMBINATION_PARTICLE.get(), pos.getX() + 0.5, pos.up().getY() + 0.4, pos.getZ() + 0.5, 50, 0, 0, 0, 5);
+                            this.playSound(SoundEvents.BEACON_AMBIENT);
+                            ((ServerWorld) level).sendParticles(ModParticles.COMBINATION_PARTICLE.get(), worldPosition.getX() + 0.5, worldPosition.above().getY() + 0.4, worldPosition.getZ() + 0.5, 50, 0, 0, 0, 5);
                         }
                     }
-                    if(!this.getBlockState().get(ElementalCombinator.COMBINING)) {
-                        this.world.setBlockState(pos, this.getBlockState().with(ElementalCombinator.COMBINING, true));
+                    if(!this.getBlockState().getValue(ElementalCombinator.COMBINING)) {
+                        this.level.setBlockAndUpdate(worldPosition, this.getBlockState().setValue(ElementalCombinator.COMBINING, true));
                     }
                     if(this.totalTime == this.combinationTime) {
                         this.stopCombination();
                         this.combine(recipe);
 
                         if(ModConfig.cached.FANCY_COMBINATION) {
-                            this.playSound(SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE);
+                            this.playSound(SoundEvents.ENCHANTMENT_TABLE_USE);
 
-                            LightningBoltEntity lightbolt = EntityType.LIGHTNING_BOLT.create(world);
-                            lightbolt.setEffectOnly(true);
-                            lightbolt.moveForced(Vector3d.copyCenteredHorizontally(pos.up()));
-                            this.world.addEntity(lightbolt);
+                            LightningBoltEntity lightbolt = EntityType.LIGHTNING_BOLT.create(level);
+                            lightbolt.setVisualOnly(true);
+                            lightbolt.moveTo(Vector3d.atBottomCenterOf(worldPosition.above()));
+                            this.level.addFreshEntity(lightbolt);
                         }
                     }
                 } else {
                     this.stopCombination();
-                    this.playSound(SoundEvents.BLOCK_BEACON_DEACTIVATE);
+                    this.playSound(SoundEvents.BEACON_DEACTIVATE);
                 }
             }
         }
@@ -120,7 +120,7 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
 
     private void combine(@Nullable ElementalCombination recipe) {
         if(this.canCombine(recipe)) {
-            ItemStack result = recipe.getCraftingResult(new RecipeWrapper(handler));
+            ItemStack result = recipe.assemble(new RecipeWrapper(handler));
             NonNullList<ItemStack> remainingItems = recipe.getRemainingItems(new RecipeWrapper(handler));
             handler.insertItem(0, result, false);
             for (int i = 1; i < handler.getSlots(); ++i) {
@@ -128,17 +128,17 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
                 handler.insertItem(i, remainingItems.get(i), false); // inserting remaining items
             }
             // TODO Maybe I should give it only to the closest player or the one who started combination idk
-            if(world instanceof ServerWorld)
-                ((ServerWorld)world).getChunkProvider().chunkManager.getTrackingPlayers(new ChunkPos(pos), false)
-                        .filter(player -> player.getDistanceSq(pos.getX(), pos.getY(), pos.getZ()) <= 100)
-                        .forEach(player -> ModCriteriaTriggers.ITEM_COMBINED.trigger(player, result, (ServerWorld) world, pos.getX(), pos.getY(), pos.getZ()));
+            if(level instanceof ServerWorld)
+                ((ServerWorld)level).getChunkSource().chunkMap.getPlayers(new ChunkPos(worldPosition), false)
+                        .filter(player -> player.distanceToSqr(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ()) <= 100)
+                        .forEach(player -> ModCriteriaTriggers.ITEM_COMBINED.trigger(player, result, (ServerWorld) level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ()));
         }
     }
 
     private boolean canCombine(@Nullable ElementalCombination recipe) {
         if(recipe != null) {
-            ItemStack result = recipe.getCraftingResult(new RecipeWrapper(handler));
-            return !result.isEmpty() && handler.insertItem(0, result, true).isEmpty() && world.canBlockSeeSky(pos.up());
+            ItemStack result = recipe.assemble(new RecipeWrapper(handler));
+            return !result.isEmpty() && handler.insertItem(0, result, true).isEmpty() && level.canSeeSkyFromBelowWater(worldPosition.above());
         }
         return false;
     }
@@ -153,7 +153,7 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
     private void stopCombination() {
         if(this.isCrafting()) {
             this.combinationTime = 0;
-            this.world.setBlockState(pos, this.getBlockState().with(ElementalCombinator.COMBINING, false));
+            this.level.setBlockAndUpdate(worldPosition, this.getBlockState().setValue(ElementalCombinator.COMBINING, false));
         }
     }
 
@@ -162,15 +162,15 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
     }
 
     private void playSound(SoundEvent sound) {
-        this.world.playSound(null, pos, sound, SoundCategory.BLOCKS, 1.0f, 1.0f);
+        this.level.playSound(null, worldPosition, sound, SoundCategory.BLOCKS, 1.0f, 1.0f);
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
+    public CompoundNBT save(CompoundNBT compound) {
         compound.putInt("CombinationTime", this.combinationTime);
         compound.putInt("TotalCombinationTime", this.totalTime);
         this.writeInventory(compound);
-        return super.write(compound);
+        return super.save(compound);
     }
 
     private CompoundNBT writeInventory(CompoundNBT compound) {
@@ -179,11 +179,11 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT nbt) {
+    public void load(BlockState state, CompoundNBT nbt) {
         this.combinationTime = nbt.getInt("CombinationTime");
         this.totalTime = nbt.getInt("TotalCombinationTime");
         this.readInventory(nbt);
-        super.read(state, nbt);
+        super.load(state, nbt);
     }
 
     private void readInventory(CompoundNBT nbt) {
@@ -201,13 +201,13 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
 
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        this.handleUpdateTag(this.getBlockState(), pkt.getNbtCompound());
+        this.handleUpdateTag(this.getBlockState(), pkt.getTag());
     }
 
     @Nullable
     @Override
     public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(pos, -1, this.getUpdateTag());
+        return new SUpdateTileEntityPacket(worldPosition, -1, this.getUpdateTag());
     }
 
     @Override
@@ -222,7 +222,7 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
 
     @Override
     public AxisAlignedBB getRenderBoundingBox() {
-        return new AxisAlignedBB(pos.add(-1, 0, -1), pos.add(1, 2, 1));
+        return new AxisAlignedBB(worldPosition.offset(-1, 0, -1), worldPosition.offset(1, 2, 1));
     }
 
     @Override
@@ -235,8 +235,8 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
         return new ItemStackHandler(10) {
             @Override
             protected void onContentsChanged(int slot) {
-                markDirty();
-                world.notifyBlockUpdate(pos, getBlockState(), getBlockState(), 2);
+                setChanged();
+                level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
             }
         };
     }
@@ -249,6 +249,6 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
     @Nullable
     @Override
     public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_) {
-        return new ElementalCombinatorContainer(p_createMenu_1_, world, pos, p_createMenu_2_, p_createMenu_3_, this.combinatorData);
+        return new ElementalCombinatorContainer(p_createMenu_1_, level, worldPosition, p_createMenu_2_, p_createMenu_3_, this.combinatorData);
     }
 }

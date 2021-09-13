@@ -45,22 +45,22 @@ public class ElementalCombination implements IRecipe<IInventory> {
     @Override
     public boolean matches(IInventory inv, World worldIn) {
         List<ItemStack> inputs = new ArrayList<>();
-        for(int i = 2; i < inv.getSizeInventory(); ++i) {
-            ItemStack stack = inv.getStackInSlot(i);
+        for(int i = 2; i < inv.getContainerSize(); ++i) {
+            ItemStack stack = inv.getItem(i);
             if(!stack.isEmpty()) {
                 inputs.add(stack);
             }
 
         }
-        return inputs.size() == ingredients.size() && this.elemental.test(inv.getStackInSlot(1))
+        return inputs.size() == ingredients.size() && this.elemental.test(inv.getItem(1))
                 && RecipeMatcher.findMatches(inputs, ingredients) != null; // I don't know exactly if this is correct way but it works fine
     }
 
     @Override
-    public ItemStack getCraftingResult(IInventory inv) {
+    public ItemStack assemble(IInventory inv) {
         ItemStack stack = this.result.copy();
         if(this.tagTransfer) {
-            CompoundNBT nbt = inv.getStackInSlot(1).getTag();
+            CompoundNBT nbt = inv.getItem(1).getTag();
             if(nbt != null) {
                 CompoundNBT tag = nbt.copy();
                 if (tag.contains(AmuletItem.TIER_TAG)) {
@@ -75,18 +75,18 @@ public class ElementalCombination implements IRecipe<IInventory> {
     }
 
     @Override
-    public boolean canFit(int width, int height) {
+    public boolean canCraftInDimensions(int width, int height) {
         return true;
     }
 
     // Need to override this so vanilla's recipe book would ignore my recipes
     @Override
-    public boolean isDynamic() {
+    public boolean isSpecial() {
         return true;
     }
 
     @Override
-    public ItemStack getRecipeOutput() {
+    public ItemStack getResultItem() {
         return this.result;
     }
 
@@ -111,7 +111,7 @@ public class ElementalCombination implements IRecipe<IInventory> {
     }
 
     @Override
-    public ItemStack getIcon() {
+    public ItemStack getToastSymbol() {
         return new ItemStack(ModBlocks.ELEMENTAL_COMBINATOR.get());
     }
 

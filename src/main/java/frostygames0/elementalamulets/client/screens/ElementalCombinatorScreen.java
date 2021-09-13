@@ -15,24 +15,24 @@ public class ElementalCombinatorScreen extends ContainerScreen<ElementalCombinat
     public static final ResourceLocation GUI = modPrefix("textures/gui/elemental_combinator_gui.png");
     public ElementalCombinatorScreen(ElementalCombinatorContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
-        this.playerInventoryTitleX += 92;
-        this.titleX = this.guiLeft+85;
-        this.titleY = this.guiTop+8;
+        this.inventoryLabelX += 92;
+        this.titleLabelX = this.leftPos+85;
+        this.titleLabelY = this.topPos+8;
     }
 
     @Override
     public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
+        this.renderTooltip(matrixStack, mouseX, mouseY);
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
+    protected void renderBg(MatrixStack matrixStack, float partialTicks, int x, int y) {
         RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-        this.minecraft.getTextureManager().bindTexture(GUI);
-        this.blit(matrixStack, this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
-        int l = this.container.getCombinationTimeScaled();
-        this.blit(matrixStack, this.guiLeft+90, this.guiTop+34, 176, 0, l+1, 17);
+        this.minecraft.getTextureManager().bind(GUI);
+        this.blit(matrixStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+        int l = this.menu.getCombinationTimeScaled();
+        this.blit(matrixStack, this.leftPos+90, this.topPos+34, 176, 0, l+1, 17);
     }
 }

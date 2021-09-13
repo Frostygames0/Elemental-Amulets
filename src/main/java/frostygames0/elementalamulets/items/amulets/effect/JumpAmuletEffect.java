@@ -15,7 +15,7 @@ public class JumpAmuletEffect {
     static void onLivingHurt(LivingHurtEvent event) {
         if(event.getEntityLiving() instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) event.getEntityLiving();
-            if (!player.world.isRemote()) {
+            if (!player.level.isClientSide()) {
                 if (event.getSource() == DamageSource.FALL) {
                     CuriosApi.getCuriosHelper().findEquippedCurio(item -> item.getItem() instanceof JumpAmulet, player).ifPresent((triple) -> {
                         float fallResist = ((JumpAmulet) triple.getRight().getItem()).getFallResist(triple.getRight());
@@ -35,7 +35,7 @@ public class JumpAmuletEffect {
     static void onLivingAttack(LivingAttackEvent event) {
         if(event.getEntityLiving() instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) event.getEntityLiving();
-            if (!player.world.isRemote()) {
+            if (!player.level.isClientSide()) {
                 if (event.getSource() == DamageSource.FALL) {
                     CuriosApi.getCuriosHelper().findEquippedCurio(item -> item.getItem() instanceof JumpAmulet, player).ifPresent((triple) -> {
                         float fallResist = ((JumpAmulet) triple.getRight().getItem()).getFallResist(triple.getRight());
@@ -54,14 +54,14 @@ public class JumpAmuletEffect {
     static void onLivingJump(LivingEvent.LivingJumpEvent event) {
         if(event.getEntityLiving() instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) event.getEntityLiving();
-            World world = player.getEntityWorld();
-            if (!world.isRemote) {
-                if (world.getFluidState(player.getPosition()).isEmpty()) {
+            World world = player.getCommandSenderWorld();
+            if (!world.isClientSide) {
+                if (world.getFluidState(player.blockPosition()).isEmpty()) {
                     CuriosApi.getCuriosHelper().findEquippedCurio(itemStack -> itemStack.getItem() instanceof JumpAmulet, player).ifPresent(triple -> {
                         ItemStack stack = triple.getRight();
                         JumpAmulet item = (JumpAmulet) stack.getItem();
-                        player.addVelocity(0, item.getJump(stack), 0);
-                        player.velocityChanged = true;
+                        player.push(0, item.getJump(stack), 0);
+                        player.hurtMarked = true;
                     });
                 }
             }

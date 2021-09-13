@@ -27,11 +27,11 @@ public class ClientSetup {
     public static void clientSetup(final FMLClientSetupEvent event) {
         ElementalCombinatorRenderer.register();
         event.enqueueWork(() -> {
-            ScreenManager.registerFactory(ModContainers.ELEMENTAL_COMBINATOR_CONTAINER.get(), ElementalCombinatorScreen::new);
-            ScreenManager.registerFactory(ModContainers.AMULET_BELT_CONTAINER.get(), AmuletBeltScreen::new);
+            ScreenManager.register(ModContainers.ELEMENTAL_COMBINATOR_CONTAINER.get(), ElementalCombinatorScreen::new);
+            ScreenManager.register(ModContainers.AMULET_BELT_CONTAINER.get(), AmuletBeltScreen::new);
 
             ModItems.ITEMS.getEntries().stream().map(RegistryObject::get).filter(item -> item instanceof AmuletItem).forEach(
-                    item -> ItemModelsProperties.registerProperty(item, new ResourceLocation(AmuletItem.TIER_TAG),
+                    item -> ItemModelsProperties.register(item, new ResourceLocation(AmuletItem.TIER_TAG),
                             (stack, world, entity) -> ModConfig.cached.AMULETS_TIER_DIFFERENCE ? ((AmuletItem)item).getTier(stack) : 0));
         });
     }

@@ -44,7 +44,7 @@ public class AmuletIngredient extends Ingredient {
     }
 
     @Override
-    public JsonElement serialize() {
+    public JsonElement toJson() {
         JsonObject json = new JsonObject();
         json.addProperty("item", stack.getItem().getRegistryName().toString());
         if(stack.getItem() instanceof AmuletItem) {
@@ -57,13 +57,13 @@ public class AmuletIngredient extends Ingredient {
     }
 
     private static ItemStack getAmuletFromJson(JsonObject json) {
-        String itemName = JSONUtils.getString(json, "item");
+        String itemName = JSONUtils.getAsString(json, "item");
 
         Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemName));
         if (item == null) throw new JsonSyntaxException("Item: "+itemName+" does not exist!");
         if (item instanceof AmuletItem) {
-            int tier = JSONUtils.getInt(json, "tier", 1);
-            if (tier > 4 || tier < 0) {
+            int tier = JSONUtils.getAsInt(json, "tier", 1);
+            if (tier > AmuletItem.MAX_TIER || tier < 0) {
                 throw new JsonSyntaxException("Incorrect Tier! Can't be higher than 4 and lower than 0! Your tier is "+tier);
             }
             return AmuletItem.getStackWithTier(new ItemStack(item), tier);
@@ -81,7 +81,7 @@ public class AmuletIngredient extends Ingredient {
 
         @Override
         public AmuletIngredient parse(PacketBuffer buffer) {
-                return new AmuletIngredient(buffer.readItemStack());
+                return new AmuletIngredient(buffer.readItem());
             }
             @Override
             public AmuletIngredient parse(JsonObject json) {
@@ -89,7 +89,7 @@ public class AmuletIngredient extends Ingredient {
             }
             @Override
             public void write(PacketBuffer buffer, AmuletIngredient ingredient) {
-                buffer.writeItemStack(ingredient.stack);
+                buffer.writeItem(ingredient.stack);
             }
         }
     }

@@ -13,8 +13,8 @@ public class FireAmuletEffect {
         if(event.getEntityLiving() instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) event.getEntityLiving();
             DamageSource source = event.getSource();
-            if (!player.world.isRemote()) {
-                if (source.isFireDamage()) {
+            if (!player.level.isClientSide()) {
+                if (source.isFire()) {
                     CuriosApi.getCuriosHelper().findEquippedCurio(item -> item.getItem() instanceof FireAmulet, player).ifPresent((triple) -> {
                         FireAmulet amulet = (FireAmulet) triple.getRight().getItem();
                         float fire = 1 - amulet.getFireResist(triple.getRight());
@@ -34,8 +34,8 @@ public class FireAmuletEffect {
         if (event.getEntityLiving() instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) event.getEntityLiving();
             DamageSource source = event.getSource();
-            if (!player.world.isRemote()) {
-                if (source.isFireDamage()) {
+            if (!player.level.isClientSide()) {
+                if (source.isFire()) {
                     CuriosApi.getCuriosHelper().findEquippedCurio(item -> item.getItem() instanceof FireAmulet, player).ifPresent((triple) -> {
                         FireAmulet amulet = (FireAmulet) triple.getRight().getItem();
                         float fire = 1 - amulet.getFireResist(triple.getRight());

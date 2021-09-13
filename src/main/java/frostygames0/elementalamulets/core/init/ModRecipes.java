@@ -29,12 +29,12 @@ public class ModRecipes {
             ElementalCombinationSerializer::new);
 
     public static List<ElementalCombination> getRecipes(World world) {
-        return world.getRecipeManager().getRecipesForType(ELEMENTAL_COMBINATION_TYPE);
+        return world.getRecipeManager().getAllRecipesFor(ELEMENTAL_COMBINATION_TYPE);
     }
 
     public static <T extends IRecipe<C>, C extends IInventory> Map<ResourceLocation, T> getRecipesMap(IRecipeType<T> type, World world) {
         Map<IRecipeType<?>, Map<ResourceLocation, T>> recipes = ObfuscationReflectionHelper.getPrivateValue(RecipeManager.class, world.getRecipeManager(),
-                "field_199522_d");
+                "recipes");
         return recipes.get(type);
     }
 }

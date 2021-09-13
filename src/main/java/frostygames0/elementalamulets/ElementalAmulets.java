@@ -27,7 +27,7 @@ public class ElementalAmulets {
     public static final Logger LOGGER = LogManager.getLogger();
     public static final ItemGroup GROUP = new ItemGroup(MOD_ID) {
         @Override
-        public ItemStack createIcon() {
+        public ItemStack makeIcon() {
             return new ItemStack(ModItems.FIRE_AMULET.get());
         }
     };

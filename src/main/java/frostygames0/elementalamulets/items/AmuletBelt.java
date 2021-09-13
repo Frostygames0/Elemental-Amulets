@@ -38,13 +38,13 @@ public class AmuletBelt extends Item implements ICurioItem{
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        if(!worldIn.isRemote()) {
-            ItemStack stack = playerIn.getHeldItem(handIn);
+    public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+        if(!worldIn.isClientSide()) {
+            ItemStack stack = playerIn.getItemInHand(handIn);
             INamedContainerProvider provider = new INamedContainerProvider() {
                 @Override
                 public ITextComponent getDisplayName() {
-                    return new TranslationTextComponent(AmuletBelt.this.getDefaultTranslationKey());
+                    return new TranslationTextComponent(AmuletBelt.this.getOrCreateDescriptionId());
                 }
 
                 @Nullable
@@ -53,9 +53,9 @@ public class AmuletBelt extends Item implements ICurioItem{
                     return new AmuletBeltContainer(p_createMenu_1_, worldIn, stack, p_createMenu_2_, p_createMenu_3_);
                 }
             };
-            NetworkHooks.openGui((ServerPlayerEntity) playerIn, provider, buf -> buf.writeItemStack(stack));
+            NetworkHooks.openGui((ServerPlayerEntity) playerIn, provider, buf -> buf.writeItem(stack));
         }
-        return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
+        return ActionResult.success(playerIn.getItemInHand(handIn));
     }
 
     @Nullable

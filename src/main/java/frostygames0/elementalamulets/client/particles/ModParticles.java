@@ -19,6 +19,6 @@ public class ModParticles {
             () -> new BasicParticleType(true));
 
     public static void register() {
-        Minecraft.getInstance().particles.registerFactory(COMBINATION_PARTICLE.get(), CombinationParticle.Factory::new);
+        Minecraft.getInstance().particleEngine.register(COMBINATION_PARTICLE.get(), CombinationParticle.Factory::new);
     }
 }

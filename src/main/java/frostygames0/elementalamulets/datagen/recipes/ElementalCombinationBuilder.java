@@ -56,7 +56,7 @@ public class ElementalCombinationBuilder {
 
     public ElementalCombinationBuilder addIngredient(ITag<Item> tag, int quantity) {
         for(int i = 0; i < quantity; i++) {
-            this.ingredients.add(Ingredient.fromTag(tag));
+            this.ingredients.add(Ingredient.of(tag));
         }
         return this;
     }
@@ -68,7 +68,7 @@ public class ElementalCombinationBuilder {
 
     public ElementalCombinationBuilder addIngredient(int quantity, IItemProvider... item) {
         for(int i = 0; i < quantity; i++) {
-            this.ingredients.add(Ingredient.fromItems(item));
+            this.ingredients.add(Ingredient.of(item));
         }
         return this;
     }
@@ -123,14 +123,14 @@ public class ElementalCombinationBuilder {
         }
 
         @Override
-        public void serialize(JsonObject json) {
+        public void serializeRecipeData(JsonObject json) {
             // Elemental
-            json.add("elemental", elemental.serialize());
+            json.add("elemental", elemental.toJson());
 
             // Ingredients
             JsonArray array = new JsonArray();
             for(Ingredient ingr : this.ingredients) {
-                array.add(ingr.serialize());
+                array.add(ingr.toJson());
             }
             json.add("ingredients", array);
 
@@ -155,24 +155,24 @@ public class ElementalCombinationBuilder {
         }
 
         @Override
-        public ResourceLocation getID() {
+        public ResourceLocation getId() {
             return id;
         }
 
         @Override
-        public IRecipeSerializer<?> getSerializer() {
+        public IRecipeSerializer<?> getType() {
             return ModRecipes.ELEMENTAL_COMBINATION.get();
         }
 
         @Nullable
         @Override
-        public JsonObject getAdvancementJson() {
+        public JsonObject serializeAdvancement() {
             return null;
         }
 
         @Nullable
         @Override
-        public ResourceLocation getAdvancementID() {
+        public ResourceLocation getAdvancementId() {
             return null;
         }
     }

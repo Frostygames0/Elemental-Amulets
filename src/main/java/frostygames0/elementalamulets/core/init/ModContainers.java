@@ -19,15 +19,15 @@ public class ModContainers {
     public static final RegistryObject<ContainerType<ElementalCombinatorContainer>> ELEMENTAL_COMBINATOR_CONTAINER = CONTAINERS.register("elemental_combinator", () -> IForgeContainerType.create(
             ((windowId, inv, data) -> {
                 BlockPos pos = data.readBlockPos();
-                World world = inv.player.getEntityWorld();
+                World world = inv.player.getCommandSenderWorld();
                 return new ElementalCombinatorContainer(windowId, world, pos, inv, inv.player, new IntArray(2));
             })
     ));
 
     public static final RegistryObject<ContainerType<AmuletBeltContainer>> AMULET_BELT_CONTAINER = CONTAINERS.register("amulet_belt", () -> IForgeContainerType.create(
             ((windowId, inv, data) -> {
-                ItemStack stack = data.readItemStack();
-                World world = inv.player.getEntityWorld();
+                ItemStack stack = data.readItem();
+                World world = inv.player.getCommandSenderWorld();
                 return new AmuletBeltContainer(windowId, world, stack, inv, inv.player);
             })
     ));

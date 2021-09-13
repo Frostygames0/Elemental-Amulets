@@ -23,22 +23,22 @@ public class ElementItem extends Item {
     private final List<ITextComponent> description;
 
     public ElementItem(Rarity color, @Nullable ITextComponent... description) {
-        super(new Item.Properties().group(ElementalAmulets.GROUP).rarity(color));
+        super(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(color));
         this.description = Arrays.asList(description);
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        super.addInformation(stack, worldIn, tooltip, flagIn);
+    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        super.appendHoverText(stack, worldIn, tooltip, flagIn);
         if (description != null) tooltip.addAll(description);
     }
 
     @Override
-    public String getTranslationKey() {
+    public String getDescriptionId() {
         if (ModConfig.cached.USE_LATIN_ELEMENT_NAMES) {
-            return this.getDefaultTranslationKey() + ".latin_variant";
+            return this.getOrCreateDescriptionId() + ".latin_variant";
         }
-        return super.getTranslationKey();
+        return super.getDescriptionId();
     }
 
 }

@@ -29,25 +29,25 @@ public class ElementalCombinatorRenderer extends TileEntityRenderer<ElementalCom
 
     @Override
     public void render(ElementalCombinatorTile tileEntityIn, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
-        World world = tileEntityIn.getWorld();
+        World world = tileEntityIn.getLevel();
 
         ItemStack stack = tileEntityIn.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).map(h -> h.getStackInSlot(0)).orElse(ItemStack.EMPTY);
         ItemRenderer renderer = Minecraft.getInstance().getItemRenderer();
 
-        int upperLight = WorldRenderer.getCombinedLight(world, tileEntityIn.getPos().up());
+        int upperLight = WorldRenderer.getLightColor(world, tileEntityIn.getBlockPos().above());
         float angle = (System.currentTimeMillis() / ModConfig.cached.COMBINATOR_STACK_ROTATION_SPEED) % 360;
 
         if(ModConfig.cached.RENDER_COMBINATOR_STACK) {
 
-            matrixStackIn.push();
+            matrixStackIn.pushPose();
 
             matrixStackIn.translate(0.5, 1.4, 0.5);
             matrixStackIn.scale(0.6F, 0.6F, 0.6F);
-            matrixStackIn.rotate(Vector3f.YP.rotationDegrees(angle));
+            matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(angle));
 
-            IBakedModel model = renderer.getItemModelWithOverrides(stack, world, null);
-            renderer.renderItem(stack, ItemCameraTransforms.TransformType.FIXED, true, matrixStackIn, bufferIn, upperLight, combinedOverlayIn, model);
-            matrixStackIn.pop();
+            IBakedModel model = renderer.getModel(stack, world, null);
+            renderer.render(stack, ItemCameraTransforms.TransformType.FIXED, true, matrixStackIn, bufferIn, upperLight, combinedOverlayIn, model);
+            matrixStackIn.popPose();
         }
     }
 

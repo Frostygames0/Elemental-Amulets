@@ -23,8 +23,8 @@ public class ItemSuccessUseTrigger extends AbstractCriterionTrigger<ItemSuccessU
     public static final ResourceLocation ID = modPrefix("success_use_item");
 
     @Override
-    protected Instance deserializeTrigger(JsonObject json, EntityPredicate.AndPredicate entityPredicate, ConditionArrayParser conditionsParser) {
-        return new ItemSuccessUseTrigger.Instance(entityPredicate, ItemPredicate.deserialize(json.get("item")));
+    protected Instance createInstance(JsonObject json, EntityPredicate.AndPredicate entityPredicate, ConditionArrayParser conditionsParser) {
+        return new ItemSuccessUseTrigger.Instance(entityPredicate, ItemPredicate.fromJson(json.get("item")));
     }
 
     @Override
@@ -33,7 +33,7 @@ public class ItemSuccessUseTrigger extends AbstractCriterionTrigger<ItemSuccessU
     }
 
     public void trigger(ServerPlayerEntity player, ItemStack stack) {
-        triggerListeners(player, instance -> instance.test(stack));
+        trigger(player, instance -> instance.test(stack));
     }
 
     public static class Instance extends CriterionInstance {
@@ -45,7 +45,7 @@ public class ItemSuccessUseTrigger extends AbstractCriterionTrigger<ItemSuccessU
         }
 
         boolean test(ItemStack stack) {
-            return this.item.test(stack);
+            return this.item.matches(stack);
         }
 
         public ItemPredicate getItem() {

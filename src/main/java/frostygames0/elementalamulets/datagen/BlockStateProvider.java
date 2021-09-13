@@ -30,7 +30,7 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
                 modLoc("block/"+name(ModBlocks.ELEMENTAL_COMBINATOR.get())+"_up_2.0")));*/
 
         blockstateBlock(ModBlocks.ELEMENTAL_COMBINATOR.get(), state -> {
-            if(state.get(ElementalCombinator.COMBINING)) {
+            if(state.getValue(ElementalCombinator.COMBINING)) {
                 return models().cubeBottomTop(name(ModBlocks.ELEMENTAL_COMBINATOR.get())+"_on",
                         modLoc( "block/"+name(ModBlocks.ELEMENTAL_COMBINATOR.get())+"_side"),
                         mcLoc("block/furnace_top"),

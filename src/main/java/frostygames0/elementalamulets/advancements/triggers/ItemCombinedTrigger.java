@@ -19,12 +19,12 @@ import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 public class ItemCombinedTrigger extends AbstractCriterionTrigger<ItemCombinedTrigger.Instance> {
     public static final ResourceLocation ID = modPrefix("item_elemental_combined");
     @Override
-    protected Instance deserializeTrigger(JsonObject json, EntityPredicate.AndPredicate entityPredicate, ConditionArrayParser conditionsParser) {
-        return new ItemCombinedTrigger.Instance(entityPredicate, ItemPredicate.deserialize(json.get("item")), LocationPredicate.deserialize(json.get("location")));
+    protected Instance createInstance(JsonObject json, EntityPredicate.AndPredicate entityPredicate, ConditionArrayParser conditionsParser) {
+        return new ItemCombinedTrigger.Instance(entityPredicate, ItemPredicate.fromJson(json.get("item")), LocationPredicate.fromJson(json.get("location")));
     }
 
     public void trigger(ServerPlayerEntity player, ItemStack stack, ServerWorld world, double x, double y, double z) {
-        triggerListeners(player, instance -> instance.test(stack, world, x, y, z));
+        trigger(player, instance -> instance.test(stack, world, x, y, z));
     }
 
     @Override
@@ -43,7 +43,7 @@ public class ItemCombinedTrigger extends AbstractCriterionTrigger<ItemCombinedTr
         }
 
         boolean test(ItemStack stack, ServerWorld world, double x, double y, double z) {
-            return item.test(stack) && location.test(world, x, y, z);
+            return item.matches(stack) && location.matches(world, x, y, z);
         }
     }
 }

@@ -50,17 +50,17 @@ public class JEIPlugin implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
 
         // Adding list of my recipes to jei
-        registration.addRecipes(ModRecipes.getRecipes(Minecraft.getInstance().world), ElementalCombinationCategory.ID);
+        registration.addRecipes(ModRecipes.getRecipes(Minecraft.getInstance().level), ElementalCombinationCategory.ID);
 
         // Item descriptions
         registration.addIngredientInfo(ModItems.getAmulets().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.amulets.description"));
-        registration.addIngredientInfo(ModTags.ELEMENTS.getAllElements().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.elements.description"));
+        registration.addIngredientInfo(ModTags.ELEMENTS.getValues().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.elements.description"));
 
         // Elements description
-        registration.addIngredientInfo(ModTags.AIR_ELEMENT_CONVERTIBLE.getAllElements().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.convertibles.description", new TranslationTextComponent(ModItems.AIR_ELEMENT.get().getTranslationKey()).mergeStyle(TextFormatting.GRAY)));
-        registration.addIngredientInfo(ModTags.WATER_ELEMENT_CONVERTIBLE.getAllElements().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.convertibles.description", new TranslationTextComponent(ModItems.WATER_ELEMENT.get().getTranslationKey()).mergeStyle(TextFormatting.AQUA)));
-        registration.addIngredientInfo(ModTags.FIRE_ELEMENT_CONVERTIBLE.getAllElements().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.convertibles.description"), new TranslationTextComponent(ModItems.FIRE_ELEMENT.get().getTranslationKey()).mergeStyle(TextFormatting.RED));
-        registration.addIngredientInfo(ModTags.EARTH_ELEMENT_CONVERTIBLE.getAllElements().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.convertibles.description"), new TranslationTextComponent(ModItems.EARTH_ELEMENT.get().getTranslationKey()).mergeStyle(TextFormatting.DARK_GREEN));
+        registration.addIngredientInfo(ModTags.AIR_ELEMENT_CONVERTIBLE.getValues().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.convertibles.description", new TranslationTextComponent(ModItems.AIR_ELEMENT.get().getDescriptionId()).withStyle(TextFormatting.GRAY)));
+        registration.addIngredientInfo(ModTags.WATER_ELEMENT_CONVERTIBLE.getValues().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.convertibles.description", new TranslationTextComponent(ModItems.WATER_ELEMENT.get().getDescriptionId()).withStyle(TextFormatting.AQUA)));
+        registration.addIngredientInfo(ModTags.FIRE_ELEMENT_CONVERTIBLE.getValues().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.convertibles.description"), new TranslationTextComponent(ModItems.FIRE_ELEMENT.get().getDescriptionId()).withStyle(TextFormatting.RED));
+        registration.addIngredientInfo(ModTags.EARTH_ELEMENT_CONVERTIBLE.getValues().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.convertibles.description"), new TranslationTextComponent(ModItems.EARTH_ELEMENT.get().getDescriptionId()).withStyle(TextFormatting.DARK_GREEN));
         registration.addIngredientInfo(ModItems.AETHER_ELEMENT.get().getDefaultInstance(), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.aether_element.description"));
         // Misc. Description
         registration.addIngredientInfo(new ItemStack(ModItems.GUIDE_BOOK.get()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.guide_book.description"));
