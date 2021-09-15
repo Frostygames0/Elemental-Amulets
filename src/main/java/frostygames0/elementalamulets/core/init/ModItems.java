@@ -28,6 +28,8 @@ public class ModItems {
     // Mod BlockItems
     public static final RegistryObject<BlockItem> ELEMENTAL_COMBINATOR_BLOCK = ITEMS.register("elemental_combinator",
             () -> new BlockItem(ModBlocks.ELEMENTAL_COMBINATOR.get(), new Item.Properties().tab(ElementalAmulets.GROUP)));
+    public static final RegistryObject<BlockItem> ELEMENTAL_FOCUS = ITEMS.register("celestial_focus",
+            () -> new BlockItem(ModBlocks.CELESTIAL_FOCUS.get(), new Item.Properties().tab(ElementalAmulets.GROUP)));
     public static final RegistryObject<BlockItem> ELEMENTAL_ORE = ITEMS.register("elemental_ore",
             () -> new BlockItem(ModBlocks.ELEMENTAL_STONE.get(), new Item.Properties().tab(ElementalAmulets.GROUP)));
 

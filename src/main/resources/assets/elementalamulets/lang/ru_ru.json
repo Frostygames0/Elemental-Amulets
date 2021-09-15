@@ -54,6 +54,8 @@
   "block.elementalamulets.elemental_combinator.guititle": "Объединение",
   "block.elementalamulets.elemental_combinator.cooldown": "Объединитель перезаряжается! %s сек. осталось",
   "block.elementalamulets.elemental_combinator.no_sky": "%s не может видеть небо!",
+  "block.elementalamulets.celestial_focus": "Небесный фокус",
+  "block.elementalamulets.celestial_focus.tooltip": "Сами небеса ускорят элементальное объединение",
   "block.elementalamulets.elemental_ore": "Элементальная руда",
 
   "player.elementalamulets.brokenamulet.warn": "Ваш %s был сломан!",

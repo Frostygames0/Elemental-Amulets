@@ -6,6 +6,7 @@ import frostygames0.elementalamulets.blocks.containers.ElementalCombinatorContai
 import frostygames0.elementalamulets.capability.AutomationItemHandler;
 import frostygames0.elementalamulets.client.particles.ModParticles;
 import frostygames0.elementalamulets.config.ModConfig;
+import frostygames0.elementalamulets.core.init.ModBlocks;
 import frostygames0.elementalamulets.core.init.ModRecipes;
 import frostygames0.elementalamulets.core.init.ModTiles;
 import frostygames0.elementalamulets.recipes.ElementalCombination;
@@ -86,7 +87,7 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
             if(this.isCrafting()) {
                 ElementalCombination recipe = this.level.getRecipeManager().getRecipeFor(ModRecipes.ELEMENTAL_COMBINATION_TYPE, new RecipeWrapper(handler), this.level).orElse(null);
                 if(this.canCombine(recipe)) {
-                    this.totalTime = recipe.getCombinationTime();
+                    this.totalTime = this.isFocused() ? recipe.getCombinationTime() / 2 : recipe.getCombinationTime();
                     this.combinationTime++;
                     if(ModConfig.cached.FANCY_COMBINATION) {
                         if (this.combinationTime % 80 == 0) {
@@ -97,7 +98,7 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
                     if(!this.getBlockState().getValue(ElementalCombinator.COMBINING)) {
                         this.level.setBlockAndUpdate(worldPosition, this.getBlockState().setValue(ElementalCombinator.COMBINING, true));
                     }
-                    if(this.totalTime == this.combinationTime) {
+                    if(this.totalTime <= this.combinationTime) {
                         this.stopCombination();
                         this.combine(recipe);
 
@@ -163,6 +164,10 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
 
     private void playSound(SoundEvent sound) {
         this.level.playSound(null, worldPosition, sound, SoundCategory.BLOCKS, 1.0f, 1.0f);
+    }
+
+    public boolean isFocused() {
+        return this.level.getBlockState(this.getBlockPos().above()).getBlock() == ModBlocks.CELESTIAL_FOCUS.get();
     }
 
     @Override
