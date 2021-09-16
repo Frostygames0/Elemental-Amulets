@@ -32,7 +32,7 @@ public class ModBlocks {
                     .lightLevel(state -> state.getValue(ElementalCombinator.COMBINING) ? 15 : 5).isRedstoneConductor(ModBlocks::never)));
 
     public static final RegistryObject<Block> CELESTIAL_FOCUS = BLOCKS.register("celestial_focus",
-            () -> new ElementalFocus(AbstractBlock.Properties.of(Material.WOOD).strength(2f).sound(SoundType.WOOD).requiresCorrectToolForDrops().harvestTool(ToolType.AXE).harvestLevel(0)
+            () -> new ElementalFocus(AbstractBlock.Properties.of(Material.WOOD, DyeColor.BROWN).strength(2f).sound(SoundType.WOOD).harvestTool(ToolType.AXE).harvestLevel(0)
             .noOcclusion().isViewBlocking(ModBlocks::never).isSuffocating(ModBlocks::never)));
 
     public static final RegistryObject<Block> ELEMENTAL_STONE = BLOCKS.register("elemental_ore",

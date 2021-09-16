@@ -69,6 +69,14 @@ public abstract class BaseLootTableProvider extends LootTableProvider {
         return LootTable.lootTable().withPool(builder);
     }
 
+    protected LootTable.Builder createDefaultTable(String name, Block block) {
+        LootPool.Builder builder = LootPool.lootPool()
+                .name(name)
+                .setRolls(ConstantRange.exactly(1))
+                .add(ItemLootEntry.lootTableItem(block));
+        return LootTable.lootTable().withPool(builder);
+    }
+
     @Override
     public void run(DirectoryCache cache) {
         addTables();
