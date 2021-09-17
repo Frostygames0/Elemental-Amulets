@@ -1,0 +1,97 @@
+{
+  "parent": "elementalamulets:upgrade_to_max",
+  "display": {
+    "icon": {
+      "item": "minecraft:diamond"
+    },
+    "title": {
+      "translate": "advancements.elementalamulets.wear_all_amulets"
+    },
+    "description": {
+      "translate": "advancements.elementalamulets.wear_all_amulets.desc"
+    },
+    "frame": "challenge",
+    "hidden": true
+  },
+  "criteria": {
+    "fire_amulet": {
+      "trigger": "elementalamulets:success_use_item",
+      "conditions": {
+        "item": {
+          "item": "elementalamulets:fire_amulet"
+        }
+      }
+    },
+    "water_amulet": {
+      "trigger": "elementalamulets:success_use_item",
+      "conditions": {
+        "item": {
+          "item": "elementalamulets:water_amulet"
+        }
+      }
+    },
+    "air_amulet": {
+      "trigger": "elementalamulets:success_use_item",
+      "conditions": {
+        "item": {
+          "item": "elementalamulets:air_amulet"
+        }
+      }
+    },
+    "speed_amulet": {
+      "trigger": "elementalamulets:success_use_item",
+      "conditions": {
+        "item": {
+          "item": "elementalamulets:speed_amulet"
+        }
+      }
+    },
+    "jump_amulet": {
+      "trigger": "elementalamulets:success_use_item",
+      "conditions": {
+        "item": {
+          "item": "elementalamulets:jump_amulet"
+        }
+      }
+    },
+    "invisibility_amulet": {
+      "trigger": "elementalamulets:success_use_item",
+      "conditions": {
+        "item": {
+          "item": "elementalamulets:invisibility_amulet"
+        }
+      }
+    },
+    "protection_amulet": {
+      "trigger": "elementalamulets:success_use_item",
+      "conditions": {
+        "item": {
+          "item": "elementalamulets:protection_amulet"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "fire_amulet"
+    ],
+    [
+      "water_amulet"
+    ],
+    [
+      "air_amulet"
+    ],
+    [
+      "speed_amulet"
+    ],
+    [
+      "jump_amulet"
+    ],
+    [
+      "invisibility_amulet"
+    ],
+    [
+      "protection_amulet"
+    ]
+  ]
+}

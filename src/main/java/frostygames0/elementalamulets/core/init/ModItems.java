@@ -25,6 +25,8 @@ public class ModItems {
     // Mod's guide book
     public static final RegistryObject<Item> GUIDE_BOOK = ITEMS.register("guide_book",
             () -> new GuideBook(new Item.Properties().tab(ElementalAmulets.GROUP).stacksTo(1)));
+    public static final RegistryObject<Item> ALL_SEEING_LENS = ITEMS.register("all_seeing_lens",
+            () -> new Item(new Item.Properties().tab(ElementalAmulets.GROUP).stacksTo(16).rarity(Rarity.UNCOMMON)));
     // Mod BlockItems
     public static final RegistryObject<BlockItem> ELEMENTAL_COMBINATOR_BLOCK = ITEMS.register("elemental_combinator",
             () -> new BlockItem(ModBlocks.ELEMENTAL_COMBINATOR.get(), new Item.Properties().tab(ElementalAmulets.GROUP)));

@@ -60,6 +60,15 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .define('x', ModItems.ELEMENTAL_SHARDS.get())
                 .unlockedBy("has_item", InventoryChangeTrigger.Instance.hasItems(ModItems.ELEMENTAL_SHARDS.get()))
                 .save(consumer);
+        ShapedRecipeBuilder.shaped(ModBlocks.CELESTIAL_FOCUS.get())
+                .pattern("/0/")
+                .pattern("/ /")
+                .pattern(". .")
+                .define('/', Tags.Items.RODS_WOODEN)
+                .define('0', ModItems.ALL_SEEING_LENS.get())
+                .define('.', Items.IRON_NUGGET)
+                .unlockedBy("has_item", InventoryChangeTrigger.Instance.hasItems(ModItems.ALL_SEEING_LENS.get()))
+                .save(consumer);
         oreSmelting(ModBlocks.ELEMENTAL_STONE.get(), ModItems.ELEMENTAL_SHARDS.get(), 0.7f, 200, consumer);
     }
     // Elemental Combination recipes

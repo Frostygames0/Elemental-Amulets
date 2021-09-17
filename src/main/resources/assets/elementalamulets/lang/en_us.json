@@ -3,7 +3,7 @@
 
   "item.elementalamulets.guide_book": "Elemental Guide",
   "item.elementalamulets.guide_book.subtitle": "Contains all knowledge about Elemental Amulets",
-
+  "item.elementalamulets.all_seeing_lens": "All-seeing lens",
   "item.elementalamulets.elemental_shards": "Elemental Shards",
   "item.elementalamulets.elemental_shards.latin_variant": "Elemental Shards",
   "item.elementalamulets.fire_element": "Element of Fire",
@@ -70,6 +70,7 @@
   "jei.elementalamulets.elements.description": "Elements are the five main powers in Minecraft's world!",
   "jei.elementalamulets.convertibles.description": "When 6 of these are combined with empty element(Elemental Shards) they produce %s ",
   "jei.elementalamulets.aether_element.description": "Small amount of aether magnetized to a shard. Used in upgrade combinations",
+  "jei.elementalamulets.all_seeing_lens.description": "A very rare item, only one person knows how to do it.\n Jeweller sells it on level 4",
 
   "patchouli.elementalamulets.landing": "Hello $(thing)$(playername)!$() This $(l)magical guide $() will provide you with all knowledge you need! $(br)Book will expand itself when a new knowledge is acquired! Everything(almost) about this mod is described here!",
   "patchouli.elementalamulets.not_present": "Patchouli is not detected! Please install patchouli in order to get access to this book",
@@ -86,6 +87,8 @@
   "advancements.elementalamulets.combine_aether.desc": "Combine the legendary fifth element, aether...",
   "advancements.elementalamulets.amulet_max": "Maximum power!",
   "advancements.elementalamulets.amulet_max.desc": "Upgrade amulet to the highest tier",
+  "advancements.elementalamulets.wear_all_amulets": "The Elemental God!",
+  "advancements.elementalamulets.wear_all_amulets.desc": "Wear all amulets at least once",
 
   "commands.elementalamulets.give.success": "Successfully gave Tier %s %2$s to: %3$s",
   "commands.elementalamulets.give.failure": "Error! %s is not an elemental amulet!",

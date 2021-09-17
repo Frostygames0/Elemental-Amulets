@@ -55,6 +55,7 @@ public class JEIPlugin implements IModPlugin {
         // Item descriptions
         registration.addIngredientInfo(ModItems.getAmulets().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.amulets.description"));
         registration.addIngredientInfo(ModTags.ELEMENTS.getValues().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.elements.description"));
+        registration.addIngredientInfo(new ItemStack(ModItems.ALL_SEEING_LENS.get()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.all_seeing_lens.description"));
 
         // Elements description
         registration.addIngredientInfo(ModTags.AIR_ELEMENT_CONVERTIBLE.getValues().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.convertibles.description", new TranslationTextComponent(ModItems.AIR_ELEMENT.get().getDescriptionId()).withStyle(TextFormatting.GRAY)));
