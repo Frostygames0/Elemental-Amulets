@@ -1,9 +1,11 @@
 package frostygames0.elementalamulets.items.amulets;
 
 import frostygames0.elementalamulets.ElementalAmulets;
+import frostygames0.elementalamulets.config.ModConfig;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -12,6 +14,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeMod;
+import top.theillusivec4.curios.api.SlotContext;
 
 
 import javax.annotation.Nullable;
@@ -28,20 +31,42 @@ public class WaterAmulet extends AmuletItem {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
-        tooltip.add(new TranslationTextComponent("item.elementalamulets.wip").withStyle(TextFormatting.RED));
+        tooltip.add(new TranslationTextComponent("item.elementalamulets.wip").withStyle(TextFormatting.YELLOW));
     }
 
     @Override
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
-        World level = livingEntity.level;
-        if(!level.isClientSide()) {
+        if(livingEntity.level.isClientSide()) {
             ModifiableAttributeInstance att = livingEntity.getAttribute(ForgeMod.SWIM_SPEED.get());
             AttributeModifier attMod = new AttributeModifier(MODIFIER_UUID, new ResourceLocation(ElementalAmulets.MOD_ID, "speed").toString(),
-                    1, AttributeModifier.Operation.MULTIPLY_BASE);
+                    this.getSwimSpeed(stack), AttributeModifier.Operation.MULTIPLY_TOTAL);
             livingEntity.setAirSupply(livingEntity.getAirSupply());
             if(livingEntity.isUnderWater()) {
-
+                if(livingEntity.isSwimming()) {
+                    if (!att.hasModifier(attMod)) {
+                        att.addTransientModifier(attMod);
+                    }
+                } else {
+                    if (att.hasModifier(attMod)) {
+                        att.removeModifier(attMod);
+                    }
+                }
+                if(livingEntity.tickCount % 20 == 0) livingEntity.setAirSupply(300); // TODO Make it higher with tiers
             }
         }
+    }
+
+    @Override
+    public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
+        ModifiableAttributeInstance att = slotContext.getWearer().getAttribute(Attributes.MOVEMENT_SPEED);
+        if(stack.getItem() != newStack.getItem()) {
+            if (att.getModifier(MODIFIER_UUID) != null) {
+                att.removeModifier(MODIFIER_UUID);
+            }
+        }
+    }
+
+    public float getSwimSpeed(ItemStack stack) {
+        return (float) ModConfig.cached.WATER_AMULET_SPEED_BOOST*this.getTier(stack);
     }
 }
