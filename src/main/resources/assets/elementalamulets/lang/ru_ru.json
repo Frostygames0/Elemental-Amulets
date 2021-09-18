@@ -90,6 +90,8 @@
   "advancements.elementalamulets.wear_all_amulets": "Бог Элементаля",
   "advancements.elementalamulets.wear_all_amulets.desc": "Поносите все амулеты хотя-бы однажды",
 
+  "death.attack.elementalamulets.leaf_cut": "%s был изрезан досмерти листощитом",
+
   "commands.elementalamulets.give.success": "Успешно выдал %2$s уровня %s: %3$s",
   "commands.elementalamulets.give.failure": "Ошибка! %s не является элементальным амулетом",
 

@@ -1,6 +1,7 @@
 package frostygames0.elementalamulets.items.amulets;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.client.models.LeafShield;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.core.util.NBTUtil;
@@ -10,6 +11,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -24,6 +26,7 @@ import java.util.List;
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 public class TerraProtectionAmulet extends AmuletItem {
+    public static final DamageSource LEAF_CUT = new DamageSource(ElementalAmulets.MOD_ID+".leaf_cut");
     public static final String CHARGES_TAG = modPrefix("charge").toString();
 
     public TerraProtectionAmulet(Properties properties) {

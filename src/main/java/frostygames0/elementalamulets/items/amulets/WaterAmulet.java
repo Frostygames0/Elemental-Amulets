@@ -40,7 +40,6 @@ public class WaterAmulet extends AmuletItem {
             ModifiableAttributeInstance att = livingEntity.getAttribute(ForgeMod.SWIM_SPEED.get());
             AttributeModifier attMod = new AttributeModifier(MODIFIER_UUID, new ResourceLocation(ElementalAmulets.MOD_ID, "speed").toString(),
                     this.getSwimSpeed(stack), AttributeModifier.Operation.MULTIPLY_TOTAL);
-            livingEntity.setAirSupply(livingEntity.getAirSupply());
             if(livingEntity.isUnderWater()) {
                 if(livingEntity.isSwimming()) {
                     if (!att.hasModifier(attMod)) {
@@ -51,7 +50,7 @@ public class WaterAmulet extends AmuletItem {
                         att.removeModifier(attMod);
                     }
                 }
-                if(livingEntity.tickCount % 20 == 0) livingEntity.setAirSupply(300); // TODO Make it higher with tiers
+                if(this.getTier(stack) > 2) livingEntity.setAirSupply(300);
             }
         }
     }

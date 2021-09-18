@@ -6,7 +6,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.DamagingProjectileEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.EntityRayTraceResult;
@@ -28,7 +27,7 @@ public class TerraProtectionAmuletEffect {
                             LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
                             event.setCanceled(true);
                             amulet.removeOneCharge(stack);
-                            attacker.hurt(DamageSource.MAGIC, amulet.getReflectedDamageMulti(stack));
+                            attacker.hurt(TerraProtectionAmulet.LEAF_CUT, amulet.getReflectedDamageMulti(stack));
                         }
                     }
                 });

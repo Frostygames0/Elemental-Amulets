@@ -90,6 +90,8 @@
   "advancements.elementalamulets.wear_all_amulets": "The Elemental God!",
   "advancements.elementalamulets.wear_all_amulets.desc": "Wear all amulets at least once",
 
+  "death.attack.elementalamulets.leaf_cut": "%s was cut to death by leaf shield!",
+
   "commands.elementalamulets.give.success": "Successfully gave Tier %s %2$s to: %3$s",
   "commands.elementalamulets.give.failure": "Error! %s is not an elemental amulet!",
 
