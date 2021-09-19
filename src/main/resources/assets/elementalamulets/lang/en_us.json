@@ -48,7 +48,11 @@
   "item.elementalamulets.air_amulet": "Amulet of Air",
   "item.elementalamulets.air_amulet.tooltip": "Control air! Hold SHIFT to stop!",
 
-  "item.elementalamulets.wip": "This item is currently a little bit buggy! Sorry for that :/",
+  "item.elementalamulets.earth_amulet": "Amulet of Earth",
+  "item.elementalamulets.earth_amulet.tooltip": "Farming and other green activities will be boosted",
+
+  "item.elementalamulets.wip_50": "This item is currently a little bit buggy! Sorry for that :/",
+  "item.elementalamulets.wip": "This item is currently not working! Sorry for that :/",
 
   "block.elementalamulets.elemental_combinator": "Elemental Combinator",
   "block.elementalamulets.elemental_combinator.guititle": "Combination",

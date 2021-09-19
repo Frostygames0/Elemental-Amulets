@@ -1,12 +1,13 @@
 {
   "replace": false,
   "values": [
+    "elementalamulets:water_amulet",
+    "elementalamulets:earth_amulet",
     "elementalamulets:fire_amulet",
+    "elementalamulets:air_amulet",
     "elementalamulets:speed_amulet",
     "elementalamulets:jump_amulet",
-    "elementalamulets:invisibility_amulet",
     "elementalamulets:protection_amulet",
-    "elementalamulets:water_amulet",
-    "elementalamulets:air_amulet"
+    "elementalamulets:invisibility_amulet"
   ]
 }

@@ -48,6 +48,10 @@
   "item.elementalamulets.air_amulet": "Амулет воздуха",
   "item.elementalamulets.air_amulet.tooltip": "Управляйте воздухом! Удерживайте SHIFT чтобы остановиться",
 
+  "item.elementalamulets.earth_amulet": "Амулет земли",
+  "item.elementalamulets.earth_amulet.tooltip": "Фермерство и другие зеленые занятия будут ускорены",
+
+  "item.elementalamulets.wip_50": "Данный предмет сейчас не работает! Прощу прощения за это :/",
   "item.elementalamulets.wip": "Данный предмет сейчас немного баганный! Прощу прощения за это :/",
 
   "block.elementalamulets.elemental_combinator": "Объединитель элементаля",

@@ -1,6 +1,7 @@
 package frostygames0.elementalamulets.items.amulets;
 
 import frostygames0.elementalamulets.ElementalAmulets;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -28,7 +29,7 @@ public class AirAmulet extends AmuletItem {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
-        tooltip.add(new TranslationTextComponent("item.elementalamulets.wip").withStyle(TextFormatting.YELLOW));
+        if(Screen.hasShiftDown()) tooltip.add(new TranslationTextComponent("item.elementalamulets.wip_50").withStyle(TextFormatting.YELLOW));
     }
 
     @Override
