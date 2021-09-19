@@ -25,18 +25,16 @@ public class ModItems {
     // Mod's guide book
     public static final RegistryObject<Item> GUIDE_BOOK = ITEMS.register("guide_book",
             () -> new GuideBook(new Item.Properties().tab(ElementalAmulets.GROUP).stacksTo(1)));
-    public static final RegistryObject<Item> ALL_SEEING_LENS = ITEMS.register("all_seeing_lens",
-            () -> new Item(new Item.Properties().tab(ElementalAmulets.GROUP).stacksTo(16).rarity(Rarity.UNCOMMON)));
+
     // Mod BlockItems
     public static final RegistryObject<BlockItem> ELEMENTAL_COMBINATOR_BLOCK = ITEMS.register("elemental_combinator",
             () -> new BlockItem(ModBlocks.ELEMENTAL_COMBINATOR.get(), new Item.Properties().tab(ElementalAmulets.GROUP)));
-    public static final RegistryObject<BlockItem> ELEMENTAL_FOCUS = ITEMS.register("celestial_focus",
+    public static final RegistryObject<BlockItem> CELESTIAL_FOCUS = ITEMS.register("celestial_focus",
             () -> new BlockItem(ModBlocks.CELESTIAL_FOCUS.get(), new Item.Properties().tab(ElementalAmulets.GROUP)));
     public static final RegistryObject<BlockItem> ELEMENTAL_ORE = ITEMS.register("elemental_ore",
             () -> new BlockItem(ModBlocks.ELEMENTAL_STONE.get(), new Item.Properties().tab(ElementalAmulets.GROUP)));
 
     // Elements
-    // TODO Re-Do this rarity nonsense for changing colors
     public static final RegistryObject<Item> ELEMENTAL_SHARDS = ITEMS.register("elemental_shards",
             () -> new ElementItem(Rarity.COMMON));
     public static final RegistryObject<Item> FIRE_ELEMENT = ITEMS.register("fire_element",
@@ -50,16 +48,8 @@ public class ModItems {
     public static final RegistryObject<Item> AETHER_ELEMENT = ITEMS.register("aether_element",
             () -> new ElementItem(Rarity.RARE, new TranslationTextComponent("item.elementalamulets.aether_element.tooltip").withStyle(TextFormatting.GRAY)));
 
-    // Sub-Elements
-    /*
-    public static final RegistryObject<Item> JUMP_ELEMENT = ITEMS.register("jump_element",
-            () -> new ElementItem(ElementalRarity.JUMP, new TranslationTextComponent("item.elementalamulets.sub_element.tooltip")));
-    public static final RegistryObject<Item> INVISIBLE_ELEMENT = ITEMS.register("invisible_element",
-            () -> new ElementItem(Rarity.COMMON, new TranslationTextComponent("item.elementalamulets.sub_element.tooltip")));
-    public static final RegistryObject<Item> SPEED_ELEMENT = ITEMS.register("speed_element",
-            () -> new ElementItem(ElementalRarity.SPEED, new TranslationTextComponent("item.elementalamulets.sub_element.tooltip")));
-    public static final RegistryObject<Item> FREEZE_ELEMENT = ITEMS.register("freeze_element",
-            () -> new Item(new Item.Properties().group(null)));*/
+    public static final RegistryObject<Item> ALL_SEEING_LENS = ITEMS.register("all_seeing_lens",
+            () -> new Item(new Item.Properties().tab(ElementalAmulets.GROUP).stacksTo(16).rarity(Rarity.UNCOMMON)));
 
     // Amulets
     public static final RegistryObject<Item> EMPTY_AMULET = ITEMS.register("empty_amulet",
@@ -81,10 +71,6 @@ public class ModItems {
 
     public static final RegistryObject<Item> AMULET_BELT = ITEMS.register("amulet_belt",
             () -> new AmuletBelt(new Item.Properties().tab(null).stacksTo(1)));
-
-    // Unfinished amulets
-    /*public static final RegistryObject<Item> WATER_FREEZING_AMULET = ITEMS.register("water_freeze_amulet",
-         () -> new UnfinishedAmulets(new Item.Properties().group(null).maxDamage(1000)));*/
 
     public static List<AmuletItem> getAmulets() {
         List<AmuletItem> items = new ArrayList<>();
