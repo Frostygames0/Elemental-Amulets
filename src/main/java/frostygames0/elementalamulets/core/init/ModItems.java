@@ -9,8 +9,6 @@ import frostygames0.elementalamulets.items.amulets.*;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Rarity;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -38,15 +36,15 @@ public class ModItems {
     public static final RegistryObject<Item> ELEMENTAL_SHARDS = ITEMS.register("elemental_shards",
             () -> new ElementItem(Rarity.COMMON));
     public static final RegistryObject<Item> WATER_ELEMENT = ITEMS.register("water_element",
-            () -> new ElementItem(ElementalRarity.WATER, new TranslationTextComponent("item.elementalamulets.water_element.tooltip").withStyle(TextFormatting.GRAY)));
+            () -> new ElementItem(ElementalRarity.WATER));
     public static final RegistryObject<Item> EARTH_ELEMENT = ITEMS.register("earth_element",
-            () -> new ElementItem(ElementalRarity.EARTH, new TranslationTextComponent("item.elementalamulets.earth_element.tooltip").withStyle(TextFormatting.GRAY)));
+            () -> new ElementItem(ElementalRarity.EARTH));
     public static final RegistryObject<Item> FIRE_ELEMENT = ITEMS.register("fire_element",
-            () -> new ElementItem(ElementalRarity.FIRE, new TranslationTextComponent("item.elementalamulets.fire_element.tooltip").withStyle(TextFormatting.GRAY)));
+            () -> new ElementItem(ElementalRarity.FIRE));
     public static final RegistryObject<Item> AIR_ELEMENT = ITEMS.register("air_element",
-            () -> new ElementItem(ElementalRarity.AIR, new TranslationTextComponent("item.elementalamulets.air_element.tooltip").withStyle(TextFormatting.GRAY)));
+            () -> new ElementItem(ElementalRarity.AIR));
     public static final RegistryObject<Item> AETHER_ELEMENT = ITEMS.register("aether_element",
-            () -> new ElementItem(Rarity.RARE, new TranslationTextComponent("item.elementalamulets.aether_element.tooltip").withStyle(TextFormatting.GRAY)));
+            () -> new ElementItem(Rarity.RARE));
 
     public static final RegistryObject<Item> ALL_SEEING_LENS = ITEMS.register("all_seeing_lens",
             () -> new Item(new Item.Properties().tab(ElementalAmulets.GROUP).stacksTo(16).rarity(Rarity.UNCOMMON)));
@@ -72,7 +70,7 @@ public class ModItems {
             () -> new InvisibilityAmulet(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(ElementalRarity.AIR).durability(1000)));
 
     public static final RegistryObject<Item> AMULET_BELT = ITEMS.register("amulet_belt",
-            () -> new AmuletBelt(new Item.Properties().tab(null).stacksTo(1)));
+            () -> new AmuletBelt(new Item.Properties().tab(ElementalAmulets.GROUP).stacksTo(1)));
 
     public static List<AmuletItem> getAmulets() {
         List<AmuletItem> items = new ArrayList<>();

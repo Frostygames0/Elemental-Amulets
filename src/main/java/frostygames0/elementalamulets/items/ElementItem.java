@@ -7,11 +7,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 
 import javax.annotation.Nullable;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -20,17 +21,15 @@ import java.util.List;
  * @date 01.06.2021 17:40
  */
 public class ElementItem extends Item {
-    private final List<ITextComponent> description;
 
-    public ElementItem(Rarity color, @Nullable ITextComponent... description) {
+    public ElementItem(Rarity color) {
         super(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(color));
-        this.description = Arrays.asList(description);
     }
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
-        if (description != null) tooltip.addAll(description);
+        tooltip.add(new TranslationTextComponent(this.getOrCreateDescriptionId()+".tooltip").withStyle(TextFormatting.GRAY));
     }
 
     @Override
