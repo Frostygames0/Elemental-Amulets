@@ -3,7 +3,7 @@
 
   "item.elementalamulets.guide_book": "Элементальное руководство",
   "item.elementalamulets.guide_book.subtitle": "Содержит в себе все знания о элементальных амулетах",
-
+  "item.elementalamulets.all_seeing_lens": "Всевидящая линза",
   "item.elementalamulets.elemental_shards": "Элементальные осколки",
   "item.elementalamulets.elemental_shards.latin_variant": "Элементал Шардс",
   "item.elementalamulets.fire_element": "Стихия огня",
@@ -48,12 +48,18 @@
   "item.elementalamulets.air_amulet": "Амулет воздуха",
   "item.elementalamulets.air_amulet.tooltip": "Управляйте воздухом! Удерживайте SHIFT чтобы остановиться",
 
+  "item.elementalamulets.earth_amulet": "Амулет земли",
+  "item.elementalamulets.earth_amulet.tooltip": "Фермерство и другие зеленые занятия будут ускорены",
+
+  "item.elementalamulets.wip_50": "Данный предмет сейчас не работает! Прощу прощения за это :/",
   "item.elementalamulets.wip": "Данный предмет сейчас немного баганный! Прощу прощения за это :/",
 
   "block.elementalamulets.elemental_combinator": "Объединитель элементаля",
   "block.elementalamulets.elemental_combinator.guititle": "Объединение",
   "block.elementalamulets.elemental_combinator.cooldown": "Объединитель перезаряжается! %s сек. осталось",
   "block.elementalamulets.elemental_combinator.no_sky": "%s не может видеть небо!",
+  "block.elementalamulets.celestial_focus": "Небесный фокус",
+  "block.elementalamulets.celestial_focus.tooltip": "Сами небеса ускорят элементальное объединение",
   "block.elementalamulets.elemental_ore": "Элементальная руда",
 
   "player.elementalamulets.brokenamulet.warn": "Ваш %s был сломан!",
@@ -68,6 +74,7 @@
   "jei.elementalamulets.elements.description": "Элементы это четыре главных силы в мире Minecraft",
   "jei.elementalamulets.convertibles.description": "Когда 6 этих предметов объединены с пустым элементов(Элементальные осколки) они создают %s ",
   "jei.elementalamulets.aether_element.description": "Небольшое количество эфира примагниченного к осколку. Используются в улучшающих комбинациях",
+  "jei.elementalamulets.all_seeing_lens.description": "Очень редкий предмет, только один человек знает как его сделать\n Ювелир продает это на 4 уровне",
 
   "patchouli.elementalamulets.landing": "Hello $(thing)$(playername)!$() This $(l)magical guide $() will provide you with all knowledge you need! $(br)Book will expand itself when a new knowledge is acquired! Everything(almost) about this mod is described here!",
   "patchouli.elementalamulets.not_present": "Patchouli не обнаружен!! Пожалуйста установите Patchouli, если вы хотите открыть книгу",
@@ -80,8 +87,14 @@
   "advancements.elementalamulets.amulet.desc": "Оденьте любой элементальный амулет",
   "advancements.elementalamulets.combine": "Элементальное объединение",
   "advancements.elementalamulets.combine.desc": "Используйте Элементальный объединитель впервые!",
+  "advancements.elementalamulets.combine_aether": "Пятый элемент",
+  "advancements.elementalamulets.combine_aether.desc": "Скомбинируйте легендарный пятый элемент, эфир...",
   "advancements.elementalamulets.amulet_max": "Максимальная мощь!",
   "advancements.elementalamulets.amulet_max.desc": "Улучшите амулет до самого высокого уровня",
+  "advancements.elementalamulets.wear_all_amulets": "Бог Элементаля",
+  "advancements.elementalamulets.wear_all_amulets.desc": "Поносите все амулеты хотя-бы однажды",
+
+  "death.attack.elementalamulets.leaf_cut": "%s был изрезан досмерти листощитом",
 
   "commands.elementalamulets.give.success": "Успешно выдал %2$s уровня %s: %3$s",
   "commands.elementalamulets.give.failure": "Ошибка! %s не является элементальным амулетом",

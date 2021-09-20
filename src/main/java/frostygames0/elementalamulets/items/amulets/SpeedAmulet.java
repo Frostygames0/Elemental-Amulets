@@ -21,13 +21,13 @@ public class SpeedAmulet extends AmuletItem {
 
     @Override
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
-        if(!livingEntity.world.isRemote()) {
+        if(!livingEntity.level.isClientSide()) {
             ModifiableAttributeInstance att = livingEntity.getAttribute(Attributes.MOVEMENT_SPEED);
             AttributeModifier attMod = new AttributeModifier(MODIFIER_UUID, new ResourceLocation(ElementalAmulets.MOD_ID, "speed").toString(),
                     this.getSpeed(stack), AttributeModifier.Operation.MULTIPLY_BASE);
             if(livingEntity.isSprinting()) {
                 if (!att.hasModifier(attMod)) {
-                    att.applyNonPersistentModifier(attMod);
+                    att.addTransientModifier(attMod);
                 }
                 //if(livingEntity.ticksExisted % 20 == 0) stack.damageItem(10, livingEntity, livingEntity1 -> livingEntity1.sendBreakAnimation(EquipmentSlotType.MAINHAND));
             } else {

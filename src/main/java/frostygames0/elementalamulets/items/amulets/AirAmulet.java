@@ -1,6 +1,7 @@
 package frostygames0.elementalamulets.items.amulets;
 
 import frostygames0.elementalamulets.ElementalAmulets;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -26,20 +27,19 @@ public class AirAmulet extends AmuletItem {
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        super.addInformation(stack, worldIn, tooltip, flagIn);
-        tooltip.add(new TranslationTextComponent("item.elementalamulets.wip").mergeStyle(TextFormatting.YELLOW));
+    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        super.appendHoverText(stack, worldIn, tooltip, flagIn);
+        if(Screen.hasShiftDown()) tooltip.add(new TranslationTextComponent("item.elementalamulets.wip_50").withStyle(TextFormatting.YELLOW));
     }
 
     @Override
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
-        if(!livingEntity.world.isRemote()) {
+        if(!livingEntity.level.isClientSide()) {
             ModifiableAttributeInstance gravity = livingEntity.getAttribute(ForgeMod.ENTITY_GRAVITY.get());
             AttributeModifier attMod = new AttributeModifier(MODIFIER_UUID, new ResourceLocation(ElementalAmulets.MOD_ID, "speed").toString(),
                     this.getFloating(stack), AttributeModifier.Operation.ADDITION);
-            boolean flag = livingEntity.getMotion().y <= 0.0D && !livingEntity.isSneaking();
-            if (flag) {
-                if (!gravity.hasModifier(attMod)) gravity.applyNonPersistentModifier(attMod);
+            if (livingEntity.getDeltaMovement().y <= 0.0D && !livingEntity.isShiftKeyDown()) {
+                if (!gravity.hasModifier(attMod)) gravity.addTransientModifier(attMod);
                 livingEntity.fallDistance = 0.0F;
             } else if (gravity.hasModifier(attMod)) {
                 gravity.removeModifier(attMod);

@@ -3,7 +3,7 @@
 
   "item.elementalamulets.guide_book": "Elemental Guide",
   "item.elementalamulets.guide_book.subtitle": "Contains all knowledge about Elemental Amulets",
-
+  "item.elementalamulets.all_seeing_lens": "All-seeing lens",
   "item.elementalamulets.elemental_shards": "Elemental Shards",
   "item.elementalamulets.elemental_shards.latin_variant": "Elemental Shards",
   "item.elementalamulets.fire_element": "Element of Fire",
@@ -48,12 +48,18 @@
   "item.elementalamulets.air_amulet": "Amulet of Air",
   "item.elementalamulets.air_amulet.tooltip": "Control air! Hold SHIFT to stop!",
 
-  "item.elementalamulets.wip": "This item is currently a little bit buggy! Sorry for that :/",
+  "item.elementalamulets.earth_amulet": "Amulet of Earth",
+  "item.elementalamulets.earth_amulet.tooltip": "Farming and other green activities will be boosted",
+
+  "item.elementalamulets.wip_50": "This item is currently a little bit buggy! Sorry for that :/",
+  "item.elementalamulets.wip": "This item is currently not working! Sorry for that :/",
 
   "block.elementalamulets.elemental_combinator": "Elemental Combinator",
   "block.elementalamulets.elemental_combinator.guititle": "Combination",
   "block.elementalamulets.elemental_combinator.cooldown": "%s is recharging! %1$ss left",
   "block.elementalamulets.elemental_combinator.no_sky": "%s can't see sky!",
+  "block.elementalamulets.celestial_focus": "Celestial Focus",
+  "block.elementalamulets.celestial_focus.tooltip": "The heavens themselves will increase the speed of elemental combination",
   "block.elementalamulets.elemental_ore": "Elemental Ore",
 
   "player.elementalamulets.brokenamulet.warn": "Your %s just got broken!",
@@ -68,6 +74,7 @@
   "jei.elementalamulets.elements.description": "Elements are the five main powers in Minecraft's world!",
   "jei.elementalamulets.convertibles.description": "When 6 of these are combined with empty element(Elemental Shards) they produce %s ",
   "jei.elementalamulets.aether_element.description": "Small amount of aether magnetized to a shard. Used in upgrade combinations",
+  "jei.elementalamulets.all_seeing_lens.description": "A very rare item, only one person knows how to do it.\n Jeweller sells it on level 4",
 
   "patchouli.elementalamulets.landing": "Hello $(thing)$(playername)!$() This $(l)magical guide $() will provide you with all knowledge you need! $(br)Book will expand itself when a new knowledge is acquired! Everything(almost) about this mod is described here!",
   "patchouli.elementalamulets.not_present": "Patchouli is not detected! Please install patchouli in order to get access to this book",
@@ -80,8 +87,14 @@
   "advancements.elementalamulets.amulet.desc": "Wear any elemental amulet!",
   "advancements.elementalamulets.combine": "Elemental Combination",
   "advancements.elementalamulets.combine.desc": "Use Elemental Combinator for the first time!",
+  "advancements.elementalamulets.combine_aether": "The Fifth Element",
+  "advancements.elementalamulets.combine_aether.desc": "Combine the legendary fifth element, aether...",
   "advancements.elementalamulets.amulet_max": "Maximum power!",
   "advancements.elementalamulets.amulet_max.desc": "Upgrade amulet to the highest tier",
+  "advancements.elementalamulets.wear_all_amulets": "The Elemental God!",
+  "advancements.elementalamulets.wear_all_amulets.desc": "Wear all amulets at least once",
+
+  "death.attack.elementalamulets.leaf_cut": "%s was cut to death by leaf shield!",
 
   "commands.elementalamulets.give.success": "Successfully gave Tier %s %2$s to: %3$s",
   "commands.elementalamulets.give.failure": "Error! %s is not an elemental amulet!",

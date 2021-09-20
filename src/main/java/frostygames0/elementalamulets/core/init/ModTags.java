@@ -16,7 +16,7 @@ public class ModTags {
     public static final ITag.INamedTag<Item> EARTH_ELEMENT_CONVERTIBLE = forge(ElementalAmulets.MOD_ID+"/earth_element_convertible");
 
     private static ITag.INamedTag<Item> tag(String name) {
-        return ItemTags.makeWrapperTag(new ResourceLocation(ElementalAmulets.MOD_ID, name).toString());
+        return ItemTags.bind(new ResourceLocation(ElementalAmulets.MOD_ID, name).toString());
     }
 
     private static ITag.INamedTag<Item> forge(String name) {

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "/0/",
+    "/ /",
+    ". ."
+  ],
+  "key": {
+    "/": {
+      "tag": "forge:rods/wooden"
+    },
+    "0": {
+      "item": "elementalamulets:all_seeing_lens"
+    },
+    ".": {
+      "item": "minecraft:iron_nugget"
+    }
+  },
+  "result": {
+    "item": "elementalamulets:celestial_focus"
+  }
+}

@@ -30,36 +30,45 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
 
 
     @Override
-    protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
+    protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
         this.registerVanillaRecipes(consumer);
         this.registerModRecipes(consumer);
     }
     // Vanilla recipes(crafting, smelting, etc.)
     private void registerVanillaRecipes(Consumer<IFinishedRecipe> consumer) {
-        ShapedRecipeBuilder.shapedRecipe(ModItems.ELEMENTAL_COMBINATOR_BLOCK.get())
-                .patternLine("_=_")
-                .patternLine("#4#")
-                .patternLine("000")
-                .key('_', Items.RED_CARPET)
-                .key('=', Items.IRON_INGOT)
-                .key('4', ModItems.ELEMENTAL_SHARDS.get())
-                .key('0', Tags.Items.COBBLESTONE)
-                .key('#', ItemTags.PLANKS)
-                .addCriterion("has_item", InventoryChangeTrigger.Instance.forItems(ModItems.ELEMENTAL_SHARDS.get()))
-                .build(consumer);
-        ShapelessRecipeBuilder.shapelessRecipe(ModItems.GUIDE_BOOK.get())
-                .addIngredient(Items.BOOK)
-                .addIngredient(ModTags.ELEMENTS)
-                .addCriterion("has_item", InventoryChangeTrigger.Instance.forItems(ModItems.ELEMENTAL_SHARDS.get()))
-                .build(consumer);
-        ShapedRecipeBuilder.shapedRecipe(ModItems.EMPTY_AMULET.get())
-                .patternLine(" ##")
-                .patternLine("xx#")
-                .patternLine("xx ")
-                .key('#', Tags.Items.STRING)
-                .key('x', ModItems.ELEMENTAL_SHARDS.get())
-                .addCriterion("has_item", InventoryChangeTrigger.Instance.forItems(ModItems.ELEMENTAL_SHARDS.get()))
-                .build(consumer);
+        ShapedRecipeBuilder.shaped(ModItems.ELEMENTAL_COMBINATOR_BLOCK.get())
+                .pattern("_=_")
+                .pattern("#4#")
+                .pattern("000")
+                .define('_', Items.RED_CARPET)
+                .define('=', Items.IRON_INGOT)
+                .define('4', ModItems.ELEMENTAL_SHARDS.get())
+                .define('0', Tags.Items.COBBLESTONE)
+                .define('#', ItemTags.PLANKS)
+                .unlockedBy("has_item", InventoryChangeTrigger.Instance.hasItems(ModItems.ELEMENTAL_SHARDS.get()))
+                .save(consumer);
+        ShapelessRecipeBuilder.shapeless(ModItems.GUIDE_BOOK.get())
+                .requires(Items.BOOK)
+                .requires(ModTags.ELEMENTS)
+                .unlockedBy("has_item", InventoryChangeTrigger.Instance.hasItems(ModItems.ELEMENTAL_SHARDS.get()))
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(ModItems.EMPTY_AMULET.get())
+                .pattern(" ##")
+                .pattern("xx#")
+                .pattern("xx ")
+                .define('#', Tags.Items.STRING)
+                .define('x', ModItems.ELEMENTAL_SHARDS.get())
+                .unlockedBy("has_item", InventoryChangeTrigger.Instance.hasItems(ModItems.ELEMENTAL_SHARDS.get()))
+                .save(consumer);
+        ShapedRecipeBuilder.shaped(ModBlocks.CELESTIAL_FOCUS.get())
+                .pattern("/0/")
+                .pattern("/ /")
+                .pattern(". .")
+                .define('/', Tags.Items.RODS_WOODEN)
+                .define('0', ModItems.ALL_SEEING_LENS.get())
+                .define('.', Items.IRON_NUGGET)
+                .unlockedBy("has_item", InventoryChangeTrigger.Instance.hasItems(ModItems.ALL_SEEING_LENS.get()))
+                .save(consumer);
         oreSmelting(ModBlocks.ELEMENTAL_STONE.get(), ModItems.ELEMENTAL_SHARDS.get(), 0.7f, 200, consumer);
     }
     // Elemental Combination recipes
@@ -231,13 +240,13 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
     }
 
     private static void oreSmelting(Block oreBlock, Item resultOre, float exp, int cookTime, Consumer<IFinishedRecipe> consumerIn) {
-        CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(oreBlock),
+        CookingRecipeBuilder.smelting(Ingredient.of(oreBlock),
                 resultOre, exp, cookTime)
-                .addCriterion("has_item", InventoryChangeTrigger.Instance.forItems(oreBlock))
-                .build(consumerIn, resultOre.getRegistryName());
-        CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(oreBlock),
+                .unlockedBy("has_item", InventoryChangeTrigger.Instance.hasItems(oreBlock))
+                .save(consumerIn, resultOre.getRegistryName());
+        CookingRecipeBuilder.blasting(Ingredient.of(oreBlock),
                 resultOre, exp, cookTime/2)
-                .addCriterion("has_item", InventoryChangeTrigger.Instance.forItems(oreBlock))
-                .build(consumerIn, resultOre.getRegistryName()+"_from_blasting");
+                .unlockedBy("has_item", InventoryChangeTrigger.Instance.hasItems(oreBlock))
+                .save(consumerIn, resultOre.getRegistryName()+"_from_blasting");
     }
 }

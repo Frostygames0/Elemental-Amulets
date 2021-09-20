@@ -5,10 +5,13 @@ import frostygames0.elementalamulets.client.renderer.ElementalCombinatorRenderer
 import frostygames0.elementalamulets.client.screens.AmuletBeltScreen;
 import frostygames0.elementalamulets.client.screens.ElementalCombinatorScreen;
 import frostygames0.elementalamulets.config.ModConfig;
+import frostygames0.elementalamulets.core.init.ModBlocks;
 import frostygames0.elementalamulets.core.init.ModContainers;
 import frostygames0.elementalamulets.core.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -27,11 +30,12 @@ public class ClientSetup {
     public static void clientSetup(final FMLClientSetupEvent event) {
         ElementalCombinatorRenderer.register();
         event.enqueueWork(() -> {
-            ScreenManager.registerFactory(ModContainers.ELEMENTAL_COMBINATOR_CONTAINER.get(), ElementalCombinatorScreen::new);
-            ScreenManager.registerFactory(ModContainers.AMULET_BELT_CONTAINER.get(), AmuletBeltScreen::new);
+            RenderTypeLookup.setRenderLayer(ModBlocks.CELESTIAL_FOCUS.get(), RenderType.translucent());
+            ScreenManager.register(ModContainers.ELEMENTAL_COMBINATOR_CONTAINER.get(), ElementalCombinatorScreen::new);
+            ScreenManager.register(ModContainers.AMULET_BELT_CONTAINER.get(), AmuletBeltScreen::new);
 
             ModItems.ITEMS.getEntries().stream().map(RegistryObject::get).filter(item -> item instanceof AmuletItem).forEach(
-                    item -> ItemModelsProperties.registerProperty(item, new ResourceLocation(AmuletItem.TIER_TAG),
+                    item -> ItemModelsProperties.register(item, new ResourceLocation(AmuletItem.TIER_TAG),
                             (stack, world, entity) -> ModConfig.cached.AMULETS_TIER_DIFFERENCE ? ((AmuletItem)item).getTier(stack) : 0));
         });
     }

@@ -1,6 +1,7 @@
 package frostygames0.elementalamulets.items.amulets;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.client.models.LeafShield;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.core.util.NBTUtil;
@@ -10,6 +11,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -24,6 +26,7 @@ import java.util.List;
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 public class TerraProtectionAmulet extends AmuletItem {
+    public static final DamageSource LEAF_CUT = new DamageSource(ElementalAmulets.MOD_ID+".leaf_cut");
     public static final String CHARGES_TAG = modPrefix("charge").toString();
 
     public TerraProtectionAmulet(Properties properties) {
@@ -31,16 +34,16 @@ public class TerraProtectionAmulet extends AmuletItem {
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        super.addInformation(stack, worldIn, tooltip, flagIn);
-        tooltip.add(new TranslationTextComponent("item.elementalamulets.protection_amulet.charges", new StringTextComponent(this.getCharges(stack) + "/" + 4 * this.getTier(stack)).mergeStyle(TextFormatting.YELLOW)).mergeStyle(TextFormatting.GOLD));
+    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        super.appendHoverText(stack, worldIn, tooltip, flagIn);
+        tooltip.add(new TranslationTextComponent("item.elementalamulets.protection_amulet.charges", new StringTextComponent(this.getCharges(stack) + "/" + 4 * this.getTier(stack)).withStyle(TextFormatting.YELLOW)).withStyle(TextFormatting.GOLD));
     }
 
     @Override
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
         super.curioTick(identifier, index, livingEntity, stack);
-        if(!livingEntity.world.isRemote()) {
-            if(livingEntity.ticksExisted % ModConfig.cached.PROTECTION_AMULET_CHARGE_TIME == 0) {
+        if(!livingEntity.level.isClientSide()) {
+            if(livingEntity.tickCount % ModConfig.cached.PROTECTION_AMULET_CHARGE_TIME == 0) {
                 if(getCharges(stack) < 4 * getTier(stack)) {
                     NBTUtil.putInteger(stack, CHARGES_TAG, getCharges(stack)+1);
                 }
@@ -54,15 +57,15 @@ public class TerraProtectionAmulet extends AmuletItem {
         float angle = (System.currentTimeMillis() / 15) % 360;
 
         if(ModConfig.cached.RENDER_LEAF_SHIELD && this.canProtect(stack)) {
-            matrixStack.push();
+            matrixStack.pushPose();
 
             matrixStack.scale(2.0f, 2.0f, 2.0f);
             matrixStack.translate(0, -0.7, 0);
-            matrixStack.rotate(Vector3f.YP.rotationDegrees(angle));
+            matrixStack.mulPose(Vector3f.YP.rotationDegrees(angle));
 
-            model.render(matrixStack, renderTypeBuffer.getBuffer(RenderType.getEntityTranslucent(modPrefix("textures/entity/amulets/leaf_shield_colored.png"))), light, OverlayTexture.NO_OVERLAY, 1.0f, 1.0f, 1.0f, 1.0f);
+            model.renderToBuffer(matrixStack, renderTypeBuffer.getBuffer(RenderType.entityTranslucent(modPrefix("textures/entity/amulets/leaf_shield_colored.png"))), light, OverlayTexture.NO_OVERLAY, 1.0f, 1.0f, 1.0f, 1.0f);
 
-            matrixStack.pop();
+            matrixStack.popPose();
         }
 
         // Calling super is important since super class renders amulet here

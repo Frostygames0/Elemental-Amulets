@@ -56,7 +56,7 @@ public class ElementalCombinationCategory implements IRecipeCategory<ElementalCo
     private IDrawableAnimated getArrow(ElementalCombination recipe) {
         int combinationTime = recipe.getCombinationTime();
         if(combinationTime < 1) {
-            combinationTime = 30;
+            combinationTime = ElementalCombination.DEFAULT_COMBINATION;
         }
         return this.cachedArrows.getUnchecked(combinationTime);
     }
@@ -94,7 +94,7 @@ public class ElementalCombinationCategory implements IRecipeCategory<ElementalCo
     @Override
     public void setIngredients(ElementalCombination recipe, IIngredients ingredients) {
         ingredients.setInputIngredients(recipe.getIngredients());
-        ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
+        ingredients.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
     }
 
     @Override
@@ -121,14 +121,14 @@ public class ElementalCombinationCategory implements IRecipeCategory<ElementalCo
 
     @Override
     public void draw(ElementalCombination recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
-        matrixStack.push();
+        matrixStack.pushPose();
         // Drawing arrow
         this.getArrow(recipe).draw(matrixStack, 84, 29);
 
         // Drawing text
         ITextComponent cooldown = new TranslationTextComponent("jei.elementalamulets.cooldown", recipe.getCombinationTime()/20.0f);
-        Minecraft.getInstance().fontRenderer.drawText(matrixStack, cooldown, 4, 77, 0xFF808080);
-        matrixStack.pop();
+        Minecraft.getInstance().font.draw(matrixStack, cooldown, 4, 77, 0xFF808080);
+        matrixStack.popPose();
     }
 
     @Override

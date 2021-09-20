@@ -26,19 +26,19 @@ public class ElementalCombinator extends Block {
     public static final BooleanProperty COMBINING = BooleanProperty.create("combining");
     public ElementalCombinator(Properties properties) {
         super(properties);
-        this.setDefaultState(this.getDefaultState().with(COMBINING, false));
+        this.registerDefaultState(this.defaultBlockState().setValue(COMBINING, false));
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if(worldIn.isRemote()) {
+    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+        if(worldIn.isClientSide()) {
             return ActionResultType.SUCCESS;
         }
-        TileEntity te = worldIn.getTileEntity(pos);
+        TileEntity te = worldIn.getBlockEntity(pos);
         if(te instanceof ElementalCombinatorTile) {
             ElementalCombinatorTile elementalCombinatorTile = (ElementalCombinatorTile) te;
-            if(!player.isSneaking()) {
-                NetworkHooks.openGui((ServerPlayerEntity) player, elementalCombinatorTile, elementalCombinatorTile.getPos());
+            if(!player.isShiftKeyDown()) {
+                NetworkHooks.openGui((ServerPlayerEntity) player, elementalCombinatorTile, elementalCombinatorTile.getBlockPos());
             } else {
                 elementalCombinatorTile.startCombination();
             }
@@ -49,22 +49,22 @@ public class ElementalCombinator extends Block {
     }
 
     @Override
-    public PushReaction getPushReaction(BlockState state) {
+    public PushReaction getPistonPushReaction(BlockState state) {
         return PushReaction.BLOCK;
     }
 
     @Override
-    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        if(!state.matchesBlock(newState.getBlock())) {
-            TileEntity tileEntity = worldIn.getTileEntity(pos);
+    public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+        if(!state.is(newState.getBlock())) {
+            TileEntity tileEntity = worldIn.getBlockEntity(pos);
             if(tileEntity instanceof ElementalCombinatorTile) {
                 tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
                     for (int i = 0; i < h.getSlots(); i++) {
-                        spawnAsEntity(worldIn, pos, h.getStackInSlot(i));
+                        popResource(worldIn, pos, h.getStackInSlot(i));
                     }
                 });
             }
-            super.onReplaced(state,worldIn,pos, newState, isMoving);
+            super.onRemove(state,worldIn,pos, newState, isMoving);
         }
     }
 
@@ -80,7 +80,7 @@ public class ElementalCombinator extends Block {
     }
 
     @Override
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(COMBINING);
     }
 }

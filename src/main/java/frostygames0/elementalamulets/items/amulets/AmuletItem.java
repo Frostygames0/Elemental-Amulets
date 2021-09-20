@@ -46,18 +46,18 @@ public abstract class AmuletItem extends Item implements ICurioItem {
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        super.addInformation(stack, worldIn, tooltip, flagIn);
+    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        super.appendHoverText(stack, worldIn, tooltip, flagIn);
         if(this.getTier(stack) > 0)
-            tooltip.add(new TranslationTextComponent("item.elementalamulets.common_amulet.tooltip.tier", new StringTextComponent(String.valueOf(this.getTier(stack))).mergeStyle(TextFormatting.YELLOW)).mergeStyle(TextFormatting.GOLD));
-        tooltip.add(new TranslationTextComponent(getDefaultTranslationKey()+".tooltip").mergeStyle(TextFormatting.GRAY));
+            tooltip.add(new TranslationTextComponent("item.elementalamulets.common_amulet.tooltip.tier", new StringTextComponent(String.valueOf(this.getTier(stack))).withStyle(TextFormatting.YELLOW)).withStyle(TextFormatting.GOLD));
+        tooltip.add(new TranslationTextComponent(getOrCreateDescriptionId()+".tooltip").withStyle(TextFormatting.GRAY));
     }
 
     @Override
     public void onEquip(SlotContext slotContext, ItemStack prevStack, ItemStack stack) {
         if(prevStack.getItem() != stack.getItem()) {
             LivingEntity entity = slotContext.getWearer();
-            if(!entity.world.isRemote() && entity instanceof ServerPlayerEntity)
+            if(!entity.level.isClientSide() && entity instanceof ServerPlayerEntity)
                 ModCriteriaTriggers.SUCCESS_USE.trigger((ServerPlayerEntity) entity, stack);
         }
     }
@@ -77,10 +77,10 @@ public abstract class AmuletItem extends Item implements ICurioItem {
     }
 
     @Override
-    public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
-        if(!this.hasTier) super.fillItemGroup(group, items);
+    public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
+        if(!this.hasTier) super.fillItemCategory(group, items);
         else {
-            if (isInGroup(group)) {
+            if (allowdedIn(group)) {
                 for (int i = 1; i <= MAX_TIER; ++i) {
                     ItemStack stack = new ItemStack(this);
                     items.add(getStackWithTier(stack, i));
@@ -96,16 +96,16 @@ public abstract class AmuletItem extends Item implements ICurioItem {
 
     @Override
     public void render(String identifier, int index, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int light, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack stack) {
-        matrixStack.push();
+        matrixStack.pushPose();
         ICurio.RenderHelper.translateIfSneaking(matrixStack, livingEntity);
         ICurio.RenderHelper.rotateIfSneaking(matrixStack, livingEntity);
 
         matrixStack.scale(0.7f, 0.7f, 0.7f); // Makes amulet smaller gugugaga
 
         AmuletModel amuletModel = new AmuletModel();
-        IVertexBuilder vertexBuilder = ItemRenderer.getBuffer(renderTypeBuffer, amuletModel.getRenderType(AmuletModel.getTexture(this, stack)), false, stack.hasEffect());
-        amuletModel.render(matrixStack, vertexBuilder, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-        matrixStack.pop();
+        IVertexBuilder vertexBuilder = ItemRenderer.getFoilBuffer(renderTypeBuffer, amuletModel.renderType(AmuletModel.getTexture(this, stack)), false, stack.hasFoil());
+        amuletModel.renderToBuffer(matrixStack, vertexBuilder, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        matrixStack.popPose();
     }
 
     @Override
@@ -116,7 +116,7 @@ public abstract class AmuletItem extends Item implements ICurioItem {
     @Nonnull
     @Override
     public ICurio.SoundInfo getEquipSound(SlotContext slotContext, ItemStack stack) {
-        return new ICurio.SoundInfo(SoundEvents.ITEM_ARMOR_EQUIP_GOLD, 1f,1f);
+        return new ICurio.SoundInfo(SoundEvents.ARMOR_EQUIP_GOLD, 1f,1f);
     }
 
     public int getTier(ItemStack stack) {

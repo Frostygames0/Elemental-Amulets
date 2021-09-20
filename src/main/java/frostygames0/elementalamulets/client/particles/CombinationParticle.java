@@ -15,9 +15,9 @@ public class CombinationParticle extends PortalParticle {
 
     public CombinationParticle(ClientWorld world, double x, double y, double z, double motionX, double motionY, double motionZ) {
         super(world, x, y, z, motionX, motionY, motionZ);
-        this.particleRed = 1;
-        this.particleGreen = 1;
-        this.particleBlue = 1;
+        this.rCol = 1;
+        this.gCol = 1;
+        this.bCol = 1;
     }
 
     public static class Factory implements IParticleFactory<BasicParticleType> {
@@ -28,9 +28,9 @@ public class CombinationParticle extends PortalParticle {
             this.spriteSet = spriteSet;
         }
 
-        public Particle makeParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             PortalParticle portalparticle = new CombinationParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed);
-            portalparticle.selectSpriteRandomly(this.spriteSet);
+            portalparticle.pickSprite(this.spriteSet);
             return portalparticle;
         }
     }

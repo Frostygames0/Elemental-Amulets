@@ -27,6 +27,7 @@ public class ModConfig {
         private final ForgeConfigSpec.DoubleValue SPEED_AMULET_BOOST;
         private final ForgeConfigSpec.DoubleValue PROTECTION_AMULET_REFLECT_DAMAGE_MULT;
         private final ForgeConfigSpec.IntValue PROTECTION_AMULET_CHARGE_TIME;
+        private final ForgeConfigSpec.DoubleValue WATER_AMULET_SPEED_BOOST;
 
         public Server(ForgeConfigSpec.Builder builder) {
             builder.push("General");
@@ -38,8 +39,10 @@ public class ModConfig {
             FIRE_AMULET_FIRE_RESISTANCE = builder.comment("How good will Fire Amulet protect from fire [DEFAULT: 0.5]").defineInRange("fire_amulet_fire_resistance", 0.5, 0, Integer.MAX_VALUE);
             FIRE_AMULET_LAVA_RESISTANCE = builder.comment("How good will Fire Amulet protect from lava [DEFAULT: 0.25]").defineInRange("fire_amulet_lava_resistance", 0.25, 0, Integer.MAX_VALUE);
             SPEED_AMULET_BOOST = builder.comment("How fast will players run with Speed Amulet [DEFAULT: 1.08]").defineInRange("speed_amulet_boost", 1.08, 0, Integer.MAX_VALUE);
-            PROTECTION_AMULET_REFLECT_DAMAGE_MULT = builder.comment("How much damage will Leaf Shield absorb? [DEFAULT: 3.0]") .defineInRange("protection_amulet_absorption", 0.3f, 0, Integer.MAX_VALUE);
-            PROTECTION_AMULET_CHARGE_TIME = builder.comment("How long will leaf shield recharge one bar? [DEFAULT: 80]").defineInRange("protection_amulet_recharge_time", 80, 0, Integer.MAX_VALUE);
+            PROTECTION_AMULET_REFLECT_DAMAGE_MULT = builder.comment("How much damage will Leaf Shield absorb? [DEFAULT: 0.5]") .defineInRange("protection_amulet_absorption", 0.5f, 0, Integer.MAX_VALUE);
+            PROTECTION_AMULET_CHARGE_TIME = builder.comment("How long will leaf shield recharge one bar (in ticks)? [DEFAULT: 80]").defineInRange("protection_amulet_recharge_time", 80, 0, Integer.MAX_VALUE);
+            WATER_AMULET_SPEED_BOOST = builder.comment("How fast will players swim with Water Amulet [DEFAULT 0.5]").defineInRange("water_amulet_speed_boost", 0.5f, 0, Integer.MAX_VALUE);
+
             builder.pop();
 
             builder.pop();
@@ -71,7 +74,7 @@ public class ModConfig {
 
             builder.push("Amulets");
             RENDER_LEAF_SHIELD = builder.comment("Render leaf shield around the player? [DEFAULT: true]").define("render_leaf_shield", true);
-            AMULETS_TIER_DIFFERENCE = builder.comment("Set to true, if you want amulets to be different based on their tier [DEFAULT: false]").translation("config.elementalamulets.amulets_tier_difference").define("amulets_tier_difference", true);
+            AMULETS_TIER_DIFFERENCE = builder.comment("Set to true, if you want amulets to be different based on their tier [DEFAULT: true]").translation("config.elementalamulets.amulets_tier_difference").define("amulets_tier_difference", true);
             builder.pop();
 
             builder.pop();
@@ -87,6 +90,7 @@ public class ModConfig {
         public static double SPEED_AMULET_BOOST;
         public static double PROTECTION_AMULET_REFLECT_DAMAGE_MULT;
         public static int PROTECTION_AMULET_CHARGE_TIME;
+        public static double WATER_AMULET_SPEED_BOOST;
 
         private static void bakeServerConfig() {
             FANCY_COMBINATION = SERVER.FANCY_COMBINATION.get();
@@ -96,6 +100,7 @@ public class ModConfig {
             SPEED_AMULET_BOOST = SERVER.SPEED_AMULET_BOOST.get();
             PROTECTION_AMULET_REFLECT_DAMAGE_MULT = SERVER.PROTECTION_AMULET_REFLECT_DAMAGE_MULT.get();
             PROTECTION_AMULET_CHARGE_TIME = SERVER.PROTECTION_AMULET_CHARGE_TIME.get();
+            WATER_AMULET_SPEED_BOOST = SERVER.WATER_AMULET_SPEED_BOOST.get();
         }
 
         public static boolean AMULETS_TIER_DIFFERENCE;

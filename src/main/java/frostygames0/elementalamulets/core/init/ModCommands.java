@@ -36,10 +36,10 @@ public class ModCommands {
     }
 
     private static class GiveAmuletCommand {
-        private static final DynamicCommandExceptionType ISNT_AMULET = new DynamicCommandExceptionType(item -> new TranslationTextComponent("commands.elementalamulets.give.failure", ((ItemStack)item).getTextComponent()));
+        private static final DynamicCommandExceptionType ISNT_AMULET = new DynamicCommandExceptionType(item -> new TranslationTextComponent("commands.elementalamulets.give.failure", ((ItemStack)item).getDisplayName()));
         private static ArgumentBuilder<CommandSource, ?> register() {
             return Commands.literal("give")
-                    .requires(s -> s.hasPermissionLevel(2))
+                    .requires(s -> s.hasPermission(2))
                     .then(Commands.argument("player", EntityArgument.players())
                     .then(Commands.argument("amulet", ItemArgument.item()).suggests((ctx, builder) -> ISuggestionProvider.suggest(ModItems.getAmulets().stream().map(item -> item.getRegistryName().toString()), builder)).executes(ctx -> execute(ctx.getSource(), EntityArgument.getPlayers(ctx, "player"), ItemArgument.getItem(ctx, "amulet"), 1))
                     .then(Commands.argument("tier", IntegerArgumentType.integer(1, AmuletItem.MAX_TIER))
@@ -48,7 +48,7 @@ public class ModCommands {
 
         private static int execute(CommandSource source, Collection<ServerPlayerEntity> players, ItemInput item, int tier) throws CommandSyntaxException {
             for(ServerPlayerEntity player : players) {
-                ItemStack stack = AmuletItem.getStackWithTier(item.createStack(1, false), tier);
+                ItemStack stack = AmuletItem.getStackWithTier(item.createItemStack(1, false), tier);
                 if(item.getItem() instanceof AmuletItem) {
                     ItemHandlerHelper.giveItemToPlayer(player, stack);
                 } else {
@@ -57,9 +57,9 @@ public class ModCommands {
 
             }
             if (players.size() == 1) {
-                source.sendFeedback(new TranslationTextComponent("commands.elementalamulets.give.success", tier, item.createStack(1, false).getTextComponent(), players.iterator().next().getDisplayName()), true);
+                source.sendSuccess(new TranslationTextComponent("commands.elementalamulets.give.success", tier, item.createItemStack(1, false).getDisplayName(), players.iterator().next().getDisplayName()), true);
             } else {
-                source.sendFeedback(new TranslationTextComponent("commands.elementalamulets.give.success", tier, item.createStack(1, false).getTextComponent(), players.size()), true);
+                source.sendSuccess(new TranslationTextComponent("commands.elementalamulets.give.success", tier, item.createItemStack(1, false).getDisplayName(), players.size()), true);
             }
 
             return players.size();

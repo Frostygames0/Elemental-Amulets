@@ -6,7 +6,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.DamagingProjectileEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.EntityRayTraceResult;
@@ -19,16 +18,16 @@ public class TerraProtectionAmuletEffect {
     static void onLivingHurt(LivingHurtEvent event) {
         if(event.getEntityLiving() instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) event.getEntityLiving();
-            if (!player.world.isRemote()) {
+            if (!player.level.isClientSide()) {
                 CuriosApi.getCuriosHelper().findEquippedCurio(item -> item.getItem() instanceof TerraProtectionAmulet, player).ifPresent(triple -> {
                     ItemStack stack = triple.getRight();
                     TerraProtectionAmulet amulet = (TerraProtectionAmulet) stack.getItem();
                     if (amulet.canProtect(stack)) {
-                        if (event.getSource().getTrueSource() instanceof LivingEntity) {
-                            LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
+                        if (event.getSource().getEntity() instanceof LivingEntity) {
+                            LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
                             event.setCanceled(true);
                             amulet.removeOneCharge(stack);
-                            attacker.attackEntityFrom(DamageSource.MAGIC, amulet.getReflectedDamageMulti(stack));
+                            attacker.hurt(TerraProtectionAmulet.LEAF_CUT, amulet.getReflectedDamageMulti(stack));
                         }
                     }
                 });
@@ -46,16 +45,16 @@ public class TerraProtectionAmuletEffect {
                 ItemStack stack = triple.getRight();
                 TerraProtectionAmulet amulet = (TerraProtectionAmulet) stack.getItem(); // For future
                 if(amulet.canProtect(stack)) {
-                    projectile.setMotion(projectile.getMotion().inverse().scale(0.5)); // I don't want arrows to shoot with the same speed as it looks awful
+                    projectile.setDeltaMovement(projectile.getDeltaMovement().reverse().scale(0.5)); // I don't want arrows to shoot with the same speed as it looks awful
                     if (projectile instanceof DamagingProjectileEntity) {
                         DamagingProjectileEntity damagingProjectile = (DamagingProjectileEntity) projectile;
-                        damagingProjectile.accelerationX *= -0.5;
-                        damagingProjectile.accelerationY *= -0.5;
-                        damagingProjectile.accelerationZ *= -0.5;
+                        damagingProjectile.xPower *= -0.5;
+                        damagingProjectile.yPower *= -0.5;
+                        damagingProjectile.zPower *= -0.5;
                     }
                     event.setCanceled(true);
-                    projectile.velocityChanged = true;
-                    entity.world.playSound(null, entity.getPosX(), entity.getPosY(), entity.getPosZ(), SoundEvents.BLOCK_GRASS_BREAK, SoundCategory.PLAYERS, 1.0f, 1.0f);
+                    projectile.hurtMarked = true;
+                    entity.level.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.GRASS_BREAK, SoundCategory.PLAYERS, 1.0f, 1.0f);
                 }
             });
         }

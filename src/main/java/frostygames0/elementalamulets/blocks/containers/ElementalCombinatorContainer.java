@@ -25,7 +25,7 @@ public class ElementalCombinatorContainer extends Container {
 
     public ElementalCombinatorContainer(int id, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player, IIntArray data) {
         super(ModContainers.ELEMENTAL_COMBINATOR_CONTAINER.get(), id);
-        this.tileEntity = world.getTileEntity(pos);
+        this.tileEntity = world.getBlockEntity(pos);
         this.playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);
         this.data = data;
@@ -45,7 +45,7 @@ public class ElementalCombinatorContainer extends Container {
             });
         }
         this.bindPlayerInventory(8,83);
-        this.trackIntArray(data);
+        this.addDataSlots(data);
     }
 
     public IIntArray getCombinatorData() {
@@ -53,35 +53,35 @@ public class ElementalCombinatorContainer extends Container {
     }
 
     @Override
-    public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+    public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
         ItemStack itemStack = ItemStack.EMPTY;
         Slot slot = this.getSlot(index);
-        if(slot != null && slot.getHasStack()) {
-            ItemStack itemStack1 = slot.getStack();
+        if(slot != null && slot.hasItem()) {
+            ItemStack itemStack1 = slot.getItem();
             itemStack = itemStack1.copy();
             if(index == 0) {
-                if(!this.mergeItemStack(itemStack1, 10, 46, true)) {
+                if(!this.moveItemStackTo(itemStack1, 10, 46, true)) {
                     return ItemStack.EMPTY;
                 }
-                slot.onSlotChange(itemStack1, itemStack);
+                slot.onQuickCraft(itemStack1, itemStack);
             } else if(index >= 10 && index < 46) {
-                if (!this.mergeItemStack(itemStack1, 1, 10, false)) {
+                if (!this.moveItemStackTo(itemStack1, 1, 10, false)) {
                     if (index < 37) {
-                        if (!this.mergeItemStack(itemStack1, 37, 46, false)) {
+                        if (!this.moveItemStackTo(itemStack1, 37, 46, false)) {
                             return ItemStack.EMPTY;
                         }
-                    } else if (!this.mergeItemStack(itemStack1, 10, 37, false)) {
+                    } else if (!this.moveItemStackTo(itemStack1, 10, 37, false)) {
                         return ItemStack.EMPTY;
                     }
                 }
-            } else if (!this.mergeItemStack(itemStack1, 10, 46, false)) {
+            } else if (!this.moveItemStackTo(itemStack1, 10, 46, false)) {
                 return ItemStack.EMPTY;
             }
 
             if(itemStack1.isEmpty()) {
-                slot.putStack(ItemStack.EMPTY);
+                slot.set(ItemStack.EMPTY);
             } else {
-                slot.onSlotChanged();
+                slot.setChanged();
             }
             if(itemStack1.getCount() == itemStack.getCount()) {
                 return ItemStack.EMPTY;
@@ -92,8 +92,8 @@ public class ElementalCombinatorContainer extends Container {
     }
 
     @Override
-    public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(IWorldPosCallable.of(tileEntity.getWorld(), tileEntity.getPos()), playerEntity, ModBlocks.ELEMENTAL_COMBINATOR.get());
+    public boolean stillValid(PlayerEntity playerIn) {
+        return stillValid(IWorldPosCallable.create(tileEntity.getLevel(), tileEntity.getBlockPos()), playerEntity, ModBlocks.ELEMENTAL_COMBINATOR.get());
     }
 
     private int addSlotRange(IItemHandler handler, int index, int x, int y, int amount, int dx) {

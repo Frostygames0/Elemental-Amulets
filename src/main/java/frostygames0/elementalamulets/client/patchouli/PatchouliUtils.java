@@ -25,7 +25,7 @@ public class PatchouliUtils {
      * P.S: and yes I looked how botania does it :p Also use only for patchouli related stuff!
      */
     public static ElementalCombination getRecipe(ResourceLocation name) {
-        Map<ResourceLocation, ElementalCombination> recipes = ModRecipes.getRecipesMap(ModRecipes.ELEMENTAL_COMBINATION_TYPE, Minecraft.getInstance().world);
+        Map<ResourceLocation, ElementalCombination> recipes = ModRecipes.getRecipesMap(ModRecipes.ELEMENTAL_COMBINATION_TYPE, Minecraft.getInstance().level);
         ElementalCombination defaultRecipe = recipes.get(name);
         if(defaultRecipe != null) return defaultRecipe;
         ElementalCombination craftTweakedRecipe = recipes.get(new ResourceLocation("crafttweaker", name.getPath()));
