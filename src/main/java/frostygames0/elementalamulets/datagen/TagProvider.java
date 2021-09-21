@@ -29,6 +29,7 @@ public class TagProvider extends ItemTagsProvider {
 
         // Curios tag
         this.tag(ItemTags.bind("curios:necklace")).addTag(ModTags.NECKLACES);
+        this.tag(ItemTags.bind("curios:belt")).add(ModItems.AMULET_BELT.get());
 
         // Elements
         this.tag(ModTags.ELEMENTS).add(ModItems.AIR_ELEMENT.get(), ModItems.EARTH_ELEMENT.get(), ModItems.FIRE_ELEMENT.get(), ModItems.WATER_ELEMENT.get(), ModItems.AETHER_ELEMENT.get(), ModItems.ELEMENTAL_SHARDS.get());
