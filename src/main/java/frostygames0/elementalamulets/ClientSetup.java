@@ -1,5 +1,6 @@
 package frostygames0.elementalamulets;
 
+import frostygames0.elementalamulets.client.ModKeyBindings;
 import frostygames0.elementalamulets.client.particles.ModParticles;
 import frostygames0.elementalamulets.client.renderer.ElementalCombinatorRenderer;
 import frostygames0.elementalamulets.client.screens.AmuletBeltScreen;
@@ -29,6 +30,7 @@ public class ClientSetup {
     @SubscribeEvent
     public static void clientSetup(final FMLClientSetupEvent event) {
         ElementalCombinatorRenderer.register();
+        ModKeyBindings.registerKeyBinds();
         event.enqueueWork(() -> {
             RenderTypeLookup.setRenderLayer(ModBlocks.CELESTIAL_FOCUS.get(), RenderType.translucent());
             ScreenManager.register(ModContainers.ELEMENTAL_COMBINATOR_CONTAINER.get(), ElementalCombinatorScreen::new);
