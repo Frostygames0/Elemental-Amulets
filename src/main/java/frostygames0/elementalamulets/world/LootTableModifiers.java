@@ -1,4 +1,4 @@
-package frostygames0.elementalamulets.core.util;
+package frostygames0.elementalamulets.world;
 
 import com.google.gson.JsonObject;
 import frostygames0.elementalamulets.ElementalAmulets;
