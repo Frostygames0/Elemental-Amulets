@@ -4,10 +4,12 @@ import frostygames0.elementalamulets.advancements.triggers.ModCriteriaTriggers;
 import frostygames0.elementalamulets.client.particles.ModParticles;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.core.init.*;
+import frostygames0.elementalamulets.core.util.LootTableModifiers;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -43,6 +45,8 @@ public class ElementalAmulets {
         ModRecipes.SERIALIZERS.register(bus);
         ModVillagers.register(bus);
         ModParticles.PARTICLES.register(bus);
+
+        bus.addGenericListener(GlobalLootModifierSerializer.class, LootTableModifiers::registerLootModifierSerializer); // Loot modification register
 
         ModLoadingContext.get().registerConfig(net.minecraftforge.fml.config.ModConfig.Type.SERVER, ModConfig.SERVER_SPEC);
         ModLoadingContext.get().registerConfig(net.minecraftforge.fml.config.ModConfig.Type.CLIENT, ModConfig.CLIENT_SPEC);
