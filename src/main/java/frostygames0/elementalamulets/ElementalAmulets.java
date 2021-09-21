@@ -4,7 +4,8 @@ import frostygames0.elementalamulets.advancements.triggers.ModCriteriaTriggers;
 import frostygames0.elementalamulets.client.particles.ModParticles;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.core.init.*;
-import frostygames0.elementalamulets.core.util.LootTableModifiers;
+import frostygames0.elementalamulets.network.ModNetworking;
+import frostygames0.elementalamulets.world.LootTableModifiers;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -67,9 +68,11 @@ public class ElementalAmulets {
                 .cosmetic()
                 .icon(new ResourceLocation(ElementalAmulets.MOD_ID, "item/necklace_slot"))
                 .build());
+        InterModComms.sendTo(CuriosApi.MODID, SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("belt").build());
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
+        ModNetworking.registerMessages();
         event.enqueueWork(() -> {
             ModFeatures.register();
             ModVillagers.Structures.init();

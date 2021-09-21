@@ -1,10 +1,7 @@
 package frostygames0.elementalamulets.items;
 
-import frostygames0.elementalamulets.blocks.containers.AmuletBeltContainer;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.container.SimpleNamedContainerProvider;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -16,7 +13,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -37,13 +33,12 @@ public class AmuletBelt extends Item implements ICurioItem {
 
     @Override
     public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        if(!worldIn.isClientSide()) {
+        /*if(!worldIn.isClientSide()) {
             ItemStack stack = playerIn.getItemInHand(handIn);
-            NetworkHooks.openGui((ServerPlayerEntity) playerIn, new SimpleNamedContainerProvider((id, playerInventory, player) -> new AmuletBeltContainer(id, playerInventory, playerInventory.selected), stack.getDisplayName()), buf -> buf.writeVarInt(playerIn.inventory.selected));
-        }
+            NetworkHooks.openGui((ServerPlayerEntity) playerIn, new SimpleNamedContainerProvider((id, playerInventory, player) -> new AmuletBeltContainer(id, playerInventory, stack), stack.getDisplayName()), buf -> buf.writeItem(stack));
+        }*/
         return ActionResult.success(playerIn.getItemInHand(handIn));
     }
-
 
     @Nullable
     @Override

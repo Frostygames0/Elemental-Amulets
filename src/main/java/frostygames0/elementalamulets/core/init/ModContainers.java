@@ -4,6 +4,7 @@ import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.blocks.containers.AmuletBeltContainer;
 import frostygames0.elementalamulets.blocks.containers.ElementalCombinatorContainer;
 import net.minecraft.inventory.container.ContainerType;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IntArray;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -25,8 +26,8 @@ public class ModContainers {
 
     public static final RegistryObject<ContainerType<AmuletBeltContainer>> AMULET_BELT_CONTAINER = CONTAINERS.register("amulet_belt", () -> IForgeContainerType.create(
             ((windowId, inv, data) -> {
-                int slot = data.readVarInt();
-                return new AmuletBeltContainer(windowId, inv, slot);
+                ItemStack belt = data.readItem();
+                return new AmuletBeltContainer(windowId, inv, belt);
             })
     ));
 

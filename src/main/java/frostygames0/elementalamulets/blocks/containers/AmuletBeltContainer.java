@@ -16,22 +16,20 @@ import net.minecraftforge.items.wrapper.InvWrapper;
  * @date 10.09.2021 23:54
  */
 public class AmuletBeltContainer extends Container {
-    private final ItemStack stack;
+    private final ItemStack belt;
     private final IItemHandler playerInventory;
-    private final int selectedSlot;
 
-    public AmuletBeltContainer(int id, PlayerInventory playerInventory, int selectedSlot) {
+    public AmuletBeltContainer(int id, PlayerInventory playerInventory, ItemStack belt) {
         super(ModContainers.AMULET_BELT_CONTAINER.get(), id);
-        this.selectedSlot = selectedSlot;
-        this.stack = playerInventory.getItem(selectedSlot);
+        this.belt = belt;
         this.playerInventory = new InvWrapper(playerInventory);
-        stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> addSlotRange(h, 0, 44, 54, 5, 18));
+        belt.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> addSlotRange(h, 0, 44, 54, 5, 18));
         this.bindPlayerInventory(8, 83);
     }
 
     @Override
     public boolean stillValid(PlayerEntity playerIn) {
-        return !stack.isEmpty() && stack.getItem() instanceof AmuletBelt;
+        return !belt.isEmpty() && belt.getItem() instanceof AmuletBelt;
     }
 
     private int addSlotRange(IItemHandler handler, int index1, int x, int y, int amount, int dx) {
