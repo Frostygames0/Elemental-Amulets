@@ -19,7 +19,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
@@ -36,9 +35,9 @@ public class ClientSetup {
             ScreenManager.register(ModContainers.ELEMENTAL_COMBINATOR_CONTAINER.get(), ElementalCombinatorScreen::new);
             ScreenManager.register(ModContainers.AMULET_BELT_CONTAINER.get(), AmuletBeltScreen::new);
 
-            ModItems.ITEMS.getEntries().stream().map(RegistryObject::get).filter(item -> item instanceof AmuletItem).forEach(
+            ModItems.getAmulets().forEach(
                     item -> ItemModelsProperties.register(item, new ResourceLocation(AmuletItem.TIER_TAG),
-                            (stack, world, entity) -> ModConfig.cached.AMULETS_TIER_DIFFERENCE ? ((AmuletItem)item).getTier(stack) : 0));
+                            (stack, world, entity) -> ModConfig.cached.AMULETS_TIER_DIFFERENCE ? item.getTier(stack) : 0));
         });
     }
 
