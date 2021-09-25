@@ -13,8 +13,11 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
+import top.theillusivec4.curios.api.type.capability.ICurio;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
+import top.theillusivec4.curios.api.type.util.ICuriosHelper;
 
 
 import javax.annotation.Nonnull;
@@ -32,10 +35,17 @@ public class AmuletBelt extends Item implements ICurioItem {
     @Override
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
         stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+            ICuriosHelper helper = CuriosApi.getCuriosHelper();
             for(int i = 0; i < h.getSlots(); i++) {
                 ItemStack amulet = h.getStackInSlot(i);
-                if(amulet.getItem() instanceof ICurioItem && amulet.getItem() instanceof AmuletItem) {
-                    if(!((AmuletItem)amulet.getItem()).hasSpecialEffect()) ((ICurioItem)amulet.getItem()).curioTick(identifier, index, livingEntity, amulet);
+                Item itemAmulet = amulet.getItem();
+                LazyOptional<ICurio> curio = helper.getCurio(amulet);
+                if(curio.isPresent() && itemAmulet instanceof AmuletItem) {
+                    if(!((AmuletItem)itemAmulet).hasSpecialEffect()) {
+                        if(helper.findEquippedCurio(itemAmulet, livingEntity).map(triple -> triple.getRight()).orElse(ItemStack.EMPTY).isEmpty()) { // Checks if there is amulet in main slot that is same as one in belt. Rule of priority
+                            curio.orElseThrow(NullPointerException::new).curioTick(identifier, index, livingEntity);
+                        }
+                    }
                 }
             }
         });
@@ -44,14 +54,22 @@ public class AmuletBelt extends Item implements ICurioItem {
     @Override
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
         stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+            ICuriosHelper helper = CuriosApi.getCuriosHelper();
             for(int i = 0; i < h.getSlots(); i++) {
                 ItemStack amulet = h.getStackInSlot(i);
-                if(amulet.getItem() instanceof ICurioItem && amulet.getItem() instanceof AmuletItem) {
-                    if(!((AmuletItem)amulet.getItem()).hasSpecialEffect()) ((ICurioItem)amulet.getItem()).onUnequip(slotContext, newStack, amulet);
+                Item itemAmulet = amulet.getItem();
+                LazyOptional<ICurio> curio = helper.getCurio(amulet);
+                if(curio.isPresent() && itemAmulet instanceof AmuletItem) {
+                    if(!((AmuletItem)itemAmulet).hasSpecialEffect()) {
+                        if(helper.findEquippedCurio(itemAmulet, slotContext.getWearer()).map(triple -> triple.getRight()).orElse(ItemStack.EMPTY).isEmpty()) { // Checks if there is amulet in main slot that is same as one in belt. Rule of priority
+                            curio.orElseThrow(NullPointerException::new).onUnequip(slotContext, newStack);
+                        }
+                    }
                 }
             }
         });
     }
+
 
     @Nullable
     @Override
