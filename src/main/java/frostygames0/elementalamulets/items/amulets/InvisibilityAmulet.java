@@ -17,6 +17,7 @@ public class InvisibilityAmulet extends AmuletItem {
         if(!world.isClientSide()) {
             if(livingEntity.isShiftKeyDown()) {
                 if(!livingEntity.isInvisible()) livingEntity.setInvisible(true);
+                //if(livingEntity.tickCount % 20 == 0) AmuletHelper.damage(stack, livingEntity, identifier, index);
             } else {
                 if(!livingEntity.hasEffect(Effects.INVISIBILITY)) livingEntity.setInvisible(false);
             }

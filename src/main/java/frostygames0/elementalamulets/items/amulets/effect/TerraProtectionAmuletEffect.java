@@ -48,6 +48,9 @@ public class TerraProtectionAmuletEffect {
                     projectile.setDeltaMovement(projectile.getDeltaMovement().reverse().scale(0.5)); // I don't want arrows to shoot with the same speed as it looks awful
                     if (projectile instanceof DamagingProjectileEntity) {
                         DamagingProjectileEntity damagingProjectile = (DamagingProjectileEntity) projectile;
+
+                        damagingProjectile.setOwner(entity);
+
                         damagingProjectile.xPower *= -0.5;
                         damagingProjectile.yPower *= -0.5;
                         damagingProjectile.zPower *= -0.5;

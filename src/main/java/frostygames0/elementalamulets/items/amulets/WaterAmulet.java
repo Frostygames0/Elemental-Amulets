@@ -52,6 +52,7 @@ public class WaterAmulet extends AmuletItem {
                     }
                 }
                 if(this.getTier(stack) > 2) livingEntity.setAirSupply(300);
+                // if(livingEntity.tickCount % 20 == 0) AmuletHelper.damage(stack, livingEntity, identifier, index);
             }
         }
     }
@@ -59,7 +60,7 @@ public class WaterAmulet extends AmuletItem {
     @Override
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
         ModifiableAttributeInstance att = slotContext.getWearer().getAttribute(Attributes.MOVEMENT_SPEED);
-        if(stack.getItem() != newStack.getItem()) {
+        if (stack.getItem() != newStack.getItem()) {
             if (att.getModifier(MODIFIER_UUID) != null) {
                 att.removeModifier(MODIFIER_UUID);
             }

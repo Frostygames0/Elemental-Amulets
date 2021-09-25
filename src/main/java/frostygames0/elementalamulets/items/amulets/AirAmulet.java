@@ -41,6 +41,8 @@ public class AirAmulet extends AmuletItem {
             if (livingEntity.getDeltaMovement().y <= 0.0D && !livingEntity.isShiftKeyDown()) {
                 if (!gravity.hasModifier(attMod)) gravity.addTransientModifier(attMod);
                 livingEntity.fallDistance = 0.0F;
+
+                // if(livingEntity.tickCount % 20 == 0) AmuletHelper.damage(stack, livingEntity, identifier, index);
             } else if (gravity.hasModifier(attMod)) {
                 gravity.removeModifier(attMod);
             }

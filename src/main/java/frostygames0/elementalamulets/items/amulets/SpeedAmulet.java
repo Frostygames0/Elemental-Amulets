@@ -29,7 +29,7 @@ public class SpeedAmulet extends AmuletItem {
                 if (!att.hasModifier(attMod)) {
                     att.addTransientModifier(attMod);
                 }
-                //if(livingEntity.ticksExisted % 20 == 0) stack.damageItem(10, livingEntity, livingEntity1 -> livingEntity1.sendBreakAnimation(EquipmentSlotType.MAINHAND));
+                //if(livingEntity.tickCount % 20 == 0) AmuletHelper.damage(stack, livingEntity, identifier, index);
             } else {
                 if (att.hasModifier(attMod)) {
                     att.removeModifier(attMod);
