@@ -41,26 +41,27 @@ public class TerraProtectionAmuletEffect {
         Entity target = ((EntityRayTraceResult) event.getRayTraceResult()).getEntity();
         if(target instanceof PlayerEntity) {
             PlayerEntity entity = (PlayerEntity) target;
-            CuriosApi.getCuriosHelper().findEquippedCurio(item -> item.getItem() instanceof TerraProtectionAmulet, entity).ifPresent(triple -> {
-                ItemStack stack = triple.getRight();
-                TerraProtectionAmulet amulet = (TerraProtectionAmulet) stack.getItem(); // For future
-                if(amulet.canProtect(stack)) {
-                    projectile.setDeltaMovement(projectile.getDeltaMovement().reverse().scale(0.5)); // I don't want arrows to shoot with the same speed as it looks awful
-                    if (projectile instanceof DamagingProjectileEntity) {
-                        DamagingProjectileEntity damagingProjectile = (DamagingProjectileEntity) projectile;
+            if (!entity.level.isClientSide()) {
+                CuriosApi.getCuriosHelper().findEquippedCurio(item -> item.getItem() instanceof TerraProtectionAmulet, entity).ifPresent(triple -> {
+                    ItemStack stack = triple.getRight();
+                    TerraProtectionAmulet amulet = (TerraProtectionAmulet) stack.getItem(); // For future
+                    if (amulet.canProtect(stack)) {
+                        projectile.setDeltaMovement(projectile.getDeltaMovement().reverse().scale(0.5)); // I don't want arrows to shoot with the same speed as it looks awful
+                        if (projectile instanceof DamagingProjectileEntity) {
+                            DamagingProjectileEntity damagingProjectile = (DamagingProjectileEntity) projectile;
 
-                        damagingProjectile.setOwner(entity);
+                            damagingProjectile.setOwner(entity);
 
-                        damagingProjectile.xPower *= -1;
-                        damagingProjectile.yPower *= -1;
-                        damagingProjectile.zPower *= -1;
+                            damagingProjectile.xPower *= -1;
+                            damagingProjectile.yPower *= -1;
+                            damagingProjectile.zPower *= -1;
+                        }
+                        event.setCanceled(true);
+                        projectile.hurtMarked = true;
+                        entity.level.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.GRASS_BREAK, SoundCategory.PLAYERS, 1.0f, 1.0f);
                     }
-                    event.setCanceled(true);
-                    projectile.hurtMarked = true;
-                    entity.level.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.GRASS_BREAK, SoundCategory.PLAYERS, 1.0f, 1.0f);
-                }
-            });
+                });
+            }
         }
-
     }
 }
