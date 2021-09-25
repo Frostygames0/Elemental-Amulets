@@ -33,9 +33,11 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public abstract class AmuletItem extends Item implements ICurioItem {
-    private final boolean hasTier;
     public static final String TIER_TAG = ElementalAmulets.MOD_ID+":tier";
     public static final int MAX_TIER = 4;
+
+    private final boolean hasTier;
+    
     public AmuletItem(Properties properties, boolean hasTier) {
         super(properties);
         this.hasTier = hasTier;
@@ -48,8 +50,7 @@ public abstract class AmuletItem extends Item implements ICurioItem {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
-        if(this.getTier(stack) > 0)
-            tooltip.add(new TranslationTextComponent("item.elementalamulets.common_amulet.tooltip.tier", new StringTextComponent(String.valueOf(this.getTier(stack))).withStyle(TextFormatting.YELLOW)).withStyle(TextFormatting.GOLD));
+        if(this.getTier(stack) > 0) tooltip.add(new TranslationTextComponent("item.elementalamulets.common_amulet.tooltip.tier", new StringTextComponent(String.valueOf(this.getTier(stack))).withStyle(TextFormatting.YELLOW)).withStyle(TextFormatting.GOLD));
         tooltip.add(new TranslationTextComponent(getOrCreateDescriptionId()+".tooltip").withStyle(TextFormatting.GRAY));
     }
 
@@ -128,6 +129,14 @@ public abstract class AmuletItem extends Item implements ICurioItem {
 
     public boolean hasTier() {
         return this.hasTier;
+    }
+
+    /**
+     * Defines if amulet implements it's action outside of {@link ICurioItem} methods such as {@link frostygames0.elementalamulets.items.amulets.effect.JumpAmuletEffect}
+     * @return true - if it uses something different for effect(e.g forge events), false - if not
+     */
+    public boolean hasSpecialEffect() {
+        return false;
     }
 
 

@@ -15,4 +15,9 @@ public class FireAmulet extends AmuletItem {
     public float getLavaResist(ItemStack stack) {
         return (float) (ModConfig.cached.FIRE_AMULET_LAVA_RESISTANCE * this.getTier(stack));
     }
+
+    @Override
+    public boolean hasSpecialEffect() {
+        return true;
+    }
 }

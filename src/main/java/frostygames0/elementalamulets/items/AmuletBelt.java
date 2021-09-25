@@ -1,14 +1,11 @@
 package frostygames0.elementalamulets.items;
 
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
@@ -16,6 +13,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 
@@ -32,12 +30,27 @@ public class AmuletBelt extends Item implements ICurioItem {
     }
 
     @Override
-    public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        /*if(!worldIn.isClientSide()) {
-            ItemStack stack = playerIn.getItemInHand(handIn);
-            NetworkHooks.openGui((ServerPlayerEntity) playerIn, new SimpleNamedContainerProvider((id, playerInventory, player) -> new AmuletBeltContainer(id, playerInventory, stack), stack.getDisplayName()), buf -> buf.writeItem(stack));
-        }*/
-        return ActionResult.success(playerIn.getItemInHand(handIn));
+    public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
+        stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+            for(int i = 0; i < h.getSlots(); i++) {
+                ItemStack amulet = h.getStackInSlot(i);
+                if(amulet.getItem() instanceof ICurioItem && amulet.getItem() instanceof AmuletItem) {
+                    if(!((AmuletItem)amulet.getItem()).hasSpecialEffect()) ((ICurioItem)amulet.getItem()).curioTick(identifier, index, livingEntity, amulet);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
+        stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+            for(int i = 0; i < h.getSlots(); i++) {
+                ItemStack amulet = h.getStackInSlot(i);
+                if(amulet.getItem() instanceof ICurioItem && amulet.getItem() instanceof AmuletItem) {
+                    if(!((AmuletItem)amulet.getItem()).hasSpecialEffect()) ((ICurioItem)amulet.getItem()).onUnequip(slotContext, newStack, amulet);
+                }
+            }
+        });
     }
 
     @Nullable
@@ -47,7 +60,14 @@ public class AmuletBelt extends Item implements ICurioItem {
             @Nonnull
             @Override
             public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-                return stack.getItem() instanceof AmuletItem ? super.insertItem(slot, stack, simulate) : stack;
+                boolean sameAmulet = false; // Checks if there is same amulet already in belt
+                for(int i = 0; i < this.getSlots(); i++) {
+                    if(getStackInSlot(i).getItem() == stack.getItem()) {
+                        sameAmulet = true;
+                        break;
+                    }
+                }
+                return stack.getItem() instanceof AmuletItem  && !sameAmulet ? super.insertItem(slot, stack, simulate) : stack;
             }
         };
         LazyOptional<IItemHandler> optional = LazyOptional.of(() -> handler);

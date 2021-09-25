@@ -17,4 +17,8 @@ public class JumpAmulet extends AmuletItem {
         return getJump(stack)*10;
     }
 
+    @Override
+    public boolean hasSpecialEffect() {
+        return true;
+    }
 }
