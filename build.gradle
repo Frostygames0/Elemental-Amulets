@@ -139,7 +139,7 @@ dependencies {
 
 processResources {
     exclude '.cache' // Removes .cache from jar since it's useless and should be eliminated! UAHAHHA
-    exclude 'loot_modifiers'
+    exclude 'data/forge/loot_modifiers'
 }
 
 jar {
