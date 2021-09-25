@@ -8,5 +8,5 @@ Escape from enemies with the help of a amulet of speed and jump boost, take a ho
 
 Also, with full customization and full JEI support, you can put this mod into any modpack! Change the values using the configuration, view, add and remove recipes!
 
-## This mod is licensed with LGPL(GNU Lesser General Public License) V2.1
-You can find it here: https://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt
+## This mod is licensed with GPL(GNU Lesser General Public License) V3
+You can find it here: https://www.gnu.org/licenses/gpl-3.0.en.html
