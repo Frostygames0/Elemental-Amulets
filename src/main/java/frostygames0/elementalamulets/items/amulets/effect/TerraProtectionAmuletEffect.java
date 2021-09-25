@@ -51,9 +51,9 @@ public class TerraProtectionAmuletEffect {
 
                         damagingProjectile.setOwner(entity);
 
-                        damagingProjectile.xPower *= -0.5;
-                        damagingProjectile.yPower *= -0.5;
-                        damagingProjectile.zPower *= -0.5;
+                        damagingProjectile.xPower *= -1;
+                        damagingProjectile.yPower *= -1;
+                        damagingProjectile.zPower *= -1;
                     }
                     event.setCanceled(true);
                     projectile.hurtMarked = true;

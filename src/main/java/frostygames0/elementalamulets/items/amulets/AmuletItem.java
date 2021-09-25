@@ -5,9 +5,7 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.advancements.triggers.ModCriteriaTriggers;
 import frostygames0.elementalamulets.client.models.AmuletModel;
-import frostygames0.elementalamulets.client.particles.ModParticles;
 import frostygames0.elementalamulets.core.util.NBTUtil;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -59,12 +57,6 @@ public abstract class AmuletItem extends Item implements ICurioItem {
     @Override
     public int getMaxDamage(ItemStack stack) {
         return 1000 * this.getTier(stack);
-    }
-
-    @Override
-    public void curioBreak(ItemStack stack, LivingEntity livingEntity) {
-        Minecraft.getInstance().particleEngine.createTrackingEmitter(livingEntity, ModParticles.COMBINATION_PARTICLE.get(), 30);
-        livingEntity.level.playLocalSound(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ(), SoundEvents.RESPAWN_ANCHOR_DEPLETE, livingEntity.getSoundSource(), 1f, 1f, false);
     }
 
     @Override
