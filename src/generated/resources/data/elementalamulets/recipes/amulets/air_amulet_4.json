@@ -1,30 +1,30 @@
 {
   "type": "elementalamulets:elemental_combination",
   "elemental": {
-    "item": "elementalamulets:speed_amulet",
+    "item": "elementalamulets:air_amulet",
     "tier": 3
   },
   "ingredients": [
     {
-      "item": "elementalamulets:water_element"
+      "item": "elementalamulets:air_element"
     },
     {
       "item": "elementalamulets:aether_element"
     },
     {
-      "item": "elementalamulets:water_element"
+      "item": "elementalamulets:air_element"
     },
     {
       "item": "elementalamulets:aether_element"
     },
     {
-      "item": "elementalamulets:water_element"
+      "item": "elementalamulets:air_element"
     },
     {
       "item": "elementalamulets:aether_element"
     },
     {
-      "item": "elementalamulets:water_element"
+      "item": "elementalamulets:air_element"
     },
     {
       "item": "elementalamulets:aether_element"
@@ -33,7 +33,7 @@
   "combination_time": 800,
   "tag_transfer": true,
   "result": {
-    "item": "elementalamulets:speed_amulet",
+    "item": "elementalamulets:air_amulet",
     "nbt": "{\"elementalamulets:tier\":4}"
   }
 }

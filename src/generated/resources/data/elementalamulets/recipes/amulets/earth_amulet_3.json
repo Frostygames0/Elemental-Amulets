@@ -2,38 +2,38 @@
   "type": "elementalamulets:elemental_combination",
   "elemental": {
     "item": "elementalamulets:earth_amulet",
-    "tier": 1
+    "tier": 2
   },
   "ingredients": [
     {
-      "item": "elementalamulets:earth_element"
+      "item": "minecraft:bone_meal"
     },
     {
       "item": "elementalamulets:earth_element"
     },
     {
-      "item": "elementalamulets:earth_element"
-    },
-    {
-      "item": "minecraft:lapis_lazuli"
+      "item": "minecraft:gold_ingot"
     },
     {
       "item": "elementalamulets:earth_element"
     },
     {
-      "item": "minecraft:shield"
+      "item": "minecraft:bone_meal"
     },
     {
       "item": "elementalamulets:earth_element"
     },
     {
-      "item": "minecraft:lapis_lazuli"
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "elementalamulets:earth_element"
     }
   ],
-  "combination_time": 350,
+  "combination_time": 400,
   "tag_transfer": true,
   "result": {
-    "item": "elementalamulets:protection_amulet",
-    "nbt": "{\"elementalamulets:tier\":1}"
+    "item": "elementalamulets:earth_amulet",
+    "nbt": "{\"elementalamulets:tier\":3}"
   }
 }

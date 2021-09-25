@@ -1,39 +1,39 @@
 {
   "type": "elementalamulets:elemental_combination",
   "elemental": {
-    "item": "elementalamulets:speed_amulet",
-    "tier": 3
+    "item": "elementalamulets:water_amulet",
+    "tier": 2
   },
   "ingredients": [
     {
-      "item": "elementalamulets:water_element"
-    },
-    {
-      "item": "elementalamulets:aether_element"
+      "item": "minecraft:pufferfish"
     },
     {
       "item": "elementalamulets:water_element"
     },
     {
-      "item": "elementalamulets:aether_element"
+      "item": "minecraft:gold_ingot"
     },
     {
       "item": "elementalamulets:water_element"
     },
     {
-      "item": "elementalamulets:aether_element"
+      "item": "minecraft:pufferfish"
     },
     {
       "item": "elementalamulets:water_element"
     },
     {
-      "item": "elementalamulets:aether_element"
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "item": "elementalamulets:water_element"
     }
   ],
-  "combination_time": 800,
+  "combination_time": 400,
   "tag_transfer": true,
   "result": {
-    "item": "elementalamulets:speed_amulet",
-    "nbt": "{\"elementalamulets:tier\":4}"
+    "item": "elementalamulets:water_amulet",
+    "nbt": "{\"elementalamulets:tier\":3}"
   }
 }

@@ -1,7 +1,7 @@
 {
   "type": "elementalamulets:elemental_combination",
   "elemental": {
-    "item": "elementalamulets:speed_amulet",
+    "item": "elementalamulets:water_amulet",
     "tier": 3
   },
   "ingredients": [
@@ -33,7 +33,7 @@
   "combination_time": 800,
   "tag_transfer": true,
   "result": {
-    "item": "elementalamulets:speed_amulet",
+    "item": "elementalamulets:water_amulet",
     "nbt": "{\"elementalamulets:tier\":4}"
   }
 }
