@@ -70,7 +70,7 @@ public class ModItems {
             () -> new InvisibilityAmulet(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(ElementalRarity.AIR).durability(1000)));
 
     public static final RegistryObject<Item> AMULET_BELT = ITEMS.register("amulet_belt",
-            () -> new AmuletBelt(new Item.Properties().tab(ElementalAmulets.GROUP).stacksTo(1)));
+            () -> new AmuletBelt(new Item.Properties().tab(null).stacksTo(1)));
 
     public static List<AmuletItem> getAmulets() {
         List<AmuletItem> items = new ArrayList<>();
