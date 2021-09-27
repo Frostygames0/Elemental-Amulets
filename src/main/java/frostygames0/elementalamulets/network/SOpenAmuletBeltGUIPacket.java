@@ -16,8 +16,8 @@ import java.util.function.Supplier;
  * @author Frostygames0
  * @date 21.09.2021 22:06
  */
-public class COpenAmuletBeltGUIPacket {
-    public static void handle(COpenAmuletBeltGUIPacket msg, Supplier<NetworkEvent.Context> supplier) {
+public class SOpenAmuletBeltGUIPacket {
+    public static void handle(SOpenAmuletBeltGUIPacket msg, Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
             ServerPlayerEntity sender = ctx.getSender();
