@@ -4,6 +4,11 @@
   "item.elementalamulets.guide_book": "Elemental Guide",
   "item.elementalamulets.guide_book.subtitle": "Contains all knowledge about Elemental Amulets",
   "item.elementalamulets.all_seeing_lens": "All-seeing lens",
+  "item.elementalamulets.amulet_belt": "Amulet belt",
+
+  "item.elementalamulets.author_amulet": "Author's amulet",
+  "item.elementalamulets.author_amulet.tooltip": "Feeling lucky!",
+
   "item.elementalamulets.elemental_shards": "Elemental Shards",
   "item.elementalamulets.elemental_shards.latin_variant": "Elemental Shards",
   "item.elementalamulets.elemental_shards.tooltip": "Can be filled with elemental power",
