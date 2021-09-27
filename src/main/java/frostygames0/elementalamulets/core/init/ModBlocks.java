@@ -1,8 +1,9 @@
 package frostygames0.elementalamulets.core.init;
 
 import frostygames0.elementalamulets.ElementalAmulets;
+import frostygames0.elementalamulets.blocks.CelestialFocus;
 import frostygames0.elementalamulets.blocks.ElementalCombinator;
-import frostygames0.elementalamulets.blocks.ElementalFocus;
+import frostygames0.elementalamulets.config.ModConfig;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -32,21 +33,21 @@ public class ModBlocks {
                     .lightLevel(state -> state.getValue(ElementalCombinator.COMBINING) ? 15 : 5).isRedstoneConductor(ModBlocks::never)));
 
     public static final RegistryObject<Block> CELESTIAL_FOCUS = BLOCKS.register("celestial_focus",
-            () -> new ElementalFocus(AbstractBlock.Properties.of(Material.WOOD, DyeColor.BROWN).strength(2f).sound(SoundType.WOOD).harvestTool(ToolType.AXE).harvestLevel(0)
+            () -> new CelestialFocus(AbstractBlock.Properties.of(Material.WOOD, DyeColor.BROWN).strength(2f).sound(SoundType.WOOD).harvestTool(ToolType.AXE).harvestLevel(0)
             .noOcclusion().isViewBlocking(ModBlocks::never).isSuffocating(ModBlocks::never)));
 
-    public static final RegistryObject<Block> ELEMENTAL_STONE = BLOCKS.register("elemental_ore",
+    public static final RegistryObject<Block> ELEMENTAL_ORE = BLOCKS.register("elemental_ore",
             () -> new Block(AbstractBlock.Properties.of(Material.STONE).strength(3.5f).sound(SoundType.STONE).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).harvestLevel(1)));
 
     private static boolean never(BlockState blockState, IBlockReader iBlockReader, BlockPos blockPos) {
         return false;
     }
 
-    @SubscribeEvent(priority = EventPriority.HIGH)
+    @SubscribeEvent(priority = EventPriority.NORMAL)
     public static void oreGeneration(BiomeLoadingEvent event) {
         BiomeGenerationSettingsBuilder gen = event.getGeneration();
         if(!event.getCategory().equals(Biome.Category.NETHER) && !event.getCategory().equals(Biome.Category.THEEND)) {
-            gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, ModFeatures.ELEMENTAL_ORE);
+            if(ModConfig.cached.GENERATE_ORES) gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, ModFeatures.ELEMENTAL_ORE);
         }
     }
 }

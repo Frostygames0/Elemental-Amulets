@@ -69,7 +69,7 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .define('.', Items.IRON_NUGGET)
                 .unlockedBy("has_item", InventoryChangeTrigger.Instance.hasItems(ModItems.ALL_SEEING_LENS.get()))
                 .save(consumer);
-        oreSmelting(ModBlocks.ELEMENTAL_STONE.get(), ModItems.ELEMENTAL_SHARDS.get(), 0.7f, 200, consumer);
+        oreSmelting(ModBlocks.ELEMENTAL_ORE.get(), ModItems.ELEMENTAL_SHARDS.get(), 0.7f, 200, consumer);
     }
     // Elemental Combination recipes
     private void registerModRecipes(Consumer<IFinishedRecipe> consumer) {

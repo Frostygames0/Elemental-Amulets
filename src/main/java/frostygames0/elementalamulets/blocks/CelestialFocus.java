@@ -27,8 +27,8 @@ import java.util.List;
  * @author Frostygames0
  * @date 15.09.2021 18:33
  */
-public class ElementalFocus extends Block {
-    public ElementalFocus(Properties p_i48440_1_) {
+public class CelestialFocus extends Block {
+    public CelestialFocus(Properties p_i48440_1_) {
         super(p_i48440_1_);
     }
 

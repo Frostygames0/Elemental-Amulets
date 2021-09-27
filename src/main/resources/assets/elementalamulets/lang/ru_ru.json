@@ -6,6 +6,9 @@
   "item.elementalamulets.all_seeing_lens": "Всевидящая линза",
   "item.elementalamulets.amulet_belt": "Пояс для амулетов",
 
+  "item.elementalamulets.author_amulet": "Author's amulet",
+  "item.elementalamulets.author_amulet.tooltip": "Feeling lucky!",
+
   "item.elementalamulets.elemental_shards": "Элементальные осколки",
   "item.elementalamulets.elemental_shards.latin_variant": "Элементал Шардс",
   "item.elementalamulets.elemental_shards.tooltip": "Может быть наполнен силой стихий",
@@ -78,6 +81,7 @@
   "jei.elementalamulets.convertibles.description": "Когда 6 этих предметов объединены с пустым элементов(Элементальные осколки) они создают %s ",
   "jei.elementalamulets.aether_element.description": "Небольшое количество эфира примагниченного к осколку. Используются в улучшающих комбинациях",
   "jei.elementalamulets.all_seeing_lens.description": "Очень редкий предмет, только один человек знает как его сделать\n Ювелир продает это на 4 уровне",
+  "jei.elementalamulets.elemental_ore.whereabouts": "Elemental Ore - is a block that contains Elemental Shards inside.\nCan be found up to Y:40 and sometimes higher",
 
   "patchouli.elementalamulets.landing": "Hello $(thing)$(playername)!$() This $(l)magical guide $() will provide you with all knowledge you need! $(br)Book will expand itself when a new knowledge is acquired! Everything(almost) about this mod is described here!",
   "patchouli.elementalamulets.not_present": "Patchouli не обнаружен!! Пожалуйста установите Patchouli, если вы хотите открыть книгу",

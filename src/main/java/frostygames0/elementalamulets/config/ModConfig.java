@@ -82,6 +82,29 @@ public class ModConfig {
             builder.pop();
         }
     }
+
+    public static final ForgeConfigSpec COMMON_SPEC;
+    public static final Common COMMON;
+    static {
+        final Pair<Common, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Common::new);
+        COMMON_SPEC = specPair.getRight();
+        COMMON = specPair.getLeft();
+    }
+    public static class Common {
+        private final ForgeConfigSpec.BooleanValue GENERATE_JEWELLER_HOUSE;
+        private final ForgeConfigSpec.BooleanValue GENERATE_ORES;
+        public Common(ForgeConfigSpec.Builder builder) {
+            builder.push("World Generation");
+            GENERATE_JEWELLER_HOUSE = builder.comment("Generate Jeweller's house? [DEFAULT: true]").define("generate_jeweller_house", true);
+            GENERATE_ORES = builder.comment("Generate Elemental Shards ore? [DEFAULT: true]").define("generate_ores", true);
+            builder.pop();
+        }
+    }
+
+    // ---------------------------------------- //
+    //           Config Caching                 //
+    // ---------------------------------------- //
+
     public static class cached {
         public static boolean FANCY_COMBINATION;
         public static double JUMP_AMULET_BOOST;
@@ -116,6 +139,14 @@ public class ModConfig {
             RENDER_COMBINATOR_STACK = CLIENT.RENDER_COMBINATOR_STACK.get();
             RENDER_LEAF_SHIELD = CLIENT.RENDER_LEAF_SHIELD.get();
         }
+
+        public static boolean GENERATE_JEWELLER_HOUSE;
+        public static boolean GENERATE_ORES;
+
+        private static void bakeCommonConfig() {
+            GENERATE_JEWELLER_HOUSE = COMMON.GENERATE_JEWELLER_HOUSE.get();
+            GENERATE_ORES = COMMON.GENERATE_ORES.get();
+        }
     }
 
     @SubscribeEvent
@@ -125,6 +156,9 @@ public class ModConfig {
         }
         if(event.getConfig().getSpec() == ModConfig.CLIENT_SPEC) {
             cached.bakeClientConfig();
+        }
+        if(event.getConfig().getSpec() == ModConfig.COMMON_SPEC) {
+            cached.bakeCommonConfig();
         }
     }
 

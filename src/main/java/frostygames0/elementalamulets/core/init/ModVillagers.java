@@ -3,6 +3,7 @@ package frostygames0.elementalamulets.core.init;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
 import frostygames0.elementalamulets.ElementalAmulets;
+import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import net.minecraft.entity.merchant.villager.VillagerProfession;
 import net.minecraft.entity.merchant.villager.VillagerTrades;
@@ -15,7 +16,7 @@ import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.village.PointOfInterestType;
 import net.minecraft.world.gen.feature.jigsaw.JigsawPattern;
 import net.minecraft.world.gen.feature.jigsaw.JigsawPiece;
-import net.minecraft.world.gen.feature.structure.*;
+import net.minecraft.world.gen.feature.structure.VillagesPools;
 import net.minecraft.world.gen.feature.template.ProcessorLists;
 import net.minecraftforge.common.BasicTrade;
 import net.minecraftforge.event.village.VillagerTradesEvent;
@@ -52,8 +53,7 @@ public class ModVillagers{
     public static void registerTrades(final VillagerTradesEvent event) {
         if(event.getType() == JEWELLER.get()) {
             // Level 1 trades
-            List<VillagerTrades.ITrade> trades1 = event.getTrades().get(1);
-            trades1.add(new BasicTrade(new ItemStack(ModItems.ELEMENTAL_SHARDS.get(), 5), new ItemStack(Items.EMERALD), 10, 1, 1f));
+            event.getTrades().get(1).add(new BasicTrade(new ItemStack(ModItems.ELEMENTAL_SHARDS.get(), 5), new ItemStack(Items.EMERALD), 10, 1, 1f));
 
             // Level 2 trades
             List<VillagerTrades.ITrade> trades2 = event.getTrades().get(2);
@@ -66,8 +66,12 @@ public class ModVillagers{
             trades3.add(new BasicTrade(3, new ItemStack(ModItems.AIR_ELEMENT.get()), 10, 1, 1.2f));
             trades3.add(new BasicTrade(3, new ItemStack(ModItems.EARTH_ELEMENT.get()), 10, 1, 1.2f));
 
-            List<VillagerTrades.ITrade> trades4 = event.getTrades().get(4);
-            trades4.add(new BasicTrade(new ItemStack(Items.EMERALD, 10), new ItemStack(ModItems.AETHER_ELEMENT.get(), 2), new ItemStack(ModItems.ALL_SEEING_LENS.get()), 4, 10, 1.3F));
+            event.getTrades().get(4).add(new BasicTrade(new ItemStack(Items.EMERALD, 10), new ItemStack(ModItems.AETHER_ELEMENT.get(), 2), new ItemStack(ModItems.ALL_SEEING_LENS.get()), 4, 10, 1.3F));
+
+            List<VillagerTrades.ITrade> trades5 = event.getTrades().get(5);
+            trades5.add(new BasicTrade(42, new ItemStack(ModItems.AUTHOR_AMULET.get()), 1, 50, 3));
+            trades5.add(new BasicTrade(new ItemStack(Items.EMERALD, 30), new ItemStack(ModItems.AETHER_ELEMENT.get()), new ItemStack(ModItems.AMULET_BELT.get()), 1, 30, 2.5f));
+
 
         }
     }
@@ -80,16 +84,14 @@ public class ModVillagers{
 
     public static class Structures {
         public static void init() {
-                PlainsVillagePools.bootstrap();
-                SavannaVillagePools.bootstrap();
-                TaigaVillagePools.bootstrap();
-                DesertVillagePools.bootstrap();
-                SnowyVillagePools.bootstrap();
-                for (String biome : new String[]{"plains"}) { // This is because it should be all village biomes but for now there is only plains
-                    addHouseToPool(new ResourceLocation("village/" + biome + "/houses"),
-                            ElementalAmulets.MOD_ID + ":villages/jeweller_house_" + biome, 12);
-                }
-                ElementalAmulets.LOGGER.debug("Jeweller's house was successfully added to all existing vanilla plains villages");
+                VillagesPools.bootstrap();
+                if(ModConfig.cached.GENERATE_JEWELLER_HOUSE) {
+                    for (String biome : new String[]{"plains"}) { // This is because it should be all village biomes but for now there is only plains
+                        addHouseToPool(new ResourceLocation("village/" + biome + "/houses"),
+                                ElementalAmulets.MOD_ID + ":villages/jeweller_house_" + biome, 12);
+                    }
+                    ElementalAmulets.LOGGER.debug("Jeweller's house was successfully added to all existing vanilla plains villages");
+                } else ElementalAmulets.LOGGER.debug("Jeweller' s house generation skipped (Config Preference)");
         }
 
         private static void addHouseToPool(ResourceLocation pool, String houseToAdd, int weight) {

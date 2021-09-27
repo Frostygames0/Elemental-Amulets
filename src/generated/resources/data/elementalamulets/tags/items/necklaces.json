@@ -8,6 +8,7 @@
     "elementalamulets:speed_amulet",
     "elementalamulets:jump_amulet",
     "elementalamulets:protection_amulet",
-    "elementalamulets:invisibility_amulet"
+    "elementalamulets:invisibility_amulet",
+    "elementalamulets:author_amulet"
   ]
 }
