@@ -1,5 +1,6 @@
 package frostygames0.elementalamulets.items.amulets.effect;
 
+import frostygames0.elementalamulets.core.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.FireAmulet;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.DamageSource;
@@ -15,7 +16,7 @@ public class FireAmuletEffect {
             DamageSource source = event.getSource();
             if (!player.level.isClientSide()) {
                 if (source.isFire()) {
-                    CuriosApi.getCuriosHelper().findEquippedCurio(item -> item.getItem() instanceof FireAmulet, player).ifPresent((triple) -> {
+                    CuriosApi.getCuriosHelper().findEquippedCurio(ModItems.FIRE_AMULET.get(), player).ifPresent((triple) -> {
                         FireAmulet amulet = (FireAmulet) triple.getRight().getItem();
                         float fire = 1 - amulet.getFireResist(triple.getRight());
                         float lava = 1 - amulet.getLavaResist(triple.getRight());
@@ -36,7 +37,7 @@ public class FireAmuletEffect {
             DamageSource source = event.getSource();
             if (!player.level.isClientSide()) {
                 if (source.isFire()) {
-                    CuriosApi.getCuriosHelper().findEquippedCurio(item -> item.getItem() instanceof FireAmulet, player).ifPresent((triple) -> {
+                    CuriosApi.getCuriosHelper().findEquippedCurio(ModItems.FIRE_AMULET.get(), player).ifPresent((triple) -> {
                         FireAmulet amulet = (FireAmulet) triple.getRight().getItem();
                         float fire = 1 - amulet.getFireResist(triple.getRight());
                         float lava = 1 - amulet.getLavaResist(triple.getRight());
