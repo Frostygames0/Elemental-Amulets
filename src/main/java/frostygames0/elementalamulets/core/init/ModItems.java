@@ -48,6 +48,8 @@ public class ModItems {
 
     public static final RegistryObject<Item> ALL_SEEING_LENS = ITEMS.register("all_seeing_lens",
             () -> new Item(new Item.Properties().tab(ElementalAmulets.GROUP).stacksTo(16).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> AMULET_BELT = ITEMS.register("amulet_belt",
+            () -> new AmuletBelt(new Item.Properties().tab(ElementalAmulets.GROUP).stacksTo(1).rarity(Rarity.UNCOMMON)));
 
     // Amulets
     public static final RegistryObject<Item> EMPTY_AMULET = ITEMS.register("empty_amulet",
@@ -69,8 +71,9 @@ public class ModItems {
     public static final RegistryObject<Item> INVISIBILITY_AMULET = ITEMS.register("invisibility_amulet",
             () -> new InvisibilityAmulet(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(ElementalRarity.AIR).durability(1000)));
 
-    public static final RegistryObject<Item> AMULET_BELT = ITEMS.register("amulet_belt",
-            () -> new AmuletBelt(new Item.Properties().tab(null).stacksTo(1)));
+    public static final RegistryObject<Item> AUTHOR_AMULET = ITEMS.register("author_amulet",
+            () -> new AuthorAmulet(new Item.Properties().rarity(Rarity.EPIC)));
+
 
     public static List<AmuletItem> getAmulets() {
         List<AmuletItem> items = new ArrayList<>();
