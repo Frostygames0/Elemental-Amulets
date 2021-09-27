@@ -77,6 +77,7 @@ public class ElementalAmulets {
             ModFeatures.register();
             ModVillagers.Structures.init();
             ModCriteriaTriggers.register();
+            ModStats.registerStats();
         });
     }
 }
