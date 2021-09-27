@@ -26,10 +26,10 @@ public class ModNetworking {
                 PROTOCOL_NETWORK::equals,
                 PROTOCOL_NETWORK::equals);
 
-        INSTANCE.messageBuilder(COpenAmuletBeltGUIPacket.class, nextID())
+        INSTANCE.messageBuilder(SOpenAmuletBeltGUIPacket.class, nextID())
                 .encoder(((cOpenAmuletBeltGUIPacket, packetBuffer) -> {}))
-                .decoder(buf -> new COpenAmuletBeltGUIPacket())
-                .consumer(COpenAmuletBeltGUIPacket::handle)
+                .decoder(buf -> new SOpenAmuletBeltGUIPacket())
+                .consumer(SOpenAmuletBeltGUIPacket::handle)
                 .add();
     }
 }
