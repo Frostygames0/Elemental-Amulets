@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.advancements.triggers.ModCriteriaTriggers;
 import frostygames0.elementalamulets.client.models.AmuletModel;
+import frostygames0.elementalamulets.core.init.ModStats;
 import frostygames0.elementalamulets.core.util.NBTUtil;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
@@ -63,8 +64,12 @@ public abstract class AmuletItem extends Item implements ICurioItem {
     public void onEquip(SlotContext slotContext, ItemStack prevStack, ItemStack stack) {
         if(prevStack.getItem() != stack.getItem()) {
             LivingEntity entity = slotContext.getWearer();
-            if(!entity.level.isClientSide() && entity instanceof ServerPlayerEntity)
-                ModCriteriaTriggers.SUCCESS_USE.trigger((ServerPlayerEntity) entity, stack);
+            if(!entity.level.isClientSide() && entity instanceof ServerPlayerEntity) {
+                ServerPlayerEntity player = (ServerPlayerEntity) entity;
+
+                ModCriteriaTriggers.SUCCESS_USE.trigger(player, stack);
+                player.awardStat(ModStats.AMULET_WORN_STAT);
+            }
         }
     }
 

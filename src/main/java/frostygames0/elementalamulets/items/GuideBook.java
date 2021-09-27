@@ -1,6 +1,7 @@
 package frostygames0.elementalamulets.items;
 
 import frostygames0.elementalamulets.advancements.triggers.ModCriteriaTriggers;
+import frostygames0.elementalamulets.core.init.ModStats;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -45,6 +46,7 @@ public class GuideBook extends Item {
                 if (ModList.get().isLoaded("patchouli")) {
                     PatchouliAPI.get().openBookGUI((ServerPlayerEntity) playerIn, BOOK_ID);
                     ModCriteriaTriggers.SUCCESS_USE.trigger((ServerPlayerEntity) playerIn, playerIn.getItemInHand(handIn));
+                    playerIn.awardStat(ModStats.GUIDE_OPENED);
                     return ActionResult.success(playerIn.getItemInHand(handIn));
                 } else {
                     playerIn.displayClientMessage(new TranslationTextComponent("patchouli.elementalamulets.not_present").withStyle(TextFormatting.RED), true);

@@ -8,6 +8,7 @@ import frostygames0.elementalamulets.client.particles.ModParticles;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.core.init.ModBlocks;
 import frostygames0.elementalamulets.core.init.ModRecipes;
+import frostygames0.elementalamulets.core.init.ModStats;
 import frostygames0.elementalamulets.core.init.ModTiles;
 import frostygames0.elementalamulets.recipes.ElementalCombination;
 import net.minecraft.block.BlockState;
@@ -128,11 +129,14 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
                 handler.extractItem(i, 1, false);
                 handler.insertItem(i, remainingItems.get(i), false); // inserting remaining items
             }
-            // TODO Maybe I should give it only to the closest player or the one who started combination idk
+
             if(level instanceof ServerWorld)
                 ((ServerWorld)level).getChunkSource().chunkMap.getPlayers(new ChunkPos(worldPosition), false)
                         .filter(player -> player.distanceToSqr(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ()) <= 100)
-                        .forEach(player -> ModCriteriaTriggers.ITEM_COMBINED.trigger(player, result, (ServerWorld) level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ()));
+                        .forEach(player -> {
+                            ModCriteriaTriggers.ITEM_COMBINED.trigger(player, result, (ServerWorld) level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ());
+                            player.awardStat(ModStats.TIMES_COMBINED);
+                        });
         }
     }
 
