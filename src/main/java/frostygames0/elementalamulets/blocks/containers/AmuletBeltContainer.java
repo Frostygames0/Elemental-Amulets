@@ -28,6 +28,41 @@ public class AmuletBeltContainer extends Container {
     }
 
     @Override
+    public ItemStack quickMoveStack(PlayerEntity pPlayer, int index) {
+        ItemStack itemStack = ItemStack.EMPTY;
+        /*Slot slot = this.getSlot(index);
+        if(slot != null && slot.hasItem()) {
+            ItemStack itemStack1 = slot.getItem();
+            itemStack = itemStack1.copy();
+
+            if(index >= 4 && index < 41) {
+                if (!this.moveItemStackTo(itemStack1, 0, 4, false)) {
+                    if (index < 32) {
+                        if (!this.moveItemStackTo(itemStack1, 32, 41, false)) {
+                            return ItemStack.EMPTY;
+                        }
+                    } else if (!this.moveItemStackTo(itemStack1, 5, 32, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                }
+            } else if (!this.moveItemStackTo(itemStack1, 5, 41, false)) {
+                return ItemStack.EMPTY;
+            }
+
+            if(itemStack1.isEmpty()) {
+                slot.set(ItemStack.EMPTY);
+            } else {
+                slot.setChanged();
+            }
+            if(itemStack1.getCount() == itemStack.getCount()) {
+                return ItemStack.EMPTY;
+            }
+            slot.onTake(pPlayer, itemStack1);
+        }*/
+        return itemStack;
+    }
+
+    @Override
     public boolean stillValid(PlayerEntity playerIn) {
         return !belt.isEmpty() && belt.getItem() instanceof AmuletBelt;
     }
