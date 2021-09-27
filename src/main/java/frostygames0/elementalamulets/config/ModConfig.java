@@ -61,7 +61,7 @@ public class ModConfig {
     public static class Client {
         private final ForgeConfigSpec.BooleanValue USE_LATIN_ELEMENT_NAMES;
         private final ForgeConfigSpec.BooleanValue AMULETS_TIER_DIFFERENCE;
-        private final ForgeConfigSpec.IntValue COMBINATOR_STACK_ROTATION_SPEED;
+        //private final ForgeConfigSpec.IntValue COMBINATOR_STACK_ROTATION_SPEED;
         private final ForgeConfigSpec.BooleanValue RENDER_COMBINATOR_STACK;
         private final ForgeConfigSpec.BooleanValue RENDER_LEAF_SHIELD;
         public Client(ForgeConfigSpec.Builder builder) {
@@ -70,7 +70,7 @@ public class ModConfig {
 
             builder.push("Rendering");
             RENDER_COMBINATOR_STACK = builder.comment("Render output slot on top Elemental Combinator? [DEFAULT: true]").translation("config.elementalamulets.elemental_combinator_stack_display").define("render_elemental_combinator_stack", true);
-            COMBINATOR_STACK_ROTATION_SPEED = builder.comment("How fast does rendered item spins? [DEFAULT: true]").translation("config.elementalamulets.elemental_combinator_stack_speed").defineInRange("rendered_stack_speed", 20, 1, Integer.MAX_VALUE);
+            //COMBINATOR_STACK_ROTATION_SPEED = builder.comment("How fast does rendered item spins? [DEFAULT: true]").translation("config.elementalamulets.elemental_combinator_stack_speed").defineInRange("rendered_stack_speed", 20, 1, Integer.MAX_VALUE);
 
             builder.push("Amulets");
             RENDER_LEAF_SHIELD = builder.comment("Render leaf shield around the player? [DEFAULT: true]").define("render_leaf_shield", true);
@@ -105,14 +105,14 @@ public class ModConfig {
 
         public static boolean AMULETS_TIER_DIFFERENCE;
         public static boolean USE_LATIN_ELEMENT_NAMES;
-        public static int COMBINATOR_STACK_ROTATION_SPEED;
+        //public static int COMBINATOR_STACK_ROTATION_SPEED;
         public static boolean RENDER_COMBINATOR_STACK;
         public static boolean RENDER_LEAF_SHIELD;
 
         private static void bakeClientConfig() {
             USE_LATIN_ELEMENT_NAMES = CLIENT.USE_LATIN_ELEMENT_NAMES.get();
             AMULETS_TIER_DIFFERENCE = CLIENT.AMULETS_TIER_DIFFERENCE.get();
-            COMBINATOR_STACK_ROTATION_SPEED = CLIENT.COMBINATOR_STACK_ROTATION_SPEED.get();
+            //COMBINATOR_STACK_ROTATION_SPEED = CLIENT.COMBINATOR_STACK_ROTATION_SPEED.get();
             RENDER_COMBINATOR_STACK = CLIENT.RENDER_COMBINATOR_STACK.get();
             RENDER_LEAF_SHIELD = CLIENT.RENDER_LEAF_SHIELD.get();
         }
