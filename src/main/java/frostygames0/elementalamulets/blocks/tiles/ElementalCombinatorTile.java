@@ -143,7 +143,7 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
     private boolean canCombine(@Nullable ElementalCombination recipe) {
         if(recipe != null) {
             ItemStack result = recipe.assemble(new RecipeWrapper(handler));
-            return !result.isEmpty() && handler.insertItem(0, result, true).isEmpty() && level.canSeeSkyFromBelowWater(worldPosition.above());
+            return !result.isEmpty() && handler.insertItem(0, result, true).isEmpty() && level.canSeeSky(worldPosition.above());
         }
         return false;
     }
