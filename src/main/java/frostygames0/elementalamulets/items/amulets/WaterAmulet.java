@@ -1,6 +1,5 @@
 package frostygames0.elementalamulets.items.amulets;
 
-import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.config.ModConfig;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
@@ -9,7 +8,6 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -21,6 +19,8 @@ import top.theillusivec4.curios.api.SlotContext;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
+
+import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 // TODO: Finish it
 public class WaterAmulet extends AmuletItem {
@@ -39,7 +39,7 @@ public class WaterAmulet extends AmuletItem {
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
         if(!livingEntity.level.isClientSide()) {
             ModifiableAttributeInstance att = livingEntity.getAttribute(ForgeMod.SWIM_SPEED.get());
-            AttributeModifier attMod = new AttributeModifier(MODIFIER_UUID, new ResourceLocation(ElementalAmulets.MOD_ID, "speed").toString(),
+            AttributeModifier attMod = new AttributeModifier(MODIFIER_UUID, modPrefix("speed").toString(),
                     this.getSwimSpeed(stack), AttributeModifier.Operation.MULTIPLY_TOTAL);
             if(livingEntity.isUnderWater()) {
                 if(livingEntity.isSwimming()) {
