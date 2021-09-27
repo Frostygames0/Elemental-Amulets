@@ -1,5 +1,6 @@
 package frostygames0.elementalamulets.items.amulets.effect;
 
+import frostygames0.elementalamulets.core.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.TerraProtectionAmulet;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -11,6 +12,7 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import top.theillusivec4.curios.api.CuriosApi;
 
 public class TerraProtectionAmuletEffect {
@@ -19,7 +21,7 @@ public class TerraProtectionAmuletEffect {
         if(event.getEntityLiving() instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) event.getEntityLiving();
             if (!player.level.isClientSide()) {
-                CuriosApi.getCuriosHelper().findEquippedCurio(item -> item.getItem() instanceof TerraProtectionAmulet, player).ifPresent(triple -> {
+                CuriosApi.getCuriosHelper().findEquippedCurio(ModItems.TERRA_PROTECTION_AMULET.get(), player).ifPresent(triple -> {
                     ItemStack stack = triple.getRight();
                     TerraProtectionAmulet amulet = (TerraProtectionAmulet) stack.getItem();
                     if (amulet.canProtect(stack)) {
@@ -42,7 +44,7 @@ public class TerraProtectionAmuletEffect {
         if(target instanceof PlayerEntity) {
             PlayerEntity entity = (PlayerEntity) target;
             if (!entity.level.isClientSide()) {
-                CuriosApi.getCuriosHelper().findEquippedCurio(item -> item.getItem() instanceof TerraProtectionAmulet, entity).ifPresent(triple -> {
+                CuriosApi.getCuriosHelper().findEquippedCurio(ModItems.TERRA_PROTECTION_AMULET.get(), entity).ifPresent(triple -> {
                     ItemStack stack = triple.getRight();
                     TerraProtectionAmulet amulet = (TerraProtectionAmulet) stack.getItem(); // For future
                     if (amulet.canProtect(stack)) {
@@ -60,6 +62,20 @@ public class TerraProtectionAmuletEffect {
                         projectile.hurtMarked = true;
                         entity.level.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.GRASS_BREAK, SoundCategory.PLAYERS, 1.0f, 1.0f);
                     }
+                });
+            }
+        }
+    }
+
+    // Maybe use attribute instead so other things can affect it too?
+    static void onLivingKnockback(LivingKnockBackEvent event) {
+        if(event.getEntityLiving() instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+            if(!player.level.isClientSide()) {
+                CuriosApi.getCuriosHelper().findEquippedCurio(ModItems.TERRA_PROTECTION_AMULET.get(), player).ifPresent(triple -> {
+                    ItemStack stack = triple.getRight();
+                    TerraProtectionAmulet amulet = (TerraProtectionAmulet) stack.getItem();
+                    event.setCanceled(amulet.canProtect(stack));
                 });
             }
         }

@@ -5,6 +5,7 @@ import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -29,5 +30,9 @@ public class EffectEventHandler {
     @SubscribeEvent
     public static void onProjectileImpact(final ProjectileImpactEvent event) {
         TerraProtectionAmuletEffect.onProjectileImpact(event);
+    }
+    @SubscribeEvent
+    public static void onLivingKnockback(final LivingKnockBackEvent event) {
+        TerraProtectionAmuletEffect.onLivingKnockback(event);
     }
  }
