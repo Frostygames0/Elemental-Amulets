@@ -6,6 +6,8 @@ import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.core.init.*;
 import frostygames0.elementalamulets.network.ModNetworking;
 import frostygames0.elementalamulets.world.LootTableModifiers;
+import frostygames0.elementalamulets.world.structures.ModStructures;
+import frostygames0.elementalamulets.world.structures.StructureFeatures;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -77,8 +79,13 @@ public class ElementalAmulets {
     private void commonSetup(final FMLCommonSetupEvent event) {
         ModNetworking.registerMessages();
         event.enqueueWork(() -> {
+            ModStructures.setupStructures();
+            StructureFeatures.register();
+
             ModFeatures.register();
+
             ModVillagers.Structures.init();
+
             ModCriteriaTriggers.register();
             ModStats.registerStats();
         });

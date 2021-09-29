@@ -1,0 +1,24 @@
+{
+  "name": "cult_temple_sides",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "minecraft:dasdasd",
+        "processors": "minecraft:mossify_70_percent"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "minecraft:aboba",
+        "processors": "minecraft:mossify_70_percent"
+      }
+    }
+  ]
+}
