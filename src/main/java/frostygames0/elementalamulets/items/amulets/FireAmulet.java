@@ -17,7 +17,7 @@ public class FireAmulet extends AmuletItem {
     }
 
     @Override
-    public boolean hasSpecialEffect() {
-        return true;
+    public boolean usesCurioMethods() {
+        return false;
     }
 }

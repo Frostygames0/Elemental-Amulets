@@ -142,11 +142,10 @@ public abstract class AmuletItem extends Item implements ICurioItem {
     }
 
     /**
-     * Defines if amulet implements it's action outside of {@link ICurioItem} methods such as {@link frostygames0.elementalamulets.items.amulets.effect.JumpAmuletEffect}
-     * @return true - if it uses something different for effect(e.g forge events), false - if not
+     * Defines if amulet uses curio methods (like {@link ICurioItem#curioTick(String, int, LivingEntity, ItemStack)}
      */
-    public boolean hasSpecialEffect() {
-        return false;
+    public boolean usesCurioMethods() {
+        return true;
     }
 
 

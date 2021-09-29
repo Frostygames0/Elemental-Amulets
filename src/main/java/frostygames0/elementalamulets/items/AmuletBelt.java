@@ -43,7 +43,7 @@ public class AmuletBelt extends Item implements ICurioItem {
                     Item itemAmulet = amulet.getItem();
                     LazyOptional<ICurio> curio = helper.getCurio(amulet);
                     if (curio.isPresent() && itemAmulet instanceof AmuletItem) {
-                        if (!((AmuletItem) itemAmulet).hasSpecialEffect()) {
+                        if (((AmuletItem) itemAmulet).usesCurioMethods()) {
                             if (helper.findEquippedCurio(itemAmulet, livingEntity).map(ImmutableTriple::getRight).orElse(ItemStack.EMPTY).isEmpty()) { // Checks if there is amulet in main slot that is same as one in belt. Rule of priority
                                 curio.orElseThrow(NullPointerException::new).curioTick(identifier, index, livingEntity);
                             }
@@ -63,7 +63,7 @@ public class AmuletBelt extends Item implements ICurioItem {
                 Item itemAmulet = amulet.getItem();
                 LazyOptional<ICurio> curio = helper.getCurio(amulet);
                 if(curio.isPresent() && itemAmulet instanceof AmuletItem) {
-                    if(!((AmuletItem)itemAmulet).hasSpecialEffect()) {
+                    if(((AmuletItem) itemAmulet).usesCurioMethods()) {
                         if(helper.findEquippedCurio(itemAmulet, slotContext.getWearer()).map(ImmutableTriple::getRight).orElse(ItemStack.EMPTY).isEmpty()) { // Checks if there is amulet in main slot that is same as one in belt. Rule of priority
                             curio.orElseThrow(NullPointerException::new).onUnequip(slotContext, newStack);
                         }
