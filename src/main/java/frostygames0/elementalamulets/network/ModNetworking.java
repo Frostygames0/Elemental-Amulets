@@ -1,5 +1,7 @@
 package frostygames0.elementalamulets.network;
 
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 
@@ -31,5 +33,18 @@ public class ModNetworking {
                 .decoder(buf -> new SOpenAmuletBeltGUIPacket())
                 .consumer(SOpenAmuletBeltGUIPacket::handle)
                 .add();
+        INSTANCE.messageBuilder(CUpdatePlayerVelocityPacket.class, nextID())
+                .encoder(CUpdatePlayerVelocityPacket::toBytes)
+                .decoder(CUpdatePlayerVelocityPacket::new)
+                .consumer(CUpdatePlayerVelocityPacket::handle)
+                .add();
+    }
+
+    public static void sendToClient(Object packet, ServerPlayerEntity player) {
+        INSTANCE.sendTo(packet, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+    }
+
+    public static void sendToServer(Object packet) {
+        INSTANCE.sendToServer(packet);
     }
 }

@@ -29,7 +29,7 @@ public class ModKeyBindings {
     public static void onClientTick(TickEvent.ClientTickEvent event) {
         if(event.phase == TickEvent.Phase.START) {
             if(OPEN_AMULET_BELT.isDown()) {
-                ModNetworking.INSTANCE.sendToServer(new SOpenAmuletBeltGUIPacket());
+                ModNetworking.sendToServer(new SOpenAmuletBeltGUIPacket());
             }
         }
     }
