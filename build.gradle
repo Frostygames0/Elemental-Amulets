@@ -26,7 +26,7 @@ minecraft {
     mappings channel: 'parchment', version: '2021.08.29-1.16.5'
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
     
-// accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
         client {
@@ -139,7 +139,6 @@ dependencies {
 
 processResources {
     exclude '.cache' // Removes .cache from jar since it's useless and should be eliminated! UAHAHHA
-    exclude 'data/forge/loot_modifiers'
 }
 
 jar {
