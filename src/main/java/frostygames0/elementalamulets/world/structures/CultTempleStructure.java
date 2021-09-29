@@ -45,7 +45,7 @@ public class CultTempleStructure extends Structure<NoFeatureConfig> {
         public void generatePieces(DynamicRegistries dynamicRegistryManager, ChunkGenerator chunkGenerator, TemplateManager templateManagerIn, int chunkX, int chunkZ, Biome biomeIn, NoFeatureConfig config) {
             BlockPos centerPos = new BlockPos(chunkX * 16, 0, chunkZ * 16);
 
-            JigsawManager.addPieces(dynamicRegistryManager, new VillageConfig(() -> dynamicRegistryManager.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY).get(modPrefix("")), 1), AbstractVillagePiece::new, chunkGenerator, templateManagerIn, centerPos, pieces, random, false,true);
+            JigsawManager.addPieces(dynamicRegistryManager, new VillageConfig(() -> dynamicRegistryManager.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY).get(modPrefix("cult_temple_start")), 1), AbstractVillagePiece::new, chunkGenerator, templateManagerIn, centerPos, pieces, random, false,true);
 
             Vector3i structureCenter = this.pieces.get(0).getBoundingBox().getCenter();
             int xOffset = centerPos.getX() - structureCenter.getX();
