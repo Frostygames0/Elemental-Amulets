@@ -65,6 +65,7 @@ public class ElementalAmulets {
         ModContainers.CONTAINERS.register(bus);
         ModRecipes.SERIALIZERS.register(bus);
         ModVillagers.register(bus);
+        ModStructures.STRUCTURES.register(bus);
         ModParticles.PARTICLES.register(bus);
 
         bus.addGenericListener(GlobalLootModifierSerializer.class, LootTableModifiers::registerLootModifierSerializer); // Loot modification register
