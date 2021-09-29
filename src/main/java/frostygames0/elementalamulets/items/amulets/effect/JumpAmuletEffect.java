@@ -2,9 +2,13 @@ package frostygames0.elementalamulets.items.amulets.effect;
 
 import frostygames0.elementalamulets.core.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.JumpAmulet;
+import frostygames0.elementalamulets.network.CUpdatePlayerVelocityPacket;
+import frostygames0.elementalamulets.network.ModNetworking;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -61,8 +65,9 @@ public class JumpAmuletEffect {
                     CuriosApi.getCuriosHelper().findEquippedCurio(ModItems.JUMP_AMULET.get(), player).ifPresent(triple -> {
                         ItemStack stack = triple.getRight();
                         JumpAmulet item = (JumpAmulet) stack.getItem();
-                        player.push(0, item.getJump(stack), 0);
-                        player.hurtMarked = true;
+
+                        Vector3d vector = player.getDeltaMovement().add(0, item.getJump(stack), 0);
+                        ModNetworking.sendToClient(new CUpdatePlayerVelocityPacket(vector.x, vector.y, vector.z), (ServerPlayerEntity) player);
                     });
                 }
             }
