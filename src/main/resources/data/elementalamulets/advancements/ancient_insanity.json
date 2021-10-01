@@ -1,0 +1,28 @@
+{
+  "parent": "elementalamulets:combine_aether",
+  "display": {
+    "icon": {
+      "item": "minecraft:stone_bricks"
+    },
+    "title": {
+      "translate": "advancements.elementalamulets.ancient_insanity"
+    },
+    "description": {
+      "translate": "advancements.elementalamulets.ancient_insanity.desc"
+    },
+    "frame": "task"
+  },
+  "criteria": {
+    "in_temple": {
+      "trigger": "minecraft:location",
+      "conditions": {
+        "location": {
+          "feature": "elementalamulets:cult_temple"
+        }
+      }
+    }
+  },
+  "requirements": [[
+    "in_temple"
+  ]]
+}

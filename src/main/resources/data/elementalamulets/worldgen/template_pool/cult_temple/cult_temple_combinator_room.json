@@ -1,0 +1,15 @@
+{
+  "name": "elementalamulets:cult_temple/cult_temple_combinator_room",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "elementalamulets:cult_temple/cult_temple_combinator_room",
+        "processors": "elementalamulets:age_stone_bricks"
+      }
+    }
+  ]
+}

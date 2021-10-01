@@ -100,6 +100,8 @@
   "advancements.elementalamulets.amulet_max.desc": "Upgrade amulet to the highest tier",
   "advancements.elementalamulets.wear_all_amulets": "The Elemental God!",
   "advancements.elementalamulets.wear_all_amulets.desc": "Wear all amulets at least once",
+  "advancements.elementalamulets.ancient_insanity": "Ancient insanity",
+  "advancements.elementalamulets.ancient_insanity.desc": "Enter the ancient temple",
 
   "death.attack.elementalamulets.leaf_cut": "%s was cut to death by leaf shield!",
 
@@ -107,6 +109,8 @@
   "commands.elementalamulets.give.failure": "Error! %s is not an elemental amulet!",
 
   "key.elementalamulets.open_belt_gui": "Open amulet belt interface",
+
+  "filled_map.elementalamulets.cult_temple": "Strange Temple's map",
 
   "config.elementalamulets.elements_latin_variant": "If true, elements names will be in latin (Ignis, Aer, Aqua and Terra) [DEFAULT: false]",
   "config.elementalamulets.elemental_combinator_stack_display": "Display output slot on Elemental Combinator? [DEFAULT: true]",

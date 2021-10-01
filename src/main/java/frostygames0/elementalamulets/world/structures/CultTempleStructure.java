@@ -1,5 +1,7 @@
 package frostygames0.elementalamulets.world.structures;
 
+import frostygames0.elementalamulets.ElementalAmulets;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.util.math.vector.Vector3i;
@@ -13,8 +15,6 @@ import net.minecraft.world.gen.feature.jigsaw.JigsawManager;
 import net.minecraft.world.gen.feature.structure.*;
 import net.minecraft.world.gen.feature.template.TemplateManager;
 
-
-import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 /**
  * @author Frostygames0
@@ -41,11 +41,16 @@ public class CultTempleStructure extends Structure<NoFeatureConfig> {
             super(structureIn, chunkX, chunkZ, mutableBoundingBox, referenceIn, seedIn);
         }
 
+
         @Override
         public void generatePieces(DynamicRegistries dynamicRegistryManager, ChunkGenerator chunkGenerator, TemplateManager templateManagerIn, int chunkX, int chunkZ, Biome biomeIn, NoFeatureConfig config) {
             BlockPos centerPos = new BlockPos(chunkX * 16, 0, chunkZ * 16);
 
-            JigsawManager.addPieces(dynamicRegistryManager, new VillageConfig(() -> dynamicRegistryManager.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY).get(modPrefix("cult_temple_start")), 1), AbstractVillagePiece::new, chunkGenerator, templateManagerIn, centerPos, pieces, random, false,true);
+            JigsawManager.addPieces(dynamicRegistryManager, new VillageConfig(() -> dynamicRegistryManager.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY).get(new ResourceLocation(ElementalAmulets.MOD_ID, "cult_temple/cult_temple_start")), 5), AbstractVillagePiece::new, chunkGenerator, templateManagerIn, centerPos, pieces, random, false,true);
+
+            this.pieces.forEach(piece -> piece.move(0, -2, 0));
+            this.pieces.forEach(piece -> piece.getBoundingBox().y0 -= 2);
+
 
             Vector3i structureCenter = this.pieces.get(0).getBoundingBox().getCenter();
             int xOffset = centerPos.getX() - structureCenter.getX();

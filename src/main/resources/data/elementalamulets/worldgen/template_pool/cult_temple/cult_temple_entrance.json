@@ -1,5 +1,5 @@
 {
-  "name": "cult_temple_start",
+  "name": "elementalamulets:cult_temple/cult_temple_entrance",
   "fallback": "minecraft:empty",
   "elements": [
     {
@@ -7,8 +7,8 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
-        "location": "elementalamulets:cult_temple/cult_temple_start",
-        "processors": "minecraft:mossify_70_percent"
+        "location": "elementalamulets:cult_temple/cult_temple_entrance",
+        "processors": "elementalamulets:age_stone_bricks"
       }
     }
   ]

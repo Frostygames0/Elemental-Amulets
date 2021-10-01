@@ -1,0 +1,13 @@
+{
+  "name": "elementalamulets:cult_temple/cult_temple_cornertunnel",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:empty_pool_element",
+        "projection": "rigid"
+      }
+    }
+  ]
+}

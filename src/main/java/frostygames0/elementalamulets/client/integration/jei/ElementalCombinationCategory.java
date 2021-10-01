@@ -5,7 +5,7 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import frostygames0.elementalamulets.client.screens.ElementalCombinatorScreen;
-import frostygames0.elementalamulets.core.init.ModItems;
+import frostygames0.elementalamulets.core.init.ModBlocks;
 import frostygames0.elementalamulets.recipes.ElementalCombination;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
@@ -40,7 +40,7 @@ public class ElementalCombinationCategory implements IRecipeCategory<ElementalCo
     public ElementalCombinationCategory(IGuiHelper helper) {
         this.background = helper.drawableBuilder(ElementalCombinatorScreen.GUI, 6, 5, 149, 74)
         .addPadding(0, 10, 0, 0).build();
-        this.icon = helper.createDrawableIngredient(new ItemStack(ModItems.ELEMENTAL_COMBINATOR_BLOCK.get()));
+        this.icon = helper.createDrawableIngredient(new ItemStack(ModBlocks.ELEMENTAL_COMBINATOR.get()));
         this.cachedArrows = CacheBuilder.newBuilder()
                 .maximumSize(25)
                 .build(new CacheLoader<Integer, IDrawableAnimated>() {

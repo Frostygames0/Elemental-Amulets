@@ -9,6 +9,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.item.DyeColor;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
@@ -17,7 +18,6 @@ import net.minecraft.world.gen.GenerationStage;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
@@ -33,17 +33,20 @@ public class ModBlocks {
                     .lightLevel(state -> state.getValue(ElementalCombinator.COMBINING) ? 15 : 5).isRedstoneConductor(ModBlocks::never)));
 
     public static final RegistryObject<Block> CELESTIAL_FOCUS = BLOCKS.register("celestial_focus",
-            () -> new CelestialFocus(AbstractBlock.Properties.of(Material.WOOD, DyeColor.BROWN).strength(2f).sound(SoundType.WOOD).harvestTool(ToolType.AXE).harvestLevel(0)
-            .noOcclusion().isViewBlocking(ModBlocks::never).isSuffocating(ModBlocks::never)));
+            () -> new CelestialFocus(AbstractBlock.Properties.of(Material.WOOD, DyeColor.BROWN).strength(2f).sound(SoundType.WOOD).harvestTool(ToolType.AXE)
+                    .noOcclusion().isViewBlocking(ModBlocks::never).isSuffocating(ModBlocks::never)));
 
     public static final RegistryObject<Block> ELEMENTAL_ORE = BLOCKS.register("elemental_ore",
             () -> new Block(AbstractBlock.Properties.of(Material.STONE).strength(3.5f).sound(SoundType.STONE).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).harvestLevel(1)));
+
+    public static final RegistryObject<Block> ELEMENTAL_SHARDS_BLOCK = BLOCKS.register("elemental_shards_block",
+            () -> new Block(AbstractBlock.Properties.of(Material.GLASS, MaterialColor.COLOR_CYAN).strength(0.8f).sound(SoundType.GLASS).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE)));
 
     private static boolean never(BlockState blockState, IBlockReader iBlockReader, BlockPos blockPos) {
         return false;
     }
 
-    @SubscribeEvent(priority = EventPriority.NORMAL)
+    @SubscribeEvent
     public static void oreGeneration(BiomeLoadingEvent event) {
         BiomeGenerationSettingsBuilder gen = event.getGeneration();
         if(!event.getCategory().equals(Biome.Category.NETHER) && !event.getCategory().equals(Biome.Category.THEEND)) {

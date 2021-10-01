@@ -36,7 +36,7 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
     }
     // Vanilla recipes(crafting, smelting, etc.)
     private void registerVanillaRecipes(Consumer<IFinishedRecipe> consumer) {
-        ShapedRecipeBuilder.shaped(ModItems.ELEMENTAL_COMBINATOR_BLOCK.get())
+        ShapedRecipeBuilder.shaped(ModBlocks.ELEMENTAL_COMBINATOR.get())
                 .pattern("_=_")
                 .pattern("#4#")
                 .pattern("000")
@@ -70,6 +70,12 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .unlockedBy("has_item", InventoryChangeTrigger.Instance.hasItems(ModItems.ALL_SEEING_LENS.get()))
                 .save(consumer);
         oreSmelting(ModBlocks.ELEMENTAL_ORE.get(), ModItems.ELEMENTAL_SHARDS.get(), 0.7f, 200, consumer);
+        ShapedRecipeBuilder.shaped(ModBlocks.ELEMENTAL_SHARDS_BLOCK.get())
+                .pattern("***")
+                .pattern("***")
+                .pattern("***")
+                .define('*', ModItems.ELEMENTAL_SHARDS.get())
+                .unlockedBy("has_item", InventoryChangeTrigger.Instance.hasItems(ModItems.ELEMENTAL_SHARDS.get()));
     }
     // Elemental Combination recipes
     private void registerModRecipes(Consumer<IFinishedRecipe> consumer) {

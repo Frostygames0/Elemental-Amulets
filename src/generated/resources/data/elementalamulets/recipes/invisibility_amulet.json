@@ -32,6 +32,7 @@
   "combination_time": 200,
   "tag_transfer": true,
   "result": {
-    "item": "elementalamulets:invisibility_amulet"
+    "item": "elementalamulets:invisibility_amulet",
+    "nbt": "{}"
   }
 }

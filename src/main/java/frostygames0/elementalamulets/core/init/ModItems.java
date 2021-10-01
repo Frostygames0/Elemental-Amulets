@@ -25,12 +25,14 @@ public class ModItems {
             () -> new GuideBook(new Item.Properties().tab(ElementalAmulets.GROUP).stacksTo(1)));
 
     // Mod BlockItems
-    public static final RegistryObject<BlockItem> ELEMENTAL_COMBINATOR_BLOCK = ITEMS.register("elemental_combinator",
+    public static final RegistryObject<BlockItem> ELEMENTAL_COMBINATOR = ITEMS.register("elemental_combinator",
             () -> new BlockItem(ModBlocks.ELEMENTAL_COMBINATOR.get(), new Item.Properties().tab(ElementalAmulets.GROUP)));
     public static final RegistryObject<BlockItem> CELESTIAL_FOCUS = ITEMS.register("celestial_focus",
             () -> new BlockItem(ModBlocks.CELESTIAL_FOCUS.get(), new Item.Properties().tab(ElementalAmulets.GROUP)));
     public static final RegistryObject<BlockItem> ELEMENTAL_ORE = ITEMS.register("elemental_ore",
             () -> new BlockItem(ModBlocks.ELEMENTAL_ORE.get(), new Item.Properties().tab(ElementalAmulets.GROUP)));
+    public static final RegistryObject<BlockItem> ELEMENTAL_SHARDS_BLOCK = ITEMS.register("elemental_shards_block",
+            () -> new BlockItem(ModBlocks.ELEMENTAL_SHARDS_BLOCK.get(), new Item.Properties().tab(ElementalAmulets.GROUP)));
 
     // Elements
     public static final RegistryObject<Item> ELEMENTAL_SHARDS = ITEMS.register("elemental_shards",
