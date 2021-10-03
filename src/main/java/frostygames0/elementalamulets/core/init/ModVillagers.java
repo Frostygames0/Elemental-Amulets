@@ -81,9 +81,7 @@ public class ModVillagers{
             List<VillagerTrades.ITrade> trades5 = event.getTrades().get(5);
             trades5.add(new BasicTrade(42, new ItemStack(ModItems.AUTHOR_AMULET.get()), 1, 50, 3));
             trades5.add(new BasicTrade(new ItemStack(Items.EMERALD, 30), new ItemStack(ModItems.AETHER_ELEMENT.get()), new ItemStack(ModItems.AMULET_BELT.get()), 1, 30, 2.5f));
-            trades2.add(new CultTempleTrade(30, 1, 10));
-
-
+            trades5.add(new CultTempleTrade(30, 1, 10));
         }
     }
 
@@ -94,7 +92,7 @@ public class ModVillagers{
     }
 
     public static class Structures {
-        public static void init() {
+        public static void bootstrap() {
                 VillagesPools.bootstrap();
                 if(ModConfig.cached.GENERATE_JEWELLER_HOUSE) {
                     for (String biome : new String[]{"plains", "taiga"}) { // This is because it should be all village biomes but for now there is only plains
@@ -141,7 +139,7 @@ public class ModVillagers{
                 if (blockpos != null) {
                     ItemStack itemstack = FilledMapItem.create(serverworld, blockpos.getX(), blockpos.getZ(), (byte)3, true, true);
                     FilledMapItem.renderBiomePreviewMap(serverworld, itemstack);
-                    MapData.addTargetDecoration(itemstack, blockpos, "+", MapDecoration.Type.TARGET_X);
+                    MapData.addTargetDecoration(itemstack, blockpos, "+", MapDecoration.Type.RED_X);
                     itemstack.setHoverName(new TranslationTextComponent("filled_map.elementalamulets.cult_temple"));
                     return new MerchantOffer(new ItemStack(Items.EMERALD, this.emerald), new ItemStack(Items.COMPASS), itemstack, this.maxUses, this.villagerXp, 0.2F);
                 } else {
