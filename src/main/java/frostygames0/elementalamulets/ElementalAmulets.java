@@ -83,7 +83,7 @@ public class ElementalAmulets {
 
             ModFeatures.register();
 
-            ModVillagers.Structures.init();
+            ModVillagers.Structures.bootstrap();
 
             ModCriteriaTriggers.register();
             ModStats.registerStats();
