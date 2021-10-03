@@ -91,10 +91,12 @@ public class ModConfig {
         COMMON = specPair.getLeft();
     }
     public static class Common {
+        private final ForgeConfigSpec.BooleanValue GENERATE_CULT_TEMPLE;
         private final ForgeConfigSpec.BooleanValue GENERATE_JEWELLER_HOUSE;
         private final ForgeConfigSpec.BooleanValue GENERATE_ORES;
         public Common(ForgeConfigSpec.Builder builder) {
             builder.push("World Generation");
+            GENERATE_CULT_TEMPLE = builder.comment("Generate Cult's temple ruins? [DEFAULT: true]").define("generate_cult_temple", true);
             GENERATE_JEWELLER_HOUSE = builder.comment("Generate Jeweller's house? [DEFAULT: true]").define("generate_jeweller_house", true);
             GENERATE_ORES = builder.comment("Generate Elemental Shards ore? [DEFAULT: true]").define("generate_ores", true);
             builder.pop();
@@ -140,10 +142,12 @@ public class ModConfig {
             RENDER_LEAF_SHIELD = CLIENT.RENDER_LEAF_SHIELD.get();
         }
 
+        public static boolean GENERATE_CULT_TEMPLE;
         public static boolean GENERATE_JEWELLER_HOUSE;
         public static boolean GENERATE_ORES;
 
         private static void bakeCommonConfig() {
+            GENERATE_CULT_TEMPLE = COMMON.GENERATE_CULT_TEMPLE.get();
             GENERATE_JEWELLER_HOUSE = COMMON.GENERATE_JEWELLER_HOUSE.get();
             GENERATE_ORES = COMMON.GENERATE_ORES.get();
         }

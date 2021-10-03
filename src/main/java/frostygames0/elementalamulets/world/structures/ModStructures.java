@@ -3,6 +3,7 @@ package frostygames0.elementalamulets.world.structures;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.Codec;
 import frostygames0.elementalamulets.ElementalAmulets;
+import frostygames0.elementalamulets.config.ModConfig;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
@@ -40,7 +41,7 @@ public class ModStructures {
     public static final RegistryObject<Structure<NoFeatureConfig>> CULT_TEMPLE = STRUCTURES.register("cult_temple", CultTempleStructure::new);
 
     public static void setupStructures() {
-        setup(CULT_TEMPLE.get(), new StructureSeparationSettings(32, 8, 234235432));
+        setup(CULT_TEMPLE.get(), new StructureSeparationSettings(50, 12, 234235432));
     }
 
     private static <T extends Structure<?>> void setup(T structure, StructureSeparationSettings settings) {
@@ -92,7 +93,7 @@ public class ModStructures {
 
     @SubscribeEvent
     public static void addStructuresToWorld(BiomeLoadingEvent event) {
-        if(event.getCategory() == Biome.Category.JUNGLE) event.getGeneration().getStructures().add(() -> StructureFeatures.CONFIGURED_CULT_TEMPLE);
+        if(event.getCategory() == Biome.Category.JUNGLE && ModConfig.cached.GENERATE_CULT_TEMPLE) event.getGeneration().getStructures().add(() -> StructureFeatures.CONFIGURED_CULT_TEMPLE);
     }
 
 
