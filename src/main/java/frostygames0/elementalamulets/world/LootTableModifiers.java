@@ -26,7 +26,7 @@ import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 public class LootTableModifiers{
 
     public static void registerLootModifierSerializer(RegistryEvent.Register<GlobalLootModifierSerializer<?>> event) {
-        event.getRegistry().register(new TreasureLoot.Serializer().setRegistryName(modPrefix("desert_pyramid_loot")));
+        event.getRegistry().register(new TreasureLoot.Serializer().setRegistryName(modPrefix("vanilla_dungeons_loot")));
     }
 
     public static class TreasureLoot extends LootModifier {
