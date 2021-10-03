@@ -3,11 +3,20 @@
   "fallback": "minecraft:empty",
   "elements": [
     {
-      "weight": 1,
+      "weight": 3,
       "element": {
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
-        "location": "elementalamulets:cult_temple/cult_temple_combinator_room",
+        "location": "elementalamulets:cult_temple/cult_temple_combinator_room_1",
+        "processors": "elementalamulets:age_stone_bricks"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "elementalamulets:cult_temple/cult_temple_combinator_room_2",
         "processors": "elementalamulets:age_stone_bricks"
       }
     }
