@@ -1,4 +1,6 @@
 {
+  "itemGroup.elementalamulets": "Elemental Amulets",
+
   "item.elementalamulets.guide_book": "Элементальное руководство",
   "item.elementalamulets.guide_book.subtitle": "Содержит в себе все знания о элементальных амулетах",
   "item.elementalamulets.all_seeing_lens": "Всевидящая линза",
@@ -65,6 +67,7 @@
   "block.elementalamulets.celestial_focus": "Небесный фокус",
   "block.elementalamulets.celestial_focus.tooltip": "Сами небеса ускорят элементальное объединение",
   "block.elementalamulets.elemental_ore": "Элементальная руда",
+  "block.elementalamulets.elemental_shards_block": "Блок элементальных осколков",
 
   "player.elementalamulets.brokenamulet.warn": "Ваш %s был сломан!",
   "entity.minecraft.villager.elementalamulets.jeweller": "Ювелир",
@@ -79,7 +82,7 @@
   "jei.elementalamulets.convertibles.description": "Когда 6 этих предметов объединены с пустым элементов(Элементальные осколки) они создают %s ",
   "jei.elementalamulets.aether_element.description": "Небольшое количество эфира примагниченного к осколку. Используются в улучшающих комбинациях",
   "jei.elementalamulets.all_seeing_lens.description": "Очень редкий предмет, только один человек знает как его сделать\n Ювелир продает это на 4 уровне",
-  "jei.elementalamulets.elemental_ore.whereabouts": "Elemental Ore - is a block that contains Elemental Shards inside.\nCan be found up to Y:40 and sometimes higher",
+  "jei.elementalamulets.elemental_ore.whereabouts": "Элементальная руда - это блок который содержит элементальные осколки\nМожет быть найден на Y:40 и иногда выше",
 
   "patchouli.elementalamulets.landing": "Hello $(thing)$(playername)!$() This $(l)magical guide $() will provide you with all knowledge you need! $(br)Book will expand itself when a new knowledge is acquired! Everything(almost) about this mod is described here!",
   "patchouli.elementalamulets.not_present": "Patchouli не обнаружен!! Пожалуйста установите Patchouli, если вы хотите открыть книгу",

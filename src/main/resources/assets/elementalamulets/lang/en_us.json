@@ -67,6 +67,7 @@
   "block.elementalamulets.celestial_focus": "Celestial Focus",
   "block.elementalamulets.celestial_focus.tooltip": "The heavens themselves will increase the speed of elemental combination",
   "block.elementalamulets.elemental_ore": "Elemental Ore",
+  "block.elementalamulets.elemental_shards_block": "Elemental Shards Block",
 
   "player.elementalamulets.brokenamulet.warn": "Your %s just got broken!",
   "entity.minecraft.villager.elementalamulets.jeweller": "Jeweller",
