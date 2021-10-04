@@ -73,9 +73,6 @@ public class ModItems {
     public static final RegistryObject<Item> INVISIBILITY_AMULET = ITEMS.register("invisibility_amulet",
             () -> new InvisibilityAmulet(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(ElementalRarity.AIR).durability(1000)));
 
-    public static final RegistryObject<Item> AUTHOR_AMULET = ITEMS.register("author_amulet",
-            () -> new AuthorAmulet(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1)));
-
 
     public static List<AmuletItem> getAmulets() {
         List<AmuletItem> items = new ArrayList<>();

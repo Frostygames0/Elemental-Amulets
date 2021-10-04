@@ -14,7 +14,6 @@ import mezz.jei.api.registration.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 
@@ -67,7 +66,6 @@ public class JEIPlugin implements IModPlugin {
         // Misc. Description
         registration.addIngredientInfo(new ItemStack(ModItems.GUIDE_BOOK.get()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.guide_book.description"));
         registration.addIngredientInfo(new ItemStack(ModBlocks.ELEMENTAL_COMBINATOR.get()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.elemental_combinator.description"));
-        registration.addIngredientInfo(new ItemStack(ModItems.AUTHOR_AMULET.get()), VanillaTypes.ITEM, new StringTextComponent("Nuhai bebru, ya em kakashki! My le popa is bige").withStyle(TextFormatting.OBFUSCATED));
         registration.addIngredientInfo(new ItemStack(ModBlocks.ELEMENTAL_ORE.get()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.elemental_ore.whereabouts"));
     }
 
