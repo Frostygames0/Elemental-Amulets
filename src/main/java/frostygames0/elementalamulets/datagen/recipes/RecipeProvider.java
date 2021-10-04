@@ -75,7 +75,8 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .pattern("***")
                 .pattern("***")
                 .define('*', ModItems.ELEMENTAL_SHARDS.get())
-                .unlockedBy("has_item", InventoryChangeTrigger.Instance.hasItems(ModItems.ELEMENTAL_SHARDS.get()));
+                .unlockedBy("has_item", InventoryChangeTrigger.Instance.hasItems(ModItems.ELEMENTAL_SHARDS.get()))
+                .save(consumer);
     }
     // Elemental Combination recipes
     private void registerModRecipes(Consumer<IFinishedRecipe> consumer) {
