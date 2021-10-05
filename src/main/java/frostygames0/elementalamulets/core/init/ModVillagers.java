@@ -16,13 +16,12 @@ import net.minecraft.item.MerchantOffer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.MutableRegistry;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.village.PointOfInterestType;
 import net.minecraft.world.gen.feature.jigsaw.JigsawPattern;
 import net.minecraft.world.gen.feature.jigsaw.JigsawPiece;
-import net.minecraft.world.gen.feature.structure.VillagesPools;
 import net.minecraft.world.gen.feature.template.ProcessorLists;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.MapData;
@@ -34,15 +33,15 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
 
 @Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ModVillagers{
@@ -79,7 +78,6 @@ public class ModVillagers{
             event.getTrades().get(4).add(new BasicTrade(new ItemStack(Items.EMERALD, 10), new ItemStack(ModItems.AETHER_ELEMENT.get(), 2), new ItemStack(ModItems.ALL_SEEING_LENS.get()), 4, 10, 1.3F));
 
             List<VillagerTrades.ITrade> trades5 = event.getTrades().get(5);
-            trades5.add(new BasicTrade(42, new ItemStack(ModItems.AUTHOR_AMULET.get()), 1, 50, 3));
             trades5.add(new BasicTrade(new ItemStack(Items.EMERALD, 30), new ItemStack(ModItems.AETHER_ELEMENT.get()), new ItemStack(ModItems.AMULET_BELT.get()), 1, 30, 2.5f));
             trades5.add(new CultTempleTrade(30, 1, 10));
         }
@@ -89,33 +87,6 @@ public class ModVillagers{
     public static void registerWandererTrades(final WandererTradesEvent event) {
         Random rand = new Random();
         event.getRareTrades().add(new BasicTrade(45, AmuletItem.getStackWithTier(new ItemStack(ModItems.getAmulets().get(rand.nextInt(ModItems.getAmulets().size()))), 3), 1, 25, 1.5f));
-    }
-
-    public static class Structures {
-        public static void bootstrap() {
-                VillagesPools.bootstrap();
-                if(ModConfig.cached.GENERATE_JEWELLER_HOUSE) {
-                    for (String biome : new String[]{"plains", "taiga"}) { // This is because it should be all village biomes but for now there is only plains
-                        addHouseToPool(new ResourceLocation("village/" + biome + "/houses"),
-                                ElementalAmulets.MOD_ID + ":villages/jeweller_house_" + biome, 12);
-                    }
-                    ElementalAmulets.LOGGER.debug("Jeweller's house was successfully added to all existing vanilla villages");
-                } else ElementalAmulets.LOGGER.debug("Jeweller' s house generation skipped (Config Preference)");
-        }
-
-        private static void addHouseToPool(ResourceLocation pool, String houseToAdd, int weight) {
-            JigsawPattern old = WorldGenRegistries.TEMPLATE_POOL.get(pool);
-            if (old == null) {
-                ElementalAmulets.LOGGER.warn("Jigsaw pool " + pool + " is not found! Skipping Jeweller's house generation");
-                return;
-            }
-            List<JigsawPiece> pieces = old.getShuffledTemplates(ThreadLocalRandom.current());
-            List<Pair<JigsawPiece, Integer>> newPieces = pieces.stream().map(p -> Pair.of(p, 1)).collect(Collectors.toList());
-            JigsawPiece newPiece = JigsawPiece.legacy(houseToAdd, ProcessorLists.MOSSIFY_10_PERCENT).apply(JigsawPattern.PlacementBehaviour.RIGID);
-            newPieces.add(Pair.of(newPiece, weight));
-            // I'm getting old pool and then add my house and just register it with same name, so it replaces the old one. Hacky but works good
-            Registry.register(WorldGenRegistries.TEMPLATE_POOL, pool, new JigsawPattern(pool, old.getName(), newPieces));
-        }
     }
 
     public static class CultTempleTrade implements VillagerTrades.ITrade {
@@ -148,4 +119,37 @@ public class ModVillagers{
             }
         }
     }
+
+
+    public static class Structures {
+        public static void addHouses(final FMLServerAboutToStartEvent event) {
+                if(ModConfig.cached.GENERATE_JEWELLER_HOUSE) {
+                    MutableRegistry<JigsawPattern> registry = event.getServer().registryAccess().registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY);
+                    for (String biome : new String[]{"plains", "taiga"}) { // This is because it should be all village biomes but for now there is only plains
+                        addHouse(registry, new ResourceLocation("village/" + biome + "/houses"),
+                                ElementalAmulets.MOD_ID + ":villages/jeweller_house_" + biome, 12);
+                    }
+                    ElementalAmulets.LOGGER.debug("Jeweller's house was successfully added to all existing vanilla villages");
+                } else ElementalAmulets.LOGGER.debug("Jeweller' s house generation skipped (Config Preference)");
+        }
+
+        private static void addHouse(MutableRegistry<JigsawPattern> registry, ResourceLocation poolId, String houseToAdd, int weight) {
+            JigsawPattern pool = registry.get(poolId);
+            if (pool == null) {
+                ElementalAmulets.LOGGER.warn("Jigsaw pool " + pool + " is not found! Skipping Jeweller's house generation");
+                return;
+            }
+
+            JigsawPiece piece = JigsawPiece.single(houseToAdd, ProcessorLists.MOSSIFY_10_PERCENT).apply(JigsawPattern.PlacementBehaviour.RIGID);
+
+            for (int i = 0; i < weight; i++) {
+                pool.templates.add(piece);
+            }
+
+            List<Pair<JigsawPiece, Integer>> listOfPieceEntries = new ArrayList<>(pool.rawTemplates);
+            listOfPieceEntries.add(new Pair<>(piece, weight));
+            pool.rawTemplates = listOfPieceEntries;
+        }
+    }
+
 }

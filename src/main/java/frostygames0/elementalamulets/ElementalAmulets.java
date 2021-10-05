@@ -58,11 +58,11 @@ public class ElementalAmulets {
         modCtx.registerConfig(net.minecraftforge.fml.config.ModConfig.Type.CLIENT, ModConfig.CLIENT_SPEC);
         modCtx.registerConfig(net.minecraftforge.fml.config.ModConfig.Type.COMMON, ModConfig.COMMON_SPEC, MOD_ID+"-worldgen.toml");
 
-
         bus.addListener(this::enqueueIMC);
         bus.addListener(this::commonSetup);
 
         forgeBus.addListener(ModCommands::registerCommandsEvent); // Commands don't deserve EventBusSubscriber >:D
+        forgeBus.addListener(ModVillagers.Structures::addHouses);
     }
 
     // use this instead, when need ResourceLocation with mod's id
@@ -82,8 +82,6 @@ public class ElementalAmulets {
             StructureFeatures.register();
 
             ModFeatures.register();
-
-            ModVillagers.Structures.bootstrap();
 
             ModCriteriaTriggers.register();
             ModStats.registerStats();
