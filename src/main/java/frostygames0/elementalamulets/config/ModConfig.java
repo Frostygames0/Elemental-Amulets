@@ -166,13 +166,4 @@ public class ModConfig {
         }
     }
 
-    @SubscribeEvent
-    public static void onLoad(net.minecraftforge.fml.config.ModConfig.Loading event) {
-        if(event.getConfig().getSpec() == ModConfig.SERVER_SPEC) {
-            ElementalAmulets.LOGGER.debug("Server config file " + event.getConfig().getFileName() + " was loaded at " + event.getConfig().getFullPath());
-        }
-        if(event.getConfig().getSpec() == ModConfig.CLIENT_SPEC) {
-            ElementalAmulets.LOGGER.debug("Client config file " + event.getConfig().getFileName() + " was loaded at " + event.getConfig().getFullPath());
-        }
-    }
 }
