@@ -55,6 +55,11 @@ public class ModNetworking {
                 .decoder(CUpdatePlayerVelocityPacket::new)
                 .consumer(CUpdatePlayerVelocityPacket::handle)
                 .add();
+        INSTANCE.messageBuilder(SCombinePacket.class, nextID())
+                .encoder(SCombinePacket::toBytes)
+                .decoder(SCombinePacket::new)
+                .consumer(SCombinePacket::handle)
+                .add();
     }
 
     public static void sendToClient(Object packet, ServerPlayerEntity player) {

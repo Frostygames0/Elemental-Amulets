@@ -39,9 +39,11 @@ public class ElementalCombinatorContainer extends Container {
     private final PlayerEntity playerEntity;
     private final IItemHandler playerInventory;
     private final IIntArray data;
+    private final BlockPos pos;
 
     public ElementalCombinatorContainer(int id, World world, BlockPos pos, PlayerInventory playerInventory, PlayerEntity player, IIntArray data) {
         super(ModContainers.ELEMENTAL_COMBINATOR_CONTAINER.get(), id);
+        this.pos = pos;
         this.tileEntity = world.getBlockEntity(pos);
         this.playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);
@@ -141,5 +143,9 @@ public class ElementalCombinatorContainer extends Container {
         int i = this.getCombinatorData().get(0);
         int j = this.getCombinatorData().get(1);
         return j != 0 && i != 0 ? i * 25 / j : 0;
+    }
+
+    public BlockPos getPos() {
+        return pos;
     }
 }
