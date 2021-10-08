@@ -1,3 +1,20 @@
+/*
+ *    This file is part of Elemental Amulets.
+ *
+ *     Elemental Amulets is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     Elemental Amulets is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with Elemental Amulets.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package frostygames0.elementalamulets.client.screens;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -33,6 +50,6 @@ public class ElementalCombinatorScreen extends ContainerScreen<ElementalCombinat
         this.minecraft.getTextureManager().bind(GUI);
         this.blit(matrixStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
         int l = this.menu.getCombinationTimeScaled();
-        this.blit(matrixStack, this.leftPos+90, this.topPos+34, 176, 0, l+1, 17);
+        this.blit(matrixStack, this.leftPos + 90, this.topPos + 34, 176, 0, l + 1, 17);
     }
 }

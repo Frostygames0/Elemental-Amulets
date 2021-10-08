@@ -1,12 +1,29 @@
+/*
+ *    This file is part of Elemental Amulets.
+ *
+ *     Elemental Amulets is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     Elemental Amulets is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with Elemental Amulets.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package frostygames0.elementalamulets.client.models;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 
-public class LeafShield extends EntityModel<Entity> {
+public class LeafShield<T extends LivingEntity> extends EntityModel<T> {
 	private final ModelRenderer leafPart1;
 	private final ModelRenderer cube_r1_r1;
 	private final ModelRenderer leafPart2;
@@ -40,7 +57,7 @@ public class LeafShield extends EntityModel<Entity> {
 	}
 
 	@Override
-	public void setupAnim(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
+	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
 		//previously the render function, render code was moved to a method below
 	}
 
