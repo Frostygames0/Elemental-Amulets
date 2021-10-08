@@ -52,6 +52,7 @@ public class ElementalCombinatorScreen extends ContainerScreen<ElementalCombinat
         this.combineButton = addButton(new CombinationButton(this.leftPos+132, this.topPos+57,
                 button -> ModNetworking.sendToServer(new SCombinePacket(menu.getPos())),
                 (button, ms, mouseX, mouseY) -> this.renderTooltip(ms, new TranslationTextComponent("block.elementalamulets.elemental_combinator.time_left", this.getCombinationTime()/20), mouseX, mouseY)));
+        this.combineButton.active = this.getCombinationTime() < 1;
     }
 
     @Override
@@ -91,11 +92,18 @@ public class ElementalCombinatorScreen extends ContainerScreen<ElementalCombinat
             RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
             Minecraft.getInstance().getTextureManager().bind(GUI);
             int yOff = 18;
+            // Renders tooltip
+            if (this.isHovered()) {
+                this.renderToolTip(pMatrixStack, pMouseX, pMouseY);
+            }
+
+            // Defines variation
             if(!this.active) {
                 yOff = 31;
             } else if(this.isHovered) {
                 yOff = 44;
             }
+
             this.blit(pMatrixStack, x, y, 178, yOff, width, height);
         }
     }
