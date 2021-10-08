@@ -29,7 +29,6 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
@@ -50,15 +49,14 @@ public class ElementalCombinatorScreen extends ContainerScreen<ElementalCombinat
     protected void init() {
         super.init();
         this.combineButton = addButton(new CombinationButton(this.leftPos+132, this.topPos+57,
-                button -> ModNetworking.sendToServer(new SCombinePacket(menu.getPos())),
-                (button, ms, mouseX, mouseY) -> this.renderTooltip(ms, new TranslationTextComponent("block.elementalamulets.elemental_combinator.time_left", (this.menu.getCombinatorData().get(1) - this.getCombinationTime())/20), mouseX, mouseY)));
-        this.combineButton.active = this.getCombinationTime() < 1;
+                button -> ModNetworking.sendToServer(new SCombinePacket(menu.getPos()))));
+        this.combineButton.active = this.isCombining();
     }
 
     @Override
     public void tick() {
         super.tick();
-        this.combineButton.active = this.getCombinationTime() < 1;
+        this.combineButton.active = this.isCombining();
     }
 
     @Override
@@ -77,14 +75,14 @@ public class ElementalCombinatorScreen extends ContainerScreen<ElementalCombinat
         this.blit(matrixStack, this.leftPos + 90, this.topPos + 34, 176, 0, l + 1, 17);
     }
 
-    private int getCombinationTime() {
-        return this.menu.getCombinatorData().get(0);
+    private boolean isCombining() {
+        return this.menu.getCombinatorData().get(0) < 1;
     }
 
     static class CombinationButton extends Button {
 
-        CombinationButton(int pX, int pY, Button.IPressable pOnPress, ITooltip tooltip) {
-            super(pX, pY, 21, 13, StringTextComponent.EMPTY, pOnPress, tooltip);
+        CombinationButton(int pX, int pY, Button.IPressable pOnPress) {
+            super(pX, pY, 21, 13, StringTextComponent.EMPTY, pOnPress);
         }
 
         @Override
@@ -95,10 +93,8 @@ public class ElementalCombinatorScreen extends ContainerScreen<ElementalCombinat
 
             if(!this.active) {
                 yOff = 31;
-            }
-            if(this.isHovered) {
-                if(this.active) yOff = 44;
-                this.renderToolTip(pMatrixStack, pMouseX, pMouseY);
+            } else if(this.isHovered) {
+                yOff = 44;
             }
 
             this.blit(pMatrixStack, x, y, 178, yOff, width, height);
