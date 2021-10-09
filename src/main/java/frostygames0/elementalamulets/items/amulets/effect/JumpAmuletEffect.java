@@ -21,6 +21,7 @@ import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.JumpAmulet;
 import frostygames0.elementalamulets.network.CUpdatePlayerVelocityPacket;
 import frostygames0.elementalamulets.network.ModNetworkHandler;
+import frostygames0.elementalamulets.util.AmuletHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -30,7 +31,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import top.theillusivec4.curios.api.CuriosApi;
 
 public class JumpAmuletEffect {
 
@@ -39,7 +39,7 @@ public class JumpAmuletEffect {
             PlayerEntity player = (PlayerEntity) event.getEntityLiving();
             if (!player.level.isClientSide()) {
                 if (event.getSource() == DamageSource.FALL) {
-                    CuriosApi.getCuriosHelper().findEquippedCurio(ModItems.JUMP_AMULET.get(), player).ifPresent((triple) -> {
+                    AmuletHelper.getAmuletInSlotOrBelt(ModItems.JUMP_AMULET.get(), player).ifPresent((triple) -> {
                         float fallResist = ((JumpAmulet) triple.getRight().getItem()).getFallResist(triple.getRight());
                         if (!event.isCanceled() && fallResist > 0) {
                             float finalDamage = Math.max(0, (event.getAmount() - fallResist));
@@ -59,7 +59,7 @@ public class JumpAmuletEffect {
             PlayerEntity player = (PlayerEntity) event.getEntityLiving();
             if (!player.level.isClientSide()) {
                 if (event.getSource() == DamageSource.FALL) {
-                    CuriosApi.getCuriosHelper().findEquippedCurio(ModItems.JUMP_AMULET.get(), player).ifPresent((triple) -> {
+                    AmuletHelper.getAmuletInSlotOrBelt(ModItems.JUMP_AMULET.get(), player).ifPresent((triple) -> {
                         float fallResist = ((JumpAmulet) triple.getRight().getItem()).getFallResist(triple.getRight());
                         if (!event.isCanceled() && fallResist > 0) {
                             float finalDamage = Math.max(0, (event.getAmount() - fallResist));
@@ -79,7 +79,7 @@ public class JumpAmuletEffect {
             World world = player.getCommandSenderWorld();
             if (!world.isClientSide) {
                 if (world.getFluidState(player.blockPosition()).isEmpty()) {
-                    CuriosApi.getCuriosHelper().findEquippedCurio(ModItems.JUMP_AMULET.get(), player).ifPresent(triple -> {
+                    AmuletHelper.getAmuletInSlotOrBelt(ModItems.JUMP_AMULET.get(), player).ifPresent(triple -> {
                         ItemStack stack = triple.getRight();
                         JumpAmulet item = (JumpAmulet) stack.getItem();
 

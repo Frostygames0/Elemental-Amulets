@@ -18,6 +18,7 @@
 package frostygames0.elementalamulets.items;
 
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
+import frostygames0.elementalamulets.util.AmuletHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -61,7 +62,7 @@ public class AmuletBelt extends Item implements ICurioItem {
                     LazyOptional<ICurio> curio = helper.getCurio(amulet);
                     if (curio.isPresent() && itemAmulet instanceof AmuletItem) {
                         if (((AmuletItem) itemAmulet).usesCurioMethods()) {
-                            if (helper.findEquippedCurio(itemAmulet, livingEntity).map(ImmutableTriple::getRight).orElse(ItemStack.EMPTY).isEmpty()) { // Checks if there is amulet in main slot that is same as one in belt. Rule of priority
+                            if (!AmuletHelper.isAmuletPresent(itemAmulet, livingEntity)) { // Checks if there is amulet in main slot that is same as one in belt. Rule of priority
                                 curio.orElseThrow(() -> new NullPointerException("Unable to obtain Curio instance of "+amulet.getItem()+"! This is not supposed to happen, report to the developer!")).curioTick(identifier, index, livingEntity);
                             }
                         }

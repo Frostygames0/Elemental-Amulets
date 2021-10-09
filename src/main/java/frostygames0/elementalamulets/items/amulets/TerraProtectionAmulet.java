@@ -107,6 +107,6 @@ public class TerraProtectionAmulet extends AmuletItem {
 
     @Override
     public boolean usesCurioMethods() {
-        return false;
+        return true;
     }
 }
