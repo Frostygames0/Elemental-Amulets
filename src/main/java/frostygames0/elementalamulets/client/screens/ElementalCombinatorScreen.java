@@ -20,7 +20,7 @@ package frostygames0.elementalamulets.client.screens;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import frostygames0.elementalamulets.blocks.containers.ElementalCombinatorContainer;
-import frostygames0.elementalamulets.network.ModNetworking;
+import frostygames0.elementalamulets.network.ModNetworkHandler;
 import frostygames0.elementalamulets.network.SCombinePacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -49,7 +49,7 @@ public class ElementalCombinatorScreen extends ContainerScreen<ElementalCombinat
     protected void init() {
         super.init();
         this.combineButton = addButton(new CombinationButton(this.leftPos+132, this.topPos+57,
-                button -> ModNetworking.sendToServer(new SCombinePacket(menu.getPos()))));
+                button -> ModNetworkHandler.sendToServer(new SCombinePacket(menu.getPos()))));
         this.combineButton.active = this.isCombining();
     }
 

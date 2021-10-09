@@ -18,7 +18,7 @@
 package frostygames0.elementalamulets.client;
 
 import frostygames0.elementalamulets.ElementalAmulets;
-import frostygames0.elementalamulets.network.ModNetworking;
+import frostygames0.elementalamulets.network.ModNetworkHandler;
 import frostygames0.elementalamulets.network.SOpenAmuletBeltGUIPacket;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.util.InputMappings;
@@ -46,7 +46,7 @@ public class ModKeyBindings {
     public static void onClientTick(TickEvent.ClientTickEvent event) {
         if(event.phase == TickEvent.Phase.START) {
             if(OPEN_AMULET_BELT.isDown()) {
-                ModNetworking.sendToServer(new SOpenAmuletBeltGUIPacket());
+                ModNetworkHandler.sendToServer(new SOpenAmuletBeltGUIPacket());
             }
         }
     }

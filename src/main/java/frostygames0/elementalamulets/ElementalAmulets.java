@@ -21,7 +21,7 @@ import frostygames0.elementalamulets.advancements.triggers.ModCriteriaTriggers;
 import frostygames0.elementalamulets.client.particles.ModParticles;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.core.init.*;
-import frostygames0.elementalamulets.network.ModNetworking;
+import frostygames0.elementalamulets.network.ModNetworkHandler;
 import frostygames0.elementalamulets.world.LootTableModifiers;
 import frostygames0.elementalamulets.world.structures.ModStructures;
 import frostygames0.elementalamulets.world.structures.StructureFeatures;
@@ -93,7 +93,7 @@ public class ElementalAmulets {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-        ModNetworking.registerMessages();
+        ModNetworkHandler.registerMessages();
         event.enqueueWork(() -> {
             ModStructures.setupStructures();
             StructureFeatures.register();

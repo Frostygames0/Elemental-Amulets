@@ -29,7 +29,7 @@ import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
  * @author Frostygames0
  * @date 21.09.2021 22:01
  */
-public class ModNetworking {
+public class ModNetworkHandler {
     private static final String PROTOCOL_NETWORK = "1.0";
     private static int ID = 0;
 

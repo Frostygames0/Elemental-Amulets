@@ -20,7 +20,7 @@ package frostygames0.elementalamulets.items.amulets.effect;
 import frostygames0.elementalamulets.core.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.JumpAmulet;
 import frostygames0.elementalamulets.network.CUpdatePlayerVelocityPacket;
-import frostygames0.elementalamulets.network.ModNetworking;
+import frostygames0.elementalamulets.network.ModNetworkHandler;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -84,7 +84,7 @@ public class JumpAmuletEffect {
                         JumpAmulet item = (JumpAmulet) stack.getItem();
 
                         Vector3d vector = player.getDeltaMovement().add(0, item.getJump(stack), 0);
-                        ModNetworking.sendToClient(new CUpdatePlayerVelocityPacket(vector.x, vector.y, vector.z), (ServerPlayerEntity) player);
+                        ModNetworkHandler.sendToClient(new CUpdatePlayerVelocityPacket(vector.x, vector.y, vector.z), (ServerPlayerEntity) player);
                     });
                 }
             }
