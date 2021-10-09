@@ -18,7 +18,7 @@
 package frostygames0.elementalamulets.network;
 
 import frostygames0.elementalamulets.blocks.containers.AmuletBeltContainer;
-import frostygames0.elementalamulets.core.init.ModItems;
+import frostygames0.elementalamulets.init.ModItems;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.SimpleNamedContainerProvider;
 import net.minecraft.item.ItemStack;

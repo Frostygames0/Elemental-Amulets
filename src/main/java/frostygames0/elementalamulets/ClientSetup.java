@@ -23,9 +23,9 @@ import frostygames0.elementalamulets.client.renderer.ElementalCombinatorRenderer
 import frostygames0.elementalamulets.client.screens.AmuletBeltScreen;
 import frostygames0.elementalamulets.client.screens.ElementalCombinatorScreen;
 import frostygames0.elementalamulets.config.ModConfig;
-import frostygames0.elementalamulets.core.init.ModBlocks;
-import frostygames0.elementalamulets.core.init.ModContainers;
-import frostygames0.elementalamulets.core.init.ModItems;
+import frostygames0.elementalamulets.init.ModBlocks;
+import frostygames0.elementalamulets.init.ModContainers;
+import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;

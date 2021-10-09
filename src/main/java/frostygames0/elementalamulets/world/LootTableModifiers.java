@@ -18,7 +18,7 @@
 package frostygames0.elementalamulets.world;
 
 import com.google.gson.JsonObject;
-import frostygames0.elementalamulets.core.init.ModItems;
+import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;

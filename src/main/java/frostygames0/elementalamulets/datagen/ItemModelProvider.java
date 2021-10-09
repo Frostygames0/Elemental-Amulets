@@ -18,7 +18,7 @@
 package frostygames0.elementalamulets.datagen;
 
 import frostygames0.elementalamulets.ElementalAmulets;
-import frostygames0.elementalamulets.core.init.ModItems;
+import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.BlockItem;

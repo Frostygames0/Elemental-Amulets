@@ -18,7 +18,7 @@
 package frostygames0.elementalamulets.client.patchouli;
 
 import frostygames0.elementalamulets.ElementalAmulets;
-import frostygames0.elementalamulets.core.init.ModRecipes;
+import frostygames0.elementalamulets.init.ModRecipes;
 import frostygames0.elementalamulets.recipes.ElementalCombination;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;

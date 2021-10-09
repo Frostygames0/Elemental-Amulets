@@ -23,10 +23,10 @@ import frostygames0.elementalamulets.blocks.containers.ElementalCombinatorContai
 import frostygames0.elementalamulets.capability.AutomationItemHandler;
 import frostygames0.elementalamulets.client.particles.ModParticles;
 import frostygames0.elementalamulets.config.ModConfig;
-import frostygames0.elementalamulets.core.init.ModBlocks;
-import frostygames0.elementalamulets.core.init.ModRecipes;
-import frostygames0.elementalamulets.core.init.ModStats;
-import frostygames0.elementalamulets.core.init.ModTiles;
+import frostygames0.elementalamulets.init.ModBlocks;
+import frostygames0.elementalamulets.init.ModRecipes;
+import frostygames0.elementalamulets.init.ModStats;
+import frostygames0.elementalamulets.init.ModTiles;
 import frostygames0.elementalamulets.recipes.ElementalCombination;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;

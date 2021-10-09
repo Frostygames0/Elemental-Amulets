@@ -20,7 +20,7 @@ package frostygames0.elementalamulets;
 import frostygames0.elementalamulets.advancements.triggers.ModCriteriaTriggers;
 import frostygames0.elementalamulets.client.particles.ModParticles;
 import frostygames0.elementalamulets.config.ModConfig;
-import frostygames0.elementalamulets.core.init.*;
+import frostygames0.elementalamulets.init.*;
 import frostygames0.elementalamulets.network.ModNetworkHandler;
 import frostygames0.elementalamulets.world.LootTableModifiers;
 import frostygames0.elementalamulets.world.structures.ModStructures;

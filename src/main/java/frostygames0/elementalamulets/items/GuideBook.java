@@ -18,7 +18,7 @@
 package frostygames0.elementalamulets.items;
 
 import frostygames0.elementalamulets.advancements.triggers.ModCriteriaTriggers;
-import frostygames0.elementalamulets.core.init.ModStats;
+import frostygames0.elementalamulets.init.ModStats;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;

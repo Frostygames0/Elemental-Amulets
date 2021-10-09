@@ -17,11 +17,11 @@
 
 package frostygames0.elementalamulets.recipes;
 
-import frostygames0.elementalamulets.core.init.ModBlocks;
-import frostygames0.elementalamulets.core.init.ModRecipes;
-import frostygames0.elementalamulets.core.util.NBTUtil;
+import frostygames0.elementalamulets.init.ModBlocks;
+import frostygames0.elementalamulets.init.ModRecipes;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import frostygames0.elementalamulets.recipes.ingredient.AmuletIngredient;
+import frostygames0.elementalamulets.util.NBTUtil;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;

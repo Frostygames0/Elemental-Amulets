@@ -21,7 +21,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.client.models.LeafShield;
 import frostygames0.elementalamulets.config.ModConfig;
-import frostygames0.elementalamulets.core.util.NBTUtil;
+import frostygames0.elementalamulets.util.NBTUtil;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;

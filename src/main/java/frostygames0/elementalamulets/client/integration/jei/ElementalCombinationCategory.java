@@ -22,7 +22,7 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import frostygames0.elementalamulets.client.screens.ElementalCombinatorScreen;
-import frostygames0.elementalamulets.core.init.ModBlocks;
+import frostygames0.elementalamulets.init.ModBlocks;
 import frostygames0.elementalamulets.recipes.ElementalCombination;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;

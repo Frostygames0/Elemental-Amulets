@@ -17,8 +17,8 @@
 
 package frostygames0.elementalamulets.datagen.loottables;
 
-import frostygames0.elementalamulets.core.init.ModBlocks;
-import frostygames0.elementalamulets.core.init.ModItems;
+import frostygames0.elementalamulets.init.ModBlocks;
+import frostygames0.elementalamulets.init.ModItems;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.loot.ConstantRange;
 import net.minecraft.loot.ItemLootEntry;

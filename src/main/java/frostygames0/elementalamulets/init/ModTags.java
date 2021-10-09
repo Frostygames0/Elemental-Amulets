@@ -15,7 +15,7 @@
  *     along with Elemental Amulets.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package frostygames0.elementalamulets.core.init;
+package frostygames0.elementalamulets.init;
 
 import frostygames0.elementalamulets.ElementalAmulets;
 import net.minecraft.item.Item;

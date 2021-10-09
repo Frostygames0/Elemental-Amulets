@@ -17,9 +17,9 @@
 
 package frostygames0.elementalamulets.datagen.recipes;
 
-import frostygames0.elementalamulets.core.init.ModBlocks;
-import frostygames0.elementalamulets.core.init.ModItems;
-import frostygames0.elementalamulets.core.init.ModTags;
+import frostygames0.elementalamulets.init.ModBlocks;
+import frostygames0.elementalamulets.init.ModItems;
+import frostygames0.elementalamulets.init.ModTags;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import frostygames0.elementalamulets.recipes.ElementalCombination;
 import net.minecraft.advancements.criterion.InventoryChangeTrigger;

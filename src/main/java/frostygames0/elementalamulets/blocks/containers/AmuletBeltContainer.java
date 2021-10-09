@@ -17,7 +17,7 @@
 
 package frostygames0.elementalamulets.blocks.containers;
 
-import frostygames0.elementalamulets.core.init.ModContainers;
+import frostygames0.elementalamulets.init.ModContainers;
 import frostygames0.elementalamulets.items.AmuletBelt;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;

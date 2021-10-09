@@ -17,7 +17,7 @@
 
 package frostygames0.elementalamulets.items.amulets.effect;
 
-import frostygames0.elementalamulets.core.init.ModItems;
+import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.TerraProtectionAmulet;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;

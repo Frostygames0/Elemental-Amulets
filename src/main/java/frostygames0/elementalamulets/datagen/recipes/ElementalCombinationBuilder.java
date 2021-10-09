@@ -20,7 +20,7 @@ package frostygames0.elementalamulets.datagen.recipes;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import frostygames0.elementalamulets.ElementalAmulets;
-import frostygames0.elementalamulets.core.init.ModRecipes;
+import frostygames0.elementalamulets.init.ModRecipes;
 import frostygames0.elementalamulets.recipes.ingredient.AmuletIngredient;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.item.Item;

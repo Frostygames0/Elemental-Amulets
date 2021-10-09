@@ -15,7 +15,7 @@
  *     along with Elemental Amulets.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package frostygames0.elementalamulets.core.util;
+package frostygames0.elementalamulets.util;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;

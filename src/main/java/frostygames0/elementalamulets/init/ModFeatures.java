@@ -15,32 +15,22 @@
  *     along with Elemental Amulets.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package frostygames0.elementalamulets.core.init;
+package frostygames0.elementalamulets.init;
 
-import net.minecraft.stats.Stats;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.WorldGenRegistries;
+import net.minecraft.world.gen.feature.ConfiguredFeature;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.OreFeatureConfig;
 
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
-/**
- * @author Frostygames0
- * @date 26.09.2021 17:22
- */
-public class ModStats {
-    public static final ResourceLocation AMULET_WORN_STAT = modPrefix("amulets_worn");
-    public static final ResourceLocation TIMES_COMBINED = modPrefix("times_combined");
-    public static final ResourceLocation GUIDE_OPENED = modPrefix("guide_opened");
+public class ModFeatures {
+    public static final ConfiguredFeature<?, ?> ELEMENTAL_ORE = Feature.ORE.configured(
+            new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, ModBlocks.ELEMENTAL_ORE.get().defaultBlockState(), 9)).range(35).squared().count(5);
 
-    public static void registerStats() {
-        registerStat(AMULET_WORN_STAT);
-        registerStat(TIMES_COMBINED);
-        registerStat(GUIDE_OPENED);
-    }
-
-    private static void registerStat(ResourceLocation name) {
-        Registry.register(Registry.CUSTOM_STAT, name.getPath(), name);
-        Stats.CUSTOM.get(name);
+    public static void register() {
+        Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, modPrefix("elemental_ore"), ELEMENTAL_ORE);
     }
 }

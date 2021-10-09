@@ -15,14 +15,14 @@
  *     along with Elemental Amulets.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package frostygames0.elementalamulets.core.init;
+package frostygames0.elementalamulets.init;
 
 import frostygames0.elementalamulets.ElementalAmulets;
-import frostygames0.elementalamulets.core.util.ElementalRarity;
 import frostygames0.elementalamulets.items.AmuletBelt;
 import frostygames0.elementalamulets.items.ElementItem;
 import frostygames0.elementalamulets.items.GuideBook;
 import frostygames0.elementalamulets.items.amulets.*;
+import frostygames0.elementalamulets.util.ElementalRarity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Rarity;

@@ -25,7 +25,7 @@ import com.blamejared.crafttweaker.api.item.IItemStack;
 import com.blamejared.crafttweaker.api.managers.IRecipeManager;
 import com.blamejared.crafttweaker.impl.actions.recipes.ActionAddRecipe;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
-import frostygames0.elementalamulets.core.init.ModRecipes;
+import frostygames0.elementalamulets.init.ModRecipes;
 import frostygames0.elementalamulets.recipes.ElementalCombination;
 import frostygames0.elementalamulets.recipes.ingredient.AmuletIngredient;
 import net.minecraft.item.crafting.IRecipeType;

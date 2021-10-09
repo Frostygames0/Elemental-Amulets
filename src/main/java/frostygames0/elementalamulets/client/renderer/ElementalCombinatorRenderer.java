@@ -20,7 +20,7 @@ package frostygames0.elementalamulets.client.renderer;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import frostygames0.elementalamulets.blocks.tiles.ElementalCombinatorTile;
 import frostygames0.elementalamulets.config.ModConfig;
-import frostygames0.elementalamulets.core.init.ModTiles;
+import frostygames0.elementalamulets.init.ModTiles;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
