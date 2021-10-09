@@ -31,7 +31,6 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import org.apache.commons.lang3.tuple.ImmutableTriple;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio;
@@ -82,7 +81,7 @@ public class AmuletBelt extends Item implements ICurioItem {
                 LazyOptional<ICurio> curio = helper.getCurio(amulet);
                 if(curio.isPresent() && itemAmulet instanceof AmuletItem) {
                     if(((AmuletItem) itemAmulet).usesCurioMethods()) {
-                        if(helper.findEquippedCurio(itemAmulet, slotContext.getWearer()).map(ImmutableTriple::getRight).orElse(ItemStack.EMPTY).isEmpty()) { // Checks if there is amulet in main slot that is same as one in belt. Rule of priority
+                        if(AmuletHelper.isAmuletPresent(itemAmulet, slotContext.getWearer())) { // Checks if there is amulet in main slot that is same as one in belt. Rule of priority
                             curio.orElseThrow(() -> new NullPointerException("Unable to obtain Curio instance of "+amulet.getItem()+"! This is not supposed to happen, report to the developer!")).onUnequip(slotContext, newStack);
                         }
                     }
