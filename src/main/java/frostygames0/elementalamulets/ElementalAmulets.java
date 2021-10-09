@@ -43,6 +43,9 @@ import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotTypeMessage;
 import top.theillusivec4.curios.api.SlotTypePreset;
 
+
+import java.util.Locale;
+
 @Mod(ElementalAmulets.MOD_ID)
 public class ElementalAmulets {
 
@@ -84,7 +87,7 @@ public class ElementalAmulets {
 
     // use this instead, when need ResourceLocation with mod's id
     public static ResourceLocation modPrefix(String name) {
-        return new ResourceLocation(MOD_ID, name);
+        return new ResourceLocation(MOD_ID, name.toLowerCase(Locale.ROOT));
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event) {
