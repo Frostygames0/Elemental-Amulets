@@ -91,6 +91,11 @@ public class AmuletBelt extends Item implements ICurioItem {
         });
     }
 
+    @Override
+    public boolean canEquipFromUse(SlotContext slotContext, ItemStack stack) {
+        return true;
+    }
+
     @Nullable
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
