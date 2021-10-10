@@ -56,18 +56,19 @@ public class LeafShieldLayer<T extends LivingEntity, M extends EntityModel<T>> e
 
         AmuletHelper.getAmuletInSlotOrBelt(ModItems.TERRA_PROTECTION_AMULET.get(), pLivingEntity).ifPresent(triple -> {
             ItemStack stack = triple.getRight();
-            if (ModConfig.cached.RENDER_LEAF_SHIELD && ((TerraProtectionAmulet)stack.getItem()).canProtect(stack)) {
-                pMatrixStack.pushPose();
+            if(!pLivingEntity.isInvisible()) {
+                if (ModConfig.cached.RENDER_LEAF_SHIELD && ((TerraProtectionAmulet) stack.getItem()).canProtect(stack)) {
+                    pMatrixStack.pushPose();
 
-                pMatrixStack.scale(2.0f, 2.0f, 2.0f);
-                pMatrixStack.translate(0, -0.7, 0);
-                pMatrixStack.mulPose(Vector3f.YP.rotationDegrees(angle));
+                    pMatrixStack.scale(2.0f, 2.0f, 2.0f);
+                    pMatrixStack.translate(0, -0.7, 0);
+                    pMatrixStack.mulPose(Vector3f.YP.rotationDegrees(angle));
 
-                leafShieldModel.renderToBuffer(pMatrixStack, pBuffer.getBuffer(RenderType.entityTranslucent(modPrefix("textures/entity/amulets/leaf_shield_colored.png"))), pPackedLight, OverlayTexture.NO_OVERLAY, 1.0f, 1.0f, 1.0f, 1.0f);
+                    leafShieldModel.renderToBuffer(pMatrixStack, pBuffer.getBuffer(RenderType.entityTranslucent(modPrefix("textures/entity/amulets/leaf_shield_colored.png"))), pPackedLight, OverlayTexture.NO_OVERLAY, 1.0f, 1.0f, 1.0f, 1.0f);
 
-                pMatrixStack.popPose();
+                    pMatrixStack.popPose();
+                }
             }
         });
-
     }
 }
