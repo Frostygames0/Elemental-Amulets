@@ -54,23 +54,21 @@ public class AmuletBelt extends Item implements ICurioItem {
 
     @Override
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
-        if(!livingEntity.level.isClientSide()) {
-            stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-                ICuriosHelper helper = CuriosApi.getCuriosHelper();
-                for (int i = 0; i < h.getSlots(); i++) {
-                    ItemStack amulet = h.getStackInSlot(i);
-                    Item itemAmulet = amulet.getItem();
-                    LazyOptional<ICurio> curio = helper.getCurio(amulet);
-                    if (curio.isPresent() && itemAmulet instanceof AmuletItem) {
-                        if (((AmuletItem) itemAmulet).usesCurioMethods()) {
-                            if (!AmuletHelper.isAmuletPresent(itemAmulet, livingEntity)) { // Checks if there is amulet in main slot that is same as one in belt. Rule of priority
-                                curio.orElseThrow(() -> new NullPointerException("Unable to obtain Curio instance of "+amulet.getItem()+"! This is not supposed to happen, report to the developer!")).curioTick(identifier, index, livingEntity);
-                            }
+        stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+            ICuriosHelper helper = CuriosApi.getCuriosHelper();
+            for (int i = 0; i < h.getSlots(); i++) {
+                ItemStack amulet = h.getStackInSlot(i);
+                Item itemAmulet = amulet.getItem();
+                LazyOptional<ICurio> curio = helper.getCurio(amulet);
+                if (curio.isPresent() && itemAmulet instanceof AmuletItem) {
+                    if (((AmuletItem) itemAmulet).usesCurioMethods()) {
+                        if (!AmuletHelper.isAmuletPresent(itemAmulet, livingEntity)) { // Checks if there is amulet in main slot that is same as one in belt. Rule of priority
+                            curio.orElseThrow(() -> new NullPointerException("Unable to obtain Curio instance of "+amulet.getItem()+"! This is not supposed to happen, report to the developer!")).curioTick(identifier, index, livingEntity);
                         }
                     }
                 }
-            });
-        }
+            }
+        });
     }
 
 
@@ -150,7 +148,7 @@ public class AmuletBelt extends Item implements ICurioItem {
         if(handler instanceof ItemStackHandler) {
             return ((ItemStackHandler)handler).serializeNBT();
         }
-        return ICurioItem.super.writeSyncData(stack);
+        return new CompoundNBT();
     }
 
     @Override
