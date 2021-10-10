@@ -1,5 +1,7 @@
 /*
- *    This file is part of Elemental Amulets.
+ *     Copyright (c) 2021
+ *
+ *     This file is part of Elemental Amulets, a Minecraft Mod.
  *
  *     Elemental Amulets is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
@@ -19,17 +21,13 @@ package frostygames0.elementalamulets.items.amulets;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import frostygames0.elementalamulets.ElementalAmulets;
-import frostygames0.elementalamulets.client.models.LeafShield;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.util.NBTUtil;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -70,7 +68,7 @@ public class TerraProtectionAmulet extends AmuletItem {
 
     @Override
     public void render(String identifier, int index, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int light, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack stack) {
-        LeafShield<LivingEntity> model = new LeafShield<>();
+        /*LeafShield<LivingEntity> model = new LeafShield<>();
         float angle = (livingEntity.tickCount + partialTicks) * 2.0F;
 
         if(ModConfig.cached.RENDER_LEAF_SHIELD && this.canProtect(stack)) {
@@ -83,7 +81,7 @@ public class TerraProtectionAmulet extends AmuletItem {
             model.renderToBuffer(matrixStack, renderTypeBuffer.getBuffer(RenderType.entityTranslucent(modPrefix("textures/entity/amulets/leaf_shield_colored.png"))), light, OverlayTexture.NO_OVERLAY, 1.0f, 1.0f, 1.0f, 1.0f);
 
             matrixStack.popPose();
-        }
+        }*/
 
         // Calling super is important since super class renders amulet here
         super.render(identifier, index, matrixStack, renderTypeBuffer, light, livingEntity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, stack);

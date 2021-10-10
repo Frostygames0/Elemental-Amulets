@@ -1,5 +1,7 @@
 /*
- *    This file is part of Elemental Amulets.
+ *     Copyright (c) 2021
+ *
+ *     This file is part of Elemental Amulets, a Minecraft Mod.
  *
  *     Elemental Amulets is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
@@ -71,6 +73,7 @@ public class AmuletBelt extends Item implements ICurioItem {
         }
     }
 
+
     @Override
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
         stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
@@ -129,5 +132,33 @@ public class AmuletBelt extends Item implements ICurioItem {
                 return LazyOptional.empty();
             }
         };
+    }
+
+    //
+    // Capability synchronization methods
+    //
+
+    @Override
+    public boolean canSync(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
+        return true;
+    }
+
+    @Nullable
+    @Override
+    public CompoundNBT writeSyncData(ItemStack stack) {
+        IItemHandler handler = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(null);
+        if(handler instanceof ItemStackHandler) {
+            return ((ItemStackHandler)handler).serializeNBT();
+        }
+        return ICurioItem.super.writeSyncData(stack);
+    }
+
+    @Override
+    public void readSyncData(CompoundNBT compound, ItemStack stack) {
+        stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+            if(h instanceof ItemStackHandler) {
+                ((ItemStackHandler)h).deserializeNBT(compound);
+            }
+        });
     }
 }

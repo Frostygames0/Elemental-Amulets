@@ -1,5 +1,7 @@
 /*
- *    This file is part of Elemental Amulets.
+ *     Copyright (c) 2021
+ *
+ *     This file is part of Elemental Amulets, a Minecraft Mod.
  *
  *     Elemental Amulets is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
@@ -46,7 +48,7 @@ public class AmuletHelper {
         Optional<ImmutableTriple<String, Integer, ItemStack>> optional = helper.findEquippedCurio(ModItems.AMULET_BELT.get(), entity);
         if(optional.isPresent()) {
             ImmutableTriple<String, Integer, ItemStack> triple = optional.get();
-            IItemHandler handler = triple.getRight().getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(() -> new NullPointerException("Belt has no ItemHandlerCapability! This is not supposed to happen!"));
+            IItemHandler handler = triple.getRight().getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(() -> new NullPointerException("Belt has no ItemHandlerCapability! This is not supposed to happen! Report to the developer"));
             for(int i = 0; i < handler.getSlots(); i++) {
                 ItemStack amulet = handler.getStackInSlot(i);
                 if(amulet.getItem() == item) {

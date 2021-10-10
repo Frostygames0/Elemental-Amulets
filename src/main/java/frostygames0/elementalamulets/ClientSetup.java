@@ -1,5 +1,7 @@
 /*
- *    This file is part of Elemental Amulets.
+ *     Copyright (c) 2021
+ *
+ *     This file is part of Elemental Amulets, a Minecraft Mod.
  *
  *     Elemental Amulets is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
@@ -20,6 +22,7 @@ package frostygames0.elementalamulets;
 import frostygames0.elementalamulets.client.ModKeyBindings;
 import frostygames0.elementalamulets.client.particles.ModParticles;
 import frostygames0.elementalamulets.client.renderer.ElementalCombinatorRenderer;
+import frostygames0.elementalamulets.client.renderer.LeafShieldLayer;
 import frostygames0.elementalamulets.client.screens.AmuletBeltScreen;
 import frostygames0.elementalamulets.client.screens.ElementalCombinatorScreen;
 import frostygames0.elementalamulets.config.ModConfig;
@@ -27,9 +30,11 @@ import frostygames0.elementalamulets.init.ModBlocks;
 import frostygames0.elementalamulets.init.ModContainers;
 import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.client.renderer.entity.PlayerRenderer;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -38,6 +43,10 @@ import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
+
+
+import java.util.Map;
 
 @Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientSetup {
@@ -66,5 +75,15 @@ public class ClientSetup {
     @SubscribeEvent
     public static void particleFactoryRegister(final ParticleFactoryRegisterEvent event) {
         ModParticles.register();
+    }
+
+    // Since clientSetup is too early
+    @SubscribeEvent
+    public static void postClientSetup(FMLLoadCompleteEvent event) {
+        Map<String, PlayerRenderer> skinMap = Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap();
+
+        for (PlayerRenderer render : skinMap.values()) {
+            render.addLayer(new LeafShieldLayer<>(render));
+        }
     }
 }

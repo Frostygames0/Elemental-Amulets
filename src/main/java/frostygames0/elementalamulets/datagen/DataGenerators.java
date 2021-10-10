@@ -1,5 +1,7 @@
 /*
- *    This file is part of Elemental Amulets.
+ *     Copyright (c) 2021
+ *
+ *     This file is part of Elemental Amulets, a Minecraft Mod.
  *
  *     Elemental Amulets is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
