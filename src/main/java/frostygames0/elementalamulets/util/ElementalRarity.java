@@ -25,7 +25,7 @@ import net.minecraft.util.text.TextFormatting;
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
-public class ElementalRarity {
+public final class ElementalRarity {
     // Main elements
     public static final Rarity FIRE = Rarity.create(modPrefix("fire_rarity").toString(), TextFormatting.RED);
     public static final Rarity WATER = Rarity.create(modPrefix("water_rarity").toString(), TextFormatting.BLUE);

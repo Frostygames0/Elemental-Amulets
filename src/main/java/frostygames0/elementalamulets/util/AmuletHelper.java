@@ -36,7 +36,7 @@ import java.util.Optional;
  * @author Frostygames0
  * @date 25.09.2021 15:04
  */
-public class AmuletHelper {
+public final class AmuletHelper {
 
     // This is a wrapper method for Amulet Belt to work
     // TODO: Check if this affects performance in any way and if it causes bugs

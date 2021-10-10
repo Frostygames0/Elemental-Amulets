@@ -21,8 +21,7 @@ package frostygames0.elementalamulets.util;
 
 import net.minecraft.item.ItemStack;
 
-public class NBTUtil {
-    private NBTUtil() {}
+public final class NBTUtil {
 
     public static boolean isSafeToGet(ItemStack stack, String tagName) {
         return !stack.isEmpty() && stack.getOrCreateTag().contains(tagName);
