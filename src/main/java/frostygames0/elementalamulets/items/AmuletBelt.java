@@ -96,6 +96,10 @@ public class AmuletBelt extends Item implements ICurioItem {
         return true;
     }
 
+    /*------------------------------------------------------*/
+    /*  Capability init                                    */
+    /*-----------------------------------------------------*/
+
     @Nullable
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
@@ -137,9 +141,6 @@ public class AmuletBelt extends Item implements ICurioItem {
         };
     }
 
-    //
-    // Capability synchronization methods
-    //
 
     @Override
     public boolean canSync(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {

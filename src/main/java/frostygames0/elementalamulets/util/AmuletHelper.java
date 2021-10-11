@@ -62,6 +62,6 @@ public final class AmuletHelper {
 
     // Checks if amulet is present
     public static boolean isAmuletPresent(Item item, LivingEntity entity) {
-        return !CuriosApi.getCuriosHelper().findEquippedCurio(item, entity).map(ImmutableTriple::getRight).orElse(ItemStack.EMPTY).isEmpty();
+        return CuriosApi.getCuriosHelper().findEquippedCurio(item, entity).isPresent();
     }
 }
