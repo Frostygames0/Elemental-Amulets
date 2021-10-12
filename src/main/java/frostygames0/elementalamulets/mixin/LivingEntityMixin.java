@@ -46,7 +46,7 @@ import java.util.Optional;
 @Mixin(LivingEntity.class)
 public class LivingEntityMixin  {
     @Inject(at = @At(value = "INVOKE",
-            target = "Lnet/minecraft/entity/LivingEntity;getDeltaMovement()Lnet/minecraft/util/math/vector/Vector3d;"), method = "travel", locals = LocalCapture.CAPTURE_FAILSOFT)
+            target = "Lnet/minecraft/entity/LivingEntity;getDeltaMovement()Lnet/minecraft/util/math/vector/Vector3d;", ordinal = 0), method = "travel", locals = LocalCapture.CAPTURE_FAILSOFT)
     public void travel(Vector3d travelVector, CallbackInfo ci, double d0, ModifiableAttributeInstance gravity) {
         LivingEntity entity = (LivingEntity) (Object) this;
 
