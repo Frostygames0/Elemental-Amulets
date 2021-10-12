@@ -19,6 +19,8 @@
 
 package frostygames0.elementalamulets.items;
 
+import com.google.common.collect.ImmutableList;
+import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import frostygames0.elementalamulets.util.AmuletHelper;
 import net.minecraft.entity.LivingEntity;
@@ -29,6 +31,7 @@ import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
+import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -49,6 +52,8 @@ import javax.annotation.Nullable;
  * @date 10.09.2021 23:51
  */
 public class AmuletBelt extends Item implements ICurioItem {
+
+    public static final Lazy<ImmutableList<Item>> INCOMPATIBLE_AMULETS = Lazy.of(() -> ImmutableList.of(ModItems.EARTH_AMULET.get(), ModItems.SPEED_AMULET.get(), ModItems.WATER_AMULET.get(), ModItems.INVISIBILITY_AMULET.get()));
 
     public AmuletBelt(Properties properties) {
         super(properties);
@@ -115,7 +120,7 @@ public class AmuletBelt extends Item implements ICurioItem {
                         break;
                     }
                 }
-                return stack.getItem() instanceof AmuletItem  && !sameAmulet ? super.insertItem(slot, stack, simulate) : stack;
+                return stack.getItem() instanceof AmuletItem  && !sameAmulet  && !INCOMPATIBLE_AMULETS.get().contains(stack.getItem()) ? super.insertItem(slot, stack, simulate) : stack;
             }
         };
         LazyOptional<IItemHandler> optional = LazyOptional.of(() -> handler);
