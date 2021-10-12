@@ -83,10 +83,11 @@ public class ModConfig {
         //private final ForgeConfigSpec.IntValue COMBINATOR_STACK_ROTATION_SPEED;
         private final ForgeConfigSpec.BooleanValue RENDER_COMBINATOR_STACK;
         private final ForgeConfigSpec.BooleanValue RENDER_LEAF_SHIELD;
+        private final ForgeConfigSpec.BooleanValue SHOW_SPLASHES;
         public Client(ForgeConfigSpec.Builder builder) {
             builder.push("General");
             USE_LATIN_ELEMENT_NAMES = builder.comment("If true, elements names will be in latin (Ignis, Aer, Aqua and Terra) [DEFAULT: false]").translation("config.elementalamulets.elements_latin_variant").define("elements_latin_variant", false);
-
+            SHOW_SPLASHES = builder.comment("Show custom splash(es)? [DEFAULT: true]").define("show_splashes", true);
             builder.push("Rendering");
             RENDER_COMBINATOR_STACK = builder.comment("Render output slot on top Elemental Combinator? [DEFAULT: true]").translation("config.elementalamulets.elemental_combinator_stack_display").define("render_elemental_combinator_stack", true);
             //COMBINATOR_STACK_ROTATION_SPEED = builder.comment("How fast does rendered item spins? [DEFAULT: true]").translation("config.elementalamulets.elemental_combinator_stack_speed").defineInRange("rendered_stack_speed", 20, 1, Integer.MAX_VALUE);
@@ -152,6 +153,7 @@ public class ModConfig {
         //public static int COMBINATOR_STACK_ROTATION_SPEED;
         public static boolean RENDER_COMBINATOR_STACK;
         public static boolean RENDER_LEAF_SHIELD;
+        public static boolean SHOW_SPLASHES;
 
         private static void bakeClientConfig() {
             USE_LATIN_ELEMENT_NAMES = CLIENT.USE_LATIN_ELEMENT_NAMES.get();
@@ -159,6 +161,7 @@ public class ModConfig {
             //COMBINATOR_STACK_ROTATION_SPEED = CLIENT.COMBINATOR_STACK_ROTATION_SPEED.get();
             RENDER_COMBINATOR_STACK = CLIENT.RENDER_COMBINATOR_STACK.get();
             RENDER_LEAF_SHIELD = CLIENT.RENDER_LEAF_SHIELD.get();
+            SHOW_SPLASHES = CLIENT.SHOW_SPLASHES.get();
         }
 
         public static boolean GENERATE_CULT_TEMPLE;
