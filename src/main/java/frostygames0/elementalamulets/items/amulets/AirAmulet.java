@@ -19,19 +19,14 @@
 
 package frostygames0.elementalamulets.items.amulets;
 
-import frostygames0.elementalamulets.ElementalAmulets;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeMod;
 import top.theillusivec4.curios.api.SlotContext;
 
 
@@ -53,7 +48,7 @@ public class AirAmulet extends AmuletItem {
 
     @Override
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
-        if(!livingEntity.level.isClientSide()) {
+        /*if(!livingEntity.level.isClientSide()) {
             ModifiableAttributeInstance gravity = livingEntity.getAttribute(ForgeMod.ENTITY_GRAVITY.get());
             AttributeModifier attMod = new AttributeModifier(MODIFIER_UUID, new ResourceLocation(ElementalAmulets.MOD_ID, "speed").toString(),
                     this.getFloating(stack), AttributeModifier.Operation.ADDITION);
@@ -65,20 +60,25 @@ public class AirAmulet extends AmuletItem {
             } else if (gravity.hasModifier(attMod)) {
                 gravity.removeModifier(attMod);
             }
-        }
+        }*/
     }
 
     @Override
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
-        ModifiableAttributeInstance att = slotContext.getWearer().getAttribute(ForgeMod.ENTITY_GRAVITY.get());
+        /*ModifiableAttributeInstance att = slotContext.getWearer().getAttribute(ForgeMod.ENTITY_GRAVITY.get());
         if(stack.getItem() != newStack.getItem()) {
             if (att.getModifier(MODIFIER_UUID) != null) {
                 att.removeModifier(MODIFIER_UUID);
             }
-        }
+        }*/
     }
 
     public float getFloating(ItemStack stack) {
         return -0.01f*(this.getTier(stack)*1.75f);
+    }
+
+    @Override
+    public boolean usesCurioMethods() {
+        return false;
     }
 }

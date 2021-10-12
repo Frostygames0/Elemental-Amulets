@@ -2,11 +2,13 @@ buildscript {
     repositories {
         maven { url = 'https://maven.minecraftforge.net' }
         maven { url = 'https://maven.parchmentmc.org' }
+        maven { url = 'https://repo.spongepowered.org/repository/maven-public/'}
         mavenCentral()
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
         classpath 'org.parchmentmc:librarian:1.+'
+        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
@@ -14,6 +16,8 @@ apply plugin: 'org.parchmentmc.librarian.forgegradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'idea'
 apply plugin: 'maven-publish'
+
+apply plugin: 'org.spongepowered.mixin' // Mixins
 
 version = "${mc_version}-${mod_version}"
 group = 'frostygames0.elementalamulets' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
@@ -104,9 +108,7 @@ repositories {
 dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.2.0'
 
-    if (System.getProperty("idea.sync.active") != "true") {
-        annotationProcessor 'org.spongepowered:mixin:0.8.2:processor'
-    }
+    annotationProcessor 'org.spongepowered:mixin:0.8.3:processor'
 
     // Curios API
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curios_version}")
@@ -135,6 +137,14 @@ dependencies {
      */
 
 
+}
+
+mixin {
+    add sourceSets.main, 'mixins.elementalamulets.refmap.json'
+    config 'mixins.elementalamulets.json'
+
+    debug.verbose = true;
+    debug.export = true;
 }
 
 processResources {
