@@ -43,11 +43,13 @@ import top.theillusivec4.curios.api.type.util.ICuriosHelper;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+
 /**
  * @author Frostygames0
  * @date 10.09.2021 23:51
  */
 public class AmuletBelt extends Item implements ICurioItem {
+
     public AmuletBelt(Properties properties) {
         super(properties);
     }
@@ -63,7 +65,7 @@ public class AmuletBelt extends Item implements ICurioItem {
                 if (curio.isPresent() && itemAmulet instanceof AmuletItem) {
                     if (((AmuletItem) itemAmulet).usesCurioMethods()) {
                         if (!AmuletHelper.isAmuletPresent(itemAmulet, livingEntity)) { // Checks if there is amulet in main slot that is same as one in belt. Rule of priority
-                            curio.orElseThrow(() -> new NullPointerException("Unable to obtain Curio instance of "+amulet.getItem()+"! This is not supposed to happen, report to the developer!")).curioTick(identifier, index, livingEntity);
+                            curio.orElseThrow(NullPointerException::new).curioTick(identifier, index, livingEntity);
                         }
                     }
                 }
@@ -72,6 +74,7 @@ public class AmuletBelt extends Item implements ICurioItem {
     }
 
 
+    // FIXME: I'm stupid.... This will work when belt is unequiped and not when amulet is removed from slot -_-
     @Override
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
         stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
@@ -82,9 +85,7 @@ public class AmuletBelt extends Item implements ICurioItem {
                 LazyOptional<ICurio> curio = helper.getCurio(amulet);
                 if(curio.isPresent() && itemAmulet instanceof AmuletItem) {
                     if(((AmuletItem) itemAmulet).usesCurioMethods()) {
-                        if(AmuletHelper.isAmuletPresent(itemAmulet, slotContext.getWearer())) { // Checks if there is amulet in main slot that is same as one in belt. Rule of priority
-                            curio.orElseThrow(() -> new NullPointerException("Unable to obtain Curio instance of "+amulet.getItem()+"! This is not supposed to happen, report to the developer!")).onUnequip(slotContext, newStack);
-                        }
+                        curio.orElseThrow(NullPointerException::new).onUnequip(slotContext, newStack);
                     }
                 }
             }
@@ -150,7 +151,7 @@ public class AmuletBelt extends Item implements ICurioItem {
     @Nullable
     @Override
     public CompoundNBT writeSyncData(ItemStack stack) {
-        IItemHandler handler = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(null);
+        IItemHandler handler = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
         if(handler instanceof ItemStackHandler) {
             return ((ItemStackHandler)handler).serializeNBT();
         }
@@ -165,4 +166,7 @@ public class AmuletBelt extends Item implements ICurioItem {
             }
         });
     }
+    
+    
+
 }

@@ -39,7 +39,6 @@ import java.util.Optional;
 public final class AmuletHelper {
 
     // This is a wrapper method for Amulet Belt to work
-    // TODO: Check if this affects performance in any way and if it causes bugs
     public static Optional<ImmutableTriple<String, Integer, ItemStack>> getAmuletInSlotOrBelt(Item item, LivingEntity entity) {
         ICuriosHelper helper = CuriosApi.getCuriosHelper();
         if(isAmuletPresent(item, entity)) {
@@ -48,7 +47,7 @@ public final class AmuletHelper {
         Optional<ImmutableTriple<String, Integer, ItemStack>> optional = helper.findEquippedCurio(ModItems.AMULET_BELT.get(), entity);
         if(optional.isPresent()) {
             ImmutableTriple<String, Integer, ItemStack> triple = optional.get();
-            IItemHandler handler = triple.getRight().getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(() -> new NullPointerException("Belt has no ItemHandlerCapability! This is not supposed to happen! Report to the developer"));
+            IItemHandler handler = triple.getRight().getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
             for(int i = 0; i < handler.getSlots(); i++) {
                 ItemStack amulet = handler.getStackInSlot(i);
                 if(amulet.getItem() == item) {
