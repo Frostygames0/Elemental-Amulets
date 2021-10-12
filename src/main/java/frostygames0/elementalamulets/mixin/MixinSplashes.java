@@ -1,0 +1,48 @@
+/*
+ *     Copyright (c) 2021
+ *
+ *     This file is part of Elemental Amulets, a Minecraft Mod.
+ *
+ *     Elemental Amulets is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     Elemental Amulets is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with Elemental Amulets.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+package frostygames0.elementalamulets.mixin;
+
+import net.minecraft.client.util.Splashes;
+import net.minecraft.profiler.IProfiler;
+import net.minecraft.resources.IResourceManager;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+
+
+import java.util.List;
+
+/**
+ * @author Frostygames0
+ * @date 12.10.2021 22:45
+ */
+@Mixin(Splashes.class)
+public class MixinSplashes {
+    @Shadow
+    @Final
+    private List<String> splashes;
+
+    @Inject(at = @At("RETURN"), method = "apply")
+    protected void apply(List<String> pObject, IResourceManager pResourceManager, IProfiler pProfiler) {
+        this.splashes.add("Jeweller likes color green!");
+    }
+}

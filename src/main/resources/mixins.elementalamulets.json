@@ -5,7 +5,8 @@
   "refmap": "mixins.elementalamulets.refmap.json",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "LivingEntityMixin"
+    "MixinLivingEntity",
+    "MixinSplashes"
   ]
 
 }
