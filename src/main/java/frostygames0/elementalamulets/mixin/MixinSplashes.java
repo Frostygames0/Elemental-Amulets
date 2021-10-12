@@ -19,6 +19,7 @@
 
 package frostygames0.elementalamulets.mixin;
 
+import frostygames0.elementalamulets.config.ModConfig;
 import net.minecraft.client.util.Splashes;
 import net.minecraft.profiler.IProfiler;
 import net.minecraft.resources.IResourceManager;
@@ -27,6 +28,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 
 import java.util.List;
@@ -42,7 +44,7 @@ public class MixinSplashes {
     private List<String> splashes;
 
     @Inject(at = @At("RETURN"), method = "apply")
-    protected void apply(List<String> pObject, IResourceManager pResourceManager, IProfiler pProfiler) {
-        this.splashes.add("Jeweller likes color green!");
+    protected void apply(List<String> pObject, IResourceManager pResourceManager, IProfiler pProfiler, CallbackInfo ci) {
+        if(ModConfig.cached.SHOW_SPLASHES) this.splashes.add("Jeweller likes color green!");
     }
 }
