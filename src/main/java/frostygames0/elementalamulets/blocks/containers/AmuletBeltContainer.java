@@ -21,14 +21,20 @@ package frostygames0.elementalamulets.blocks.containers;
 
 import frostygames0.elementalamulets.init.ModContainers;
 import frostygames0.elementalamulets.items.AmuletBelt;
+import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
+import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.SlotContext;
+import top.theillusivec4.curios.api.type.capability.ICurio;
 
 /**
  * @author Frostygames0
@@ -42,7 +48,7 @@ public class AmuletBeltContainer extends Container {
         super(ModContainers.AMULET_BELT_CONTAINER.get(), id);
         this.belt = belt;
         this.playerInventory = new InvWrapper(playerInventory);
-        belt.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> addSlotRange(h, 0, 44, 54, 5, 18));
+        belt.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> layoutBelt(h, 0, 44, 54, 5, 18));
         this.bindPlayerInventory(8, 83);
     }
 
@@ -86,8 +92,28 @@ public class AmuletBeltContainer extends Container {
         return !belt.isEmpty() && belt.getItem() instanceof AmuletBelt;
     }
 
+    private int layoutBelt(IItemHandler handler, int index, int x, int y, int amount, int dx) {
+        for (int i = 0 ; i < amount ; i++) {
+            this.addSlot(new SlotItemHandler(handler, index, x, y) {
+                @Override
+                public ItemStack onTake(PlayerEntity pPlayer, ItemStack amulet) {
+                    Item itemAmulet = amulet.getItem();
+                    LazyOptional<ICurio> curio = CuriosApi.getCuriosHelper().getCurio(amulet);
+                    if(curio.isPresent() && itemAmulet instanceof AmuletItem) {
+                        if(((AmuletItem) itemAmulet).usesCurioMethods()) {
+                            curio.orElseThrow(NullPointerException::new).onUnequip(new SlotContext("necklace", pPlayer), ItemStack.EMPTY);
+                        }
+                    }
+                    return super.onTake(pPlayer, amulet);
+                }
+            });
+            x += dx;
+            index++;
+        }
+        return index;
+    }
+
     private int addSlotRange(IItemHandler handler, int index1, int x, int y, int amount, int dx) {
-        int index = index1;
         for (int i = 0 ; i < amount ; i++) {
             this.addSlot(new SlotItemHandler(handler, index1, x, y));
             x += dx;
