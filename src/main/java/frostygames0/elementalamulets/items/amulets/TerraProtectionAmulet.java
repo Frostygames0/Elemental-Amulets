@@ -19,11 +19,9 @@
 
 package frostygames0.elementalamulets.items.amulets;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.util.NBTUtil;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
@@ -64,27 +62,6 @@ public class TerraProtectionAmulet extends AmuletItem {
                 }
             }
         }
-    }
-
-    @Override
-    public void render(String identifier, int index, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int light, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack stack) {
-        /*LeafShield<LivingEntity> model = new LeafShield<>();
-        float angle = (livingEntity.tickCount + partialTicks) * 2.0F;
-
-        if(ModConfig.cached.RENDER_LEAF_SHIELD && this.canProtect(stack)) {
-            matrixStack.pushPose();
-
-            matrixStack.scale(2.0f, 2.0f, 2.0f);
-            matrixStack.translate(0, -0.7, 0);
-            matrixStack.mulPose(Vector3f.YP.rotationDegrees(angle));
-
-            model.renderToBuffer(matrixStack, renderTypeBuffer.getBuffer(RenderType.entityTranslucent(modPrefix("textures/entity/amulets/leaf_shield_colored.png"))), light, OverlayTexture.NO_OVERLAY, 1.0f, 1.0f, 1.0f, 1.0f);
-
-            matrixStack.popPose();
-        }*/
-
-        // Calling super is important since super class renders amulet here
-        super.render(identifier, index, matrixStack, renderTypeBuffer, light, livingEntity, limbSwing, limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, stack);
     }
 
     public float getReflectedDamageMulti(ItemStack stack) {
