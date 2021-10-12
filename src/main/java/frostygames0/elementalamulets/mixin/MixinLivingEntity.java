@@ -44,7 +44,7 @@ import java.util.Optional;
  * @date 12.10.2021 16:45
  */
 @Mixin(LivingEntity.class)
-public class LivingEntityMixin  {
+public class MixinLivingEntity {
     @Inject(at = @At(value = "INVOKE",
             target = "Lnet/minecraft/entity/LivingEntity;getDeltaMovement()Lnet/minecraft/util/math/vector/Vector3d;", ordinal = 0), method = "travel", locals = LocalCapture.CAPTURE_FAILSOFT)
     public void travel(Vector3d travelVector, CallbackInfo ci, double d0, ModifiableAttributeInstance gravity) {
