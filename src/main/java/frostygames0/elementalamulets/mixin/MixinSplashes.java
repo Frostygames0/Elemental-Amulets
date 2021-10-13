@@ -39,12 +39,13 @@ import java.util.List;
  */
 @Mixin(Splashes.class)
 public class MixinSplashes {
+
     @Shadow
     @Final
     private List<String> splashes;
 
     @Inject(at = @At("RETURN"), method = "apply")
     protected void apply(List<String> pObject, IResourceManager pResourceManager, IProfiler pProfiler, CallbackInfo ci) {
-        if(ModConfig.cached.SHOW_SPLASHES) this.splashes.add("Jeweller likes color green!");
+        if(ModConfig.cached.SHOW_SPLASHES) this.splashes.add("Jeweller likes color lime!");
     }
 }
