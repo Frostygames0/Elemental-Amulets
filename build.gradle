@@ -34,9 +34,6 @@ accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
         client {
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-
             workingDirectory project.file('run')
 
             property 'forge.logging.markers', 'REGISTRIES'
@@ -52,9 +49,6 @@ accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
         }
 
         server {
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-
             workingDirectory project.file('runServer')
 
             property 'forge.logging.markers', 'REGISTRIES'
@@ -135,8 +129,6 @@ dependencies {
     annotationProcessor "com.blamejared.crafttweaker:Crafttweaker_Annotation_Processors-1.16.5:1.0.0.312"
     annotationProcessor "org.reflections:reflections:0.9.10" // CT dependency
      */
-
-
 }
 
 mixin {
