@@ -4,9 +4,11 @@
   "package": "frostygames0.elementalamulets.mixin",
   "refmap": "mixins.elementalamulets.refmap.json",
   "compatibilityLevel": "JAVA_8",
-  "mixins": [
-    "MixinLivingEntity",
+  "client": [
     "MixinSplashes"
+  ],
+  "mixins": [
+    "MixinLivingEntity"
   ]
 
 }
