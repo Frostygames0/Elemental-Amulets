@@ -137,7 +137,7 @@ public class ModConfig {
         public static int PROTECTION_AMULET_CHARGE_TIME;
         public static double WATER_AMULET_SPEED_BOOST;
 
-        private static void bakeServerConfig() {
+        private static void cacheServerConfig() {
             FANCY_COMBINATION = SERVER.FANCY_COMBINATION.get();
             JUMP_AMULET_BOOST = SERVER.JUMP_AMULET_BOOST.get();
             FIRE_AMULET_FIRE_RESISTANCE = SERVER.FIRE_AMULET_FIRE_RESISTANCE.get();
@@ -155,7 +155,7 @@ public class ModConfig {
         public static boolean RENDER_LEAF_SHIELD;
         public static boolean SHOW_SPLASHES;
 
-        private static void bakeClientConfig() {
+        private static void cacheClientConfig() {
             USE_LATIN_ELEMENT_NAMES = CLIENT.USE_LATIN_ELEMENT_NAMES.get();
             AMULETS_TIER_DIFFERENCE = CLIENT.AMULETS_TIER_DIFFERENCE.get();
             //COMBINATOR_STACK_ROTATION_SPEED = CLIENT.COMBINATOR_STACK_ROTATION_SPEED.get();
@@ -168,7 +168,7 @@ public class ModConfig {
         public static boolean GENERATE_JEWELLER_HOUSE;
         public static boolean GENERATE_ORES;
 
-        private static void bakeCommonConfig() {
+        private static void cacheCommonConfig() {
             GENERATE_CULT_TEMPLE = COMMON.GENERATE_CULT_TEMPLE.get();
             GENERATE_JEWELLER_HOUSE = COMMON.GENERATE_JEWELLER_HOUSE.get();
             GENERATE_ORES = COMMON.GENERATE_ORES.get();
@@ -178,13 +178,13 @@ public class ModConfig {
     @SubscribeEvent
     public static void configEvent(net.minecraftforge.fml.config.ModConfig.ModConfigEvent event) {
         if(event.getConfig().getSpec() == ModConfig.SERVER_SPEC) {
-            cached.bakeServerConfig();
+            cached.cacheServerConfig();
         }
         if(event.getConfig().getSpec() == ModConfig.CLIENT_SPEC) {
-            cached.bakeClientConfig();
+            cached.cacheClientConfig();
         }
         if(event.getConfig().getSpec() == ModConfig.COMMON_SPEC) {
-            cached.bakeCommonConfig();
+            cached.cacheCommonConfig();
         }
     }
 
