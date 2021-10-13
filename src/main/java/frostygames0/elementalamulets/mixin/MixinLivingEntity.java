@@ -19,7 +19,6 @@
 
 package frostygames0.elementalamulets.mixin;
 
-import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.AirAmulet;
 import frostygames0.elementalamulets.util.AmuletHelper;
@@ -27,7 +26,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3d;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.spongepowered.asm.mixin.Mixin;
@@ -38,6 +36,8 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 
 import java.util.Optional;
+
+import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 /**
  * @author Frostygames0
@@ -50,18 +50,17 @@ public class MixinLivingEntity {
     public void travel(Vector3d travelVector, CallbackInfo ci, double d0, ModifiableAttributeInstance gravity) {
         LivingEntity entity = (LivingEntity) (Object) this;
 
-        boolean amuletFlag = entity.getDeltaMovement().y <= 0.0D;
-        Optional<ImmutableTriple<String, Integer, ItemStack>> optionalTriple = AmuletHelper.getAmuletInSlotOrBelt(ModItems.AIR_AMULET.get(), entity);
+        Optional<ImmutableTriple<String, Integer, ItemStack>> amuletOptionalTriple = AmuletHelper.getAmuletInSlotOrBelt(ModItems.AIR_AMULET.get(), entity);
 
-        if(optionalTriple.isPresent()) {
-            ImmutableTriple<String, Integer, ItemStack> triple = optionalTriple.get();
+        if(amuletOptionalTriple.isPresent()) {
+            ImmutableTriple<String, Integer, ItemStack> triple = amuletOptionalTriple.get();
             ItemStack stack = triple.getRight();
             AirAmulet amulet = (AirAmulet) stack.getItem();
 
-            AttributeModifier attMod = new AttributeModifier(AirAmulet.MODIFIER_UUID, new ResourceLocation(ElementalAmulets.MOD_ID, "speed").toString(),
+            AttributeModifier attMod = new AttributeModifier(AirAmulet.MODIFIER_UUID, modPrefix("air_speed").toString(),
                     amulet.getFloating(stack), AttributeModifier.Operation.ADDITION);
 
-            if(amuletFlag && !entity.isShiftKeyDown()) {
+            if(entity.getDeltaMovement().y <= 0.0D && !entity.isShiftKeyDown()) {
                 if (!gravity.hasModifier(attMod)) gravity.addTransientModifier(attMod);
             } else if (gravity.hasModifier(attMod)) {
                 gravity.removeModifier(attMod);
