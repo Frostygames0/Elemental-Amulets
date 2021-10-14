@@ -59,7 +59,7 @@ import java.util.List;
  */
 public class AmuletBelt extends Item implements ICurioItem {
 
-    public static final Lazy<ImmutableList<Item>> INCOMPATIBLE_AMULETS = Lazy.of(() -> ImmutableList.of(ModItems.EARTH_AMULET.get(), ModItems.SPEED_AMULET.get(), ModItems.WATER_AMULET.get(), ModItems.INVISIBILITY_AMULET.get()));
+    public static final Lazy<ImmutableList<Item>> INCOMPATIBLE_AMULETS = Lazy.of(() -> ImmutableList.of(ModItems.AIR_AMULET.get(), ModItems.EARTH_AMULET.get(), ModItems.SPEED_AMULET.get(), ModItems.WATER_AMULET.get(), ModItems.INVISIBILITY_AMULET.get()));
 
     public AmuletBelt(Properties properties) {
         super(properties);
@@ -91,8 +91,6 @@ public class AmuletBelt extends Item implements ICurioItem {
         });
     }
 
-
-    // FIXME: I'm stupid.... This will work when belt is unequiped and not when amulet is removed from slot -_-
     @Override
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
         stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {

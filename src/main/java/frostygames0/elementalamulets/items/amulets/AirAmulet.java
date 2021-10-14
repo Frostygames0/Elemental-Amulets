@@ -19,10 +19,17 @@
 
 package frostygames0.elementalamulets.items.amulets;
 
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.ForgeMod;
+import top.theillusivec4.curios.api.SlotContext;
 
 
 import java.util.UUID;
+
+import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 public class AirAmulet extends AmuletItem {
     public static UUID MODIFIER_UUID = UUID.fromString("2589aeb9-2b6a-44dc-8fab-97c9743dacdf");
@@ -37,5 +44,31 @@ public class AirAmulet extends AmuletItem {
     @Override
     public boolean usesCurioMethods() {
         return false;
+    }
+
+    @Override
+    public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
+
+        ModifiableAttributeInstance gravity = livingEntity.getAttribute(ForgeMod.ENTITY_GRAVITY.get());
+        AttributeModifier attMod = new AttributeModifier(AirAmulet.MODIFIER_UUID, modPrefix("air_speed").toString(),
+                this.getFloating(stack), AttributeModifier.Operation.ADDITION);
+
+        if(livingEntity.getDeltaMovement().y <= 0 && !livingEntity.isShiftKeyDown()) {
+            if (!gravity.hasModifier(attMod)) gravity.addTransientModifier(attMod);
+            livingEntity.fallDistance = 0;
+        } else if (gravity.hasModifier(attMod)) {
+            gravity.removeModifier(attMod);
+        }
+    }
+
+
+    @Override
+    public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
+        ModifiableAttributeInstance att = slotContext.getWearer().getAttribute(ForgeMod.ENTITY_GRAVITY.get());
+        if(stack.getItem() != newStack.getItem()) {
+            if (att.getModifier(MODIFIER_UUID) != null) {
+                att.removeModifier(MODIFIER_UUID);
+            }
+        }
     }
 }
