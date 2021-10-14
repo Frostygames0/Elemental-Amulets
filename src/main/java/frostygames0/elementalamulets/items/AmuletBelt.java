@@ -23,11 +23,16 @@ import com.google.common.collect.ImmutableList;
 import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import frostygames0.elementalamulets.util.AmuletHelper;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
@@ -45,6 +50,7 @@ import top.theillusivec4.curios.api.type.util.ICuriosHelper;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.List;
 
 
 /**
@@ -57,6 +63,13 @@ public class AmuletBelt extends Item implements ICurioItem {
 
     public AmuletBelt(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack pStack, @Nullable World pLevel, List<ITextComponent> pTooltip, ITooltipFlag pFlag) {
+        super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
+        pTooltip.add(new StringTextComponent("INCOMPATIBLE AMULETS:").withStyle(TextFormatting.DARK_RED));
+        INCOMPATIBLE_AMULETS.get().forEach(amulet -> pTooltip.add(new StringTextComponent(" * ").append(amulet.getDescription()).withStyle(TextFormatting.GRAY)));
     }
 
     @Override
