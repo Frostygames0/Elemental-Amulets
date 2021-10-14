@@ -19,25 +19,15 @@
 
 package frostygames0.elementalamulets.items.amulets;
 
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
 
 
-import javax.annotation.Nullable;
-import java.util.List;
 import java.util.UUID;
 
 public class AirAmulet extends AmuletItem {
     public static UUID MODIFIER_UUID = UUID.fromString("2589aeb9-2b6a-44dc-8fab-97c9743dacdf");
     public AirAmulet(Properties properties) {
         super(properties, true);
-    }
-
-    @Override
-    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        super.appendHoverText(stack, worldIn, tooltip, flagIn);
     }
 
     public float getFloating(ItemStack stack) {
