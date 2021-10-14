@@ -21,6 +21,7 @@ package frostygames0.elementalamulets.mixin;
 
 import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.AirAmulet;
+import frostygames0.elementalamulets.items.amulets.WaterAmulet;
 import frostygames0.elementalamulets.util.AmuletHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -32,6 +33,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 
@@ -44,10 +46,11 @@ import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
  * @date 12.10.2021 16:45
  */
 @Mixin(LivingEntity.class)
-public class MixinLivingEntity {
+public abstract class MixinLivingEntity {
+
     @Inject(at = @At(value = "INVOKE",
-            target = "Lnet/minecraft/entity/LivingEntity;getDeltaMovement()Lnet/minecraft/util/math/vector/Vector3d;", ordinal = 0), method = "travel", locals = LocalCapture.CAPTURE_FAILSOFT)
-    public void travel(Vector3d travelVector, CallbackInfo ci, double d0, ModifiableAttributeInstance gravity) {
+            target = "Lnet/minecraft/entity/ai/attributes/ModifiableAttributeInstance;getValue()D"), method = "travel", locals = LocalCapture.CAPTURE_FAILSOFT)
+    public void applyAirAmuletEffect(Vector3d travelVector, CallbackInfo ci, double d0, ModifiableAttributeInstance gravity, boolean flag) {
         LivingEntity entity = (LivingEntity) (Object) this;
 
         Optional<ImmutableTriple<String, Integer, ItemStack>> amuletOptionalTriple = AmuletHelper.getAmuletInSlotOrBelt(ModItems.AIR_AMULET.get(), entity);
@@ -60,7 +63,7 @@ public class MixinLivingEntity {
             AttributeModifier attMod = new AttributeModifier(AirAmulet.MODIFIER_UUID, modPrefix("air_speed").toString(),
                     amulet.getFloating(stack), AttributeModifier.Operation.ADDITION);
 
-            if(entity.getDeltaMovement().y <= 0.0D && !entity.isShiftKeyDown()) {
+            if(flag && !entity.isShiftKeyDown()) {
                 if (!gravity.hasModifier(attMod)) gravity.addTransientModifier(attMod);
             } else if (gravity.hasModifier(attMod)) {
                 gravity.removeModifier(attMod);
@@ -70,5 +73,18 @@ public class MixinLivingEntity {
                 gravity.removeModifier(AirAmulet.MODIFIER_UUID);
             }
         }
+    }
+
+    @Inject(at = @At("RETURN"), method = "decreaseAirSupply", cancellable = true)
+    protected void decreaseAirWithWaterAmulet(int air, CallbackInfoReturnable<Integer> ci) {
+        LivingEntity entity = (LivingEntity) (Object) this;
+        AmuletHelper.getAmuletInSlotOrBelt(ModItems.WATER_AMULET.get(), entity).ifPresent(triple -> {
+            ItemStack stack = triple.getRight();
+            WaterAmulet amulet = (WaterAmulet) stack.getItem();
+
+            if(amulet.getTier(stack) >= 2) {
+                ci.setReturnValue(air);
+            }
+        });
     }
 }
