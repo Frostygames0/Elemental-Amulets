@@ -20,6 +20,10 @@ apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin' // Mixins
 
 version = "${mc_version}-${mod_version}"
+if("${preview}" == "1") {
+    version += "-PRE"
+}
+
 group = 'frostygames0.elementalamulets' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'elementalamulets'
 
@@ -29,9 +33,7 @@ println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getPro
 minecraft {
     mappings channel: 'parchment', version: '2021.08.29-1.16.5'
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
-    
 accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
-
     runs {
         client {
             workingDirectory project.file('run')
