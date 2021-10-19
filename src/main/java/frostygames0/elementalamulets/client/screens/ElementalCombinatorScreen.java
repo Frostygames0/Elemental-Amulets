@@ -73,6 +73,7 @@ public class ElementalCombinatorScreen extends ContainerScreen<ElementalCombinat
         RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
         this.minecraft.getTextureManager().bind(GUI);
         this.blit(matrixStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+
         int l = this.menu.getCombinationTimeScaled();
         this.blit(matrixStack, this.leftPos + 90, this.topPos + 34, 176, 0, l + 1, 17);
     }
@@ -84,7 +85,7 @@ public class ElementalCombinatorScreen extends ContainerScreen<ElementalCombinat
     static class CombinationButton extends Button {
 
         CombinationButton(int pX, int pY, Button.IPressable pOnPress) {
-            super(pX, pY, 21, 13, StringTextComponent.EMPTY, pOnPress);
+            super(pX, pY, 21, 14, StringTextComponent.EMPTY, pOnPress);
         }
 
         @Override
@@ -94,9 +95,9 @@ public class ElementalCombinatorScreen extends ContainerScreen<ElementalCombinat
             int yOff = 18;
 
             if(!this.active) {
-                yOff = 31;
+                yOff = 32;
             } else if(this.isHovered) {
-                yOff = 44;
+                yOff = 46;
             }
 
             this.blit(pMatrixStack, x, y, 178, yOff, width, height);
