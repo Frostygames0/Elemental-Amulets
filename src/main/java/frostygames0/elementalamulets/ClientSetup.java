@@ -51,7 +51,6 @@ import java.util.Map;
 @Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientSetup {
 
-    // Client setup was moved from main class for safety, since it can cause crashes on server
     @SubscribeEvent
     public static void clientSetup(final FMLClientSetupEvent event) {
         ElementalCombinatorRenderer.register();
@@ -77,7 +76,6 @@ public class ClientSetup {
         ModParticles.register();
     }
 
-    // Since clientSetup is too early
     @SubscribeEvent
     public static void postClientSetup(FMLLoadCompleteEvent event) {
         Map<String, PlayerRenderer> skinMap = Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap();
