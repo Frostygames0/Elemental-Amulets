@@ -36,7 +36,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(LivingEntity.class)
 public class MixinLivingEntity {
 
-
     @Inject(at = @At("RETURN"), method = "decreaseAirSupply", cancellable = true)
     protected void decreaseAirWithWaterAmulet(int air, CallbackInfoReturnable<Integer> ci) {
         LivingEntity entity = (LivingEntity) (Object) this;
