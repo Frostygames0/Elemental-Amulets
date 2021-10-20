@@ -40,6 +40,7 @@ public class EffectEventHandler {
         JumpAmuletEffect.onLivingHurt(event);
         FireAmuletEffect.onLivingHurt(event);
         TerraProtectionAmuletEffect.onLivingHurt(event);
+        PacifyingAmuletEffect.onLivingHurt(event);
     }
     @SubscribeEvent
     public static void onAttack(final LivingAttackEvent event) {

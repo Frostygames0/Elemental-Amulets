@@ -91,6 +91,8 @@ public class ModItems {
             () -> new TerraProtectionAmulet(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(ElementalRarity.EARTH).durability(1000)));
     public static final RegistryObject<Item> INVISIBILITY_AMULET = ITEMS.register("invisibility_amulet",
             () -> new InvisibilityAmulet(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(ElementalRarity.AIR).durability(1000)));
+    public static final RegistryObject<Item> PACIFYING_AMULET = ITEMS.register("pacifying_amulet",
+            () -> new PacifyingAmulet(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(Rarity.EPIC).durability(1000)));
 
 
     public static List<AmuletItem> getAmulets() {
