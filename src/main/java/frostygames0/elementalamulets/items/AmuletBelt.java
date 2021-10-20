@@ -68,7 +68,7 @@ public class AmuletBelt extends Item implements ICurioItem {
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable World pLevel, List<ITextComponent> pTooltip, ITooltipFlag pFlag) {
         super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
-        pTooltip.add(new StringTextComponent("INCOMPATIBLE AMULETS:").withStyle(TextFormatting.DARK_RED));
+        pTooltip.add(new StringTextComponent("BUGGY AMULETS:").withStyle(TextFormatting.DARK_RED));
         INCOMPATIBLE_AMULETS.get().forEach(amulet -> pTooltip.add(new StringTextComponent(" * ").append(amulet.getDescription()).withStyle(TextFormatting.GRAY)));
     }
 
@@ -131,7 +131,7 @@ public class AmuletBelt extends Item implements ICurioItem {
                         break;
                     }
                 }
-                return stack.getItem() instanceof AmuletItem  && !sameAmulet  && !INCOMPATIBLE_AMULETS.get().contains(stack.getItem()) ? super.insertItem(slot, stack, simulate) : stack;
+                return stack.getItem() instanceof AmuletItem  && !sameAmulet  /*&& !INCOMPATIBLE_AMULETS.get().contains(stack.getItem())*/ ? super.insertItem(slot, stack, simulate) : stack;
             }
         };
         LazyOptional<IItemHandler> optional = LazyOptional.of(() -> handler);
