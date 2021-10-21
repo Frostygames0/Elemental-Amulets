@@ -19,6 +19,7 @@
 
 package frostygames0.elementalamulets.items.amulets;
 
+import frostygames0.elementalamulets.util.AttributeUtil;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
@@ -54,11 +55,10 @@ public class AirAmulet extends AmuletItem {
                 this.getFloating(stack), AttributeModifier.Operation.ADDITION);
 
         if(livingEntity.getDeltaMovement().y <= 0 && !livingEntity.isShiftKeyDown()) {
-            if (!gravity.hasModifier(attMod)) gravity.addTransientModifier(attMod);
+            AttributeUtil.applyModifier(gravity, attMod);
             livingEntity.fallDistance = 0;
-        } else if (gravity.hasModifier(attMod)) {
-            gravity.removeModifier(attMod);
-        }
+        } else
+            AttributeUtil.removeModifier(gravity, attMod);
     }
 
 
@@ -66,9 +66,7 @@ public class AirAmulet extends AmuletItem {
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
         ModifiableAttributeInstance att = slotContext.getWearer().getAttribute(ForgeMod.ENTITY_GRAVITY.get());
         if(stack.getItem() != newStack.getItem()) {
-            if (att.getModifier(MODIFIER_UUID) != null) {
-                att.removeModifier(MODIFIER_UUID);
-            }
+            AttributeUtil.removeModifierByUUID(att, MODIFIER_UUID);
         }
     }
 }

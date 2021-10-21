@@ -21,6 +21,7 @@ package frostygames0.elementalamulets.items.amulets;
 
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.config.ModConfig;
+import frostygames0.elementalamulets.util.AttributeUtil;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -45,14 +46,10 @@ public class SpeedAmulet extends AmuletItem {
             AttributeModifier attMod = new AttributeModifier(MODIFIER_UUID, new ResourceLocation(ElementalAmulets.MOD_ID, "speed").toString(),
                     this.getSpeed(stack), AttributeModifier.Operation.MULTIPLY_BASE);
             if(livingEntity.isSprinting()) {
-                if (!att.hasModifier(attMod)) {
-                    att.addTransientModifier(attMod);
-                }
+                AttributeUtil.applyModifier(att, attMod);
                 //if(livingEntity.tickCount % 20 == 0) AmuletHelper.damage(stack, livingEntity, identifier, index);
             } else {
-                if (att.hasModifier(attMod)) {
-                    att.removeModifier(attMod);
-                }
+                AttributeUtil.removeModifier(att, attMod);
             }
         }
     }
@@ -61,9 +58,7 @@ public class SpeedAmulet extends AmuletItem {
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
         ModifiableAttributeInstance att = slotContext.getWearer().getAttribute(Attributes.MOVEMENT_SPEED);
         if(stack.getItem() != newStack.getItem()) {
-            if (att.getModifier(MODIFIER_UUID) != null) {
-                att.removeModifier(MODIFIER_UUID);
-            }
+            AttributeUtil.removeModifierByUUID(att, MODIFIER_UUID);
         }
     }
 

@@ -20,6 +20,7 @@
 package frostygames0.elementalamulets.items.amulets;
 
 import frostygames0.elementalamulets.config.ModConfig;
+import frostygames0.elementalamulets.util.AttributeUtil;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -47,13 +48,9 @@ public class WaterAmulet extends AmuletItem {
                     this.getSwimSpeed(stack), AttributeModifier.Operation.MULTIPLY_TOTAL);
             if(livingEntity.isUnderWater()) {
                 if(livingEntity.isSwimming()) {
-                    if (!att.hasModifier(attMod)) {
-                        att.addTransientModifier(attMod);
-                    }
+                    AttributeUtil.applyModifier(att, attMod);
                 } else {
-                    if (att.hasModifier(attMod)) {
-                        att.removeModifier(attMod);
-                    }
+                    AttributeUtil.removeModifier(att, attMod);
                 }
             }
         }
@@ -63,9 +60,7 @@ public class WaterAmulet extends AmuletItem {
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
         ModifiableAttributeInstance att = slotContext.getWearer().getAttribute(Attributes.MOVEMENT_SPEED);
         if (stack.getItem() != newStack.getItem()) {
-            if (att.getModifier(MODIFIER_UUID) != null) {
-                att.removeModifier(MODIFIER_UUID);
-            }
+            AttributeUtil.removeModifierByUUID(att, MODIFIER_UUID);
         }
     }
 
