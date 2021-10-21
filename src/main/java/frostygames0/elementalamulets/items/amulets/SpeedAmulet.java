@@ -47,7 +47,6 @@ public class SpeedAmulet extends AmuletItem {
                     this.getSpeed(stack), AttributeModifier.Operation.MULTIPLY_BASE);
             if(livingEntity.isSprinting()) {
                 AttributeUtil.applyModifier(att, attMod);
-                //if(livingEntity.tickCount % 20 == 0) AmuletHelper.damage(stack, livingEntity, identifier, index);
             } else {
                 AttributeUtil.removeModifier(att, attMod);
             }
