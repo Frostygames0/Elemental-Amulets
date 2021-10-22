@@ -21,8 +21,14 @@ package frostygames0.elementalamulets.client.screens;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import frostygames0.elementalamulets.ElementalAmulets;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.AbstractGui;
+import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
@@ -31,17 +37,28 @@ import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
  * @author Frostygames0
  * @date 14.10.2021 20:00
  */
-// PROTOTYPE
+@Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID, value = Dist.CLIENT)
 public class LeafChargeOverlay {
 
+    @SubscribeEvent
     public static void renderLeafOverlay(RenderGameOverlayEvent event) {
-        Minecraft mc = Minecraft.getInstance();
+        TextureManager manager = Minecraft.getInstance().getTextureManager();
         MatrixStack ms = event.getMatrixStack();
-        if(event.getType() == RenderGameOverlayEvent.ElementType.FOOD) {
+
+        int posX = (event.getWindow().getGuiScaledWidth() / 2) + 30;
+        int posY = event.getWindow().getGuiScaledHeight() - 10;
+
+        if(event.getType() == RenderGameOverlayEvent.ElementType.HOTBAR) {
             RenderSystem.color4f(1,1,1,1);
+
+            manager.bind(modPrefix("textures/gui/leaf_charge_overlay.png"));
+
             RenderSystem.enableBlend();
-            mc.getTextureManager().bind(modPrefix(""));
-            //mc.gui.blit(ms, 10, 10);
+            AbstractGui.blit(ms, posX, posY, 0, 0, 80, 7, 256, 256);
+            RenderSystem.disableBlend();
+
+            RenderSystem.enableBlend();
+            AbstractGui.drawString(ms, Minecraft.getInstance().font, "TEST",posX+85, posY, 1);
             RenderSystem.disableBlend();
         }
     }
