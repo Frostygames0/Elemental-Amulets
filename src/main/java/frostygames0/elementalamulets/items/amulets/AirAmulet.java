@@ -43,11 +43,6 @@ public class AirAmulet extends AmuletItem {
     }
 
     @Override
-    public boolean usesCurioMethods() {
-        return false;
-    }
-
-    @Override
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
 
         ModifiableAttributeInstance gravity = livingEntity.getAttribute(ForgeMod.ENTITY_GRAVITY.get());
@@ -68,5 +63,10 @@ public class AirAmulet extends AmuletItem {
         if(stack.getItem() != newStack.getItem()) {
             AttributeUtil.removeModifierByUUID(att, MODIFIER_UUID);
         }
+    }
+
+    @Override
+    public boolean usesCurioMethods() {
+        return true;
     }
 }
