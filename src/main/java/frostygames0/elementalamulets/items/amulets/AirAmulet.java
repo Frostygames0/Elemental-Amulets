@@ -64,9 +64,4 @@ public class AirAmulet extends AmuletItem {
             AttributeUtil.removeModifierByUUID(att, MODIFIER_UUID);
         }
     }
-
-    @Override
-    public boolean usesCurioMethods() {
-        return true;
-    }
 }
