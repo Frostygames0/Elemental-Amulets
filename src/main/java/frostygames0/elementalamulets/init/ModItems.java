@@ -21,6 +21,7 @@ package frostygames0.elementalamulets.init;
 
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.items.AmuletBelt;
+import frostygames0.elementalamulets.items.AncientTablet;
 import frostygames0.elementalamulets.items.ElementItem;
 import frostygames0.elementalamulets.items.GuideBook;
 import frostygames0.elementalamulets.items.amulets.*;
@@ -42,6 +43,9 @@ public class ModItems {
     // Mod's guide book
     public static final RegistryObject<Item> GUIDE_BOOK = ITEMS.register("guide_book",
             () -> new GuideBook(new Item.Properties().tab(ElementalAmulets.GROUP).stacksTo(1)));
+
+    public static final RegistryObject<Item> ANCIENT_TABLET = ITEMS.register("ancient_tablet",
+            () -> new AncientTablet(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(Rarity.RARE).stacksTo(1)));
 
     // Mod BlockItems
     public static final RegistryObject<BlockItem> ELEMENTAL_COMBINATOR = ITEMS.register("elemental_combinator",
@@ -74,7 +78,7 @@ public class ModItems {
 
     // Amulets
     public static final RegistryObject<Item> EMPTY_AMULET = ITEMS.register("empty_amulet",
-            () -> new Item(new Item.Properties().tab(ElementalAmulets.GROUP).durability(1000)));
+            () -> new Item(new Item.Properties().tab(ElementalAmulets.GROUP).stacksTo(1)));
     public static final RegistryObject<Item> WATER_AMULET = ITEMS.register("water_amulet",
             () -> new WaterAmulet(new Item.Properties().tab(ElementalAmulets.GROUP).durability(1000)));
     public static final RegistryObject<Item> EARTH_AMULET = ITEMS.register("earth_amulet",
@@ -93,6 +97,8 @@ public class ModItems {
             () -> new InvisibilityAmulet(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(ElementalRarity.AIR).durability(1000)));
     public static final RegistryObject<Item> PACIFYING_AMULET = ITEMS.register("pacifying_amulet",
             () -> new PacifyingAmulet(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(Rarity.EPIC).durability(1000)));
+    public static final RegistryObject<Item> KNOCKBACK_AMULET = ITEMS.register("knockback_amulet",
+            () -> new KnockbackAmulet(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(Rarity.RARE).durability(1000)));
 
 
     public static List<AmuletItem> getAmulets() {
