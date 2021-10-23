@@ -47,7 +47,7 @@ public class PacifyingAmuletEffect {
                     if(damager instanceof PlayerEntity) {
                         PlayerEntity damagingPlayer = (PlayerEntity) damager;
                         if(damagingPlayer.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 100, item.getTier(amulet)))) {
-                            player.displayClientMessage(new TranslationTextComponent("item.elementalamulets.tired"), true);
+                            damagingPlayer.displayClientMessage(new TranslationTextComponent("item.elementalamulets.tired"), true);
                         }
                     }
                 });
