@@ -19,9 +19,29 @@
 
 package frostygames0.elementalamulets.items.amulets.effect;
 
+import frostygames0.elementalamulets.init.ModItems;
+import frostygames0.elementalamulets.util.AmuletHelper;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
+
 /**
  * @author Frostygames0
  * @date 09.10.2021 11:51
  */
 public class KnockbackAmuletEffect {
+    static void onLivingHurt(LivingHurtEvent event) {
+        if(event.getEntityLiving() instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+            if (!player.level.isClientSide()) {
+                AmuletHelper.getAmuletInSlotOrBelt(ModItems.KNOCKBACK_AMULET.get(), player).ifPresent(triple -> {
+                    if (event.getSource().getEntity() instanceof LivingEntity) {
+                        LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
+                        attacker.knockback( 2 * 0.5F, MathHelper.sin(player.yRot * ((float)Math.PI / 180F)), -MathHelper.cos(player.yRot * ((float)Math.PI / 180F)));
+                    }
+                });
+            }
+        }
+    }
 }

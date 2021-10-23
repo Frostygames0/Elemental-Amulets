@@ -1,0 +1,6 @@
+{
+  "parent": "elementalamulets:item/knockback_amulet",
+  "textures": {
+    "layer1": "elementalamulets:item/amulet_tiers/level4"
+  }
+}
