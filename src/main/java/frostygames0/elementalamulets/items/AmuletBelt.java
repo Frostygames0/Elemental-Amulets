@@ -23,6 +23,7 @@ import com.google.common.collect.ImmutableList;
 import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import frostygames0.elementalamulets.util.AmuletHelper;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
@@ -32,6 +33,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -68,8 +70,13 @@ public class AmuletBelt extends Item implements ICurioItem {
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable World pLevel, List<ITextComponent> pTooltip, ITooltipFlag pFlag) {
         super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
-        pTooltip.add(new StringTextComponent("BUGGY AMULETS(With some mods):").withStyle(TextFormatting.RED));
-        INCOMPATIBLE_AMULETS.get().forEach(amulet -> pTooltip.add(new StringTextComponent(" * ").append(amulet.getDescription()).withStyle(TextFormatting.GRAY)));
+
+        if(Screen.hasShiftDown()) {
+            pTooltip.add(new StringTextComponent("Can cause bugs(extremely rare):").withStyle(TextFormatting.GOLD));
+            INCOMPATIBLE_AMULETS.get().forEach(amulet -> pTooltip.add(new StringTextComponent(" * ").append(amulet.getDescription()).withStyle(TextFormatting.YELLOW)));
+        } else {
+            pTooltip.add(new TranslationTextComponent("item.elementalamulets.amulet_belt.incompat").withStyle(TextFormatting.GRAY));
+        }
     }
 
     @Override
