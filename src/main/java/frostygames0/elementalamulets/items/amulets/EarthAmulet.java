@@ -87,7 +87,6 @@ public class EarthAmulet extends AmuletItem{
                         ElementalAmulets.LOGGER.debug("Boosted " + block.getName() + " at " + blockPos.toShortString());
 
                         NBTUtil.putInteger(amulet, COOLDOWN_TAG, 100);
-                        break;
                     }
                 }
             }
