@@ -29,7 +29,7 @@ public class JumpAmulet extends AmuletItem {
     }
 
     public float getJump(ItemStack stack) {
-        return (float) (ModConfig.cached.JUMP_AMULET_BOOST *getTier(stack));
+        return (float) (ModConfig.CachedValues.JUMP_AMULET_BOOST *getTier(stack));
     }
 
     public float getFallResist(ItemStack stack) {

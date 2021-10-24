@@ -62,7 +62,7 @@ public class SpeedAmulet extends AmuletItem {
     }
 
     public float getSpeed(ItemStack stack) {
-        return (float) ModConfig.cached.SPEED_AMULET_BOOST*this.getTier(stack);
+        return (float) ModConfig.CachedValues.SPEED_AMULET_BOOST*this.getTier(stack);
     }
 
 

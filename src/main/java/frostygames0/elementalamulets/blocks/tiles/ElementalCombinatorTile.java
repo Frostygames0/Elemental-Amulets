@@ -109,7 +109,7 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
                 if(this.canCombine(recipe)) {
                     this.totalTime = this.isFocused() ? recipe.getCombinationTime() / 2 : recipe.getCombinationTime();
                     this.combinationTime++;
-                    if(ModConfig.cached.FANCY_COMBINATION) {
+                    if(ModConfig.CachedValues.FANCY_COMBINATION) {
                         if (this.combinationTime % 80 == 0) {
                             this.playSound(SoundEvents.BEACON_AMBIENT);
                             ((ServerWorld) level).sendParticles(ModParticles.COMBINATION_PARTICLE.get(), worldPosition.getX() + 0.5, worldPosition.above().getY() + 0.4, worldPosition.getZ() + 0.5, 50, 0, 0, 0, 5);
@@ -122,7 +122,7 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
                         this.stopCombination();
                         this.combine(recipe);
 
-                        if(ModConfig.cached.FANCY_COMBINATION) {
+                        if(ModConfig.CachedValues.FANCY_COMBINATION) {
                             this.playSound(SoundEvents.ENCHANTMENT_TABLE_USE);
 
                             LightningBoltEntity lightbolt = EntityType.LIGHTNING_BOLT.create(level);

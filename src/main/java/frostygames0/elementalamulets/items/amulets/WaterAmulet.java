@@ -65,6 +65,6 @@ public class WaterAmulet extends AmuletItem {
     }
 
     public float getSwimSpeed(ItemStack stack) {
-        return (float) ModConfig.cached.WATER_AMULET_SPEED_BOOST*this.getTier(stack);
+        return (float) ModConfig.CachedValues.WATER_AMULET_SPEED_BOOST*this.getTier(stack);
     }
 }

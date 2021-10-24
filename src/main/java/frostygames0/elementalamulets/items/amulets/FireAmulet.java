@@ -28,11 +28,11 @@ public class FireAmulet extends AmuletItem {
     }
 
     public float getFireResist(ItemStack stack) {
-        return (float) (ModConfig.cached.FIRE_AMULET_FIRE_RESISTANCE * this.getTier(stack));
+        return (float) (ModConfig.CachedValues.FIRE_AMULET_FIRE_RESISTANCE * this.getTier(stack));
     }
 
     public float getLavaResist(ItemStack stack) {
-        return (float) (ModConfig.cached.FIRE_AMULET_LAVA_RESISTANCE * this.getTier(stack));
+        return (float) (ModConfig.CachedValues.FIRE_AMULET_LAVA_RESISTANCE * this.getTier(stack));
     }
 
     @Override

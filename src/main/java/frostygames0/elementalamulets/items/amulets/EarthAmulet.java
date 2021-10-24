@@ -19,6 +19,7 @@
 
 package frostygames0.elementalamulets.items.amulets;
 
+import frostygames0.elementalamulets.config.ModConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IGrowable;
@@ -63,7 +64,7 @@ public class EarthAmulet extends AmuletItem{
                 CooldownTracker cooldownTracker = ((PlayerEntity)livingEntity).getCooldowns();
                 if (!cooldownTracker.isOnCooldown(this)) {
                     if(boostLocalPlants(world, stack, livingEntity.blockPosition(), livingEntity.getRandom()))
-                        cooldownTracker.addCooldown(this, 100);
+                        cooldownTracker.addCooldown(this, ModConfig.CachedValues.EARTH_AMULET_COOLDOWN);
                 }
             }
         }

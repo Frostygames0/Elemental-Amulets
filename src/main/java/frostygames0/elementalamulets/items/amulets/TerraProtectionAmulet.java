@@ -56,7 +56,7 @@ public class TerraProtectionAmulet extends AmuletItem {
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
         super.curioTick(identifier, index, livingEntity, stack);
         if(!livingEntity.level.isClientSide()) {
-            if(livingEntity.tickCount % ModConfig.cached.PROTECTION_AMULET_CHARGE_TIME == 0) {
+            if(livingEntity.tickCount % ModConfig.CachedValues.PROTECTION_AMULET_CHARGE_TIME == 0) {
                 if(getCharges(stack) < 4 * getTier(stack)) {
                     NBTUtil.putInteger(stack, CHARGES_TAG, getCharges(stack)+1);
                 }
@@ -65,7 +65,7 @@ public class TerraProtectionAmulet extends AmuletItem {
     }
 
     public float getReflectedDamageMulti(ItemStack stack) {
-        return (float) (this.getTier(stack) * ModConfig.cached.PROTECTION_AMULET_REFLECT_DAMAGE_MULT);
+        return (float) (this.getTier(stack) * ModConfig.CachedValues.PROTECTION_AMULET_REFLECT_DAMAGE_MULT);
     }
 
     public int getCharges(ItemStack stack) {

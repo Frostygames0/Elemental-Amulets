@@ -53,7 +53,7 @@ public class ElementItem extends Item {
 
     @Override
     public String getDescriptionId() {
-        if (ModConfig.cached.USE_LATIN_ELEMENT_NAMES) {
+        if (ModConfig.CachedValues.USE_LATIN_ELEMENT_NAMES) {
             return this.getOrCreateDescriptionId() + ".latin_variant";
         }
         return super.getDescriptionId();

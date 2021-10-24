@@ -62,7 +62,7 @@ public class ClientSetup {
 
             ModItems.getAmulets().forEach(
                     item -> ItemModelsProperties.register(item, new ResourceLocation(AmuletItem.TIER_TAG),
-                            (stack, world, entity) -> ModConfig.cached.AMULETS_TIER_DIFFERENCE ? item.getTier(stack) : 0));
+                            (stack, world, entity) -> ModConfig.CachedValues.AMULETS_TIER_DIFFERENCE ? item.getTier(stack) : 0));
         });
     }
 

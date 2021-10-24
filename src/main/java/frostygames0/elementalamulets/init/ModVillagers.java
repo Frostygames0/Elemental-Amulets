@@ -142,7 +142,7 @@ public class ModVillagers{
 
     public static class Structures {
         public static void addHouses(final FMLServerAboutToStartEvent event) {
-                if(ModConfig.cached.GENERATE_JEWELLER_HOUSE) {
+                if(ModConfig.CachedValues.GENERATE_JEWELLER_HOUSE) {
                     MutableRegistry<JigsawPattern> registry = event.getServer().registryAccess().registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY);
                     for (String biome : new String[]{"plains", "taiga"}) { // This is because it should be all village biomes but for now there is only plains
                         addHouse(registry, new ResourceLocation("village/" + biome + "/houses"),

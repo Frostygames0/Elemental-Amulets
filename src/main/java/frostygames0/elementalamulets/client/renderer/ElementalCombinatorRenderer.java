@@ -54,9 +54,9 @@ public class ElementalCombinatorRenderer extends TileEntityRenderer<ElementalCom
         ItemRenderer renderer = Minecraft.getInstance().getItemRenderer();
 
         int upperLight = WorldRenderer.getLightColor(world, tileEntityIn.getBlockPos().above());
-        float angle = (world.getGameTime() + partialTicks) * 2.0F;//(System.currentTimeMillis() / ModConfig.cached.COMBINATOR_STACK_ROTATION_SPEED) % 360;
+        float angle = (world.getGameTime() + partialTicks) * 2.0F;//(System.currentTimeMillis() / ModConfig.CachedValues.COMBINATOR_STACK_ROTATION_SPEED) % 360;
 
-        if(ModConfig.cached.RENDER_COMBINATOR_STACK) {
+        if(ModConfig.CachedValues.RENDER_COMBINATOR_STACK) {
 
             matrixStackIn.pushPose();
 
