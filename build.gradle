@@ -142,7 +142,7 @@ mixin {
 }
 
 processResources {
-    exclude '.cache' // Removes .cache from jar since it's useless and should be eliminated! UAHAHHA
+    exclude '.cache' // Removes .cache from jar
 }
 
 jar {
