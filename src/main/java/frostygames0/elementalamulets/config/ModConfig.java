@@ -47,6 +47,7 @@ public class ModConfig {
         private final ForgeConfigSpec.DoubleValue PROTECTION_AMULET_REFLECT_DAMAGE_MULT;
         private final ForgeConfigSpec.IntValue PROTECTION_AMULET_CHARGE_TIME;
         private final ForgeConfigSpec.DoubleValue WATER_AMULET_SPEED_BOOST;
+        private final ForgeConfigSpec.IntValue EARTH_AMULET_COOLDOWN;
 
         public Server(ForgeConfigSpec.Builder builder) {
             builder.push("General");
@@ -54,17 +55,34 @@ public class ModConfig {
 
             builder.comment("Anything that is related to the amulets [WARNING! Setting any of these values too high may cause bugs, lags and even crashes]")
                     .push("Amulets");
+
+
+            builder.push("Amulet of Jump-Boost");
             JUMP_AMULET_BOOST = builder.comment("How high will players jump with Jump Amulet [DEFAULT: 0.3]").defineInRange("jump_amulet_boost", 0.3, 0, Integer.MAX_VALUE);
-            FIRE_AMULET_FIRE_RESISTANCE = builder.comment("How good will Fire Amulet protect from fire [DEFAULT: 0.5]").defineInRange("fire_amulet_fire_resistance", 0.5, 0, Integer.MAX_VALUE);
-            FIRE_AMULET_LAVA_RESISTANCE = builder.comment("How good will Fire Amulet protect from lava [DEFAULT: 0.25]").defineInRange("fire_amulet_lava_resistance", 0.25, 0, Integer.MAX_VALUE);
-            SPEED_AMULET_BOOST = builder.comment("How fast will players run with Speed Amulet [DEFAULT: 1.08]").defineInRange("speed_amulet_boost", 1.08, 0, Integer.MAX_VALUE);
+            builder.pop();
+
+            builder.push("Amulet of Fire-Resistance");
+            FIRE_AMULET_FIRE_RESISTANCE = builder.comment("How good will Amulet of Fire-Resistance protect from fire [DEFAULT: 0.5]").defineInRange("fire_amulet_fire_resistance", 0.5, 0, Integer.MAX_VALUE);
+            FIRE_AMULET_LAVA_RESISTANCE = builder.comment("How good will Amulet of Fire-Resistance protect from lava [DEFAULT: 0.25]").defineInRange("fire_amulet_lava_resistance", 0.25, 0, Integer.MAX_VALUE);
+            builder.pop();
+
+            builder.push("Amulet of Speed-Boost");
+            SPEED_AMULET_BOOST = builder.comment("How fast will players run with Amulet of Speed-Boost [DEFAULT: 1.08]").defineInRange("speed_amulet_boost", 1.08, 0, Integer.MAX_VALUE);
+            builder.pop();
+
+            builder.push("Amulet of Terra-Protection");
             PROTECTION_AMULET_REFLECT_DAMAGE_MULT = builder.comment("How much damage will Leaf Shield absorb? [DEFAULT: 0.5]") .defineInRange("protection_amulet_absorption", 0.5f, 0, Integer.MAX_VALUE);
             PROTECTION_AMULET_CHARGE_TIME = builder.comment("How long will leaf shield recharge one bar (in ticks)? [DEFAULT: 80]").defineInRange("protection_amulet_recharge_time", 80, 0, Integer.MAX_VALUE);
+            builder.pop();
+
+            builder.push("Amulet of Water");
             WATER_AMULET_SPEED_BOOST = builder.comment("How fast will players swim with Water Amulet [DEFAULT 0.5]").defineInRange("water_amulet_speed_boost", 0.5f, 0, Integer.MAX_VALUE);
-
             builder.pop();
 
-            builder.pop();
+            builder.push("Amulet of Earth");
+            EARTH_AMULET_COOLDOWN = builder.comment("How long will the Amulet of Earth be on cooldown? (in ticks, 1 sec - 20 ticks) [DEFAULT: 100]").defineInRange("earth_amulet_cooldown", 100, 0, Integer.MAX_VALUE);
+
+            builder.pop(3);
         }
     }
 
@@ -80,20 +98,22 @@ public class ModConfig {
     public static class Client {
         private final ForgeConfigSpec.BooleanValue USE_LATIN_ELEMENT_NAMES;
         private final ForgeConfigSpec.BooleanValue AMULETS_TIER_DIFFERENCE;
-        //private final ForgeConfigSpec.IntValue COMBINATOR_STACK_ROTATION_SPEED;
         private final ForgeConfigSpec.BooleanValue RENDER_COMBINATOR_STACK;
         private final ForgeConfigSpec.BooleanValue RENDER_LEAF_SHIELD;
         private final ForgeConfigSpec.BooleanValue SHOW_SPLASHES;
         public Client(ForgeConfigSpec.Builder builder) {
             builder.push("General");
-            USE_LATIN_ELEMENT_NAMES = builder.comment("If true, elements names will be in latin (Ignis, Aer, Aqua and Terra) [DEFAULT: false]").translation("config.elementalamulets.elements_latin_variant").define("elements_latin_variant", false);
+            USE_LATIN_ELEMENT_NAMES = builder.comment("Use latin names for the elements(Ignis, Aer, Aqua, Terra and Aether) [DEFAULT: false]").translation("config.elementalamulets.elements_latin_variant").define("elements_latin_variant", false);
             SHOW_SPLASHES = builder.comment("Show custom splash(es)? [DEFAULT: true]").define("show_splashes", true);
             builder.push("Rendering");
-            RENDER_COMBINATOR_STACK = builder.comment("Render output slot on top Elemental Combinator? [DEFAULT: true]").translation("config.elementalamulets.elemental_combinator_stack_display").define("render_elemental_combinator_stack", true);
-            //COMBINATOR_STACK_ROTATION_SPEED = builder.comment("How fast does rendered item spins? [DEFAULT: true]").translation("config.elementalamulets.elemental_combinator_stack_speed").defineInRange("rendered_stack_speed", 20, 1, Integer.MAX_VALUE);
+            RENDER_COMBINATOR_STACK = builder.comment("Render output slot on the top Elemental Combinator? [DEFAULT: true]").translation("config.elementalamulets.elemental_combinator_stack_display").define("render_elemental_combinator_stack", true);
 
             builder.push("Amulets");
-            RENDER_LEAF_SHIELD = builder.comment("Render leaf shield around the player? [DEFAULT: true]").define("render_leaf_shield", true);
+
+            builder.push("Amulet of Terra-Protection");
+            RENDER_LEAF_SHIELD = builder.comment("Render a leaf shield around the player? [DEFAULT: true]").define("render_leaf_shield", true);
+            builder.pop();
+
             AMULETS_TIER_DIFFERENCE = builder.comment("Set to true, if you want amulets to be different based on their tier [DEFAULT: true]").translation("config.elementalamulets.amulets_tier_difference").define("amulets_tier_difference", true);
             builder.pop();
 
@@ -127,7 +147,7 @@ public class ModConfig {
     //           Config Caching                 //
     // ---------------------------------------- //
 
-    public static class cached {
+    public static class CachedValues {
         public static boolean FANCY_COMBINATION;
         public static double JUMP_AMULET_BOOST;
         public static double FIRE_AMULET_FIRE_RESISTANCE;
@@ -136,6 +156,7 @@ public class ModConfig {
         public static double PROTECTION_AMULET_REFLECT_DAMAGE_MULT;
         public static int PROTECTION_AMULET_CHARGE_TIME;
         public static double WATER_AMULET_SPEED_BOOST;
+        public static int EARTH_AMULET_COOLDOWN;
 
         private static void cacheServerConfig() {
             FANCY_COMBINATION = SERVER.FANCY_COMBINATION.get();
@@ -146,6 +167,7 @@ public class ModConfig {
             PROTECTION_AMULET_REFLECT_DAMAGE_MULT = SERVER.PROTECTION_AMULET_REFLECT_DAMAGE_MULT.get();
             PROTECTION_AMULET_CHARGE_TIME = SERVER.PROTECTION_AMULET_CHARGE_TIME.get();
             WATER_AMULET_SPEED_BOOST = SERVER.WATER_AMULET_SPEED_BOOST.get();
+            EARTH_AMULET_COOLDOWN = SERVER.EARTH_AMULET_COOLDOWN.get();
         }
 
         public static boolean AMULETS_TIER_DIFFERENCE;
@@ -178,13 +200,13 @@ public class ModConfig {
     @SubscribeEvent
     public static void configEvent(net.minecraftforge.fml.config.ModConfig.ModConfigEvent event) {
         if(event.getConfig().getSpec() == ModConfig.SERVER_SPEC) {
-            cached.cacheServerConfig();
+            CachedValues.cacheServerConfig();
         }
         if(event.getConfig().getSpec() == ModConfig.CLIENT_SPEC) {
-            cached.cacheClientConfig();
+            CachedValues.cacheClientConfig();
         }
         if(event.getConfig().getSpec() == ModConfig.COMMON_SPEC) {
-            cached.cacheCommonConfig();
+            CachedValues.cacheCommonConfig();
         }
     }
 
