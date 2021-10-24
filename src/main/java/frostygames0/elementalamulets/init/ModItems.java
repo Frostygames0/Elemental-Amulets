@@ -45,7 +45,7 @@ public class ModItems {
             () -> new GuideBook(new Item.Properties().tab(ElementalAmulets.GROUP).stacksTo(1)));
 
     public static final RegistryObject<Item> ANCIENT_TABLET = ITEMS.register("ancient_tablet",
-            () -> new AncientTablet(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(Rarity.RARE).stacksTo(1)));
+            () -> new AncientTablet(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(Rarity.RARE).durability(100)));
 
     // Mod BlockItems
     public static final RegistryObject<BlockItem> ELEMENTAL_COMBINATOR = ITEMS.register("elemental_combinator",

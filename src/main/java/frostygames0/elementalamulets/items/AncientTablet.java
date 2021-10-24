@@ -52,6 +52,11 @@ public class AncientTablet extends Item {
 
     @Override
     public ItemStack getContainerItem(ItemStack itemStack) {
-        return new ItemStack(this);
+        ItemStack stack = new ItemStack(this);
+        stack.hurt(itemStack.getDamageValue() + 1, random, null);
+        if(stack.getDamageValue() > stack.getMaxDamage()) {
+            return ItemStack.EMPTY;
+        }
+        return stack;
     }
 }
