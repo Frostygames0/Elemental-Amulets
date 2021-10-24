@@ -130,5 +130,10 @@
   "config.elementalamulets.amulets_tier_difference": "Показывать уровень амулета на текстуре",
   "config.elementalamulets.generate_cult_temple": "Храм культа",
   "config.elementalamulets.generate_jeweller_house": "Дом ювелира",
-  "config.elementalamulets.generate_ores": "Элементальная руда"
+  "config.elementalamulets.generate_ores": "Элементальная руда",
+  "config.elementalamulets.render_leaf_shield": "Отображать листянной щит",
+  "config.elementalamulets.general": "Основное",
+  "config.elementalamulets.amulets": "Амулеты",
+  "config.elementalamulets.rendering": "Рендеринг",
+  "config.elementalamulets.worldgen": "Генерация мира"
 }

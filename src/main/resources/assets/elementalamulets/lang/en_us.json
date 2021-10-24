@@ -130,5 +130,10 @@
   "config.elementalamulets.amulets_tier_difference": "Show tier of amulet on texture",
   "config.elementalamulets.generate_cult_temple": "Cult Temple",
   "config.elementalamulets.generate_jeweller_house": "Jeweller's house",
-  "config.elementalamulets.generate_ores": "Elemental ore"
+  "config.elementalamulets.generate_ores": "Elemental ore",
+  "config.elementalamulets.render_leaf_shield": "Render a leaf shield",
+  "config.elementalamulets.general": "General",
+  "config.elementalamulets.amulets": "Amulets",
+  "config.elementalamulets.rendering": "Rendering",
+  "config.elementalamulets.worldgen": "World generation"
 }
