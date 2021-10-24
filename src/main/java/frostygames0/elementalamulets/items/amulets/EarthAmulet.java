@@ -19,14 +19,14 @@
 
 package frostygames0.elementalamulets.items.amulets;
 
-import frostygames0.elementalamulets.ElementalAmulets;
-import frostygames0.elementalamulets.util.NBTUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IGrowable;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.CooldownTracker;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -42,9 +42,7 @@ import java.util.Random;
  * @author Frostygames0
  * @date 19.09.2021 22:50
  */
-// TODO: Add more effects, maybe saturation when in forest idk
 public class EarthAmulet extends AmuletItem{
-    private static final String COOLDOWN_TAG = ElementalAmulets.MOD_ID+":cooldown";
     public EarthAmulet(Properties properties) {
         super(properties);
     }
@@ -61,17 +59,17 @@ public class EarthAmulet extends AmuletItem{
         super.curioTick(identifier, index, livingEntity, stack);
         World world = livingEntity.level;
         if(!world.isClientSide()) {
-            int cooldown = NBTUtil.getInteger(stack, COOLDOWN_TAG);
-            if(cooldown < 1) {
-                boostLocalPlants(world, stack, livingEntity.blockPosition(), livingEntity.getRandom());
+            if(livingEntity instanceof PlayerEntity) {
+                CooldownTracker cooldownTracker = ((PlayerEntity)livingEntity).getCooldowns();
+                if (!cooldownTracker.isOnCooldown(this)) {
+                    if(boostLocalPlants(world, stack, livingEntity.blockPosition(), livingEntity.getRandom()))
+                        cooldownTracker.addCooldown(this, 100);
+                }
             }
-            if(cooldown > 0) NBTUtil.putInteger(stack, COOLDOWN_TAG, cooldown-1);
-            ElementalAmulets.LOGGER.debug(cooldown);
         }
     }
 
-    // TODO: Make it grow plants randomly and not in order
-    private void boostLocalPlants(World world, ItemStack amulet, BlockPos centerPos, Random random) {
+    private boolean boostLocalPlants(World world, ItemStack amulet, BlockPos centerPos, Random random) {
         for (BlockPos blockPos : BlockPos.betweenClosed(centerPos.getX() - 4, centerPos.getY() - 1, centerPos.getZ() - 4,
                 centerPos.getX() + 4, centerPos.getY() + 3, centerPos.getZ() + 4)) {
 
@@ -80,16 +78,14 @@ public class EarthAmulet extends AmuletItem{
 
             if (block instanceof IGrowable) {
                 IGrowable growable = (IGrowable) block;
-                if (random.nextInt(20) <= this.getTier(amulet)) {
+                if (random.nextInt(50) <= this.getTier(amulet)) {
                     if (growable.isValidBonemealTarget(world, blockPos, blockState, false)) {
                         growable.performBonemeal((ServerWorld) world, random, blockPos, blockState);
-
-                        ElementalAmulets.LOGGER.debug("Boosted " + block.getName() + " at " + blockPos.toShortString());
-
-                        NBTUtil.putInteger(amulet, COOLDOWN_TAG, 100);
+                        return true;
                     }
                 }
             }
         }
+        return false;
     }
 }
