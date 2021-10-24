@@ -5,6 +5,9 @@
   "item.elementalamulets.guide_book.subtitle": "Содержит в себе все знания о элементальных амулетах",
   "item.elementalamulets.all_seeing_lens": "Всевидящая линза",
   "item.elementalamulets.amulet_belt": "Пояс для амулетов",
+  "item.elementalamulets.amulet_belt.incompat": "This item can cause bugs(extremely rare but still). Press SHIFT for more",
+  "item.elementalamulets.ancient_tablet": "Древняя табличка",
+  "item.elementalamulets.ancient_tablet.tooltip": "Странная бирюзовая табличка из средневековья со странными рисунками на ней",
 
   "item.elementalamulets.author_amulet": "Амулет автора",
   "item.elementalamulets.author_amulet.tooltip": "Чувство удачи!",
@@ -56,6 +59,13 @@
 
   "item.elementalamulets.earth_amulet": "Амулет земли",
   "item.elementalamulets.earth_amulet.tooltip": "Фермерство и другие зеленые занятия будут ускорены",
+
+  "item.elementalamulets.pacifying_amulet": "Амулет успокоения",
+  "item.elementalamulets.pacifying_amulet.tooltip": "Пассивные мобы не дают сдачи",
+  "item.elementalamulets.tired": "Вы резко чувствуйте себя уставшим",
+
+  "item.elementalamulets.knockback_amulet": "Амулет отдачи",
+  "item.elementalamulets.knockback_amulet.tooltip": "Откидывает назад любого атакующего моба",
 
   "item.elementalamulets.wip_50": "Данный предмет сейчас не работает! Прощу прощения за это :/",
   "item.elementalamulets.wip": "Данный предмет сейчас немного баганный! Прощу прощения за это :/",
@@ -114,9 +124,11 @@
 
   "filled_map.elementalamulets.cult_temple": "Карта к странному храму",
 
-  "config.elementalamulets.elements_latin_variant": "If true, elements names will be in latin (Ignis, Aer, Aqua and Terra) [DEFAULT: false]",
-  "config.elementalamulets.elemental_combinator_stack_display": "Display output slot on Elemental Combinator? [DEFAULT: true]",
-  "config.elementalamulets.elemental_combinator_stack_speed": "Display output slot on Elemental Combinator? [DEFAULT: true]",
-  "config.elementalamulets.amulets_tier_difference": "Set to true, if you want amulets to be different based on their tier [DEFAULT: false]"
-
+  "config.elementalamulets.elements_latin_variant": "Использовать латинский для имен стихий",
+  "config.elementalamulets.show_splashes": "Показывать сплэши",
+  "config.elementalamulets.elemental_combinator_stack_display": "Отображать выводной слот объединителя элементаля",
+  "config.elementalamulets.amulets_tier_difference": "Показывать уровень амулета на текстуре",
+  "config.elementalamulets.generate_cult_temple": "Храм культа",
+  "config.elementalamulets.generate_jeweller_house": "Дом ювелира",
+  "config.elementalamulets.generate_ores": "Элементальная руда"
 }
