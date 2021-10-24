@@ -79,9 +79,4 @@ public class TerraProtectionAmulet extends AmuletItem {
     public boolean canProtect(ItemStack stack) {
         return getCharges(stack) > 0;
     }
-
-    @Override
-    public boolean usesCurioMethods() {
-        return true;
-    }
 }
