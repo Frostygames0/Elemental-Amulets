@@ -104,7 +104,7 @@ public class ModConfig {
         public Client(ForgeConfigSpec.Builder builder) {
             builder.push("General");
             USE_LATIN_ELEMENT_NAMES = builder.comment("Use latin names for the elements(Ignis, Aer, Aqua, Terra and Aether) [DEFAULT: false]").translation("config.elementalamulets.elements_latin_variant").define("elements_latin_variant", false);
-            SHOW_SPLASHES = builder.comment("Show custom splash(es)? [DEFAULT: true]").define("show_splashes", true);
+            SHOW_SPLASHES = builder.comment("Show custom splash(es)? [DEFAULT: true]").translation("config.elementalamulets.show_splashes").define("show_splashes", true);
             builder.push("Rendering");
             RENDER_COMBINATOR_STACK = builder.comment("Render output slot on the top Elemental Combinator? [DEFAULT: true]").translation("config.elementalamulets.elemental_combinator_stack_display").define("render_elemental_combinator_stack", true);
 
@@ -136,9 +136,9 @@ public class ModConfig {
         private final ForgeConfigSpec.BooleanValue GENERATE_ORES;
         public Common(ForgeConfigSpec.Builder builder) {
             builder.push("World Generation");
-            GENERATE_CULT_TEMPLE = builder.comment("Generate Cult's temple ruins? [DEFAULT: true]").define("generate_cult_temple", true);
-            GENERATE_JEWELLER_HOUSE = builder.comment("Generate Jeweller's house? [DEFAULT: true]").define("generate_jeweller_house", true);
-            GENERATE_ORES = builder.comment("Generate Elemental Shards ore? [DEFAULT: true]").define("generate_ores", true);
+            GENERATE_CULT_TEMPLE = builder.comment("Generate Cult's temple ruins? [DEFAULT: true]").translation("config.elementalamulets.generate_cult_temple").define("generate_cult_temple", true);
+            GENERATE_JEWELLER_HOUSE = builder.comment("Generate Jeweller's house? [DEFAULT: true]").translation("config.elementalamulets.generate_jeweller_house").define("generate_jeweller_house", true);
+            GENERATE_ORES = builder.comment("Generate Elemental Shards ore? [DEFAULT: true]").translation("config.elementalamulets.generate_ores").define("generate_ores", true);
             builder.pop();
         }
     }
