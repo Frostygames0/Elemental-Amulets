@@ -19,6 +19,8 @@
 
 package frostygames0.elementalamulets.items.amulets;
 
+import net.minecraft.item.ItemStack;
+
 /**
  * @author Frostygames0
  * @date 09.10.2021 11:44
@@ -26,5 +28,14 @@ package frostygames0.elementalamulets.items.amulets;
 public class KnockbackAmulet extends AmuletItem{
     public KnockbackAmulet(Properties properties) {
         super(properties);
+    }
+
+    public float getKnockback(ItemStack item) {
+        return (float) (getTier(item) * 0.5);
+    }
+
+    @Override
+    public boolean usesCurioMethods() {
+        return false;
     }
 }
