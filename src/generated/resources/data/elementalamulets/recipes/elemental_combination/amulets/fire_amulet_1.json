@@ -33,6 +33,6 @@
   "tag_transfer": true,
   "result": {
     "item": "elementalamulets:fire_amulet",
-    "nbt": "{'elementalamulets:tier':1}"
+    "nbt": "{\"elementalamulets:tier\":1}"
   }
 }

@@ -114,7 +114,7 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .addIngredient(ModItems.EARTH_ELEMENT.get())
                 .addIngredient(Items.EMERALD)
                 .setCombinationTime(600)
-                .build(consumer);
+                .build(consumer, modPrefix("elements/"+ModItems.AETHER_ELEMENT.getId().getPath()));
 
         amuletRecipeTier1(ModItems.FIRE_AMULET.get().getDefaultInstance(), ModItems.FIRE_ELEMENT.get(), consumer);
         amuletRecipeTier1(ModItems.AIR_AMULET.get().getDefaultInstance(), ModItems.AIR_ELEMENT.get(), consumer);
@@ -150,7 +150,7 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .addIngredient(ModItems.WATER_ELEMENT.get())
                 .setCombinationTime(200)
                 .isTagTransferred()
-                .build(consumer);
+                .build(consumer, modPrefix("amulets/"+ModItems.INVISIBILITY_AMULET.getId().getPath()));
         amuletRecipeSpecial(ModItems.TERRA_PROTECTION_AMULET.get().getDefaultInstance(), ModItems.EARTH_AMULET.get().getDefaultInstance(), Items.SHIELD, ModItems.EARTH_ELEMENT.get(), consumer);
 
         amuletRecipeTier2(ModItems.FIRE_AMULET.get().getDefaultInstance(), AmuletItem.getStackWithTier(new ItemStack(ModItems.FIRE_AMULET.get()), 2), Items.IRON_INGOT, ModItems.FIRE_ELEMENT.get(), consumer);

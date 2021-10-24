@@ -175,7 +175,7 @@ public class ElementalCombinationBuilder {
 
         @Override
         public ResourceLocation getId() {
-            return id;
+            return new ResourceLocation(id.getNamespace(), "elemental_combination/"+id.getPath()); // Makes any recipe go into elemental_combination folder
         }
 
         @Override
