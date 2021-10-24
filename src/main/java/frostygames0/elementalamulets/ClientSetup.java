@@ -80,8 +80,8 @@ public class ClientSetup {
     public static void postClientSetup(FMLLoadCompleteEvent event) {
         Map<String, PlayerRenderer> skinMap = Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap();
 
-        for (PlayerRenderer render : skinMap.values()) {
-            render.addLayer(new LeafShieldLayer<>(render));
+        for (PlayerRenderer renderer : skinMap.values()) {
+            renderer.addLayer(new LeafShieldLayer<>(renderer));
         }
     }
 }
