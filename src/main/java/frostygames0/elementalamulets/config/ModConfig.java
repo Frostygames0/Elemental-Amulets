@@ -100,7 +100,9 @@ public class ModConfig {
         private final ForgeConfigSpec.BooleanValue AMULETS_TIER_DIFFERENCE;
         private final ForgeConfigSpec.BooleanValue RENDER_COMBINATOR_STACK;
         private final ForgeConfigSpec.BooleanValue RENDER_LEAF_SHIELD;
+        private final ForgeConfigSpec.BooleanValue RENDER_LEAF_CHARGE_OVERLAY;
         private final ForgeConfigSpec.BooleanValue SHOW_SPLASHES;
+
         public Client(ForgeConfigSpec.Builder builder) {
             builder.push("General");
             USE_LATIN_ELEMENT_NAMES = builder.comment("Use latin names for the elements(Ignis, Aer, Aqua, Terra and Aether) [DEFAULT: false]").translation("config.elementalamulets.elements_latin_variant").define("elements_latin_variant", false);
@@ -111,6 +113,7 @@ public class ModConfig {
             builder.push("Amulets");
 
             builder.push("Amulet of Terra-Protection");
+            RENDER_LEAF_CHARGE_OVERLAY = builder.comment("Render a leaf charge overlay? [DEFAULT: true]").translation("config.elementalamulets.render_leaf_charge_overlay").define("render_leaf_charge_overlay", true);
             RENDER_LEAF_SHIELD = builder.comment("Render a leaf shield around the player? [DEFAULT: true]").translation("config.elementalamulets.render_leaf_shield").define("render_leaf_shield", true);
             builder.pop();
 
@@ -175,14 +178,15 @@ public class ModConfig {
         //public static int COMBINATOR_STACK_ROTATION_SPEED;
         public static boolean RENDER_COMBINATOR_STACK;
         public static boolean RENDER_LEAF_SHIELD;
+        public static boolean RENDER_LEAF_CHARGE_OVERLAY;
         public static boolean SHOW_SPLASHES;
 
         private static void cacheClientConfig() {
             USE_LATIN_ELEMENT_NAMES = CLIENT.USE_LATIN_ELEMENT_NAMES.get();
             AMULETS_TIER_DIFFERENCE = CLIENT.AMULETS_TIER_DIFFERENCE.get();
-            //COMBINATOR_STACK_ROTATION_SPEED = CLIENT.COMBINATOR_STACK_ROTATION_SPEED.get();
             RENDER_COMBINATOR_STACK = CLIENT.RENDER_COMBINATOR_STACK.get();
             RENDER_LEAF_SHIELD = CLIENT.RENDER_LEAF_SHIELD.get();
+            RENDER_LEAF_CHARGE_OVERLAY = CLIENT.RENDER_LEAF_CHARGE_OVERLAY.get();
             SHOW_SPLASHES = CLIENT.SHOW_SPLASHES.get();
         }
 
