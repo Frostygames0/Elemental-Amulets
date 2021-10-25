@@ -84,6 +84,8 @@ public class ModStructures {
     }
 
     private static Method GETCODEC_METHOD;
+
+    @SuppressWarnings("unchecked")
     @SubscribeEvent
     public static void addDimensionalSpacing(final WorldEvent.Load event) {
         if(event.getWorld() instanceof ServerWorld){
