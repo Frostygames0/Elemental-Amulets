@@ -57,7 +57,7 @@ public class TerraProtectionAmulet extends AmuletItem {
         super.curioTick(identifier, index, livingEntity, stack);
         if(!livingEntity.level.isClientSide()) {
             if(livingEntity.tickCount % ModConfig.CachedValues.PROTECTION_AMULET_CHARGE_TIME == 0) {
-                if(getCharges(stack) < 4 * getTier(stack)) {
+                if(getCharges(stack) < getMaxCharge(stack)) {
                     NBTUtil.putInteger(stack, CHARGES_TAG, getCharges(stack)+1);
                 }
             }
@@ -78,5 +78,9 @@ public class TerraProtectionAmulet extends AmuletItem {
 
     public boolean canProtect(ItemStack stack) {
         return getCharges(stack) > 0;
+    }
+
+    public int getMaxCharge(ItemStack stack) {
+        return 4 * getTier(stack);
     }
 }
