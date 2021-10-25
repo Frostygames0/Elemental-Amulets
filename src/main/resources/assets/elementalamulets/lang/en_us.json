@@ -132,6 +132,7 @@
   "config.elementalamulets.generate_jeweller_house": "Jeweller's house",
   "config.elementalamulets.generate_ores": "Elemental ore",
   "config.elementalamulets.render_leaf_shield": "Render a leaf shield",
+  "config.elementalamulets.render_leaf_charge_overlay": "Render the leaf charge overlay",
   "config.elementalamulets.general": "General",
   "config.elementalamulets.amulets": "Amulets",
   "config.elementalamulets.rendering": "Rendering",

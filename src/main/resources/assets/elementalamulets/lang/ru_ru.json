@@ -132,8 +132,9 @@
   "config.elementalamulets.generate_jeweller_house": "Дом ювелира",
   "config.elementalamulets.generate_ores": "Элементальная руда",
   "config.elementalamulets.render_leaf_shield": "Отображать листянной щит",
+  "config.elementalamulets.render_leaf_charge_overlay": "Отображать оверлей листянного заряда",
   "config.elementalamulets.general": "Основное",
   "config.elementalamulets.amulets": "Амулеты",
   "config.elementalamulets.rendering": "Рендеринг",
-  "config.elementalamulets.worldgen": "Генерация мира"
+  "config.elementalamulets.worldgen": "Генерация мира",
 }
