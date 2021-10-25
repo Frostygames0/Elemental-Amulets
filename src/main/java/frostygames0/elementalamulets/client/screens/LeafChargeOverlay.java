@@ -22,9 +22,14 @@ package frostygames0.elementalamulets.client.screens;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import frostygames0.elementalamulets.ElementalAmulets;
+import frostygames0.elementalamulets.config.ModConfig;
+import frostygames0.elementalamulets.init.ModItems;
+import frostygames0.elementalamulets.items.amulets.TerraProtectionAmulet;
+import frostygames0.elementalamulets.util.AmuletHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -41,26 +46,43 @@ import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 public class LeafChargeOverlay {
 
     @SubscribeEvent
-    public static void renderLeafOverlay(RenderGameOverlayEvent event) {
+    public static void renderLeafOverlay(RenderGameOverlayEvent.Post event) {
+        Minecraft mc = Minecraft.getInstance();
         TextureManager manager = Minecraft.getInstance().getTextureManager();
         MatrixStack ms = event.getMatrixStack();
 
-        int posX = (event.getWindow().getGuiScaledWidth() / 2) + 30;
-        int posY = event.getWindow().getGuiScaledHeight() - 10;
+        int posX = (event.getWindow().getGuiScaledWidth() / 2);
+        int posY = event.getWindow().getGuiScaledHeight() - 12;
 
-        if(event.getType() == RenderGameOverlayEvent.ElementType.HOTBAR) {
+        if(event.getType() == RenderGameOverlayEvent.ElementType.FOOD && ModConfig.CachedValues.RENDER_LEAF_CHARGE_OVERLAY) {
             RenderSystem.color4f(1,1,1,1);
 
             manager.bind(modPrefix("textures/gui/leaf_charge_overlay.png"));
 
-            RenderSystem.enableBlend();
-            AbstractGui.blit(ms, posX, posY, 0, 0, 80, 7, 256, 256);
-            RenderSystem.disableBlend();
+            AmuletHelper.getAmuletInSlotOrBelt(ModItems.TERRA_PROTECTION_AMULET.get(), mc.player).ifPresent(triple -> {
+                ItemStack stack = triple.getRight();
+                TerraProtectionAmulet amulet = (TerraProtectionAmulet) stack.getItem();
 
-            RenderSystem.enableBlend();
-            AbstractGui.drawString(ms, Minecraft.getInstance().font, "TEST",posX+85, posY, 1);
-            RenderSystem.disableBlend();
+                int offset = posX+98;
+
+                RenderSystem.enableBlend();
+
+                drawLeafBar(ms, Math.min(amulet.getMaxCharge(stack), 16), offset, posY, 0);
+                drawLeafBar(ms, Math.min(amulet.getCharges(stack), 16), offset, posY, 8);
+
+                RenderSystem.disableBlend();
+
+            });
         }
+    }
+
+    private static int drawLeafBar(MatrixStack ms, int size, int posX, int posY, int VOffset) {
+        for (int j = 1; j <= size; j++) {
+            AbstractGui.blit(ms, posX, posY, 0, VOffset, 7, 7, 16, 16);
+            posX += 8;
+        }
+
+        return posX;
     }
 
 }
