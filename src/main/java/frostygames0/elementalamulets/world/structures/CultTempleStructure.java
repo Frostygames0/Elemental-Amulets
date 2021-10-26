@@ -20,10 +20,8 @@
 package frostygames0.elementalamulets.world.structures;
 
 import com.google.common.collect.ImmutableList;
-import frostygames0.elementalamulets.ElementalAmulets;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SharedSeedRandom;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -45,6 +43,8 @@ import net.minecraft.world.gen.feature.template.TemplateManager;
 
 
 import java.util.List;
+
+import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 
 /**
@@ -94,7 +94,7 @@ public class CultTempleStructure extends Structure<NoFeatureConfig> {
         public void generatePieces(DynamicRegistries dynamicRegistryManager, ChunkGenerator chunkGenerator, TemplateManager templateManagerIn, int chunkX, int chunkZ, Biome biomeIn, NoFeatureConfig config) {
             BlockPos centerPos = new BlockPos(chunkX * 16, 0, chunkZ * 16);
 
-            JigsawManager.addPieces(dynamicRegistryManager, new VillageConfig(() -> dynamicRegistryManager.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY).get(new ResourceLocation(ElementalAmulets.MOD_ID, "cult_temple/cult_temple_entrance")), 10), AbstractVillagePiece::new, chunkGenerator, templateManagerIn, centerPos, pieces, random, false,true);
+            JigsawManager.addPieces(dynamicRegistryManager, new VillageConfig(() -> dynamicRegistryManager.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY).get(modPrefix("cult_temple/entrance")), 12), AbstractVillagePiece::new, chunkGenerator, templateManagerIn, centerPos, pieces, random, false,true);
 
             Vector3i structureCenter = this.pieces.get(0).getBoundingBox().getCenter();
             int xOffset = centerPos.getX() - structureCenter.getX();

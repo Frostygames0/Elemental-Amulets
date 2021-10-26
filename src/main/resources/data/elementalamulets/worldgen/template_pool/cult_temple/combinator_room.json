@@ -1,5 +1,5 @@
 {
-  "name": "elementalamulets:cult_temple/cult_temple_combinator_room",
+  "name": "elementalamulets:cult_temple/combinator_room",
   "fallback": "minecraft:empty",
   "elements": [
     {
@@ -7,7 +7,7 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
-        "location": "elementalamulets:cult_temple/cult_temple_combinator_room_1",
+        "location": "elementalamulets:cult_temple/combroom/combinator_room_1",
         "processors": "elementalamulets:age_stone_bricks"
       }
     },
@@ -16,7 +16,7 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
-        "location": "elementalamulets:cult_temple/cult_temple_combinator_room_2",
+        "location": "elementalamulets:cult_temple/combroom/combinator_room_2",
         "processors": "elementalamulets:age_stone_bricks"
       }
     }

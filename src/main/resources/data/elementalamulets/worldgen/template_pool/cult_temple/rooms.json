@@ -1,0 +1,42 @@
+{
+  "name": "elementalamulets:cult_temple/rooms",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "elementalamulets:cult_temple/rooms/challenge_room",
+        "processors": "elementalamulets:age_stone_bricks"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "elementalamulets:cult_temple/tunnel/prison_room",
+        "processors": "elementalamulets:age_stone_bricks"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "elementalamulets:cult_temple/tunnel/treasure_room",
+        "processors": "elementalamulets:age_stone_bricks"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "elementalamulets:cult_temple/tunnel/tunnel_deadend",
+        "processors": "elementalamulets:age_stone_bricks"
+      }
+    }
+  ]
+}

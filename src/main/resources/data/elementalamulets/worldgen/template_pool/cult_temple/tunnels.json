@@ -1,0 +1,150 @@
+{
+  "name": "elementalamulets:cult_temple/tunnels",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "elementalamulets:cult_temple/tunnel/corner",
+        "processors": "elementalamulets:age_stone_bricks"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "elementalamulets:cult_temple/tunnel/corner_obstructed",
+        "processors": "elementalamulets:age_stone_bricks"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "elementalamulets:cult_temple/tunnel/corner_with_room",
+        "processors": "elementalamulets:age_stone_bricks"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "elementalamulets:cult_temple/tunnel/corner_with_trap",
+        "processors": "elementalamulets:age_stone_bricks"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "elementalamulets:cult_temple/tunnel/corner_with_treasure",
+        "processors": "elementalamulets:age_stone_bricks"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "elementalamulets:cult_temple/tunnel/staircase",
+        "processors": "elementalamulets:age_stone_bricks"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "elementalamulets:cult_temple/tunnel/staircase_obstructed",
+        "processors": "elementalamulets:age_stone_bricks"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "elementalamulets:cult_temple/tunnel/staircase_with_barrels",
+        "processors": "elementalamulets:age_stone_bricks"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "elementalamulets:cult_temple/tunnel/staircase_with_trap",
+        "processors": "elementalamulets:age_stone_bricks"
+      }
+    },
+    {
+      "weight": 7,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "elementalamulets:cult_temple/tunnel/t_corner",
+        "processors": "elementalamulets:age_stone_bricks"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "elementalamulets:cult_temple/tunnel/tunnel",
+        "processors": "elementalamulets:age_stone_bricks"
+      }
+    },
+    {
+      "weight": 2,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "elementalamulets:cult_temple/tunnel/tunnel_deadend",
+        "processors": "elementalamulets:age_stone_bricks"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "elementalamulets:cult_temple/tunnel/tunnel_obstructed",
+        "processors": "elementalamulets:age_stone_bricks"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "elementalamulets:cult_temple/tunnel/tunnel_with_arch",
+        "processors": "elementalamulets:age_stone_bricks"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "elementalamulets:cult_temple/tunnel/tunnel_with_room",
+        "processors": "elementalamulets:age_stone_bricks"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "elementalamulets:cult_temple/tunnel/tunnel_with_treasure",
+        "processors": "elementalamulets:age_stone_bricks"
+      }
+    }
+  ]
+}

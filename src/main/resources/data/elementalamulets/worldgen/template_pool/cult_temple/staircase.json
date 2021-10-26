@@ -1,5 +1,5 @@
 {
-  "name": "elementalamulets:cult_temple/cult_temple_entrance",
+  "name": "elementalamulets:cult_temple/staircase",
   "fallback": "minecraft:empty",
   "elements": [
     {
@@ -7,7 +7,7 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
-        "location": "elementalamulets:cult_temple/cult_temple_entrance",
+        "location": "elementalamulets:cult_temple/combroom/entrance_staircase",
         "processors": "elementalamulets:age_stone_bricks"
       }
     }
