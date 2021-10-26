@@ -57,29 +57,29 @@ public class ModConfig {
                     .push("Amulets");
 
 
-            builder.push("Amulet of Jump-Boost").translation("item.elementalamulets.jump_amulet");
+            builder.push("Amulet of Jump-Boost");
             JUMP_AMULET_BOOST = builder.comment("How high will players jump with Jump Amulet [DEFAULT: 0.3]").defineInRange("jump_amulet_boost", 0.3, 0, Integer.MAX_VALUE);
             builder.pop();
 
-            builder.push("Amulet of Fire-Resistance").translation("item.elementalamulets.fire_amulet");
+            builder.push("Amulet of Fire-Resistance");
             FIRE_AMULET_FIRE_RESISTANCE = builder.comment("How good will Amulet of Fire-Resistance protect from fire [DEFAULT: 0.5]").defineInRange("fire_amulet_fire_resistance", 0.5, 0, Integer.MAX_VALUE);
             FIRE_AMULET_LAVA_RESISTANCE = builder.comment("How good will Amulet of Fire-Resistance protect from lava [DEFAULT: 0.25]").defineInRange("fire_amulet_lava_resistance", 0.25, 0, Integer.MAX_VALUE);
             builder.pop();
 
-            builder.push("Amulet of Speed-Boost").translation("item.elementalamulets.speed_amulet");
+            builder.push("Amulet of Speed-Boost");
             SPEED_AMULET_BOOST = builder.comment("How fast will players run with Amulet of Speed-Boost [DEFAULT: 1.08]").defineInRange("speed_amulet_boost", 1.08, 0, Integer.MAX_VALUE);
             builder.pop();
 
-            builder.push("Amulet of Terra-Protection").translation("item.elementalamulets.protection_amulet");
+            builder.push("Amulet of Terra-Protection");
             PROTECTION_AMULET_REFLECT_DAMAGE_MULT = builder.comment("How much damage will Leaf Shield absorb? [DEFAULT: 0.5]") .defineInRange("protection_amulet_absorption", 0.5f, 0, Integer.MAX_VALUE);
             PROTECTION_AMULET_CHARGE_TIME = builder.comment("How long will leaf shield recharge one bar (in ticks)? [DEFAULT: 80]").defineInRange("protection_amulet_recharge_time", 80, 0, Integer.MAX_VALUE);
             builder.pop();
 
-            builder.push("Amulet of Water").translation("item.elementalamulets.water_amulet");
+            builder.push("Amulet of Water");
             WATER_AMULET_SPEED_BOOST = builder.comment("How fast will players swim with Water Amulet [DEFAULT 0.5]").defineInRange("water_amulet_speed_boost", 0.5f, 0, Integer.MAX_VALUE);
             builder.pop();
 
-            builder.push("Amulet of Earth").translation("item.elementalamulets.earth_amulet");
+            builder.push("Amulet of Earth");
             EARTH_AMULET_COOLDOWN = builder.comment("How long will the Amulet of Earth be on cooldown? (in ticks, 1 sec - 20 ticks) [DEFAULT: 100]").defineInRange("earth_amulet_cooldown", 100, 0, Integer.MAX_VALUE);
 
             builder.pop(3);
