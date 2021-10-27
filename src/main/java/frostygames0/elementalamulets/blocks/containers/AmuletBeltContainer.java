@@ -21,20 +21,14 @@ package frostygames0.elementalamulets.blocks.containers;
 
 import frostygames0.elementalamulets.init.ModContainers;
 import frostygames0.elementalamulets.items.AmuletBelt;
-import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
-import top.theillusivec4.curios.api.CuriosApi;
-import top.theillusivec4.curios.api.SlotContext;
-import top.theillusivec4.curios.api.type.capability.ICurio;
 
 /**
  * @author Frostygames0
@@ -97,13 +91,13 @@ public class AmuletBeltContainer extends Container {
             this.addSlot(new SlotItemHandler(handler, index, x, y) {
                 @Override
                 public ItemStack onTake(PlayerEntity pPlayer, ItemStack amulet) {
-                    Item itemAmulet = amulet.getItem();
+                    /*Item itemAmulet = amulet.getItem();
                     LazyOptional<ICurio> curio = CuriosApi.getCuriosHelper().getCurio(amulet);
                     if(curio.isPresent() && itemAmulet instanceof AmuletItem) {
                         if(((AmuletItem) itemAmulet).usesCurioMethods()) {
                             curio.orElseThrow(NullPointerException::new).onUnequip(new SlotContext("necklace", pPlayer), ItemStack.EMPTY);
                         }
-                    }
+                    }*/
                     return super.onTake(pPlayer, amulet);
                 }
             });

@@ -21,6 +21,9 @@ package frostygames0.elementalamulets.util;
 
 import net.minecraft.item.ItemStack;
 
+
+import java.util.UUID;
+
 public final class NBTUtil {
 
     public static boolean isSafeToGet(ItemStack stack, String tagName) {
@@ -47,6 +50,10 @@ public final class NBTUtil {
         return isSafeToGet(stack, tagName) ? stack.getOrCreateTag().getString(tagName) : "";
     }
 
+    public static UUID getUUID(ItemStack stack, String tagName) {
+        return stack.getOrCreateTag().hasUUID(tagName) ? stack.getOrCreateTag().getUUID(tagName) : new UUID(0L, 0L);
+    }
+
     public static void putInteger(ItemStack stack, String tagName, int value) {
         stack.getOrCreateTag().putInt(tagName, value);
     }
@@ -65,5 +72,9 @@ public final class NBTUtil {
 
     public static void putString(ItemStack stack, String tagName, String value) {
         stack.getOrCreateTag().putString(tagName, value);
+    }
+
+    public static void putUUID(ItemStack stack, String name, UUID value) {
+        stack.getOrCreateTag().putUUID(name, value);
     }
 }

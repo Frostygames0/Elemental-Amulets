@@ -19,13 +19,13 @@
 
 package frostygames0.elementalamulets.items;
 
-import com.google.common.collect.ImmutableList;
-import frostygames0.elementalamulets.init.ModItems;
+import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import frostygames0.elementalamulets.util.AmuletHelper;
-import net.minecraft.client.gui.screen.Screen;
+import frostygames0.elementalamulets.util.NBTUtil;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -33,18 +33,18 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
-import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
+import top.theillusivec4.curios.api.SlotTypePreset;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 import top.theillusivec4.curios.api.type.util.ICuriosHelper;
@@ -53,6 +53,9 @@ import top.theillusivec4.curios.api.type.util.ICuriosHelper;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.UUID;
+
+import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 
 /**
@@ -60,8 +63,7 @@ import java.util.List;
  * @date 10.09.2021 23:51
  */
 public class AmuletBelt extends Item implements ICurioItem {
-
-    public static final Lazy<ImmutableList<Item>> INCOMPATIBLE_AMULETS = Lazy.of(() -> ImmutableList.of(ModItems.AIR_AMULET.get(), ModItems.EARTH_AMULET.get(), ModItems.SPEED_AMULET.get(), ModItems.WATER_AMULET.get(), ModItems.INVISIBILITY_AMULET.get()));
+    public static final String WEARER_UUID_TAG = modPrefix("wearer").toString();
 
     public AmuletBelt(Properties properties) {
         super(properties);
@@ -70,13 +72,13 @@ public class AmuletBelt extends Item implements ICurioItem {
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable World pLevel, List<ITextComponent> pTooltip, ITooltipFlag pFlag) {
         super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
-
-        if(Screen.hasShiftDown()) {
-            pTooltip.add(new StringTextComponent("Can cause bugs(extremely rare):").withStyle(TextFormatting.GOLD));
-            INCOMPATIBLE_AMULETS.get().forEach(amulet -> pTooltip.add(new StringTextComponent(" * ").append(amulet.getDescription()).withStyle(TextFormatting.YELLOW)));
-        } else {
-            pTooltip.add(new TranslationTextComponent("item.elementalamulets.amulet_belt.incompat").withStyle(TextFormatting.GRAY));
-        }
+        pTooltip.add(new StringTextComponent("Amulets in belt:").withStyle(TextFormatting.GOLD));
+        pStack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+            for(int i = 0; i < h.getSlots(); i++) {
+                ItemStack stack = h.getStackInSlot(i);
+                if(!stack.isEmpty()) pTooltip.add(new StringTextComponent(i+1 + ". ").append(stack.getHoverName()).withStyle(TextFormatting.GRAY));
+            }
+        });
     }
 
     @Override
@@ -96,23 +98,55 @@ public class AmuletBelt extends Item implements ICurioItem {
                 }
             }
         });
+
+        if(!livingEntity.level.isClientSide()) {
+            if(livingEntity instanceof PlayerEntity) {
+                // If for some reason UUID of wearer is not correct, it will correct it
+                UUID wearerUUID = NBTUtil.getUUID(stack, WEARER_UUID_TAG);
+                UUID livingUUID = livingEntity.getUUID();
+                if (!wearerUUID.equals(livingUUID))  {
+                    NBTUtil.putUUID(stack, WEARER_UUID_TAG, livingUUID);
+                    ElementalAmulets.LOGGER.debug("Corrected UUID");
+                }
+            }
+        }
     }
 
     @Override
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
-        stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-            ICuriosHelper helper = CuriosApi.getCuriosHelper();
-            for(int i = 0; i < h.getSlots(); i++) {
-                ItemStack amulet = h.getStackInSlot(i);
-                Item itemAmulet = amulet.getItem();
-                LazyOptional<ICurio> curio = helper.getCurio(amulet);
-                if(curio.isPresent() && itemAmulet instanceof AmuletItem) {
-                    if(((AmuletItem) itemAmulet).usesCurioMethods()) {
-                        curio.orElseThrow(NullPointerException::new).onUnequip(slotContext, newStack);
+        if(newStack.getItem() != stack.getItem()) {
+            stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+                ICuriosHelper helper = CuriosApi.getCuriosHelper();
+                for (int i = 0; i < h.getSlots(); i++) {
+                    ItemStack amulet = h.getStackInSlot(i);
+                    Item itemAmulet = amulet.getItem();
+                    LazyOptional<ICurio> curio = helper.getCurio(amulet);
+                    if (curio.isPresent() && itemAmulet instanceof AmuletItem) {
+                        if (((AmuletItem) itemAmulet).usesCurioMethods()) {
+                            curio.orElseThrow(NullPointerException::new).onUnequip(slotContext, newStack);
+                        }
                     }
                 }
+            });
+
+            // Removes wearer UUID tag from stack
+            if(!slotContext.getWearer().level.isClientSide()) {
+                stack.getOrCreateTag().remove(WEARER_UUID_TAG);
+                ElementalAmulets.LOGGER.debug("Removed UUID");
             }
-        });
+        }
+    }
+
+    @Override
+    public void onEquip(SlotContext slotContext, ItemStack prevStack, ItemStack stack) {
+        if(prevStack.getItem() != stack.getItem()) {
+            // Creates tag with uuid of wearer
+            LivingEntity livingEntity = slotContext.getWearer();
+            if(!livingEntity.level.isClientSide() && livingEntity instanceof PlayerEntity) {
+                NBTUtil.putUUID(stack, WEARER_UUID_TAG, livingEntity.getUUID());
+                ElementalAmulets.LOGGER.debug("Put UUID");
+            }
+        }
     }
 
     @Override
@@ -139,6 +173,27 @@ public class AmuletBelt extends Item implements ICurioItem {
                     }
                 }
                 return stack.getItem() instanceof AmuletItem  && !sameAmulet  /*&& !INCOMPATIBLE_AMULETS.get().contains(stack.getItem())*/ ? super.insertItem(slot, stack, simulate) : stack;
+            }
+
+            @Nonnull
+            @Override
+            public ItemStack extractItem(int slot, int amount, boolean simulate) {
+                ItemStack amulet = getStackInSlot(slot);
+                UUID UUID = NBTUtil.getUUID(stack, WEARER_UUID_TAG);
+                PlayerEntity wearer = ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayer(UUID);
+                if(wearer != null) {
+                    Item itemAmulet = amulet.getItem();
+                    LazyOptional<ICurio> curio = CuriosApi.getCuriosHelper().getCurio(amulet);
+                    if (curio.isPresent() && itemAmulet instanceof AmuletItem) {
+                        if (((AmuletItem) itemAmulet).usesCurioMethods()) {
+                            curio.orElseThrow(NullPointerException::new).onUnequip(new SlotContext(SlotTypePreset.NECKLACE.getIdentifier(), wearer), ItemStack.EMPTY);
+                        }
+                    }
+                    ElementalAmulets.LOGGER.debug(wearer.getDisplayName() + " is cool!");
+                } else {
+                    return amulet;
+                }
+                return super.extractItem(slot, amount, simulate);
             }
         };
         LazyOptional<IItemHandler> optional = LazyOptional.of(() -> handler);
