@@ -29,9 +29,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.CooldownTracker;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.common.BiomeDictionary;
 
 
 import java.util.Random;
@@ -56,9 +54,6 @@ public class EarthAmuletItem extends AmuletItem{
                 if (!cooldownTracker.isOnCooldown(this)) {
                     if(boostLocalPlants(world, stack, player.blockPosition(), player.getRandom()))
                         cooldownTracker.addCooldown(this, ModConfig.CachedValues.EARTH_AMULET_COOLDOWN);
-                        if(BiomeDictionary.hasType(world.getBiomeName(player.blockPosition()).orElse(Biomes.THE_VOID), BiomeDictionary.Type.FOREST)) {
-                            player.heal(player.getRandom().nextInt(2));
-                        }
                 }
             }
         }
