@@ -28,6 +28,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -190,17 +191,20 @@ public class AmuletBeltItem extends Item implements ICurioItem {
             public ItemStack extractItem(int slot, int amount, boolean simulate) {
                 ItemStack amulet = getStackInSlot(slot);
                 UUID UUID = NBTUtil.getUUID(stack, WEARER_UUID_TAG);
-                PlayerEntity wearer = ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayer(UUID);
-                if(wearer != null) {
-                    Item itemAmulet = amulet.getItem();
-                    LazyOptional<ICurio> curio = CuriosApi.getCuriosHelper().getCurio(amulet);
-                    if (curio.isPresent() && itemAmulet instanceof AmuletItem) {
-                        if (((AmuletItem) itemAmulet).usesCurioMethods()) {
-                            curio.orElseThrow(NullPointerException::new).onUnequip(new SlotContext(SlotTypePreset.NECKLACE.getIdentifier(), wearer), ItemStack.EMPTY);
+                MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
+                if(server != null) {
+                    PlayerEntity wearer = server.getPlayerList().getPlayer(UUID);
+                    if (wearer != null) {
+                        Item itemAmulet = amulet.getItem();
+                        LazyOptional<ICurio> curio = CuriosApi.getCuriosHelper().getCurio(amulet);
+                        if (curio.isPresent() && itemAmulet instanceof AmuletItem) {
+                            if (((AmuletItem) itemAmulet).usesCurioMethods()) {
+                                curio.orElseThrow(NullPointerException::new).onUnequip(new SlotContext(SlotTypePreset.NECKLACE.getIdentifier(), wearer), ItemStack.EMPTY);
+                            }
                         }
+                    } else {
+                        return amulet;
                     }
-                } else {
-                    return amulet;
                 }
                 return super.extractItem(slot, amount, simulate);
             }
