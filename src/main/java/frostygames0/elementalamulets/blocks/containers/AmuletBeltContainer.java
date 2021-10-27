@@ -42,7 +42,7 @@ public class AmuletBeltContainer extends Container {
         super(ModContainers.AMULET_BELT_CONTAINER.get(), id);
         this.belt = belt;
         this.playerInventory = new InvWrapper(playerInventory);
-        belt.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> layoutBelt(h, 0, 44, 54, 5, 18));
+        belt.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> addSlotRange(h, 0, 44, 54, 5, 18));
         this.bindPlayerInventory(8, 83);
     }
 
@@ -84,27 +84,6 @@ public class AmuletBeltContainer extends Container {
     @Override
     public boolean stillValid(PlayerEntity playerIn) {
         return !belt.isEmpty() && belt.getItem() instanceof AmuletBeltItem;
-    }
-
-    private int layoutBelt(IItemHandler handler, int index, int x, int y, int amount, int dx) {
-        for (int i = 0 ; i < amount ; i++) {
-            this.addSlot(new SlotItemHandler(handler, index, x, y) {
-                @Override
-                public ItemStack onTake(PlayerEntity pPlayer, ItemStack amulet) {
-                    /*Item itemAmulet = amulet.getItem();
-                    LazyOptional<ICurio> curio = CuriosApi.getCuriosHelper().getCurio(amulet);
-                    if(curio.isPresent() && itemAmulet instanceof AmuletItem) {
-                        if(((AmuletItem) itemAmulet).usesCurioMethods()) {
-                            curio.orElseThrow(NullPointerException::new).onUnequip(new SlotContext("necklace", pPlayer), ItemStack.EMPTY);
-                        }
-                    }*/
-                    return super.onTake(pPlayer, amulet);
-                }
-            });
-            x += dx;
-            index++;
-        }
-        return index;
     }
 
     private int addSlotRange(IItemHandler handler, int index1, int x, int y, int amount, int dx) {
