@@ -1,0 +1,31 @@
+{
+  "parent": "elementalamulets:ancient_insanity",
+  "display": {
+    "icon": {
+      "item": "elementalamulets:ancient_tablet"
+    },
+    "title": {
+      "translate": "advancements.elementalamulets.strange_tablet"
+    },
+    "description": {
+      "translate": "advancements.elementalamulets.strange_tablet.desc"
+    },
+    "frame": "task"
+  },
+  "criteria": {
+    "picked_tablet": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "elementalamulets:ancient_tablet",
+            "count": 1
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [[
+    "picked_tablet"
+  ]]
+}

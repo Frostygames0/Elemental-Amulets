@@ -9,9 +9,6 @@
   "item.elementalamulets.ancient_tablet": "Ancient Tablet",
   "item.elementalamulets.ancient_tablet.tooltip": "Strange cyan tablet from the ancient times with some drawings on it",
 
-  "item.elementalamulets.author_amulet": "Author's amulet",
-  "item.elementalamulets.author_amulet.tooltip": "Feeling lucky!",
-
   "item.elementalamulets.elemental_shards": "Elemental Shards",
   "item.elementalamulets.elemental_shards.latin_variant": "Elemental Shards",
   "item.elementalamulets.elemental_shards.tooltip": "Can be filled with elemental power",
@@ -85,7 +82,7 @@
 
   "jei.elementalamulets.cooldown": "Time to combine - %ss",
   "jei.elementalamulets.elemental_separation": "Elemental Combination",
-  "jei.elementalamulets.shapeless": "Shapeless recipe (except central slot).",
+  "jei.elementalamulets.shapeless": "Shapeless recipe (except the central slot).",
   "jei.elementalamulets.amulets.description": "Amulets - are magical jewels(in our case necklaces) that grant you a variety of powers.\nMore about them you can read in Elemental Guide",
   "jei.elementalamulets.guide_book.description": "A book with all information about this mod, to access it you need Patchouli!",
   "jei.elementalamulets.elemental_combinator.description": "Allows you to combine things and get unique and powerful items!\nRight click on it while sneaking to activate",
@@ -114,15 +111,17 @@
   "advancements.elementalamulets.wear_all_amulets.desc": "Wear all amulets at least once",
   "advancements.elementalamulets.ancient_insanity": "Ancient insanity",
   "advancements.elementalamulets.ancient_insanity.desc": "Enter the ancient temple",
+  "advancements.elementalamulets.strange_tablet": "Strange tablet",
+  "advancements.elementalamulets.strange_tablet.desc": "Find a strange tablet in the temple",
 
   "death.attack.elementalamulets.leaf_cut": "%s was cut to death by leaf shield!",
 
   "commands.elementalamulets.give.success": "Successfully gave Tier %s %2$s to: %3$s",
   "commands.elementalamulets.give.failure": "Error! %s is not an elemental amulet!",
 
-  "key.elementalamulets.open_belt_gui": "Open amulet belt interface",
+  "key.elementalamulets.open_belt_gui": "Open the Amulet Belt interface",
 
-  "filled_map.elementalamulets.cult_temple": "Strange Temple's map",
+  "filled_map.elementalamulets.cult_temple": "Map to the temple ruins",
 
   "config.elementalamulets.elements_latin_variant": "Use latin names for the elements",
   "config.elementalamulets.show_splashes": "Show splashes",
