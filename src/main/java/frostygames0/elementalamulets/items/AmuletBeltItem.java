@@ -63,7 +63,7 @@ import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
  * @date 10.09.2021 23:51
  */
 public class AmuletBeltItem extends Item implements ICurioItem {
-    public static final String WEARER_UUID_TAG = modPrefix("wearer").toString();
+    private static final String WEARER_UUID_TAG = modPrefix("wearer").toString();
 
     public AmuletBeltItem(Properties properties) {
         super(properties);
@@ -140,6 +140,19 @@ public class AmuletBeltItem extends Item implements ICurioItem {
     @Override
     public void onEquip(SlotContext slotContext, ItemStack prevStack, ItemStack stack) {
         if(prevStack.getItem() != stack.getItem()) {
+            stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+                ICuriosHelper helper = CuriosApi.getCuriosHelper();
+                for (int i = 0; i < h.getSlots(); i++) {
+                    ItemStack amulet = h.getStackInSlot(i);
+                    Item itemAmulet = amulet.getItem();
+                    LazyOptional<ICurio> curio = helper.getCurio(amulet);
+                    if (curio.isPresent() && itemAmulet instanceof AmuletItem) {
+                        curio.orElseThrow(NullPointerException::new).onEquip(slotContext, stack);
+                    }
+                }
+            });
+
+
             // Creates tag with uuid of wearer
             LivingEntity livingEntity = slotContext.getWearer();
             if(!livingEntity.level.isClientSide() && livingEntity instanceof PlayerEntity) {
@@ -189,7 +202,7 @@ public class AmuletBeltItem extends Item implements ICurioItem {
                             curio.orElseThrow(NullPointerException::new).onUnequip(new SlotContext(SlotTypePreset.NECKLACE.getIdentifier(), wearer), ItemStack.EMPTY);
                         }
                     }
-                    ElementalAmulets.LOGGER.debug(wearer.getDisplayName() + " is cool!");
+                    ElementalAmulets.LOGGER.debug(wearer.getDisplayName().getContents() + " is cool!");
                 } else {
                     return amulet;
                 }
