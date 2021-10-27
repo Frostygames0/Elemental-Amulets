@@ -64,7 +64,7 @@ public class LeafShieldLayer<T extends LivingEntity, M extends EntityModel<T>> e
                     pMatrixStack.translate(0, -0.7, 0);
                     pMatrixStack.mulPose(Vector3f.YP.rotationDegrees(angle));
 
-                    leafShieldModel.renderToBuffer(pMatrixStack, pBuffer.getBuffer(RenderType.entityTranslucent(modPrefix("textures/entity/amulets/leaf_shield_colored.png"))), pPackedLight, OverlayTexture.NO_OVERLAY, 1.0f, 1.0f, 1.0f, 1.0f);
+                    leafShieldModel.renderToBuffer(pMatrixStack, pBuffer.getBuffer(RenderType.entityTranslucent(modPrefix("textures/entity/amulets/leaf_shield.png"))), pPackedLight, OverlayTexture.NO_OVERLAY, 1.0f, 1.0f, 1.0f, 1.0f);
 
                     pMatrixStack.popPose();
                 }
