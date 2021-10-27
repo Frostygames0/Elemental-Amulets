@@ -30,6 +30,14 @@
         }
       }
     },
+    "earth_amulet": {
+      "trigger": "elementalamulets:success_use_item",
+      "conditions": {
+        "item": {
+          "item": "elementalamulets:earth_amulet"
+        }
+      }
+    },
     "air_amulet": {
       "trigger": "elementalamulets:success_use_item",
       "conditions": {
@@ -69,6 +77,22 @@
           "item": "elementalamulets:protection_amulet"
         }
       }
+    },
+    "knockback_amulet": {
+      "trigger": "elementalamulets:success_use_item",
+      "conditions": {
+        "item": {
+          "item": "elementalamulets:knockback_amulet"
+        }
+      }
+    },
+    "pacifying_amulet": {
+      "trigger": "elementalamulets:success_use_item",
+      "conditions": {
+        "item": {
+          "item": "elementalamulets:pacifying_amulet"
+        }
+      }
     }
   },
   "requirements": [
@@ -77,6 +101,9 @@
     ],
     [
       "water_amulet"
+    ],
+    [
+      "earth_amulet"
     ],
     [
       "air_amulet"
@@ -92,6 +119,12 @@
     ],
     [
       "protection_amulet"
+    ],
+    [
+      "knockback_amulet"
+    ],
+    [
+      "pacifying_amulet"
     ]
   ]
 }
