@@ -19,7 +19,6 @@
 
 package frostygames0.elementalamulets.items;
 
-import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import frostygames0.elementalamulets.util.AmuletHelper;
 import frostygames0.elementalamulets.util.NBTUtil;
@@ -33,6 +32,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -72,11 +72,11 @@ public class AmuletBeltItem extends Item implements ICurioItem {
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable World pLevel, List<ITextComponent> pTooltip, ITooltipFlag pFlag) {
         super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
-        pTooltip.add(new StringTextComponent("Amulets in belt:").withStyle(TextFormatting.GOLD));
         pStack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+            pTooltip.add(new TranslationTextComponent("item.elementalamulets.amulet_belt.inside").withStyle(TextFormatting.GOLD));
             for(int i = 0; i < h.getSlots(); i++) {
                 ItemStack stack = h.getStackInSlot(i);
-                if(!stack.isEmpty()) pTooltip.add(new StringTextComponent(i+1 + ". ").append(stack.getHoverName()).withStyle(TextFormatting.GRAY));
+                if(!stack.isEmpty()) pTooltip.add(new StringTextComponent(i+1 + ". ").withStyle(TextFormatting.YELLOW).append(stack.getHoverName().copy().withStyle(TextFormatting.GRAY)));
             }
         });
     }
@@ -106,7 +106,6 @@ public class AmuletBeltItem extends Item implements ICurioItem {
                 UUID livingUUID = livingEntity.getUUID();
                 if (!wearerUUID.equals(livingUUID))  {
                     NBTUtil.putUUID(stack, WEARER_UUID_TAG, livingUUID);
-                    ElementalAmulets.LOGGER.debug("Corrected UUID");
                 }
             }
         }
@@ -132,7 +131,6 @@ public class AmuletBeltItem extends Item implements ICurioItem {
             // Removes wearer UUID tag from stack
             if(!slotContext.getWearer().level.isClientSide()) {
                 stack.getOrCreateTag().remove(WEARER_UUID_TAG);
-                ElementalAmulets.LOGGER.debug("Removed UUID");
             }
         }
     }
@@ -157,7 +155,6 @@ public class AmuletBeltItem extends Item implements ICurioItem {
             LivingEntity livingEntity = slotContext.getWearer();
             if(!livingEntity.level.isClientSide() && livingEntity instanceof PlayerEntity) {
                 NBTUtil.putUUID(stack, WEARER_UUID_TAG, livingEntity.getUUID());
-                ElementalAmulets.LOGGER.debug("Put UUID");
             }
         }
     }
@@ -202,7 +199,6 @@ public class AmuletBeltItem extends Item implements ICurioItem {
                             curio.orElseThrow(NullPointerException::new).onUnequip(new SlotContext(SlotTypePreset.NECKLACE.getIdentifier(), wearer), ItemStack.EMPTY);
                         }
                     }
-                    ElementalAmulets.LOGGER.debug(wearer.getDisplayName().getContents() + " is cool!");
                 } else {
                     return amulet;
                 }

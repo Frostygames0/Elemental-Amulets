@@ -5,7 +5,7 @@
   "item.elementalamulets.guide_book.subtitle": "Содержит в себе все знания о элементальных амулетах",
   "item.elementalamulets.all_seeing_lens": "Всевидящая линза",
   "item.elementalamulets.amulet_belt": "Пояс для амулетов",
-  "item.elementalamulets.amulet_belt.incompat": "This item can cause bugs(extremely rare but still). Press SHIFT for more",
+  "item.elementalamulets.amulet_belt.inside": "Амулеты внутри:",
   "item.elementalamulets.ancient_tablet": "Древняя табличка",
   "item.elementalamulets.ancient_tablet.tooltip": "Странная бирюзовая табличка из средневековья со странными рисунками на ней",
 
@@ -136,5 +136,5 @@
   "config.elementalamulets.general": "Основное",
   "config.elementalamulets.amulets": "Амулеты",
   "config.elementalamulets.rendering": "Рендеринг",
-  "config.elementalamulets.worldgen": "Генерация мира",
+  "config.elementalamulets.worldgen": "Генерация мира"
 }
