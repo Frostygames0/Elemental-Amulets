@@ -23,7 +23,6 @@ import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.util.AttributeUtil;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ForgeMod;
@@ -58,7 +57,7 @@ public class WaterAmulet extends AmuletItem {
 
     @Override
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
-        ModifiableAttributeInstance att = slotContext.getWearer().getAttribute(Attributes.MOVEMENT_SPEED);
+        ModifiableAttributeInstance att = slotContext.getWearer().getAttribute(ForgeMod.SWIM_SPEED.get());
         if (stack.getItem() != newStack.getItem()) {
             AttributeUtil.removeModifierByUUID(att, MODIFIER_UUID);
         }
