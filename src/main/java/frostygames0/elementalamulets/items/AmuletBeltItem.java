@@ -190,9 +190,9 @@ public class AmuletBeltItem extends Item implements ICurioItem {
             @Override
             public ItemStack extractItem(int slot, int amount, boolean simulate) {
                 ItemStack amulet = getStackInSlot(slot);
-                UUID UUID = NBTUtil.getUUID(stack, WEARER_UUID_TAG);
                 MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
                 if(server != null) {
+                    UUID UUID = NBTUtil.getUUID(stack, WEARER_UUID_TAG);
                     PlayerEntity wearer = server.getPlayerList().getPlayer(UUID);
                     if (wearer != null) {
                         Item itemAmulet = amulet.getItem();
