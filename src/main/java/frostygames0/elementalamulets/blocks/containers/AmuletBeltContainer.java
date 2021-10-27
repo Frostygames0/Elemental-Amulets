@@ -20,7 +20,7 @@
 package frostygames0.elementalamulets.blocks.containers;
 
 import frostygames0.elementalamulets.init.ModContainers;
-import frostygames0.elementalamulets.items.AmuletBelt;
+import frostygames0.elementalamulets.items.AmuletBeltItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -83,7 +83,7 @@ public class AmuletBeltContainer extends Container {
 
     @Override
     public boolean stillValid(PlayerEntity playerIn) {
-        return !belt.isEmpty() && belt.getItem() instanceof AmuletBelt;
+        return !belt.isEmpty() && belt.getItem() instanceof AmuletBeltItem;
     }
 
     private int layoutBelt(IItemHandler handler, int index, int x, int y, int amount, int dx) {

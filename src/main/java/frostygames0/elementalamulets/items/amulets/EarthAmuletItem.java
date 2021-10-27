@@ -23,37 +23,27 @@ import frostygames0.elementalamulets.config.ModConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IGrowable;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.CooldownTracker;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.BiomeDictionary;
 
 
-import javax.annotation.Nullable;
-import java.util.List;
 import java.util.Random;
 
 /**
  * @author Frostygames0
  * @date 19.09.2021 22:50
  */
-public class EarthAmulet extends AmuletItem{
-    public EarthAmulet(Properties properties) {
+public class EarthAmuletItem extends AmuletItem{
+    public EarthAmuletItem(Properties properties) {
         super(properties);
     }
-
-    @Override
-    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        super.appendHoverText(stack, worldIn, tooltip, flagIn);
-        tooltip.add(new TranslationTextComponent("item.elementalamulets.wip"));
-    }
-
 
     @Override
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
@@ -61,10 +51,14 @@ public class EarthAmulet extends AmuletItem{
         World world = livingEntity.level;
         if(!world.isClientSide()) {
             if(livingEntity instanceof PlayerEntity) {
-                CooldownTracker cooldownTracker = ((PlayerEntity)livingEntity).getCooldowns();
+                PlayerEntity player = (PlayerEntity) livingEntity;
+                CooldownTracker cooldownTracker = player.getCooldowns();
                 if (!cooldownTracker.isOnCooldown(this)) {
-                    if(boostLocalPlants(world, stack, livingEntity.blockPosition(), livingEntity.getRandom()))
+                    if(boostLocalPlants(world, stack, player.blockPosition(), player.getRandom()))
                         cooldownTracker.addCooldown(this, ModConfig.CachedValues.EARTH_AMULET_COOLDOWN);
+                        if(BiomeDictionary.hasType(world.getBiomeName(player.blockPosition()).orElse(Biomes.THE_VOID), BiomeDictionary.Type.FOREST)) {
+                            player.heal(player.getRandom().nextInt(2));
+                        }
                 }
             }
         }

@@ -20,7 +20,7 @@
 package frostygames0.elementalamulets.items.amulets.effect;
 
 import frostygames0.elementalamulets.init.ModItems;
-import frostygames0.elementalamulets.items.amulets.PacifyingAmulet;
+import frostygames0.elementalamulets.items.amulets.PacifyingAmuletItem;
 import frostygames0.elementalamulets.util.AmuletHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -41,7 +41,7 @@ public class PacifyingAmuletEffect {
             if (!player.level.isClientSide()) {
                 AmuletHelper.getAmuletInSlotOrBelt(ModItems.PACIFYING_AMULET.get(), player).ifPresent(triple -> {
                     ItemStack amulet = triple.getRight();
-                    PacifyingAmulet item = (PacifyingAmulet) amulet.getItem();
+                    PacifyingAmuletItem item = (PacifyingAmuletItem) amulet.getItem();
 
                     Entity damager = event.getSource().getEntity();
                     if(damager instanceof PlayerEntity) {

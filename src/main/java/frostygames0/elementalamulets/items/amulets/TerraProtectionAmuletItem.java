@@ -38,11 +38,11 @@ import java.util.List;
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
-public class TerraProtectionAmulet extends AmuletItem {
+public class TerraProtectionAmuletItem extends AmuletItem {
     public static final DamageSource LEAF_CUT = new DamageSource(ElementalAmulets.MOD_ID+".leaf_cut");
     public static final String CHARGES_TAG = modPrefix("charge").toString();
 
-    public TerraProtectionAmulet(Properties properties) {
+    public TerraProtectionAmuletItem(Properties properties) {
         super(properties, true);
     }
 

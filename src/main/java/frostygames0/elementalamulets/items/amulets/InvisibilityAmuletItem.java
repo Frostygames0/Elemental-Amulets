@@ -25,8 +25,8 @@ import net.minecraft.potion.Effects;
 import net.minecraft.world.World;
 import top.theillusivec4.curios.api.SlotContext;
 
-public class InvisibilityAmulet extends AmuletItem {
-    public InvisibilityAmulet(Properties properties) {
+public class InvisibilityAmuletItem extends AmuletItem {
+    public InvisibilityAmuletItem(Properties properties) {
         super(properties, false);
     }
 

@@ -19,19 +19,21 @@
 
 package frostygames0.elementalamulets.items.amulets;
 
+import frostygames0.elementalamulets.config.ModConfig;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-/**
- * @author Frostygames0
- * @date 09.10.2021 11:44
- */
-public class KnockbackAmulet extends AmuletItem{
-    public KnockbackAmulet(Properties properties) {
+public class JumpAmuletItem extends AmuletItem {
+    public JumpAmuletItem(Item.Properties properties) {
         super(properties);
     }
 
-    public float getKnockback(ItemStack item) {
-        return (float) (getTier(item) * 0.5);
+    public float getJump(ItemStack stack) {
+        return (float) (ModConfig.CachedValues.JUMP_AMULET_BOOST *getTier(stack));
+    }
+
+    public float getFallResist(ItemStack stack) {
+        return getJump(stack)*10;
     }
 
     @Override

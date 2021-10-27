@@ -20,7 +20,7 @@
 package frostygames0.elementalamulets.items.amulets.effect;
 
 import frostygames0.elementalamulets.init.ModItems;
-import frostygames0.elementalamulets.items.amulets.KnockbackAmulet;
+import frostygames0.elementalamulets.items.amulets.KnockbackAmuletItem;
 import frostygames0.elementalamulets.util.AmuletHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -42,7 +42,7 @@ public class KnockbackAmuletEffect {
                         LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
 
                         ItemStack stack = triple.getRight();
-                        KnockbackAmulet amulet = (KnockbackAmulet) stack.getItem();
+                        KnockbackAmuletItem amulet = (KnockbackAmuletItem) stack.getItem();
                         attacker.knockback(amulet.getKnockback(stack), MathHelper.sin(player.yRot * ((float)Math.PI / 180F)), -MathHelper.cos(player.yRot * ((float)Math.PI / 180F)));
                     }
                 });

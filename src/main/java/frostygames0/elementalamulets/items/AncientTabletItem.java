@@ -34,8 +34,8 @@ import java.util.List;
  * @author Frostygames0
  * @date 23.10.2021 13:05
  */
-public class AncientTablet extends Item {
-    public AncientTablet(Properties pProperties) {
+public class AncientTabletItem extends Item {
+    public AncientTabletItem(Properties pProperties) {
         super(pProperties);
     }
 

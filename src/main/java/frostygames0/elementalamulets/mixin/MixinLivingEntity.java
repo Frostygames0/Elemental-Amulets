@@ -20,7 +20,7 @@
 package frostygames0.elementalamulets.mixin;
 
 import frostygames0.elementalamulets.init.ModItems;
-import frostygames0.elementalamulets.items.amulets.WaterAmulet;
+import frostygames0.elementalamulets.items.amulets.WaterAmuletItem;
 import frostygames0.elementalamulets.util.AmuletHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
@@ -41,7 +41,7 @@ public class MixinLivingEntity {
         LivingEntity entity = (LivingEntity) (Object) this;
         AmuletHelper.getAmuletInSlotOrBelt(ModItems.WATER_AMULET.get(), entity).ifPresent(triple -> {
             ItemStack stack = triple.getRight();
-            WaterAmulet amulet = (WaterAmulet) stack.getItem();
+            WaterAmuletItem amulet = (WaterAmuletItem) stack.getItem();
 
             if(amulet.getTier(stack) >= 2) {
                 ci.setReturnValue(air);

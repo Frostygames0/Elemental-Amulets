@@ -20,7 +20,7 @@
 package frostygames0.elementalamulets.items.amulets.effect;
 
 import frostygames0.elementalamulets.init.ModItems;
-import frostygames0.elementalamulets.items.amulets.JumpAmulet;
+import frostygames0.elementalamulets.items.amulets.JumpAmuletItem;
 import frostygames0.elementalamulets.network.CUpdatePlayerVelocityPacket;
 import frostygames0.elementalamulets.network.ModNetworkHandler;
 import frostygames0.elementalamulets.util.AmuletHelper;
@@ -42,7 +42,7 @@ public class JumpAmuletEffect {
             if (!player.level.isClientSide()) {
                 if (event.getSource() == DamageSource.FALL) {
                     AmuletHelper.getAmuletInSlotOrBelt(ModItems.JUMP_AMULET.get(), player).ifPresent((triple) -> {
-                        float fallResist = ((JumpAmulet) triple.getRight().getItem()).getFallResist(triple.getRight());
+                        float fallResist = ((JumpAmuletItem) triple.getRight().getItem()).getFallResist(triple.getRight());
                         if (!event.isCanceled() && fallResist > 0) {
                             float finalDamage = Math.max(0, (event.getAmount() - fallResist));
                             if (finalDamage == 0) {
@@ -62,7 +62,7 @@ public class JumpAmuletEffect {
             if (!player.level.isClientSide()) {
                 if (event.getSource() == DamageSource.FALL) {
                     AmuletHelper.getAmuletInSlotOrBelt(ModItems.JUMP_AMULET.get(), player).ifPresent((triple) -> {
-                        float fallResist = ((JumpAmulet) triple.getRight().getItem()).getFallResist(triple.getRight());
+                        float fallResist = ((JumpAmuletItem) triple.getRight().getItem()).getFallResist(triple.getRight());
                         if (!event.isCanceled() && fallResist > 0) {
                             float finalDamage = Math.max(0, (event.getAmount() - fallResist));
                             if (finalDamage == 0) {
@@ -83,7 +83,7 @@ public class JumpAmuletEffect {
                 if (world.getFluidState(player.blockPosition()).isEmpty()) {
                     AmuletHelper.getAmuletInSlotOrBelt(ModItems.JUMP_AMULET.get(), player).ifPresent(triple -> {
                         ItemStack stack = triple.getRight();
-                        JumpAmulet item = (JumpAmulet) stack.getItem();
+                        JumpAmuletItem item = (JumpAmuletItem) stack.getItem();
 
                         Vector3d vector = player.getDeltaMovement().add(0, item.getJump(stack), 0);
                         ModNetworkHandler.sendToClient(new CUpdatePlayerVelocityPacket(vector.x, vector.y, vector.z), (ServerPlayerEntity) player);

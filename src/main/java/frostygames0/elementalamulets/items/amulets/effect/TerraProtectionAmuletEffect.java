@@ -20,7 +20,7 @@
 package frostygames0.elementalamulets.items.amulets.effect;
 
 import frostygames0.elementalamulets.init.ModItems;
-import frostygames0.elementalamulets.items.amulets.TerraProtectionAmulet;
+import frostygames0.elementalamulets.items.amulets.TerraProtectionAmuletItem;
 import frostygames0.elementalamulets.util.AmuletHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -42,13 +42,13 @@ public class TerraProtectionAmuletEffect {
             if (!player.level.isClientSide()) {
                 AmuletHelper.getAmuletInSlotOrBelt(ModItems.TERRA_PROTECTION_AMULET.get(), player).ifPresent(triple -> {
                     ItemStack stack = triple.getRight();
-                    TerraProtectionAmulet amulet = (TerraProtectionAmulet) stack.getItem();
+                    TerraProtectionAmuletItem amulet = (TerraProtectionAmuletItem) stack.getItem();
                     if (amulet.canProtect(stack)) {
                         if (event.getSource().getEntity() instanceof LivingEntity) {
                             LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
                             event.setCanceled(true);
                             amulet.removeOneCharge(stack);
-                            attacker.hurt(TerraProtectionAmulet.LEAF_CUT, amulet.getReflectedDamageMulti(stack));
+                            attacker.hurt(TerraProtectionAmuletItem.LEAF_CUT, amulet.getReflectedDamageMulti(stack));
                         }
                     }
                 });
@@ -65,7 +65,7 @@ public class TerraProtectionAmuletEffect {
             if (!entity.level.isClientSide()) {
                 AmuletHelper.getAmuletInSlotOrBelt(ModItems.TERRA_PROTECTION_AMULET.get(), entity).ifPresent(triple -> {
                     ItemStack stack = triple.getRight();
-                    TerraProtectionAmulet amulet = (TerraProtectionAmulet) stack.getItem(); // For future
+                    TerraProtectionAmuletItem amulet = (TerraProtectionAmuletItem) stack.getItem(); // For future
                     if (amulet.canProtect(stack)) {
                         projectile.setDeltaMovement(projectile.getDeltaMovement().reverse().scale(0.5)); // I don't want arrows to shoot with the same speed as it looks awful
                         if (projectile instanceof DamagingProjectileEntity) {
@@ -93,7 +93,7 @@ public class TerraProtectionAmuletEffect {
             if(!player.level.isClientSide()) {
                 AmuletHelper.getAmuletInSlotOrBelt(ModItems.TERRA_PROTECTION_AMULET.get(), player).ifPresent(triple -> {
                     ItemStack stack = triple.getRight();
-                    TerraProtectionAmulet amulet = (TerraProtectionAmulet) stack.getItem();
+                    TerraProtectionAmuletItem amulet = (TerraProtectionAmuletItem) stack.getItem();
                     event.setCanceled(amulet.canProtect(stack));
                 });
             }

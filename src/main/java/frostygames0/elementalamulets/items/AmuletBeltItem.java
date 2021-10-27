@@ -62,10 +62,10 @@ import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
  * @author Frostygames0
  * @date 10.09.2021 23:51
  */
-public class AmuletBelt extends Item implements ICurioItem {
+public class AmuletBeltItem extends Item implements ICurioItem {
     public static final String WEARER_UUID_TAG = modPrefix("wearer").toString();
 
-    public AmuletBelt(Properties properties) {
+    public AmuletBeltItem(Properties properties) {
         super(properties);
     }
 

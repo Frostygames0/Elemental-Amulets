@@ -32,9 +32,8 @@ import net.minecraft.world.World;
  * @author Frostygames0
  * @date 14.10.2021 22:15
  */
-// TODO: Debug it
-public class PacifyingAmulet extends AmuletItem {
-    public PacifyingAmulet(Properties properties) {
+public class PacifyingAmuletItem extends AmuletItem {
+    public PacifyingAmuletItem(Properties properties) {
         super(properties, false);
     }
 
@@ -43,14 +42,18 @@ public class PacifyingAmulet extends AmuletItem {
         World world = livingEntity.level;
         if(!world.isClientSide()) {
             BlockPos pos = livingEntity.blockPosition();
-
-            if (livingEntity.tickCount % 20 == 0) { // For some reasons I need to delay it or it will cause strange behavior
-                for (MobEntity mob : world.getEntitiesOfClass(MobEntity.class, new AxisAlignedBB(pos.subtract(new Vector3i(6, 5, 6)), pos.offset(new Vector3i(6, 5, 6))), entity -> entity instanceof IAngerable)) {
+            if (livingEntity.tickCount % 5 == 0) { // For some reasons I need to delay it or it will cause strange behavior
+                for (MobEntity mob : world.getLoadedEntitiesOfClass(MobEntity.class, new AxisAlignedBB(pos.subtract(new Vector3i(6, 5, 6)), pos.offset(new Vector3i(6, 5, 6))), entity -> entity instanceof IAngerable)) {
                     IAngerable angerable = (IAngerable) mob;
+
                     if (angerable.getPersistentAngerTarget() == null || !angerable.getPersistentAngerTarget().equals(livingEntity.getUUID()))
                         continue;
 
                     angerable.stopBeingAngry();
+
+                    // Maybe this will work idk
+                    //mob.targetSelector.getRunningGoals().filter(goal -> goal.getGoal() instanceof NearestAttackableTargetGoal).forEach(goal -> ((NearestAttackableTargetGoal<?>) goal.getGoal()).setTarget(null));
+
                 }
             }
         }

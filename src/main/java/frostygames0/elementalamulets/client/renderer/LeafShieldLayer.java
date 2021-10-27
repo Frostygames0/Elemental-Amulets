@@ -23,7 +23,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import frostygames0.elementalamulets.client.models.LeafShield;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.init.ModItems;
-import frostygames0.elementalamulets.items.amulets.TerraProtectionAmulet;
+import frostygames0.elementalamulets.items.amulets.TerraProtectionAmuletItem;
 import frostygames0.elementalamulets.util.AmuletHelper;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
@@ -57,7 +57,7 @@ public class LeafShieldLayer<T extends LivingEntity, M extends EntityModel<T>> e
         AmuletHelper.getAmuletInSlotOrBelt(ModItems.TERRA_PROTECTION_AMULET.get(), pLivingEntity).ifPresent(triple -> {
             ItemStack stack = triple.getRight();
             if(!pLivingEntity.isInvisible()) {
-                if (ModConfig.CachedValues.RENDER_LEAF_SHIELD && ((TerraProtectionAmulet) stack.getItem()).canProtect(stack)) {
+                if (ModConfig.CachedValues.RENDER_LEAF_SHIELD && ((TerraProtectionAmuletItem) stack.getItem()).canProtect(stack)) {
                     pMatrixStack.pushPose();
 
                     pMatrixStack.scale(2.0f, 2.0f, 2.0f);

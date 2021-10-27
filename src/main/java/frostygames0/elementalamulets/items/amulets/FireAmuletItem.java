@@ -20,20 +20,19 @@
 package frostygames0.elementalamulets.items.amulets;
 
 import frostygames0.elementalamulets.config.ModConfig;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class JumpAmulet extends AmuletItem {
-    public JumpAmulet(Item.Properties properties) {
-        super(properties);
+public class FireAmuletItem extends AmuletItem {
+    public FireAmuletItem(Properties p_i48487_1_) {
+        super(p_i48487_1_);
     }
 
-    public float getJump(ItemStack stack) {
-        return (float) (ModConfig.CachedValues.JUMP_AMULET_BOOST *getTier(stack));
+    public float getFireResist(ItemStack stack) {
+        return (float) (ModConfig.CachedValues.FIRE_AMULET_FIRE_RESISTANCE * this.getTier(stack));
     }
 
-    public float getFallResist(ItemStack stack) {
-        return getJump(stack)*10;
+    public float getLavaResist(ItemStack stack) {
+        return (float) (ModConfig.CachedValues.FIRE_AMULET_LAVA_RESISTANCE * this.getTier(stack));
     }
 
     @Override

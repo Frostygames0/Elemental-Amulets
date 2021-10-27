@@ -32,9 +32,9 @@ import java.util.UUID;
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
-public class AirAmulet extends AmuletItem {
+public class AirAmuletItem extends AmuletItem {
     public static UUID MODIFIER_UUID = UUID.fromString("2589aeb9-2b6a-44dc-8fab-97c9743dacdf");
-    public AirAmulet(Properties properties) {
+    public AirAmuletItem(Properties properties) {
         super(properties, true);
     }
 
@@ -46,7 +46,7 @@ public class AirAmulet extends AmuletItem {
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
 
         ModifiableAttributeInstance gravity = livingEntity.getAttribute(ForgeMod.ENTITY_GRAVITY.get());
-        AttributeModifier attMod = new AttributeModifier(AirAmulet.MODIFIER_UUID, modPrefix("air_speed").toString(),
+        AttributeModifier attMod = new AttributeModifier(AirAmuletItem.MODIFIER_UUID, modPrefix("air_speed").toString(),
                 this.getFloating(stack), AttributeModifier.Operation.ADDITION);
 
         if(livingEntity.getDeltaMovement().y <= 0 && !livingEntity.isShiftKeyDown()) {
