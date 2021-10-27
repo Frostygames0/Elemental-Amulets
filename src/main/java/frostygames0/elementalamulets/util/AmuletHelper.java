@@ -41,7 +41,7 @@ public final class AmuletHelper {
     // This is a wrapper method for Amulet Belt to work
     public static Optional<ImmutableTriple<String, Integer, ItemStack>> getAmuletInSlotOrBelt(Item item, LivingEntity entity) {
         ICuriosHelper helper = CuriosApi.getCuriosHelper();
-        if(isAmuletPresent(item, entity)) {
+        if(helper.findEquippedCurio(item, entity).isPresent()) {
             return helper.findEquippedCurio(item, entity);
         }
         Optional<ImmutableTriple<String, Integer, ItemStack>> optional = helper.findEquippedCurio(ModItems.AMULET_BELT.get(), entity);
@@ -57,10 +57,5 @@ public final class AmuletHelper {
         }
 
         return Optional.empty();
-    }
-
-    // Checks if amulet is present
-    public static boolean isAmuletPresent(Item item, LivingEntity entity) {
-        return CuriosApi.getCuriosHelper().findEquippedCurio(item, entity).isPresent();
     }
 }

@@ -20,7 +20,6 @@
 package frostygames0.elementalamulets.items;
 
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
-import frostygames0.elementalamulets.util.AmuletHelper;
 import frostygames0.elementalamulets.util.NBTUtil;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
@@ -92,7 +91,7 @@ public class AmuletBeltItem extends Item implements ICurioItem {
                 LazyOptional<ICurio> curio = helper.getCurio(amulet);
                 if (curio.isPresent() && itemAmulet instanceof AmuletItem) {
                     if (((AmuletItem) itemAmulet).usesCurioMethods()) {
-                        if (!AmuletHelper.isAmuletPresent(itemAmulet, livingEntity)) { // Checks if there is amulet in main slot that is same as one in belt. Rule of priority
+                        if (!helper.findEquippedCurio(itemAmulet, livingEntity).isPresent()) { // Checks if there is amulet in main slot that is same as one in belt. Rule of priority
                             curio.orElseThrow(NullPointerException::new).curioTick(identifier, index, livingEntity);
                         }
                     }
@@ -183,7 +182,7 @@ public class AmuletBeltItem extends Item implements ICurioItem {
                         break;
                     }
                 }
-                return stack.getItem() instanceof AmuletItem  && !sameAmulet  /*&& !INCOMPATIBLE_AMULETS.get().contains(stack.getItem())*/ ? super.insertItem(slot, stack, simulate) : stack;
+                return stack.getItem() instanceof AmuletItem  && !sameAmulet ? super.insertItem(slot, stack, simulate) : stack;
             }
 
             @Nonnull
