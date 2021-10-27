@@ -45,7 +45,6 @@ public class EarthAmuletItem extends AmuletItem{
 
     @Override
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
-        super.curioTick(identifier, index, livingEntity, stack);
         World world = livingEntity.level;
         if(!world.isClientSide()) {
             if(livingEntity instanceof PlayerEntity) {
