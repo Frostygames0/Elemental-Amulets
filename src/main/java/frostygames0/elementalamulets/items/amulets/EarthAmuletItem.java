@@ -51,14 +51,18 @@ public class EarthAmuletItem extends AmuletItem{
                 PlayerEntity player = (PlayerEntity) livingEntity;
                 CooldownTracker cooldownTracker = player.getCooldowns();
                 if (!cooldownTracker.isOnCooldown(this)) {
-                    if(boostLocalPlants(world, stack, player.blockPosition(), player.getRandom()))
+                    int boosted = boostLocalPlants(world, stack, player.blockPosition(), player.getRandom());
+                    if(boosted > 0) {
                         cooldownTracker.addCooldown(this, ModConfig.CachedValues.EARTH_AMULET_COOLDOWN);
+
+                    }
                 }
             }
         }
     }
 
-    private boolean boostLocalPlants(World world, ItemStack amulet, BlockPos centerPos, Random random) {
+    private int boostLocalPlants(World world, ItemStack amulet, BlockPos centerPos, Random random) {
+        int boosted = 0;
         for (BlockPos blockPos : BlockPos.betweenClosed(centerPos.getX() - 4, centerPos.getY() - 1, centerPos.getZ() - 4,
                 centerPos.getX() + 4, centerPos.getY() + 3, centerPos.getZ() + 4)) {
 
@@ -70,11 +74,11 @@ public class EarthAmuletItem extends AmuletItem{
                 if (random.nextInt(50) <= this.getTier(amulet)) {
                     if (growable.isValidBonemealTarget(world, blockPos, blockState, false)) {
                         growable.performBonemeal((ServerWorld) world, random, blockPos, blockState);
-                        return true;
+                        boosted++;
                     }
                 }
             }
         }
-        return false;
+        return boosted;
     }
 }
