@@ -93,7 +93,7 @@
   "jei.elementalamulets.elemental_ore.whereabouts": "Elemental Ore - is a block that contains Elemental Shards inside.\nCan be found up to Y:40 and sometimes higher",
 
   "patchouli.elementalamulets.landing": "Hello $(thing)$(playername)!$() This $(l)magical guide $() will provide you with all knowledge you need! $(br)Book will expand itself when a new knowledge is acquired! Everything(almost) about this mod is described here!",
-  "patchouli.elementalamulets.not_present": "Patchouli is not detected! Please install patchouli in order to get access to this book",
+  "patchouli.elementalamulets.not_present": "Patchouli is not installed! The Elemental Guide cannot work without it!",
   "patchouli.elementalamulets.no_ide": "You want to open it, but the magical lock on it prevents you from doing that! Book is sealed and may not be opened! (Book is work in progress)",
 
   "advancements.elementalamulets.desc": "Things that you will achieve in your adventure",

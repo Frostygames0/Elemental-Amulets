@@ -35,7 +35,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.loading.FMLEnvironment;
 import vazkii.patchouli.api.PatchouliAPI;
 
 
@@ -61,18 +60,14 @@ public class GuideBookItem extends Item {
     @Override
     public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
         if(playerIn instanceof ServerPlayerEntity) {
-            if(!FMLEnvironment.production) { // Isn't not finished, so locking it for players
-                if (ModList.get().isLoaded("patchouli")) {
-                    PatchouliAPI.get().openBookGUI((ServerPlayerEntity) playerIn, BOOK_ID);
-                    ModCriteriaTriggers.SUCCESS_USE.trigger((ServerPlayerEntity) playerIn, playerIn.getItemInHand(handIn));
-                    playerIn.awardStat(ModStats.GUIDE_OPENED);
-                    return ActionResult.success(playerIn.getItemInHand(handIn));
-                } else {
-                    playerIn.displayClientMessage(new TranslationTextComponent("patchouli.elementalamulets.not_present").withStyle(TextFormatting.RED), true);
-                    return ActionResult.fail(playerIn.getItemInHand(handIn));
-                }
+            if (ModList.get().isLoaded("patchouli")) {
+                PatchouliAPI.get().openBookGUI((ServerPlayerEntity) playerIn, BOOK_ID);
+                ModCriteriaTriggers.SUCCESS_USE.trigger((ServerPlayerEntity) playerIn, playerIn.getItemInHand(handIn));
+                playerIn.awardStat(ModStats.GUIDE_OPENED);
+                return ActionResult.success(playerIn.getItemInHand(handIn));
             } else {
-                playerIn.displayClientMessage(new TranslationTextComponent("patchouli.elementalamulets.no_ide").withStyle(TextFormatting.GOLD), true);
+                playerIn.displayClientMessage(new TranslationTextComponent("patchouli.elementalamulets.not_present").withStyle(TextFormatting.RED), true);
+                return ActionResult.fail(playerIn.getItemInHand(handIn));
             }
         }
         return ActionResult.consume(playerIn.getItemInHand(handIn));
