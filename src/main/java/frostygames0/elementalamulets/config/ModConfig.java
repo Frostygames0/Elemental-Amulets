@@ -40,6 +40,7 @@ public class ModConfig {
 
     public static class Server {
         private final ForgeConfigSpec.BooleanValue FANCY_COMBINATION;
+        private final ForgeConfigSpec.BooleanValue OLD_FASHIONED_WAY;
 
         private final ForgeConfigSpec.DoubleValue JUMP_AMULET_BOOST;
         private final ForgeConfigSpec.DoubleValue FIRE_AMULET_FIRE_RESISTANCE;
@@ -51,7 +52,8 @@ public class ModConfig {
         private final ForgeConfigSpec.IntValue EARTH_AMULET_COOLDOWN;
 
         public Server(ForgeConfigSpec.Builder builder) {
-            builder.push("General");
+            builder.push("Elemental Combinator");
+            OLD_FASHIONED_WAY = builder.comment("Allow usage of old combination procedure(Shift-Click on the block) [DEFAULT: false]").define("elemental_combinator_old_way", false);
             FANCY_COMBINATION = builder.comment("Add special effects when Elemental Combinator is working [DEFAULT: true]").define("elemental_combinator_special_effects", true);
 
             builder.comment("Anything that is related to the amulets [WARNING! Setting any of these values too high may cause bugs, lags and even crashes]")
@@ -83,7 +85,7 @@ public class ModConfig {
             builder.push("Amulet of Earth");
             EARTH_AMULET_COOLDOWN = builder.comment("How long will the Amulet of Earth be on cooldown? (in ticks, 1 sec - 20 ticks) [DEFAULT: 100]").defineInRange("earth_amulet_cooldown", 100, 0, Integer.MAX_VALUE);
 
-            builder.pop(3);
+            builder.pop(2);
         }
     }
 
@@ -105,9 +107,8 @@ public class ModConfig {
         private final ForgeConfigSpec.BooleanValue SHOW_SPLASHES;
 
         public Client(ForgeConfigSpec.Builder builder) {
-            builder.push("General");
-            USE_LATIN_ELEMENT_NAMES = builder.comment("Use latin names for the elements(Ignis, Aer, Aqua, Terra and Aether) [DEFAULT: false]").translation("config.elementalamulets.elements_latin_variant").define("elements_latin_variant", false);
             SHOW_SPLASHES = builder.comment("Show custom splash(es)? [DEFAULT: true]").translation("config.elementalamulets.show_splashes").define("show_splashes", true);
+            USE_LATIN_ELEMENT_NAMES = builder.comment("Use latin names for the elements(Ignis, Aer, Aqua, Terra and Aether) [DEFAULT: false]").translation("config.elementalamulets.elements_latin_variant").define("elements_latin_variant", false);
             builder.push("Rendering");
             RENDER_COMBINATOR_STACK = builder.comment("Render output slot on the top Elemental Combinator? [DEFAULT: true]").translation("config.elementalamulets.elemental_combinator_stack_display").define("render_elemental_combinator_stack", true);
 
@@ -119,8 +120,6 @@ public class ModConfig {
             builder.pop();
 
             AMULETS_TIER_DIFFERENCE = builder.comment("Set to true, if you want amulets to be different based on their tier [DEFAULT: true]").translation("config.elementalamulets.amulets_tier_difference").define("amulets_tier_difference", true);
-            builder.pop();
-
             builder.pop();
 
             builder.pop();
@@ -153,6 +152,7 @@ public class ModConfig {
 
     public static class CachedValues {
         public static boolean FANCY_COMBINATION;
+        public static boolean OLD_FASHIONED_WAY;
         public static double JUMP_AMULET_BOOST;
         public static double FIRE_AMULET_FIRE_RESISTANCE;
         public static double FIRE_AMULET_LAVA_RESISTANCE;
@@ -164,6 +164,7 @@ public class ModConfig {
 
         private static void cacheServerConfig() {
             FANCY_COMBINATION = SERVER.FANCY_COMBINATION.get();
+            OLD_FASHIONED_WAY = SERVER.OLD_FASHIONED_WAY.get();
             JUMP_AMULET_BOOST = SERVER.JUMP_AMULET_BOOST.get();
             FIRE_AMULET_FIRE_RESISTANCE = SERVER.FIRE_AMULET_FIRE_RESISTANCE.get();
             FIRE_AMULET_LAVA_RESISTANCE = SERVER.FIRE_AMULET_LAVA_RESISTANCE.get();

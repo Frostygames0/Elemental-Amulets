@@ -20,6 +20,7 @@
 package frostygames0.elementalamulets.blocks;
 
 import frostygames0.elementalamulets.blocks.tiles.ElementalCombinatorTile;
+import frostygames0.elementalamulets.config.ModConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.PushReaction;
@@ -59,7 +60,7 @@ public class ElementalCombinator extends Block {
             if(!player.isShiftKeyDown()) {
                 NetworkHooks.openGui((ServerPlayerEntity) player, elementalCombinatorTile, elementalCombinatorTile.getBlockPos());
             } else {
-                elementalCombinatorTile.startCombination();
+                if(ModConfig.CachedValues.OLD_FASHIONED_WAY) elementalCombinatorTile.startCombination();
             }
         } else {
             throw new IllegalStateException("Tile Entity is not correct! Cannot do any action!");
