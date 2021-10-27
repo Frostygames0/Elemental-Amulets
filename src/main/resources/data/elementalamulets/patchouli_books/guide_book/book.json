@@ -2,7 +2,7 @@
   "name": "item.elementalamulets.guide_book",
   "landing_text": "patchouli.elementalamulets.landing",
   "version": "0.2",
-  "book_texture": "patchouli:textures/gui/book_cyan.png",
+  "book_texture": "patchouli:textures/gui/book_brown.png",
   "dont_generate_book": true,
   "custom_book_item": "elementalamulets:guide_book",
   "advancements_tab": "elementalamulets:root",
