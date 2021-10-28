@@ -68,7 +68,7 @@ public class JEIPlugin implements IModPlugin {
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
 
-        // Adding list of my recipes to jei
+        // Adding the list of my recipes to jei
         registration.addRecipes(ModRecipes.getRecipes(Minecraft.getInstance().level), ElementalCombinationCategory.ID);
 
         // Item descriptions
