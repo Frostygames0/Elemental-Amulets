@@ -43,7 +43,7 @@ public class WaterAmuletItem extends AmuletItem {
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
         if(!livingEntity.level.isClientSide()) {
             ModifiableAttributeInstance att = livingEntity.getAttribute(ForgeMod.SWIM_SPEED.get());
-            AttributeModifier attMod = new AttributeModifier(MODIFIER_UUID, modPrefix("speed").toString(),
+            AttributeModifier attMod = new AttributeModifier(MODIFIER_UUID, modPrefix("swim_speed_boost").toString(),
                     this.getSwimSpeed(stack), AttributeModifier.Operation.MULTIPLY_TOTAL);
             if(livingEntity.isUnderWater()) {
                 if(livingEntity.isSwimming()) {
