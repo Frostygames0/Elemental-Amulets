@@ -73,12 +73,12 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 10,
+          "weight": 30,
           "name": "elementalamulets:ancient_tablet"
         },
         {
           "type": "minecraft:item",
-          "weight": 90,
+          "weight": 70,
           "name": "minecraft:cobblestone"
         }
       ]
