@@ -50,8 +50,13 @@ public class ModConfig {
         private final ForgeConfigSpec.IntValue PROTECTION_AMULET_CHARGE_TIME;
         private final ForgeConfigSpec.DoubleValue WATER_AMULET_SPEED_BOOST;
         private final ForgeConfigSpec.IntValue EARTH_AMULET_COOLDOWN;
+        private final ForgeConfigSpec.BooleanValue MODIFY_VANILLA_LOOT;
 
         public Server(ForgeConfigSpec.Builder builder) {
+            builder.push("Loot");
+            MODIFY_VANILLA_LOOT = builder.comment("Add mod items to the vanilla loot tables [DEFAULT: true]").define("modify_vanilla_loot", true);
+            builder.pop();
+
             builder.push("Elemental Combinator");
             OLD_FASHIONED_WAY = builder.comment("Allow usage of old combination procedure(Shift-Click on the block) [DEFAULT: false]").define("elemental_combinator_old_way", false);
             FANCY_COMBINATION = builder.comment("Add special effects when Elemental Combinator is working [DEFAULT: true]").define("elemental_combinator_special_effects", true);
@@ -161,6 +166,7 @@ public class ModConfig {
         public static int PROTECTION_AMULET_CHARGE_TIME;
         public static double WATER_AMULET_SPEED_BOOST;
         public static int EARTH_AMULET_COOLDOWN;
+        public static boolean MODIFY_VANILLA_LOOT;
 
         private static void cacheServerConfig() {
             FANCY_COMBINATION = SERVER.FANCY_COMBINATION.get();
@@ -173,11 +179,11 @@ public class ModConfig {
             PROTECTION_AMULET_CHARGE_TIME = SERVER.PROTECTION_AMULET_CHARGE_TIME.get();
             WATER_AMULET_SPEED_BOOST = SERVER.WATER_AMULET_SPEED_BOOST.get();
             EARTH_AMULET_COOLDOWN = SERVER.EARTH_AMULET_COOLDOWN.get();
+            MODIFY_VANILLA_LOOT = SERVER.MODIFY_VANILLA_LOOT.get();
         }
 
         public static boolean AMULETS_TIER_DIFFERENCE;
         public static boolean USE_LATIN_ELEMENT_NAMES;
-        //public static int COMBINATOR_STACK_ROTATION_SPEED;
         public static boolean RENDER_COMBINATOR_STACK;
         public static boolean RENDER_LEAF_SHIELD;
         public static boolean RENDER_LEAF_CHARGE_OVERLAY;

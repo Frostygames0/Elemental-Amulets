@@ -20,6 +20,7 @@
 package frostygames0.elementalamulets.world;
 
 import com.google.gson.JsonObject;
+import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import net.minecraft.item.ItemStack;
@@ -49,6 +50,8 @@ public class LootTableModifiers{
     }
 
     public static class TreasureLoot extends LootModifier {
+        private static final Random RANDOM = new Random();
+
         public TreasureLoot(ILootCondition[] conditionsIn) {
             super(conditionsIn);
         }
@@ -57,13 +60,16 @@ public class LootTableModifiers{
         @Override
         protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
             List<AmuletItem> AMULETS = ModItems.getAmulets();
-            Random rand = new Random();
-            if (LootTables.DESERT_PYRAMID.equals(context.getQueriedLootTableId())) {
-                generatedLoot.add(AmuletItem.getStackWithTier(new ItemStack(AMULETS.get(rand.nextInt(AMULETS.size()))), 1));
-            } else if(LootTables.BURIED_TREASURE.equals(context.getQueriedLootTableId())) {
-                generatedLoot.add(new ItemStack(ModItems.AETHER_ELEMENT.get(), 2));
-            } else if(LootTables.SHIPWRECK_TREASURE.equals(context.getQueriedLootTableId())) {
-                generatedLoot.add(new ItemStack(ModItems.WATER_ELEMENT.get(), 5));
+            if(ModConfig.CachedValues.MODIFY_VANILLA_LOOT) {
+                if (LootTables.DESERT_PYRAMID.equals(context.getQueriedLootTableId())) {
+                    generatedLoot.add(AmuletItem.getStackWithTier(new ItemStack(AMULETS.get(RANDOM.nextInt(AMULETS.size()))), 1));
+                } else if (LootTables.BURIED_TREASURE.equals(context.getQueriedLootTableId())) {
+                    generatedLoot.add(new ItemStack(ModItems.AETHER_ELEMENT.get(), 2));
+                } else if (LootTables.SHIPWRECK_TREASURE.equals(context.getQueriedLootTableId())) {
+                    generatedLoot.add(new ItemStack(ModItems.WATER_ELEMENT.get(), 5));
+                } else if (LootTables.NETHER_BRIDGE.equals(context.getQueriedLootTableId())) {
+                    generatedLoot.add(new ItemStack(ModItems.FIRE_ELEMENT.get(), 4));
+                }
             }
             return generatedLoot;
         }
