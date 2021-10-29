@@ -1,0 +1,6 @@
+{
+  "name": "Amulets",
+  "description": "This category is about the amulets and how you can create them!",
+  "icon": "elementalamulets:jump_amulet{'elementalamulets:tier':3}",
+  "sortnum": 2
+}

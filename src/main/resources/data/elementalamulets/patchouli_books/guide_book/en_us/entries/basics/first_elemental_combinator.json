@@ -1,0 +1,15 @@
+{
+  "name": "Crafting your first Elemental Combinator",
+  "category": "elementalamulets:basics",
+  "icon": "elementalamulets:elemental_combinator",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "To craft almost anything in this mod, you'll need an Elemental Combinator! $(br2)In short, it's a unusual crafting block"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "But in order to craft it, we need elemental shards.$(br)This is a magic ore that can absorb the elements and contain them. Pretty convenient isn't it?"
+    }
+  ]
+}

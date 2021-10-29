@@ -1,0 +1,21 @@
+{
+  "name": "Elemental Shards",
+  "category": "elementalamulets:elements",
+  "icon": "elementalamulets:elemental_shards",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Elemental shards - are pieces of very fragile crystal that can contain any element.$(br2)They are pretty common in nature just like iron."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "How to obtain",
+      "text": "There is several ways to find them!$(br2)One of them is mining!$(br)They are generating on < Y:40 height and can be mined by a stone pickaxe."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "How to obtain",
+      "text": "Second way is to find them in the world! Either in dungeon or from trading."
+    }
+  ]
+}

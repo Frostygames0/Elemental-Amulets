@@ -1,0 +1,24 @@
+{
+  "name": "Introduction",
+  "category": "elementalamulets:basics",
+  "icon": "minecraft:emerald",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Hello, $(playername) and welcome to the Elemental Guide!$(br2)As you may have already read on the landing page, this book will help you on your journey!"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "This mod adds amulets - powerful necklaces that grant their holder cool abilities!$(br2)Fire-resistance, jump-boost, speed-boost, pacifying, healing, etc..."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Also it adds something mysterious to your world... $(br)But you will learn about it later",
+      "flag": "elementalamulets:cult_temple"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "So, let's get started! :)"
+    }
+  ]
+}

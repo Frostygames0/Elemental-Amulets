@@ -1,5 +1,6 @@
 {
   "name": "Elements",
-  "description": "Everything about elements and how to use them",
-  "icon": "elementalamulets:elemental_shards"
+  "description": "This category is about the elements and how you can use them!",
+  "icon": "elementalamulets:elemental_shards",
+  "sortnum": 1
 }

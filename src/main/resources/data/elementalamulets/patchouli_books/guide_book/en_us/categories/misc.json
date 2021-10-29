@@ -1,5 +1,6 @@
 {
-  "name": "Miscellaneous",
-  "description": "Anything that is not that important",
-  "icon": "minecraft:lava_bucket"
+  "name": "Misc.",
+  "description": "Anything that is not that important and very specific",
+  "icon": "minecraft:lava_bucket",
+  "sortnum": 5
 }
