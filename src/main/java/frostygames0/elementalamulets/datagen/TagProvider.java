@@ -53,13 +53,9 @@ public class TagProvider extends ItemTagsProvider {
         // Elements
         this.tag(ModTags.ELEMENTS).add(ModItems.AIR_ELEMENT.get(), ModItems.EARTH_ELEMENT.get(), ModItems.FIRE_ELEMENT.get(), ModItems.WATER_ELEMENT.get(), ModItems.ELEMENTAL_SHARDS.get());
         // Fire
-        this.tag(ModTags.FIRE_ELEMENT_CONVERTIBLE).add(Items.BLAZE_POWDER, Items.NETHERITE_SCRAP, Items.LAVA_BUCKET, Items.FIRE_CHARGE);
+        this.tag(ModTags.FIRE_ELEMENT_CONVERTIBLE).add(Items.BLAZE_POWDER, Items.NETHERITE_SCRAP, Items.LAVA_BUCKET, Items.FIRE_CHARGE, Items.MAGMA_BLOCK);
         // Water
-        this.tag(ModTags.WATER_ELEMENT_CONVERTIBLE).add(Items.WATER_BUCKET, Items.WET_SPONGE,
-                Items.PRISMARINE, Items.PRISMARINE_BRICK_SLAB, Items.PRISMARINE_BRICK_STAIRS,
-                Items.PRISMARINE_BRICKS, Items.PRISMARINE_SLAB, Items.PRISMARINE_STAIRS,
-                Items.PRISMARINE_CRYSTALS, Items.PRISMARINE_SHARD, Items.PRISMARINE_WALL,
-                Items.DARK_PRISMARINE, Items.DARK_PRISMARINE_SLAB, Items.DARK_PRISMARINE_STAIRS );
+        this.tag(ModTags.WATER_ELEMENT_CONVERTIBLE).add(Items.WATER_BUCKET, Items.WET_SPONGE, Items.PRISMARINE_CRYSTALS, Items.PRISMARINE_SHARD).addTag(ItemTags.FISHES);
         // Air
         this.tag(ModTags.AIR_ELEMENT_CONVERTIBLE).add(Items.FEATHER).addTags(ItemTags.SAND, ItemTags.WOOL);
         // Earth
