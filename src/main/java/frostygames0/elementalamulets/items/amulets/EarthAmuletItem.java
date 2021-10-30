@@ -51,7 +51,7 @@ public class EarthAmuletItem extends AmuletItem{
                 PlayerEntity player = (PlayerEntity) livingEntity;
                 CooldownTracker cooldownTracker = player.getCooldowns();
                 if (!cooldownTracker.isOnCooldown(this)) {
-                    int boosted = boostLocalPlants(world, stack, player.blockPosition(), player.getRandom());
+                    int boosted = boostLocalPlants(world, stack, player.blockPosition(), random);
                     if(boosted > 0) {
                         cooldownTracker.addCooldown(this, ModConfig.CachedValues.EARTH_AMULET_COOLDOWN);
 
