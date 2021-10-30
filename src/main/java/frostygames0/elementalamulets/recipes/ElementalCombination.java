@@ -72,7 +72,7 @@ public class ElementalCombination implements IRecipe<IInventory> {
 
         }
         return inputs.size() == ingredients.size() && this.elemental.test(inv.getItem(1))
-                && RecipeMatcher.findMatches(inputs, ingredients) != null; // I don't know exactly if this is correct way but it works fine
+                && RecipeMatcher.findMatches(inputs, ingredients) != null;
     }
 
     @Override
