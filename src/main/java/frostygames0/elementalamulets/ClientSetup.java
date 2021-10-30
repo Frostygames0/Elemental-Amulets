@@ -48,6 +48,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 
 import java.util.Map;
 
+import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
+
 @Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ClientSetup {
 
@@ -68,7 +70,7 @@ public class ClientSetup {
 
     @SubscribeEvent
     public static void textureStitch(final TextureStitchEvent.Pre event) {
-        event.addSprite(new ResourceLocation(ElementalAmulets.MOD_ID, "item/necklace_slot"));
+        event.addSprite(modPrefix("item/necklace_slot"));
     }
 
     @SubscribeEvent
