@@ -1,15 +1,25 @@
 {
-  "name": "Crafting your first Elemental Combinator",
+  "name": "Crafting your first El.",
   "category": "elementalamulets:basics",
   "icon": "elementalamulets:elemental_combinator",
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "To craft almost anything in this mod, you'll need an Elemental Combinator! $(br2)In short, it's a unusual crafting block"
+      "text": "To craft almost anything in this mod, you'll need an $(item)Elemental Combinator!$() $(br2)In short, it's a unusual crafting block$(br2)But in order to craft it, $(item)Elemental Shards$() are required$(br2)This is a magic ore that can absorb the elements and contain them"
     },
     {
-      "type": "patchouli:text",
-      "text": "But in order to craft it, we need elemental shards.$(br)This is a magic ore that can absorb the elements and contain them. Pretty convenient isn't it?"
+      "type": "patchouli:spotlight",
+      "item": "elementalamulets:elemental_ore",
+      "text": "You can find them in caves under Y:40, you will need a stone pickaxe or better. $(br2) Once you have found the $(item)Elemental Shards$(), you can proceed to the next step"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "elementalamulets:elemental_combinator",
+      "text": "The next step is crafting!$(br)This is a recipe of $(item)Elemental Combinator$(). It's pretty easy to craft. $(2br) Once you've crafted it, you are ready to go! "
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": ["elementalamulets:elements/elemental_shards"]
     }
   ]
 }

@@ -1,0 +1,15 @@
+{
+  "name": "Element of Air",
+  "category": "elementalamulets:elements",
+  "icon": "elementalamulets:air_element",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": ""
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "recipe": "elementalamulets:elemental_combination/elements/air_element"
+    }
+  ]
+}

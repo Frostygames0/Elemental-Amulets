@@ -1,0 +1,15 @@
+{
+  "name": "Elemental of Water",
+  "category": "elementalamulets:elements",
+  "icon": "elementalamulets:water_element",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Elemental shards - are pieces of very fragile crystal that can contain any element.$(br2)They are pretty common in nature just like iron."
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "recipe": "elementalamulets:elemental_combination/elements/water_element"
+    }
+  ]
+}
