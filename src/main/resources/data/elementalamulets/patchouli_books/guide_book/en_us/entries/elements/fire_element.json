@@ -5,7 +5,7 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "Elemental shards - are pieces of very fragile crystal that can contain any element.$(br2)They are pretty common in nature just like iron."
+      "text": ""
     },
     {
       "type": "elementalamulets:elemental_combination",

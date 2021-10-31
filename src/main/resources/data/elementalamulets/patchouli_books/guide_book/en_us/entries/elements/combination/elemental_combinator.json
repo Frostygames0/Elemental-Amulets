@@ -1,0 +1,16 @@
+{
+  "name": "Elemental Combinator",
+  "category": "elementalamulets:combination",
+  "icon": "elementalamulets:elemental_combinator",
+  "extra_recipe_mappings": {"elementalamulets:elemental_combinator": 1},
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(item)Elemental Combinator$() - a powerful altar for the $(thing)$(o)'Elemental Combination'$().$(br)One of the most important things in $(name)Elemental Amulets$().$(br2)Requires no mana or anything."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "elementalamulets:elemental_combinator"
+    }
+  ]
+}

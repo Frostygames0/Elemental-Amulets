@@ -6,11 +6,11 @@
   "dont_generate_book": true,
   "custom_book_item": "elementalamulets:guide_book",
   "advancements_tab": "elementalamulets:root",
-  "i18n": "true",
   "macros": {
     "$(fire)": "$(#FF0000)",
     "$(water)": "$(#0080FF)",
     "$(earth)": "$(#16B200)",
-    "$(air)": "$(#CCCCCC)"
+    "$(air)": "$(#CCCCCC)",
+    "$(name)": "$(#a9a9a9)"
   }
 }
