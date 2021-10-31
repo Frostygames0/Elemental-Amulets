@@ -92,9 +92,8 @@
   "jei.elementalamulets.all_seeing_lens.description": "A very rare item, only one person knows how to do it.\nJeweller sells it on level 4",
   "jei.elementalamulets.elemental_ore.whereabouts": "Elemental Ore - is a block that contains Elemental Shards inside.\nCan be found up to Y:40 and sometimes higher",
 
-  "patchouli.elementalamulets.landing": "Hello $(thing)$(playername)!$() This $(l)magical guide $() will provide you with all knowledge you need! $(br)Book will expand itself when a new knowledge is acquired! Everything(almost) about this mod is described here!",
+  "patchouli.elementalamulets.landing": "Hello $(thing)$(playername)!$() Welcome to the Elemental Guide, a great source of knowledge!$(br2)It will help you with Elemental Amulets mod!",
   "patchouli.elementalamulets.not_present": "Patchouli is not installed! The Elemental Guide cannot work without it!",
-  "patchouli.elementalamulets.no_ide": "You want to open it, but the magical lock on it prevents you from doing that! Book is sealed and may not be opened! (Book is work in progress)",
 
   "advancements.elementalamulets.desc": "Things that you will achieve in your adventure",
   "advancements.elementalamulets.guide": "Great source of knowledge!",
@@ -113,6 +112,12 @@
   "advancements.elementalamulets.ancient_insanity.desc": "Enter the ancient temple",
   "advancements.elementalamulets.strange_tablet": "Strange tablet",
   "advancements.elementalamulets.strange_tablet.desc": "Find a strange tablet in the temple",
+  "advancements.elementalamulets.order_to_calm": "I order you to calm!",
+  "advancements.elementalamulets.order_to_calm.desc": "Wear a pacifying amulet for the first time",
+
+  "stat.elementalamulets.amulets_worn": "Amulets worn",
+  "stat.elementalamulets.guide_opened": "Guides opened",
+  "stat.elementalamulets.times_combined": "Times combined",
 
   "death.attack.elementalamulets.leaf_cut": "%s was cut to death by leaf shield!",
 
