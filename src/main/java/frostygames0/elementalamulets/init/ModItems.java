@@ -41,7 +41,7 @@ public class ModItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ElementalAmulets.MOD_ID);
 
     // Mod's guide book
-    public static final RegistryObject<Item> GUIDE_BOOK = ITEMS.register("guide_book",
+    public static final RegistryObject<Item> ELEMENTAL_GUIDE = ITEMS.register("guide_book",
             () -> new GuideBookItem(new Item.Properties().tab(ElementalAmulets.GROUP).stacksTo(1)));
 
     public static final RegistryObject<Item> ANCIENT_TABLET = ITEMS.register("ancient_tablet",
@@ -80,13 +80,13 @@ public class ModItems {
     public static final RegistryObject<Item> EMPTY_AMULET = ITEMS.register("empty_amulet",
             () -> new Item(new Item.Properties().tab(ElementalAmulets.GROUP).stacksTo(1)));
     public static final RegistryObject<Item> WATER_AMULET = ITEMS.register("water_amulet",
-            () -> new WaterAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).durability(1000)));
+            () -> new WaterAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(ElementalRarity.WATER).durability(1000)));
     public static final RegistryObject<Item> EARTH_AMULET = ITEMS.register("earth_amulet",
-            () -> new EarthAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).durability(1000)));
+            () -> new EarthAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(ElementalRarity.EARTH).durability(1000)));
     public static final RegistryObject<Item> FIRE_AMULET = ITEMS.register("fire_amulet",
             () -> new FireAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(ElementalRarity.FIRE).fireResistant().durability(1000)));
     public static final RegistryObject<Item> AIR_AMULET = ITEMS.register("air_amulet",
-            () -> new AirAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).durability(1000)));
+            () -> new AirAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(ElementalRarity.AIR).durability(1000)));
     public static final RegistryObject<Item> SPEED_AMULET = ITEMS.register("speed_amulet",
             () -> new SpeedAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(ElementalRarity.SPEED).durability(1000)));
     public static final RegistryObject<Item> JUMP_AMULET = ITEMS.register("jump_amulet",
@@ -94,7 +94,7 @@ public class ModItems {
     public static final RegistryObject<Item> TERRA_PROTECTION_AMULET = ITEMS.register("protection_amulet",
             () -> new TerraProtectionAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(ElementalRarity.EARTH).durability(1000)));
     public static final RegistryObject<Item> INVISIBILITY_AMULET = ITEMS.register("invisibility_amulet",
-            () -> new InvisibilityAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(ElementalRarity.AIR).durability(1000)));
+            () -> new InvisibilityAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).durability(1000)));
     public static final RegistryObject<Item> PACIFYING_AMULET = ITEMS.register("pacifying_amulet",
             () -> new PacifyingAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(Rarity.EPIC).durability(1000)));
     public static final RegistryObject<Item> KNOCKBACK_AMULET = ITEMS.register("knockback_amulet",

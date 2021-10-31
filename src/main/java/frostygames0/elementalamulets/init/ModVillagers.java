@@ -85,7 +85,7 @@ public class ModVillagers{
 
             // Level 2 trades
             List<VillagerTrades.ITrade> trades2 = event.getTrades().get(2);
-            trades2.add(new BasicTrade(5, new ItemStack(ModItems.GUIDE_BOOK.get()), 1, 2, 1.3F));
+            trades2.add(new BasicTrade(5, new ItemStack(ModItems.ELEMENTAL_GUIDE.get()), 1, 2, 1.3F));
             trades2.add(new BasicTrade(15, new ItemStack(ModBlocks.ELEMENTAL_COMBINATOR.get().asItem()), 2, 5, 1.5f));
 
             List<VillagerTrades.ITrade> trades3 = event.getTrades().get(3);

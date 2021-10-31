@@ -66,7 +66,7 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .define('#', ItemTags.PLANKS)
                 .unlockedBy("has_item", InventoryChangeTrigger.Instance.hasItems(ModItems.ELEMENTAL_SHARDS.get()))
                 .save(consumer);
-        ShapelessRecipeBuilder.shapeless(ModItems.GUIDE_BOOK.get())
+        ShapelessRecipeBuilder.shapeless(ModItems.ELEMENTAL_GUIDE.get())
                 .requires(Items.BOOK)
                 .requires(ModTags.ELEMENTS)
                 .unlockedBy("has_item", InventoryChangeTrigger.Instance.hasItems(ModItems.ELEMENTAL_SHARDS.get()))
