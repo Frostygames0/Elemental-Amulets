@@ -1,0 +1,25 @@
+{
+  "parent": "elementalamulets:wear_amulet",
+  "display": {
+    "icon": {
+      "item": "elementalamulets:pacifying_amulet"
+    },
+    "title": {
+      "translate": "advancements.elementalamulets.order_to_calm"
+    },
+    "description": {
+      "translate": "advancements.elementalamulets.order_to_calm.desc"
+    }
+  },
+  "criteria": {
+    "amulet_worn": {
+      "trigger": "elementalamulets:success_use_item",
+      "conditions": {
+        "item": {"item":"elementalamulets:pacifying_amulet"}
+      }
+    }
+  },
+  "requirements": [[
+    "amulet_worn"
+  ]]
+}

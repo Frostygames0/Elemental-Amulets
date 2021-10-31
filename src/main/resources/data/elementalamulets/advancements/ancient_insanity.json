@@ -1,5 +1,5 @@
 {
-  "parent": "elementalamulets:combine_aether",
+  "parent": "elementalamulets:source_of_knowledge",
   "display": {
     "icon": {
       "item": "minecraft:stone_bricks"
