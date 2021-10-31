@@ -20,6 +20,7 @@
 package frostygames0.elementalamulets.items;
 
 import frostygames0.elementalamulets.advancements.triggers.ModCriteriaTriggers;
+import frostygames0.elementalamulets.client.patchouli.PatchouliUtils;
 import frostygames0.elementalamulets.init.ModStats;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
@@ -34,7 +35,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.ModList;
 import vazkii.patchouli.api.PatchouliAPI;
 
 
@@ -53,14 +53,14 @@ public class GuideBookItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
-        if(ModList.get().isLoaded("patchouli")) tooltip.add(((IFormattableTextComponent)PatchouliAPI.get().getSubtitle(BOOK_ID)).withStyle(TextFormatting.GOLD));
+        if(PatchouliUtils.isSafeToUse()) tooltip.add(((IFormattableTextComponent)PatchouliAPI.get().getSubtitle(BOOK_ID)).withStyle(TextFormatting.GOLD));
         tooltip.add(new TranslationTextComponent("item.elementalamulets.guide_book.subtitle").withStyle(TextFormatting.GRAY));
     }
 
     @Override
     public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
         if(playerIn instanceof ServerPlayerEntity) {
-            if (ModList.get().isLoaded("patchouli")) {
+            if (PatchouliUtils.isSafeToUse()) {
                 PatchouliAPI.get().openBookGUI((ServerPlayerEntity) playerIn, BOOK_ID);
                 ModCriteriaTriggers.SUCCESS_USE.trigger((ServerPlayerEntity) playerIn, playerIn.getItemInHand(handIn));
                 playerIn.awardStat(ModStats.GUIDE_OPENED);

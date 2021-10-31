@@ -61,4 +61,8 @@ public class PatchouliUtils {
         }
         return null;
     }
+
+    public static boolean isSafeToUse() {
+        return ModList.get().isLoaded("patchouli");
+    }
 }
