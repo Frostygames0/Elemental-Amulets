@@ -50,7 +50,7 @@ public class PatchouliUtils {
         ElementalCombination craftTweakedRecipe = recipes.get(new ResourceLocation("crafttweaker", name.getPath()));
         if(craftTweakedRecipe != null) return craftTweakedRecipe;
 
-        ElementalAmulets.LOGGER.warn("Template references nonexistent recipe {} of {}", name, ModRecipes.ELEMENTAL_COMBINATION_TYPE);
+        ElementalAmulets.LOGGER.warn("Elemental Guide's template references nonexistent recipe {} of {}", name, ModRecipes.ELEMENTAL_COMBINATION_TYPE);
 
         if(!userNotified) {
             userNotified = true;
