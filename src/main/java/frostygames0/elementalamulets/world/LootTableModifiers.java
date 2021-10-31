@@ -27,6 +27,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootTables;
 import net.minecraft.loot.conditions.ILootCondition;
+import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
@@ -52,8 +53,16 @@ public class LootTableModifiers{
     public static class TreasureLoot extends LootModifier {
         private static final Random RANDOM = new Random();
 
-        public TreasureLoot(ILootCondition[] conditionsIn) {
+        private final float desertChance;
+        private final float buriedChance;
+        private final float shipwreckChance;
+        private final float netherChance;
+        public TreasureLoot(ILootCondition[] conditionsIn, float desertChance, float buriedChance, float shipwreckChance, float netherChance) {
             super(conditionsIn);
+            this.desertChance = desertChance;
+            this.buriedChance = buriedChance;
+            this.shipwreckChance = shipwreckChance;
+            this.netherChance = netherChance;
         }
 
         @Nonnull
@@ -61,13 +70,13 @@ public class LootTableModifiers{
         protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
             List<AmuletItem> AMULETS = ModItems.getAmulets();
             if(ModConfig.CachedValues.MODIFY_VANILLA_LOOT) {
-                if (LootTables.DESERT_PYRAMID.equals(context.getQueriedLootTableId())) {
+                if (LootTables.DESERT_PYRAMID.equals(context.getQueriedLootTableId()) && RANDOM.nextDouble() <= desertChance) {
                     generatedLoot.add(AmuletItem.getStackWithTier(new ItemStack(AMULETS.get(RANDOM.nextInt(AMULETS.size()))), 1));
-                } else if (LootTables.BURIED_TREASURE.equals(context.getQueriedLootTableId())) {
+                } else if (LootTables.BURIED_TREASURE.equals(context.getQueriedLootTableId()) && RANDOM.nextDouble() <= buriedChance) {
                     generatedLoot.add(new ItemStack(ModItems.AETHER_ELEMENT.get(), 2));
-                } else if (LootTables.SHIPWRECK_TREASURE.equals(context.getQueriedLootTableId())) {
+                } else if (LootTables.SHIPWRECK_TREASURE.equals(context.getQueriedLootTableId()) && RANDOM.nextDouble() <= shipwreckChance) {
                     generatedLoot.add(new ItemStack(ModItems.WATER_ELEMENT.get(), 5));
-                } else if (LootTables.NETHER_BRIDGE.equals(context.getQueriedLootTableId())) {
+                } else if (LootTables.NETHER_BRIDGE.equals(context.getQueriedLootTableId()) && RANDOM.nextDouble() <= netherChance) {
                     generatedLoot.add(new ItemStack(ModItems.FIRE_ELEMENT.get(), 4));
                 }
             }
@@ -78,12 +87,21 @@ public class LootTableModifiers{
 
             @Override
             public TreasureLoot read(ResourceLocation location, JsonObject object, ILootCondition[] ailootcondition) {
-                return new TreasureLoot(ailootcondition);
+                float desert = JSONUtils.getAsFloat(object, "desert_pyramid", 0.1f);
+                float treasure = JSONUtils.getAsFloat(object, "buried_treasure", 0.3f);
+                float shipwreck = JSONUtils.getAsFloat(object, "shipwreck_treasure", 0.3f);
+                float nether = JSONUtils.getAsFloat(object, "nether_bridge", 0.2f);
+                return new TreasureLoot(ailootcondition, desert, treasure, shipwreck, nether);
             }
 
             @Override
             public JsonObject write(TreasureLoot instance) {
-                return makeConditions(instance.conditions);
+                JsonObject json = makeConditions(instance.conditions);
+                json.addProperty("desert_pyramid", instance.desertChance);
+                json.addProperty("buried_treasure", instance.buriedChance);
+                json.addProperty("shipwreck_treasure", instance.shipwreckChance);
+                json.addProperty("nether_bridge", instance.netherChance);
+                return json;
             }
         }
     }
