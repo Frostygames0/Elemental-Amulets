@@ -15,7 +15,7 @@
     "amulet_worn": {
       "trigger": "elementalamulets:success_use_item",
       "conditions": {
-        "item": {"tag":"curios:necklace"}
+        "item": {"tag":"elementalamulets:necklaces"}
       }
     }
   },
