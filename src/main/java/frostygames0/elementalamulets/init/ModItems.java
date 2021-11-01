@@ -23,7 +23,7 @@ import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.items.AmuletBeltItem;
 import frostygames0.elementalamulets.items.AncientTabletItem;
 import frostygames0.elementalamulets.items.ElementItem;
-import frostygames0.elementalamulets.items.GuideBookItem;
+import frostygames0.elementalamulets.items.ElementalGuideItem;
 import frostygames0.elementalamulets.items.amulets.*;
 import frostygames0.elementalamulets.util.ElementalRarity;
 import net.minecraft.item.BlockItem;
@@ -42,7 +42,7 @@ public class ModItems {
 
     // Mod's guide book
     public static final RegistryObject<Item> ELEMENTAL_GUIDE = ITEMS.register("guide_book",
-            () -> new GuideBookItem(new Item.Properties().tab(ElementalAmulets.GROUP).stacksTo(1)));
+            () -> new ElementalGuideItem(new Item.Properties().tab(ElementalAmulets.GROUP).stacksTo(1)));
 
     public static final RegistryObject<Item> ANCIENT_TABLET = ITEMS.register("ancient_tablet",
             () -> new AncientTabletItem(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(Rarity.RARE).durability(100)));

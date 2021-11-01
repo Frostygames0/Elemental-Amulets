@@ -43,10 +43,10 @@ import java.util.List;
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
-public class GuideBookItem extends Item {
+public class ElementalGuideItem extends Item {
     public static final ResourceLocation BOOK_ID = modPrefix("guide_book");
 
-    public GuideBookItem(Properties properties) {
+    public ElementalGuideItem(Properties properties) {
         super(properties);
     }
 
