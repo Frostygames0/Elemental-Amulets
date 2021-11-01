@@ -1,6 +1,4 @@
 {
-  "itemGroup.elementalamulets": "Elemental Amulets",
-
   "item.elementalamulets.guide_book": "Элементальное руководство",
   "item.elementalamulets.guide_book.subtitle": "Содержит в себе все знания о элементальных амулетах",
   "item.elementalamulets.all_seeing_lens": "Всевидящая линза",
@@ -92,9 +90,8 @@
   "jei.elementalamulets.all_seeing_lens.description": "Очень редкий предмет, только один человек знает как его сделать\n Ювелир продает это на 4 уровне",
   "jei.elementalamulets.elemental_ore.whereabouts": "Элементальная руда - это блок который содержит элементальные осколки\nМожет быть найден на Y:40 и иногда выше",
 
-  "patchouli.elementalamulets.landing": "Hello $(thing)$(playername)!$() This $(l)magical guide $() will provide you with all knowledge you need! $(br)Book will expand itself when a new knowledge is acquired! Everything(almost) about this mod is described here!",
+  "patchouli.elementalamulets.landing": "Привет $(thing)$(playername)!$() This $(l)magical guide $() will provide you with all knowledge you need! $(br)Book will expand itself when a new knowledge is acquired! Everything(almost) about this mod is described here!",
   "patchouli.elementalamulets.not_present": "Patchouli не обнаружен!! Пожалуйста установите Patchouli, если вы хотите открыть книгу",
-  "patchouli.elementalamulets.no_ide": "Вы хотите открыть его, но магический замок на книге мешает вам это сделать! Книга запечатана и не может быть открыта! (Книга в работе!)",
 
   "advancements.elementalamulets.desc": "То чего вы достигнете в вашем приключении",
   "advancements.elementalamulets.guide": "Великий источник знаний!",
@@ -113,6 +110,12 @@
   "advancements.elementalamulets.ancient_insanity.desc": "Войдите в древний храм",
   "advancements.elementalamulets.strange_tablet": "Странная табличка",
   "advancements.elementalamulets.strange_tablet.desc": "Найдите странную табличку в храме",
+  "advancements.elementalamulets.order_to_calm": "Я приказываю успокоиться!",
+  "advancements.elementalamulets.order_to_calm.desc": "Оденьте амулет успокоения впервые",
+
+  "stat.elementalamulets.amulets_worn": "Надето амулетов",
+  "stat.elementalamulets.guide_opened": "Открыто гидов",
+  "stat.elementalamulets.times_combined": "Скомбинировано",
 
   "death.attack.elementalamulets.leaf_cut": "%s был изрезан досмерти листощитом",
 
