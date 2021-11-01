@@ -23,6 +23,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
@@ -42,7 +43,7 @@ public class AncientTabletItem extends Item {
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable World pLevel, List<ITextComponent> pTooltip, ITooltipFlag pFlag) {
         super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
-        pTooltip.add(new TranslationTextComponent("item.elementalamulets.ancient_tablet.tooltip"));
+        pTooltip.add(new TranslationTextComponent("item.elementalamulets.ancient_tablet.tooltip").withStyle(TextFormatting.GRAY));
     }
 
     @Override
