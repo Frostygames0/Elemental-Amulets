@@ -85,8 +85,8 @@ public class ModVillagers{
 
             // Level 2 trades
             List<VillagerTrades.ITrade> trades2 = event.getTrades().get(2);
-            trades2.add(new BasicTrade(5, new ItemStack(ModItems.ELEMENTAL_GUIDE.get()), 1, 2, 1.3F));
-            trades2.add(new BasicTrade(15, new ItemStack(ModBlocks.ELEMENTAL_COMBINATOR.get().asItem()), 2, 5, 1.5f));
+            trades2.add(new BasicTrade(2, new ItemStack(ModItems.ELEMENTAL_GUIDE.get()), 1, 2, 1.3F));
+            trades2.add(new BasicTrade(5, new ItemStack(ModBlocks.ELEMENTAL_COMBINATOR.get().asItem()), 2, 5, 1.5f));
 
             List<VillagerTrades.ITrade> trades3 = event.getTrades().get(3);
             trades3.add(new BasicTrade(3, new ItemStack(ModItems.FIRE_ELEMENT.get()), 10, 1, 1.2f));
@@ -97,7 +97,7 @@ public class ModVillagers{
             event.getTrades().get(4).add(new BasicTrade(new ItemStack(Items.EMERALD, 10), new ItemStack(ModItems.AETHER_ELEMENT.get(), 2), new ItemStack(ModItems.ALL_SEEING_LENS.get()), 4, 10, 1.3F));
 
             List<VillagerTrades.ITrade> trades5 = event.getTrades().get(5);
-            trades5.add(new BasicTrade(new ItemStack(Items.EMERALD, 30), new ItemStack(ModItems.AETHER_ELEMENT.get()), new ItemStack(ModItems.AMULET_BELT.get()), 1, 30, 2.5f));
+            trades5.add(new BasicTrade(new ItemStack(Items.EMERALD, 25), new ItemStack(ModItems.AETHER_ELEMENT.get()), new ItemStack(ModItems.AMULET_BELT.get()), 1, 30, 2.5f));
             trades5.add(new CultTempleTrade(30, 1, 10));
         }
     }
@@ -155,7 +155,7 @@ public class ModVillagers{
         private static void addHouse(MutableRegistry<JigsawPattern> registry, ResourceLocation poolId, String houseToAdd, int weight) {
             JigsawPattern pool = registry.get(poolId);
             if (pool == null) {
-                ElementalAmulets.LOGGER.warn("Jigsaw pool " + pool + " is not found! Skipping Jeweller's house generation");
+                ElementalAmulets.LOGGER.warn("Jigsaw pool " + poolId + " is not found! Skipping Jeweller's house generation");
                 return;
             }
 
