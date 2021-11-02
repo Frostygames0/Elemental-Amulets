@@ -23,6 +23,7 @@ import frostygames0.elementalamulets.advancements.triggers.ModCriteriaTriggers;
 import frostygames0.elementalamulets.client.particles.ModParticles;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.init.*;
+import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import frostygames0.elementalamulets.network.ModNetworkHandler;
 import frostygames0.elementalamulets.world.LootTableModifiers;
 import frostygames0.elementalamulets.world.structures.ModStructures;
@@ -56,7 +57,7 @@ public class ElementalAmulets {
     public static final ItemGroup GROUP = new ItemGroup(MOD_ID) {
         @Override
         public ItemStack makeIcon() {
-            return new ItemStack(ModItems.FIRE_AMULET.get());
+            return AmuletItem.getStackWithTier(new ItemStack(ModItems.FIRE_AMULET.get()), 3);
         }
     };
 
