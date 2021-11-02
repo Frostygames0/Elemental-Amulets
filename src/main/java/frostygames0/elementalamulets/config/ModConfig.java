@@ -144,9 +144,9 @@ public class ModConfig {
         private final ForgeConfigSpec.BooleanValue GENERATE_ORES;
         public Common(ForgeConfigSpec.Builder builder) {
             builder.push("World generation");
-            GENERATE_CULT_TEMPLE = builder.comment("Generate Cult's temple ruins? [DEFAULT: true]").translation("config.elementalamulets.generate_cult_temple").define("generate_cult_temple", true);
-            GENERATE_JEWELLER_HOUSE = builder.comment("Generate Jeweller's house? [DEFAULT: true]").translation("config.elementalamulets.generate_jeweller_house").define("generate_jeweller_house", true);
-            GENERATE_ORES = builder.comment("Generate Elemental Shards ore? [DEFAULT: true]").translation("config.elementalamulets.generate_ores").define("generate_ores", true);
+            GENERATE_CULT_TEMPLE = builder.comment("Generate Cult's temple ruins? [DEFAULT: true, requires world restart]").translation("config.elementalamulets.generate_cult_temple").worldRestart().define("generate_cult_temple", true);
+            GENERATE_JEWELLER_HOUSE = builder.comment("Generate Jeweller's house? [DEFAULT: true, requires world restart]").translation("config.elementalamulets.generate_jeweller_house").worldRestart().define("generate_jeweller_house", true);
+            GENERATE_ORES = builder.comment("Generate Elemental Shards ore? [DEFAULT: true, requires world restart]").translation("config.elementalamulets.generate_ores").worldRestart().define("generate_ores", true);
             builder.pop();
         }
     }
