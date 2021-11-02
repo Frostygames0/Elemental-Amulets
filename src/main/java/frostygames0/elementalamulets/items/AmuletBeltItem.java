@@ -57,15 +57,13 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 
-import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
-
 
 /**
  * @author Frostygames0
  * @date 10.09.2021 23:51
  */
 public class AmuletBeltItem extends Item implements ICurioItem {
-    private static final String WEARER_UUID_TAG = modPrefix("wearer").toString();
+    private static final String WEARER_UUID_TAG = ElementalAmulets.MOD_ID+":wearer_UUID";
 
     public AmuletBeltItem(Properties properties) {
         super(properties);
@@ -106,7 +104,6 @@ public class AmuletBeltItem extends Item implements ICurioItem {
             UUID livingUUID = livingEntity.getUUID();
             if (!wearerUUID.equals(livingUUID)) {
                 NBTUtil.putUUID(stack, WEARER_UUID_TAG, livingUUID);
-                ElementalAmulets.LOGGER.warn("fIXING ANAL MUMU DAUN [IDPOERWRWE");
             }
         }
     }
@@ -114,7 +111,7 @@ public class AmuletBeltItem extends Item implements ICurioItem {
     @Override
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
         if(slotContext.getWearer() instanceof PlayerEntity) {
-            if (newStack.getItem() != stack.getItem()) {
+            if (!compareBelts(newStack, stack)) {
                 stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
                     ICuriosHelper helper = CuriosApi.getCuriosHelper();
                     for (int i = 0; i < h.getSlots(); i++) {
@@ -136,7 +133,7 @@ public class AmuletBeltItem extends Item implements ICurioItem {
     public void onEquip(SlotContext slotContext, ItemStack prevStack, ItemStack stack) {
         LivingEntity livingEntity = slotContext.getWearer();
         if(livingEntity instanceof PlayerEntity) {
-            if (prevStack.getItem() != stack.getItem()) {
+            if (!compareBelts(prevStack, stack)) {
                 stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
                     ICuriosHelper helper = CuriosApi.getCuriosHelper();
                     for (int i = 0; i < h.getSlots(); i++) {
@@ -165,7 +162,7 @@ public class AmuletBeltItem extends Item implements ICurioItem {
         Item secondAmulet = other.getItem();
         if(!(amulet instanceof AmuletBeltItem) || !(secondAmulet instanceof AmuletBeltItem))
             return false;
-        return true;
+        return ItemStack.tagMatches(stack, other);
     }
 
     /*------------------------------------------------------*/
@@ -199,13 +196,11 @@ public class AmuletBeltItem extends Item implements ICurioItem {
                     PlayerEntity wearer = server.getPlayerList().getPlayer(UUID);
                     if (wearer != null) {
                         if(CuriosApi.getCuriosHelper().findEquippedCurio(stack.getItem(), wearer).map(ImmutableTriple::getRight).orElse(ItemStack.EMPTY) == stack) { // Workaround so It won't unEquip when not worn.
-                            ElementalAmulets.LOGGER.warn("Something is extracting amulet from belt of player {}", wearer.getDisplayName().getString());
                             Item itemAmulet = amulet.getItem();
                             LazyOptional<ICurio> curio = CuriosApi.getCuriosHelper().getCurio(amulet);
                             if (curio.isPresent() && itemAmulet instanceof AmuletItem) {
                                 if (((AmuletItem) itemAmulet).usesCurioMethods()) {
                                     curio.orElseThrow(NullPointerException::new).onUnequip(new SlotContext(SlotTypePreset.BELT.getIdentifier(), wearer), ItemStack.EMPTY);
-                                    ElementalAmulets.LOGGER.warn("{} uses curio methods, so invoking ICurio#onUnequip", itemAmulet);
                                 }
                             }
                         }
