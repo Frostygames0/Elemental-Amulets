@@ -19,6 +19,7 @@
 
 package frostygames0.elementalamulets.items;
 
+import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import frostygames0.elementalamulets.util.NBTUtil;
 import net.minecraft.client.util.ITooltipFlag;
@@ -42,6 +43,7 @@ import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import org.apache.commons.lang3.tuple.ImmutableTriple;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.SlotTypePreset;
@@ -83,37 +85,7 @@ public class AmuletBeltItem extends Item implements ICurioItem {
 
     @Override
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
-        stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-            ICuriosHelper helper = CuriosApi.getCuriosHelper();
-            for (int i = 0; i < h.getSlots(); i++) {
-                ItemStack amulet = h.getStackInSlot(i);
-                Item itemAmulet = amulet.getItem();
-                LazyOptional<ICurio> curio = helper.getCurio(amulet);
-                if (curio.isPresent() && itemAmulet instanceof AmuletItem) {
-                    if (((AmuletItem) itemAmulet).usesCurioMethods()) {
-                        if (!helper.findEquippedCurio(itemAmulet, livingEntity).isPresent()) { // Checks if there is amulet in main slot that is same as one in belt. Rule of priority
-                            curio.orElseThrow(NullPointerException::new).curioTick(identifier, index, livingEntity);
-                        }
-                    }
-                }
-            }
-        });
-
-        if(!livingEntity.level.isClientSide()) {
-            if(livingEntity instanceof PlayerEntity) {
-                // If for some reason UUID of wearer is not correct, it will correct it
-                UUID wearerUUID = NBTUtil.getUUID(stack, WEARER_UUID_TAG);
-                UUID livingUUID = livingEntity.getUUID();
-                if (!wearerUUID.equals(livingUUID))  {
-                    NBTUtil.putUUID(stack, WEARER_UUID_TAG, livingUUID);
-                }
-            }
-        }
-    }
-
-    @Override
-    public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
-        if(newStack.getItem() != stack.getItem()) {
+        if(livingEntity instanceof PlayerEntity) {
             stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
                 ICuriosHelper helper = CuriosApi.getCuriosHelper();
                 for (int i = 0; i < h.getSlots(); i++) {
@@ -122,38 +94,61 @@ public class AmuletBeltItem extends Item implements ICurioItem {
                     LazyOptional<ICurio> curio = helper.getCurio(amulet);
                     if (curio.isPresent() && itemAmulet instanceof AmuletItem) {
                         if (((AmuletItem) itemAmulet).usesCurioMethods()) {
-                            curio.orElseThrow(NullPointerException::new).onUnequip(slotContext, newStack);
+                            if (!helper.findEquippedCurio(itemAmulet, livingEntity).isPresent()) { // Checks if there is amulet in main slot that is same as one in belt. Rule of priority
+                                curio.orElseThrow(NullPointerException::new).curioTick(identifier, index, livingEntity);
+                            }
                         }
                     }
                 }
             });
+            // If for some reason UUID of wearer is not correct, it will correct it
+            UUID wearerUUID = NBTUtil.getUUID(stack, WEARER_UUID_TAG);
+            UUID livingUUID = livingEntity.getUUID();
+            if (!wearerUUID.equals(livingUUID)) {
+                NBTUtil.putUUID(stack, WEARER_UUID_TAG, livingUUID);
+                ElementalAmulets.LOGGER.warn("fIXING ANAL MUMU DAUN [IDPOERWRWE");
+            }
+        }
+    }
 
-            // Removes wearer UUID tag from stack
-            if(!slotContext.getWearer().level.isClientSide()) {
-                stack.getOrCreateTag().remove(WEARER_UUID_TAG);
+    @Override
+    public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
+        if(slotContext.getWearer() instanceof PlayerEntity) {
+            if (newStack.getItem() != stack.getItem()) {
+                stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+                    ICuriosHelper helper = CuriosApi.getCuriosHelper();
+                    for (int i = 0; i < h.getSlots(); i++) {
+                        ItemStack amulet = h.getStackInSlot(i);
+                        Item itemAmulet = amulet.getItem();
+                        LazyOptional<ICurio> curio = helper.getCurio(amulet);
+                        if (curio.isPresent() && itemAmulet instanceof AmuletItem) {
+                            if (((AmuletItem) itemAmulet).usesCurioMethods()) {
+                                curio.orElseThrow(NullPointerException::new).onUnequip(slotContext, newStack);
+                            }
+                        }
+                    }
+                });
             }
         }
     }
 
     @Override
     public void onEquip(SlotContext slotContext, ItemStack prevStack, ItemStack stack) {
-        if(prevStack.getItem() != stack.getItem()) {
-            stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-                ICuriosHelper helper = CuriosApi.getCuriosHelper();
-                for (int i = 0; i < h.getSlots(); i++) {
-                    ItemStack amulet = h.getStackInSlot(i);
-                    Item itemAmulet = amulet.getItem();
-                    LazyOptional<ICurio> curio = helper.getCurio(amulet);
-                    if (curio.isPresent() && itemAmulet instanceof AmuletItem) {
-                        curio.orElseThrow(NullPointerException::new).onEquip(slotContext, stack);
+        LivingEntity livingEntity = slotContext.getWearer();
+        if(livingEntity instanceof PlayerEntity) {
+            if (prevStack.getItem() != stack.getItem()) {
+                stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+                    ICuriosHelper helper = CuriosApi.getCuriosHelper();
+                    for (int i = 0; i < h.getSlots(); i++) {
+                        ItemStack amulet = h.getStackInSlot(i);
+                        Item itemAmulet = amulet.getItem();
+                        LazyOptional<ICurio> curio = helper.getCurio(amulet);
+                        if (curio.isPresent() && itemAmulet instanceof AmuletItem) {
+                            curio.orElseThrow(NullPointerException::new).onEquip(slotContext, stack);
+                        }
                     }
-                }
-            });
-
-
-            // Creates tag with uuid of wearer
-            LivingEntity livingEntity = slotContext.getWearer();
-            if(!livingEntity.level.isClientSide() && livingEntity instanceof PlayerEntity) {
+                });
+                // Creates tag with uuid of wearer
                 NBTUtil.putUUID(stack, WEARER_UUID_TAG, livingEntity.getUUID());
             }
         }
@@ -161,6 +156,15 @@ public class AmuletBeltItem extends Item implements ICurioItem {
 
     @Override
     public boolean canEquipFromUse(SlotContext slotContext, ItemStack stack) {
+        return true;
+    }
+
+    // TODO Finish comparing method
+    private static boolean compareBelts(ItemStack stack, ItemStack other) {
+        Item amulet = stack.getItem();
+        Item secondAmulet = other.getItem();
+        if(!(amulet instanceof AmuletBeltItem) || !(secondAmulet instanceof AmuletBeltItem))
+            return false;
         return true;
     }
 
@@ -194,11 +198,15 @@ public class AmuletBeltItem extends Item implements ICurioItem {
                     UUID UUID = NBTUtil.getUUID(stack, WEARER_UUID_TAG);
                     PlayerEntity wearer = server.getPlayerList().getPlayer(UUID);
                     if (wearer != null) {
-                        Item itemAmulet = amulet.getItem();
-                        LazyOptional<ICurio> curio = CuriosApi.getCuriosHelper().getCurio(amulet);
-                        if (curio.isPresent() && itemAmulet instanceof AmuletItem) {
-                            if (((AmuletItem) itemAmulet).usesCurioMethods()) {
-                                curio.orElseThrow(NullPointerException::new).onUnequip(new SlotContext(SlotTypePreset.NECKLACE.getIdentifier(), wearer), ItemStack.EMPTY);
+                        if(CuriosApi.getCuriosHelper().findEquippedCurio(stack.getItem(), wearer).map(ImmutableTriple::getRight).orElse(ItemStack.EMPTY) == stack) { // Workaround so It won't unEquip when not worn.
+                            ElementalAmulets.LOGGER.warn("Something is extracting amulet from belt of player {}", wearer.getDisplayName().getString());
+                            Item itemAmulet = amulet.getItem();
+                            LazyOptional<ICurio> curio = CuriosApi.getCuriosHelper().getCurio(amulet);
+                            if (curio.isPresent() && itemAmulet instanceof AmuletItem) {
+                                if (((AmuletItem) itemAmulet).usesCurioMethods()) {
+                                    curio.orElseThrow(NullPointerException::new).onUnequip(new SlotContext(SlotTypePreset.BELT.getIdentifier(), wearer), ItemStack.EMPTY);
+                                    ElementalAmulets.LOGGER.warn("{} uses curio methods, so invoking ICurio#onUnequip", itemAmulet);
+                                }
                             }
                         }
                     } else {
@@ -256,7 +264,4 @@ public class AmuletBeltItem extends Item implements ICurioItem {
             }
         });
     }
-    
-    
-
 }
