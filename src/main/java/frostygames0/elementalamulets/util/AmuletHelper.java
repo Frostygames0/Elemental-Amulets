@@ -20,6 +20,7 @@
 package frostygames0.elementalamulets.util;
 
 import frostygames0.elementalamulets.init.ModItems;
+import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -57,5 +58,18 @@ public final class AmuletHelper {
         }
 
         return Optional.empty();
+    }
+    
+    public static boolean compareAmulets(ItemStack stack, ItemStack other) {
+        Item amulet = stack.getItem();
+        Item secondAmulet = other.getItem();
+        if(!(amulet instanceof AmuletItem) || !(secondAmulet instanceof AmuletItem))
+            return false;
+
+        if(amulet == secondAmulet) {
+            return ((AmuletItem) amulet).getTier(stack) == ((AmuletItem) secondAmulet).getTier(other);
+        }
+
+        return false;
     }
 }

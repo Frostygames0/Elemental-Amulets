@@ -19,6 +19,7 @@
 
 package frostygames0.elementalamulets.items.amulets;
 
+import frostygames0.elementalamulets.util.AmuletHelper;
 import frostygames0.elementalamulets.util.AttributeUtil;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -60,7 +61,7 @@ public class AirAmuletItem extends AmuletItem {
     @Override
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
         ModifiableAttributeInstance att = slotContext.getWearer().getAttribute(ForgeMod.ENTITY_GRAVITY.get());
-        if(stack.getItem() != newStack.getItem()) {
+        if(!AmuletHelper.compareAmulets(stack, newStack)) {
             AttributeUtil.removeModifierByUUID(att, MODIFIER_UUID);
         }
     }

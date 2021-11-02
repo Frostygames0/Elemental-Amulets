@@ -23,7 +23,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
-import frostygames0.elementalamulets.util.NBTUtil;
+import frostygames0.elementalamulets.util.AmuletHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
@@ -49,17 +49,13 @@ public class AmuletIngredient extends Ingredient {
     public boolean test(@Nullable ItemStack test) {
         if (test == null) return false;
         if(test.getItem() instanceof AmuletItem) {
-            return this.stack.getItem() == test.getItem() && compareAmuletTiers(stack, test);
+            return AmuletHelper.compareAmulets(this.stack, test);
         }
         return this.stack.getItem() == test.getItem();
     }
 
     public ItemStack getMatchingStack() {
         return this.stack;
-    }
-
-    private boolean compareAmuletTiers(ItemStack stack, ItemStack other) {
-        return NBTUtil.getInteger(stack, AmuletItem.TIER_TAG) == NBTUtil.getInteger(other, AmuletItem.TIER_TAG);
     }
 
     @Override
