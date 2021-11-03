@@ -20,8 +20,8 @@ apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin' // Mixins
 
 version = "${mc_version}-${mod_version}"
-if("${preview}" == "1") {
-    version += "-PRE"
+if("${preview}" == "true") {
+    version += "-preview"
 }
 
 group = 'frostygames0.elementalamulets' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
