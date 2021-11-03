@@ -37,7 +37,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MixinLivingEntity {
 
     @Inject(at = @At("RETURN"), method = "decreaseAirSupply", cancellable = true)
-    protected void decreaseAirWithWaterAmulet(int air, CallbackInfoReturnable<Integer> ci) {
+    protected void elementalamulets_decreaseAirWithWaterAmulet(int air, CallbackInfoReturnable<Integer> ci) {
         LivingEntity entity = (LivingEntity) (Object) this;
         AmuletHelper.getAmuletInSlotOrBelt(ModItems.WATER_AMULET.get(), entity).ifPresent(triple -> {
             ItemStack stack = triple.getRight();

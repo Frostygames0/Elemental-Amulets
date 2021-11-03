@@ -36,7 +36,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MixinEnderman {
 
     @Inject(at = @At("HEAD"), method = "isLookingAtMe", cancellable = true)
-    public void isLookingAtMe(PlayerEntity player, CallbackInfoReturnable<Boolean> ci) {
+    public void elementalamulets_ignorePlayerWithAmulet(PlayerEntity player, CallbackInfoReturnable<Boolean> ci) {
         if(AmuletHelper.getAmuletInSlotOrBelt(ModItems.PACIFYING_AMULET.get(), player).isPresent()) ci.setReturnValue(false);
     }
 }
