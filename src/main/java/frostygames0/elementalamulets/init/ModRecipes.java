@@ -53,7 +53,7 @@ public class ModRecipes {
 
     public static <T extends IRecipe<C>, C extends IInventory> Map<ResourceLocation, T> getRecipesMap(IRecipeType<T> type, World world) {
         Map<IRecipeType<?>, Map<ResourceLocation, T>> recipes = ObfuscationReflectionHelper.getPrivateValue(RecipeManager.class, world.getRecipeManager(),
-                "recipes");
+                "field_199522_d");
         return recipes.get(type);
     }
 }
