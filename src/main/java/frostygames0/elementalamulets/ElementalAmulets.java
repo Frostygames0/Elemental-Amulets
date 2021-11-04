@@ -26,6 +26,7 @@ import frostygames0.elementalamulets.init.*;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import frostygames0.elementalamulets.network.ModNetworkHandler;
 import frostygames0.elementalamulets.world.LootTableModifiers;
+import frostygames0.elementalamulets.world.ModFeatures;
 import frostygames0.elementalamulets.world.structures.ModStructures;
 import frostygames0.elementalamulets.world.structures.StructureFeatures;
 import net.minecraft.item.ItemGroup;

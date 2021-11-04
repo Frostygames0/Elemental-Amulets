@@ -37,6 +37,7 @@ import net.minecraft.world.gen.settings.StructureSeparationSettings;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.WorldEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
@@ -112,7 +113,7 @@ public class ModStructures {
         }
     }
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGH)
     public static void addStructuresToWorld(BiomeLoadingEvent event) {
         if(event.getCategory() == Biome.Category.JUNGLE && ModConfig.CachedValues.GENERATE_CULT_TEMPLE) event.getGeneration().getStructures().add(() -> StructureFeatures.CONFIGURED_CULT_TEMPLE);
     }
