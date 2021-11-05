@@ -21,6 +21,7 @@ package frostygames0.elementalamulets.client.patchouli;
 
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.config.ModConfig;
+import net.minecraftforge.fml.ModList;
 import vazkii.patchouli.api.PatchouliAPI;
 
 /**
@@ -30,7 +31,7 @@ import vazkii.patchouli.api.PatchouliAPI;
 public class ElementalGuideConfigFlags {
 
     public static void updateConfigFlags() {
-        if(PatchouliUtils.isSafeToUse()) {
+        if(ModList.get().isLoaded("patchouli")) {
             PatchouliAPI.get().setConfigFlag(ElementalAmulets.MOD_ID + ":cult_temple", ModConfig.CachedValues.GENERATE_CULT_TEMPLE);
             PatchouliAPI.get().setConfigFlag(ElementalAmulets.MOD_ID + ":jeweller_house", ModConfig.CachedValues.GENERATE_JEWELLER_HOUSE);
         }
