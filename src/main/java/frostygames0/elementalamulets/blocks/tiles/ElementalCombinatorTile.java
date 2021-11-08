@@ -51,6 +51,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -104,7 +105,7 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
     @Override
     public void tick() {
         if(level != null && !level.isClientSide()) {
-            if(this.isCrafting()) {
+            if(this.isCombining()) {
                 ElementalCombination recipe = this.level.getRecipeManager().getRecipeFor(ModRecipes.ELEMENTAL_COMBINATION_TYPE, new RecipeWrapper(handler), this.level).orElse(null);
                 if(this.canCombine(recipe)) {
                     this.totalTime = this.isFocused() ? recipe.getCombinationTime() / 2 : recipe.getCombinationTime();
@@ -169,19 +170,19 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
 
 
     public void startCombination() {
-        if (!this.isCrafting()) {
+        if (!this.isCombining()) {
             this.combinationTime = 1;
         }
     }
 
     private void stopCombination() {
-        if(this.isCrafting()) {
+        if(this.isCombining()) {
             this.combinationTime = 0;
             this.level.setBlockAndUpdate(worldPosition, this.getBlockState().setValue(ElementalCombinator.COMBINING, false));
         }
     }
 
-    public boolean isCrafting() {
+    public boolean isCombining() {
         return this.combinationTime > 0;
     }
 
@@ -264,7 +265,7 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
             @Override
             protected void onContentsChanged(int slot) {
                 setChanged();
-                level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 2);
+                level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Constants.BlockFlags.BLOCK_UPDATE);
             }
         };
     }
