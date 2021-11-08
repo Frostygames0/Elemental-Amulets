@@ -22,11 +22,17 @@ package frostygames0.elementalamulets.items.amulets;
 import net.minecraft.entity.IAngerable;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.ai.goal.GoalSelector;
+import net.minecraft.entity.ai.goal.PrioritizedGoal;
+import net.minecraft.entity.ai.goal.TargetGoal;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.World;
+
+
+import java.util.stream.Collectors;
 
 /**
  * @author Frostygames0
@@ -42,18 +48,24 @@ public class PacifyingAmuletItem extends AmuletItem {
         World world = livingEntity.level;
         if(!world.isClientSide()) {
             BlockPos pos = livingEntity.blockPosition();
-            if (livingEntity.tickCount % 5 == 0) { // For some reasons I need to delay it or it will cause strange behavior
+            if (livingEntity.tickCount % 5 == 0) {
                 for (MobEntity mob : world.getLoadedEntitiesOfClass(MobEntity.class, new AxisAlignedBB(pos.subtract(new Vector3i(6, 5, 6)), pos.offset(new Vector3i(6, 5, 6))), entity -> entity instanceof IAngerable)) {
                     IAngerable angerable = (IAngerable) mob;
+
+                    if(!mob.canSee(livingEntity)) continue; // Prevents pacifying of mobs that are behind walls etc(basically that can't see user)
 
                     if (angerable.getPersistentAngerTarget() == null || !angerable.getPersistentAngerTarget().equals(livingEntity.getUUID()))
                         continue;
 
+                    GoalSelector selector = mob.targetSelector;
+                    for(PrioritizedGoal priGoal : selector.getRunningGoals().collect(Collectors.toList())) {
+                        if(priGoal.getGoal() instanceof TargetGoal) {
+                            if(((TargetGoal)priGoal.getGoal()).targetMob == livingEntity) // This should stop mobs that use TargetGoal to be angry after they stop being angry, TODO maybe there is a better way?
+                                priGoal.stop();
+                        }
+                    }
+
                     angerable.stopBeingAngry();
-
-                    // Maybe this will work idk
-                    //mob.targetSelector.getRunningGoals().filter(goal -> goal.getGoal() instanceof NearestAttackableTargetGoal).forEach(goal -> ((NearestAttackableTargetGoal<?>) goal.getGoal()).setTarget(null));
-
                 }
             }
         }
