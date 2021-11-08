@@ -15,7 +15,7 @@
     {
       "type": "patchouli:crafting",
       "recipe": "elementalamulets:elemental_combinator",
-      "text": "The next step is crafting!$(br)This is a recipe of $(l:elementalamulets:elements/combination/elemental_combinator)$(l)$(item)Elemental Combinator$(). It's pretty easy to craft. $(2br) Once you've crafted it, you are ready to go! Good luck exploring the $(name)Elemental Amulets$() :) "
+      "text": "The next step is crafting!$(br)This is a recipe of $(l:elementalamulets:elements/combination/elemental_combinator)$(l)$(item)Elemental Combinator$(). It's pretty easy to craft. $(2br) Once you've crafted it, you are ready to go! $(br2)$(l)REMEMBER! The Elemental Combinator must see sky to work!$()"
     },
     {
       "type": "patchouli:relations",

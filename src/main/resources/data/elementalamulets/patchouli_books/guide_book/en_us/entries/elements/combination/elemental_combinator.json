@@ -10,7 +10,8 @@
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "elementalamulets:elemental_combinator"
+      "recipe": "elementalamulets:elemental_combinator",
+      "text": "$(br2)$(l)REMEMBER! The Elemental Combinator must see sky to work!$()"
     }
   ]
 }
