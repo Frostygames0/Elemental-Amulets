@@ -59,7 +59,8 @@ public class PacifyingAmuletItem extends AmuletItem {
 
                     GoalSelector selector = mob.targetSelector;
                     for(PrioritizedGoal priGoal : selector.getRunningGoals().collect(Collectors.toList())) {
-                        if(priGoal.getGoal() instanceof TargetGoal) {
+                           if(priGoal.getGoal() instanceof TargetGoal) {
+                            // TODO: Use accessor mixin instead, since AT protected method is a bit unsafe.
                             if(((TargetGoal)priGoal.getGoal()).targetMob == livingEntity) // This should stop mobs that use TargetGoal to be angry after they stop being angry, TODO maybe there is a better way?
                                 priGoal.stop();
                         }
