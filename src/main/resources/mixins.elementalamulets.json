@@ -9,7 +9,8 @@
   ],
   "mixins": [
     "MixinEnderman",
-    "MixinLivingEntity"
+    "MixinLivingEntity",
+    "accessors.AccessorTargetGoal"
   ]
 
 }

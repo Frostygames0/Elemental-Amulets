@@ -19,6 +19,8 @@
 
 package frostygames0.elementalamulets.items.amulets;
 
+import frostygames0.elementalamulets.ElementalAmulets;
+import frostygames0.elementalamulets.mixin.accessors.AccessorTargetGoal;
 import net.minecraft.entity.IAngerable;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
@@ -48,7 +50,7 @@ public class PacifyingAmuletItem extends AmuletItem {
         World world = livingEntity.level;
         if(!world.isClientSide()) {
             BlockPos pos = livingEntity.blockPosition();
-            if (livingEntity.tickCount % 5 == 0) {
+            if (livingEntity.tickCount % 5 == 0) { // A little optimization so it wont call it every tick
                 for (MobEntity mob : world.getLoadedEntitiesOfClass(MobEntity.class, new AxisAlignedBB(pos.subtract(new Vector3i(6, 5, 6)), pos.offset(new Vector3i(6, 5, 6))), entity -> entity instanceof IAngerable)) {
                     IAngerable angerable = (IAngerable) mob;
 
@@ -60,12 +62,15 @@ public class PacifyingAmuletItem extends AmuletItem {
                     GoalSelector selector = mob.targetSelector;
                     for(PrioritizedGoal priGoal : selector.getRunningGoals().collect(Collectors.toList())) {
                            if(priGoal.getGoal() instanceof TargetGoal) {
-                            // TODO: Use accessor mixin instead, since AT protected method is a bit unsafe.
-                            if(((TargetGoal)priGoal.getGoal()).targetMob == livingEntity) // This should stop mobs that use TargetGoal to be angry after they stop being angry, TODO maybe there is a better way?
-                                priGoal.stop();
-                        }
-                    }
+                               TargetGoal goal = (TargetGoal) priGoal.getGoal();
 
+                               if(((AccessorTargetGoal)goal).getTargetMob() == livingEntity)
+                                   // This should stop mobs that use TargetGoal to be angry after they stop being angry, TODO maybe there is a better way?
+                                   ElementalAmulets.LOGGER.warn("Goal {} was stopped in entity {}", goal, mob.toString());
+                                   priGoal.stop();
+                           }
+                    }
+                    ElementalAmulets.LOGGER.warn("Fully stopping {} from being angry", mob);
                     angerable.stopBeingAngry();
                 }
             }
