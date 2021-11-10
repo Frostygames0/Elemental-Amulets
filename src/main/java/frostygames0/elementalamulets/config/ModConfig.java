@@ -50,6 +50,7 @@ public class ModConfig {
         private final ForgeConfigSpec.IntValue PROTECTION_AMULET_CHARGE_TIME;
         private final ForgeConfigSpec.DoubleValue WATER_AMULET_SPEED_BOOST;
         private final ForgeConfigSpec.IntValue EARTH_AMULET_COOLDOWN;
+        //private final ForgeConfigSpec.ConfigValue<List<? extends String>> EARTH_AMULET_BOOST_BLACKLIST;
         private final ForgeConfigSpec.BooleanValue MODIFY_VANILLA_LOOT;
 
         public Server(ForgeConfigSpec.Builder builder) {
@@ -89,7 +90,7 @@ public class ModConfig {
 
             builder.push("Amulet of Earth");
             EARTH_AMULET_COOLDOWN = builder.comment("How long will the Amulet of Earth be on cooldown? (in ticks, 1 sec - 20 ticks) [DEFAULT: 100]").defineInRange("earth_amulet_cooldown", 100, 0, Integer.MAX_VALUE);
-
+            //EARTH_AMULET_BOOST_BLACKLIST = builder.comment("Which blocks Amulet of Earth can't boost(apply bonemeal effect)? [DEFAULT: empty, accepts only block ids]").defineList("earth_amulet_boost_blacklist", ImmutableList.of(), string -> string instanceof String);
             builder.pop(2);
         }
     }
@@ -166,6 +167,7 @@ public class ModConfig {
         public static int PROTECTION_AMULET_CHARGE_TIME;
         public static double WATER_AMULET_SPEED_BOOST;
         public static int EARTH_AMULET_COOLDOWN;
+        //public static List<? extends String> EARTH_AMULET_BOOST_BLACKLIST;
         public static boolean MODIFY_VANILLA_LOOT;
 
         private static void cacheServerConfig() {
@@ -180,6 +182,7 @@ public class ModConfig {
             WATER_AMULET_SPEED_BOOST = SERVER.WATER_AMULET_SPEED_BOOST.get();
             EARTH_AMULET_COOLDOWN = SERVER.EARTH_AMULET_COOLDOWN.get();
             MODIFY_VANILLA_LOOT = SERVER.MODIFY_VANILLA_LOOT.get();
+            //EARTH_AMULET_BOOST_BLACKLIST = SERVER.EARTH_AMULET_BOOST_BLACKLIST.get();
         }
 
         public static boolean AMULETS_TIER_DIFFERENCE;
