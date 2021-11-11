@@ -68,7 +68,12 @@ public class CultTempleStructure extends Structure<NoFeatureConfig> {
 
     @Override
     public List<MobSpawnInfo.Spawners> getDefaultSpawnList() {
-        return ImmutableList.of(new MobSpawnInfo.Spawners(EntityType.CREEPER, 100, 2, 5));
+        return ImmutableList.of(new MobSpawnInfo.Spawners(EntityType.CREEPER, 100, 1, 2));
+    }
+
+    @Override
+    public List<MobSpawnInfo.Spawners> getDefaultCreatureSpawnList() {
+        return ImmutableList.of(new MobSpawnInfo.Spawners(EntityType.BAT, 100, 1, 4));
     }
 
     @Override
