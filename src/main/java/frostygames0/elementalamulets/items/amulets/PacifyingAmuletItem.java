@@ -28,12 +28,14 @@ import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.goal.GoalSelector;
 import net.minecraft.entity.ai.goal.PrioritizedGoal;
 import net.minecraft.entity.ai.goal.TargetGoal;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 
 import java.util.stream.Collectors;
@@ -54,7 +56,7 @@ public class PacifyingAmuletItem extends AmuletItem {
         World world = livingEntity.level;
         if(!world.isClientSide()) {
             BlockPos pos = livingEntity.blockPosition();
-            if (livingEntity.tickCount % 5 == 0) { // A little optimization so it wont call it every tick
+            if (livingEntity.tickCount % 5 == 0) { // A little optimization so it won't call it every tick
                 for (MobEntity mob : world.getLoadedEntitiesOfClass(MobEntity.class, new AxisAlignedBB(pos.subtract(new Vector3i(6, 5, 6)), pos.offset(new Vector3i(6, 5, 6))), entity -> entity instanceof IAngerable)) {
                     IAngerable angerable = (IAngerable) mob;
 
@@ -77,8 +79,9 @@ public class PacifyingAmuletItem extends AmuletItem {
                     //ElementalAmulets.LOGGER.warn("Fully stopping {} from being angry", mob);
                     angerable.stopBeingAngry();
 
-                    // Makes heart particles :)
-                    world.addParticle(ParticleTypes.HEART, mob.getX(), mob.getY(), mob.getZ(), 0.1, 0.1, 0.1);
+                    // Makes heart particles around entity :>
+                    if(livingEntity instanceof ServerPlayerEntity)
+                        ((ServerWorld)world).sendParticles((ServerPlayerEntity) livingEntity, ParticleTypes.HEART, false, mob.getX(), mob.getY(), mob.getZ(), 10, 0, 0, 0, 1);
                 }
             }
         }
