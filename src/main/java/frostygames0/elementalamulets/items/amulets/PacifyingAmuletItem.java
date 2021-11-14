@@ -19,16 +19,13 @@
 
 package frostygames0.elementalamulets.items.amulets;
 
-import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.mixin.accessors.AccessorTargetGoal;
-import frostygames0.elementalamulets.util.NBTUtil;
 import net.minecraft.entity.IAngerable;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.goal.GoalSelector;
 import net.minecraft.entity.ai.goal.PrioritizedGoal;
 import net.minecraft.entity.ai.goal.TargetGoal;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -36,6 +33,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import top.theillusivec4.curios.api.CuriosApi;
 
 
 import java.util.stream.Collectors;
@@ -44,8 +42,8 @@ import java.util.stream.Collectors;
  * @author Frostygames0
  * @date 14.10.2021 22:15
  */
+// TODO Make something negative when it breaks
 public class PacifyingAmuletItem extends AmuletItem {
-    public static final String CHARGE_TAG = ElementalAmulets.MOD_ID + ":calming_charge";
 
     public PacifyingAmuletItem(Properties properties) {
         super(properties, false);
@@ -72,26 +70,16 @@ public class PacifyingAmuletItem extends AmuletItem {
 
                                if(((AccessorTargetGoal)goal).getTargetMob() == livingEntity)
                                    // This should stop mobs that use TargetGoal to be angry after they stop being angry, TODO maybe there is a better way?
-                                   //ElementalAmulets.LOGGER.warn("Goal {} was stopped in entity {}", goal, mob);
                                    priGoal.stop();
                            }
                     }
-                    //ElementalAmulets.LOGGER.warn("Fully stopping {} from being angry", mob);
                     angerable.stopBeingAngry();
+                    stack.hurtAndBreak(1, livingEntity, livingEnt -> CuriosApi.getCuriosHelper().onBrokenCurio(identifier, index, livingEnt));
 
                     // Makes heart particles around entity :>
-                    if(livingEntity instanceof ServerPlayerEntity)
-                        ((ServerWorld)world).sendParticles((ServerPlayerEntity) livingEntity, ParticleTypes.HEART, false, mob.getX(), mob.getY(), mob.getZ(), 10, 0, 0, 0, 1);
+                    ((ServerWorld)world).sendParticles(ParticleTypes.HEART, mob.getX(), mob.getY(), mob.getZ(), 10, 0, 0, 0, 1);
                 }
             }
         }
-    }
-
-    public int getCharges(ItemStack stack) {
-        return NBTUtil.getInteger(stack, CHARGE_TAG);
-    }
-
-    public boolean canPacify(ItemStack stack) {
-        return getCharges(stack) > 0;
     }
 }
