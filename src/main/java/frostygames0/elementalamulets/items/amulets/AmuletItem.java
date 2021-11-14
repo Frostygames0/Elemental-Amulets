@@ -51,7 +51,7 @@ import top.theillusivec4.curios.api.type.capability.ICurioItem;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
-
+// TODO Remake this getTier nonsense with hasTier
 public abstract class AmuletItem extends Item implements ICurioItem {
     public static final String TIER_TAG = ElementalAmulets.MOD_ID+":tier";
     public static final int MAX_TIER = 4;
@@ -76,7 +76,7 @@ public abstract class AmuletItem extends Item implements ICurioItem {
 
     @Override
     public int getMaxDamage(ItemStack stack) {
-        return 1000 * this.getTier(stack);
+        return 1000 * Math.max(this.getTier(stack), 1);
     }
 
     @Override
