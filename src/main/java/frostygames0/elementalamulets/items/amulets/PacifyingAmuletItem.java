@@ -36,7 +36,6 @@ import net.minecraft.util.CooldownTracker;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -115,7 +114,6 @@ public class PacifyingAmuletItem extends AmuletItem {
         for(MobEntity mob : getAngerablesAround(entity)) {
             IAngerable angerable = (IAngerable) mob;
             angerable.setTarget(entity);
-            mob.setDeltaMovement(mob.getDeltaMovement().add(new Vector3d(0, 10, 0)));
             if(entity instanceof PlayerEntity) {
                 ((PlayerEntity)entity).getCooldowns().addCooldown(this, ModConfig.CachedValues.PACIFYING_AMULET_BREAK_COOLDOWN);
             }
