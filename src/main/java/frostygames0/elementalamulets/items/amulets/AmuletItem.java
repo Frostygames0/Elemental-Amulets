@@ -43,6 +43,9 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
@@ -51,6 +54,8 @@ import top.theillusivec4.curios.api.type.capability.ICurioItem;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.ListIterator;
+
 // TODO Remake this getTier nonsense with hasTier
 public abstract class AmuletItem extends Item implements ICurioItem {
     public static final String TIER_TAG = ElementalAmulets.MOD_ID+":tier";
@@ -70,7 +75,19 @@ public abstract class AmuletItem extends Item implements ICurioItem {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
+
+        // Tier
         if(this.getTier(stack) > 0) tooltip.add(new TranslationTextComponent("item.elementalamulets.common_amulet.tooltip.tier", new StringTextComponent(String.valueOf(this.getTier(stack))).withStyle(TextFormatting.YELLOW)).withStyle(TextFormatting.GOLD));
+
+        // Elemental Power (Cool looking durability)
+        if(stack.isDamaged()) {
+            tooltip.add(new TranslationTextComponent("item.elementalamulets.common_amulet.elemental_power",
+                    new StringTextComponent(
+                            stack.getMaxDamage() - stack.getDamageValue() + " / " + stack.getMaxDamage()).withStyle(TextFormatting.YELLOW)
+            ).withStyle(TextFormatting.GOLD));
+        }
+
+        // Tooltip
         tooltip.add(new TranslationTextComponent(getOrCreateDescriptionId()+".tooltip").withStyle(TextFormatting.GRAY));
     }
 
@@ -167,5 +184,22 @@ public abstract class AmuletItem extends Item implements ICurioItem {
         return true;
     }
 
-
+    // Removes vanilla durability tooltip from tooltip list
+    @Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID)
+    public static class TooltipEventHandler {
+        @SubscribeEvent
+        public static void onTooltipEvent(final ItemTooltipEvent event) {
+            ItemStack stack = event.getItemStack();
+            if(stack.getItem() instanceof AmuletItem) {
+                for(ListIterator<ITextComponent> iterator = event.getToolTip().listIterator(); iterator.hasNext();) {
+                    ITextComponent tooltip = iterator.next();
+                    if(tooltip instanceof TranslationTextComponent) {
+                        if(((TranslationTextComponent)tooltip).getKey().equals("item.durability")) {
+                            iterator.remove();
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
