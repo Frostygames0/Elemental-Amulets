@@ -31,6 +31,7 @@
   "item.elementalamulets.empty_amulet": "Empty Amulet",
 
   "item.elementalamulets.common_amulet.tooltip.tier": "Tier: %s",
+  "item.elementalamulets.common_amulet.elemental_power": "Elemental Power: %s",
 
   "item.elementalamulets.fire_amulet": "Amulet of Fire-Resistance",
   "item.elementalamulets.fire_amulet.tooltip": "%sProtects you from%s %1$sfire%1$s",
@@ -59,6 +60,7 @@
 
   "item.elementalamulets.pacifying_amulet": "Pacifying Amulet",
   "item.elementalamulets.pacifying_amulet.tooltip": "Passive mobs don't fight back",
+  "item.elementalamulets.pacifying_amulet.onbreak": "%s is broken! All nearby mobs are angry at you!",
   "item.elementalamulets.tired": "You suddenly feel tired",
 
   "item.elementalamulets.knockback_amulet": "Knockback Amulet",
