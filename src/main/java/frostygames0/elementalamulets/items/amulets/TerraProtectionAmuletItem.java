@@ -49,7 +49,10 @@ public class TerraProtectionAmuletItem extends AmuletItem {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
-        tooltip.add(new TranslationTextComponent("item.elementalamulets.protection_amulet.charges", new StringTextComponent(this.getCharges(stack) + "/" + 4 * this.getTier(stack)).withStyle(TextFormatting.YELLOW)).withStyle(TextFormatting.GOLD));
+        tooltip.add(new TranslationTextComponent("item.elementalamulets.protection_amulet.charges",
+                new StringTextComponent(
+                        this.getCharges(stack) + " / " + this.getMaxCharge(stack)).withStyle(TextFormatting.YELLOW)
+        ).withStyle(TextFormatting.GOLD));
     }
 
     @Override
