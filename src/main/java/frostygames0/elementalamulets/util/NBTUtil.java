@@ -33,7 +33,7 @@ public final class NBTUtil {
     public static int getInteger(ItemStack stack, String tagName) {
         return isSafeToGet(stack, tagName) ? stack.getOrCreateTag().getInt(tagName) : 0;
     }
-
+    /*
     public static float getFloat(ItemStack stack, String tagName) {
         return isSafeToGet(stack, tagName) ? stack.getOrCreateTag().getFloat(tagName) : 0;
     }
@@ -48,7 +48,7 @@ public final class NBTUtil {
 
     public static String getString(ItemStack stack, String tagName) {
         return isSafeToGet(stack, tagName) ? stack.getOrCreateTag().getString(tagName) : "";
-    }
+    }*/
 
     public static UUID getUUID(ItemStack stack, String tagName) {
         return stack.getOrCreateTag().hasUUID(tagName) ? stack.getOrCreateTag().getUUID(tagName) : new UUID(0L, 0L);
@@ -57,7 +57,7 @@ public final class NBTUtil {
     public static void putInteger(ItemStack stack, String tagName, int value) {
         stack.getOrCreateTag().putInt(tagName, value);
     }
-
+    /*
     public static void putDouble(ItemStack stack, String tagName, double value) {
         stack.getOrCreateTag().putDouble(tagName, value);
     }
@@ -72,7 +72,7 @@ public final class NBTUtil {
 
     public static void putString(ItemStack stack, String tagName, String value) {
         stack.getOrCreateTag().putString(tagName, value);
-    }
+    }*/
 
     public static void putUUID(ItemStack stack, String name, UUID value) {
         stack.getOrCreateTag().putUUID(name, value);
