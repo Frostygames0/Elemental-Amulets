@@ -19,18 +19,27 @@
 
 package frostygames0.elementalamulets.items.amulets;
 
+import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.mixin.accessors.AccessorTargetGoal;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.IAngerable;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.goal.GoalSelector;
 import net.minecraft.entity.ai.goal.PrioritizedGoal;
 import net.minecraft.entity.ai.goal.TargetGoal;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.CooldownTracker;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3i;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import top.theillusivec4.curios.api.CuriosApi;
@@ -42,7 +51,6 @@ import java.util.stream.Collectors;
  * @author Frostygames0
  * @date 14.10.2021 22:15
  */
-// TODO Make something negative when it breaks
 public class PacifyingAmuletItem extends AmuletItem {
 
     public PacifyingAmuletItem(Properties properties) {
@@ -53,33 +61,77 @@ public class PacifyingAmuletItem extends AmuletItem {
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
         World world = livingEntity.level;
         if(!world.isClientSide()) {
-            BlockPos pos = livingEntity.blockPosition();
-            if (livingEntity.tickCount % 5 == 0) { // A little optimization so it won't call it every tick
-                for (MobEntity mob : world.getLoadedEntitiesOfClass(MobEntity.class, new AxisAlignedBB(pos.subtract(new Vector3i(6, 5, 6)), pos.offset(new Vector3i(6, 5, 6))), entity -> entity instanceof IAngerable)) {
-                    IAngerable angerable = (IAngerable) mob;
+            if(livingEntity instanceof PlayerEntity) {
+                PlayerEntity player = (PlayerEntity) livingEntity;
+                CooldownTracker tracker = player.getCooldowns();
 
-                    if(!mob.canSee(livingEntity)) continue; // Prevents pacifying of mobs that are behind walls etc(basically that can't see user)
+                if(tracker.isOnCooldown(this))
+                    return;
 
-                    if (angerable.getPersistentAngerTarget() == null || !angerable.getPersistentAngerTarget().equals(livingEntity.getUUID()))
-                        continue;
+                if (player.tickCount % 5 == 0) {// A little optimization so it won't call it every tick
+                    for (MobEntity mob : getAngerablesAround(player)) {
+                        if(tracker.isOnCooldown(this))
+                            break;
 
-                    GoalSelector selector = mob.targetSelector;
-                    for(PrioritizedGoal priGoal : selector.getRunningGoals().collect(Collectors.toList())) {
-                           if(priGoal.getGoal() instanceof TargetGoal) {
-                               TargetGoal goal = (TargetGoal) priGoal.getGoal();
+                        IAngerable angerable = (IAngerable) mob;
 
-                               if(((AccessorTargetGoal)goal).getTargetMob() == livingEntity)
-                                   // This should stop mobs that use TargetGoal to be angry after they stop being angry, TODO maybe there is a better way?
-                                   priGoal.stop();
-                           }
+                        GoalSelector selector = mob.targetSelector;
+                        for(PrioritizedGoal priGoal : selector.getRunningGoals().collect(Collectors.toList())) {
+                            if(priGoal.getGoal() instanceof TargetGoal) {
+                                TargetGoal goal = (TargetGoal) priGoal.getGoal();
+
+                                if(((AccessorTargetGoal)goal).getTargetMob() == player)
+                                    // This should stop mobs that use TargetGoal to be angry after they stop being angry, TODO maybe there is a better way?
+                                    priGoal.stop();
+                            }
+                        }
+                        angerable.stopBeingAngry();
+                        stack.hurtAndBreak(1, player, livingEnt -> this.onAmuletBreak(identifier, index, player));
+
+                        // Makes heart particles around entity :>
+                        ((ServerWorld)world).sendParticles(ParticleTypes.HEART, mob.getX(), mob.getY(), mob.getZ(), 20, 0, 0, 0, 1);
                     }
-                    angerable.stopBeingAngry();
-                    stack.hurtAndBreak(1, livingEntity, livingEnt -> CuriosApi.getCuriosHelper().onBrokenCurio(identifier, index, livingEnt));
-
-                    // Makes heart particles around entity :>
-                    ((ServerWorld)world).sendParticles(ParticleTypes.HEART, mob.getX(), mob.getY(), mob.getZ(), 10, 0, 0, 0, 1);
                 }
             }
         }
+    }
+
+    @Override
+    public void curioBreak(ItemStack stack, LivingEntity livingEntity) {
+        Minecraft mc = Minecraft.getInstance();
+
+        mc.gameRenderer.displayItemActivation(stack);
+
+        ClientPlayerEntity player = mc.player;
+        player.playSound(SoundEvents.WITHER_DEATH, 1f, 1f);
+        player.displayClientMessage(new TranslationTextComponent("item.elementalamulets.pacifying_amulet.onbreak", this.getName(stack)).withStyle(TextFormatting.RED), true);
+    }
+
+    // Call this in ItemStack#hurtAndBreak's consumer
+    public void onAmuletBreak(String identifier, int index, LivingEntity entity) {
+        if(!ModConfig.CachedValues.PACIFYING_AMULET_ANGER_ONBREAK)
+            return;
+
+        for(MobEntity mob : getAngerablesAround(entity)) {
+            IAngerable angerable = (IAngerable) mob;
+            angerable.setTarget(entity);
+            mob.setDeltaMovement(mob.getDeltaMovement().add(new Vector3d(0, 10, 0)));
+            if(entity instanceof PlayerEntity) {
+                ((PlayerEntity)entity).getCooldowns().addCooldown(this, ModConfig.CachedValues.PACIFYING_AMULET_BREAK_COOLDOWN);
+            }
+
+            CuriosApi.getCuriosHelper().onBrokenCurio(identifier, index, entity);
+        }
+    }
+
+    private Iterable<MobEntity> getAngerablesAround(LivingEntity target) {
+        BlockPos position = target.blockPosition();
+        return target.level.getLoadedEntitiesOfClass(MobEntity.class, new AxisAlignedBB(position.subtract(new Vector3i(6, 5, 6)), position.offset(new Vector3i(6, 5, 6))), entity -> {
+            if(entity instanceof IAngerable) {
+                IAngerable angerable = (IAngerable) entity;
+                return entity.canSee(target) && angerable.getPersistentAngerTarget() != null && angerable.getPersistentAngerTarget().equals(target.getUUID());
+            }
+            return false;
+        });
     }
 }

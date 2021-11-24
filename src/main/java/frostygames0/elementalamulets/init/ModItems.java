@@ -96,7 +96,7 @@ public class ModItems {
     public static final RegistryObject<Item> INVISIBILITY_AMULET = ITEMS.register("invisibility_amulet",
             () -> new InvisibilityAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).durability(1000)));
     public static final RegistryObject<Item> PACIFYING_AMULET = ITEMS.register("pacifying_amulet",
-            () -> new PacifyingAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(Rarity.EPIC).durability(1000)));
+            () -> new PacifyingAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(Rarity.EPIC).durability(2000)));
     public static final RegistryObject<Item> KNOCKBACK_AMULET = ITEMS.register("knockback_amulet",
             () -> new KnockbackAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(Rarity.RARE).durability(1000)));
 

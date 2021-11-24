@@ -50,7 +50,8 @@ public class ModConfig {
         private final ForgeConfigSpec.IntValue PROTECTION_AMULET_CHARGE_TIME;
         private final ForgeConfigSpec.DoubleValue WATER_AMULET_SPEED_BOOST;
         private final ForgeConfigSpec.IntValue EARTH_AMULET_COOLDOWN;
-        //private final ForgeConfigSpec.ConfigValue<List<? extends String>> EARTH_AMULET_BOOST_BLACKLIST;
+        private final ForgeConfigSpec.IntValue PACIFYING_AMULET_BREAK_COOLDOWN;
+        private final ForgeConfigSpec.BooleanValue PACIFYING_AMULET_ANGER_ONBREAK;
         private final ForgeConfigSpec.BooleanValue MODIFY_VANILLA_LOOT;
 
         public Server(ForgeConfigSpec.Builder builder) {
@@ -81,7 +82,7 @@ public class ModConfig {
 
             builder.push("Amulet of Terra-Protection");
             PROTECTION_AMULET_REFLECT_DAMAGE_MULT = builder.comment("How much damage will Leaf Shield absorb? [DEFAULT: 0.5]") .defineInRange("protection_amulet_absorption", 0.5f, 0, Integer.MAX_VALUE);
-            PROTECTION_AMULET_CHARGE_TIME = builder.comment("How long will leaf shield recharge one bar (in ticks)? [DEFAULT: 80]").defineInRange("protection_amulet_recharge_time", 80, 0, Integer.MAX_VALUE);
+            PROTECTION_AMULET_CHARGE_TIME = builder.comment("How long will leaf shield recharge one bar (in ticks, 1 sec - 20 ticks)? [DEFAULT: 80]").defineInRange("protection_amulet_recharge_time", 80, 0, Integer.MAX_VALUE);
             builder.pop();
 
             builder.push("Amulet of Water");
@@ -90,7 +91,11 @@ public class ModConfig {
 
             builder.push("Amulet of Earth");
             EARTH_AMULET_COOLDOWN = builder.comment("How long will the Amulet of Earth be on cooldown? (in ticks, 1 sec - 20 ticks) [DEFAULT: 100]").defineInRange("earth_amulet_cooldown", 100, 0, Integer.MAX_VALUE);
-            //EARTH_AMULET_BOOST_BLACKLIST = builder.comment("Which blocks Amulet of Earth can't boost(apply bonemeal effect)? [DEFAULT: empty, accepts only block ids]").defineList("earth_amulet_boost_blacklist", ImmutableList.of(), string -> string instanceof String);
+
+            builder.push("Pacifying Amulet");
+            PACIFYING_AMULET_BREAK_COOLDOWN = builder.comment("How long will you need to wait until you can use Pacifying Amulet when broken (in ticks, 1 sec - 20 ticks) [DEFAULT: 200]").defineInRange("pacifying_amulet_break_cooldown", 200, 0, Integer.MAX_VALUE);
+            PACIFYING_AMULET_ANGER_ONBREAK = builder.comment("Anger all nearby 'angerable'(wolves, golems, etc) entities when pacifying amulet breaks? [DEFAULT: true]").define("pacifying_amulet_anger_onbreak", true);
+
             builder.pop(2);
         }
     }
@@ -167,6 +172,9 @@ public class ModConfig {
         public static int PROTECTION_AMULET_CHARGE_TIME;
         public static double WATER_AMULET_SPEED_BOOST;
         public static int EARTH_AMULET_COOLDOWN;
+        public static int PACIFYING_AMULET_BREAK_COOLDOWN;
+        public static boolean PACIFYING_AMULET_ANGER_ONBREAK;
+
         //public static List<? extends String> EARTH_AMULET_BOOST_BLACKLIST;
         public static boolean MODIFY_VANILLA_LOOT;
 
@@ -182,6 +190,8 @@ public class ModConfig {
             WATER_AMULET_SPEED_BOOST = SERVER.WATER_AMULET_SPEED_BOOST.get();
             EARTH_AMULET_COOLDOWN = SERVER.EARTH_AMULET_COOLDOWN.get();
             MODIFY_VANILLA_LOOT = SERVER.MODIFY_VANILLA_LOOT.get();
+            PACIFYING_AMULET_BREAK_COOLDOWN = SERVER.PACIFYING_AMULET_BREAK_COOLDOWN.get();
+            PACIFYING_AMULET_ANGER_ONBREAK = SERVER.PACIFYING_AMULET_ANGER_ONBREAK.get();
             //EARTH_AMULET_BOOST_BLACKLIST = SERVER.EARTH_AMULET_BOOST_BLACKLIST.get();
         }
 

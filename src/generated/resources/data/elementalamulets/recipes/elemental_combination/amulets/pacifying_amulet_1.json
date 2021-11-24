@@ -1,0 +1,38 @@
+{
+  "type": "elementalamulets:elemental_combination",
+  "elemental": {
+    "item": "elementalamulets:empty_amulet"
+  },
+  "ingredients": [
+    {
+      "item": "elementalamulets:aether_element"
+    },
+    {
+      "item": "elementalamulets:aether_element"
+    },
+    {
+      "item": "elementalamulets:aether_element"
+    },
+    {
+      "item": "minecraft:lapis_lazuli"
+    },
+    {
+      "item": "elementalamulets:aether_element"
+    },
+    {
+      "item": "elementalamulets:ancient_tablet"
+    },
+    {
+      "item": "elementalamulets:aether_element"
+    },
+    {
+      "item": "minecraft:lapis_lazuli"
+    }
+  ],
+  "combination_time": 350,
+  "tag_transfer": true,
+  "result": {
+    "item": "elementalamulets:pacifying_amulet",
+    "nbt": "{}"
+  }
+}

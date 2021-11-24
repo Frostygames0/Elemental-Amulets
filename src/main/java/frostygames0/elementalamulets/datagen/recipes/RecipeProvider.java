@@ -152,6 +152,7 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .isTagTransferred()
                 .build(consumer, modPrefix("amulets/"+ModItems.INVISIBILITY_AMULET.getId().getPath()));
         amuletRecipeSpecial(ModItems.TERRA_PROTECTION_AMULET.get().getDefaultInstance(), ModItems.EARTH_AMULET.get().getDefaultInstance(), Items.SHIELD, ModItems.EARTH_ELEMENT.get(), consumer);
+        amuletRecipeSpecial(ModItems.PACIFYING_AMULET.get().getDefaultInstance(), ModItems.EMPTY_AMULET.get().getDefaultInstance(), ModItems.ANCIENT_TABLET.get(), ModItems.AETHER_ELEMENT.get(), consumer);
 
         amuletRecipeTier2(ModItems.FIRE_AMULET.get().getDefaultInstance(), AmuletItem.getStackWithTier(new ItemStack(ModItems.FIRE_AMULET.get()), 2), Items.IRON_INGOT, ModItems.FIRE_ELEMENT.get(), consumer);
         amuletRecipeTier2(ModItems.WATER_AMULET.get().getDefaultInstance(), AmuletItem.getStackWithTier(new ItemStack(ModItems.WATER_AMULET.get()), 2), Items.IRON_INGOT, ModItems.WATER_ELEMENT.get(), consumer);
