@@ -77,7 +77,8 @@ public abstract class AmuletItem extends Item implements ICurioItem {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
 
         // Tier
-        if(this.getTier(stack) > 0) tooltip.add(new TranslationTextComponent("item.elementalamulets.common_amulet.tooltip.tier", new StringTextComponent(String.valueOf(this.getTier(stack))).withStyle(TextFormatting.YELLOW)).withStyle(TextFormatting.GOLD));
+        if(this.getTier(stack) > 0)
+            tooltip.add(new TranslationTextComponent("item.elementalamulets.common_amulet.tooltip.tier", new StringTextComponent(String.valueOf(this.getTier(stack))).withStyle(TextFormatting.YELLOW)).withStyle(TextFormatting.GOLD));
 
         // Elemental Power (Cool looking durability)
         if(stack.isDamaged()) {
@@ -184,7 +185,7 @@ public abstract class AmuletItem extends Item implements ICurioItem {
         return true;
     }
 
-    // Removes vanilla durability tooltip from tooltip list
+    // Removes vanilla durability tooltip from the tooltip list
     @Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID)
     public static class TooltipEventHandler {
         @SubscribeEvent
