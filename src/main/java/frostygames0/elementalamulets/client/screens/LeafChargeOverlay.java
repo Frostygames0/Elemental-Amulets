@@ -45,6 +45,7 @@ import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 @Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID, value = Dist.CLIENT)
 public class LeafChargeOverlay {
 
+    @SuppressWarnings("deprecation")
     @SubscribeEvent
     public static void renderLeafOverlay(RenderGameOverlayEvent.Post event) {
         Minecraft mc = Minecraft.getInstance();

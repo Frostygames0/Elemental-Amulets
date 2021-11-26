@@ -49,6 +49,7 @@ public class AmuletBeltScreen extends ContainerScreen<AmuletBeltContainer> {
         this.renderTooltip(matrixStack, mouseX, mouseY);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void renderBg(MatrixStack matrixStack, float partialTicks, int x, int y) {
         RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
