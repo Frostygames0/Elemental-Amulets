@@ -63,7 +63,7 @@ public class ElementalAmulets {
     };
 
     public ElementalAmulets() {
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus(); // Only for mod specific events
+        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
         IEventBus forgeBus = MinecraftForge.EVENT_BUS;
 
         ModItems.ITEMS.register(bus);
@@ -85,11 +85,11 @@ public class ElementalAmulets {
         bus.addListener(this::enqueueIMC);
         bus.addListener(this::commonSetup);
 
-        forgeBus.addListener(ModCommands::registerCommandsEvent); // Commands don't deserve EventBusSubscriber >:D
+        forgeBus.addListener(ModCommands::registerCommandsEvent);
         forgeBus.addListener(ModVillagers.Structures::addHouses);
     }
 
-    // use this instead, when need ResourceLocation with mod's id
+    // use this instead, when you need a ResourceLocation with mod's id
     public static ResourceLocation modPrefix(String name) {
         return new ResourceLocation(MOD_ID, name.toLowerCase(Locale.ROOT));
     }
