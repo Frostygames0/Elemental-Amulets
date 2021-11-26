@@ -22,6 +22,10 @@
  * @date 26.11.2021 18:42
  */
 @ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 package frostygames0.elementalamulets.items;
+
+import mcp.MethodsReturnNonnullByDefault;
+
 
 import javax.annotation.ParametersAreNonnullByDefault;
