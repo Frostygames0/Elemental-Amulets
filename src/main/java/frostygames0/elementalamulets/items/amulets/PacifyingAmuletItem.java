@@ -68,7 +68,7 @@ public class PacifyingAmuletItem extends AmuletItem {
                     return;
 
                 if (player.tickCount % 5 == 0) {// A little optimization so it won't call it every tick
-                    for (MobEntity mob : getAngerablesAround(player)) {
+                    for (MobEntity mob : this.getAngerablesAround(player)) {
                         if (tracker.isOnCooldown(this))
                             break;
 
