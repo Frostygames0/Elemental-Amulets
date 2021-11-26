@@ -71,7 +71,7 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
     private final IIntArray combinatorData = new IIntArray() {
         @Override
         public int get(int index) {
-            switch(index) {
+            switch (index) {
                 case 0:
                     return ElementalCombinatorTile.this.combinationTime;
                 case 1:
@@ -83,7 +83,7 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
 
         @Override
         public void set(int index, int value) {
-            switch(index) {
+            switch (index) {
                 case 0:
                     ElementalCombinatorTile.this.combinationTime = value;
                     break;
@@ -92,6 +92,7 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
                     break;
             }
         }
+
         @Override
         public int getCount() {
             return 2;
@@ -104,26 +105,26 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
 
     @Override
     public void tick() {
-        if(level != null && !level.isClientSide()) {
-            if(this.isCombining()) {
+        if (level != null && !level.isClientSide()) {
+            if (this.isCombining()) {
                 ElementalCombination recipe = this.level.getRecipeManager().getRecipeFor(ModRecipes.ELEMENTAL_COMBINATION_TYPE, new RecipeWrapper(handler), this.level).orElse(null);
-                if(this.canCombine(recipe)) {
+                if (this.canCombine(recipe)) {
                     this.totalTime = this.isFocused() ? recipe.getCombinationTime() / 2 : recipe.getCombinationTime();
                     this.combinationTime++;
-                    if(ModConfig.CachedValues.FANCY_COMBINATION) {
+                    if (ModConfig.CachedValues.FANCY_COMBINATION) {
                         if (this.combinationTime % 80 == 0) {
                             this.playSound(SoundEvents.BEACON_AMBIENT);
                             ((ServerWorld) level).sendParticles(ModParticles.COMBINATION_PARTICLE.get(), worldPosition.getX() + 0.5, worldPosition.above().getY() + 0.4, worldPosition.getZ() + 0.5, 50, 0, 0, 0, 5);
                         }
                     }
-                    if(!this.getBlockState().getValue(ElementalCombinator.COMBINING)) {
+                    if (!this.getBlockState().getValue(ElementalCombinator.COMBINING)) {
                         this.level.setBlockAndUpdate(worldPosition, this.getBlockState().setValue(ElementalCombinator.COMBINING, true));
                     }
-                    if(this.totalTime <= this.combinationTime) {
+                    if (this.totalTime <= this.combinationTime) {
                         this.stopCombination();
                         this.combine(recipe);
 
-                        if(ModConfig.CachedValues.FANCY_COMBINATION) {
+                        if (ModConfig.CachedValues.FANCY_COMBINATION) {
                             this.playSound(SoundEvents.ENCHANTMENT_TABLE_USE);
 
                             LightningBoltEntity lightbolt = EntityType.LIGHTNING_BOLT.create(level);
@@ -141,7 +142,7 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
     }
 
     private void combine(@Nullable ElementalCombination recipe) {
-        if(this.canCombine(recipe)) {
+        if (this.canCombine(recipe)) {
             ItemStack result = recipe.assemble(new RecipeWrapper(handler));
             NonNullList<ItemStack> remainingItems = recipe.getRemainingItems(new RecipeWrapper(handler));
             handler.insertItem(0, result, false);
@@ -150,8 +151,8 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
                 handler.insertItem(i, remainingItems.get(i), false); // inserting remaining items
             }
 
-            if(level instanceof ServerWorld)
-                ((ServerWorld)level).getChunkSource().chunkMap.getPlayers(new ChunkPos(worldPosition), false)
+            if (level instanceof ServerWorld)
+                ((ServerWorld) level).getChunkSource().chunkMap.getPlayers(new ChunkPos(worldPosition), false)
                         .filter(player -> player.distanceToSqr(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ()) <= 100)
                         .forEach(player -> {
                             ModCriteriaTriggers.ITEM_COMBINED.trigger(player, result, (ServerWorld) level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ());
@@ -161,7 +162,7 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
     }
 
     private boolean canCombine(@Nullable ElementalCombination recipe) {
-        if(recipe != null) {
+        if (recipe != null) {
             ItemStack result = recipe.assemble(new RecipeWrapper(handler));
             return !result.isEmpty() && handler.insertItem(0, result, true).isEmpty() && level.canSeeSky(worldPosition.above());
         }
@@ -176,7 +177,7 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
     }
 
     private void stopCombination() {
-        if(this.isCombining()) {
+        if (this.isCombining()) {
             this.combinationTime = 0;
             this.level.setBlockAndUpdate(worldPosition, this.getBlockState().setValue(ElementalCombinator.COMBINING, false));
         }
@@ -222,7 +223,7 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if(cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+        if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             return optional.cast();
         }
         return super.getCapability(cap, side);

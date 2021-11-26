@@ -54,8 +54,8 @@ public class LeafChargeOverlay {
         int posX = (event.getWindow().getGuiScaledWidth() / 2);
         int posY = event.getWindow().getGuiScaledHeight() - 12;
 
-        if(event.getType() == RenderGameOverlayEvent.ElementType.FOOD && ModConfig.CachedValues.RENDER_LEAF_CHARGE_OVERLAY) {
-            RenderSystem.color4f(1,1,1,1);
+        if (event.getType() == RenderGameOverlayEvent.ElementType.FOOD && ModConfig.CachedValues.RENDER_LEAF_CHARGE_OVERLAY) {
+            RenderSystem.color4f(1, 1, 1, 1);
 
             manager.bind(modPrefix("textures/gui/leaf_charge_overlay.png"));
 
@@ -63,7 +63,7 @@ public class LeafChargeOverlay {
                 ItemStack stack = triple.getRight();
                 TerraProtectionAmuletItem amulet = (TerraProtectionAmuletItem) stack.getItem();
 
-                int offset = posX+98;
+                int offset = posX + 98;
 
                 RenderSystem.enableBlend();
 

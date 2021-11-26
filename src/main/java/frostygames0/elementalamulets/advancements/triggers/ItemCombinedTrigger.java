@@ -32,11 +32,13 @@ import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 /**
  * Triggered when combination happens.
+ *
  * @author Frostygames0
  * @date 02.06.2021 10:19
  */
 public class ItemCombinedTrigger extends AbstractCriterionTrigger<ItemCombinedTrigger.Instance> {
     public static final ResourceLocation ID = modPrefix("item_elemental_combined");
+
     @Override
     protected Instance createInstance(JsonObject json, EntityPredicate.AndPredicate entityPredicate, ConditionArrayParser conditionsParser) {
         return new ItemCombinedTrigger.Instance(entityPredicate, ItemPredicate.fromJson(json.get("item")), LocationPredicate.fromJson(json.get("location")));

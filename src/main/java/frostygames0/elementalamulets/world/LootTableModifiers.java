@@ -44,7 +44,7 @@ import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
  * @author Frostygames0
  * @date 21.09.2021 15:47
  */
-public class LootTableModifiers{
+public class LootTableModifiers {
 
     public static void registerLootModifierSerializer(RegistryEvent.Register<GlobalLootModifierSerializer<?>> event) {
         event.getRegistry().register(new TreasureLoot.Serializer().setRegistryName(modPrefix("vanilla_dungeons_loot")));
@@ -57,6 +57,7 @@ public class LootTableModifiers{
         private final float buriedChance;
         private final float shipwreckChance;
         private final float netherChance;
+
         public TreasureLoot(ILootCondition[] conditionsIn, float desertChance, float buriedChance, float shipwreckChance, float netherChance) {
             super(conditionsIn);
             this.desertChance = desertChance;
@@ -69,7 +70,7 @@ public class LootTableModifiers{
         @Override
         protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
             List<AmuletItem> AMULETS = ModItems.getAmulets();
-            if(ModConfig.CachedValues.MODIFY_VANILLA_LOOT) {
+            if (ModConfig.CachedValues.MODIFY_VANILLA_LOOT) {
                 if (LootTables.DESERT_PYRAMID.equals(context.getQueriedLootTableId()) && RANDOM.nextDouble() <= desertChance) {
                     generatedLoot.add(AmuletItem.getStackWithTier(new ItemStack(AMULETS.get(RANDOM.nextInt(AMULETS.size()))), 1));
                 } else if (LootTables.BURIED_TREASURE.equals(context.getQueriedLootTableId()) && RANDOM.nextDouble() <= buriedChance) {

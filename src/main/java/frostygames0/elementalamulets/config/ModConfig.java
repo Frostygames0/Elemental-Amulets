@@ -32,6 +32,7 @@ public class ModConfig {
     // Server Config
     public static final ForgeConfigSpec SERVER_SPEC;
     public static final Server SERVER;
+
     static {
         final Pair<Server, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Server::new);
         SERVER_SPEC = specPair.getRight();
@@ -81,7 +82,7 @@ public class ModConfig {
             builder.pop();
 
             builder.push("Amulet of Terra-Protection");
-            PROTECTION_AMULET_REFLECT_DAMAGE_MULT = builder.comment("How much damage will Leaf Shield absorb? [DEFAULT: 0.5]") .defineInRange("protection_amulet_absorption", 0.5f, 0, Integer.MAX_VALUE);
+            PROTECTION_AMULET_REFLECT_DAMAGE_MULT = builder.comment("How much damage will Leaf Shield absorb? [DEFAULT: 0.5]").defineInRange("protection_amulet_absorption", 0.5f, 0, Integer.MAX_VALUE);
             PROTECTION_AMULET_CHARGE_TIME = builder.comment("How long will leaf shield recharge one bar (in ticks, 1 sec - 20 ticks)? [DEFAULT: 80]").defineInRange("protection_amulet_recharge_time", 80, 0, Integer.MAX_VALUE);
             builder.pop();
 
@@ -103,6 +104,7 @@ public class ModConfig {
     // Client Config
     public static final ForgeConfigSpec CLIENT_SPEC;
     public static final Client CLIENT;
+
     static {
         final Pair<Client, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Client::new);
         CLIENT_SPEC = specPair.getRight();
@@ -139,15 +141,18 @@ public class ModConfig {
 
     public static final ForgeConfigSpec COMMON_SPEC;
     public static final Common COMMON;
+
     static {
         final Pair<Common, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Common::new);
         COMMON_SPEC = specPair.getRight();
         COMMON = specPair.getLeft();
     }
+
     public static class Common {
         private final ForgeConfigSpec.BooleanValue GENERATE_CULT_TEMPLE;
         private final ForgeConfigSpec.BooleanValue GENERATE_JEWELLER_HOUSE;
         private final ForgeConfigSpec.BooleanValue GENERATE_ORES;
+
         public Common(ForgeConfigSpec.Builder builder) {
             builder.push("World generation");
             GENERATE_CULT_TEMPLE = builder.comment("Generate Cult's temple ruins? [DEFAULT: true, requires world restart]").translation("config.elementalamulets.generate_cult_temple").worldRestart().define("generate_cult_temple", true);
@@ -224,13 +229,13 @@ public class ModConfig {
 
     @SubscribeEvent
     public static void configEvent(net.minecraftforge.fml.config.ModConfig.ModConfigEvent event) {
-        if(event.getConfig().getSpec() == ModConfig.SERVER_SPEC) {
+        if (event.getConfig().getSpec() == ModConfig.SERVER_SPEC) {
             CachedValues.cacheServerConfig();
         }
-        if(event.getConfig().getSpec() == ModConfig.CLIENT_SPEC) {
+        if (event.getConfig().getSpec() == ModConfig.CLIENT_SPEC) {
             CachedValues.cacheClientConfig();
         }
-        if(event.getConfig().getSpec() == ModConfig.COMMON_SPEC) {
+        if (event.getConfig().getSpec() == ModConfig.COMMON_SPEC) {
             CachedValues.cacheCommonConfig();
         }
         // Updates config flags in patchouli

@@ -51,6 +51,7 @@ public class ElementalCombinationBuilder {
     private final List<Ingredient> ingredients = new ArrayList<>();
     private int combinationTime;
     private boolean tagTransfer;
+
     private ElementalCombinationBuilder(ItemStack item) {
         this.result = item;
     }
@@ -74,7 +75,7 @@ public class ElementalCombinationBuilder {
     }
 
     public ElementalCombinationBuilder addIngredient(ITag<Item> tag, int quantity) {
-        for(int i = 0; i < quantity; i++) {
+        for (int i = 0; i < quantity; i++) {
             this.ingredients.add(Ingredient.of(tag));
         }
         return this;
@@ -86,7 +87,7 @@ public class ElementalCombinationBuilder {
     }
 
     public ElementalCombinationBuilder addIngredient(int quantity, IItemProvider... item) {
-        for(int i = 0; i < quantity; i++) {
+        for (int i = 0; i < quantity; i++) {
             this.ingredients.add(Ingredient.of(item));
         }
         return this;
@@ -118,11 +119,12 @@ public class ElementalCombinationBuilder {
     }
 
     private void validate() {
-        if(this.elemental == null || this.elemental.getMatchingStack().isEmpty()) throw new IllegalStateException("Elemental cannot be empty!");
-        if(this.ingredients.size() > 8) throw new IllegalStateException("Elemental combinator has only 8 ingredient slots!");
-        if(this.ingredients.isEmpty()) throw new IllegalStateException("Ingredients cannot be empty!");
+        if (this.elemental == null || this.elemental.getMatchingStack().isEmpty())
+            throw new IllegalStateException("Elemental cannot be empty!");
+        if (this.ingredients.size() > 8)
+            throw new IllegalStateException("Elemental combinator has only 8 ingredient slots!");
+        if (this.ingredients.isEmpty()) throw new IllegalStateException("Ingredients cannot be empty!");
     }
-
 
 
     public static class Result implements IFinishedRecipe {
@@ -132,6 +134,7 @@ public class ElementalCombinationBuilder {
         private final ItemStack result;
         private final int combinationTime;
         private final boolean tagTransfer;
+
         public Result(ResourceLocation id, AmuletIngredient elemental, List<Ingredient> ingredients, ItemStack result, int combinationTime, boolean tagTransfer) {
             this.id = id;
             this.elemental = elemental;
@@ -148,7 +151,7 @@ public class ElementalCombinationBuilder {
 
             // Ingredients
             JsonArray array = new JsonArray();
-            for(Ingredient ingr : this.ingredients) {
+            for (Ingredient ingr : this.ingredients) {
                 array.add(ingr.toJson());
             }
             json.add("ingredients", array);
@@ -157,15 +160,15 @@ public class ElementalCombinationBuilder {
             if (this.combinationTime > 0) {
                 json.addProperty("combination_time", combinationTime);
             }
-            if(tagTransfer) {
+            if (tagTransfer) {
                 json.addProperty("tag_transfer", tagTransfer);
             }
 
             // Result
             JsonObject resultJson = new JsonObject();
             resultJson.addProperty("item", result.getItem().getRegistryName().toString());
-            if(result.getCount() > 1) resultJson.addProperty("count", result.getCount());
-            if(result.hasTag()) {
+            if (result.getCount() > 1) resultJson.addProperty("count", result.getCount());
+            if (result.hasTag()) {
                 CompoundNBT copy = result.getTag().copy();
                 if (copy.contains("Damage")) copy.remove("Damage"); // Please don't ask why am I removing damage's tag
                 resultJson.addProperty("nbt", copy.toString());
@@ -175,7 +178,7 @@ public class ElementalCombinationBuilder {
 
         @Override
         public ResourceLocation getId() {
-            return new ResourceLocation(id.getNamespace(), "elemental_combination/"+id.getPath()); // Makes any recipe go into elemental_combination folder
+            return new ResourceLocation(id.getNamespace(), "elemental_combination/" + id.getPath()); // Makes any recipe go into elemental_combination folder
         }
 
         @Override

@@ -34,11 +34,11 @@ public class InvisibilityAmuletItem extends AmuletItem {
     @Override
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
         World world = livingEntity.getCommandSenderWorld();
-        if(!world.isClientSide()) {
-            if(livingEntity.isShiftKeyDown()) {
-                if(!livingEntity.isInvisible()) livingEntity.setInvisible(true);
+        if (!world.isClientSide()) {
+            if (livingEntity.isShiftKeyDown()) {
+                if (!livingEntity.isInvisible()) livingEntity.setInvisible(true);
             } else {
-                if(!livingEntity.hasEffect(Effects.INVISIBILITY)) livingEntity.setInvisible(false);
+                if (!livingEntity.hasEffect(Effects.INVISIBILITY)) livingEntity.setInvisible(false);
             }
         }
     }
@@ -51,7 +51,7 @@ public class InvisibilityAmuletItem extends AmuletItem {
     @Override
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
         LivingEntity entity = slotContext.getWearer();
-        if(AmuletHelper.compareAmulets(stack, newStack)) {
+        if (AmuletHelper.compareAmulets(stack, newStack)) {
             if (entity.isInvisible() && !entity.hasEffect(Effects.INVISIBILITY)) {
                 entity.setInvisible(false);
             }

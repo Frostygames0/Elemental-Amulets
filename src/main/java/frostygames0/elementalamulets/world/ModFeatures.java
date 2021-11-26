@@ -41,7 +41,7 @@ import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 @Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ModFeatures {
-    public static final Lazy<ConfiguredFeature<?, ?>> ELEMENTAL_ORE = Lazy.of(() ->Feature.ORE.configured(
+    public static final Lazy<ConfiguredFeature<?, ?>> ELEMENTAL_ORE = Lazy.of(() -> Feature.ORE.configured(
             new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, ModBlocks.ELEMENTAL_ORE.get().defaultBlockState(), 9)).range(35).squared().count(5));
 
     public static void register() {
@@ -51,8 +51,9 @@ public class ModFeatures {
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void oreGeneration(BiomeLoadingEvent event) {
         BiomeGenerationSettingsBuilder gen = event.getGeneration();
-        if(!event.getCategory().equals(Biome.Category.NETHER) && !event.getCategory().equals(Biome.Category.THEEND)) {
-            if(ModConfig.CachedValues.GENERATE_ORES) gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, ModFeatures.ELEMENTAL_ORE.get());
+        if (!event.getCategory().equals(Biome.Category.NETHER) && !event.getCategory().equals(Biome.Category.THEEND)) {
+            if (ModConfig.CachedValues.GENERATE_ORES)
+                gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, ModFeatures.ELEMENTAL_ORE.get());
         }
     }
 }

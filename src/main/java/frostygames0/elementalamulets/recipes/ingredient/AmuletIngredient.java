@@ -48,7 +48,7 @@ public class AmuletIngredient extends Ingredient {
     @Override
     public boolean test(@Nullable ItemStack test) {
         if (test == null) return false;
-        if(test.getItem() instanceof AmuletItem) {
+        if (test.getItem() instanceof AmuletItem) {
             return AmuletHelper.compareAmulets(this.stack, test);
         }
         return this.stack.getItem() == test.getItem();
@@ -62,9 +62,9 @@ public class AmuletIngredient extends Ingredient {
     public JsonElement toJson() {
         JsonObject json = new JsonObject();
         json.addProperty("item", stack.getItem().getRegistryName().toString());
-        if(stack.getItem() instanceof AmuletItem) {
+        if (stack.getItem() instanceof AmuletItem) {
             AmuletItem item = (AmuletItem) stack.getItem();
-            if(item.hasTier()) {
+            if (item.hasTier()) {
                 json.addProperty("tier", item.getTier(stack));
             }
         }
@@ -75,11 +75,11 @@ public class AmuletIngredient extends Ingredient {
         String itemName = JSONUtils.getAsString(json, "item");
 
         Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemName));
-        if (item == null) throw new JsonSyntaxException("Item: "+itemName+" does not exist!");
+        if (item == null) throw new JsonSyntaxException("Item: " + itemName + " does not exist!");
         if (item instanceof AmuletItem) {
             int tier = JSONUtils.getAsInt(json, "tier", 1);
             if (tier > AmuletItem.MAX_TIER || tier < 0) {
-                throw new JsonSyntaxException("Incorrect Tier! Can't be higher than 4 and lower than 0! Your tier is "+tier);
+                throw new JsonSyntaxException("Incorrect Tier! Can't be higher than 4 and lower than 0! Your tier is " + tier);
             }
             return AmuletItem.getStackWithTier(new ItemStack(item), tier);
         }
@@ -96,16 +96,18 @@ public class AmuletIngredient extends Ingredient {
 
         @Override
         public AmuletIngredient parse(PacketBuffer buffer) {
-                return new AmuletIngredient(buffer.readItem());
-            }
-            @Override
-            public AmuletIngredient parse(JsonObject json) {
-                return new AmuletIngredient(getAmuletFromJson(json));
-            }
-            @Override
-            public void write(PacketBuffer buffer, AmuletIngredient ingredient) {
-                buffer.writeItem(ingredient.stack);
-            }
+            return new AmuletIngredient(buffer.readItem());
+        }
+
+        @Override
+        public AmuletIngredient parse(JsonObject json) {
+            return new AmuletIngredient(getAmuletFromJson(json));
+        }
+
+        @Override
+        public void write(PacketBuffer buffer, AmuletIngredient ingredient) {
+            buffer.writeItem(ingredient.stack);
         }
     }
+}
 

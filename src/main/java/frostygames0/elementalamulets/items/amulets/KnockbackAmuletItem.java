@@ -25,7 +25,7 @@ import net.minecraft.item.ItemStack;
  * @author Frostygames0
  * @date 09.10.2021 11:44
  */
-public class KnockbackAmuletItem extends AmuletItem{
+public class KnockbackAmuletItem extends AmuletItem {
     public KnockbackAmuletItem(Properties properties) {
         super(properties);
     }

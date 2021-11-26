@@ -63,7 +63,7 @@ public class ElementalCombinatorContainer extends Container {
                 this.addSlot(new SlotItemHandler(h, 9, 15, 14));
             });
         }
-        this.bindPlayerInventory(8,83);
+        this.bindPlayerInventory(8, 83);
         this.addDataSlots(data);
     }
 
@@ -75,15 +75,15 @@ public class ElementalCombinatorContainer extends Container {
     public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
         ItemStack itemStack = ItemStack.EMPTY;
         Slot slot = this.getSlot(index);
-        if(slot != null && slot.hasItem()) {
+        if (slot != null && slot.hasItem()) {
             ItemStack itemStack1 = slot.getItem();
             itemStack = itemStack1.copy();
-            if(index == 0) {
-                if(!this.moveItemStackTo(itemStack1, 10, 46, true)) {
+            if (index == 0) {
+                if (!this.moveItemStackTo(itemStack1, 10, 46, true)) {
                     return ItemStack.EMPTY;
                 }
                 slot.onQuickCraft(itemStack1, itemStack);
-            } else if(index >= 10 && index < 46) {
+            } else if (index >= 10 && index < 46) {
                 if (!this.moveItemStackTo(itemStack1, 1, 10, false)) {
                     if (index < 37) {
                         if (!this.moveItemStackTo(itemStack1, 37, 46, false)) {
@@ -97,12 +97,12 @@ public class ElementalCombinatorContainer extends Container {
                 return ItemStack.EMPTY;
             }
 
-            if(itemStack1.isEmpty()) {
+            if (itemStack1.isEmpty()) {
                 slot.set(ItemStack.EMPTY);
             } else {
                 slot.setChanged();
             }
-            if(itemStack1.getCount() == itemStack.getCount()) {
+            if (itemStack1.getCount() == itemStack.getCount()) {
                 return ItemStack.EMPTY;
             }
             slot.onTake(playerIn, itemStack1);
@@ -116,7 +116,7 @@ public class ElementalCombinatorContainer extends Container {
     }
 
     private int addSlotRange(IItemHandler handler, int index, int x, int y, int amount, int dx) {
-        for (int i = 0 ; i < amount ; i++) {
+        for (int i = 0; i < amount; i++) {
             this.addSlot(new SlotItemHandler(handler, index, x, y));
             x += dx;
             index++;
@@ -125,7 +125,7 @@ public class ElementalCombinatorContainer extends Container {
     }
 
     private int addSlotBox(IItemHandler handler, int index, int x, int y, int horAmount, int dx, int verAmount, int dy) {
-        for (int j = 0 ; j < verAmount ; j++) {
+        for (int j = 0; j < verAmount; j++) {
             index = addSlotRange(handler, index, x, y, horAmount, dx);
             y += dy;
         }

@@ -29,10 +29,10 @@ public class ModTags {
     public static final ITag.INamedTag<Item> NECKLACES = tag("necklaces");
     public static final ITag.INamedTag<Item> ELEMENTS = tag("elements");
 
-    public static final ITag.INamedTag<Item> FIRE_ELEMENT_CONVERTIBLE = forge(ElementalAmulets.MOD_ID+"/fire_element_convertible");
-    public static final ITag.INamedTag<Item> WATER_ELEMENT_CONVERTIBLE = forge(ElementalAmulets.MOD_ID+"/water_element_convertible");
-    public static final ITag.INamedTag<Item> AIR_ELEMENT_CONVERTIBLE = forge(ElementalAmulets.MOD_ID+"/air_element_convertible");
-    public static final ITag.INamedTag<Item> EARTH_ELEMENT_CONVERTIBLE = forge(ElementalAmulets.MOD_ID+"/earth_element_convertible");
+    public static final ITag.INamedTag<Item> FIRE_ELEMENT_CONVERTIBLE = forge(ElementalAmulets.MOD_ID + "/fire_element_convertible");
+    public static final ITag.INamedTag<Item> WATER_ELEMENT_CONVERTIBLE = forge(ElementalAmulets.MOD_ID + "/water_element_convertible");
+    public static final ITag.INamedTag<Item> AIR_ELEMENT_CONVERTIBLE = forge(ElementalAmulets.MOD_ID + "/air_element_convertible");
+    public static final ITag.INamedTag<Item> EARTH_ELEMENT_CONVERTIBLE = forge(ElementalAmulets.MOD_ID + "/earth_element_convertible");
 
     private static ITag.INamedTag<Item> tag(String name) {
         return ItemTags.bind(new ResourceLocation(ElementalAmulets.MOD_ID, name).toString());

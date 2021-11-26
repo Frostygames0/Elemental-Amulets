@@ -58,7 +58,7 @@ public class ElementalCombinationCategory implements IRecipeCategory<ElementalCo
 
     public ElementalCombinationCategory(IGuiHelper helper) {
         this.background = helper.drawableBuilder(ElementalCombinatorScreen.GUI, 6, 5, 149, 74)
-        .addPadding(0, 10, 0, 0).build();
+                .addPadding(0, 10, 0, 0).build();
         this.icon = helper.createDrawableIngredient(new ItemStack(ModBlocks.ELEMENTAL_COMBINATOR.get()));
         this.cachedArrows = CacheBuilder.newBuilder()
                 .maximumSize(25)
@@ -74,7 +74,7 @@ public class ElementalCombinationCategory implements IRecipeCategory<ElementalCo
 
     private IDrawableAnimated getArrow(ElementalCombination recipe) {
         int combinationTime = recipe.getCombinationTime();
-        if(combinationTime < 1) {
+        if (combinationTime < 1) {
             combinationTime = ElementalCombination.DEFAULT_COMBINATION;
         }
         return this.cachedArrows.getUnchecked(combinationTime);
@@ -129,7 +129,7 @@ public class ElementalCombinationCategory implements IRecipeCategory<ElementalCo
         guiItemStacks.init(6, true, 28, 52);
         guiItemStacks.init(7, true, 8, 48);
         guiItemStacks.init(8, true, 4, 28);
-        guiItemStacks.init(9, true,8, 8);
+        guiItemStacks.init(9, true, 8, 8);
         // Output slot
         guiItemStacks.init(OUTPUT_SLOT, false, 127, 28);
 
@@ -145,14 +145,14 @@ public class ElementalCombinationCategory implements IRecipeCategory<ElementalCo
         this.getArrow(recipe).draw(matrixStack, 84, 29);
 
         // Drawing text
-        ITextComponent cooldown = new TranslationTextComponent("jei.elementalamulets.cooldown", recipe.getCombinationTime()/20.0f);
+        ITextComponent cooldown = new TranslationTextComponent("jei.elementalamulets.cooldown", recipe.getCombinationTime() / 20.0f);
         Minecraft.getInstance().font.draw(matrixStack, cooldown, 4, 77, 0xFF808080);
         matrixStack.popPose();
     }
 
     @Override
     public List<ITextComponent> getTooltipStrings(ElementalCombination recipe, double mouseX, double mouseY) {
-        if(mouseX >= 139 && mouseX <= 148 && mouseY <= 5 && mouseY >= 0) {
+        if (mouseX >= 139 && mouseX <= 148 && mouseY <= 5 && mouseY >= 0) {
             return Collections.singletonList(new TranslationTextComponent("jei.elementalamulets.shapeless"));
         }
         return Collections.emptyList();

@@ -36,6 +36,7 @@ import java.util.List;
 
 /**
  * I made this class because I need elements to have description and multi-name
+ *
  * @author Frostygames0
  * @date 01.06.2021 17:40
  */
@@ -48,7 +49,7 @@ public class ElementItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
-        tooltip.add(new TranslationTextComponent(this.getOrCreateDescriptionId()+".tooltip").withStyle(TextFormatting.GRAY));
+        tooltip.add(new TranslationTextComponent(this.getOrCreateDescriptionId() + ".tooltip").withStyle(TextFormatting.GRAY));
     }
 
     @Override

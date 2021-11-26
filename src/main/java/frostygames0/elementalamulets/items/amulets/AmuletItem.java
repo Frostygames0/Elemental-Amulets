@@ -58,11 +58,11 @@ import java.util.ListIterator;
 
 // TODO Remake this getTier nonsense with hasTier
 public abstract class AmuletItem extends Item implements ICurioItem {
-    public static final String TIER_TAG = ElementalAmulets.MOD_ID+":tier";
+    public static final String TIER_TAG = ElementalAmulets.MOD_ID + ":tier";
     public static final int MAX_TIER = 4;
 
     private final boolean hasTier;
-    
+
     public AmuletItem(Properties properties, boolean hasTier) {
         super(properties);
         this.hasTier = hasTier;
@@ -72,16 +72,25 @@ public abstract class AmuletItem extends Item implements ICurioItem {
         this(properties, true);
     }
 
+    public static ItemStack getStackWithTier(ItemStack stack, int tier) {
+        if (stack.getItem() instanceof AmuletItem) {
+            if (((AmuletItem) stack.getItem()).hasTier) {
+                NBTUtil.putInteger(stack, TIER_TAG, MathHelper.clamp(tier, 1, MAX_TIER));
+            }
+        }
+        return stack;
+    }
+
     @Override
     public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
 
         // Tier
-        if(this.getTier(stack) > 0)
+        if (this.getTier(stack) > 0)
             tooltip.add(new TranslationTextComponent("item.elementalamulets.common_amulet.tooltip.tier", new StringTextComponent(String.valueOf(this.getTier(stack))).withStyle(TextFormatting.YELLOW)).withStyle(TextFormatting.GOLD));
 
         // Elemental Power (Cool looking durability)
-        if(stack.isDamaged()) {
+        if (stack.isDamaged()) {
             tooltip.add(new TranslationTextComponent("item.elementalamulets.common_amulet.elemental_power",
                     new StringTextComponent(
                             stack.getMaxDamage() - stack.getDamageValue() + " / " + stack.getMaxDamage()).withStyle(TextFormatting.YELLOW)
@@ -89,7 +98,7 @@ public abstract class AmuletItem extends Item implements ICurioItem {
         }
 
         // Tooltip
-        tooltip.add(new TranslationTextComponent(getOrCreateDescriptionId()+".tooltip").withStyle(TextFormatting.GRAY));
+        tooltip.add(new TranslationTextComponent(getOrCreateDescriptionId() + ".tooltip").withStyle(TextFormatting.GRAY));
     }
 
     @Override
@@ -99,9 +108,9 @@ public abstract class AmuletItem extends Item implements ICurioItem {
 
     @Override
     public void onEquip(SlotContext slotContext, ItemStack prevStack, ItemStack stack) {
-        if(prevStack.getItem() != stack.getItem()) {
+        if (prevStack.getItem() != stack.getItem()) {
             LivingEntity entity = slotContext.getWearer();
-            if(!entity.level.isClientSide() && entity instanceof ServerPlayerEntity) {
+            if (!entity.level.isClientSide() && entity instanceof ServerPlayerEntity) {
                 ServerPlayerEntity player = (ServerPlayerEntity) entity;
 
                 ModCriteriaTriggers.SUCCESS_USE.trigger(player, stack);
@@ -115,18 +124,9 @@ public abstract class AmuletItem extends Item implements ICurioItem {
         return getStackWithTier(new ItemStack(this), 1);
     }
 
-    public static ItemStack getStackWithTier(ItemStack stack, int tier) {
-        if(stack.getItem() instanceof AmuletItem) {
-            if(((AmuletItem) stack.getItem()).hasTier) {
-                NBTUtil.putInteger(stack, TIER_TAG, MathHelper.clamp(tier, 1, MAX_TIER));
-            }
-        }
-        return stack;
-    }
-
     @Override
     public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
-        if(!this.hasTier) super.fillItemCategory(group, items);
+        if (!this.hasTier) super.fillItemCategory(group, items);
         else {
             if (allowdedIn(group)) {
                 for (int i = 1; i <= MAX_TIER; ++i) {
@@ -164,11 +164,11 @@ public abstract class AmuletItem extends Item implements ICurioItem {
     @Nonnull
     @Override
     public ICurio.SoundInfo getEquipSound(SlotContext slotContext, ItemStack stack) {
-        return new ICurio.SoundInfo(SoundEvents.ARMOR_EQUIP_GOLD, 1f,1f);
+        return new ICurio.SoundInfo(SoundEvents.ARMOR_EQUIP_GOLD, 1f, 1f);
     }
 
     public int getTier(ItemStack stack) {
-        if(this.hasTier()) {
+        if (this.hasTier()) {
             return NBTUtil.getInteger(stack, TIER_TAG);
         }
         return 0;
@@ -191,11 +191,11 @@ public abstract class AmuletItem extends Item implements ICurioItem {
         @SubscribeEvent
         public static void onTooltipEvent(final ItemTooltipEvent event) {
             ItemStack stack = event.getItemStack();
-            if(stack.getItem() instanceof AmuletItem) {
-                for(ListIterator<ITextComponent> iterator = event.getToolTip().listIterator(); iterator.hasNext();) {
+            if (stack.getItem() instanceof AmuletItem) {
+                for (ListIterator<ITextComponent> iterator = event.getToolTip().listIterator(); iterator.hasNext(); ) {
                     ITextComponent tooltip = iterator.next();
-                    if(tooltip instanceof TranslationTextComponent) {
-                        if(((TranslationTextComponent)tooltip).getKey().equals("item.durability")) {
+                    if (tooltip instanceof TranslationTextComponent) {
+                        if (((TranslationTextComponent) tooltip).getKey().equals("item.durability")) {
                             iterator.remove();
                         }
                     }

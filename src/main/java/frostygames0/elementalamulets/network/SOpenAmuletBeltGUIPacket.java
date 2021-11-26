@@ -42,7 +42,7 @@ public class SOpenAmuletBeltGUIPacket {
         ctx.enqueueWork(() -> {
             ServerPlayerEntity sender = ctx.getSender();
             ItemStack stack = CuriosApi.getCuriosHelper().findEquippedCurio(ModItems.AMULET_BELT.get(), sender).map(triple -> triple.right).orElse(ItemStack.EMPTY);
-            if(!stack.isEmpty()) {
+            if (!stack.isEmpty()) {
                 NetworkHooks.openGui(sender, new SimpleNamedContainerProvider((id, playerInventory, player) -> new AmuletBeltContainer(id, playerInventory, stack), new TranslationTextComponent(stack.getDescriptionId())), buf -> buf.writeItem(stack));
             }
         });

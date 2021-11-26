@@ -42,7 +42,7 @@ import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
  * @author Frostygames0
  * @date 10.10.2021 11:33
  */
-public class LeafShieldLayer<T extends LivingEntity, M extends EntityModel<T>> extends LayerRenderer<T,M> {
+public class LeafShieldLayer<T extends LivingEntity, M extends EntityModel<T>> extends LayerRenderer<T, M> {
 
     private final LeafShield<T> leafShieldModel = new LeafShield<>();
 
@@ -56,7 +56,7 @@ public class LeafShieldLayer<T extends LivingEntity, M extends EntityModel<T>> e
 
         AmuletHelper.getAmuletInSlotOrBelt(ModItems.TERRA_PROTECTION_AMULET.get(), pLivingEntity).ifPresent(triple -> {
             ItemStack stack = triple.getRight();
-            if(!pLivingEntity.isInvisible()) {
+            if (!pLivingEntity.isInvisible()) {
                 if (ModConfig.CachedValues.RENDER_LEAF_SHIELD && ((TerraProtectionAmuletItem) stack.getItem()).canProtect(stack)) {
                     pMatrixStack.pushPose();
 

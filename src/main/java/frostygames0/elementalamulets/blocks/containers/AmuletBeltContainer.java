@@ -48,8 +48,8 @@ public class AmuletBeltContainer extends Container {
 
     @Override
     public ItemStack quickMoveStack(PlayerEntity pPlayer, int index) {
-        ItemStack itemStack = ItemStack.EMPTY;
-        /*Slot slot = this.getSlot(index);
+        /*ItemStack itemStack = ItemStack.EMPTY;
+        Slot slot = this.getSlot(index);
         if(slot != null && slot.hasItem()) {
             ItemStack itemStack1 = slot.getItem();
             itemStack = itemStack1.copy();
@@ -78,7 +78,7 @@ public class AmuletBeltContainer extends Container {
             }
             slot.onTake(pPlayer, itemStack1);
         }*/
-        return itemStack;
+        return ItemStack.EMPTY;
     }
 
     @Override
@@ -87,7 +87,7 @@ public class AmuletBeltContainer extends Container {
     }
 
     private int addSlotRange(IItemHandler handler, int index1, int x, int y, int amount, int dx) {
-        for (int i = 0 ; i < amount ; i++) {
+        for (int i = 0; i < amount; i++) {
             this.addSlot(new SlotItemHandler(handler, index1, x, y));
             x += dx;
             index1++;
@@ -96,7 +96,7 @@ public class AmuletBeltContainer extends Container {
     }
 
     private int addSlotBox(IItemHandler handler, int index, int x, int y, int horAmount, int dx, int verAmount, int dy) {
-        for (int j = 0 ; j < verAmount ; j++) {
+        for (int j = 0; j < verAmount; j++) {
             index = addSlotRange(handler, index, x, y, horAmount, dx);
             y += dy;
         }

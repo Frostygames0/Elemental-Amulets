@@ -36,18 +36,19 @@ import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 public class WaterAmuletItem extends AmuletItem {
     public static UUID MODIFIER_UUID = UUID.fromString("88f5e6ea-c12f-4cfd-b3f4-40d9ca8cdfad");
+
     public WaterAmuletItem(Properties properties) {
         super(properties, true);
     }
 
     @Override
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
-        if(!livingEntity.level.isClientSide()) {
+        if (!livingEntity.level.isClientSide()) {
             ModifiableAttributeInstance att = livingEntity.getAttribute(ForgeMod.SWIM_SPEED.get());
             AttributeModifier attMod = new AttributeModifier(MODIFIER_UUID, modPrefix("swim_speed_boost").toString(),
                     this.getSwimSpeed(stack), AttributeModifier.Operation.MULTIPLY_TOTAL);
-            if(livingEntity.isUnderWater()) {
-                if(livingEntity.isSwimming()) {
+            if (livingEntity.isUnderWater()) {
+                if (livingEntity.isSwimming()) {
                     AttributeUtil.applyModifier(att, attMod);
                 } else {
                     AttributeUtil.removeModifier(att, attMod);
@@ -65,6 +66,6 @@ public class WaterAmuletItem extends AmuletItem {
     }
 
     public float getSwimSpeed(ItemStack stack) {
-        return (float) ModConfig.CachedValues.WATER_AMULET_SPEED_BOOST*this.getTier(stack);
+        return (float) ModConfig.CachedValues.WATER_AMULET_SPEED_BOOST * this.getTier(stack);
     }
 }

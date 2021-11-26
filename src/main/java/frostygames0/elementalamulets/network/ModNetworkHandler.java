@@ -48,7 +48,8 @@ public class ModNetworkHandler {
                 PROTOCOL_NETWORK::equals);
 
         INSTANCE.messageBuilder(SOpenAmuletBeltGUIPacket.class, nextID())
-                .encoder(((cOpenAmuletBeltGUIPacket, packetBuffer) -> {}))
+                .encoder(((cOpenAmuletBeltGUIPacket, packetBuffer) -> {
+                }))
                 .decoder(buf -> new SOpenAmuletBeltGUIPacket())
                 .consumer(SOpenAmuletBeltGUIPacket::handle)
                 .add();

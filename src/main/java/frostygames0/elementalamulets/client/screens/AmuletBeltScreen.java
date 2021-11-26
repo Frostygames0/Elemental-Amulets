@@ -36,9 +36,10 @@ import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
  */
 public class AmuletBeltScreen extends ContainerScreen<AmuletBeltContainer> {
     public static final ResourceLocation GUI = modPrefix("textures/gui/amulet_belt_gui.png");
+
     public AmuletBeltScreen(AmuletBeltContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
-        this.titleLabelY = this.topPos+43;
+        this.titleLabelY = this.topPos + 43;
     }
 
     @Override

@@ -60,7 +60,7 @@ import java.util.UUID;
  * @date 10.09.2021 23:51
  */
 public class AmuletBeltItem extends Item implements ICurioItem {
-    private static final String WEARER_UUID_TAG = ElementalAmulets.MOD_ID+":wearer_UUID";
+    private static final String WEARER_UUID_TAG = ElementalAmulets.MOD_ID + ":wearer_UUID";
 
     public AmuletBeltItem(Properties properties) {
         super(properties);
@@ -80,7 +80,7 @@ public class AmuletBeltItem extends Item implements ICurioItem {
 
     @Override
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
-        if(livingEntity instanceof PlayerEntity) {
+        if (livingEntity instanceof PlayerEntity) {
             stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
                 ICuriosHelper helper = CuriosApi.getCuriosHelper();
                 for (int i = 0; i < h.getSlots(); i++) {
@@ -107,7 +107,7 @@ public class AmuletBeltItem extends Item implements ICurioItem {
 
     @Override
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
-        if(slotContext.getWearer() instanceof PlayerEntity) {
+        if (slotContext.getWearer() instanceof PlayerEntity) {
             if (!compareBelts(newStack, stack)) {
                 stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
                     ICuriosHelper helper = CuriosApi.getCuriosHelper();
@@ -129,7 +129,7 @@ public class AmuletBeltItem extends Item implements ICurioItem {
     @Override
     public void onEquip(SlotContext slotContext, ItemStack prevStack, ItemStack stack) {
         LivingEntity livingEntity = slotContext.getWearer();
-        if(livingEntity instanceof PlayerEntity) {
+        if (livingEntity instanceof PlayerEntity) {
             if (!compareBelts(prevStack, stack)) {
                 stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
                     ICuriosHelper helper = CuriosApi.getCuriosHelper();
@@ -157,7 +157,7 @@ public class AmuletBeltItem extends Item implements ICurioItem {
     private static boolean compareBelts(ItemStack stack, ItemStack other) {
         Item amulet = stack.getItem();
         Item secondAmulet = other.getItem();
-        if(!(amulet instanceof AmuletBeltItem) || !(secondAmulet instanceof AmuletBeltItem))
+        if (!(amulet instanceof AmuletBeltItem) || !(secondAmulet instanceof AmuletBeltItem))
             return false;
         return ItemStack.tagMatches(stack, other);
     }
@@ -174,13 +174,13 @@ public class AmuletBeltItem extends Item implements ICurioItem {
             @Override
             public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
                 boolean sameAmulet = false; // Checks if there is same amulet already in belt
-                for(int i = 0; i < this.getSlots(); i++) {
-                    if(getStackInSlot(i).getItem() == stack.getItem()) {
+                for (int i = 0; i < this.getSlots(); i++) {
+                    if (getStackInSlot(i).getItem() == stack.getItem()) {
                         sameAmulet = true;
                         break;
                     }
                 }
-                return stack.getItem() instanceof AmuletItem  && !sameAmulet ? super.insertItem(slot, stack, simulate) : stack;
+                return stack.getItem() instanceof AmuletItem && !sameAmulet ? super.insertItem(slot, stack, simulate) : stack;
             }
 
             @Nonnull
@@ -188,11 +188,11 @@ public class AmuletBeltItem extends Item implements ICurioItem {
             public ItemStack extractItem(int slot, int amount, boolean simulate) {
                 ItemStack amulet = getStackInSlot(slot);
                 MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
-                if(server != null) {
+                if (server != null) {
                     UUID UUID = NBTUtil.getUUID(stack, WEARER_UUID_TAG);
                     PlayerEntity wearer = server.getPlayerList().getPlayer(UUID);
                     if (wearer != null) {
-                        if(CuriosApi.getCuriosHelper().findEquippedCurio(stack.getItem(), wearer).map(ImmutableTriple::getRight).orElse(ItemStack.EMPTY) == stack) { // Workaround so It won't unEquip when not worn.
+                        if (CuriosApi.getCuriosHelper().findEquippedCurio(stack.getItem(), wearer).map(ImmutableTriple::getRight).orElse(ItemStack.EMPTY) == stack) { // Workaround so It won't unEquip when not worn.
                             Item itemAmulet = amulet.getItem();
                             LazyOptional<ICurio> curio = CuriosApi.getCuriosHelper().getCurio(amulet);
                             if (curio.isPresent() && itemAmulet instanceof AmuletItem) {
@@ -224,7 +224,7 @@ public class AmuletBeltItem extends Item implements ICurioItem {
             @Nonnull
             @Override
             public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-                if(cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+                if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
                     return optional.cast();
                 }
                 return LazyOptional.empty();
@@ -242,8 +242,8 @@ public class AmuletBeltItem extends Item implements ICurioItem {
     @Override
     public CompoundNBT writeSyncData(ItemStack stack) {
         IItemHandler handler = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
-        if(handler instanceof ItemStackHandler) {
-            return ((ItemStackHandler)handler).serializeNBT();
+        if (handler instanceof ItemStackHandler) {
+            return ((ItemStackHandler) handler).serializeNBT();
         }
         return new CompoundNBT();
     }
@@ -251,8 +251,8 @@ public class AmuletBeltItem extends Item implements ICurioItem {
     @Override
     public void readSyncData(CompoundNBT compound, ItemStack stack) {
         stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-            if(h instanceof ItemStackHandler) {
-                ((ItemStackHandler)h).deserializeNBT(compound);
+            if (h instanceof ItemStackHandler) {
+                ((ItemStackHandler) h).deserializeNBT(compound);
             }
         });
     }

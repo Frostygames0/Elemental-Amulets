@@ -42,22 +42,22 @@ public class ElementalCombinationProcessor implements IComponentProcessor {
 
     @Override
     public IVariable process(String key) {
-        if(recipe != null) {
+        if (recipe != null) {
             if (key.startsWith("item")) {
                 int index = Integer.parseInt(key.substring(4)) - 1;
-                if(!(index >= recipe.getOnlyIngredients().size())) {
+                if (!(index >= recipe.getOnlyIngredients().size())) {
                     Ingredient ingredient = recipe.getOnlyIngredients().get(index);
                     return IVariable.wrapList(Arrays.stream(ingredient.getItems()).map(IVariable::from).collect(Collectors.toList()));
                 }
                 return IVariable.from(ItemStack.EMPTY);
             } else if (key.equals("elemental")) {
                 return IVariable.from(recipe.getElemental().getMatchingStack());
-            } else if(key.equals("result")) {
+            } else if (key.equals("result")) {
                 return IVariable.from(recipe.getResultItem());
-            } else if(key.equals("icon")) {
+            } else if (key.equals("icon")) {
                 return IVariable.from(recipe.getToastSymbol());
-            } else if(key.equals("combination_time")) {
-                return IVariable.wrap(recipe.getCombinationTime()/20);
+            } else if (key.equals("combination_time")) {
+                return IVariable.wrap(recipe.getCombinationTime() / 20);
             }
         }
         return null;

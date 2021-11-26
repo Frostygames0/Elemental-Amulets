@@ -36,7 +36,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
  */
 public class PacifyingAmuletEffect {
     static void onLivingHurt(LivingHurtEvent event) {
-        if(event.getEntityLiving() instanceof PlayerEntity) {
+        if (event.getEntityLiving() instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) event.getEntityLiving();
             if (!player.level.isClientSide()) {
                 AmuletHelper.getAmuletInSlotOrBelt(ModItems.PACIFYING_AMULET.get(), player).ifPresent(triple -> {
@@ -44,9 +44,9 @@ public class PacifyingAmuletEffect {
                     PacifyingAmuletItem item = (PacifyingAmuletItem) amulet.getItem();
 
                     Entity damager = event.getSource().getEntity();
-                    if(damager instanceof PlayerEntity) {
+                    if (damager instanceof PlayerEntity) {
                         PlayerEntity damagingPlayer = (PlayerEntity) damager;
-                        if(damagingPlayer.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 100, item.getTier(amulet)))) {
+                        if (damagingPlayer.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 100, item.getTier(amulet)))) {
                             damagingPlayer.displayClientMessage(new TranslationTextComponent("item.elementalamulets.tired"), true);
                         }
                     }

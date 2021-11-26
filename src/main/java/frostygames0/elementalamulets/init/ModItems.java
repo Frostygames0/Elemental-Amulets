@@ -103,13 +103,12 @@ public class ModItems {
 
     public static List<AmuletItem> getAmulets() {
         List<AmuletItem> items = new ArrayList<>();
-        for(RegistryObject<Item> reg : ITEMS.getEntries()) {
+        for (RegistryObject<Item> reg : ITEMS.getEntries()) {
             Item item = reg.get();
-            if(item instanceof AmuletItem) items.add((AmuletItem) item);
+            if (item instanceof AmuletItem) items.add((AmuletItem) item);
         }
         return items;
     }
-
 
 
 }

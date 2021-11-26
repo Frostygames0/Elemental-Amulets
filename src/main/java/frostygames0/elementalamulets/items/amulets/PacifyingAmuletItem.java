@@ -59,27 +59,27 @@ public class PacifyingAmuletItem extends AmuletItem {
     @Override
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
         World world = livingEntity.level;
-        if(!world.isClientSide()) {
-            if(livingEntity instanceof PlayerEntity) {
+        if (!world.isClientSide()) {
+            if (livingEntity instanceof PlayerEntity) {
                 PlayerEntity player = (PlayerEntity) livingEntity;
                 CooldownTracker tracker = player.getCooldowns();
 
-                if(tracker.isOnCooldown(this))
+                if (tracker.isOnCooldown(this))
                     return;
 
                 if (player.tickCount % 5 == 0) {// A little optimization so it won't call it every tick
                     for (MobEntity mob : getAngerablesAround(player)) {
-                        if(tracker.isOnCooldown(this))
+                        if (tracker.isOnCooldown(this))
                             break;
 
                         IAngerable angerable = (IAngerable) mob;
 
                         GoalSelector selector = mob.targetSelector;
-                        for(PrioritizedGoal priGoal : selector.getRunningGoals().collect(Collectors.toList())) {
-                            if(priGoal.getGoal() instanceof TargetGoal) {
+                        for (PrioritizedGoal priGoal : selector.getRunningGoals().collect(Collectors.toList())) {
+                            if (priGoal.getGoal() instanceof TargetGoal) {
                                 TargetGoal goal = (TargetGoal) priGoal.getGoal();
 
-                                if(((AccessorTargetGoal)goal).getTargetMob() == player)
+                                if (((AccessorTargetGoal) goal).getTargetMob() == player)
                                     // This should stop mobs that use TargetGoal to be angry after they stop being angry, TODO maybe there is a better way?
                                     priGoal.stop();
                             }
@@ -88,7 +88,7 @@ public class PacifyingAmuletItem extends AmuletItem {
                         stack.hurtAndBreak(1, player, livingEnt -> this.onAmuletBreak(identifier, index, player));
 
                         // Makes heart particles around entity :>
-                        ((ServerWorld)world).sendParticles(ParticleTypes.HEART, mob.getX(), mob.getY(), mob.getZ(), 20, 0, 0, 0, 1);
+                        ((ServerWorld) world).sendParticles(ParticleTypes.HEART, mob.getX(), mob.getY(), mob.getZ(), 20, 0, 0, 0, 1);
                     }
                 }
             }
@@ -108,14 +108,14 @@ public class PacifyingAmuletItem extends AmuletItem {
 
     // Call this in ItemStack#hurtAndBreak's consumer
     public void onAmuletBreak(String identifier, int index, LivingEntity entity) {
-        if(!ModConfig.CachedValues.PACIFYING_AMULET_ANGER_ONBREAK)
+        if (!ModConfig.CachedValues.PACIFYING_AMULET_ANGER_ONBREAK)
             return;
 
-        for(MobEntity mob : getAngerablesAround(entity)) {
+        for (MobEntity mob : getAngerablesAround(entity)) {
             IAngerable angerable = (IAngerable) mob;
             angerable.setTarget(entity);
-            if(entity instanceof PlayerEntity) {
-                ((PlayerEntity)entity).getCooldowns().addCooldown(this, ModConfig.CachedValues.PACIFYING_AMULET_BREAK_COOLDOWN);
+            if (entity instanceof PlayerEntity) {
+                ((PlayerEntity) entity).getCooldowns().addCooldown(this, ModConfig.CachedValues.PACIFYING_AMULET_BREAK_COOLDOWN);
             }
 
             CuriosApi.getCuriosHelper().onBrokenCurio(identifier, index, entity);
@@ -125,7 +125,7 @@ public class PacifyingAmuletItem extends AmuletItem {
     private Iterable<MobEntity> getAngerablesAround(LivingEntity target) {
         BlockPos position = target.blockPosition();
         return target.level.getLoadedEntitiesOfClass(MobEntity.class, new AxisAlignedBB(position.subtract(new Vector3i(6, 5, 6)), position.offset(new Vector3i(6, 5, 6))), entity -> {
-            if(entity instanceof IAngerable) {
+            if (entity instanceof IAngerable) {
                 IAngerable angerable = (IAngerable) entity;
                 return entity.canSee(target) && angerable.getPersistentAngerTarget() != null && angerable.getPersistentAngerTarget().equals(target.getUUID());
             }

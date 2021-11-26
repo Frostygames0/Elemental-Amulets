@@ -28,6 +28,7 @@ import net.minecraft.advancements.CriteriaTriggers;
 public class ModCriteriaTriggers {
     public static final ItemSuccessUseTrigger SUCCESS_USE = new ItemSuccessUseTrigger();
     public static final ItemCombinedTrigger ITEM_COMBINED = new ItemCombinedTrigger();
+
     public static void register() {
         CriteriaTriggers.register(SUCCESS_USE);
         CriteriaTriggers.register(ITEM_COMBINED);

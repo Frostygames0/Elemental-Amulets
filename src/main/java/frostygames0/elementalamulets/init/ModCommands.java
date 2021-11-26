@@ -55,20 +55,21 @@ public class ModCommands {
     }
 
     private static class GiveAmuletCommand {
-        private static final DynamicCommandExceptionType ISNT_AMULET = new DynamicCommandExceptionType(item -> new TranslationTextComponent("commands.elementalamulets.give.failure", ((ItemStack)item).getDisplayName()));
+        private static final DynamicCommandExceptionType ISNT_AMULET = new DynamicCommandExceptionType(item -> new TranslationTextComponent("commands.elementalamulets.give.failure", ((ItemStack) item).getDisplayName()));
+
         private static ArgumentBuilder<CommandSource, ?> register() {
             return Commands.literal("give")
                     .requires(s -> s.hasPermission(2))
                     .then(Commands.argument("player", EntityArgument.players())
-                    .then(Commands.argument("amulet", ItemArgument.item()).suggests((ctx, builder) -> ISuggestionProvider.suggest(ModItems.getAmulets().stream().map(item -> item.getRegistryName().toString()), builder)).executes(ctx -> execute(ctx.getSource(), EntityArgument.getPlayers(ctx, "player"), ItemArgument.getItem(ctx, "amulet"), 1))
-                    .then(Commands.argument("tier", IntegerArgumentType.integer(1, AmuletItem.MAX_TIER))
-                    .executes(ctx -> execute(ctx.getSource(), EntityArgument.getPlayers(ctx, "player"), ItemArgument.getItem(ctx, "amulet"), IntegerArgumentType.getInteger(ctx, "tier"))))));
+                            .then(Commands.argument("amulet", ItemArgument.item()).suggests((ctx, builder) -> ISuggestionProvider.suggest(ModItems.getAmulets().stream().map(item -> item.getRegistryName().toString()), builder)).executes(ctx -> execute(ctx.getSource(), EntityArgument.getPlayers(ctx, "player"), ItemArgument.getItem(ctx, "amulet"), 1))
+                                    .then(Commands.argument("tier", IntegerArgumentType.integer(1, AmuletItem.MAX_TIER))
+                                            .executes(ctx -> execute(ctx.getSource(), EntityArgument.getPlayers(ctx, "player"), ItemArgument.getItem(ctx, "amulet"), IntegerArgumentType.getInteger(ctx, "tier"))))));
         }
 
         private static int execute(CommandSource source, Collection<ServerPlayerEntity> players, ItemInput item, int tier) throws CommandSyntaxException {
-            for(ServerPlayerEntity player : players) {
+            for (ServerPlayerEntity player : players) {
                 ItemStack stack = AmuletItem.getStackWithTier(item.createItemStack(1, false), tier);
-                if(item.getItem() instanceof AmuletItem) {
+                if (item.getItem() instanceof AmuletItem) {
                     ItemHandlerHelper.giveItemToPlayer(player, stack);
                 } else {
                     throw ISNT_AMULET.create(stack);

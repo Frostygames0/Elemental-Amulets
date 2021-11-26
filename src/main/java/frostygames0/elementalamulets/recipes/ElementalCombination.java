@@ -61,12 +61,13 @@ public class ElementalCombination implements IRecipe<IInventory> {
         this.combinationTime = combinationTime;
         this.tagTransfer = tagTransfer;
     }
+
     @Override
     public boolean matches(IInventory inv, World worldIn) {
         List<ItemStack> inputs = new ArrayList<>();
-        for(int i = 2; i < inv.getContainerSize(); ++i) {
+        for (int i = 2; i < inv.getContainerSize(); ++i) {
             ItemStack stack = inv.getItem(i);
-            if(!stack.isEmpty()) {
+            if (!stack.isEmpty()) {
                 inputs.add(stack);
             }
 
@@ -78,9 +79,9 @@ public class ElementalCombination implements IRecipe<IInventory> {
     @Override
     public ItemStack assemble(IInventory inv) {
         ItemStack stack = this.result.copy();
-        if(this.tagTransfer) {
+        if (this.tagTransfer) {
             CompoundNBT nbt = inv.getItem(1).getTag();
-            if(nbt != null) {
+            if (nbt != null) {
                 CompoundNBT tag = nbt.copy();
                 if (NBTUtil.isSafeToGet(stack, AmuletItem.TIER_TAG))
                     tag.putInt(AmuletItem.TIER_TAG, NBTUtil.getInteger(stack, AmuletItem.TIER_TAG));

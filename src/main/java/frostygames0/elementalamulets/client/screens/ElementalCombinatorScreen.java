@@ -43,14 +43,14 @@ public class ElementalCombinatorScreen extends ContainerScreen<ElementalCombinat
     public ElementalCombinatorScreen(ElementalCombinatorContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
         super(screenContainer, inv, titleIn);
         this.inventoryLabelX += 92;
-        this.titleLabelX = this.leftPos+85;
-        this.titleLabelY = this.topPos+8;
+        this.titleLabelX = this.leftPos + 85;
+        this.titleLabelY = this.topPos + 8;
     }
 
     @Override
     protected void init() {
         super.init();
-        this.combineButton = addButton(new CombinationButton(this.leftPos+132, this.topPos+57,
+        this.combineButton = addButton(new CombinationButton(this.leftPos + 132, this.topPos + 57,
                 button -> ModNetworkHandler.sendToServer(new SCombinePacket(menu.getPos()))));
         this.combineButton.active = this.isCombining();
     }
@@ -68,6 +68,7 @@ public class ElementalCombinatorScreen extends ContainerScreen<ElementalCombinat
         this.renderTooltip(matrixStack, mouseX, mouseY);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void renderBg(MatrixStack matrixStack, float partialTicks, int x, int y) {
         RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
@@ -94,9 +95,9 @@ public class ElementalCombinatorScreen extends ContainerScreen<ElementalCombinat
             Minecraft.getInstance().getTextureManager().bind(GUI);
             int yOff = 18;
 
-            if(!this.active) {
+            if (!this.active) {
                 yOff = 32;
-            } else if(this.isHovered) {
+            } else if (this.isHovered) {
                 yOff = 46;
             }
 

@@ -27,9 +27,11 @@ import javax.annotation.Nonnull;
 
 public class AutomationItemHandler implements IItemHandlerModifiable {
     private final IItemHandlerModifiable handler;
+
     public AutomationItemHandler(IItemHandlerModifiable handler) {
         this.handler = handler;
     }
+
     @Override
     public void setStackInSlot(int slot, @Nonnull ItemStack stack) {
         handler.setStackInSlot(slot, stack);

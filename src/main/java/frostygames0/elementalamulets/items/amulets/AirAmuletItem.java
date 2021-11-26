@@ -35,12 +35,13 @@ import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 public class AirAmuletItem extends AmuletItem {
     public static UUID MODIFIER_UUID = UUID.fromString("2589aeb9-2b6a-44dc-8fab-97c9743dacdf");
+
     public AirAmuletItem(Properties properties) {
         super(properties, true);
     }
 
     public float getFloating(ItemStack stack) {
-        return -0.01f*(this.getTier(stack)*1.75f);
+        return -0.01f * (this.getTier(stack) * 1.75f);
     }
 
     @Override
@@ -50,7 +51,7 @@ public class AirAmuletItem extends AmuletItem {
         AttributeModifier attMod = new AttributeModifier(AirAmuletItem.MODIFIER_UUID, modPrefix("air_speed").toString(),
                 this.getFloating(stack), AttributeModifier.Operation.ADDITION);
 
-        if(livingEntity.getDeltaMovement().y <= 0 && !livingEntity.isShiftKeyDown()) {
+        if (livingEntity.getDeltaMovement().y <= 0 && !livingEntity.isShiftKeyDown()) {
             AttributeUtil.applyModifier(gravity, attMod);
             livingEntity.fallDistance = 0;
         } else
@@ -61,7 +62,7 @@ public class AirAmuletItem extends AmuletItem {
     @Override
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
         ModifiableAttributeInstance att = slotContext.getWearer().getAttribute(ForgeMod.ENTITY_GRAVITY.get());
-        if(!AmuletHelper.compareAmulets(stack, newStack)) {
+        if (!AmuletHelper.compareAmulets(stack, newStack)) {
             AttributeUtil.removeModifierByUUID(att, MODIFIER_UUID);
         }
     }

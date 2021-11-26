@@ -53,13 +53,14 @@ public class ElementalGuideItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
-        if(ModList.get().isLoaded("patchouli")) tooltip.add(((IFormattableTextComponent)PatchouliAPI.get().getSubtitle(BOOK_ID)).withStyle(TextFormatting.GOLD));
+        if (ModList.get().isLoaded("patchouli"))
+            tooltip.add(((IFormattableTextComponent) PatchouliAPI.get().getSubtitle(BOOK_ID)).withStyle(TextFormatting.GOLD));
         tooltip.add(new TranslationTextComponent("item.elementalamulets.guide_book.subtitle").withStyle(TextFormatting.GRAY));
     }
 
     @Override
     public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        if(playerIn instanceof ServerPlayerEntity) {
+        if (playerIn instanceof ServerPlayerEntity) {
             if (ModList.get().isLoaded("patchouli")) {
                 PatchouliAPI.get().openBookGUI((ServerPlayerEntity) playerIn, BOOK_ID);
                 ModCriteriaTriggers.SUCCESS_USE.trigger((ServerPlayerEntity) playerIn, playerIn.getItemInHand(handIn));

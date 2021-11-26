@@ -60,7 +60,7 @@ public class JEIPlugin implements IModPlugin {
 
     @Override
     public void registerItemSubtypes(ISubtypeRegistration registration) {
-        for(AmuletItem item : ModItems.getAmulets()) {
+        for (AmuletItem item : ModItems.getAmulets()) {
             registration.registerSubtypeInterpreter(item, (stack, ctx) -> String.valueOf(item.getTier(stack)));
         }
     }

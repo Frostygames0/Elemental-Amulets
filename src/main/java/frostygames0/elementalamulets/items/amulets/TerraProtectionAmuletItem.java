@@ -39,7 +39,7 @@ import java.util.List;
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 public class TerraProtectionAmuletItem extends AmuletItem {
-    public static final DamageSource LEAF_CUT = new DamageSource(ElementalAmulets.MOD_ID+".leaf_cut");
+    public static final DamageSource LEAF_CUT = new DamageSource(ElementalAmulets.MOD_ID + ".leaf_cut");
     public static final String CHARGES_TAG = modPrefix("charge").toString();
 
     public TerraProtectionAmuletItem(Properties properties) {
@@ -58,10 +58,10 @@ public class TerraProtectionAmuletItem extends AmuletItem {
     @Override
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
         super.curioTick(identifier, index, livingEntity, stack);
-        if(!livingEntity.level.isClientSide()) {
-            if(livingEntity.tickCount % ModConfig.CachedValues.PROTECTION_AMULET_CHARGE_TIME == 0) {
-                if(getCharges(stack) < getMaxCharge(stack)) {
-                    NBTUtil.putInteger(stack, CHARGES_TAG, getCharges(stack)+1);
+        if (!livingEntity.level.isClientSide()) {
+            if (livingEntity.tickCount % ModConfig.CachedValues.PROTECTION_AMULET_CHARGE_TIME == 0) {
+                if (getCharges(stack) < getMaxCharge(stack)) {
+                    NBTUtil.putInteger(stack, CHARGES_TAG, getCharges(stack) + 1);
                 }
             }
         }
@@ -76,7 +76,7 @@ public class TerraProtectionAmuletItem extends AmuletItem {
     }
 
     public void removeOneCharge(ItemStack stack) {
-        NBTUtil.putInteger(stack, CHARGES_TAG, getCharges(stack)-1);
+        NBTUtil.putInteger(stack, CHARGES_TAG, getCharges(stack) - 1);
     }
 
     public boolean canProtect(ItemStack stack) {

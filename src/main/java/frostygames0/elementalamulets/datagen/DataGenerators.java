@@ -32,11 +32,11 @@ public class DataGenerators {
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {
         DataGenerator generator = event.getGenerator();
-        if(event.includeClient()) {
+        if (event.includeClient()) {
             generator.addProvider(new ItemModelProvider(generator, event.getExistingFileHelper()));
             generator.addProvider(new BlockStateProvider(generator, event.getExistingFileHelper()));
         }
-        if(event.includeServer()) {
+        if (event.includeServer()) {
             generator.addProvider(new TagProvider(generator, event.getExistingFileHelper()));
             generator.addProvider(new RecipeProvider(generator));
             generator.addProvider(new LootTableProvider(generator));

@@ -42,16 +42,16 @@ public final class AmuletHelper {
     // This is a wrapper method for Amulet Belt to work
     public static Optional<ImmutableTriple<String, Integer, ItemStack>> getAmuletInSlotOrBelt(Item item, LivingEntity entity) {
         ICuriosHelper helper = CuriosApi.getCuriosHelper();
-        if(helper.findEquippedCurio(item, entity).isPresent()) {
+        if (helper.findEquippedCurio(item, entity).isPresent()) {
             return helper.findEquippedCurio(item, entity);
         }
         Optional<ImmutableTriple<String, Integer, ItemStack>> optional = helper.findEquippedCurio(ModItems.AMULET_BELT.get(), entity);
-        if(optional.isPresent()) {
+        if (optional.isPresent()) {
             ImmutableTriple<String, Integer, ItemStack> triple = optional.get();
             IItemHandler handler = triple.getRight().getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
-            for(int i = 0; i < handler.getSlots(); i++) {
+            for (int i = 0; i < handler.getSlots(); i++) {
                 ItemStack amulet = handler.getStackInSlot(i);
-                if(amulet.getItem() == item) {
+                if (amulet.getItem() == item) {
                     return Optional.of(ImmutableTriple.of(triple.getLeft(), triple.getMiddle(), amulet));
                 }
             }
@@ -59,14 +59,14 @@ public final class AmuletHelper {
 
         return Optional.empty();
     }
-    
+
     public static boolean compareAmulets(ItemStack stack, ItemStack other) {
         Item amulet = stack.getItem();
         Item secondAmulet = other.getItem();
-        if(!(amulet instanceof AmuletItem) || !(secondAmulet instanceof AmuletItem))
+        if (!(amulet instanceof AmuletItem) || !(secondAmulet instanceof AmuletItem))
             return false;
 
-        if(amulet == secondAmulet) {
+        if (amulet == secondAmulet) {
             return ((AmuletItem) amulet).getTier(stack) == ((AmuletItem) secondAmulet).getTier(other);
         }
 

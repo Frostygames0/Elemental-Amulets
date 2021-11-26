@@ -35,6 +35,7 @@ import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 /**
  * Works like ConsumeItemTrigger but triggers ONLY when action was successful
  * E.G: When amulet is worn or guide is opened
+ *
  * @author Frostygames0
  * @date 02.06.2021 10:01
  */

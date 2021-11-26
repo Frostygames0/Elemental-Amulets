@@ -43,7 +43,7 @@ import java.util.Random;
  * @author Frostygames0
  * @date 19.09.2021 22:50
  */
-public class EarthAmuletItem extends AmuletItem{
+public class EarthAmuletItem extends AmuletItem {
     public EarthAmuletItem(Properties properties) {
         super(properties);
     }
@@ -51,13 +51,13 @@ public class EarthAmuletItem extends AmuletItem{
     @Override
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
         World world = livingEntity.level;
-        if(!world.isClientSide()) {
-            if(livingEntity instanceof PlayerEntity) {
+        if (!world.isClientSide()) {
+            if (livingEntity instanceof PlayerEntity) {
                 PlayerEntity player = (PlayerEntity) livingEntity;
                 CooldownTracker cooldownTracker = player.getCooldowns();
                 if (!cooldownTracker.isOnCooldown(this)) {
                     int boosted = boostLocalPlants(world, stack, player.blockPosition(), random);
-                    if(boosted > 0) {
+                    if (boosted > 0) {
                         this.regenerate(livingEntity, stack, boosted);
                         cooldownTracker.addCooldown(this, ModConfig.CachedValues.EARTH_AMULET_COOLDOWN);
                     }
@@ -90,13 +90,13 @@ public class EarthAmuletItem extends AmuletItem{
     // TODO still needs some work
     private void regenerate(LivingEntity living, ItemStack stack, int boosted) {
         World level = living.level;
-        if(getTier(stack) > 1) {
+        if (getTier(stack) > 1) {
             RegistryKey<Biome> biome = level.getBiomeName(living.blockPosition()).orElseThrow(() -> new NullPointerException("Cannot identify a biome!"));
-            if(BiomeDictionary.hasType(biome, BiomeDictionary.Type.PLAINS) || BiomeDictionary.hasType(biome, BiomeDictionary.Type.FOREST)) {
+            if (BiomeDictionary.hasType(biome, BiomeDictionary.Type.PLAINS) || BiomeDictionary.hasType(biome, BiomeDictionary.Type.FOREST)) {
                 living.heal(0.1f * boosted);
 
-                if(living instanceof PlayerEntity) {
-                    ((PlayerEntity)living).displayClientMessage(new StringTextComponent("You feel hehe penis").withStyle(TextFormatting.GREEN), true);
+                if (living instanceof PlayerEntity) {
+                    ((PlayerEntity) living).displayClientMessage(new StringTextComponent("You feel hehe penis").withStyle(TextFormatting.GREEN), true);
                 }
             }
         }

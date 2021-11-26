@@ -49,16 +49,16 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
                 modLoc("block/"+name(ModBlocks.ELEMENTAL_COMBINATOR.get())+"_up_2.0")));*/
 
         blockstateBlock(ModBlocks.ELEMENTAL_COMBINATOR.get(), state -> {
-            if(state.getValue(ElementalCombinator.COMBINING)) {
-                return models().cubeBottomTop(name(ModBlocks.ELEMENTAL_COMBINATOR.get())+"_on",
-                        modLoc( "block/"+name(ModBlocks.ELEMENTAL_COMBINATOR.get())+"_side"),
+            if (state.getValue(ElementalCombinator.COMBINING)) {
+                return models().cubeBottomTop(name(ModBlocks.ELEMENTAL_COMBINATOR.get()) + "_on",
+                        modLoc("block/" + name(ModBlocks.ELEMENTAL_COMBINATOR.get()) + "_side"),
                         mcLoc("block/furnace_top"),
-                        modLoc("block/"+name(ModBlocks.ELEMENTAL_COMBINATOR.get())+"_up_on"));
+                        modLoc("block/" + name(ModBlocks.ELEMENTAL_COMBINATOR.get()) + "_up_on"));
             } else {
                 return models().cubeBottomTop(name(ModBlocks.ELEMENTAL_COMBINATOR.get()),
-                        modLoc( "block/"+name(ModBlocks.ELEMENTAL_COMBINATOR.get())+"_side"),
+                        modLoc("block/" + name(ModBlocks.ELEMENTAL_COMBINATOR.get()) + "_side"),
                         mcLoc("block/furnace_top"),
-                        modLoc("block/"+name(ModBlocks.ELEMENTAL_COMBINATOR.get())+"_up_off"));
+                        modLoc("block/" + name(ModBlocks.ELEMENTAL_COMBINATOR.get()) + "_up_off"));
             }
         });
 
@@ -67,8 +67,8 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         simpleBlock(ModBlocks.CELESTIAL_FOCUS.get(), models().getExistingFile(modLoc("block/celestial_focus")));
         simpleBlock(ModBlocks.ELEMENTAL_SHARDS_BLOCK.get());
 
-        for(Block block : ModBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).collect(Collectors.toList())) {
-            simpleBlockItem(block, models().getExistingFile(modLoc("block/"+name(block))));
+        for (Block block : ModBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).collect(Collectors.toList())) {
+            simpleBlockItem(block, models().getExistingFile(modLoc("block/" + name(block))));
         }
     }
 

@@ -45,25 +45,26 @@ import java.util.List;
  * @author Frostygames0
  * @date 15.09.2021 18:33
  */
+@SuppressWarnings("deprecation")
 public class CelestialFocus extends Block {
 
-    public static final VoxelShape FIRST_STAND = box(0, 0, 0, 2, 16, 2);
-    public static final VoxelShape SECOND_STAND = box(0, 0, 14, 2, 16, 16);
-    public static final VoxelShape THIRD_STAND = box(14, 0, 0, 16, 16, 2);
-    public static final VoxelShape FOURTH_STAND = box(14, 0, 14, 16, 16, 16);
+    private static final VoxelShape FIRST_STAND = box(0, 0, 0, 2, 16, 2);
+    private static final VoxelShape SECOND_STAND = box(0, 0, 14, 2, 16, 16);
+    private static final VoxelShape THIRD_STAND = box(14, 0, 0, 16, 16, 2);
+    private static final VoxelShape FOURTH_STAND = box(14, 0, 14, 16, 16, 16);
 
-    public static final VoxelShape STAND = VoxelShapes.or(FIRST_STAND, SECOND_STAND, THIRD_STAND, FOURTH_STAND);
+    private static final VoxelShape STAND = VoxelShapes.or(FIRST_STAND, SECOND_STAND, THIRD_STAND, FOURTH_STAND);
 
-    public static final VoxelShape EAST_STICK = box(0, 10, 2, 2, 12, 14);
-    public static final VoxelShape WEST_STICK = box(14, 10, 2, 16, 12, 14);
-    public static final VoxelShape NORTH_STICK = box(2, 10, 0, 14, 12, 2);
-    public static final VoxelShape SOUTH_STICK = box(2, 10, 14, 14, 12, 16);
+    private static final VoxelShape EAST_STICK = box(0, 10, 2, 2, 12, 14);
+    private static final VoxelShape WEST_STICK = box(14, 10, 2, 16, 12, 14);
+    private static final VoxelShape NORTH_STICK = box(2, 10, 0, 14, 12, 2);
+    private static final VoxelShape SOUTH_STICK = box(2, 10, 14, 14, 12, 16);
 
-    public static final VoxelShape STICKS = VoxelShapes.or(WEST_STICK, EAST_STICK, NORTH_STICK, SOUTH_STICK);
+    private static final VoxelShape STICKS = VoxelShapes.or(WEST_STICK, EAST_STICK, NORTH_STICK, SOUTH_STICK);
 
-    public static final VoxelShape LENS = box(5, 14.25, 5, 11, 15.25, 11);
+    private static final VoxelShape LENS = box(5, 14.25, 5, 11, 15.25, 11);
 
-    public static final VoxelShape CELESTIAL_FOCUS = VoxelShapes.or(STAND, STICKS, LENS);
+    private static final VoxelShape CELESTIAL_FOCUS = VoxelShapes.or(STAND, STICKS, LENS);
 
     public CelestialFocus(Properties p_i48440_1_) {
         super(p_i48440_1_);

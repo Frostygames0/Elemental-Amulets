@@ -83,8 +83,8 @@ public abstract class BaseLootTableProvider extends LootTableProvider {
                 .add(ItemLootEntry.lootTableItem(block)
                         .when(SILK_TOUCH)
                         .otherwise(ItemLootEntry.lootTableItem(drop)
-                            .apply(ApplyBonus.addOreBonusCount(Enchantments.BLOCK_FORTUNE))
-                            .apply(ExplosionDecay.explosionDecay())));
+                                .apply(ApplyBonus.addOreBonusCount(Enchantments.BLOCK_FORTUNE))
+                                .apply(ExplosionDecay.explosionDecay())));
         return LootTable.lootTable().withPool(builder);
     }
 

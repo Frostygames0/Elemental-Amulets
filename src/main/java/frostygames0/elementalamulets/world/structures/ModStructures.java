@@ -73,12 +73,11 @@ public class ModStructures {
         WorldGenRegistries.NOISE_GENERATOR_SETTINGS.entrySet().forEach((spreadSettings) -> {
             Map<Structure<?>, StructureSeparationSettings> structureMap = spreadSettings.getValue().structureSettings().structureConfig();
 
-            if(structureMap instanceof ImmutableMap){
+            if (structureMap instanceof ImmutableMap) {
                 Map<Structure<?>, StructureSeparationSettings> tempMap = new HashMap<>(structureMap);
                 tempMap.put(structure, settings);
                 spreadSettings.getValue().structureSettings().structureConfig = tempMap;
-            }
-            else{
+            } else {
                 structureMap.put(structure, settings);
             }
         });
@@ -89,21 +88,21 @@ public class ModStructures {
     @SuppressWarnings("unchecked")
     @SubscribeEvent
     public static void addDimensionalSpacing(final WorldEvent.Load event) {
-        if(event.getWorld() instanceof ServerWorld){
-            ServerWorld serverWorld = (ServerWorld)event.getWorld();
+        if (event.getWorld() instanceof ServerWorld) {
+            ServerWorld serverWorld = (ServerWorld) event.getWorld();
 
             // Skips TerraForged generator
             try {
-                if(GETCODEC_METHOD == null) GETCODEC_METHOD = ObfuscationReflectionHelper.findMethod(ChunkGenerator.class, "func_230347_a_");
+                if (GETCODEC_METHOD == null)
+                    GETCODEC_METHOD = ObfuscationReflectionHelper.findMethod(ChunkGenerator.class, "func_230347_a_");
                 ResourceLocation cgRL = Registry.CHUNK_GENERATOR.getKey((Codec<? extends ChunkGenerator>) GETCODEC_METHOD.invoke(serverWorld.getChunkSource().generator));
-                if(cgRL != null && cgRL.getNamespace().equals("terraforged")) return;
-            }
-            catch(Exception e){
+                if (cgRL != null && cgRL.getNamespace().equals("terraforged")) return;
+            } catch (Exception e) {
                 ElementalAmulets.LOGGER.error("Was unable to check if " + serverWorld.dimension().location() + " is using Terraforged's ChunkGenerator.");
             }
 
-            if(serverWorld.getChunkSource().getGenerator() instanceof FlatChunkGenerator &&
-                    serverWorld.dimension().equals(World.OVERWORLD)){
+            if (serverWorld.getChunkSource().getGenerator() instanceof FlatChunkGenerator &&
+                    serverWorld.dimension().equals(World.OVERWORLD)) {
                 return;
             }
 
@@ -115,7 +114,8 @@ public class ModStructures {
 
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void addStructuresToWorld(BiomeLoadingEvent event) {
-        if(event.getCategory() == Biome.Category.JUNGLE && ModConfig.CachedValues.GENERATE_CULT_TEMPLE) event.getGeneration().getStructures().add(() -> StructureFeatures.CONFIGURED_CULT_TEMPLE);
+        if (event.getCategory() == Biome.Category.JUNGLE && ModConfig.CachedValues.GENERATE_CULT_TEMPLE)
+            event.getGeneration().getStructures().add(() -> StructureFeatures.CONFIGURED_CULT_TEMPLE);
     }
 
 

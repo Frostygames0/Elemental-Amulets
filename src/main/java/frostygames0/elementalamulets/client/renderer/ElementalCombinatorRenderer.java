@@ -56,7 +56,7 @@ public class ElementalCombinatorRenderer extends TileEntityRenderer<ElementalCom
         int upperLight = WorldRenderer.getLightColor(world, tileEntityIn.getBlockPos().above());
         float angle = (world.getGameTime() + partialTicks) * 2.0F;//(System.currentTimeMillis() / ModConfig.CachedValues.COMBINATOR_STACK_ROTATION_SPEED) % 360;
 
-        if(ModConfig.CachedValues.RENDER_COMBINATOR_STACK) {
+        if (ModConfig.CachedValues.RENDER_COMBINATOR_STACK) {
 
             matrixStackIn.pushPose();
 

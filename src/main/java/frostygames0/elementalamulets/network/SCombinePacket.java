@@ -52,7 +52,7 @@ public class SCombinePacket {
         NetworkEvent.Context ctx = sup.get();
         ctx.enqueueWork(() -> {
             World world = ctx.getSender().level;
-            if(world != null) {
+            if (world != null) {
                 if (world.isLoaded(pos)) {
                     TileEntity tile = world.getBlockEntity(pos);
                     if (tile instanceof ElementalCombinatorTile) {

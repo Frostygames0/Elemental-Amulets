@@ -37,7 +37,7 @@ import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 public class TerraProtectionAmuletEffect {
 
     static void onLivingHurt(LivingHurtEvent event) {
-        if(event.getEntityLiving() instanceof PlayerEntity) {
+        if (event.getEntityLiving() instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) event.getEntityLiving();
             if (!player.level.isClientSide()) {
                 AmuletHelper.getAmuletInSlotOrBelt(ModItems.TERRA_PROTECTION_AMULET.get(), player).ifPresent(triple -> {
@@ -57,10 +57,11 @@ public class TerraProtectionAmuletEffect {
     }
 
     static void onProjectileImpact(ProjectileImpactEvent event) {
-        if(!(event.getRayTraceResult() instanceof EntityRayTraceResult)) return; // We need only projectiles that hit entity
+        if (!(event.getRayTraceResult() instanceof EntityRayTraceResult))
+            return; // We need only projectiles that hit entity
         Entity projectile = event.getEntity();
         Entity target = ((EntityRayTraceResult) event.getRayTraceResult()).getEntity();
-        if(target instanceof PlayerEntity) {
+        if (target instanceof PlayerEntity) {
             PlayerEntity entity = (PlayerEntity) target;
             if (!entity.level.isClientSide()) {
                 AmuletHelper.getAmuletInSlotOrBelt(ModItems.TERRA_PROTECTION_AMULET.get(), entity).ifPresent(triple -> {
@@ -88,9 +89,9 @@ public class TerraProtectionAmuletEffect {
 
     // Maybe use attribute instead so other things can affect it too?
     static void onLivingKnockback(LivingKnockBackEvent event) {
-        if(event.getEntityLiving() instanceof PlayerEntity) {
+        if (event.getEntityLiving() instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) event.getEntityLiving();
-            if(!player.level.isClientSide()) {
+            if (!player.level.isClientSide()) {
                 AmuletHelper.getAmuletInSlotOrBelt(ModItems.TERRA_PROTECTION_AMULET.get(), player).ifPresent(triple -> {
                     ItemStack stack = triple.getRight();
                     TerraProtectionAmuletItem amulet = (TerraProtectionAmuletItem) stack.getItem();

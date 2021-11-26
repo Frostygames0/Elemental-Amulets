@@ -43,7 +43,7 @@ public class MixinLivingEntity {
             ItemStack stack = triple.getRight();
             WaterAmuletItem amulet = (WaterAmuletItem) stack.getItem();
 
-            if(amulet.getTier(stack) >= 2) {
+            if (amulet.getTier(stack) >= 2) {
                 ci.setReturnValue(air);
             }
         });

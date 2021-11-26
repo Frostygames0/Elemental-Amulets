@@ -34,7 +34,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
  */
 public class KnockbackAmuletEffect {
     static void onLivingHurt(LivingHurtEvent event) {
-        if(event.getEntityLiving() instanceof PlayerEntity) {
+        if (event.getEntityLiving() instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) event.getEntityLiving();
             if (!player.level.isClientSide()) {
                 AmuletHelper.getAmuletInSlotOrBelt(ModItems.KNOCKBACK_AMULET.get(), player).ifPresent(triple -> {
@@ -43,7 +43,7 @@ public class KnockbackAmuletEffect {
 
                         ItemStack stack = triple.getRight();
                         KnockbackAmuletItem amulet = (KnockbackAmuletItem) stack.getItem();
-                        attacker.knockback(amulet.getKnockback(stack), MathHelper.sin(player.yRot * ((float)Math.PI / 180F)), -MathHelper.cos(player.yRot * ((float)Math.PI / 180F)));
+                        attacker.knockback(amulet.getKnockback(stack), MathHelper.sin(player.yRot * ((float) Math.PI / 180F)), -MathHelper.cos(player.yRot * ((float) Math.PI / 180F)));
                     }
                 });
             }

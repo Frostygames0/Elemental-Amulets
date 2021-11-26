@@ -37,7 +37,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 public class JumpAmuletEffect {
 
     static void onLivingHurt(LivingHurtEvent event) {
-        if(event.getEntityLiving() instanceof PlayerEntity) {
+        if (event.getEntityLiving() instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) event.getEntityLiving();
             if (!player.level.isClientSide()) {
                 if (event.getSource() == DamageSource.FALL) {
@@ -56,8 +56,9 @@ public class JumpAmuletEffect {
             }
         }
     }
+
     static void onLivingAttack(LivingAttackEvent event) {
-        if(event.getEntityLiving() instanceof PlayerEntity) {
+        if (event.getEntityLiving() instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) event.getEntityLiving();
             if (!player.level.isClientSide()) {
                 if (event.getSource() == DamageSource.FALL) {
@@ -76,7 +77,7 @@ public class JumpAmuletEffect {
     }
 
     static void onLivingJump(LivingEvent.LivingJumpEvent event) {
-        if(event.getEntityLiving() instanceof PlayerEntity) {
+        if (event.getEntityLiving() instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) event.getEntityLiving();
             World world = player.getCommandSenderWorld();
             if (!world.isClientSide) {

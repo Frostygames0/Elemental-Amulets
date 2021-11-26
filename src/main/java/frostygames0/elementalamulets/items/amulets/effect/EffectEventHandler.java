@@ -35,6 +35,7 @@ public class EffectEventHandler {
     public static void onJump(final LivingEvent.LivingJumpEvent event) {
         JumpAmuletEffect.onLivingJump(event);
     }
+
     @SubscribeEvent
     public static void onHurt(final LivingHurtEvent event) {
         JumpAmuletEffect.onLivingHurt(event);
@@ -43,17 +44,20 @@ public class EffectEventHandler {
         PacifyingAmuletEffect.onLivingHurt(event);
         KnockbackAmuletEffect.onLivingHurt(event);
     }
+
     @SubscribeEvent
     public static void onAttack(final LivingAttackEvent event) {
         JumpAmuletEffect.onLivingAttack(event);
         FireAmuletEffect.onLivingAttack(event);
     }
+
     @SubscribeEvent
     public static void onProjectileImpact(final ProjectileImpactEvent event) {
         TerraProtectionAmuletEffect.onProjectileImpact(event);
     }
+
     @SubscribeEvent
     public static void onLivingKnockback(final LivingKnockBackEvent event) {
         TerraProtectionAmuletEffect.onLivingKnockback(event);
     }
- }
+}

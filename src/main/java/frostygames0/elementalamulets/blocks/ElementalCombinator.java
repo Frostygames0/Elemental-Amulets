@@ -44,6 +44,7 @@ import javax.annotation.Nullable;
 @SuppressWarnings("deprecation")
 public class ElementalCombinator extends Block {
     public static final BooleanProperty COMBINING = BooleanProperty.create("combining");
+
     public ElementalCombinator(Properties properties) {
         super(properties);
         this.registerDefaultState(this.defaultBlockState().setValue(COMBINING, false));
@@ -51,16 +52,16 @@ public class ElementalCombinator extends Block {
 
     @Override
     public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        if(worldIn.isClientSide()) {
+        if (worldIn.isClientSide()) {
             return ActionResultType.SUCCESS;
         }
         TileEntity te = worldIn.getBlockEntity(pos);
-        if(te instanceof ElementalCombinatorTile) {
+        if (te instanceof ElementalCombinatorTile) {
             ElementalCombinatorTile elementalCombinatorTile = (ElementalCombinatorTile) te;
-            if(!player.isShiftKeyDown()) {
+            if (!player.isShiftKeyDown()) {
                 NetworkHooks.openGui((ServerPlayerEntity) player, elementalCombinatorTile, elementalCombinatorTile.getBlockPos());
             } else {
-                if(ModConfig.CachedValues.OLD_FASHIONED_WAY) elementalCombinatorTile.startCombination();
+                if (ModConfig.CachedValues.OLD_FASHIONED_WAY) elementalCombinatorTile.startCombination();
             }
         } else {
             throw new IllegalStateException("Tile Entity is not correct! Cannot do any action!");
@@ -75,16 +76,16 @@ public class ElementalCombinator extends Block {
 
     @Override
     public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        if(!state.is(newState.getBlock())) {
+        if (!state.is(newState.getBlock())) {
             TileEntity tileEntity = worldIn.getBlockEntity(pos);
-            if(tileEntity instanceof ElementalCombinatorTile) {
+            if (tileEntity instanceof ElementalCombinatorTile) {
                 tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
                     for (int i = 0; i < h.getSlots(); i++) {
                         popResource(worldIn, pos, h.getStackInSlot(i));
                     }
                 });
             }
-            super.onRemove(state,worldIn,pos, newState, isMoving);
+            super.onRemove(state, worldIn, pos, newState, isMoving);
         }
     }
 

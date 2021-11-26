@@ -30,7 +30,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 public class FireAmuletEffect {
 
     static void onLivingAttack(LivingAttackEvent event) {
-        if(event.getEntityLiving() instanceof PlayerEntity) {
+        if (event.getEntityLiving() instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) event.getEntityLiving();
             DamageSource source = event.getSource();
             if (!player.level.isClientSide()) {

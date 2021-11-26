@@ -36,17 +36,18 @@ import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 public class SpeedAmuletItem extends AmuletItem {
     public static UUID MODIFIER_UUID = UUID.fromString("06c06b38-3779-4ca2-b678-7c111c77faef");
+
     public SpeedAmuletItem(Properties properties) {
         super(properties);
     }
 
     @Override
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
-        if(!livingEntity.level.isClientSide()) {
+        if (!livingEntity.level.isClientSide()) {
             ModifiableAttributeInstance att = livingEntity.getAttribute(Attributes.MOVEMENT_SPEED);
             AttributeModifier attMod = new AttributeModifier(MODIFIER_UUID, modPrefix("speed_boost").toString(),
                     this.getSpeed(stack), AttributeModifier.Operation.MULTIPLY_BASE);
-            if(livingEntity.isSprinting()) {
+            if (livingEntity.isSprinting()) {
                 AttributeUtil.applyModifier(att, attMod);
             } else {
                 AttributeUtil.removeModifier(att, attMod);
@@ -57,13 +58,13 @@ public class SpeedAmuletItem extends AmuletItem {
     @Override
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
         ModifiableAttributeInstance att = slotContext.getWearer().getAttribute(Attributes.MOVEMENT_SPEED);
-        if(AmuletHelper.compareAmulets(stack, newStack)) {
+        if (AmuletHelper.compareAmulets(stack, newStack)) {
             AttributeUtil.removeModifierByUUID(att, MODIFIER_UUID);
         }
     }
 
     public float getSpeed(ItemStack stack) {
-        return (float) ModConfig.CachedValues.SPEED_AMULET_BOOST*this.getTier(stack);
+        return (float) ModConfig.CachedValues.SPEED_AMULET_BOOST * this.getTier(stack);
     }
 
 

@@ -55,7 +55,7 @@ public class AncientTabletItem extends Item {
     public ItemStack getContainerItem(ItemStack itemStack) {
         ItemStack stack = new ItemStack(this);
         stack.hurt(itemStack.getDamageValue() + 1, random, null);
-        if(stack.getDamageValue() > stack.getMaxDamage()) {
+        if (stack.getDamageValue() > stack.getMaxDamage()) {
             return ItemStack.EMPTY;
         }
         return stack;

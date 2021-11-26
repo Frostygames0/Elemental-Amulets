@@ -31,7 +31,7 @@ import vazkii.patchouli.api.PatchouliAPI;
 public class ElementalGuideConfigFlags {
 
     public static void updateConfigFlags() {
-        if(ModList.get().isLoaded("patchouli")) {
+        if (ModList.get().isLoaded("patchouli")) {
             PatchouliAPI.get().setConfigFlag(ElementalAmulets.MOD_ID + ":cult_temple", ModConfig.CachedValues.GENERATE_CULT_TEMPLE);
             PatchouliAPI.get().setConfigFlag(ElementalAmulets.MOD_ID + ":jeweller_house", ModConfig.CachedValues.GENERATE_JEWELLER_HOUSE);
         }

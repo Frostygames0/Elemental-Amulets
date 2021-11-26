@@ -63,7 +63,7 @@ import java.util.List;
 import java.util.Random;
 
 @Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID)
-public class ModVillagers{
+public class ModVillagers {
     public static final DeferredRegister<VillagerProfession> PROFESSIONS = DeferredRegister.create(ForgeRegistries.PROFESSIONS, ElementalAmulets.MOD_ID);
     public static final DeferredRegister<PointOfInterestType> POI_TYPES = DeferredRegister.create(ForgeRegistries.POI_TYPES, ElementalAmulets.MOD_ID);
 
@@ -79,7 +79,7 @@ public class ModVillagers{
 
     @SubscribeEvent
     public static void registerTrades(final VillagerTradesEvent event) {
-        if(event.getType() == JEWELLER.get()) {
+        if (event.getType() == JEWELLER.get()) {
             // Level 1 trades
             event.getTrades().get(1).add(new BasicTrade(new ItemStack(ModItems.ELEMENTAL_SHARDS.get(), 5), new ItemStack(Items.EMERALD), 10, 1, 1f));
 
@@ -118,16 +118,17 @@ public class ModVillagers{
             this.maxUses = maxUses;
             this.villagerXp = villagerXp;
         }
+
         @Nullable
         @Override
         public MerchantOffer getOffer(Entity pTrader, Random pRand) {
             if (!(pTrader.level instanceof ServerWorld)) {
                 return null;
             } else {
-                ServerWorld serverworld = (ServerWorld)pTrader.level;
+                ServerWorld serverworld = (ServerWorld) pTrader.level;
                 BlockPos blockpos = serverworld.findNearestMapFeature(ModStructures.CULT_TEMPLE.get(), pTrader.blockPosition(), 2000, true);
                 if (blockpos != null) {
-                    ItemStack itemstack = FilledMapItem.create(serverworld, blockpos.getX(), blockpos.getZ(), (byte)3, true, true);
+                    ItemStack itemstack = FilledMapItem.create(serverworld, blockpos.getX(), blockpos.getZ(), (byte) 3, true, true);
                     FilledMapItem.renderBiomePreviewMap(serverworld, itemstack);
                     MapData.addTargetDecoration(itemstack, blockpos, "+", MapDecoration.Type.RED_X);
                     itemstack.setHoverName(new TranslationTextComponent("filled_map.elementalamulets.cult_temple"));
@@ -142,14 +143,14 @@ public class ModVillagers{
 
     public static class Structures {
         public static void addHouses(final FMLServerAboutToStartEvent event) {
-                if(ModConfig.CachedValues.GENERATE_JEWELLER_HOUSE) {
-                    MutableRegistry<JigsawPattern> registry = event.getServer().registryAccess().registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY);
-                    for (String biome : new String[]{"plains", "taiga"}) { // This is because it should be all village biomes but for now there is only plains
-                        addHouse(registry, new ResourceLocation("village/" + biome + "/houses"),
-                                ElementalAmulets.MOD_ID + ":villages/jeweller_house_" + biome, 12);
-                    }
-                    ElementalAmulets.LOGGER.debug("Jeweller's house was successfully added to all existing vanilla villages");
-                } else ElementalAmulets.LOGGER.debug("Jeweller' s house generation skipped (Config Preference)");
+            if (ModConfig.CachedValues.GENERATE_JEWELLER_HOUSE) {
+                MutableRegistry<JigsawPattern> registry = event.getServer().registryAccess().registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY);
+                for (String biome : new String[]{"plains", "taiga"}) { // This is because it should be all village biomes but for now there is only plains
+                    addHouse(registry, new ResourceLocation("village/" + biome + "/houses"),
+                            ElementalAmulets.MOD_ID + ":villages/jeweller_house_" + biome, 12);
+                }
+                ElementalAmulets.LOGGER.debug("Jeweller's house was successfully added to all existing vanilla villages");
+            } else ElementalAmulets.LOGGER.debug("Jeweller' s house generation skipped (Config Preference)");
         }
 
         private static void addHouse(MutableRegistry<JigsawPattern> registry, ResourceLocation poolId, String houseToAdd, int weight) {
