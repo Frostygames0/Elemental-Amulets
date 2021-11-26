@@ -89,6 +89,7 @@ public class ElementalCombinatorScreen extends ContainerScreen<ElementalCombinat
             super(pX, pY, 21, 14, StringTextComponent.EMPTY, pOnPress);
         }
 
+        @SuppressWarnings("deprecation")
         @Override
         public void renderButton(MatrixStack pMatrixStack, int pMouseX, int pMouseY, float pPartialTicks) {
             RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
