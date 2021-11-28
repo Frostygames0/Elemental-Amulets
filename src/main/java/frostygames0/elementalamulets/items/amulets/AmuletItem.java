@@ -43,6 +43,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -186,7 +187,7 @@ public abstract class AmuletItem extends Item implements ICurioItem {
     }
 
     // Removes vanilla durability tooltip from the tooltip list
-    @Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID)
+    @Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID, value = Dist.CLIENT)
     public static class TooltipEventHandler {
         @SubscribeEvent
         public static void onTooltipEvent(final ItemTooltipEvent event) {
