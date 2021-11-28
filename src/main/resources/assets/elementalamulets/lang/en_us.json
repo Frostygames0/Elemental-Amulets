@@ -1,14 +1,12 @@
 {
   "itemGroup.elementalamulets": "Elemental Amulets",
-
   "item.elementalamulets.guide_book": "Elemental Guide",
   "item.elementalamulets.guide_book.subtitle": "Contains all knowledge about Elemental Amulets",
   "item.elementalamulets.all_seeing_lens": "All-seeing lens",
   "item.elementalamulets.amulet_belt": "Amulet belt",
-  "item.elementalamulets.amulet_belt.inside": "Amulets inside:",
+  "item.elementalamulets.amulet_belt.contents": "Amulets inside:",
   "item.elementalamulets.ancient_tablet": "Ancient Tablet",
   "item.elementalamulets.ancient_tablet.tooltip": "Strange cyan tablet from the ancient times with some drawings on it",
-
   "item.elementalamulets.elemental_shards": "Elemental Shards",
   "item.elementalamulets.elemental_shards.latin_variant": "Elemental Shards",
   "item.elementalamulets.elemental_shards.tooltip": "Can be filled with elemental power",

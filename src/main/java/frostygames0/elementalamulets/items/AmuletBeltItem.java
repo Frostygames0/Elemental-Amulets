@@ -31,6 +31,9 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -69,13 +72,15 @@ public class AmuletBeltItem extends Item implements ICurioItem {
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable World pLevel, List<ITextComponent> pTooltip, ITooltipFlag pFlag) {
         super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
-        /*pStack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-            pTooltip.add(new TranslationTextComponent("item.elementalamulets.amulet_belt.inside").withStyle(TextFormatting.GOLD));
-            for(int i = 0; i < h.getSlots(); i++) {
+        pStack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+            pTooltip.add(new TranslationTextComponent("item.elementalamulets.amulet_belt.contents").withStyle(TextFormatting.GOLD));
+            for (int i = 0; i < h.getSlots(); i++) {
                 ItemStack stack = h.getStackInSlot(i);
-                if(!stack.isEmpty()) pTooltip.add(new StringTextComponent(i+1 + ". ").withStyle(TextFormatting.YELLOW).append(stack.getHoverName().copy().withStyle(TextFormatting.GRAY)));
+                if (!stack.isEmpty()) {
+                    pTooltip.add(new StringTextComponent(i + 1 + ". ").withStyle(TextFormatting.YELLOW).append(stack.getDisplayName().copy().withStyle(TextFormatting.GRAY)));
+                }
             }
-        });*/
+        });
     }
 
     @Override
@@ -238,7 +243,7 @@ public class AmuletBeltItem extends Item implements ICurioItem {
         return true;
     }
 
-    @Nullable
+    /*@Nullable
     @Override
     public CompoundNBT writeSyncData(ItemStack stack) {
         IItemHandler handler = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
@@ -255,26 +260,30 @@ public class AmuletBeltItem extends Item implements ICurioItem {
                 ((ItemStackHandler) h).deserializeNBT(compound);
             }
         });
-    }
+    }*/
 
-    /*@Nullable
+    @Nullable
     @Override
     public CompoundNBT getShareTag(ItemStack stack) {
-        IItemHandler handler = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
-        if(handler instanceof ItemStackHandler) {
-            return ((ItemStackHandler)handler).serializeNBT();
-        }
-        return new CompoundNBT();
+        CompoundNBT tag = stack.getOrCreateTag();
+        stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
+            if (h instanceof ItemStackHandler) {
+                tag.put("SyncContents", ((ItemStackHandler) h).serializeNBT());
+            }
+        });
+        return tag;
     }
 
     @Override
     public void readShareTag(ItemStack stack, @Nullable CompoundNBT nbt) {
-        if(nbt != null) {
+        super.readShareTag(stack, nbt);
+
+        if (nbt != null) {
             stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
                 if (h instanceof ItemStackHandler) {
-                    ((ItemStackHandler) h).deserializeNBT(nbt);
+                    ((ItemStackHandler) h).deserializeNBT(nbt.getCompound("SyncContents"));
                 }
             });
         }
-    }*/
+    }
 }
