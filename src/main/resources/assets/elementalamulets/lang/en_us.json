@@ -46,27 +46,21 @@
   "item.elementalamulets.protection_amulet": "Amulet of Terra Protection",
   "item.elementalamulets.protection_amulet.tooltip": "%sCreates powerful Leaf Shield around you!",
   "item.elementalamulets.protection_amulet.charges": "Charges - %s",
-
   "item.elementalamulets.water_amulet": "Amulet of Water",
   "item.elementalamulets.water_amulet.tooltip": "Gives you buffs in water",
-
   "item.elementalamulets.air_amulet": "Amulet of Air",
   "item.elementalamulets.air_amulet.tooltip": "Control air! Hold SHIFT to stop!",
-
   "item.elementalamulets.earth_amulet": "Amulet of Earth",
   "item.elementalamulets.earth_amulet.tooltip": "Farming and other green activities will be boosted",
-
   "item.elementalamulets.pacifying_amulet": "Pacifying Amulet",
-  "item.elementalamulets.pacifying_amulet.tooltip": "Passive mobs don't fight back",
+  "item.elementalamulets.pacifying_amulet.tooltip": "Passive mobs don't fight back, and aggressive ones get tired",
   "item.elementalamulets.pacifying_amulet.onbreak": "%s is broken! All nearby mobs are angry at you!",
-  "item.elementalamulets.tired": "You suddenly feel tired",
-
+  "item.elementalamulets.pacifying_amulet.tired": "You suddenly feel tired",
+  "item.elementalamulets.pacifying_amulet.tired_success": "Your target is feeling tired!",
   "item.elementalamulets.knockback_amulet": "Knockback Amulet",
   "item.elementalamulets.knockback_amulet.tooltip": "Knocks back any attacking enemy",
-
   "item.elementalamulets.wip_50": "This item is currently a little bit buggy! Sorry for that :/",
   "item.elementalamulets.wip": "This item is currently not working! Sorry for that :/",
-
   "block.elementalamulets.elemental_combinator": "Elemental Combinator",
   "block.elementalamulets.elemental_combinator.guititle": "Combination",
   "block.elementalamulets.elemental_combinator.cooldown": "%s is recharging! %1$ss left",

@@ -53,6 +53,7 @@ public class ModConfig {
         private final ForgeConfigSpec.IntValue EARTH_AMULET_COOLDOWN;
         private final ForgeConfigSpec.IntValue PACIFYING_AMULET_BREAK_COOLDOWN;
         private final ForgeConfigSpec.BooleanValue PACIFYING_AMULET_ANGER_ONBREAK;
+        private final ForgeConfigSpec.IntValue PACIFYING_AMULET_TIREDNESS_TIME;
         private final ForgeConfigSpec.BooleanValue MODIFY_VANILLA_LOOT;
 
         public Server(ForgeConfigSpec.Builder builder) {
@@ -94,6 +95,7 @@ public class ModConfig {
             EARTH_AMULET_COOLDOWN = builder.comment("How long will the Amulet of Earth be on cooldown? (in ticks, 1 sec - 20 ticks) [DEFAULT: 100]").defineInRange("earth_amulet_cooldown", 100, 0, Integer.MAX_VALUE);
 
             builder.push("Pacifying Amulet");
+            PACIFYING_AMULET_TIREDNESS_TIME = builder.comment("How long will the enemy player be tired? (in ticks, 1 sec - 20 ticks) [DEFAULT: 100]").defineInRange("pacifying_amulet_tiredness_time", 100, 0, Integer.MAX_VALUE);
             PACIFYING_AMULET_BREAK_COOLDOWN = builder.comment("How long will you need to wait until you can use Pacifying Amulet when broken (in ticks, 1 sec - 20 ticks) [DEFAULT: 200]").defineInRange("pacifying_amulet_break_cooldown", 200, 0, Integer.MAX_VALUE);
             PACIFYING_AMULET_ANGER_ONBREAK = builder.comment("Anger all nearby 'angerable'(wolves, golems, etc) entities when pacifying amulet breaks? [DEFAULT: true]").define("pacifying_amulet_anger_onbreak", true);
 

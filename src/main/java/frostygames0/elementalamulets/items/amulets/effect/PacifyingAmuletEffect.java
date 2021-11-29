@@ -23,10 +23,13 @@ import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.PacifyingAmuletItem;
 import frostygames0.elementalamulets.util.AmuletHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
+import net.minecraft.util.CooldownTracker;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
@@ -34,6 +37,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
  * @author Frostygames0
  * @date 20.10.2021 20:10
  */
+// TODO Oh yeah I forgot about it's effect on non Angerable entities -_-
 public class PacifyingAmuletEffect {
     static void onLivingHurt(LivingHurtEvent event) {
         if (event.getEntityLiving() instanceof PlayerEntity) {
@@ -44,10 +48,19 @@ public class PacifyingAmuletEffect {
                     PacifyingAmuletItem item = (PacifyingAmuletItem) amulet.getItem();
 
                     Entity damager = event.getSource().getEntity();
-                    if (damager instanceof PlayerEntity) {
-                        PlayerEntity damagingPlayer = (PlayerEntity) damager;
-                        if (damagingPlayer.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 100, item.getTier(amulet)))) {
-                            damagingPlayer.displayClientMessage(new TranslationTextComponent("item.elementalamulets.tired"), true);
+
+                    CooldownTracker tracker = player.getCooldowns();
+                    if (tracker.isOnCooldown(item))
+                        return;
+
+                    if (damager instanceof LivingEntity) {
+                        LivingEntity livingDamager = (LivingEntity) damager;
+                        if (livingDamager.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 100, item.getTier(amulet)))) {
+                            if (livingDamager instanceof PlayerEntity) {
+                                PlayerEntity damagingPlayer = (PlayerEntity) livingDamager;
+                                damagingPlayer.displayClientMessage(new TranslationTextComponent("item.elementalamulets.pacifying_amulet.tired").withStyle(TextFormatting.RED), true);
+                            }
+                            player.displayClientMessage(new TranslationTextComponent("item.elementalamulets.pacifying_amulet.tired_success").withStyle(TextFormatting.DARK_GREEN), true);
                         }
                     }
                 });
