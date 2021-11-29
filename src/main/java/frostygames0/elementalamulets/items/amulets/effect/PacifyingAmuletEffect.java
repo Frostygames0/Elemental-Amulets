@@ -55,12 +55,12 @@ public class PacifyingAmuletEffect {
 
                     if (damager instanceof LivingEntity) {
                         LivingEntity livingDamager = (LivingEntity) damager;
-                        if (livingDamager.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 100, item.getTier(amulet)))) {
+                        if (livingDamager.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 100, 2, false, true, true, new EffectInstance(Effects.BLINDNESS, 50)))) {
                             if (livingDamager instanceof PlayerEntity) {
                                 PlayerEntity damagingPlayer = (PlayerEntity) livingDamager;
                                 damagingPlayer.displayClientMessage(new TranslationTextComponent("item.elementalamulets.pacifying_amulet.tired").withStyle(TextFormatting.RED), true);
                             }
-                            player.displayClientMessage(new TranslationTextComponent("item.elementalamulets.pacifying_amulet.tired_success").withStyle(TextFormatting.DARK_GREEN), true);
+                            player.displayClientMessage(new TranslationTextComponent("item.elementalamulets.pacifying_amulet.tired_success").withStyle(TextFormatting.GREEN), true);
                         }
                     }
                 });

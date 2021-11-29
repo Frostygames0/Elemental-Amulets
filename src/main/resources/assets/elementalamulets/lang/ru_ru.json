@@ -44,26 +44,21 @@
   "item.elementalamulets.protection_amulet": "Амулет Терра защиты",
   "item.elementalamulets.protection_amulet.tooltip": "%sСоздают могучий листяной щит вокруг вас",
   "item.elementalamulets.protection_amulet.charges": "Зарядов - %s",
-
   "item.elementalamulets.water_amulet": "Амулет воды",
   "item.elementalamulets.water_amulet.tooltip": "Дает усиления под водой",
-
   "item.elementalamulets.air_amulet": "Амулет воздуха",
   "item.elementalamulets.air_amulet.tooltip": "Управляйте воздухом! Удерживайте SHIFT чтобы остановиться",
-
   "item.elementalamulets.earth_amulet": "Амулет земли",
   "item.elementalamulets.earth_amulet.tooltip": "Фермерство и другие зеленые занятия будут ускорены",
-
   "item.elementalamulets.pacifying_amulet": "Амулет успокоения",
-  "item.elementalamulets.pacifying_amulet.tooltip": "Пассивные мобы не дают сдачи",
-  "item.elementalamulets.tired": "Вы резко чувствуйте себя уставшим",
-
+  "item.elementalamulets.pacifying_amulet.tooltip": "Пассивные мобы не дают сдачи, а агресивные дезорентируются",
+  "item.elementalamulets.pacifying_amulet.onbreak": "%s сломан! Все ближайшие мобы злы на вас",
+  "item.elementalamulets.pacifying_amulet.tired": "Вы резко почувствовали усталость...",
+  "item.elementalamulets.pacifying_amulet.tired_success": "Ваш враг устал",
   "item.elementalamulets.knockback_amulet": "Амулет отдачи",
   "item.elementalamulets.knockback_amulet.tooltip": "Откидывает назад любого атакующего моба",
-
   "item.elementalamulets.wip_50": "Данный предмет сейчас не работает! Прощу прощения за это :/",
   "item.elementalamulets.wip": "Данный предмет сейчас немного баганный! Прощу прощения за это :/",
-
   "block.elementalamulets.elemental_combinator": "Объединитель элементаля",
   "block.elementalamulets.elemental_combinator.guititle": "Объединение",
   "block.elementalamulets.elemental_combinator.cooldown": "Объединитель перезаряжается! %s сек. осталось",
@@ -139,6 +134,5 @@
   "config.elementalamulets.rendering": "Рендеринг",
   "config.elementalamulets.worldgen": "Генерация мира",
   "itemGroup.elementalamulets": "Elemental Amulets",
-  "item.elementalamulets.common_amulet.elemental_power": "Elemental Power: %s",
-  "item.elementalamulets.pacifying_amulet.onbreak": "%s is broken! All nearby mobs are angry at you!"
+  "item.elementalamulets.common_amulet.elemental_power": "Elemental Power: %s"
 }
