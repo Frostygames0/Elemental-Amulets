@@ -53,7 +53,7 @@ public class ModConfig {
         private final ForgeConfigSpec.IntValue EARTH_AMULET_COOLDOWN;
         private final ForgeConfigSpec.IntValue PACIFYING_AMULET_BREAK_COOLDOWN;
         private final ForgeConfigSpec.BooleanValue PACIFYING_AMULET_ANGER_ONBREAK;
-        private final ForgeConfigSpec.IntValue PACIFYING_AMULET_TIREDNESS_TIME;
+        private final ForgeConfigSpec.IntValue PACIFYING_AMULET_DISORIENTATION_TIME;
         private final ForgeConfigSpec.BooleanValue MODIFY_VANILLA_LOOT;
 
         public Server(ForgeConfigSpec.Builder builder) {
@@ -64,6 +64,7 @@ public class ModConfig {
             builder.push("Elemental Combinator");
             OLD_FASHIONED_WAY = builder.comment("Allow usage of old combination procedure(Shift-Click on the block) [DEFAULT: false]").define("elemental_combinator_old_way", false);
             FANCY_COMBINATION = builder.comment("Add special effects when Elemental Combinator is working [DEFAULT: true]").define("elemental_combinator_special_effects", true);
+            builder.pop();
 
             builder.comment("Anything that is related to the amulets [WARNING! Setting any of these values too high may cause bugs, lags and even crashes]")
                     .push("Amulets");
@@ -95,7 +96,7 @@ public class ModConfig {
             EARTH_AMULET_COOLDOWN = builder.comment("How long will the Amulet of Earth be on cooldown? (in ticks, 1 sec - 20 ticks) [DEFAULT: 100]").defineInRange("earth_amulet_cooldown", 100, 0, Integer.MAX_VALUE);
 
             builder.push("Pacifying Amulet");
-            PACIFYING_AMULET_TIREDNESS_TIME = builder.comment("How long will the enemy player be tired? (in ticks, 1 sec - 20 ticks) [DEFAULT: 100]").defineInRange("pacifying_amulet_tiredness_time", 100, 0, Integer.MAX_VALUE);
+            PACIFYING_AMULET_DISORIENTATION_TIME = builder.comment("How long will the enemy  be disoriented (if enemy can't be pacified)? (in ticks, 1 sec - 20 ticks) [DEFAULT: 100]").defineInRange("pacifying_amulet_tiredness_time", 100, 0, Integer.MAX_VALUE);
             PACIFYING_AMULET_BREAK_COOLDOWN = builder.comment("How long will you need to wait until you can use Pacifying Amulet when broken (in ticks, 1 sec - 20 ticks) [DEFAULT: 200]").defineInRange("pacifying_amulet_break_cooldown", 200, 0, Integer.MAX_VALUE);
             PACIFYING_AMULET_ANGER_ONBREAK = builder.comment("Anger all nearby 'angerable'(wolves, golems, etc) entities when pacifying amulet breaks? [DEFAULT: true]").define("pacifying_amulet_anger_onbreak", true);
 
@@ -181,6 +182,7 @@ public class ModConfig {
         public static int EARTH_AMULET_COOLDOWN;
         public static int PACIFYING_AMULET_BREAK_COOLDOWN;
         public static boolean PACIFYING_AMULET_ANGER_ONBREAK;
+        public static int PACIFYING_AMULET_DISORIENTATION_TIME;
 
         //public static List<? extends String> EARTH_AMULET_BOOST_BLACKLIST;
         public static boolean MODIFY_VANILLA_LOOT;
@@ -199,7 +201,7 @@ public class ModConfig {
             MODIFY_VANILLA_LOOT = SERVER.MODIFY_VANILLA_LOOT.get();
             PACIFYING_AMULET_BREAK_COOLDOWN = SERVER.PACIFYING_AMULET_BREAK_COOLDOWN.get();
             PACIFYING_AMULET_ANGER_ONBREAK = SERVER.PACIFYING_AMULET_ANGER_ONBREAK.get();
-            //EARTH_AMULET_BOOST_BLACKLIST = SERVER.EARTH_AMULET_BOOST_BLACKLIST.get();
+            PACIFYING_AMULET_DISORIENTATION_TIME = SERVER.PACIFYING_AMULET_DISORIENTATION_TIME.get();
         }
 
         public static boolean AMULETS_TIER_DIFFERENCE;

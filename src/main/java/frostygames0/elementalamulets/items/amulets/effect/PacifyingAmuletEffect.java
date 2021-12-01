@@ -19,6 +19,7 @@
 
 package frostygames0.elementalamulets.items.amulets.effect;
 
+import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.PacifyingAmuletItem;
 import frostygames0.elementalamulets.util.AmuletHelper;
@@ -57,9 +58,13 @@ public class PacifyingAmuletEffect {
 
                     if (damager instanceof LivingEntity) {
                         LivingEntity livingDamager = (LivingEntity) damager;
-                        if (livingDamager.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 100, 2, true, true, true, new EffectInstance(Effects.BLINDNESS)))) {
+
+                        int disorientationTime = ModConfig.CachedValues.PACIFYING_AMULET_DISORIENTATION_TIME;
+
+                        if (livingDamager.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, disorientationTime, 2, true, true, true))) {
                             if (livingDamager instanceof PlayerEntity) {
                                 PlayerEntity damagingPlayer = (PlayerEntity) livingDamager;
+                                damagingPlayer.addEffect(new EffectInstance(Effects.BLINDNESS, (disorientationTime / 2), 2));
                                 damagingPlayer.displayClientMessage(new TranslationTextComponent("item.elementalamulets.pacifying_amulet.tired").withStyle(TextFormatting.RED), true);
                             }
                             player.displayClientMessage(new TranslationTextComponent("item.elementalamulets.pacifying_amulet.tired_success").withStyle(TextFormatting.GREEN), true);
