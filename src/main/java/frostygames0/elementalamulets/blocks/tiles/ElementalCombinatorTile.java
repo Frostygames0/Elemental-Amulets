@@ -109,8 +109,8 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
             if (this.isCombining()) {
                 ElementalCombination recipe = this.level.getRecipeManager().getRecipeFor(ModRecipes.ELEMENTAL_COMBINATION_TYPE, new RecipeWrapper(handler), this.level).orElse(null);
                 if (this.canCombine(recipe)) {
-                    this.totalTime = this.isFocused() ? recipe.getCombinationTime() / 2 : recipe.getCombinationTime();
-                    this.combinationTime++;
+                    this.totalTime = recipe.getCombinationTime();
+                    this.combinationTime += this.getFocusedLevel();
                     if (ModConfig.CachedValues.FANCY_COMBINATION) {
                         if (this.combinationTime % 80 == 0) {
                             this.playSound(SoundEvents.BEACON_AMBIENT);
@@ -191,8 +191,17 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
         this.level.playSound(null, worldPosition, sound, SoundCategory.BLOCKS, 1.0f, 1.0f);
     }
 
-    public boolean isFocused() {
-        return this.level.getBlockState(this.getBlockPos().above()).getBlock() == ModBlocks.CELESTIAL_FOCUS.get();
+    public int getFocusedLevel() {
+        int lv = 1;
+
+        if (this.level.getBlockState(this.getBlockPos().above()).getBlock() == ModBlocks.CELESTIAL_FOCUS.get()) {
+            lv++;
+            if (level.getMoonBrightness() == 1 && level.isNight()) {
+                lv++;
+            }
+        }
+
+        return lv;
     }
 
     @Override
