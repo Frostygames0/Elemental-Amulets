@@ -238,30 +238,6 @@ public class AmuletBeltItem extends Item implements ICurioItem {
     }
 
 
-    @Override
-    public boolean canSync(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
-        return true;
-    }
-
-    /*@Nullable
-    @Override
-    public CompoundNBT writeSyncData(ItemStack stack) {
-        IItemHandler handler = stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
-        if (handler instanceof ItemStackHandler) {
-            return ((ItemStackHandler) handler).serializeNBT();
-        }
-        return new CompoundNBT();
-    }
-
-    @Override
-    public void readSyncData(CompoundNBT compound, ItemStack stack) {
-        stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-            if (h instanceof ItemStackHandler) {
-                ((ItemStackHandler) h).deserializeNBT(compound);
-            }
-        });
-    }*/
-
     @Nullable
     @Override
     public CompoundNBT getShareTag(ItemStack stack) {
