@@ -20,6 +20,7 @@
 package frostygames0.elementalamulets.items.amulets;
 
 import frostygames0.elementalamulets.config.ModConfig;
+import frostygames0.elementalamulets.init.ModTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IGrowable;
@@ -29,8 +30,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.CooldownTracker;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.server.ServerWorld;
@@ -57,7 +58,7 @@ public class EarthAmuletItem extends AmuletItem {
                 CooldownTracker cooldownTracker = player.getCooldowns();
                 if (!cooldownTracker.isOnCooldown(this)) {
                     int boosted = boostLocalPlants(world, stack, player.blockPosition(), random);
-                    if (boosted > 0) {
+                    if (boosted > 0 && this.getTier(stack) > 1) {
                         this.regenerate(livingEntity, stack, boosted);
                         cooldownTracker.addCooldown(this, ModConfig.CachedValues.EARTH_AMULET_COOLDOWN);
                     }
@@ -77,7 +78,9 @@ public class EarthAmuletItem extends AmuletItem {
             if (block instanceof IGrowable) {
                 IGrowable growable = (IGrowable) block;
                 if (random.nextInt(50) <= this.getTier(amulet)) {
-                    if (growable.isValidBonemealTarget(world, blockPos, blockState, false)) {
+                    if (growable.isValidBonemealTarget(world, blockPos, blockState, false) &&
+                            ModTags.Blocks.EARTH_AMULET_BOOSTABLE.contains(block)) {
+
                         growable.performBonemeal((ServerWorld) world, random, blockPos, blockState);
                         boosted++;
                     }
@@ -87,7 +90,6 @@ public class EarthAmuletItem extends AmuletItem {
         return boosted;
     }
 
-    // TODO still needs some work
     private void regenerate(LivingEntity living, ItemStack stack, int boosted) {
         World level = living.level;
         if (getTier(stack) > 1) {
@@ -96,7 +98,7 @@ public class EarthAmuletItem extends AmuletItem {
                 living.heal(0.1f * boosted);
 
                 if (living instanceof PlayerEntity) {
-                    ((PlayerEntity) living).displayClientMessage(new StringTextComponent("You feel hehe penis").withStyle(TextFormatting.GREEN), true);
+                    ((PlayerEntity) living).displayClientMessage(new TranslationTextComponent("item.elementalamulets.earth_amulet.regeneration").withStyle(TextFormatting.GREEN), true);
                 }
             }
         }
