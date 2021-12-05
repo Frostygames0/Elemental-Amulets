@@ -45,7 +45,10 @@ public class MixinSplashes {
     private List<String> splashes;
 
     @Inject(at = @At("RETURN"), method = "apply")
-    protected void elementalamulets_apply(List<String> pObject, IResourceManager pResourceManager, IProfiler pProfiler, CallbackInfo ci) {
-        if (ModConfig.CachedValues.SHOW_SPLASHES) this.splashes.add("Jeweller likes color lime!");
+    protected void elementalamulets_applyCustomSplashes(List<String> pObject, IResourceManager pResourceManager, IProfiler pProfiler, CallbackInfo ci) {
+        if (ModConfig.CachedValues.SHOW_SPLASHES) {
+            this.splashes.add("Jeweller likes color lime!");
+            this.splashes.add("§6Thanks for 4000 downloads on Elemental Amulets :)");
+        }
     }
 }
