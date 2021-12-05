@@ -69,7 +69,7 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .save(consumer);
         ShapelessRecipeBuilder.shapeless(ModItems.ELEMENTAL_GUIDE.get())
                 .requires(Items.BOOK)
-                .requires(ModTags.ELEMENTS)
+                .requires(ModTags.Items.ELEMENTS)
                 .unlockedBy("has_item", InventoryChangeTrigger.Instance.hasItems(ModItems.ELEMENTAL_SHARDS.get()))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(ModItems.EMPTY_AMULET.get())
@@ -101,10 +101,10 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
 
     // Elemental Combination recipes
     private void registerModRecipes(Consumer<IFinishedRecipe> consumer) {
-        classicElementRecipe(ModItems.AIR_ELEMENT.get(), ModTags.AIR_ELEMENT_CONVERTIBLE, consumer);
-        classicElementRecipe(ModItems.FIRE_ELEMENT.get(), ModTags.FIRE_ELEMENT_CONVERTIBLE, consumer);
-        classicElementRecipe(ModItems.WATER_ELEMENT.get(), ModTags.WATER_ELEMENT_CONVERTIBLE, consumer);
-        classicElementRecipe(ModItems.EARTH_ELEMENT.get(), ModTags.EARTH_ELEMENT_CONVERTIBLE, consumer);
+        classicElementRecipe(ModItems.AIR_ELEMENT.get(), ModTags.Items.AIR_ELEMENT_CONVERTIBLE, consumer);
+        classicElementRecipe(ModItems.FIRE_ELEMENT.get(), ModTags.Items.FIRE_ELEMENT_CONVERTIBLE, consumer);
+        classicElementRecipe(ModItems.WATER_ELEMENT.get(), ModTags.Items.WATER_ELEMENT_CONVERTIBLE, consumer);
+        classicElementRecipe(ModItems.EARTH_ELEMENT.get(), ModTags.Items.EARTH_ELEMENT_CONVERTIBLE, consumer);
         ElementalCombinationBuilder.create(ModItems.AETHER_ELEMENT.get())
                 .addElemental(ModItems.ELEMENTAL_SHARDS.get())
                 .addIngredient(ModItems.FIRE_ELEMENT.get())

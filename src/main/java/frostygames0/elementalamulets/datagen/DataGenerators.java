@@ -22,7 +22,10 @@ package frostygames0.elementalamulets.datagen;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.datagen.loottables.LootTableProvider;
 import frostygames0.elementalamulets.datagen.recipes.RecipeProvider;
+import frostygames0.elementalamulets.datagen.tags.BlockTagsProvider;
+import frostygames0.elementalamulets.datagen.tags.ItemTagsProvider;
 import net.minecraft.data.DataGenerator;
+import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
@@ -32,12 +35,16 @@ public class DataGenerators {
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {
         DataGenerator generator = event.getGenerator();
+        ExistingFileHelper helper = event.getExistingFileHelper();
         if (event.includeClient()) {
-            generator.addProvider(new ItemModelProvider(generator, event.getExistingFileHelper()));
-            generator.addProvider(new BlockStateProvider(generator, event.getExistingFileHelper()));
+            generator.addProvider(new ItemModelProvider(generator, helper));
+            generator.addProvider(new BlockStateProvider(generator, helper));
         }
         if (event.includeServer()) {
-            generator.addProvider(new TagProvider(generator, event.getExistingFileHelper()));
+            BlockTagsProvider blockTagsProvider = new BlockTagsProvider(generator, helper);
+            generator.addProvider(blockTagsProvider);
+            generator.addProvider(new ItemTagsProvider(generator, blockTagsProvider, helper));
+
             generator.addProvider(new RecipeProvider(generator));
             generator.addProvider(new LootTableProvider(generator));
         }
