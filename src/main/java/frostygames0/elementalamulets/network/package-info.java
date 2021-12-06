@@ -20,6 +20,8 @@
 /**
  * @author Frostygames0
  * @date 26.11.2021 18:42
+ *
+ * Packets that are prefixed with S - server packets that are sent from the client, C - client packets that are sent to the client
  */
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
