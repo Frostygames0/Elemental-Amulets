@@ -22,12 +22,8 @@ package frostygames0.elementalamulets.blocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
@@ -35,7 +31,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
 
 
 import javax.annotation.Nullable;
@@ -48,23 +43,19 @@ import java.util.List;
 @SuppressWarnings("deprecation")
 public class CelestialFocus extends Block {
 
-    private static final VoxelShape FIRST_STAND = box(0, 0, 0, 2, 16, 2);
-    private static final VoxelShape SECOND_STAND = box(0, 0, 14, 2, 16, 16);
-    private static final VoxelShape THIRD_STAND = box(14, 0, 0, 16, 16, 2);
-    private static final VoxelShape FOURTH_STAND = box(14, 0, 14, 16, 16, 16);
+    private static final VoxelShape STAND = VoxelShapes.or(box(0, 0, 0, 2, 16, 2),
+            box(0, 0, 14, 2, 16, 16),
+            box(14, 0, 0, 16, 16, 2),
+            box(14, 0, 14, 16, 16, 16));
 
-    private static final VoxelShape STAND = VoxelShapes.or(FIRST_STAND, SECOND_STAND, THIRD_STAND, FOURTH_STAND);
-
-    private static final VoxelShape EAST_STICK = box(0, 10, 2, 2, 12, 14);
-    private static final VoxelShape WEST_STICK = box(14, 10, 2, 16, 12, 14);
-    private static final VoxelShape NORTH_STICK = box(2, 10, 0, 14, 12, 2);
-    private static final VoxelShape SOUTH_STICK = box(2, 10, 14, 14, 12, 16);
-
-    private static final VoxelShape STICKS = VoxelShapes.or(WEST_STICK, EAST_STICK, NORTH_STICK, SOUTH_STICK);
+    private static final VoxelShape STICKS = VoxelShapes.or(box(14, 10, 2, 16, 12, 14),
+            box(0, 10, 2, 2, 12, 14),
+            box(2, 10, 0, 14, 12, 2),
+            box(2, 10, 14, 14, 12, 16));
 
     private static final VoxelShape LENS = box(5, 14.25, 5, 11, 15.25, 11);
 
-    private static final VoxelShape CELESTIAL_FOCUS = VoxelShapes.or(STAND, STICKS, LENS);
+    public static final VoxelShape CELESTIAL_FOCUS = VoxelShapes.or(STAND, STICKS, LENS);
 
     public CelestialFocus(Properties p_i48440_1_) {
         super(p_i48440_1_);
@@ -79,23 +70,6 @@ public class CelestialFocus extends Block {
     @Override
     public boolean propagatesSkylightDown(BlockState p_200123_1_, IBlockReader p_200123_2_, BlockPos p_200123_3_) {
         return true;
-    }
-
-    @Override
-    public ActionResultType use(BlockState pState, World pLevel, BlockPos pPos, PlayerEntity pPlayer, Hand pHand, BlockRayTraceResult pHit) {
-        /*if(pLevel.isClientSide()) {
-            return ActionResultType.SUCCESS;
-        }
-        TileEntity te = pLevel.getBlockEntity(pPos.below());
-        if(te instanceof ElementalCombinatorTile) {
-            ElementalCombinatorTile elementalCombinatorTile = (ElementalCombinatorTile) te;
-            if(!pPlayer.isShiftKeyDown()) {
-                NetworkHooks.openGui((ServerPlayerEntity) pPlayer, elementalCombinatorTile, elementalCombinatorTile.getBlockPos());
-            } else {
-                elementalCombinatorTile.startCombination();
-            }
-        }*/
-        return ActionResultType.CONSUME;
     }
 
     @Override
