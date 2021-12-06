@@ -41,13 +41,6 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
 
     @Override
     protected void registerStatesAndModels() {
-
-        // Elemental Combinator
-        /*simpleBlock(ModBlocks.ELEMENTAL_COMBINATOR.get(), models().cubeBottomTop(name(ModBlocks.ELEMENTAL_COMBINATOR.get()),
-                modLoc( "block/"+name(ModBlocks.ELEMENTAL_COMBINATOR.get())+"_side"),
-                mcLoc("block/furnace_top"),
-                modLoc("block/"+name(ModBlocks.ELEMENTAL_COMBINATOR.get())+"_up_2.0")));*/
-
         blockstateBlock(ModBlocks.ELEMENTAL_COMBINATOR.get(), state -> {
             if (state.getValue(ElementalCombinator.COMBINING)) {
                 return models().cubeBottomTop(name(ModBlocks.ELEMENTAL_COMBINATOR.get()) + "_on",
