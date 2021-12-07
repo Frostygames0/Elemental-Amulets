@@ -48,6 +48,7 @@ public class ModItems {
             () -> new AncientTabletItem(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(Rarity.RARE).durability(100)));
 
     // Mod BlockItems
+    // TODO Maybe I should use registry event with foreach loop instead of creating constants that I'm not using
     public static final RegistryObject<BlockItem> ELEMENTAL_COMBINATOR = ITEMS.register("elemental_combinator",
             () -> new BlockItem(ModBlocks.ELEMENTAL_COMBINATOR.get(), new Item.Properties().tab(ElementalAmulets.GROUP)));
     public static final RegistryObject<BlockItem> CELESTIAL_FOCUS = ITEMS.register("celestial_focus",
@@ -56,6 +57,14 @@ public class ModItems {
             () -> new BlockItem(ModBlocks.ELEMENTAL_ORE.get(), new Item.Properties().tab(ElementalAmulets.GROUP)));
     public static final RegistryObject<BlockItem> ELEMENTAL_SHARDS_BLOCK = ITEMS.register("elemental_shards_block",
             () -> new BlockItem(ModBlocks.ELEMENTAL_SHARDS_BLOCK.get(), new Item.Properties().tab(ElementalAmulets.GROUP)));
+    public static final RegistryObject<BlockItem> FIRE_SHARDS_BLOCK = ITEMS.register("fire_shards_block",
+            () -> new BlockItem(ModBlocks.FIRE_SHARDS_BLOCK.get(), new Item.Properties().tab(ElementalAmulets.GROUP)));
+    public static final RegistryObject<BlockItem> WATER_SHARDS_BLOCK = ITEMS.register("water_shards_block",
+            () -> new BlockItem(ModBlocks.WATER_SHARDS_BLOCK.get(), new Item.Properties().tab(ElementalAmulets.GROUP)));
+    public static final RegistryObject<BlockItem> EARTH_SHARDS_BLOCK = ITEMS.register("earth_shards_block",
+            () -> new BlockItem(ModBlocks.EARTH_SHARDS_BLOCK.get(), new Item.Properties().tab(ElementalAmulets.GROUP)));
+    public static final RegistryObject<BlockItem> AIR_SHARDS_BLOCK = ITEMS.register("air_shards_block",
+            () -> new BlockItem(ModBlocks.AIR_SHARDS_BLOCK.get(), new Item.Properties().tab(ElementalAmulets.GROUP)));
 
     // Elements
     public static final RegistryObject<Item> ELEMENTAL_SHARDS = ITEMS.register("elemental_shards",
