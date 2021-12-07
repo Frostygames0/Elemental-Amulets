@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "elementalamulets:elemental_shards_block",
+    "elementalamulets:fire_shards_block",
+    "elementalamulets:water_shards_block",
+    "elementalamulets:earth_shards_block",
+    "elementalamulets:air_shards_block"
+  ]
+}

@@ -20,6 +20,7 @@
 package frostygames0.elementalamulets.datagen.tags;
 
 import frostygames0.elementalamulets.ElementalAmulets;
+import frostygames0.elementalamulets.init.ModBlocks;
 import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.init.ModTags;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
@@ -43,6 +44,11 @@ public class ItemTagsProvider extends net.minecraft.data.ItemTagsProvider {
         //Amulets
         AmuletItem[] amulets = ModItems.getAmulets().toArray(new AmuletItem[0]);
         this.tag(ModTags.Items.NECKLACES).add(amulets);
+        this.tag(ModTags.Items.SHARDS_BLOCKS).add(ModBlocks.ELEMENTAL_SHARDS_BLOCK.get().asItem(),
+                ModBlocks.FIRE_SHARDS_BLOCK.get().asItem(),
+                ModBlocks.WATER_SHARDS_BLOCK.get().asItem(),
+                ModBlocks.EARTH_SHARDS_BLOCK.get().asItem(),
+                ModBlocks.AIR_SHARDS_BLOCK.get().asItem());
 
         // Curios tag
         this.tag(ItemTags.bind("curios:necklace")).addTag(ModTags.Items.NECKLACES);

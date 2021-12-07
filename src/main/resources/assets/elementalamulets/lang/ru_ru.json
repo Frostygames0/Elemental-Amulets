@@ -1,4 +1,5 @@
 {
+  "itemGroup.elementalamulets": "Elemental Amulets",
   "item.elementalamulets.guide_book": "Элементальное руководство",
   "item.elementalamulets.guide_book.subtitle": "Содержит в себе все знания о элементальных амулетах",
   "item.elementalamulets.all_seeing_lens": "Всевидящая линза",
@@ -24,20 +25,15 @@
   "item.elementalamulets.aether_element": "Элемент эфира",
   "item.elementalamulets.aether_element.tooltip": "Легендарный пятый элемент! Ну хотя бы что-то",
   "item.elementalamulets.aether_element.latin_variant": "Элементум Аэзер",
-
   "item.elementalamulets.empty_amulet": "Пустой амулет",
-
   "item.elementalamulets.common_amulet.tooltip.tier": "Уровень: %s",
-
+  "item.elementalamulets.common_amulet.elemental_power": "Elemental Power: %s",
   "item.elementalamulets.fire_amulet": "Амулет огня",
   "item.elementalamulets.fire_amulet.tooltip": "%sЗащищает от%s %1$sогня%1$s",
-
   "item.elementalamulets.speed_amulet": "Амулет скорости",
   "item.elementalamulets.speed_amulet.tooltip": "%sУскоряет вас%s",
-
   "item.elementalamulets.jump_amulet": "Амулет прыгучести",
   "item.elementalamulets.jump_amulet.tooltip": "%sПозволяет%s %1$sпрыгать%1$s %sвысоко%s",
-
   "item.elementalamulets.invisibility_amulet": "Амулет невидимости",
   "item.elementalamulets.invisibility_amulet.tooltip": "%sПрячет вас от противников%s",
   "item.elementalamulets.protection_amulet": "Амулет Терра защиты",
@@ -82,10 +78,9 @@
   "jei.elementalamulets.aether_element.description": "Небольшое количество эфира примагниченного к осколку. Используются в улучшающих комбинациях",
   "jei.elementalamulets.all_seeing_lens.description": "Очень редкий предмет, только один человек знает как его сделать\n Ювелир продает это на 4 уровне",
   "jei.elementalamulets.elemental_ore.whereabouts": "Элементальная руда - это блок который содержит элементальные осколки\nМожет быть найден на Y:40 и иногда выше",
-
+  "jei.elementalamulets.shards_blocks.description": "Куча осколков, для компактного хранения!",
   "patchouli.elementalamulets.landing": "Привет $(thing)$(playername)!$() This $(l)magical guide $() will provide you with all knowledge you need! $(br)Book will expand itself when a new knowledge is acquired! Everything(almost) about this mod is described here!",
   "patchouli.elementalamulets.not_present": "Patchouli не обнаружен!! Пожалуйста установите Patchouli, если вы хотите открыть книгу",
-
   "advancements.elementalamulets.desc": "То чего вы достигнете в вашем приключении",
   "advancements.elementalamulets.guide": "Великий источник знаний!",
   "advancements.elementalamulets.guide.desc": "Заполучите Элементальное Руководство",
@@ -131,7 +126,5 @@
   "config.elementalamulets.general": "Основное",
   "config.elementalamulets.amulets": "Амулеты",
   "config.elementalamulets.rendering": "Рендеринг",
-  "config.elementalamulets.worldgen": "Генерация мира",
-  "itemGroup.elementalamulets": "Elemental Amulets",
-  "item.elementalamulets.common_amulet.elemental_power": "Elemental Power: %s"
+  "config.elementalamulets.worldgen": "Генерация мира"
 }

@@ -79,10 +79,9 @@
   "jei.elementalamulets.aether_element.description": "Small amount of aether magnetized to a shard. Used in upgrade combinations",
   "jei.elementalamulets.all_seeing_lens.description": "A very rare item, only one person knows how to do it.\nJeweller sells it on level 4",
   "jei.elementalamulets.elemental_ore.whereabouts": "Elemental Ore - is a block that contains Elemental Shards inside.\nCan be found up to Y:40 and sometimes higher",
-
+  "jei.elementalamulets.shards_blocks.description": "A pile of shards, for compact storage!",
   "patchouli.elementalamulets.landing": "Hello $(thing)$(playername)!$() Welcome to the Elemental Guide, a great source of knowledge!$(br2)It will help you with Elemental Amulets mod!",
   "patchouli.elementalamulets.not_present": "Patchouli is not installed! The Elemental Guide cannot work without it!",
-
   "advancements.elementalamulets.desc": "Things that you will achieve in your adventure",
   "advancements.elementalamulets.guide": "Great source of knowledge!",
   "advancements.elementalamulets.guide.desc": "Obtain the elemental guide.",

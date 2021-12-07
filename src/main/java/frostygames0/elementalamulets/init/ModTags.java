@@ -32,6 +32,7 @@ public class ModTags {
     public static class Items {
         public static final ITag.INamedTag<Item> NECKLACES = tag("necklaces");
         public static final ITag.INamedTag<Item> ELEMENTS = tag("elements");
+        public static final ITag.INamedTag<Item> SHARDS_BLOCKS = tag("shards_blocks");
 
         public static final ITag.INamedTag<Item> FIRE_ELEMENT_CONVERTIBLE = forge(ElementalAmulets.MOD_ID + "/fire_element_convertible");
         public static final ITag.INamedTag<Item> WATER_ELEMENT_CONVERTIBLE = forge(ElementalAmulets.MOD_ID + "/water_element_convertible");
