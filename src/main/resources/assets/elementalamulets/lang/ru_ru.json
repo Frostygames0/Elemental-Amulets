@@ -1,5 +1,6 @@
 {
   "itemGroup.elementalamulets": "Elemental Amulets",
+
   "item.elementalamulets.guide_book": "Элементальное руководство",
   "item.elementalamulets.guide_book.subtitle": "Содержит в себе все знания о элементальных амулетах",
   "item.elementalamulets.all_seeing_lens": "Всевидящая линза",
@@ -63,10 +64,12 @@
   "block.elementalamulets.celestial_focus.tooltip": "Сами небеса ускорят элементальное объединение",
   "block.elementalamulets.elemental_ore": "Элементальная руда",
   "block.elementalamulets.elemental_shards_block": "Блок элементальных осколков",
-
+  "block.elementalamulets.fire_shards_block": "Блок огненных осколков",
+  "block.elementalamulets.water_shards_block": "Блок водянных осколков",
+  "block.elementalamulets.earth_shards_block": "Блок землянных осколковв",
+  "block.elementalamulets.air_shards_block": "Блок воздушных осколков",
   "player.elementalamulets.brokenamulet.warn": "Ваш %s был сломан!",
   "entity.minecraft.villager.elementalamulets.jeweller": "Ювелир",
-
   "jei.elementalamulets.cooldown": "Время комбинации - %s сек",
   "jei.elementalamulets.elemental_separation": "Элементальное объединение",
   "jei.elementalamulets.shapeless": "Бесформенный рецепт (за исключением центр. слота).",

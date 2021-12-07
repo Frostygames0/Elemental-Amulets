@@ -64,10 +64,12 @@
   "block.elementalamulets.celestial_focus.tooltip": "The heavens themselves will increase the speed of elemental combination",
   "block.elementalamulets.elemental_ore": "Elemental Ore",
   "block.elementalamulets.elemental_shards_block": "Elemental Shards Block",
-
+  "block.elementalamulets.fire_shards_block": "Fire Shards Block",
+  "block.elementalamulets.water_shards_block": "Water Shards Block",
+  "block.elementalamulets.earth_shards_block": "Earth Shards Block",
+  "block.elementalamulets.air_shards_block": "Air Shards Block",
   "player.elementalamulets.brokenamulet.warn": "Your %s just got broken!",
   "entity.minecraft.villager.elementalamulets.jeweller": "Jeweller",
-
   "jei.elementalamulets.cooldown": "Time to combine - %ss",
   "jei.elementalamulets.elemental_separation": "Elemental Combination",
   "jei.elementalamulets.shapeless": "Shapeless recipe (except the central slot).",
