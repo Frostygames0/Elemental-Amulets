@@ -58,13 +58,13 @@ public class ModItems {
     public static final RegistryObject<BlockItem> ELEMENTAL_SHARDS_BLOCK = ITEMS.register("elemental_shards_block",
             () -> new BlockItem(ModBlocks.ELEMENTAL_SHARDS_BLOCK.get(), new Item.Properties().tab(ElementalAmulets.GROUP)));
     public static final RegistryObject<BlockItem> FIRE_SHARDS_BLOCK = ITEMS.register("fire_shards_block",
-            () -> new BlockItem(ModBlocks.FIRE_SHARDS_BLOCK.get(), new Item.Properties().tab(ElementalAmulets.GROUP)));
+            () -> new BlockItem(ModBlocks.FIRE_SHARDS_BLOCK.get(), new Item.Properties().tab(ElementalAmulets.GROUP).rarity(ElementalRarity.FIRE)));
     public static final RegistryObject<BlockItem> WATER_SHARDS_BLOCK = ITEMS.register("water_shards_block",
-            () -> new BlockItem(ModBlocks.WATER_SHARDS_BLOCK.get(), new Item.Properties().tab(ElementalAmulets.GROUP)));
+            () -> new BlockItem(ModBlocks.WATER_SHARDS_BLOCK.get(), new Item.Properties().tab(ElementalAmulets.GROUP).rarity(ElementalRarity.WATER)));
     public static final RegistryObject<BlockItem> EARTH_SHARDS_BLOCK = ITEMS.register("earth_shards_block",
-            () -> new BlockItem(ModBlocks.EARTH_SHARDS_BLOCK.get(), new Item.Properties().tab(ElementalAmulets.GROUP)));
+            () -> new BlockItem(ModBlocks.EARTH_SHARDS_BLOCK.get(), new Item.Properties().tab(ElementalAmulets.GROUP).rarity(ElementalRarity.EARTH)));
     public static final RegistryObject<BlockItem> AIR_SHARDS_BLOCK = ITEMS.register("air_shards_block",
-            () -> new BlockItem(ModBlocks.AIR_SHARDS_BLOCK.get(), new Item.Properties().tab(ElementalAmulets.GROUP)));
+            () -> new BlockItem(ModBlocks.AIR_SHARDS_BLOCK.get(), new Item.Properties().tab(ElementalAmulets.GROUP).rarity(ElementalRarity.AIR)));
 
     // Elements
     public static final RegistryObject<Item> ELEMENTAL_SHARDS = ITEMS.register("elemental_shards",
