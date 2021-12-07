@@ -21,6 +21,8 @@ package frostygames0.elementalamulets.datagen.loottables;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import frostygames0.elementalamulets.init.ModBlocks;
+import frostygames0.elementalamulets.init.ModItems;
 import net.minecraft.advancements.criterion.EnchantmentPredicate;
 import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.advancements.criterion.MinMaxBounds;
@@ -37,6 +39,7 @@ import net.minecraft.loot.conditions.MatchTool;
 import net.minecraft.loot.functions.ApplyBonus;
 import net.minecraft.loot.functions.CopyName;
 import net.minecraft.loot.functions.ExplosionDecay;
+import net.minecraft.loot.functions.SetCount;
 import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -67,18 +70,16 @@ public abstract class BaseLootTableProvider extends LootTableProvider {
 
     protected abstract void addTables();
 
-    protected LootTable.Builder createTableNBT(String name, Block block) {
+    protected LootTable.Builder createTableNBT(Block block) {
         LootPool.Builder builder = LootPool.lootPool()
-                .name(name)
                 .setRolls(ConstantRange.exactly(1))
                 .add(ItemLootEntry.lootTableItem(block)
                         .apply(CopyName.copyName(CopyName.Source.BLOCK_ENTITY)));
         return LootTable.lootTable().withPool(builder);
     }
 
-    protected LootTable.Builder createOreTable(String name, Block block, Item drop) {
+    protected LootTable.Builder createOreTable(Block block, Item drop) {
         LootPool.Builder builder = LootPool.lootPool()
-                .name(name)
                 .setRolls(ConstantRange.exactly(1))
                 .add(ItemLootEntry.lootTableItem(block)
                         .when(SILK_TOUCH)
@@ -88,12 +89,20 @@ public abstract class BaseLootTableProvider extends LootTableProvider {
         return LootTable.lootTable().withPool(builder);
     }
 
-    protected LootTable.Builder createDefaultTable(String name, Block block) {
+    protected LootTable.Builder createDefaultTable(Block block) {
         LootPool.Builder builder = LootPool.lootPool()
-                .name(name)
                 .setRolls(ConstantRange.exactly(1))
                 .add(ItemLootEntry.lootTableItem(block));
         return LootTable.lootTable().withPool(builder);
+    }
+
+    protected LootTable.Builder createShardsTable(Block block) {
+        return LootTable.lootTable().withPool(LootPool.lootPool()
+                .setRolls(ConstantRange.exactly(1))
+                .add(ItemLootEntry.lootTableItem(ModBlocks.ELEMENTAL_SHARDS_BLOCK.get()).when(SILK_TOUCH)
+                        .otherwise(ItemLootEntry.lootTableItem(ModItems.ELEMENTAL_SHARDS.get())
+                                .apply(SetCount.setCount(ConstantRange.exactly(9)))
+                                .apply(ExplosionDecay.explosionDecay()))));
     }
 
     @Override

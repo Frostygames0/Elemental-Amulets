@@ -2,7 +2,6 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "name": "celestial_focus",
       "rolls": 1,
       "entries": [
         {

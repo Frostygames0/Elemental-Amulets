@@ -2,7 +2,6 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "name": "elemental_ore",
       "rolls": 1,
       "entries": [
         {

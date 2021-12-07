@@ -58,7 +58,12 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         // Elemental Stone
         simpleBlock(ModBlocks.ELEMENTAL_ORE.get());
         simpleBlock(ModBlocks.CELESTIAL_FOCUS.get(), models().getExistingFile(modLoc("block/celestial_focus")));
+
         simpleBlock(ModBlocks.ELEMENTAL_SHARDS_BLOCK.get());
+        simpleBlock(ModBlocks.WATER_SHARDS_BLOCK.get());
+        simpleBlock(ModBlocks.EARTH_SHARDS_BLOCK.get());
+        simpleBlock(ModBlocks.AIR_SHARDS_BLOCK.get());
+        simpleBlock(ModBlocks.FIRE_SHARDS_BLOCK.get());
 
         for (Block block : ModBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).collect(Collectors.toList())) {
             simpleBlockItem(block, models().getExistingFile(modLoc("block/" + name(block))));

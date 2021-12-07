@@ -50,8 +50,22 @@ public class ModBlocks {
     public static final RegistryObject<Block> ELEMENTAL_ORE = BLOCKS.register("elemental_ore",
             () -> new Block(AbstractBlock.Properties.of(Material.STONE).strength(3.5f).sound(SoundType.STONE).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).harvestLevel(1)));
 
+
+    // Shards
     public static final RegistryObject<Block> ELEMENTAL_SHARDS_BLOCK = BLOCKS.register("elemental_shards_block",
-            () -> new Block(AbstractBlock.Properties.of(Material.GLASS, MaterialColor.COLOR_CYAN).strength(0.8f).sound(SoundType.GLASS).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE)));
+            () -> createShardsBlock(MaterialColor.COLOR_CYAN));
+    public static final RegistryObject<Block> FIRE_SHARDS_BLOCK = BLOCKS.register("fire_shards_block",
+            () -> createShardsBlock(MaterialColor.COLOR_CYAN));
+    public static final RegistryObject<Block> WATER_SHARDS_BLOCK = BLOCKS.register("water_shards_block",
+            () -> createShardsBlock(MaterialColor.WATER));
+    public static final RegistryObject<Block> EARTH_SHARDS_BLOCK = BLOCKS.register("earth_shards_block",
+            () -> createShardsBlock(MaterialColor.DIRT));
+    public static final RegistryObject<Block> AIR_SHARDS_BLOCK = BLOCKS.register("air_shards_block",
+            () -> createShardsBlock(MaterialColor.SNOW));
+
+    private static Block createShardsBlock(MaterialColor color) {
+        return new Block(AbstractBlock.Properties.of(Material.GLASS, color).strength(0.8f).sound(SoundType.GLASS).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE));
+    }
 
     private static boolean never(BlockState blockState, IBlockReader iBlockReader, BlockPos blockPos) {
         return false;

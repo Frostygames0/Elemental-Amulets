@@ -22,12 +22,6 @@ package frostygames0.elementalamulets.datagen.loottables;
 import frostygames0.elementalamulets.init.ModBlocks;
 import frostygames0.elementalamulets.init.ModItems;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.loot.ConstantRange;
-import net.minecraft.loot.ItemLootEntry;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.functions.ExplosionDecay;
-import net.minecraft.loot.functions.SetCount;
 
 /**
  * @author Frostygames0
@@ -40,15 +34,14 @@ public class LootTableProvider extends BaseLootTableProvider {
 
     @Override
     protected void addTables() {
-        this.lootTables.put(ModBlocks.ELEMENTAL_COMBINATOR.get(), this.createTableNBT("elemental_combinator", ModBlocks.ELEMENTAL_COMBINATOR.get()));
-        this.lootTables.put(ModBlocks.ELEMENTAL_ORE.get(), this.createOreTable("elemental_ore", ModBlocks.ELEMENTAL_ORE.get(), ModItems.ELEMENTAL_SHARDS.get()));
-        this.lootTables.put(ModBlocks.CELESTIAL_FOCUS.get(), this.createDefaultTable("celestial_focus", ModBlocks.CELESTIAL_FOCUS.get()));
-        this.lootTables.put(ModBlocks.ELEMENTAL_SHARDS_BLOCK.get(), LootTable.lootTable().withPool(LootPool.lootPool()
-                .name("elemental_shards_block")
-                .setRolls(ConstantRange.exactly(1))
-                .add(ItemLootEntry.lootTableItem(ModBlocks.ELEMENTAL_SHARDS_BLOCK.get()).when(SILK_TOUCH)
-                        .otherwise(ItemLootEntry.lootTableItem(ModItems.ELEMENTAL_SHARDS.get())
-                                .apply(SetCount.setCount(ConstantRange.exactly(9)))
-                                .apply(ExplosionDecay.explosionDecay())))));
+        this.lootTables.put(ModBlocks.ELEMENTAL_COMBINATOR.get(), this.createTableNBT(ModBlocks.ELEMENTAL_COMBINATOR.get()));
+        this.lootTables.put(ModBlocks.ELEMENTAL_ORE.get(), this.createOreTable(ModBlocks.ELEMENTAL_ORE.get(), ModItems.ELEMENTAL_SHARDS.get()));
+        this.lootTables.put(ModBlocks.CELESTIAL_FOCUS.get(), this.createDefaultTable(ModBlocks.CELESTIAL_FOCUS.get()));
+
+        this.lootTables.put(ModBlocks.ELEMENTAL_SHARDS_BLOCK.get(), this.createShardsTable(ModBlocks.ELEMENTAL_SHARDS_BLOCK.get()));
+        this.lootTables.put(ModBlocks.FIRE_SHARDS_BLOCK.get(), this.createShardsTable(ModBlocks.FIRE_SHARDS_BLOCK.get()));
+        this.lootTables.put(ModBlocks.WATER_SHARDS_BLOCK.get(), this.createShardsTable(ModBlocks.WATER_SHARDS_BLOCK.get()));
+        this.lootTables.put(ModBlocks.AIR_SHARDS_BLOCK.get(), this.createShardsTable(ModBlocks.AIR_SHARDS_BLOCK.get()));
+        this.lootTables.put(ModBlocks.EARTH_SHARDS_BLOCK.get(), this.createShardsTable(ModBlocks.EARTH_SHARDS_BLOCK.get()));
     }
 }
