@@ -90,13 +90,12 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .unlockedBy("has_item", InventoryChangeTrigger.Instance.hasItems(ModItems.ALL_SEEING_LENS.get()))
                 .save(consumer);
         oreSmelting(ModBlocks.ELEMENTAL_ORE.get(), ModItems.ELEMENTAL_SHARDS.get(), 0.7f, 200, consumer);
-        ShapedRecipeBuilder.shaped(ModBlocks.ELEMENTAL_SHARDS_BLOCK.get())
-                .pattern("***")
-                .pattern("***")
-                .pattern("***")
-                .define('*', ModItems.ELEMENTAL_SHARDS.get())
-                .unlockedBy("has_item", InventoryChangeTrigger.Instance.hasItems(ModItems.ELEMENTAL_SHARDS.get()))
-                .save(consumer);
+
+        shardsBlockRecipe(ModBlocks.ELEMENTAL_SHARDS_BLOCK.get(), ModItems.ELEMENTAL_SHARDS.get(), consumer);
+        shardsBlockRecipe(ModBlocks.WATER_SHARDS_BLOCK.get(), ModItems.WATER_ELEMENT.get(), consumer);
+        shardsBlockRecipe(ModBlocks.EARTH_SHARDS_BLOCK.get(), ModItems.EARTH_ELEMENT.get(), consumer);
+        shardsBlockRecipe(ModBlocks.FIRE_SHARDS_BLOCK.get(), ModItems.FIRE_ELEMENT.get(), consumer);
+        shardsBlockRecipe(ModBlocks.AIR_SHARDS_BLOCK.get(), ModItems.AIR_ELEMENT.get(), consumer);
     }
 
     // Elemental Combination recipes
@@ -287,5 +286,15 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                         resultOre, exp, cookTime / 2)
                 .unlockedBy("has_item", InventoryChangeTrigger.Instance.hasItems(oreBlock))
                 .save(consumerIn, resultOre.getRegistryName() + "_from_blasting");
+    }
+
+    private static void shardsBlockRecipe(Block shardsBlock, Item shardsItem, Consumer<IFinishedRecipe> consumerIn) {
+        ShapedRecipeBuilder.shaped(shardsBlock)
+                .pattern("***")
+                .pattern("***")
+                .pattern("***")
+                .define('*', shardsItem)
+                .unlockedBy("has_item", InventoryChangeTrigger.Instance.hasItems(shardsItem))
+                .save(consumerIn);
     }
 }

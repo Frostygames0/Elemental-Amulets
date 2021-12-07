@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "***",
+    "***",
+    "***"
+  ],
+  "key": {
+    "*": {
+      "item": "elementalamulets:air_element"
+    }
+  },
+  "result": {
+    "item": "elementalamulets:air_shards_block"
+  }
+}

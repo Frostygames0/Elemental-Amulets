@@ -22,7 +22,6 @@ package frostygames0.elementalamulets.datagen.loottables;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import frostygames0.elementalamulets.init.ModBlocks;
-import frostygames0.elementalamulets.init.ModItems;
 import net.minecraft.advancements.criterion.EnchantmentPredicate;
 import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.advancements.criterion.MinMaxBounds;
@@ -96,11 +95,11 @@ public abstract class BaseLootTableProvider extends LootTableProvider {
         return LootTable.lootTable().withPool(builder);
     }
 
-    protected LootTable.Builder createShardsTable(Block block) {
+    protected LootTable.Builder createShardsTable(Block block, Item shards) {
         return LootTable.lootTable().withPool(LootPool.lootPool()
                 .setRolls(ConstantRange.exactly(1))
                 .add(ItemLootEntry.lootTableItem(ModBlocks.ELEMENTAL_SHARDS_BLOCK.get()).when(SILK_TOUCH)
-                        .otherwise(ItemLootEntry.lootTableItem(ModItems.ELEMENTAL_SHARDS.get())
+                        .otherwise(ItemLootEntry.lootTableItem(shards)
                                 .apply(SetCount.setCount(ConstantRange.exactly(9)))
                                 .apply(ExplosionDecay.explosionDecay()))));
     }

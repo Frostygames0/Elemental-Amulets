@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "***",
+    "***",
+    "***"
+  ],
+  "key": {
+    "*": {
+      "item": "elementalamulets:water_element"
+    }
+  },
+  "result": {
+    "item": "elementalamulets:water_shards_block"
+  }
+}
