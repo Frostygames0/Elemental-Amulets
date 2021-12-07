@@ -87,12 +87,12 @@ public class LootTableModifiers {
         public static class Serializer extends GlobalLootModifierSerializer<TreasureLoot> {
 
             @Override
-            public TreasureLoot read(ResourceLocation location, JsonObject object, ILootCondition[] ailootcondition) {
+            public TreasureLoot read(ResourceLocation location, JsonObject object, ILootCondition[] aiLootCondition) {
                 float desert = JSONUtils.getAsFloat(object, "desert_pyramid", 0.1f);
                 float treasure = JSONUtils.getAsFloat(object, "buried_treasure", 0.3f);
                 float shipwreck = JSONUtils.getAsFloat(object, "shipwreck_treasure", 0.3f);
                 float nether = JSONUtils.getAsFloat(object, "nether_bridge", 0.2f);
-                return new TreasureLoot(ailootcondition, desert, treasure, shipwreck, nether);
+                return new TreasureLoot(aiLootCondition, desert, treasure, shipwreck, nether);
             }
 
             @Override
