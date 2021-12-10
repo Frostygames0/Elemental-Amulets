@@ -34,6 +34,8 @@ import net.minecraft.command.arguments.ItemArgument;
 import net.minecraft.command.arguments.ItemInput;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -49,8 +51,11 @@ public class ModCommands {
 
     public static void registerCommandsEvent(final RegisterCommandsEvent event) {
         event.getDispatcher().register(
-                LiteralArgumentBuilder.<CommandSource>literal(ElementalAmulets.MOD_ID)
-                        .then(GiveAmuletCommand.register())
+                LiteralArgumentBuilder.<CommandSource>literal(ElementalAmulets.MOD_ID).
+                        executes(src -> {
+                            src.getSource().sendSuccess(new StringTextComponent("Elemental Amulets").withStyle(TextFormatting.GOLD), false);
+                            return 0;
+                        }).then(GiveAmuletCommand.register())
         );
     }
 
