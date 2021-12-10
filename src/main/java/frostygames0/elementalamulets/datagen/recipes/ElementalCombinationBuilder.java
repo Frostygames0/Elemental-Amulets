@@ -21,7 +21,6 @@ package frostygames0.elementalamulets.datagen.recipes;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.init.ModRecipes;
 import frostygames0.elementalamulets.recipes.ingredient.AmuletIngredient;
 import net.minecraft.data.IFinishedRecipe;
@@ -40,6 +39,8 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+
+import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 /**
  * @author Frostygames0
@@ -109,7 +110,7 @@ public class ElementalCombinationBuilder {
     }
 
     public void build(Consumer<IFinishedRecipe> consumerIn) {
-        ResourceLocation id = new ResourceLocation(ElementalAmulets.MOD_ID, ForgeRegistries.ITEMS.getKey(this.result.getItem()).getPath()); // Replacing namespace so recipe would go to correct folder
+        ResourceLocation id = modPrefix(ForgeRegistries.ITEMS.getKey(this.result.getItem()).getPath()); // Replacing namespace so recipe would go to correct folder
         this.build(consumerIn, id);
     }
 

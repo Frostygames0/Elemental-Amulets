@@ -28,6 +28,9 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
 
+
+import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
+
 public class ModTags {
     public static class Items {
         public static final ITag.INamedTag<Item> NECKLACES = tag("necklaces");
@@ -40,7 +43,7 @@ public class ModTags {
         public static final ITag.INamedTag<Item> EARTH_ELEMENT_CONVERTIBLE = forge(ElementalAmulets.MOD_ID + "/earth_element_convertible");
 
         private static ITag.INamedTag<Item> tag(String name) {
-            return ItemTags.bind(new ResourceLocation(ElementalAmulets.MOD_ID, name).toString());
+            return ItemTags.bind(modPrefix(name).toString());
         }
 
         private static ITag.INamedTag<Item> forge(String name) {
@@ -53,7 +56,7 @@ public class ModTags {
         public static final ITag.INamedTag<Block> EARTH_AMULET_BOOSTABLE = forge(ElementalAmulets.MOD_ID + "/earth_amulet_boostable");
 
         private static ITag.INamedTag<Block> tag(String name) {
-            return BlockTags.bind(new ResourceLocation(ElementalAmulets.MOD_ID, name).toString());
+            return BlockTags.bind(modPrefix(name).toString());
         }
 
         private static Tags.IOptionalNamedTag<Block> forge(String name) {
