@@ -25,6 +25,7 @@ import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import frostygames0.elementalamulets.world.structures.ModStructures;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.merchant.villager.VillagerProfession;
 import net.minecraft.entity.merchant.villager.VillagerTrades;
@@ -59,6 +60,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -80,23 +82,23 @@ public class ModVillagers {
     @SubscribeEvent
     public static void registerTrades(final VillagerTradesEvent event) {
         if (event.getType() == JEWELLER.get()) {
-            // Level 1 trades
-            event.getTrades().get(1).add(new BasicTrade(new ItemStack(ModItems.ELEMENTAL_SHARDS.get(), 5), new ItemStack(Items.EMERALD), 10, 1, 1f));
+            Int2ObjectMap<List<VillagerTrades.ITrade>> trades = event.getTrades();
 
-            // Level 2 trades
-            List<VillagerTrades.ITrade> trades2 = event.getTrades().get(2);
+            trades.get(1).add(new BasicTrade(new ItemStack(ModItems.ELEMENTAL_SHARDS.get(), 5), new ItemStack(Items.EMERALD), 10, 1, 1f));
+
+            List<VillagerTrades.ITrade> trades2 = trades.get(2);
             trades2.add(new BasicTrade(2, new ItemStack(ModItems.ELEMENTAL_GUIDE.get()), 1, 2, 1.3F));
             trades2.add(new BasicTrade(5, new ItemStack(ModBlocks.ELEMENTAL_COMBINATOR.get().asItem()), 2, 5, 1.5f));
 
-            List<VillagerTrades.ITrade> trades3 = event.getTrades().get(3);
+            List<VillagerTrades.ITrade> trades3 = trades.get(3);
             trades3.add(new BasicTrade(3, new ItemStack(ModItems.FIRE_ELEMENT.get()), 10, 1, 1.2f));
             trades3.add(new BasicTrade(3, new ItemStack(ModItems.WATER_ELEMENT.get()), 10, 1, 1.2f));
             trades3.add(new BasicTrade(3, new ItemStack(ModItems.AIR_ELEMENT.get()), 10, 1, 1.2f));
             trades3.add(new BasicTrade(3, new ItemStack(ModItems.EARTH_ELEMENT.get()), 10, 1, 1.2f));
 
-            event.getTrades().get(4).add(new BasicTrade(new ItemStack(Items.EMERALD, 10), new ItemStack(ModItems.AETHER_ELEMENT.get(), 2), new ItemStack(ModItems.ALL_SEEING_LENS.get()), 4, 10, 1.3F));
+            trades.get(4).add(new BasicTrade(new ItemStack(Items.EMERALD, 10), new ItemStack(ModItems.AETHER_ELEMENT.get(), 2), new ItemStack(ModItems.ALL_SEEING_LENS.get()), 4, 10, 1.3F));
 
-            List<VillagerTrades.ITrade> trades5 = event.getTrades().get(5);
+            List<VillagerTrades.ITrade> trades5 = trades.get(5);
             trades5.add(new BasicTrade(new ItemStack(Items.EMERALD, 25), new ItemStack(ModItems.AETHER_ELEMENT.get()), new ItemStack(ModItems.AMULET_BELT.get()), 1, 30, 2.5f));
             trades5.add(new CultTempleTrade(30, 1, 10));
         }
@@ -104,8 +106,7 @@ public class ModVillagers {
 
     @SubscribeEvent
     public static void registerWandererTrades(final WandererTradesEvent event) {
-        Random rand = new Random();
-        event.getRareTrades().add(new BasicTrade(45, AmuletItem.getStackWithTier(new ItemStack(ModItems.getAmulets().get(rand.nextInt(ModItems.getAmulets().size()))), 3), 1, 25, 1.5f));
+        event.getRareTrades().add(new EmeraldsForRandomAmulet(45, 25, 1.5f));
     }
 
     public static class CultTempleTrade implements VillagerTrades.ITrade {
@@ -140,23 +141,44 @@ public class ModVillagers {
         }
     }
 
+    public static class EmeraldsForRandomAmulet implements VillagerTrades.ITrade {
+        private final int emerald;
+        private final int villagerXp;
+        private final float priceMult;
+
+        public EmeraldsForRandomAmulet(int emerald, int villagerXp, float priceMult) {
+            this.emerald = emerald;
+            this.villagerXp = villagerXp;
+            this.priceMult = priceMult;
+        }
+
+        @Nullable
+        @Override
+        public MerchantOffer getOffer(Entity pTrader, Random pRand) {
+            List<AmuletItem> amulets = ModItems.getAmulets();
+            ItemStack stack = new ItemStack(amulets.get(pRand.nextInt(amulets.size())));
+            return new MerchantOffer(new ItemStack(Items.EMERALD, this.emerald), AmuletItem.getStackWithTier(stack, 3), 1, villagerXp, priceMult);
+        }
+    }
+
 
     public static class Structures {
         public static void addHouses(final FMLServerAboutToStartEvent event) {
             if (ModConfig.CachedValues.GENERATE_JEWELLER_HOUSE) {
                 MutableRegistry<JigsawPattern> registry = event.getServer().registryAccess().registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY);
-                for (String biome : new String[]{"plains", "taiga"}) { // This is because it should be all village biomes but for now there is only plains
+                String[] allowedBiomes = {"plains", "taiga"};
+                for (String biome : allowedBiomes) { // This is because it should be all village biomes but for now there is only plains
                     addHouse(registry, new ResourceLocation("village/" + biome + "/houses"),
                             ElementalAmulets.MOD_ID + ":villages/jeweller_house_" + biome, 12);
                 }
-                ElementalAmulets.LOGGER.debug("Jeweller's house was successfully added to all existing vanilla villages");
-            } else ElementalAmulets.LOGGER.debug("Jeweller' s house generation skipped (Config Preference)");
+                ElementalAmulets.LOGGER.debug("Jeweller's house was successfully added to: " + Arrays.toString(allowedBiomes) + " villages");
+            } else ElementalAmulets.LOGGER.debug("Jeweller's house generation was skipped (Config Preference)");
         }
 
         private static void addHouse(MutableRegistry<JigsawPattern> registry, ResourceLocation poolId, String houseToAdd, int weight) {
             JigsawPattern pool = registry.get(poolId);
             if (pool == null) {
-                ElementalAmulets.LOGGER.warn("Jigsaw pool " + poolId + " is not found! Skipping Jeweller's house generation");
+                ElementalAmulets.LOGGER.warn("Jigsaw pool " + poolId + " is not found, " + houseToAdd + " cannot be generated. Skipping...");
                 return;
             }
 
