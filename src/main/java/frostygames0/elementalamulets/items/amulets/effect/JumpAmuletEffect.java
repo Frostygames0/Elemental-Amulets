@@ -34,7 +34,7 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
-public class JumpAmuletEffect {
+class JumpAmuletEffect {
 
     static void onLivingHurt(LivingHurtEvent event) {
         if (event.getEntityLiving() instanceof PlayerEntity) {

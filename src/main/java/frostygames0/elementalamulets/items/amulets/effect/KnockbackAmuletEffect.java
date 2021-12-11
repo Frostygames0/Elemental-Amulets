@@ -32,7 +32,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
  * @author Frostygames0
  * @date 09.10.2021 11:51
  */
-public class KnockbackAmuletEffect {
+class KnockbackAmuletEffect {
     static void onLivingHurt(LivingHurtEvent event) {
         if (event.getEntityLiving() instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) event.getEntityLiving();

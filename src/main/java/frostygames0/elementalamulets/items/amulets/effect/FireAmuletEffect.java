@@ -27,7 +27,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
-public class FireAmuletEffect {
+class FireAmuletEffect {
 
     static void onLivingAttack(LivingAttackEvent event) {
         if (event.getEntityLiving() instanceof PlayerEntity) {

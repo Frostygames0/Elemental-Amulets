@@ -34,7 +34,7 @@ import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 
-public class TerraProtectionAmuletEffect {
+class TerraProtectionAmuletEffect {
 
     static void onLivingHurt(LivingHurtEvent event) {
         if (event.getEntityLiving() instanceof PlayerEntity) {
