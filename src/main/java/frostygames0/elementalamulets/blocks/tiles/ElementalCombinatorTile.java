@@ -31,10 +31,12 @@ import frostygames0.elementalamulets.init.ModStats;
 import frostygames0.elementalamulets.init.ModTiles;
 import frostygames0.elementalamulets.recipes.ElementalCombination;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
@@ -45,7 +47,6 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -160,13 +161,15 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
 
             this.setChanged();
 
-            if (level instanceof ServerWorld)
-                ((ServerWorld) level).getChunkSource().chunkMap.getPlayers(new ChunkPos(worldPosition), false)
-                        .filter(player -> player.distanceToSqr(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ()) <= 100)
-                        .forEach(player -> {
-                            ModCriteriaTriggers.ITEM_COMBINED.trigger(player, result, (ServerWorld) level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ());
+            Vector3d vector = Vector3d.atBottomCenterOf(worldPosition);
+            level.getNearbyPlayers(EntityPredicate.DEFAULT, null,
+                            new AxisAlignedBB(vector.add(3, 2, 3), vector.subtract(3, 0, 3)))
+                    .forEach(player -> {
+                        if (player instanceof ServerPlayerEntity) {
+                            ModCriteriaTriggers.ITEM_COMBINED.trigger((ServerPlayerEntity) player, result, (ServerWorld) level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ());
                             player.awardStat(ModStats.TIMES_COMBINED);
-                        });
+                        }
+                    });
         }
     }
 
