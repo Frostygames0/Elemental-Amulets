@@ -75,7 +75,7 @@ public class ClientSetup {
 
     @SubscribeEvent
     public static void particleFactoryRegister(final ParticleFactoryRegisterEvent event) {
-        ModParticles.register();
+        ModParticles.registerFactories();
     }
 
     @SubscribeEvent
