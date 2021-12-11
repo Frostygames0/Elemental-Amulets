@@ -53,7 +53,7 @@ public class SCombinePacket {
         ctx.enqueueWork(() -> {
             World world = ctx.getSender().level;
             if (world != null) {
-                if (world.isLoaded(pos)) {
+                if (world.hasChunkAt(pos)) {
                     TileEntity tile = world.getBlockEntity(pos);
                     if (tile instanceof ElementalCombinatorTile) {
                         ((ElementalCombinatorTile) tile).startCombination();
