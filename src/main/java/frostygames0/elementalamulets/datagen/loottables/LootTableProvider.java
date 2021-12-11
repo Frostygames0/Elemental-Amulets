@@ -40,7 +40,7 @@ public class LootTableProvider extends BaseLootTableProvider {
 
         this.lootTables.put(ModBlocks.ELEMENTAL_SHARDS_BLOCK.get(), this.createShardsTable(ModBlocks.ELEMENTAL_SHARDS_BLOCK.get(), ModItems.ELEMENTAL_SHARDS.get()));
         this.lootTables.put(ModBlocks.FIRE_SHARDS_BLOCK.get(), this.createShardsTable(ModBlocks.FIRE_SHARDS_BLOCK.get(), ModItems.FIRE_ELEMENT.get()));
-        this.lootTables.put(ModBlocks.WATER_SHARDS_BLOCK.get(), this.createShardsTable(ModBlocks.WATER_SHARDS_BLOCK.get(), ModItems.WATER_AMULET.get()));
+        this.lootTables.put(ModBlocks.WATER_SHARDS_BLOCK.get(), this.createShardsTable(ModBlocks.WATER_SHARDS_BLOCK.get(), ModItems.WATER_ELEMENT.get()));
         this.lootTables.put(ModBlocks.AIR_SHARDS_BLOCK.get(), this.createShardsTable(ModBlocks.AIR_SHARDS_BLOCK.get(), ModItems.AIR_ELEMENT.get()));
         this.lootTables.put(ModBlocks.EARTH_SHARDS_BLOCK.get(), this.createShardsTable(ModBlocks.EARTH_SHARDS_BLOCK.get(), ModItems.EARTH_ELEMENT.get()));
     }
