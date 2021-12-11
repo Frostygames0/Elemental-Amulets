@@ -63,7 +63,14 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class ElementalCombinatorTile extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
-    private final ItemStackHandler handler = createHandler();
+    private final ItemStackHandler handler = new ItemStackHandler(10) {
+        @Override
+        protected void onContentsChanged(int slot) {
+            ElementalCombinatorTile.this.setChanged();
+            if (slot == 0)
+                level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Constants.BlockFlags.BLOCK_UPDATE);
+        }
+    };
     private final LazyOptional<IItemHandler> optional = LazyOptional.of(() -> new AutomationItemHandler(handler));
 
     private int combinationTime;
@@ -151,6 +158,8 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
                 handler.insertItem(i, remainingItems.get(i), false); // inserting remaining items
             }
 
+            this.setChanged();
+
             if (level instanceof ServerWorld)
                 ((ServerWorld) level).getChunkSource().chunkMap.getPlayers(new ChunkPos(worldPosition), false)
                         .filter(player -> player.distanceToSqr(worldPosition.getX(), worldPosition.getY(), worldPosition.getZ()) <= 100)
@@ -173,6 +182,7 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
     public void startCombination() {
         if (!this.isCombining()) {
             this.combinationTime = 1;
+            this.setChanged();
         }
     }
 
@@ -180,6 +190,7 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
         if (this.isCombining()) {
             this.combinationTime = 0;
             this.level.setBlockAndUpdate(worldPosition, this.getBlockState().setValue(ElementalCombinator.COMBINING, false));
+            this.setChanged();
         }
     }
 
@@ -212,17 +223,17 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
         return super.save(compound);
     }
 
-    private CompoundNBT writeInventory(CompoundNBT compound) {
-        compound.put("Contents", handler.serializeNBT());
-        return compound;
-    }
-
     @Override
     public void load(BlockState state, CompoundNBT nbt) {
         this.combinationTime = nbt.getInt("CombinationTime");
         this.totalTime = nbt.getInt("TotalCombinationTime");
         this.readInventory(nbt);
         super.load(state, nbt);
+    }
+
+    private CompoundNBT writeInventory(CompoundNBT compound) {
+        compound.put("Contents", handler.serializeNBT());
+        return compound;
     }
 
     private void readInventory(CompoundNBT nbt) {
@@ -239,45 +250,20 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        this.handleUpdateTag(this.getBlockState(), pkt.getTag());
-    }
-
-    @Nullable
-    @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(worldPosition, -1, this.getUpdateTag());
-    }
-
-    @Override
-    public void handleUpdateTag(BlockState state, CompoundNBT tag) {
-        this.readInventory(tag);
-    }
-
-    @Override
-    public CompoundNBT getUpdateTag() {
-        return this.writeInventory(new CompoundNBT());
-    }
-
-    @Override
-    public AxisAlignedBB getRenderBoundingBox() {
-        return new AxisAlignedBB(worldPosition.offset(-1, 0, -1), worldPosition.offset(1, 2, 1));
-    }
-
-    @Override
     protected void invalidateCaps() {
         super.invalidateCaps();
         optional.invalidate();
     }
 
-    private ItemStackHandler createHandler() {
-        return new ItemStackHandler(10) {
-            @Override
-            protected void onContentsChanged(int slot) {
-                setChanged();
-                level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Constants.BlockFlags.BLOCK_UPDATE);
-            }
-        };
+    @Override
+    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+        this.readInventory(pkt.getTag());
+    }
+
+    @Nullable
+    @Override
+    public SUpdateTileEntityPacket getUpdatePacket() {
+        return new SUpdateTileEntityPacket(worldPosition, -1, this.writeInventory(new CompoundNBT()));
     }
 
     @Override
@@ -289,5 +275,10 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
     @Override
     public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_) {
         return new ElementalCombinatorContainer(p_createMenu_1_, level, worldPosition, p_createMenu_2_, p_createMenu_3_, this.combinatorData);
+    }
+
+    @Override
+    public AxisAlignedBB getRenderBoundingBox() {
+        return new AxisAlignedBB(worldPosition.offset(-1, 0, -1), worldPosition.offset(1, 2, 1));
     }
 }
