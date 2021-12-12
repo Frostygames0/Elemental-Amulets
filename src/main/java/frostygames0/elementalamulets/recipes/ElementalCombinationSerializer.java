@@ -49,7 +49,7 @@ public class ElementalCombinationSerializer extends net.minecraftforge.registrie
             throw new JsonParseException("Too many ingredients! Should be <= 8!");
         } else {
             if (!json.has("result"))
-                throw new JsonSyntaxException("Missing result, expected to find an a string or object");
+                throw new JsonSyntaxException("Missing result, expected to find a string or object");
             ItemStack resultStack;
             if (json.get("result").isJsonObject())
                 resultStack = ShapedRecipe.itemFromJson(JSONUtils.getAsJsonObject(json, "result"));
