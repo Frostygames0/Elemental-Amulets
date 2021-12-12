@@ -85,7 +85,6 @@ public abstract class AmuletItem extends Item implements ICurioItem {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
-
         // Tier
         if (this.getTier(stack) > 0)
             tooltip.add(new TranslationTextComponent("item.elementalamulets.common_amulet.tooltip.tier", new StringTextComponent(String.valueOf(this.getTier(stack))).withStyle(TextFormatting.YELLOW)).withStyle(TextFormatting.GOLD));
@@ -188,9 +187,9 @@ public abstract class AmuletItem extends Item implements ICurioItem {
 
     // Removes vanilla durability tooltip from the tooltip list
     @Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID, value = Dist.CLIENT)
-    public static class TooltipEventHandler {
+    private static class TooltipEventHandler {
         @SubscribeEvent
-        public static void onTooltipEvent(final ItemTooltipEvent event) {
+        private static void onTooltipEvent(final ItemTooltipEvent event) {
             ItemStack stack = event.getItemStack();
             if (stack.getItem() instanceof AmuletItem) {
                 for (ListIterator<ITextComponent> iterator = event.getToolTip().listIterator(); iterator.hasNext(); ) {
