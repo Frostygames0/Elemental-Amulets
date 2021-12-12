@@ -131,7 +131,7 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .addIngredient(Items.ICE)
                 .isTagTransferred()
                 .setCombinationTime(350)
-                .build(consumer, modPrefix("amulets/" + ModItems.SPEED_AMULET.getId().getPath() + "_1"));
+                .build(consumer, modPrefix("amulets/" + ModItems.SPEED_AMULET.getId().getPath() + "_tier1"));
         ElementalCombinationBuilder.create(ModItems.JUMP_AMULET.get().getDefaultInstance())
                 .addElemental(ModItems.AIR_AMULET.get().getDefaultInstance())
                 .addIngredient(2, Items.SLIME_BALL)
@@ -141,7 +141,7 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .addIngredient(Items.SLIME_BALL)
                 .isTagTransferred()
                 .setCombinationTime(350)
-                .build(consumer, modPrefix("amulets/" + ModItems.JUMP_AMULET.getId().getPath() + "_1"));
+                .build(consumer, modPrefix("amulets/" + ModItems.JUMP_AMULET.getId().getPath() + "_tier1"));
         ElementalCombinationBuilder.create(ModItems.INVISIBILITY_AMULET.get())
                 .addElemental(ModItems.EMPTY_AMULET.get())
                 .addIngredient(2, ModItems.WATER_ELEMENT.get())
@@ -193,7 +193,7 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .addIngredient(Items.LAPIS_LAZULI)
                 .setCombinationTime(350)
                 .isTagTransferred()
-                .build(consumer, modPrefix("amulets/" + amulet.getItem().getRegistryName().getPath() + "_1"));
+                .build(consumer, modPrefix("amulets/" + amulet.getItem().getRegistryName().getPath() + "_tier1"));
     }
 
     private static void amuletRecipeTier1(ItemStack amulet, IItemProvider element, Consumer<IFinishedRecipe> consumer) {
@@ -205,7 +205,7 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .addIngredient(Items.LAPIS_LAZULI)
                 .setCombinationTime(200)
                 .isTagTransferred()
-                .build(consumer, modPrefix("amulets/" + amulet.getItem().getRegistryName().getPath() + "_1"));
+                .build(consumer, modPrefix("amulets/" + amulet.getItem().getRegistryName().getPath() + "_tier1"));
     }
 
     private static void amuletRecipeTier2(ItemStack amulet, ItemStack result, IItemProvider upgrader, IItemProvider element, Consumer<IFinishedRecipe> consumer) {
@@ -219,7 +219,7 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .addIngredient(2, upgrader)
                 .setCombinationTime(400)
                 .isTagTransferred()
-                .build(consumer, modPrefix("amulets/" + result.getItem().getRegistryName().getPath() + "_2"));
+                .build(consumer, modPrefix("amulets/" + result.getItem().getRegistryName().getPath() + "_tier2"));
     }
 
     private static void amuletRecipeTier2sPECIAL(ItemStack amulet, ItemStack result, IItemProvider upgrader, IItemProvider upgrader2, IItemProvider element, Consumer<IFinishedRecipe> consumer) {
@@ -235,7 +235,7 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .addIngredient(element)
                 .setCombinationTime(400)
                 .isTagTransferred()
-                .build(consumer, modPrefix("amulets/" + result.getItem().getRegistryName().getPath() + "_2"));
+                .build(consumer, modPrefix("amulets/" + result.getItem().getRegistryName().getPath() + "_tier2"));
     }
 
     private static void amuletRecipeTier3(ItemStack amulet, ItemStack result, IItemProvider upgrader, IItemProvider upgrader2, IItemProvider element, Consumer<IFinishedRecipe> consumer) {
@@ -251,7 +251,7 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .addIngredient(element)
                 .setCombinationTime(400)
                 .isTagTransferred()
-                .build(consumer, modPrefix("amulets/" + result.getItem().getRegistryName().getPath() + "_3"));
+                .build(consumer, modPrefix("amulets/" + result.getItem().getRegistryName().getPath() + "_tier3"));
     }
 
     private static void amuletRecipeTier4(ItemStack amulet, ItemStack result, IItemProvider upgrader, Consumer<IFinishedRecipe> consumer) {
@@ -267,7 +267,7 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .addIngredient(ModItems.AETHER_ELEMENT.get())
                 .setCombinationTime(800)
                 .isTagTransferred()
-                .build(consumer, modPrefix("amulets/" + result.getItem().getRegistryName().getPath() + "_4"));
+                .build(consumer, modPrefix("amulets/" + result.getItem().getRegistryName().getPath() + "_tier4"));
     }
 
     private static void classicElementRecipe(IItemProvider elementIn, ITag<Item> convertibles, Consumer<IFinishedRecipe> consumerIn) {
