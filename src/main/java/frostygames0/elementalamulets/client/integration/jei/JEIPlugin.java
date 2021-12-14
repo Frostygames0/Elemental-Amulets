@@ -79,7 +79,7 @@ public class JEIPlugin implements IModPlugin {
         registration.addIngredientInfo(mapTagAsItemList(ModTags.Items.ELEMENTS), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.elements.description"));
         registration.addIngredientInfo(new ItemStack(ModItems.ALL_SEEING_LENS.get()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.all_seeing_lens.description"));
 
-        registration.addIngredientInfo(mapTagAsItemList(ModTags.Items.SHARDS_BLOCKS), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.shards_blocks.description"));
+        registration.addIngredientInfo(mapTagAsItemList(ModTags.Items.SHARD_BLOCKS), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.shards_blocks.description"));
         // Elements description
         registration.addIngredientInfo(mapTagAsItemList(ModTags.Items.AIR_ELEMENT_CONVERTIBLE), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.convertibles.description", new TranslationTextComponent(ModItems.AIR_ELEMENT.get().getDescriptionId()).withStyle(TextFormatting.GRAY)));
         registration.addIngredientInfo(mapTagAsItemList(ModTags.Items.WATER_ELEMENT_CONVERTIBLE), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.convertibles.description", new TranslationTextComponent(ModItems.WATER_ELEMENT.get().getDescriptionId()).withStyle(TextFormatting.AQUA)));

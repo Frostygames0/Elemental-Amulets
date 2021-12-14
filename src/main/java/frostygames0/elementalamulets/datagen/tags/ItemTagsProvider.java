@@ -44,7 +44,7 @@ public class ItemTagsProvider extends net.minecraft.data.ItemTagsProvider {
         //Amulets
         AmuletItem[] amulets = ModItems.getAmulets().toArray(new AmuletItem[0]);
         this.tag(ModTags.Items.NECKLACES).add(amulets);
-        this.tag(ModTags.Items.SHARDS_BLOCKS).add(ModBlocks.ELEMENTAL_SHARDS_BLOCK.get().asItem(),
+        this.tag(ModTags.Items.SHARD_BLOCKS).add(ModBlocks.ELEMENTAL_SHARDS_BLOCK.get().asItem(),
                 ModBlocks.FIRE_SHARDS_BLOCK.get().asItem(),
                 ModBlocks.WATER_SHARDS_BLOCK.get().asItem(),
                 ModBlocks.EARTH_SHARDS_BLOCK.get().asItem(),
