@@ -184,8 +184,6 @@ public class ModConfig {
         public static int PACIFYING_AMULET_BREAK_COOLDOWN;
         public static boolean PACIFYING_AMULET_ANGER_ONBREAK;
         public static int PACIFYING_AMULET_DISORIENTATION_TIME;
-
-        //public static List<? extends String> EARTH_AMULET_BOOST_BLACKLIST;
         public static boolean MODIFY_VANILLA_LOOT;
 
         private static void cacheServerConfig() {
