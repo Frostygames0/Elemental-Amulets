@@ -54,7 +54,7 @@ import java.util.Map;
  * @author Frostygames0
  * @date 29.09.2021 14:57
  */
-@Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID)
 public class ModStructures {
     public static final DeferredRegister<Structure<?>> STRUCTURES = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, ElementalAmulets.MOD_ID);
 
