@@ -39,7 +39,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
-@Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID)
 public class ModFeatures {
     public static final Lazy<ConfiguredFeature<?, ?>> ELEMENTAL_ORE = Lazy.of(() -> Feature.ORE.configured(
             new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, ModBlocks.ELEMENTAL_ORE.get().defaultBlockState(), 9)).range(35).squared().count(5));
