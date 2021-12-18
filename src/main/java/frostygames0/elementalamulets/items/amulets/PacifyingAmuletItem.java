@@ -80,7 +80,7 @@ public class PacifyingAmuletItem extends AmuletItem {
                                 TargetGoal goal = (TargetGoal) priGoal.getGoal();
 
                                 if (((AccessorTargetGoal) goal).getTargetMob() == player)
-                                    // This should stop mobs that use TargetGoal to be angry after they stop being angry, TODO maybe there is a better way?
+                                    // This should stop mobs that use TargetGoal to be angry after they stop being angry
                                     priGoal.stop();
                             }
                         }
