@@ -158,7 +158,6 @@ public class AmuletBeltItem extends Item implements ICurioItem {
         return true;
     }
 
-    // TODO Finish comparing method
     private static boolean compareBelts(ItemStack stack, ItemStack other) {
         Item amulet = stack.getItem();
         Item secondAmulet = other.getItem();
