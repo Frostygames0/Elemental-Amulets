@@ -1,0 +1,16 @@
+{
+  "name": "What is combination?",
+  "category": "elementalamulets:combination",
+  "icon": "minecraft:jigsaw",
+  "priority": true,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(item)Elemental Combination$() - is a powerful process, when $(o)several items are disassembled into the simplest elements and fill an object$()(called an $(thing)elemental$()). But it's not that simple!$(br)To combine something properly it needs $(l)'blueprint'$()!"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Basically, you just need to follow the proportions and the device itself will determine what to do next, but when the subject is very complex, you may need an 'instruction'.$(br2)And that how it basically works!$(br)$(o)Almost all hardness is hidden behind combinator's body.$()"
+    }
+  ]
+}
