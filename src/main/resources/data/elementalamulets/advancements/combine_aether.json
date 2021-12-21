@@ -1,5 +1,5 @@
 {
-  "parent": "elementalamulets:combine_item",
+  "parent": "elementalamulets:combine_all_elements",
   "display": {
     "icon": {
       "item": "elementalamulets:aether_element"

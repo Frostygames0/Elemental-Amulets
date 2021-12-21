@@ -1,0 +1,74 @@
+{
+  "parent": "elementalamulets:combine_item",
+  "display": {
+    "icon": {
+      "item": "minecraft:diamond"
+    },
+    "title": {
+      "translate": "advancements.elementalamulets.combine_all_elements"
+    },
+    "description": {
+      "translate": "advancements.elementalamulets.combine_all_elements"
+    }
+  },
+  "criteria": {
+    "acquire_fire_element": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "elementalamulets:fire_element",
+            "count": 1
+          }
+        ]
+      }
+    },
+    "acquire_water_element": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "elementalamulets:water_element",
+            "count": 1
+          }
+        ]
+      }
+    },
+    "acquire_earth_element": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "elementalamulets:earth_element",
+            "count": 1
+          }
+        ]
+      }
+    },
+    "acquire_air_element": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "elementalamulets:air_element",
+            "count": 1
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "acquire_fire_element"
+    ],
+    [
+      "acquire_water_element"
+    ],
+    [
+      "acquire_earth_element"
+    ],
+    [
+      "acquire_air_element"
+    ]
+  ]
+}
