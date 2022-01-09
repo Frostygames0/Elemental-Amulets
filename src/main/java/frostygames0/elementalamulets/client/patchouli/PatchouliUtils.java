@@ -37,12 +37,11 @@ import java.util.Map;
 public class PatchouliUtils {
     private static boolean userNotified;
 
-    /**
+    /*
      * Since removal of any recipe that mentioned in Patchouli book by CraftTweaker will result in error!
      * I made this helper method that will try to find CraftTweaker replacement in case when recipe mysteriously removed
-     * <p>
      * If there is no replacement, it will be logged;
-     * P.S: and yes I looked how botania does it :p Also use only for patchouli related stuff!
+     * P.S: and yes I looked how botania does it :p Also use only for patchouli related stuff!</b>
      */
     @Nullable
     public static ElementalCombination getRecipe(ResourceLocation name) {
