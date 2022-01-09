@@ -41,7 +41,10 @@ import java.util.function.Consumer;
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
-
+/*
+TODO: While it works fine and doesn't affect gameplay at all, it's still a very painful piece of shit that contains my early code :)
+Basically, do not worry about this and release mod
+*/
 public class RecipeProvider extends net.minecraft.data.RecipeProvider {
     public RecipeProvider(DataGenerator generatorIn) {
         super(generatorIn);
@@ -117,10 +120,10 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .setCombinationTime(600)
                 .build(consumer, modPrefix("elements/" + ModItems.AETHER_ELEMENT.getId().getPath()));
 
-        amuletRecipeTier1(ModItems.FIRE_AMULET.get().getDefaultInstance(), ModItems.FIRE_ELEMENT.get(), consumer);
-        amuletRecipeTier1(ModItems.AIR_AMULET.get().getDefaultInstance(), ModItems.AIR_ELEMENT.get(), consumer);
-        amuletRecipeTier1(ModItems.WATER_AMULET.get().getDefaultInstance(), ModItems.WATER_ELEMENT.get(), consumer);
-        amuletRecipeTier1(ModItems.EARTH_AMULET.get().getDefaultInstance(), ModItems.EARTH_ELEMENT.get(), consumer);
+        amuletRecipeTier1(ModItems.FIRE_AMULET.get(), ModItems.FIRE_ELEMENT.get(), consumer);
+        amuletRecipeTier1(ModItems.AIR_AMULET.get(), ModItems.AIR_ELEMENT.get(), consumer);
+        amuletRecipeTier1(ModItems.WATER_AMULET.get(), ModItems.WATER_ELEMENT.get(), consumer);
+        amuletRecipeTier1(ModItems.EARTH_AMULET.get(), ModItems.EARTH_ELEMENT.get(), consumer);
 
         ElementalCombinationBuilder.create(ModItems.SPEED_AMULET.get().getDefaultInstance())
                 .addElemental(ModItems.WATER_AMULET.get().getDefaultInstance())
@@ -152,38 +155,43 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .setCombinationTime(200)
                 .isTagTransferred()
                 .build(consumer, modPrefix("amulets/" + ModItems.INVISIBILITY_AMULET.getId().getPath()));
-        amuletRecipeSpecial(ModItems.TERRA_PROTECTION_AMULET.get().getDefaultInstance(), ModItems.EARTH_AMULET.get().getDefaultInstance(), Items.SHIELD, ModItems.EARTH_ELEMENT.get(), consumer);
-        amuletRecipeSpecial(ModItems.PACIFYING_AMULET.get().getDefaultInstance(), ModItems.EMPTY_AMULET.get().getDefaultInstance(), ModItems.ANCIENT_TABLET.get(), ModItems.AETHER_ELEMENT.get(), consumer);
+        amuletRecipeSpecial(ModItems.TERRA_PROTECTION_AMULET.get(), ModItems.EARTH_AMULET.get().getDefaultInstance(), Items.SHIELD, ModItems.EARTH_ELEMENT.get(), consumer);
+        amuletRecipeSpecial(ModItems.PACIFYING_AMULET.get(), ModItems.EMPTY_AMULET.get().getDefaultInstance(), ModItems.ANCIENT_TABLET.get(), ModItems.AETHER_ELEMENT.get(), consumer);
+        amuletRecipeSpecial(ModItems.KNOCKBACK_AMULET.get(), ModItems.AIR_AMULET.get().getDefaultInstance(), Items.STONE_SWORD, ModItems.AIR_ELEMENT.get(), consumer);
 
-        amuletRecipeTier2(ModItems.FIRE_AMULET.get().getDefaultInstance(), AmuletItem.getStackWithTier(new ItemStack(ModItems.FIRE_AMULET.get()), 2), Items.IRON_INGOT, ModItems.FIRE_ELEMENT.get(), consumer);
-        amuletRecipeTier2(ModItems.WATER_AMULET.get().getDefaultInstance(), AmuletItem.getStackWithTier(new ItemStack(ModItems.WATER_AMULET.get()), 2), Items.IRON_INGOT, ModItems.WATER_ELEMENT.get(), consumer);
-        amuletRecipeTier2(ModItems.AIR_AMULET.get().getDefaultInstance(), AmuletItem.getStackWithTier(new ItemStack(ModItems.AIR_AMULET.get()), 2), Items.IRON_INGOT, ModItems.AIR_ELEMENT.get(), consumer);
-        amuletRecipeTier2(ModItems.EARTH_AMULET.get().getDefaultInstance(), AmuletItem.getStackWithTier(new ItemStack(ModItems.EARTH_AMULET.get()), 2), Items.IRON_INGOT, ModItems.EARTH_ELEMENT.get(), consumer);
-        amuletRecipeTier2sPECIAL(ModItems.SPEED_AMULET.get().getDefaultInstance(), AmuletItem.getStackWithTier(new ItemStack(ModItems.SPEED_AMULET.get()), 2), Items.IRON_INGOT, Items.SUGAR, ModItems.WATER_ELEMENT.get(), consumer);
-        amuletRecipeTier2(ModItems.TERRA_PROTECTION_AMULET.get().getDefaultInstance(), AmuletItem.getStackWithTier(new ItemStack(ModItems.TERRA_PROTECTION_AMULET.get()), 2), Items.IRON_INGOT, ModItems.EARTH_ELEMENT.get(), consumer);
-        amuletRecipeTier2sPECIAL(ModItems.JUMP_AMULET.get().getDefaultInstance(), AmuletItem.getStackWithTier(new ItemStack(ModItems.JUMP_AMULET.get()), 2), Items.IRON_INGOT, Items.SLIME_BALL, ModItems.AIR_ELEMENT.get(), consumer);
+        amuletRecipeTier2(ModItems.FIRE_AMULET.get(), Items.IRON_INGOT, ModItems.FIRE_ELEMENT.get(), consumer);
+        amuletRecipeTier2(ModItems.WATER_AMULET.get(), Items.IRON_INGOT, ModItems.WATER_ELEMENT.get(), consumer);
+        amuletRecipeTier2(ModItems.AIR_AMULET.get(), Items.IRON_INGOT, ModItems.AIR_ELEMENT.get(), consumer);
+        amuletRecipeTier2(ModItems.EARTH_AMULET.get(), Items.IRON_INGOT, ModItems.EARTH_ELEMENT.get(), consumer);
+        amuletRecipeTier2Special(ModItems.SPEED_AMULET.get(), Items.IRON_INGOT, Items.SUGAR, ModItems.WATER_ELEMENT.get(), consumer);
+        amuletRecipeTier2(ModItems.TERRA_PROTECTION_AMULET.get(), Items.IRON_INGOT, ModItems.EARTH_ELEMENT.get(), consumer);
+        amuletRecipeTier2Special(ModItems.JUMP_AMULET.get(), Items.IRON_INGOT, Items.SLIME_BALL, ModItems.AIR_ELEMENT.get(), consumer);
+        amuletRecipeTier2Special(ModItems.KNOCKBACK_AMULET.get(), Items.IRON_SWORD, ModItems.AIR_ELEMENT.get(), ModItems.AIR_ELEMENT.get(), consumer);
 
-        amuletRecipeTier3(AmuletItem.getStackWithTier(new ItemStack(ModItems.FIRE_AMULET.get()), 2), AmuletItem.getStackWithTier(new ItemStack(ModItems.FIRE_AMULET.get()), 3), Items.GHAST_TEAR, Items.GOLD_INGOT, ModItems.FIRE_ELEMENT.get(), consumer);
-        amuletRecipeTier3(AmuletItem.getStackWithTier(new ItemStack(ModItems.WATER_AMULET.get()), 2), AmuletItem.getStackWithTier(new ItemStack(ModItems.WATER_AMULET.get()), 3), Items.PUFFERFISH, Items.GOLD_INGOT, ModItems.WATER_ELEMENT.get(), consumer);
-        amuletRecipeTier3(AmuletItem.getStackWithTier(new ItemStack(ModItems.EARTH_AMULET.get()), 2), AmuletItem.getStackWithTier(new ItemStack(ModItems.EARTH_AMULET.get()), 3), Items.BONE_MEAL, Items.GOLD_INGOT, ModItems.EARTH_ELEMENT.get(), consumer);
-        amuletRecipeTier3(AmuletItem.getStackWithTier(new ItemStack(ModItems.AIR_AMULET.get()), 2), AmuletItem.getStackWithTier(new ItemStack(ModItems.AIR_AMULET.get()), 3), Items.COBWEB, Items.GOLD_INGOT, ModItems.AIR_ELEMENT.get(), consumer);
-        amuletRecipeTier3(AmuletItem.getStackWithTier(new ItemStack(ModItems.SPEED_AMULET.get()), 2), AmuletItem.getStackWithTier(new ItemStack(ModItems.SPEED_AMULET.get()), 3), Items.PACKED_ICE, Items.PACKED_ICE, ModItems.WATER_ELEMENT.get(), consumer);
-        amuletRecipeTier3(AmuletItem.getStackWithTier(new ItemStack(ModItems.TERRA_PROTECTION_AMULET.get()), 2), AmuletItem.getStackWithTier(new ItemStack(ModItems.TERRA_PROTECTION_AMULET.get()), 3), Items.OBSIDIAN, Items.DIAMOND, ModItems.EARTH_ELEMENT.get(), consumer);
-        amuletRecipeTier3(AmuletItem.getStackWithTier(new ItemStack(ModItems.JUMP_AMULET.get()), 2), AmuletItem.getStackWithTier(new ItemStack(ModItems.JUMP_AMULET.get()), 3), Items.SLIME_BLOCK, Items.RABBIT_HIDE, ModItems.AIR_ELEMENT.get(), consumer);
 
-        amuletRecipeTier4(AmuletItem.getStackWithTier(new ItemStack(ModItems.FIRE_AMULET.get()), 3), AmuletItem.getStackWithTier(new ItemStack(ModItems.FIRE_AMULET.get()), 4), ModItems.FIRE_ELEMENT.get(), consumer);
-        amuletRecipeTier4(AmuletItem.getStackWithTier(new ItemStack(ModItems.WATER_AMULET.get()), 3), AmuletItem.getStackWithTier(new ItemStack(ModItems.WATER_AMULET.get()), 4), ModItems.WATER_ELEMENT.get(), consumer);
-        amuletRecipeTier4(AmuletItem.getStackWithTier(new ItemStack(ModItems.EARTH_AMULET.get()), 3), AmuletItem.getStackWithTier(new ItemStack(ModItems.EARTH_AMULET.get()), 4), ModItems.EARTH_ELEMENT.get(), consumer);
-        amuletRecipeTier4(AmuletItem.getStackWithTier(new ItemStack(ModItems.AIR_AMULET.get()), 3), AmuletItem.getStackWithTier(new ItemStack(ModItems.AIR_AMULET.get()), 4), ModItems.AIR_ELEMENT.get(), consumer);
-        amuletRecipeTier4(AmuletItem.getStackWithTier(new ItemStack(ModItems.SPEED_AMULET.get()), 3), AmuletItem.getStackWithTier(new ItemStack(ModItems.SPEED_AMULET.get()), 4), ModItems.WATER_ELEMENT.get(), consumer);
-        amuletRecipeTier4(AmuletItem.getStackWithTier(new ItemStack(ModItems.TERRA_PROTECTION_AMULET.get()), 3), AmuletItem.getStackWithTier(new ItemStack(ModItems.TERRA_PROTECTION_AMULET.get()), 4), ModItems.EARTH_ELEMENT.get(), consumer);
-        amuletRecipeTier4(AmuletItem.getStackWithTier(new ItemStack(ModItems.JUMP_AMULET.get()), 3), AmuletItem.getStackWithTier(new ItemStack(ModItems.JUMP_AMULET.get()), 4), ModItems.AIR_ELEMENT.get(), consumer);
+        amuletRecipeTier3(ModItems.FIRE_AMULET.get(), Items.GHAST_TEAR, Items.GOLD_INGOT, ModItems.FIRE_ELEMENT.get(), consumer);
+        amuletRecipeTier3(ModItems.WATER_AMULET.get(), Items.PUFFERFISH, Items.GOLD_INGOT, ModItems.WATER_ELEMENT.get(), consumer);
+        amuletRecipeTier3(ModItems.EARTH_AMULET.get(), Items.BONE_MEAL, Items.GOLD_INGOT, ModItems.EARTH_ELEMENT.get(), consumer);
+        amuletRecipeTier3(ModItems.AIR_AMULET.get(), Items.COBWEB, Items.GOLD_INGOT, ModItems.AIR_ELEMENT.get(), consumer);
+        amuletRecipeTier3(ModItems.SPEED_AMULET.get(), Items.PACKED_ICE, Items.PACKED_ICE, ModItems.WATER_ELEMENT.get(), consumer);
+        amuletRecipeTier3(ModItems.TERRA_PROTECTION_AMULET.get(), Items.OBSIDIAN, Items.DIAMOND, ModItems.EARTH_ELEMENT.get(), consumer);
+        amuletRecipeTier3(ModItems.JUMP_AMULET.get(), Items.SLIME_BLOCK, Items.RABBIT_HIDE, ModItems.AIR_ELEMENT.get(), consumer);
+        amuletRecipeTier3(ModItems.KNOCKBACK_AMULET.get(), Items.GOLDEN_SWORD, ModItems.EARTH_ELEMENT.get(), ModItems.AIR_ELEMENT.get(), consumer);
+
+        amuletRecipeTier4(ModItems.FIRE_AMULET.get(), ModItems.FIRE_ELEMENT.get(), consumer);
+        amuletRecipeTier4(ModItems.WATER_AMULET.get(), ModItems.WATER_ELEMENT.get(), consumer);
+        amuletRecipeTier4(ModItems.EARTH_AMULET.get(), ModItems.EARTH_ELEMENT.get(), consumer);
+        amuletRecipeTier4(ModItems.AIR_AMULET.get(), ModItems.AIR_ELEMENT.get(), consumer);
+        amuletRecipeTier4(ModItems.SPEED_AMULET.get(), ModItems.WATER_ELEMENT.get(), consumer);
+        amuletRecipeTier4(ModItems.TERRA_PROTECTION_AMULET.get(), ModItems.EARTH_ELEMENT.get(), consumer);
+        amuletRecipeTier4(ModItems.JUMP_AMULET.get(), ModItems.AIR_ELEMENT.get(), consumer);
+        amuletRecipeTier4(ModItems.KNOCKBACK_AMULET.get(), ModItems.AIR_ELEMENT.get(), consumer);
     }
 
     /* Helper Methods! */
 
-    private static void amuletRecipeSpecial(ItemStack amulet, ItemStack elemental, IItemProvider specialStack, IItemProvider element, Consumer<IFinishedRecipe> consumer) {
-        ElementalCombinationBuilder.create(amulet)
+    private static void amuletRecipeSpecial(Item amulet, ItemStack elemental, IItemProvider specialStack, IItemProvider element, Consumer<IFinishedRecipe> consumer) {
+        ElementalCombinationBuilder.create(amulet.getDefaultInstance())
                 .addElemental(elemental)
                 .addIngredient(3, element)
                 .addIngredient(Items.LAPIS_LAZULI)
@@ -196,8 +204,8 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .build(consumer, modPrefix("amulets/" + amulet.getItem().getRegistryName().getPath() + "_tier1"));
     }
 
-    private static void amuletRecipeTier1(ItemStack amulet, IItemProvider element, Consumer<IFinishedRecipe> consumer) {
-        ElementalCombinationBuilder.create(amulet)
+    private static void amuletRecipeTier1(Item amulet, IItemProvider element, Consumer<IFinishedRecipe> consumer) {
+        ElementalCombinationBuilder.create(amulet.getDefaultInstance())
                 .addElemental(ModItems.EMPTY_AMULET.get())
                 .addIngredient(3, element)
                 .addIngredient(Items.LAPIS_LAZULI)
@@ -208,9 +216,9 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .build(consumer, modPrefix("amulets/" + amulet.getItem().getRegistryName().getPath() + "_tier1"));
     }
 
-    private static void amuletRecipeTier2(ItemStack amulet, ItemStack result, IItemProvider upgrader, IItemProvider element, Consumer<IFinishedRecipe> consumer) {
-        ElementalCombinationBuilder.create(result)
-                .addElemental(amulet)
+    private static void amuletRecipeTier2(Item amulet, IItemProvider upgrader, IItemProvider element, Consumer<IFinishedRecipe> consumer) {
+        ElementalCombinationBuilder.create(AmuletItem.getStackWithTier(new ItemStack(amulet), 2))
+                .addElemental(AmuletItem.getStackWithTier(new ItemStack(amulet), 1))
                 .addIngredient(element)
                 .addIngredient(2, upgrader)
                 .addIngredient(element)
@@ -219,12 +227,12 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .addIngredient(2, upgrader)
                 .setCombinationTime(400)
                 .isTagTransferred()
-                .build(consumer, modPrefix("amulets/" + result.getItem().getRegistryName().getPath() + "_tier2"));
+                .build(consumer, modPrefix("amulets/" + amulet.getRegistryName().getPath() + "_tier2"));
     }
 
-    private static void amuletRecipeTier2sPECIAL(ItemStack amulet, ItemStack result, IItemProvider upgrader, IItemProvider upgrader2, IItemProvider element, Consumer<IFinishedRecipe> consumer) {
-        ElementalCombinationBuilder.create(result)
-                .addElemental(amulet)
+    private static void amuletRecipeTier2Special(Item amulet, IItemProvider upgrader, IItemProvider upgrader2, IItemProvider element, Consumer<IFinishedRecipe> consumer) {
+        ElementalCombinationBuilder.create(AmuletItem.getStackWithTier(new ItemStack(amulet), 2))
+                .addElemental(AmuletItem.getStackWithTier(new ItemStack(amulet), 1))
                 .addIngredient(upgrader)
                 .addIngredient(element)
                 .addIngredient(upgrader2)
@@ -235,12 +243,12 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .addIngredient(element)
                 .setCombinationTime(400)
                 .isTagTransferred()
-                .build(consumer, modPrefix("amulets/" + result.getItem().getRegistryName().getPath() + "_tier2"));
+                .build(consumer, modPrefix("amulets/" + amulet.getRegistryName().getPath() + "_tier2"));
     }
 
-    private static void amuletRecipeTier3(ItemStack amulet, ItemStack result, IItemProvider upgrader, IItemProvider upgrader2, IItemProvider element, Consumer<IFinishedRecipe> consumer) {
-        ElementalCombinationBuilder.create(result)
-                .addElemental(amulet)
+    private static void amuletRecipeTier3(Item amulet, IItemProvider upgrader, IItemProvider upgrader2, IItemProvider element, Consumer<IFinishedRecipe> consumer) {
+        ElementalCombinationBuilder.create(AmuletItem.getStackWithTier(new ItemStack(amulet), 3))
+                .addElemental(AmuletItem.getStackWithTier(new ItemStack(amulet), 2))
                 .addIngredient(upgrader)
                 .addIngredient(element)
                 .addIngredient(upgrader2)
@@ -251,12 +259,12 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .addIngredient(element)
                 .setCombinationTime(400)
                 .isTagTransferred()
-                .build(consumer, modPrefix("amulets/" + result.getItem().getRegistryName().getPath() + "_tier3"));
+                .build(consumer, modPrefix("amulets/" + amulet.getRegistryName().getPath() + "_tier3"));
     }
 
-    private static void amuletRecipeTier4(ItemStack amulet, ItemStack result, IItemProvider upgrader, Consumer<IFinishedRecipe> consumer) {
-        ElementalCombinationBuilder.create(result)
-                .addElemental(amulet)
+    private static void amuletRecipeTier4(Item amulet, IItemProvider upgrader, Consumer<IFinishedRecipe> consumer) {
+        ElementalCombinationBuilder.create(AmuletItem.getStackWithTier(new ItemStack(amulet), 4))
+                .addElemental(AmuletItem.getStackWithTier(new ItemStack(amulet), 3))
                 .addIngredient(upgrader)
                 .addIngredient(ModItems.AETHER_ELEMENT.get())
                 .addIngredient(upgrader)
@@ -267,13 +275,13 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .addIngredient(ModItems.AETHER_ELEMENT.get())
                 .setCombinationTime(800)
                 .isTagTransferred()
-                .build(consumer, modPrefix("amulets/" + result.getItem().getRegistryName().getPath() + "_tier4"));
+                .build(consumer, modPrefix("amulets/" + amulet.getRegistryName().getPath() + "_tier4"));
     }
 
     private static void classicElementRecipe(IItemProvider elementIn, ITag<Item> convertibles, Consumer<IFinishedRecipe> consumerIn) {
         ElementalCombinationBuilder.create(new ItemStack(elementIn, 2))
                 .addElemental(ModItems.ELEMENTAL_SHARDS.get())
-                .addIngredient(convertibles, ElementalCombination.MAX_INGREDIENTS)
+                .addIngredient(convertibles, ElementalCombination.MAX_INGREDIENTS - 2)
                 .build(consumerIn, modPrefix("elements/" + elementIn.asItem().getRegistryName().getPath()));
     }
 
