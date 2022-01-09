@@ -28,12 +28,15 @@ import frostygames0.elementalamulets.items.amulets.*;
 import frostygames0.elementalamulets.util.ElementalRarity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
+import net.minecraft.item.crafting.IRecipeType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,7 +61,15 @@ public class ModItems {
     public static final RegistryObject<BlockItem> ELEMENTAL_SHARDS_BLOCK = ITEMS.register("elemental_shards_block",
             () -> new BlockItem(ModBlocks.ELEMENTAL_SHARDS_BLOCK.get(), new Item.Properties().tab(ElementalAmulets.GROUP)));
     public static final RegistryObject<BlockItem> FIRE_SHARDS_BLOCK = ITEMS.register("fire_shards_block",
-            () -> new BlockItem(ModBlocks.FIRE_SHARDS_BLOCK.get(), new Item.Properties().tab(ElementalAmulets.GROUP).rarity(ElementalRarity.FIRE)));
+            () -> new BlockItem(ModBlocks.FIRE_SHARDS_BLOCK.get(), new Item.Properties().tab(ElementalAmulets.GROUP).rarity(ElementalRarity.FIRE)) {
+                @Override
+                public int getBurnTime(ItemStack itemStack, @Nullable IRecipeType<?> recipeType) {
+                    if (recipeType == IRecipeType.BLASTING) {
+                        return 22000;
+                    }
+                    return 20000;
+                }
+            });
     public static final RegistryObject<BlockItem> WATER_SHARDS_BLOCK = ITEMS.register("water_shards_block",
             () -> new BlockItem(ModBlocks.WATER_SHARDS_BLOCK.get(), new Item.Properties().tab(ElementalAmulets.GROUP).rarity(ElementalRarity.WATER)));
     public static final RegistryObject<BlockItem> EARTH_SHARDS_BLOCK = ITEMS.register("earth_shards_block",
@@ -74,7 +85,15 @@ public class ModItems {
     public static final RegistryObject<Item> EARTH_ELEMENT = ITEMS.register("earth_element",
             () -> new ElementItem(ElementalRarity.EARTH));
     public static final RegistryObject<Item> FIRE_ELEMENT = ITEMS.register("fire_element",
-            () -> new ElementItem(ElementalRarity.FIRE));
+            () -> new ElementItem(ElementalRarity.FIRE) {
+                @Override
+                public int getBurnTime(ItemStack itemStack, @Nullable IRecipeType<?> recipeType) {
+                    if (recipeType == IRecipeType.BLASTING) {
+                        return 5000;
+                    }
+                    return 4500;
+                }
+            });
     public static final RegistryObject<Item> AIR_ELEMENT = ITEMS.register("air_element",
             () -> new ElementItem(ElementalRarity.AIR));
     public static final RegistryObject<Item> AETHER_ELEMENT = ITEMS.register("aether_element",
