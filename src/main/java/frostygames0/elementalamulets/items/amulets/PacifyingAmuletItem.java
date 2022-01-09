@@ -85,7 +85,7 @@ public class PacifyingAmuletItem extends AmuletItem {
                             }
                         }
                         angerable.stopBeingAngry();
-                        stack.hurtAndBreak(1, player, livingEnt -> this.onAmuletBreak(identifier, index, livingEnt));
+                        stack.hurtAndBreak(1, player, playerEnt -> this.onAmuletBreak(identifier, index, playerEnt));
 
                         // Makes heart particles around entity :>
                         ((ServerWorld) world).sendParticles(ParticleTypes.HEART, mob.getX(), mob.getY(), mob.getZ(), 20, 0, 0, 0, 1);
