@@ -32,8 +32,10 @@ public class ElementalGuideConfigFlags {
 
     public static void updateConfigFlags() {
         if (ModList.get().isLoaded("patchouli")) {
-            PatchouliAPI.get().setConfigFlag(ElementalAmulets.MOD_ID + ":cult_temple", ModConfig.CachedValues.GENERATE_CULT_TEMPLE);
-            PatchouliAPI.get().setConfigFlag(ElementalAmulets.MOD_ID + ":jeweller_house", ModConfig.CachedValues.GENERATE_JEWELLER_HOUSE);
+            PatchouliAPI.IPatchouliAPI api = PatchouliAPI.get();
+            api.setConfigFlag(ElementalAmulets.MOD_ID + ":cult_temple", ModConfig.CachedValues.GENERATE_CULT_TEMPLE);
+            api.setConfigFlag(ElementalAmulets.MOD_ID + ":jeweller_house", ModConfig.CachedValues.GENERATE_JEWELLER_HOUSE);
+            api.setConfigFlag(ElementalAmulets.MOD_ID + ":generate_ores", ModConfig.CachedValues.GENERATE_ORES);
         }
     }
 }
