@@ -60,6 +60,6 @@ public class ElementalCombinationProcessor implements IComponentProcessor {
                 return IVariable.wrap(recipe.getCombinationTime() / 20);
             }
         }
-        return IVariable.empty();
+        return null;
     }
 }
