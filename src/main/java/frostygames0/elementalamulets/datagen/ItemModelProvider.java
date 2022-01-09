@@ -60,11 +60,6 @@ public class ItemModelProvider extends net.minecraftforge.client.model.generator
         } else {
             singleTexture(name(item), mcLoc("item/generated"), "layer0", modLoc("item/" + name(item)));
         }
-        //.texture("layer1", modLoc("item/amulet_tiers/level" + item.getTier(null)));
-        //.override().predicate(mcLoc("damage"), 0.20f).model(withExistingParent("item/damaged_variations/tier" + item.getTier(null) + "/" + removeTier(item) + "_damage1", modLoc("item/" + name(item))).texture("layer0", modLoc("item/" + removeTier(item) + "_damage1"))).end()
-        //.override().predicate(mcLoc("damage"), 0.40f).model(withExistingParent("item/damaged_variations/tier" + item.getTier(null) + "/" + removeTier(item) + "_damage2", modLoc("item/" + name(item))).texture("layer0", modLoc("item/" + removeTier(item) + "_damage2"))).end()
-        //.override().predicate(mcLoc("damage"), 0.60f).model(withExistingParent("item/damaged_variations/tier" + item.getTier(null) + "/" + removeTier(item) + "_damage3", modLoc("item/" + name(item))).texture("layer0", modLoc("item/" + removeTier(item) + "_damage3"))).end()
-        //.override().predicate(mcLoc("damage"), 0.80f).model(withExistingParent("item/damaged_variations/tier" + item.getTier(null) + "/" + removeTier(item) + "_damage4", modLoc("item/" + name(item))).texture("layer0", modLoc("item/" + removeTier(item) + "_damage4"))).end();
     }
 
     private String name(Item item) {

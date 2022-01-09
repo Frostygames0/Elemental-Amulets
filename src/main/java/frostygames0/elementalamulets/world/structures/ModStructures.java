@@ -67,7 +67,6 @@ public class ModStructures {
     private static <T extends Structure<?>> void setup(T structure, StructureSeparationSettings settings) {
         Structure.STRUCTURES_REGISTRY.put(structure.getRegistryName().toString(), structure);
 
-        //Structure.NOISE_AFFECTING_FEATURES = ImmutableList.<Structure<?>>builder().addAll(Structure.NOISE_AFFECTING_FEATURES).add(structure).build();
         DimensionStructuresSettings.DEFAULTS = ImmutableMap.<Structure<?>, StructureSeparationSettings>builder().putAll(DimensionStructuresSettings.DEFAULTS).put(structure, settings).build();
 
         WorldGenRegistries.NOISE_GENERATOR_SETTINGS.entrySet().forEach((spreadSettings) -> {
