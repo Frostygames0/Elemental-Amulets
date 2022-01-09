@@ -64,7 +64,7 @@ public class ElementalCombinator extends Block {
                 if (ModConfig.CachedValues.OLD_FASHIONED_WAY) elementalCombinatorTile.startCombination();
             }
         } else {
-            throw new IllegalStateException("Tile Entity is not correct! Cannot do any action!");
+            throw new IllegalStateException("Block Entity is not correct! Cannot do any action!");
         }
         return ActionResultType.CONSUME;
     }
