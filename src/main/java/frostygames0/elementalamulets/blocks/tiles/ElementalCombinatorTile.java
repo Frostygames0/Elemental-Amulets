@@ -135,10 +135,12 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
                         if (ModConfig.CachedValues.FANCY_COMBINATION) {
                             this.playSound(SoundEvents.ENCHANTMENT_TABLE_USE);
 
-                            LightningBoltEntity lightbolt = EntityType.LIGHTNING_BOLT.create(level);
-                            lightbolt.setVisualOnly(true);
-                            lightbolt.moveTo(Vector3d.atBottomCenterOf(worldPosition.above()));
-                            this.level.addFreshEntity(lightbolt);
+                            if (this.totalTime >= 100) { // Strike only when combining for 5 or more seconds
+                                LightningBoltEntity lightbolt = EntityType.LIGHTNING_BOLT.create(level);
+                                lightbolt.setVisualOnly(true);
+                                lightbolt.moveTo(Vector3d.atBottomCenterOf(worldPosition.above()));
+                                this.level.addFreshEntity(lightbolt);
+                            }
                         }
                     }
                 } else {
