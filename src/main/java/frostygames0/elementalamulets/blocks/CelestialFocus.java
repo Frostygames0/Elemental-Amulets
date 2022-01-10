@@ -67,7 +67,7 @@ public class CelestialFocus extends Block implements IWaterLoggable {
 
     public CelestialFocus(Properties p_i48440_1_) {
         super(p_i48440_1_);
-        this.registerDefaultState(this.defaultBlockState().setValue(WATERLOGGED, false));
+        this.registerDefaultState(this.stateDefinition.any().setValue(WATERLOGGED, false));
     }
 
     @Override

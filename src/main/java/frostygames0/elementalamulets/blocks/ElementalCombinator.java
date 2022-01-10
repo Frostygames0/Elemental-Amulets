@@ -47,7 +47,7 @@ public class ElementalCombinator extends Block {
 
     public ElementalCombinator(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.defaultBlockState().setValue(COMBINING, false));
+        this.registerDefaultState(this.stateDefinition.any().setValue(COMBINING, false));
     }
 
     @Override
