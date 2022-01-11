@@ -22,19 +22,20 @@ package frostygames0.elementalamulets.init;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.blocks.CelestialFocus;
 import frostygames0.elementalamulets.blocks.ElementalCombinator;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.item.DyeColor;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockReader;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+
+
+import java.util.Random;
 
 public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ElementalAmulets.MOD_ID);
@@ -48,7 +49,12 @@ public class ModBlocks {
                     .noOcclusion().isViewBlocking(ModBlocks::never).isSuffocating(ModBlocks::never)));
 
     public static final RegistryObject<Block> ELEMENTAL_ORE = BLOCKS.register("elemental_ore",
-            () -> new Block(AbstractBlock.Properties.of(Material.STONE).strength(3.5f).sound(SoundType.STONE).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).harvestLevel(1)));
+            () -> new OreBlock(AbstractBlock.Properties.of(Material.STONE).strength(3.5f).sound(SoundType.STONE).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).harvestLevel(1)) {
+                @Override
+                protected int xpOnDrop(Random p_220281_1_) {
+                    return MathHelper.nextInt(p_220281_1_, 0, 2);
+                }
+            });
 
 
     // Shards
