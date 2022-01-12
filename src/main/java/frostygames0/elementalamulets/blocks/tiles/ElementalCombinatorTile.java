@@ -207,7 +207,7 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
         this.level.playSound(null, worldPosition, sound, SoundCategory.BLOCKS, 1.0f, 1.0f);
     }
 
-    public int getFocusedLevel() {
+    private int getFocusedLevel() {
         int lv = 1;
 
         if (this.level.getBlockState(this.getBlockPos().above()).getBlock() == ModBlocks.CELESTIAL_FOCUS.get()) {
