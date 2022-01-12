@@ -65,6 +65,7 @@ class PacifyingAmuletEffect {
                             if (livingDamager instanceof PlayerEntity) {
                                 PlayerEntity damagingPlayer = (PlayerEntity) livingDamager;
                                 damagingPlayer.addEffect(new EffectInstance(Effects.BLINDNESS, (disorientationTime / 2), 2));
+                                damagingPlayer.addEffect(new EffectInstance(Effects.CONFUSION, disorientationTime, 2));
                                 damagingPlayer.displayClientMessage(new TranslationTextComponent("item.elementalamulets.pacifying_amulet.tired").withStyle(TextFormatting.RED), true);
                             }
                             player.displayClientMessage(new TranslationTextComponent("item.elementalamulets.pacifying_amulet.tired_success").withStyle(TextFormatting.GREEN), true);
