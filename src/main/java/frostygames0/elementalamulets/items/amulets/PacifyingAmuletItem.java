@@ -102,8 +102,10 @@ public class PacifyingAmuletItem extends AmuletItem {
         mc.gameRenderer.displayItemActivation(stack);
 
         ClientPlayerEntity player = mc.player;
-        player.playSound(SoundEvents.WITHER_DEATH, 1f, 1f);
-        player.displayClientMessage(new TranslationTextComponent("item.elementalamulets.pacifying_amulet.onbreak", this.getName(stack)).withStyle(TextFormatting.RED), true);
+        if (player != null) {
+            player.playSound(SoundEvents.WITHER_DEATH, 1f, 1f);
+            player.displayClientMessage(new TranslationTextComponent("item.elementalamulets.pacifying_amulet.onbreak", this.getName(stack)).withStyle(TextFormatting.RED), true);
+        }
     }
 
     // Call this in ItemStack#hurtAndBreak's consumer

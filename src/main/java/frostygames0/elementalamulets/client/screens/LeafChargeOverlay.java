@@ -27,6 +27,7 @@ import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.TerraProtectionAmuletItem;
 import frostygames0.elementalamulets.util.AmuletHelper;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.item.ItemStack;
@@ -60,20 +61,23 @@ public class LeafChargeOverlay {
 
             manager.bind(modPrefix("textures/gui/leaf_charge_overlay.png"));
 
-            AmuletHelper.getAmuletInSlotOrBelt(ModItems.TERRA_PROTECTION_AMULET.get(), mc.player).ifPresent(triple -> {
-                ItemStack stack = triple.getRight();
-                TerraProtectionAmuletItem amulet = (TerraProtectionAmuletItem) stack.getItem();
+            ClientPlayerEntity player = mc.player;
+            if (player != null) {
+                AmuletHelper.getAmuletInSlotOrBelt(ModItems.TERRA_PROTECTION_AMULET.get(), player).ifPresent(triple -> {
+                    ItemStack stack = triple.getRight();
+                    TerraProtectionAmuletItem amulet = (TerraProtectionAmuletItem) stack.getItem();
 
-                int offset = posX + 98;
+                    int offset = posX + 98;
 
-                RenderSystem.enableBlend();
+                    RenderSystem.enableBlend();
 
-                drawLeafBar(ms, Math.min(amulet.getMaxCharge(stack), 16), offset, posY, 0);
-                drawLeafBar(ms, Math.min(amulet.getCharges(stack), 16), offset, posY, 8);
+                    drawLeafBar(ms, Math.min(amulet.getMaxCharge(stack), 16), offset, posY, 0);
+                    drawLeafBar(ms, Math.min(amulet.getCharges(stack), 16), offset, posY, 8);
 
-                RenderSystem.disableBlend();
+                    RenderSystem.disableBlend();
 
-            });
+                });
+            }
         }
     }
 
