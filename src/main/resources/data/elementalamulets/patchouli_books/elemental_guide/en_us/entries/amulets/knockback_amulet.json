@@ -6,7 +6,7 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "$(l)$(item)Amulet of Knockback$() - is one of the $(o)'advanced, but yet simple'$() amulets. It's made by combining $(l:elementalamulets:amulets/air_amulet)Amulet of Air$() with a sword$(br2)$(l)USAGE$(): $(li)Knockbacks any attacking enemies! Increases with higher tier"
+      "text": "$(l)$(air)Amulet of Knockback$() - is one of the $(o)'advanced, but yet simple'$() amulets. It's made by combining $(l:elementalamulets:amulets/air_amulet)Amulet of Air$() with a sword$(br2)$(l)USAGE$(): $(li)Knockbacks any attacking enemies! Increases with higher tier"
     },
     {
       "type": "elementalamulets:elemental_combination",
