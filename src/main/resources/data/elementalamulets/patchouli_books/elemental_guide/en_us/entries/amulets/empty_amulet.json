@@ -1,0 +1,16 @@
+{
+  "name": "item.elementalamulets.empty_amulet",
+  "category": "elementalamulets:amulets",
+  "icon": "elementalamulets:empty_amulet",
+  "priority": true,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(item)Empty Amulet$() - is a shell for an amulet!$(br2)Every simple amulet uses it as the elemental"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "elementalamulets:empty_amulet"
+    }
+  ]
+}

@@ -1,8 +1,10 @@
 {
-  "name": "Elemental Combinator",
+  "name": "block.elementalamulets.elemental_combinator",
   "category": "elementalamulets:combination",
   "icon": "elementalamulets:elemental_combinator",
-  "extra_recipe_mappings": {"elementalamulets:elemental_combinator": 1},
+  "extra_recipe_mappings": {
+    "elementalamulets:elemental_combinator": 1
+  },
   "pages": [
     {
       "type": "patchouli:text",
@@ -11,7 +13,7 @@
     {
       "type": "patchouli:crafting",
       "recipe": "elementalamulets:elemental_combinator",
-      "text": "$(br2)$(l)REMEMBER! The Elemental Combinator must see sky to work!$()"
+      "text": "$(l)REMEMBER! The Elemental Combinator must see sky to work!$()"
     }
   ]
 }

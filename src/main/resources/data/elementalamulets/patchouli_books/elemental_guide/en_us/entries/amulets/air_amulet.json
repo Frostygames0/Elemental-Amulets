@@ -1,0 +1,35 @@
+{
+  "name": "item.elementalamulets.air_amulet",
+  "category": "elementalamulets:amulets",
+  "icon": "elementalamulets:air_amulet",
+  "advancement": "elementalamulets:combine_item",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(air)Amulet of Air$() - is one of the $(o)'basic'$() amulets.$(br2)$(l)USAGE$(): $(li)Allows you to control the speed of falling, to fall, press SHIFT"
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "recipe": "elementalamulets:elemental_combination/amulets/air_amulet_tier1",
+      "text": "Tier 1:$(li)allows you to fall a little bit slower, you won't take damage"
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "advancement": "elementalamulets:patchouli/combine_air_amulet",
+      "recipe": "elementalamulets:elemental_combination/amulets/air_amulet_tier2",
+      "text": "Tier 2:$(li)allows you to fall slower"
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "advancement": "elementalamulets:patchouli/combine_air_amulet2",
+      "recipe": "elementalamulets:elemental_combination/amulets/air_amulet_tier3",
+      "text": "Tier 3:$(li)same but even slower!"
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "advancement": "elementalamulets:patchouli/combine_air_amulet3",
+      "recipe": "elementalamulets:elemental_combination/amulets/air_amulet_tier4",
+      "text": "Tier 4:$(li)very slow fall$(br2)$(l)NOTE: These values may not be accurate if configuration was changed! I'm thinking about the fix"
+    }
+  ]
+}

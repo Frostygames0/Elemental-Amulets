@@ -1,16 +1,22 @@
 {
-  "name": "Amulet Belt",
+  "name": "item.elementalamulets.amulet_belt",
   "category": "elementalamulets:artifacts",
   "icon": "elementalamulets:amulet_belt",
+  "extra_recipe_mappings": {
+    "elementalamulets:amulet_belt": 1
+  },
+  "advancement": "elementalamulets:combine_aether",
   "pages": [
     {
       "type": "patchouli:text",
       "text": "$(l)$(item)Amulet Belt$() - is a strange leather belt that allows you to wear up to 6 amulets(1 in main slot, 5 in belt) at the same time!$(br2)To open it's inventory press $(l)$(k:elementalamulets.open_belt_gui)$() while wearing it"
     },
     {
-      "type": "patchouli:text",
+      "type": "patchouli:spotlight",
+      "item": "elementalamulets:amulet_belt",
+      "link_recipe": true,
       "title": "How to obtain",
-      "text": "It's a very rare artifact, you buy it from the Jeweller at master level( 5 ).$(br2)Other ways of obtaining it coming soon!"
+      "text": "Being pretty hard to create, the only known way to get it is to buy it from the $(l:elementalamulets:world/jeweller)Jeweller$(), as he knows how to do it.$(br2) But, $(o)they need to trust you$()! So you can buy it at level 5 (Master level)"
     }
   ]
 }

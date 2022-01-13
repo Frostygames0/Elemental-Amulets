@@ -1,0 +1,35 @@
+{
+  "name": "item.elementalamulets.knockback_amulet",
+  "category": "elementalamulets:amulets",
+  "icon": "elementalamulets:knockback_amulet",
+  "advancement": "elementalamulets:patchouli/combine_air_amulet",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(item)Amulet of Knockback$() - is one of the $(o)'advanced, but yet simple'$() amulets. It's made by combining $(l:elementalamulets:amulets/air_amulet)Amulet of Air$() with a sword$(br2)$(l)USAGE$(): $(li)Knockbacks any attacking enemies! Increases with higher tier"
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "recipe": "elementalamulets:elemental_combination/amulets/knockback_amulet_tier1",
+      "text": "Tier 1:$(li) knockbacks 50% better than average player"
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "advancement": "elementalamulets:patchouli/combine_knockback_amulet",
+      "recipe": "elementalamulets:elemental_combination/amulets/knockback_amulet_tier2",
+      "text": "Tier 2:$(li)100% better"
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "advancement": "elementalamulets:patchouli/combine_knockback_amulet2",
+      "recipe": "elementalamulets:elemental_combination/amulets/knockback_amulet_tier3",
+      "text": "Tier 3:$(li)200% better"
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "advancement": "elementalamulets:patchouli/combine_knockback_amulet3",
+      "recipe": "elementalamulets:elemental_combination/amulets/knockback_amulet_tier4",
+      "text": "Tier 4:$(li)Knock your enemies far away! 400% better$(br2)$(l)NOTE: These values may not be accurate if configuration was changed! I'm thinking about the fix"
+    }
+  ]
+}

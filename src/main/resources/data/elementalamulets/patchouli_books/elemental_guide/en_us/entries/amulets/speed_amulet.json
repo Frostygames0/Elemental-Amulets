@@ -1,0 +1,35 @@
+{
+  "name": "item.elementalamulets.speed_amulet",
+  "category": "elementalamulets:amulets",
+  "icon": "elementalamulets:speed_amulet",
+  "advancement": "elementalamulets:patchouli/combine_water_amulet",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(water)Amulet of Speed-Boost$() - is one of the $(o)'advanced'$() amulets. It's made by combining $(l:elementalamulets:amulets/water_amulet)Amulet of Water$() with ice and sugar$(br2)$(l)USAGE$(): $(li)Allows you to run faster, but spends your hunger! Increases with higher tier"
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "recipe": "elementalamulets:elemental_combination/amulets/speed_amulet_tier1",
+      "text": "Tier 1:$(li)increases your speed by around 90-100%"
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "advancement": "elementalamulets:patchouli/combine_speed_amulet",
+      "recipe": "elementalamulets:elemental_combination/amulets/speed_amulet_tier2",
+      "text": "Tier 2:$(li)increases your speed by around 180-200%"
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "advancement": "elementalamulets:patchouli/combine_speed_amulet2",
+      "recipe": "elementalamulets:elemental_combination/amulets/speed_amulet_tier3",
+      "text": "Tier 3:$(li)same but 360-400%"
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "advancement": "elementalamulets:patchouli/combine_speed_amulet3",
+      "recipe": "elementalamulets:elemental_combination/amulets/speed_amulet_tier4",
+      "text": "Tier 4:$(li)Be the fastest in your world! 720-800%$(br2)$(l)NOTE: These values may not be accurate if configuration was changed! I'm thinking about the fix"
+    }
+  ]
+}

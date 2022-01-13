@@ -1,0 +1,35 @@
+{
+  "name": "item.elementalamulets.earth_amulet",
+  "category": "elementalamulets:amulets",
+  "icon": "elementalamulets:earth_amulet",
+  "advancement": "elementalamulets:combine_item",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(earth)Amulet of Earth$() - is one of the $(o)'basic'$() amulets.$(br2)$(l)USAGE$(): $(li)Boosts plants like a bonemeal, also heals"
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "recipe": "elementalamulets:elemental_combination/amulets/earth_amulet_tier1",
+      "text": "Tier 1:$(li)2% chance of boosting any plant in 9x9x3 area$(li)heal depends on amount of boosted plants"
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "advancement": "elementalamulets:patchouli/combine_earth_amulet",
+      "recipe": "elementalamulets:elemental_combination/amulets/earth_amulet_tier2",
+      "text": "Tier 2:$(li)4% chance of boosting any plant in 9x9x3 area"
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "advancement": "elementalamulets:patchouli/combine_earth_amulet2",
+      "recipe": "elementalamulets:elemental_combination/amulets/earth_amulet_tier3",
+      "text": "Tier 3:$(li)6% chance of boosting any plant in 9x9x3 area"
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "advancement": "elementalamulets:patchouli/combine_earth_amulet3",
+      "recipe": "elementalamulets:elemental_combination/amulets/earth_amulet_tier4",
+      "text": "Tier 4:$(li)8% chance of boosting any plant in 9x9x3 area$(br2)$(l)NOTE: These values may not be accurate if configuration was changed! I'm thinking about the fix"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "item.elementalamulets.aether_element",
+  "category": "elementalamulets:elements",
+  "icon": "elementalamulets:aether_element",
+  "advancement": "elementalamulets:combine_all_elements",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(item)Element of Aether$() - the fifth element, represents the sky!$(br2)A very expensive and rare elements,$(br)used in level 4 upgrade and some cool amulet recipes"
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "recipe": "elementalamulets:elemental_combination/elements/aether_element"
+    }
+  ]
+}

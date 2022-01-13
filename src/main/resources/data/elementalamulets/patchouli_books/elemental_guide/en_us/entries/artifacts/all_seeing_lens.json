@@ -1,0 +1,23 @@
+{
+  "name": "item.elementalamulets.all_seeing_lens",
+  "category": "elementalamulets:artifacts",
+  "icon": "elementalamulets:all_seeing_lens",
+  "advancement": "elementalamulets:combine_aether",
+  "extra_recipe_mappings": {
+    "elementalamulets:all_seeing_lens": 1
+  },
+  "secret": true,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(item)All-seeing lens$() - is a purple lens, that channels elemental energy through itself and maybe can even boost some elemental reactions!"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "elementalamulets:amulet_belt",
+      "link_recipe": true,
+      "title": "How to obtain",
+      "text": "Being pretty hard to create, the only known way to get it is to buy it from the $(l:elementalamulets:world/jeweller)Jeweller$(), as he knows how to do it.$(br2) But, $(o)they need to trust you$()! So you can buy it at level 5 (Master level)"
+    }
+  ]
+}

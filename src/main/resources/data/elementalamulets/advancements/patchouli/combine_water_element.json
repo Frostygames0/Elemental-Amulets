@@ -1,0 +1,18 @@
+{
+  "parent": "elementalamulets:root",
+  "criteria": {
+    "combine_element": {
+      "trigger": "elementalamulets:item_elemental_combined",
+      "conditions": {
+        "item": {
+          "item": "elementalamulets:water_element"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "combine_element"
+    ]
+  ]
+}

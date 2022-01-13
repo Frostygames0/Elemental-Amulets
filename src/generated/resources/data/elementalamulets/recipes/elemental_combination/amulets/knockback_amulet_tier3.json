@@ -1,0 +1,39 @@
+{
+  "type": "elementalamulets:elemental_combination",
+  "elemental": {
+    "item": "elementalamulets:knockback_amulet",
+    "tier": 2
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:golden_sword"
+    },
+    {
+      "item": "elementalamulets:air_element"
+    },
+    {
+      "item": "elementalamulets:earth_element"
+    },
+    {
+      "item": "elementalamulets:air_element"
+    },
+    {
+      "item": "minecraft:golden_sword"
+    },
+    {
+      "item": "elementalamulets:air_element"
+    },
+    {
+      "item": "elementalamulets:earth_element"
+    },
+    {
+      "item": "elementalamulets:air_element"
+    }
+  ],
+  "combination_time": 400,
+  "tag_transfer": true,
+  "result": {
+    "item": "elementalamulets:knockback_amulet",
+    "nbt": "{\"elementalamulets:tier\":3}"
+  }
+}

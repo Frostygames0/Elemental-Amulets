@@ -1,0 +1,16 @@
+{
+  "name": "Jeweller",
+  "category": "elementalamulets:world",
+  "icon": "minecraft:oak_planks",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(thing)The Jeweller$() - a type of villager, that can be found in $(o)plains$() or $(o)taiga$() village.$(br2)They are interested in Elemental Combination and selling amulets! They also sell some rare artifacts"
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "minecraft:villager{VillagerData:{'level':3, 'profession':'elementalamulets:jeweller', 'type':'minecraft:taiga'}}",
+      "text": "That's how they look. Black hat and monocle."
+    }
+  ]
+}

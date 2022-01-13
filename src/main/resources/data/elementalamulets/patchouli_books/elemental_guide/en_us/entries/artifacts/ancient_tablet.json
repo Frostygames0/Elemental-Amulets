@@ -1,0 +1,22 @@
+{
+  "name": "item.elementalamulets.ancient_tablet",
+  "category": "elementalamulets:artifacts",
+  "icon": "elementalamulets:ancient_tablet",
+  "advancement": "elementalamulets:ancient_insanity",
+  "extra_recipe_mappings": {
+    "elementalamulets:ancient_tablet": 1
+  },
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(item)Ancient Tablet$() - is a strange cyan tablet with some text engraved on it. This is an $(o)'instruction'$(), a powerful item that serves as blueprint for $(thing)$(l:elementalamulets:elements/combination/elemental_combinator)Elemental Combinator$()"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "elementalamulets:amulet_belt",
+      "link_recipe": true,
+      "title": "How to obtain",
+      "text": "It can be found inside of Cult's temple's chest with around 30% chance.$(br2)There is no guarantee that you will the correct one, as there may be a lot of variations"
+    }
+  ]
+}

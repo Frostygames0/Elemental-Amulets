@@ -1,0 +1,17 @@
+{
+  "name": "item.elementalamulets.pacifying_amulet",
+  "category": "elementalamulets:amulets",
+  "icon": "elementalamulets:pacifying_amulet",
+  "advancement": "elementalamulets:combine_aether",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(item)Pacifying Amulet$() - is one of the $(o)'ancient and hard'$() amulets.$(br2)Creating this amulet is a very difficult task, that can be accomplished only with $(o)'instruction'$().!$(br2)$(l)USAGE$(): $(li)pacifies passive mobs like endermen, wolves, etc.$(li)if mob can't be pacified, it disorientates it."
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "recipe": "elementalamulets:elemental_combination/amulets/pacifying_amulet_tier1",
+      "text": "$(l)WARNING!$() Overusing this amulet may lead to unforeseen consequences!$(br)As it's made of aether, $(o)it can't stabilize itself$() like normal amulets do!"
+    }
+  ]
+}

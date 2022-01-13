@@ -1,0 +1,37 @@
+{
+  "name": "Shard Blocks",
+  "category": "elementalamulets:misc",
+  "icon": "elementalamulets:elemental_shards_block",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(item)Shard Blocks$() - are blocks of fused shards!$(br2)They:$(li)Contain more power.$(li)More compact.$(li)Make you look rich."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "elementalamulets:elemental_shards_block",
+      "text": "They are crafted like iron blocks, same with un-crafting.$(br2)Flip through the page for all recipes"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "elementalamulets:fire_shards_block",
+      "recipe2": "elementalamulets:water_shards_block"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "elementalamulets:earth_shards_block",
+      "recipe2": "elementalamulets:air_shards_block"
+    },
+    {
+      "type": "patchouli:relations",
+      "title": "Shards",
+      "entries": [
+        "elementalamulets:elements/elemental_shards",
+        "elementalamulets:elements/fire_element",
+        "elementalamulets:elements/water_element",
+        "elementalamulets:elements/earth_element",
+        "elementalamulets:elements/air_element"
+      ]
+    }
+  ]
+}

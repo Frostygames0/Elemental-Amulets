@@ -1,0 +1,35 @@
+{
+  "name": "item.elementalamulets.protection_amulet",
+  "category": "elementalamulets:amulets",
+  "icon": "elementalamulets:protection_amulet",
+  "advancement": "elementalamulets:patchouli/combine_earth_amulet",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(earth)Amulet of Terra-Protection$() - is one of the $(o)'special'$() amulets. It's made by combining $(l:elementalamulets:amulets/earth_amulet)Amulet of Earth$() with high durability items(like shield and obsidian)$(br2)$(l)USAGE$(): $(li)Creates a sharp and very durable $(o)Leaf Shield$()! Reflects damage on entities!"
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "recipe": "elementalamulets:elemental_combination/amulets/protection_amulet_tier1",
+      "text": "Tier 1:$(li)4 nature charges"
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "advancement": "elementalamulets:patchouli/combine_protection_amulet",
+      "recipe": "elementalamulets:elemental_combination/amulets/protection_amulet_tier2",
+      "text": "Tier 2:$(li)8 nature charges"
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "advancement": "elementalamulets:patchouli/combine_protection_amulet2",
+      "recipe": "elementalamulets:elemental_combination/amulets/protection_amulet_tier3",
+      "text": "Tier 3:$(li)12 nature charges"
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "advancement": "elementalamulets:patchouli/combine_protection_amulet3",
+      "recipe": "elementalamulets:elemental_combination/amulets/protection_amulet_tier4",
+      "text": "Tier 4:$(li)16 nature charges$(br2)$(l)NOTE: These values may not be accurate if configuration was changed! I'm thinking about the fix"
+    }
+  ]
+}

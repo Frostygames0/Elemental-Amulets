@@ -1,0 +1,16 @@
+{
+  "name": "item.elementalamulets.invisibility_amulet",
+  "category": "elementalamulets:amulets",
+  "icon": "elementalamulets:invisibility_amulet",
+  "advancement": "elementalamulets:patchouli/combine_fire_and_water_element",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(air)Amulet of Invisibility$() - is one of the $(o)'double-element'$() amulets.$(br2)It can be created using $(water)water$() and $(fire)fire$() elements!$(br2)$(l)USAGE$(): $(li)Makes you invisible when you shift"
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "recipe": "elementalamulets:elemental_combination/amulets/invisibility_amulet"
+    }
+  ]
+}

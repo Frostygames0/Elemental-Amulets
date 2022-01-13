@@ -1,11 +1,11 @@
 {
-  "name": "Elemental of Water",
+  "name": "item.elementalamulets.water_element",
   "category": "elementalamulets:elements",
   "icon": "elementalamulets:water_element",
   "pages": [
     {
       "type": "patchouli:text",
-      "text": ""
+      "text": "$(l)$(water)Element of Water$() - is a very elegant, mostly calm element$(br2)Can be obtained either randomly in dungeon or crafted with this recipe:"
     },
     {
       "type": "elementalamulets:elemental_combination",

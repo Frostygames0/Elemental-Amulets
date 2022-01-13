@@ -1,0 +1,35 @@
+{
+  "name": "item.elementalamulets.water_amulet",
+  "category": "elementalamulets:amulets",
+  "icon": "elementalamulets:water_amulet",
+  "advancement": "elementalamulets:combine_item",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(water)Amulet of Water$() - is one of the $(o)'basic'$() amulets.$(br2)$(l)USAGE$(): $(li)Boosts you underwater, allows to breathe indefinitely (tier 2 and higher)"
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "recipe": "elementalamulets:elemental_combination/amulets/water_amulet_tier1",
+      "text": "Tier 1:$(li)boosts your speed underwater by 50%"
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "advancement": "elementalamulets:patchouli/combine_water_amulet",
+      "recipe": "elementalamulets:elemental_combination/amulets/water_amulet_tier2",
+      "text": "Tier 2:$(li)boosts your speed underwater by 100%$(li)allows to breathe underwater"
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "advancement": "elementalamulets:patchouli/combine_water_amulet2",
+      "recipe": "elementalamulets:elemental_combination/amulets/water_amulet_tier3",
+      "text": "Tier 3:$(li)boosts your speed underwater by 150%"
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "advancement": "elementalamulets:patchouli/combine_water_amulet3",
+      "recipe": "elementalamulets:elemental_combination/amulets/water_amulet_tier4",
+      "text": "Tier 4:$(li)boosts your speed underwater by 200%$(br2)$(l)NOTE: These values may not be accurate if configuration was changed! I'm thinking about the fix"
+    }
+  ]
+}

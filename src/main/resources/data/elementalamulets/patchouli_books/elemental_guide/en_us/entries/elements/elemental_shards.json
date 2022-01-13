@@ -1,7 +1,11 @@
 {
-  "name": "Elemental Shards",
+  "name": "item.elementalamulets.elemental_shards",
   "category": "elementalamulets:elements",
   "icon": "elementalamulets:elemental_shards",
+  "extra_recipe_mappings": {
+    "elementalamulets:elemental_ore": 1,
+    "elementalamulets:elemental_shards": 1
+  },
   "pages": [
     {
       "type": "patchouli:text",
@@ -10,7 +14,24 @@
     {
       "type": "patchouli:text",
       "title": "How to obtain",
-      "text": "There is several ways to find them!$(li)First way is mining!$(br)They are generating on < Y:40 height and can be mined by a stone pickaxe. $(li)Second way is to find them in the world! Either in dungeon or from trading."
+      "text": "There are several ways to find them!$(li)The first way is mining!$(br)They are generated at a height of <Y:40 and can be mined with a stone pickaxe.$(li)The second way is to find them in the world! Either in the dungeon or in the trade.",
+      "flag": "elementalamulets:generate_ores"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "How to obtain",
+      "text": "There is one way to find them!$(li)The way is to find them in the world! Either in the dungeon or in the trade.",
+      "flag": "!elementalamulets:generate_ores"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Example",
+      "images": [
+        "elementalamulets:textures/gui/patchouli/elemental_ore_showcase.png"
+      ],
+      "border": true,
+      "text": "This is how it looks in the mine!",
+      "flag": "elementalamulets:generate_ores"
     }
   ]
 }

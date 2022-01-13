@@ -1,0 +1,18 @@
+{
+  "name": "block.elementalamulets.celestial_focus",
+  "category": "elementalamulets:combination",
+  "icon": "elementalamulets:celestial_focus",
+  "advancement": "elementalamulets:combine_aether",
+  "secret": true,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(item)Celestial Focus$() - is a primitive construct that holds $(l:elementalamulets:artifacts/all_seeing_lens)$(thing)All-Seeing lens$() in it.$(br2)When placed on the top of Elemental Combinator, boosts it by x2"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "elementalamulets:celestial_focus",
+      "text": "There is one condition that may affect the boost:$(li)When there is a full moon in the sky, the effect is not x2, but x3"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "name": "Cult's Temple",
+  "category": "elementalamulets:world",
+  "icon": "minecraft:mossy_stone_bricks",
+  "flag": "elementalamulets:cult_temple",
+  "advancement": "elementalamulets:combine_aether",
+  "turnin": "elementalamulets:ancient_insanity",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(thing)Cult's Temple$() - is an ancient structure that can be found inside jungles.$(br2)It was made by some strange cult that $(o)worshipped the five elements$()."
+    },
+    {
+      "type": "patchouli:quest",
+      "title": "Finally, a quest!",
+      "text": "Legends say that you may find some 'instructions'(Materials to combine powerful amulets!) But beware of a lot of creepers!$(br2) That's all that is known about these temples.$(br2)$(l)Objective$(): Find it!$(br)$(l)Location$(): Jungles, y<=65",
+      "trigger": "elementalamulets:ancient_insanity"
+    }
+  ]
+}

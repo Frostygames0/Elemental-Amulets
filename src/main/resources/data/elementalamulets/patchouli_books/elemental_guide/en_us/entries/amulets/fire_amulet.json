@@ -1,0 +1,35 @@
+{
+  "name": "item.elementalamulets.fire_amulet",
+  "category": "elementalamulets:amulets",
+  "icon": "elementalamulets:fire_amulet",
+  "advancement": "elementalamulets:combine_item",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(fire)Amulet of Fire-Resistance$() - is one of the $(o)'basic'$() amulets.$(br2)$(l)USAGE$(): $(li)It provides you with fire-resistance, that becomes better every next tier (up to 4)"
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "recipe": "elementalamulets:elemental_combination/amulets/fire_amulet_tier1",
+      "text": "Tier 1:$(li)decreases damage dealt by fire by 50%$(li)by lava by 25%"
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "advancement": "elementalamulets:patchouli/combine_fire_amulet",
+      "recipe": "elementalamulets:elemental_combination/amulets/fire_amulet_tier2",
+      "text": "Tier 2:$(li)invulnerability to fire damage$(li)decreases damage dealt by lava by 50%"
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "advancement": "elementalamulets:patchouli/combine_fire_amulet2",
+      "recipe": "elementalamulets:elemental_combination/amulets/fire_amulet_tier3",
+      "text": "Tier 3:$(li)invulnerability to fire damage$(li)decreases damage dealt by lava by 75%"
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "advancement": "elementalamulets:patchouli/combine_fire_amulet3",
+      "recipe": "elementalamulets:elemental_combination/amulets/fire_amulet_tier4",
+      "text": "Tier 4:$(li)invulnerability to all types of fire damage.$(br2)$(l)NOTE: These values may not be accurate if configuration was changed! I'm thinking about the fix"
+    }
+  ]
+}

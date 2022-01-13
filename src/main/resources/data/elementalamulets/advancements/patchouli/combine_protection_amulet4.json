@@ -1,0 +1,19 @@
+{
+  "parent": "elementalamulets:root",
+  "criteria": {
+    "combine_amulet": {
+      "trigger": "elementalamulets:item_elemental_combined",
+      "conditions": {
+        "item": {
+          "item": "elementalamulets:protection_amulet",
+          "nbt": "{'elementalamulets:tier':4}"
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "combine_amulet"
+    ]
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "name": "item.elementalamulets.jump_amulet",
+  "category": "elementalamulets:amulets",
+  "icon": "elementalamulets:jump_amulet",
+  "advancement": "elementalamulets:patchouli/combine_air_amulet",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(item)Amulet of Jump-Boost$() - is one of the $(o)'advanced'$() amulets. It's made by combining $(l:elementalamulets:amulets/air_amulet)Amulet of Air$() with slime and rabbit feet$(br2)$(l)USAGE$(): $(li)Allows you to jump higher! Increases with higher tier"
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "recipe": "elementalamulets:elemental_combination/amulets/jump_amulet_tier1",
+      "text": "Tier 1:$(li)allows you to jump to the height of 3 blocks"
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "advancement": "elementalamulets:patchouli/combine_jump_amulet",
+      "recipe": "elementalamulets:elemental_combination/amulets/jump_amulet_tier2",
+      "text": "Tier 2:$(li)allows you to jump to the height of 6 blocks"
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "advancement": "elementalamulets:patchouli/combine_jump_amulet2",
+      "recipe": "elementalamulets:elemental_combination/amulets/jump_amulet_tier3",
+      "text": "Tier 3:$(li)allows you to jump to the height of 9 blocks"
+    },
+    {
+      "type": "elementalamulets:elemental_combination",
+      "advancement": "elementalamulets:patchouli/combine_jump_amulet3",
+      "recipe": "elementalamulets:elemental_combination/amulets/jump_amulet_tier4",
+      "text": "Tier 4:$(li)Allows you to jump to the height of 12 blocks$(br2)$(l)NOTE: These values may not be accurate if configuration was changed! I'm thinking about the fix"
+    }
+  ]
+}

@@ -1,11 +1,11 @@
 {
-  "name": "Element of Fire",
+  "name": "item.elementalamulets.fire_element",
   "category": "elementalamulets:elements",
   "icon": "elementalamulets:fire_element",
   "pages": [
     {
       "type": "patchouli:text",
-      "text": ""
+      "text": "$(l)$(fire)Element of Fire$() - is a very violent, chaotic and beautiful element, perfect fuel.$(br2)Can be obtained either randomly in dungeon or crafted with this recipe:"
     },
     {
       "type": "elementalamulets:elemental_combination",
