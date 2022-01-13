@@ -6,7 +6,7 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "$(l)$(item)Amulet of Jump-Boost$() - is one of the $(o)'advanced'$() amulets. It's made by combining $(l:elementalamulets:amulets/air_amulet)Amulet of Air$() with slime and rabbit feet$(br2)$(l)USAGE$(): $(li)Allows you to jump higher! Increases with higher tier"
+      "text": "$(l)$(earth)Amulet of Jump-Boost$() - is one of the $(o)'advanced'$() amulets. It's made by combining $(l:elementalamulets:amulets/air_amulet)Amulet of Air$() with slime and rabbit feet$(br2)$(l)USAGE$(): $(li)Allows you to jump higher! Increases with higher tier"
     },
     {
       "type": "elementalamulets:elemental_combination",

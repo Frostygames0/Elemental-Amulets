@@ -17,7 +17,7 @@
       "item": "elementalamulets:amulet_belt",
       "link_recipe": true,
       "title": "How to obtain",
-      "text": "Being pretty hard to create, the only known way to get it is to buy it from the $(l:elementalamulets:world/jeweller)Jeweller$(), as he knows how to do it.$(br2) But, $(o)they need to trust you$()! So you can buy it at level 5 (Master level)"
+      "text": "Being pretty hard to create, the only known way to get it is to buy it from the $(l:elementalamulets:world/jeweller)Jeweller$(), as he knows how to do it.$(br2) But, $(o)they need to trust you$()! So you can buy it at level 4"
     }
   ]
 }
