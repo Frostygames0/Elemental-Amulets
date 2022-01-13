@@ -19,6 +19,7 @@
 
 package frostygames0.elementalamulets.items.amulets;
 
+import frostygames0.elementalamulets.config.ModConfig;
 import net.minecraft.item.ItemStack;
 
 /**
@@ -31,7 +32,7 @@ public class KnockbackAmuletItem extends AmuletItem {
     }
 
     public float getKnockback(ItemStack item) {
-        return (float) (getTier(item) * 0.5);
+        return (float) (getTier(item) * ModConfig.CachedValues.KNOCKBACK_AMULET_KNOCKBACK_MULT);
     }
 
     @Override

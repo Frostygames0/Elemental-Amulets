@@ -54,6 +54,7 @@ public class ModConfig {
         private final ForgeConfigSpec.IntValue pacifyingAmuletBreakCooldown;
         private final ForgeConfigSpec.BooleanValue pacifyingAmuletAngerOnbreak;
         private final ForgeConfigSpec.IntValue pacifyingAmuletDisorientationTime;
+        private final ForgeConfigSpec.DoubleValue knockbackAmuletKnockbackMult;
         private final ForgeConfigSpec.BooleanValue modifyVanillaLoot;
 
         public Server(ForgeConfigSpec.Builder builder) {
@@ -97,9 +98,14 @@ public class ModConfig {
             builder.pop();
 
             builder.push("Pacifying Amulet");
-            pacifyingAmuletDisorientationTime = builder.comment("How long will the enemy  be disoriented (if enemy can't be pacified)? (in ticks, 1 sec - 20 ticks) [DEFAULT: 100]").defineInRange("pacifying_amulet_tiredness_time", 100, 0, Integer.MAX_VALUE);
+            pacifyingAmuletDisorientationTime = builder.comment("How long will the enemy  be disoriented (if enemy can't be pacified)? (in ticks, 1 sec - 20 ticks) [DEFAULT: 100]").defineInRange("pacifying_amulet_tiredness_time", 100, 0, Short.MAX_VALUE);
             pacifyingAmuletBreakCooldown = builder.comment("How long will you need to wait until you can use Pacifying Amulet when broken (in ticks, 1 sec - 20 ticks) [DEFAULT: 200]").defineInRange("pacifying_amulet_break_cooldown", 200, 0, Integer.MAX_VALUE);
             pacifyingAmuletAngerOnbreak = builder.comment("Anger all nearby 'angerable'(wolves, golems, etc) entities when pacifying amulet breaks? [DEFAULT: true]").define("pacifying_amulet_anger_onbreak", true);
+
+            builder.pop();
+
+            builder.push("Knockback Amulet");
+            knockbackAmuletKnockbackMult = builder.comment("How strong will knockback be? [DEFAULT: 0.5]").defineInRange("knockback_amulet_knockback_mult", 0.5, 0, Double.MAX_VALUE);
 
             builder.pop(2);
         }
@@ -184,6 +190,7 @@ public class ModConfig {
         public static int PACIFYING_AMULET_BREAK_COOLDOWN;
         public static boolean PACIFYING_AMULET_ANGER_ONBREAK;
         public static int PACIFYING_AMULET_DISORIENTATION_TIME;
+        public static double KNOCKBACK_AMULET_KNOCKBACK_MULT;
         public static boolean MODIFY_VANILLA_LOOT;
 
         private static void cacheServerConfig() {
@@ -201,6 +208,7 @@ public class ModConfig {
             PACIFYING_AMULET_BREAK_COOLDOWN = SERVER.pacifyingAmuletBreakCooldown.get();
             PACIFYING_AMULET_ANGER_ONBREAK = SERVER.pacifyingAmuletAngerOnbreak.get();
             PACIFYING_AMULET_DISORIENTATION_TIME = SERVER.pacifyingAmuletDisorientationTime.get();
+            KNOCKBACK_AMULET_KNOCKBACK_MULT = SERVER.knockbackAmuletKnockbackMult.get();
         }
 
         public static boolean AMULETS_TIER_DIFFERENCE;
