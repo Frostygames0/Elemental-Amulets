@@ -81,7 +81,7 @@
   "jei.elementalamulets.all_seeing_lens.description": "Очень редкий предмет, только один человек знает как его сделать\n Ювелир продает это на 4 уровне",
   "jei.elementalamulets.elemental_ore.whereabouts": "Элементальная руда - это блок который содержит элементальные осколки\nМожет быть найден на Y:40 и иногда выше",
   "jei.elementalamulets.shards_blocks.description": "Куча осколков, для компактного хранения!",
-  "patchouli.elementalamulets.landing": "Привет $(thing)$(playername)!$() This $(l)magical guide $() will provide you with all knowledge you need! $(br)Book will expand itself when a new knowledge is acquired! Everything(almost) about this mod is described here!",
+  "patchouli.elementalamulets.landing": "Hello $(thing)$(playername)!$() This $(l)magical guide $() will provide you with all knowledge you need! $(br)Book will expand itself when a new knowledge is acquired! Everything(almost) about this mod is described here!",
   "patchouli.elementalamulets.not_present": "Patchouli не обнаружен!! Пожалуйста установите Patchouli, если вы хотите открыть книгу",
   "advancements.elementalamulets.desc": "То чего вы достигнете в вашем приключении",
   "advancements.elementalamulets.guide": "Великий источник знаний!",
