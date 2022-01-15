@@ -11,5 +11,5 @@ Also, with full customization and full JEI support, you can put this mod into an
 ## You can see the progress on trello board!
 https://trello.com/b/0NmQIn9N/elemental-amulets
 
-## This mod is licensed with GNU GPL(GNU General Public License) V3
-You can find it here: https://www.gnu.org/licenses/gpl-3.0.en.html or in the repository (File LICENSE)
+## This mod is licensed with GNU LGPL(GNU Lesser General Public License) V3
+You can find it here: https://www.gnu.org/licenses/lgpl-3.0.en.html or in the repository (File LICENSE)
