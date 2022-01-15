@@ -21,19 +21,18 @@ package frostygames0.elementalamulets.items;
 
 import frostygames0.elementalamulets.advancements.triggers.ModCriteriaTriggers;
 import frostygames0.elementalamulets.init.ModStats;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.ModList;
 import vazkii.patchouli.api.PatchouliAPI;
 
@@ -51,26 +50,24 @@ public class ElementalGuideItem extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
-        if (ModList.get().isLoaded("patchouli"))
-            tooltip.add(((IFormattableTextComponent) PatchouliAPI.get().getSubtitle(BOOK_ID)).withStyle(TextFormatting.GOLD));
-        tooltip.add(new TranslationTextComponent("item.elementalamulets.guide_book.subtitle").withStyle(TextFormatting.GRAY));
+        tooltip.add(new TranslatableComponent("item.elementalamulets.guide_book.subtitle").withStyle(ChatFormatting.GRAY));
     }
 
     @Override
-    public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        if (playerIn instanceof ServerPlayerEntity) {
+    public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+        if (playerIn instanceof ServerPlayer) {
             if (ModList.get().isLoaded("patchouli")) {
-                PatchouliAPI.get().openBookGUI((ServerPlayerEntity) playerIn, BOOK_ID);
-                ModCriteriaTriggers.SUCCESS_USE.trigger((ServerPlayerEntity) playerIn, playerIn.getItemInHand(handIn));
+                PatchouliAPI.get().openBookGUI((ServerPlayer) playerIn, BOOK_ID);
+                ModCriteriaTriggers.SUCCESS_USE.trigger((ServerPlayer) playerIn, playerIn.getItemInHand(handIn));
                 playerIn.awardStat(ModStats.GUIDE_OPENED);
-                return ActionResult.success(playerIn.getItemInHand(handIn));
+                return InteractionResultHolder.success(playerIn.getItemInHand(handIn));
             } else {
-                playerIn.displayClientMessage(new TranslationTextComponent("patchouli.elementalamulets.not_present").withStyle(TextFormatting.RED), true);
-                return ActionResult.fail(playerIn.getItemInHand(handIn));
+                playerIn.displayClientMessage(new TranslatableComponent("patchouli.elementalamulets.not_present").withStyle(ChatFormatting.RED), true);
+                return InteractionResultHolder.fail(playerIn.getItemInHand(handIn));
             }
         }
-        return ActionResult.consume(playerIn.getItemInHand(handIn));
+        return InteractionResultHolder.consume(playerIn.getItemInHand(handIn));
     }
 }

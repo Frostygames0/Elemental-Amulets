@@ -24,25 +24,25 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 import frostygames0.elementalamulets.recipes.ingredient.AmuletIngredient;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.item.crafting.ShapedRecipe;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraftforge.registries.ForgeRegistries;
 
 
 import javax.annotation.Nullable;
 
-public class ElementalCombinationSerializer extends net.minecraftforge.registries.ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<ElementalCombination> {
+public class ElementalCombinationSerializer extends net.minecraftforge.registries.ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<ElementalCombination> {
     @Override
     public ElementalCombination fromJson(ResourceLocation recipeId, JsonObject json) {
-        AmuletIngredient elemental = AmuletIngredient.Serializer.INSTANCE.parse(JSONUtils.getAsJsonObject(json, "elemental"));
-        NonNullList<Ingredient> nonNullList = readIngredients(JSONUtils.getAsJsonArray(json, "ingredients"));
+        AmuletIngredient elemental = AmuletIngredient.Serializer.INSTANCE.parse(GsonHelper.getAsJsonObject(json, "elemental"));
+        NonNullList<Ingredient> nonNullList = readIngredients(GsonHelper.getAsJsonArray(json, "ingredients"));
         if (nonNullList.isEmpty()) {
             throw new JsonParseException("No ingredients found!");
         } else if (nonNullList.size() > ElementalCombination.MAX_INGREDIENTS) {
@@ -52,16 +52,16 @@ public class ElementalCombinationSerializer extends net.minecraftforge.registrie
                 throw new JsonSyntaxException("Missing result, expected to find a string or object");
             ItemStack resultStack;
             if (json.get("result").isJsonObject())
-                resultStack = ShapedRecipe.itemFromJson(JSONUtils.getAsJsonObject(json, "result"));
+                resultStack = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "result"));
             else {
-                String s1 = JSONUtils.getAsString(json, "result");
+                String s1 = GsonHelper.getAsString(json, "result");
                 ResourceLocation resourcelocation = new ResourceLocation(s1);
                 Item item = ForgeRegistries.ITEMS.getValue(resourcelocation);
                 if (item == null) throw new JsonSyntaxException("Item: " + s1 + " does not exist!");
                 resultStack = new ItemStack(item);
             }
-            int combinationTime = JSONUtils.getAsInt(json, "combination_time", ElementalCombination.DEFAULT_COMBINATION); // How long combinator will recharge
-            boolean tagTransfer = JSONUtils.getAsBoolean(json, "tag_transfer", false); // Does name, damage, enchantments etc move onto result? Made it for "upgrade" recipes
+            int combinationTime = GsonHelper.getAsInt(json, "combination_time", ElementalCombination.DEFAULT_COMBINATION); // How long combinator will recharge
+            boolean tagTransfer = GsonHelper.getAsBoolean(json, "tag_transfer", false); // Does name, damage, enchantments etc move onto result? Made it for "upgrade" recipes
             return new ElementalCombination(recipeId, nonNullList, elemental, resultStack, combinationTime, tagTransfer);
         }
     }
@@ -79,7 +79,7 @@ public class ElementalCombinationSerializer extends net.minecraftforge.registrie
 
     @Nullable
     @Override
-    public ElementalCombination fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+    public ElementalCombination fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
         AmuletIngredient elemental = AmuletIngredient.Serializer.INSTANCE.parse(buffer);
         int i = buffer.readVarInt();
         NonNullList<Ingredient> nonNullList = NonNullList.withSize(i, Ingredient.EMPTY);
@@ -93,7 +93,7 @@ public class ElementalCombinationSerializer extends net.minecraftforge.registrie
     }
 
     @Override
-    public void toNetwork(PacketBuffer buffer, ElementalCombination recipe) {
+    public void toNetwork(FriendlyByteBuf buffer, ElementalCombination recipe) {
         AmuletIngredient.Serializer.INSTANCE.write(buffer, recipe.elemental);
         buffer.writeVarInt(recipe.ingredients.size());
         for (Ingredient ingr : recipe.ingredients) {

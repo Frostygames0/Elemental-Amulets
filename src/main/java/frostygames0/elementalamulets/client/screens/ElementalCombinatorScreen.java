@@ -19,28 +19,28 @@
 
 package frostygames0.elementalamulets.client.screens;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import frostygames0.elementalamulets.blocks.containers.ElementalCombinatorContainer;
 import frostygames0.elementalamulets.network.ModNetworkHandler;
 import frostygames0.elementalamulets.network.SCombinePacket;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
 
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
-public class ElementalCombinatorScreen extends ContainerScreen<ElementalCombinatorContainer> {
+public class ElementalCombinatorScreen extends AbstractContainerScreen<ElementalCombinatorContainer> {
     public static final ResourceLocation GUI = modPrefix("textures/gui/elemental_combinator_gui.png");
 
     private CombinationButton combineButton;
 
-    public ElementalCombinatorScreen(ElementalCombinatorContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
+    public ElementalCombinatorScreen(ElementalCombinatorContainer screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn);
         this.inventoryLabelX += 92;
         this.titleLabelX = this.leftPos + 85;
@@ -50,19 +50,19 @@ public class ElementalCombinatorScreen extends ContainerScreen<ElementalCombinat
     @Override
     protected void init() {
         super.init();
-        this.combineButton = addButton(new CombinationButton(this.leftPos + 132, this.topPos + 57,
+        this.combineButton = addRenderableWidget(new CombinationButton(this.leftPos + 132, this.topPos + 57,
                 button -> ModNetworkHandler.sendToServer(new SCombinePacket(menu.getPos()))));
         this.combineButton.active = this.isCombining();
     }
 
     @Override
-    public void tick() {
-        super.tick();
+    public void containerTick() {
+        super.containerTick();
         this.combineButton.active = this.isCombining();
     }
 
     @Override
-    public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
         this.renderTooltip(matrixStack, mouseX, mouseY);
@@ -70,9 +70,10 @@ public class ElementalCombinatorScreen extends ContainerScreen<ElementalCombinat
 
     @SuppressWarnings("deprecation")
     @Override
-    protected void renderBg(MatrixStack matrixStack, float partialTicks, int x, int y) {
-        RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-        this.minecraft.getTextureManager().bind(GUI);
+    protected void renderBg(PoseStack matrixStack, float partialTicks, int x, int y) {
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.setShaderTexture(0, GUI);
         this.blit(matrixStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
 
         int l = this.menu.getCombinationTimeScaled();
@@ -85,15 +86,16 @@ public class ElementalCombinatorScreen extends ContainerScreen<ElementalCombinat
 
     static class CombinationButton extends Button {
 
-        CombinationButton(int pX, int pY, Button.IPressable pOnPress) {
-            super(pX, pY, 21, 14, StringTextComponent.EMPTY, pOnPress);
+        CombinationButton(int pX, int pY, Button.OnPress pOnPress) {
+            super(pX, pY, 21, 14, TextComponent.EMPTY, pOnPress);
         }
 
         @SuppressWarnings("deprecation")
         @Override
-        public void renderButton(MatrixStack pMatrixStack, int pMouseX, int pMouseY, float pPartialTicks) {
-            RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-            Minecraft.getInstance().getTextureManager().bind(GUI);
+        public void renderButton(PoseStack pMatrixStack, int pMouseX, int pMouseY, float pPartialTicks) {
+            RenderSystem.setShader(GameRenderer::getPositionTexShader);
+            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+            RenderSystem.setShaderTexture(0, GUI);
             int yOff = 18;
 
             if (!this.active) {

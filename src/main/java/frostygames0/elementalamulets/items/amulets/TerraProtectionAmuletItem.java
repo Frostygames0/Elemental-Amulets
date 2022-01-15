@@ -22,21 +22,23 @@ package frostygames0.elementalamulets.items.amulets;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.util.NBTUtil;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 
 
 import javax.annotation.Nullable;
 import java.util.List;
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class TerraProtectionAmuletItem extends AmuletItem {
     public static final DamageSource LEAF_CUT = new DamageSource(ElementalAmulets.MOD_ID + ".leaf_cut");
@@ -47,12 +49,12 @@ public class TerraProtectionAmuletItem extends AmuletItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
-        tooltip.add(new TranslationTextComponent("item.elementalamulets.protection_amulet.charges",
-                new StringTextComponent(
-                        this.getCharges(stack) + " / " + this.getMaxCharge(stack)).withStyle(TextFormatting.YELLOW)
-        ).withStyle(TextFormatting.GOLD));
+        tooltip.add(new TranslatableComponent("item.elementalamulets.protection_amulet.charges",
+                new TextComponent(
+                        this.getCharges(stack) + " / " + this.getMaxCharge(stack)).withStyle(ChatFormatting.YELLOW)
+        ).withStyle(ChatFormatting.GOLD));
     }
 
     @Override

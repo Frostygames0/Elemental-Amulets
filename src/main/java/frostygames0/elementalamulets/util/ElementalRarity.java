@@ -19,20 +19,20 @@
 
 package frostygames0.elementalamulets.util;
 
-import net.minecraft.item.Rarity;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.ChatFormatting;
+import net.minecraft.world.item.Rarity;
 
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 public final class ElementalRarity {
     // Main elements
-    public static final Rarity FIRE = Rarity.create(modPrefix("fire_rarity").toString(), TextFormatting.RED);
-    public static final Rarity WATER = Rarity.create(modPrefix("water_rarity").toString(), TextFormatting.BLUE);
-    public static final Rarity EARTH = Rarity.create(modPrefix("earth_rarity").toString(), TextFormatting.DARK_GREEN);
-    public static final Rarity AIR = Rarity.create(modPrefix("air_rarity").toString(), TextFormatting.WHITE);
+    public static final Rarity FIRE = Rarity.create(modPrefix("fire_rarity").toString(), ChatFormatting.RED);
+    public static final Rarity WATER = Rarity.create(modPrefix("water_rarity").toString(), ChatFormatting.BLUE);
+    public static final Rarity EARTH = Rarity.create(modPrefix("earth_rarity").toString(), ChatFormatting.DARK_GREEN);
+    public static final Rarity AIR = Rarity.create(modPrefix("air_rarity").toString(), ChatFormatting.WHITE);
 
     // Sub-elements
-    public static final Rarity SPEED = Rarity.create(modPrefix("speed_rarity").toString(), TextFormatting.AQUA);
-    public static final Rarity JUMP = Rarity.create(modPrefix("jump_rarity").toString(), TextFormatting.GREEN);
+    public static final Rarity SPEED = Rarity.create(modPrefix("speed_rarity").toString(), ChatFormatting.AQUA);
+    public static final Rarity JUMP = Rarity.create(modPrefix("jump_rarity").toString(), ChatFormatting.GREEN);
 }

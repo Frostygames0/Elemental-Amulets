@@ -24,23 +24,23 @@ import frostygames0.elementalamulets.init.ModRecipes;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import frostygames0.elementalamulets.recipes.ingredient.AmuletIngredient;
 import frostygames0.elementalamulets.util.NBTUtil;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.RecipeMatcher;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ElementalCombination implements IRecipe<IInventory> {
+public class ElementalCombination implements Recipe<Container> {
 
     public static final int MAX_INGREDIENTS = 8;
     public static final int DEFAULT_COMBINATION = 30;
@@ -63,7 +63,7 @@ public class ElementalCombination implements IRecipe<IInventory> {
     }
 
     @Override
-    public boolean matches(IInventory inv, World worldIn) {
+    public boolean matches(Container inv, Level worldIn) {
         List<ItemStack> inputs = new ArrayList<>();
         for (int i = 2; i < inv.getContainerSize(); ++i) {
             ItemStack stack = inv.getItem(i);
@@ -77,12 +77,12 @@ public class ElementalCombination implements IRecipe<IInventory> {
     }
 
     @Override
-    public ItemStack assemble(IInventory inv) {
+    public ItemStack assemble(Container inv) {
         ItemStack stack = this.result.copy();
         if (this.tagTransfer) {
-            CompoundNBT nbt = inv.getItem(1).getTag();
+            CompoundTag nbt = inv.getItem(1).getTag();
             if (nbt != null) {
-                CompoundNBT tag = nbt.copy();
+                CompoundTag tag = nbt.copy();
                 if (NBTUtil.isSafeToGet(stack, AmuletItem.TIER_TAG))
                     tag.putInt(AmuletItem.TIER_TAG, NBTUtil.getInteger(stack, AmuletItem.TIER_TAG));
                 stack.setTag(tag);
@@ -138,12 +138,12 @@ public class ElementalCombination implements IRecipe<IInventory> {
     }
 
     @Override
-    public IRecipeSerializer<?> getSerializer() {
+    public RecipeSerializer<?> getSerializer() {
         return ModRecipes.ELEMENTAL_COMBINATION.get();
     }
 
     @Override
-    public IRecipeType<?> getType() {
+    public RecipeType<?> getType() {
         return ModRecipes.ELEMENTAL_COMBINATION_TYPE;
     }
 }

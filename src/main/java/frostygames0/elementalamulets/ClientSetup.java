@@ -20,33 +20,36 @@
 package frostygames0.elementalamulets;
 
 import frostygames0.elementalamulets.client.ModKeyBindings;
+import frostygames0.elementalamulets.client.models.AmuletModel;
+import frostygames0.elementalamulets.client.models.LeafShield;
 import frostygames0.elementalamulets.client.particles.ModParticles;
 import frostygames0.elementalamulets.client.renderer.ElementalCombinatorRenderer;
 import frostygames0.elementalamulets.client.renderer.LeafShieldLayer;
 import frostygames0.elementalamulets.client.screens.AmuletBeltScreen;
 import frostygames0.elementalamulets.client.screens.ElementalCombinatorScreen;
+import frostygames0.elementalamulets.client.screens.LeafChargeOverlay;
 import frostygames0.elementalamulets.config.ModConfig;
+import frostygames0.elementalamulets.init.ModBEs;
 import frostygames0.elementalamulets.init.ModBlocks;
-import frostygames0.elementalamulets.init.ModContainers;
 import frostygames0.elementalamulets.init.ModItems;
+import frostygames0.elementalamulets.init.ModMenus;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.client.renderer.entity.PlayerRenderer;
-import net.minecraft.item.ItemModelsProperties;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.client.gui.OverlayRegistry;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
+import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 
-
-import java.util.Map;
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
@@ -55,17 +58,37 @@ public class ClientSetup {
 
     @SubscribeEvent
     public static void clientSetup(final FMLClientSetupEvent event) {
-        ElementalCombinatorRenderer.register();
         ModKeyBindings.registerKeyBinds();
+        OverlayRegistry.registerOverlayTop("Nature Charges", new LeafChargeOverlay());
+        ModItems.getAmulets().forEach(amulet -> CuriosRendererRegistry.register(amulet, () -> amulet));
         event.enqueueWork(() -> {
-            RenderTypeLookup.setRenderLayer(ModBlocks.CELESTIAL_FOCUS.get(), RenderType.translucent());
-            ScreenManager.register(ModContainers.ELEMENTAL_COMBINATOR_CONTAINER.get(), ElementalCombinatorScreen::new);
-            ScreenManager.register(ModContainers.AMULET_BELT_CONTAINER.get(), AmuletBeltScreen::new);
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.CELESTIAL_FOCUS.get(), RenderType.translucent());
+            MenuScreens.register(ModMenus.ELEMENTAL_COMBINATOR_CONTAINER.get(), ElementalCombinatorScreen::new);
+            MenuScreens.register(ModMenus.AMULET_BELT_CONTAINER.get(), AmuletBeltScreen::new);
 
             ModItems.getAmulets().forEach(
-                    item -> ItemModelsProperties.register(item, new ResourceLocation(AmuletItem.TIER_TAG),
-                            (stack, world, entity) -> ModConfig.CachedValues.AMULETS_TIER_DIFFERENCE ? item.getTier(stack) : 0));
+                    item -> ItemProperties.register(item, new ResourceLocation(AmuletItem.TIER_TAG),
+                            (stack, world, entity, ipf) -> ModConfig.CachedValues.AMULETS_TIER_DIFFERENCE ? item.getTier(stack) : 0));
         });
+    }
+
+    @SubscribeEvent
+    public static void registerRenderer(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerBlockEntityRenderer(ModBEs.ELEMENTAL_COMBINATOR_TILE.get(), ElementalCombinatorRenderer::new);
+    }
+
+    @SubscribeEvent
+    public static void registerLayers(EntityRenderersEvent.AddLayers event) {
+        for(String skinType : event.getSkins()) {
+            PlayerRenderer renderer = event.getSkin(skinType);
+            if(renderer != null) renderer.addLayer(new LeafShieldLayer<>(renderer, event.getEntityModels()));
+        }
+    }
+
+    @SubscribeEvent
+    public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(LeafShield.LAYER_LOCATION, LeafShield::createBodyLayer);
+        event.registerLayerDefinition(AmuletModel.LAYER_LOCATION, AmuletModel::createBodyLayer);
     }
 
     @SubscribeEvent
@@ -76,14 +99,5 @@ public class ClientSetup {
     @SubscribeEvent
     public static void particleFactoryRegister(final ParticleFactoryRegisterEvent event) {
         ModParticles.registerFactories();
-    }
-
-    @SubscribeEvent
-    public static void postClientSetup(FMLLoadCompleteEvent event) {
-        Map<String, PlayerRenderer> skinMap = Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap();
-
-        for (PlayerRenderer renderer : skinMap.values()) {
-            renderer.addLayer(new LeafShieldLayer<>(renderer));
-        }
     }
 }

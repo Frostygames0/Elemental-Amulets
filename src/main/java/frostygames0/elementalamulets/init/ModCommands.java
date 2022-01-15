@@ -26,17 +26,17 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
-import net.minecraft.command.CommandSource;
-import net.minecraft.command.Commands;
-import net.minecraft.command.ISuggestionProvider;
-import net.minecraft.command.arguments.EntityArgument;
-import net.minecraft.command.arguments.ItemArgument;
-import net.minecraft.command.arguments.ItemInput;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
+import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.commands.arguments.EntityArgument;
+import net.minecraft.commands.arguments.item.ItemArgument;
+import net.minecraft.commands.arguments.item.ItemInput;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.items.ItemHandlerHelper;
 
@@ -51,28 +51,28 @@ public class ModCommands {
 
     public static void registerCommandsEvent(final RegisterCommandsEvent event) {
         event.getDispatcher().register(
-                LiteralArgumentBuilder.<CommandSource>literal(ElementalAmulets.MOD_ID).
+                LiteralArgumentBuilder.<CommandSourceStack>literal(ElementalAmulets.MOD_ID).
                         executes(src -> {
-                            src.getSource().sendSuccess(new StringTextComponent("Elemental Amulets").withStyle(TextFormatting.GOLD), false);
+                            src.getSource().sendSuccess(new TextComponent("Elemental Amulets").withStyle(ChatFormatting.GOLD), false);
                             return 0;
                         }).then(GiveAmuletCommand.register())
         );
     }
 
     private static class GiveAmuletCommand {
-        private static final DynamicCommandExceptionType ISNT_AMULET = new DynamicCommandExceptionType(item -> new TranslationTextComponent("commands.elementalamulets.give.failure", ((ItemStack) item).getDisplayName()));
+        private static final DynamicCommandExceptionType ISNT_AMULET = new DynamicCommandExceptionType(item -> new TranslatableComponent("commands.elementalamulets.give.failure", ((ItemStack) item).getDisplayName()));
 
-        private static ArgumentBuilder<CommandSource, ?> register() {
+        private static ArgumentBuilder<CommandSourceStack, ?> register() {
             return Commands.literal("give")
                     .requires(s -> s.hasPermission(2))
                     .then(Commands.argument("player", EntityArgument.players())
-                            .then(Commands.argument("amulet", ItemArgument.item()).suggests((ctx, builder) -> ISuggestionProvider.suggest(ModItems.getAmulets().stream().map(item -> item.getRegistryName().toString()), builder)).executes(ctx -> execute(ctx.getSource(), EntityArgument.getPlayers(ctx, "player"), ItemArgument.getItem(ctx, "amulet"), 1))
+                            .then(Commands.argument("amulet", ItemArgument.item()).suggests((ctx, builder) -> SharedSuggestionProvider.suggest(ModItems.getAmulets().stream().map(item -> item.getRegistryName().toString()), builder)).executes(ctx -> execute(ctx.getSource(), EntityArgument.getPlayers(ctx, "player"), ItemArgument.getItem(ctx, "amulet"), 1))
                                     .then(Commands.argument("tier", IntegerArgumentType.integer(1, AmuletItem.MAX_TIER))
                                             .executes(ctx -> execute(ctx.getSource(), EntityArgument.getPlayers(ctx, "player"), ItemArgument.getItem(ctx, "amulet"), IntegerArgumentType.getInteger(ctx, "tier"))))));
         }
 
-        private static int execute(CommandSource source, Collection<ServerPlayerEntity> players, ItemInput item, int tier) throws CommandSyntaxException {
-            for (ServerPlayerEntity player : players) {
+        private static int execute(CommandSourceStack source, Collection<ServerPlayer> players, ItemInput item, int tier) throws CommandSyntaxException {
+            for (ServerPlayer player : players) {
                 ItemStack stack = AmuletItem.getStackWithTier(item.createItemStack(1, false), tier);
                 if (item.getItem() instanceof AmuletItem) {
                     ItemHandlerHelper.giveItemToPlayer(player, stack);
@@ -82,9 +82,9 @@ public class ModCommands {
 
             }
             if (players.size() == 1) {
-                source.sendSuccess(new TranslationTextComponent("commands.elementalamulets.give.success", tier, item.createItemStack(1, false).getDisplayName(), players.iterator().next().getDisplayName()), true);
+                source.sendSuccess(new TranslatableComponent("commands.elementalamulets.give.success", tier, item.createItemStack(1, false).getDisplayName(), players.iterator().next().getDisplayName()), true);
             } else {
-                source.sendSuccess(new TranslationTextComponent("commands.elementalamulets.give.success", tier, item.createItemStack(1, false).getDisplayName(), players.size()), true);
+                source.sendSuccess(new TranslatableComponent("commands.elementalamulets.give.success", tier, item.createItemStack(1, false).getDisplayName(), players.size()), true);
             }
 
             return players.size();

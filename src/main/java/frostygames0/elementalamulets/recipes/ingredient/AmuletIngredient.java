@@ -24,12 +24,12 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import frostygames0.elementalamulets.util.AmuletHelper;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.crafting.IIngredientSerializer;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -41,7 +41,7 @@ public class AmuletIngredient extends Ingredient {
     private final ItemStack stack;
 
     public AmuletIngredient(ItemStack stack) {
-        super(Stream.of(new Ingredient.SingleItemList(stack)));
+        super(Stream.of(new Ingredient.ItemValue(stack)));
         this.stack = stack;
     }
 
@@ -72,12 +72,12 @@ public class AmuletIngredient extends Ingredient {
     }
 
     private static ItemStack getAmuletFromJson(JsonObject json) {
-        String itemName = JSONUtils.getAsString(json, "item");
+        String itemName = GsonHelper.getAsString(json, "item");
 
         Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemName));
         if (item == null) throw new JsonSyntaxException("Item: " + itemName + " does not exist!");
         if (item instanceof AmuletItem) {
-            int tier = JSONUtils.getAsInt(json, "tier", 1);
+            int tier = GsonHelper.getAsInt(json, "tier", 1);
             if (tier > AmuletItem.MAX_TIER || tier < 0) {
                 throw new JsonSyntaxException("Incorrect Tier! Can't be higher than 4 and lower than 0! Your tier is " + tier);
             }
@@ -95,7 +95,7 @@ public class AmuletIngredient extends Ingredient {
         public static final Serializer INSTANCE = new Serializer();
 
         @Override
-        public AmuletIngredient parse(PacketBuffer buffer) {
+        public AmuletIngredient parse(FriendlyByteBuf buffer) {
             return new AmuletIngredient(buffer.readItem());
         }
 
@@ -105,7 +105,7 @@ public class AmuletIngredient extends Ingredient {
         }
 
         @Override
-        public void write(PacketBuffer buffer, AmuletIngredient ingredient) {
+        public void write(FriendlyByteBuf buffer, AmuletIngredient ingredient) {
             buffer.writeItem(ingredient.stack);
         }
     }

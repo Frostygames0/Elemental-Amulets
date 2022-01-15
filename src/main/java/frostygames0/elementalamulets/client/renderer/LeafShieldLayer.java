@@ -19,21 +19,22 @@
 
 package frostygames0.elementalamulets.client.renderer;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
 import frostygames0.elementalamulets.client.models.LeafShield;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.TerraProtectionAmuletItem;
 import frostygames0.elementalamulets.util.AmuletHelper;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.geom.EntityModelSet;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.IEntityRenderer;
-import net.minecraft.client.renderer.entity.layers.LayerRenderer;
-import net.minecraft.client.renderer.entity.model.EntityModel;
+import net.minecraft.client.renderer.entity.RenderLayerParent;
+import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
@@ -42,16 +43,17 @@ import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
  * @author Frostygames0
  * @date 10.10.2021 11:33
  */
-public class LeafShieldLayer<T extends LivingEntity, M extends EntityModel<T>> extends LayerRenderer<T, M> {
+public class LeafShieldLayer<T extends LivingEntity, M extends EntityModel<T>> extends RenderLayer<T, M> {
 
-    private final LeafShield<T> leafShieldModel = new LeafShield<>();
+    private final LeafShield<T> leafShieldModel;
 
-    public LeafShieldLayer(IEntityRenderer<T, M> entityRenderer) {
+    public LeafShieldLayer(RenderLayerParent<T, M> entityRenderer, EntityModelSet modelSet) {
         super(entityRenderer);
+        leafShieldModel = new LeafShield<>(modelSet.bakeLayer(LeafShield.LAYER_LOCATION));
     }
 
     @Override
-    public void render(MatrixStack pMatrixStack, IRenderTypeBuffer pBuffer, int pPackedLight, T pLivingEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTicks, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
+    public void render(PoseStack pMatrixStack, MultiBufferSource pBuffer, int pPackedLight, T pLivingEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTicks, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
         float angle = (pLivingEntity.tickCount + pPartialTicks) * 3.0F;
 
         AmuletHelper.getAmuletInSlotOrBelt(ModItems.TERRA_PROTECTION_AMULET.get(), pLivingEntity).ifPresent(triple -> {

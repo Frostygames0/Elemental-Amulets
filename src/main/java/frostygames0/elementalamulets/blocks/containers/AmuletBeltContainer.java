@@ -19,12 +19,12 @@
 
 package frostygames0.elementalamulets.blocks.containers;
 
-import frostygames0.elementalamulets.init.ModContainers;
+import frostygames0.elementalamulets.init.ModMenus;
 import frostygames0.elementalamulets.items.AmuletBeltItem;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -34,12 +34,12 @@ import net.minecraftforge.items.wrapper.InvWrapper;
  * @author Frostygames0
  * @date 10.09.2021 23:54
  */
-public class AmuletBeltContainer extends Container {
+public class AmuletBeltContainer extends AbstractContainerMenu {
     private final ItemStack belt;
     private final IItemHandler playerInventory;
 
-    public AmuletBeltContainer(int id, PlayerInventory playerInventory, ItemStack belt) {
-        super(ModContainers.AMULET_BELT_CONTAINER.get(), id);
+    public AmuletBeltContainer(int id, Inventory playerInventory, ItemStack belt) {
+        super(ModMenus.AMULET_BELT_CONTAINER.get(), id);
         this.belt = belt;
         this.playerInventory = new InvWrapper(playerInventory);
         belt.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> addSlotRange(h, 0, 44, 54, 5, 18));
@@ -47,12 +47,12 @@ public class AmuletBeltContainer extends Container {
     }
 
     @Override
-    public ItemStack quickMoveStack(PlayerEntity pPlayer, int index) {
+    public ItemStack quickMoveStack(Player pPlayer, int index) {
         return ItemStack.EMPTY;
     }
 
     @Override
-    public boolean stillValid(PlayerEntity playerIn) {
+    public boolean stillValid(Player playerIn) {
         return !belt.isEmpty() && belt.getItem() instanceof AmuletBeltItem;
     }
 

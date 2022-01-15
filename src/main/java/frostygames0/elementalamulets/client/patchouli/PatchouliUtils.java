@@ -23,7 +23,7 @@ import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.init.ModRecipes;
 import frostygames0.elementalamulets.recipes.ElementalCombination;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.ModList;
 
 

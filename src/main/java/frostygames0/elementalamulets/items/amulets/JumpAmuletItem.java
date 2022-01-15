@@ -20,8 +20,8 @@
 package frostygames0.elementalamulets.items.amulets;
 
 import frostygames0.elementalamulets.config.ModConfig;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 public class JumpAmuletItem extends AmuletItem {
     public JumpAmuletItem(Item.Properties properties) {

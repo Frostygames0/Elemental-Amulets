@@ -25,7 +25,7 @@
 @MethodsReturnNonnullByDefault
 package frostygames0.elementalamulets.blocks.containers;
 
-import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.MethodsReturnNonnullByDefault;
 
 
 import javax.annotation.ParametersAreNonnullByDefault;

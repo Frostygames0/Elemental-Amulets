@@ -22,17 +22,19 @@ package frostygames0.elementalamulets.items.amulets;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.util.AmuletHelper;
 import frostygames0.elementalamulets.util.AttributeUtil;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.item.ItemStack;
 import top.theillusivec4.curios.api.SlotContext;
 
 
 import java.util.UUID;
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class SpeedAmuletItem extends AmuletItem {
     public static UUID MODIFIER_UUID = UUID.fromString("06c06b38-3779-4ca2-b678-7c111c77faef");
@@ -44,7 +46,7 @@ public class SpeedAmuletItem extends AmuletItem {
     @Override
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
         if (!livingEntity.level.isClientSide()) {
-            ModifiableAttributeInstance att = livingEntity.getAttribute(Attributes.MOVEMENT_SPEED);
+            AttributeInstance att = livingEntity.getAttribute(Attributes.MOVEMENT_SPEED);
             AttributeModifier attMod = new AttributeModifier(MODIFIER_UUID, modPrefix("speed_boost").toString(),
                     this.getSpeed(stack), AttributeModifier.Operation.MULTIPLY_BASE);
             if (livingEntity.isSprinting()) {
@@ -57,7 +59,7 @@ public class SpeedAmuletItem extends AmuletItem {
 
     @Override
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
-        ModifiableAttributeInstance att = slotContext.getWearer().getAttribute(Attributes.MOVEMENT_SPEED);
+        AttributeInstance att = slotContext.getWearer().getAttribute(Attributes.MOVEMENT_SPEED);
         if (AmuletHelper.compareAmulets(stack, newStack)) {
             AttributeUtil.removeModifierByUUID(att, MODIFIER_UUID);
         }

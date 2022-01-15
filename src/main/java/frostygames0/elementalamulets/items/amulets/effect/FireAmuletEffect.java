@@ -22,16 +22,15 @@ package frostygames0.elementalamulets.items.amulets.effect;
 import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.FireAmuletItem;
 import frostygames0.elementalamulets.util.AmuletHelper;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.DamageSource;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
 class FireAmuletEffect {
 
     static void onLivingAttack(LivingAttackEvent event) {
-        if (event.getEntityLiving() instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+        if (event.getEntityLiving() instanceof Player player) {
             DamageSource source = event.getSource();
             if (!player.level.isClientSide()) {
                 if (source.isFire()) {
@@ -51,8 +50,7 @@ class FireAmuletEffect {
     }
 
     static void onLivingHurt(LivingHurtEvent event) {
-        if (event.getEntityLiving() instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+        if (event.getEntityLiving() instanceof Player player) {
             DamageSource source = event.getSource();
             if (!player.level.isClientSide()) {
                 if (source.isFire()) {

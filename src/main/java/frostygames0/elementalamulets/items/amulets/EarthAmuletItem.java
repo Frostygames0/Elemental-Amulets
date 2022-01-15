@@ -21,20 +21,20 @@ package frostygames0.elementalamulets.items.amulets;
 
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.init.ModTags;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.IGrowable;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.CooldownTracker;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemCooldowns;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.BiomeDictionary;
 
 
@@ -51,13 +51,13 @@ public class EarthAmuletItem extends AmuletItem {
 
     @Override
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
-        World world = livingEntity.level;
+        Level world = livingEntity.level;
         if (!world.isClientSide()) {
-            if (livingEntity instanceof PlayerEntity) {
-                PlayerEntity player = (PlayerEntity) livingEntity;
-                CooldownTracker cooldownTracker = player.getCooldowns();
+            if (livingEntity instanceof Player) {
+                Player player = (Player) livingEntity;
+                ItemCooldowns cooldownTracker = player.getCooldowns();
                 if (!cooldownTracker.isOnCooldown(this)) {
-                    int boosted = boostLocalPlants(world, stack, player.blockPosition(), random);
+                    int boosted = boostLocalPlants(world, stack, player.blockPosition(), world.random);
                     if (boosted > 0 && this.getTier(stack) > 1) {
                         this.regenerate(livingEntity, stack, boosted);
                         cooldownTracker.addCooldown(this, ModConfig.CachedValues.EARTH_AMULET_COOLDOWN);
@@ -67,7 +67,7 @@ public class EarthAmuletItem extends AmuletItem {
         }
     }
 
-    private int boostLocalPlants(World world, ItemStack amulet, BlockPos centerPos, Random random) {
+    private int boostLocalPlants(Level world, ItemStack amulet, BlockPos centerPos, Random random) {
         int boosted = 0;
         for (BlockPos blockPos : BlockPos.betweenClosed(centerPos.getX() - 4, centerPos.getY() - 1, centerPos.getZ() - 4,
                 centerPos.getX() + 4, centerPos.getY() + 3, centerPos.getZ() + 4)) {
@@ -75,13 +75,13 @@ public class EarthAmuletItem extends AmuletItem {
             BlockState blockState = world.getBlockState(blockPos);
             Block block = blockState.getBlock();
 
-            if (block instanceof IGrowable) {
-                IGrowable growable = (IGrowable) block;
+            if (block instanceof BonemealableBlock) {
+                BonemealableBlock growable = (BonemealableBlock) block;
                 if (random.nextInt(50) <= this.getTier(amulet)) {
                     if (growable.isValidBonemealTarget(world, blockPos, blockState, false) &&
                             ModTags.Blocks.EARTH_AMULET_BOOSTABLE.contains(block)) {
 
-                        growable.performBonemeal((ServerWorld) world, random, blockPos, blockState);
+                        growable.performBonemeal((ServerLevel) world, random, blockPos, blockState);
                         boosted++;
                     }
                 }
@@ -91,14 +91,14 @@ public class EarthAmuletItem extends AmuletItem {
     }
 
     private void regenerate(LivingEntity living, ItemStack stack, int boosted) {
-        World level = living.level;
+        Level level = living.level;
         if (getTier(stack) > 1) {
-            RegistryKey<Biome> biome = level.getBiomeName(living.blockPosition()).orElseThrow(() -> new NullPointerException("Cannot identify a biome!"));
+            ResourceKey<Biome> biome = level.getBiomeName(living.blockPosition()).orElseThrow(() -> new NullPointerException("Cannot identify a biome!"));
             if (BiomeDictionary.hasType(biome, BiomeDictionary.Type.PLAINS) || BiomeDictionary.hasType(biome, BiomeDictionary.Type.FOREST)) {
                 living.heal(0.1f * boosted);
 
-                if (living instanceof PlayerEntity) {
-                    ((PlayerEntity) living).displayClientMessage(new TranslationTextComponent("item.elementalamulets.earth_amulet.regeneration").withStyle(TextFormatting.GREEN), true);
+                if (living instanceof Player) {
+                    ((Player) living).displayClientMessage(new TranslatableComponent("item.elementalamulets.earth_amulet.regeneration").withStyle(ChatFormatting.GREEN), true);
                 }
             }
         }

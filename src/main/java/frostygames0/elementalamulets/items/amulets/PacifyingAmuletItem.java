@@ -22,29 +22,31 @@ package frostygames0.elementalamulets.items.amulets;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.mixin.accessors.AccessorTargetGoal;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.entity.IAngerable;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.goal.GoalSelector;
-import net.minecraft.entity.ai.goal.PrioritizedGoal;
-import net.minecraft.entity.ai.goal.TargetGoal;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.CooldownTracker;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3i;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.world.entity.NeutralMob;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.goal.GoalSelector;
+import net.minecraft.world.entity.ai.goal.WrappedGoal;
+import net.minecraft.world.entity.ai.goal.target.TargetGoal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.item.ItemCooldowns;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import top.theillusivec4.curios.api.CuriosApi;
 
 
 import java.util.stream.Collectors;
+
+import net.minecraft.world.item.Item.Properties;
 
 /**
  * @author Frostygames0
@@ -58,24 +60,24 @@ public class PacifyingAmuletItem extends AmuletItem {
 
     @Override
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
-        World world = livingEntity.level;
+        Level world = livingEntity.level;
         if (!world.isClientSide()) {
-            if (livingEntity instanceof PlayerEntity) {
-                PlayerEntity player = (PlayerEntity) livingEntity;
-                CooldownTracker tracker = player.getCooldowns();
+            if (livingEntity instanceof Player) {
+                Player player = (Player) livingEntity;
+                ItemCooldowns tracker = player.getCooldowns();
 
                 if (tracker.isOnCooldown(this))
                     return;
 
                 if (player.tickCount % 5 == 0) {// A little optimization so it won't call it every tick
-                    for (MobEntity mob : this.getAngerablesAround(player)) {
+                    for (Mob mob : this.getAngerablesAround(player)) {
                         if (tracker.isOnCooldown(this))
                             break;
 
-                        IAngerable angerable = (IAngerable) mob;
+                        NeutralMob angerable = (NeutralMob) mob;
 
                         GoalSelector selector = mob.targetSelector;
-                        for (PrioritizedGoal priGoal : selector.getRunningGoals().collect(Collectors.toList())) {
+                        for (WrappedGoal priGoal : selector.getRunningGoals().toList()) {
                             if (priGoal.getGoal() instanceof TargetGoal) {
                                 TargetGoal goal = (TargetGoal) priGoal.getGoal();
 
@@ -88,7 +90,7 @@ public class PacifyingAmuletItem extends AmuletItem {
                         stack.hurtAndBreak(1, player, playerEnt -> this.onAmuletBreak(identifier, index, playerEnt));
 
                         // Makes heart particles around entity :>
-                        ((ServerWorld) world).sendParticles(ParticleTypes.HEART, mob.getX(), mob.getY(), mob.getZ(), 20, 0, 0, 0, 1);
+                        ((ServerLevel) world).sendParticles(ParticleTypes.HEART, mob.getX(), mob.getY(), mob.getZ(), 20, 0, 0, 0, 1);
                     }
                 }
             }
@@ -101,10 +103,10 @@ public class PacifyingAmuletItem extends AmuletItem {
 
         mc.gameRenderer.displayItemActivation(stack);
 
-        ClientPlayerEntity player = mc.player;
+        LocalPlayer player = mc.player;
         if (player != null) {
             player.playSound(SoundEvents.WITHER_DEATH, 1f, 1f);
-            player.displayClientMessage(new TranslationTextComponent("item.elementalamulets.pacifying_amulet.onbreak", this.getName(stack)).withStyle(TextFormatting.RED), true);
+            player.displayClientMessage(new TranslatableComponent("item.elementalamulets.pacifying_amulet.onbreak", this.getName(stack)).withStyle(ChatFormatting.RED), true);
         }
     }
 
@@ -113,23 +115,22 @@ public class PacifyingAmuletItem extends AmuletItem {
         if (!ModConfig.CachedValues.PACIFYING_AMULET_ANGER_ONBREAK)
             return;
 
-        for (MobEntity mob : getAngerablesAround(entity)) {
-            IAngerable angerable = (IAngerable) mob;
+        for (Mob mob : getAngerablesAround(entity)) {
+            NeutralMob angerable = (NeutralMob) mob;
             angerable.setTarget(entity);
-            if (entity instanceof PlayerEntity) {
-                ((PlayerEntity) entity).getCooldowns().addCooldown(this, ModConfig.CachedValues.PACIFYING_AMULET_BREAK_COOLDOWN);
+            if (entity instanceof Player) {
+                ((Player) entity).getCooldowns().addCooldown(this, ModConfig.CachedValues.PACIFYING_AMULET_BREAK_COOLDOWN);
             }
 
             CuriosApi.getCuriosHelper().onBrokenCurio(identifier, index, entity);
         }
     }
 
-    private Iterable<MobEntity> getAngerablesAround(LivingEntity target) {
+    private Iterable<Mob> getAngerablesAround(LivingEntity target) {
         BlockPos position = target.blockPosition();
-        return target.level.getLoadedEntitiesOfClass(MobEntity.class, new AxisAlignedBB(position.subtract(new Vector3i(6, 5, 6)), position.offset(new Vector3i(6, 5, 6))), entity -> {
-            if (entity instanceof IAngerable) {
-                IAngerable angerable = (IAngerable) entity;
-                return entity.canSee(target) && angerable.getPersistentAngerTarget() != null && angerable.getPersistentAngerTarget().equals(target.getUUID());
+        return target.level.getEntitiesOfClass(Mob.class, new AABB(position.subtract(new Vec3i(6, 5, 6)), position.offset(new Vec3i(6, 5, 6))), entity -> {
+            if (entity instanceof NeutralMob angerable) {
+                return angerable.getPersistentAngerTarget() != null && angerable.getPersistentAngerTarget().equals(target.getUUID());
             }
             return false;
         });

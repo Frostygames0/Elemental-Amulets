@@ -22,10 +22,10 @@ package frostygames0.elementalamulets.items.amulets;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.util.AmuletHelper;
 import frostygames0.elementalamulets.util.AttributeUtil;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ForgeMod;
 import top.theillusivec4.curios.api.SlotContext;
 
@@ -33,6 +33,8 @@ import top.theillusivec4.curios.api.SlotContext;
 import java.util.UUID;
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
+
+import net.minecraft.world.item.Item.Properties;
 
 public class WaterAmuletItem extends AmuletItem {
     public static UUID MODIFIER_UUID = UUID.fromString("88f5e6ea-c12f-4cfd-b3f4-40d9ca8cdfad");
@@ -44,7 +46,7 @@ public class WaterAmuletItem extends AmuletItem {
     @Override
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
         if (!livingEntity.level.isClientSide()) {
-            ModifiableAttributeInstance att = livingEntity.getAttribute(ForgeMod.SWIM_SPEED.get());
+            AttributeInstance att = livingEntity.getAttribute(ForgeMod.SWIM_SPEED.get());
             AttributeModifier attMod = new AttributeModifier(MODIFIER_UUID, modPrefix("swim_speed_boost").toString(),
                     this.getSwimSpeed(stack), AttributeModifier.Operation.MULTIPLY_TOTAL);
             if (livingEntity.isUnderWater()) {
@@ -59,7 +61,7 @@ public class WaterAmuletItem extends AmuletItem {
 
     @Override
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
-        ModifiableAttributeInstance att = slotContext.getWearer().getAttribute(ForgeMod.SWIM_SPEED.get());
+        AttributeInstance att = slotContext.getWearer().getAttribute(ForgeMod.SWIM_SPEED.get());
         if (AmuletHelper.compareAmulets(stack, newStack)) {
             AttributeUtil.removeModifierByUUID(att, MODIFIER_UUID);
         }

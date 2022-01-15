@@ -19,16 +19,16 @@
 
 package frostygames0.elementalamulets.client;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.network.ModNetworkHandler;
 import frostygames0.elementalamulets.network.SOpenAmuletBeltGUIPacket;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.client.util.InputMappings;
+import net.minecraft.client.KeyMapping;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.ClientRegistry;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import org.lwjgl.glfw.GLFW;
 
@@ -38,7 +38,7 @@ import org.lwjgl.glfw.GLFW;
  */
 @Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID, value = Dist.CLIENT)
 public class ModKeyBindings {
-    public static KeyBinding OPEN_AMULET_BELT = new KeyBinding("key.elementalamulets.open_belt_gui", KeyConflictContext.IN_GAME, InputMappings.Type.KEYSYM, GLFW.GLFW_KEY_I, "key.categories.inventory");
+    public static KeyMapping OPEN_AMULET_BELT = new KeyMapping("key.elementalamulets.open_belt_gui", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_I, "key.categories.inventory");
 
     public static void registerKeyBinds() {
         ClientRegistry.registerKeyBinding(OPEN_AMULET_BELT);

@@ -22,28 +22,28 @@ package frostygames0.elementalamulets.init;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.blocks.containers.AmuletBeltContainer;
 import frostygames0.elementalamulets.blocks.containers.ElementalCombinatorContainer;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IntArray;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.common.extensions.IForgeContainerType;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
-public class ModContainers {
-    public static final DeferredRegister<ContainerType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, ElementalAmulets.MOD_ID);
+public class ModMenus {
+    public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(ForgeRegistries.CONTAINERS, ElementalAmulets.MOD_ID);
 
-    public static final RegistryObject<ContainerType<ElementalCombinatorContainer>> ELEMENTAL_COMBINATOR_CONTAINER = CONTAINERS.register("elemental_combinator", () -> IForgeContainerType.create(
+    public static final RegistryObject<MenuType<ElementalCombinatorContainer>> ELEMENTAL_COMBINATOR_CONTAINER = MENUS.register("elemental_combinator", () -> IForgeMenuType.create(
             ((windowId, inv, data) -> {
                 BlockPos pos = data.readBlockPos();
-                World world = inv.player.getCommandSenderWorld();
-                return new ElementalCombinatorContainer(windowId, world, pos, inv, inv.player, new IntArray(2));
+                Level world = inv.player.getCommandSenderWorld();
+                return new ElementalCombinatorContainer(windowId, world, pos, inv, inv.player, new SimpleContainerData(2));
             })
     ));
 
-    public static final RegistryObject<ContainerType<AmuletBeltContainer>> AMULET_BELT_CONTAINER = CONTAINERS.register("amulet_belt", () -> IForgeContainerType.create(
+    public static final RegistryObject<MenuType<AmuletBeltContainer>> AMULET_BELT_CONTAINER = MENUS.register("amulet_belt", () -> IForgeMenuType.create(
             ((windowId, inv, data) -> {
                 ItemStack belt = data.readItem();
                 return new AmuletBeltContainer(windowId, inv, belt);

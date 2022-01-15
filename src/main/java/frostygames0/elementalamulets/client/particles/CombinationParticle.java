@@ -19,12 +19,12 @@
 
 package frostygames0.elementalamulets.client.particles;
 
-import net.minecraft.client.particle.IAnimatedSprite;
-import net.minecraft.client.particle.IParticleFactory;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.PortalParticle;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particles.BasicParticleType;
+import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.core.particles.SimpleParticleType;
 
 /**
  * @author Frostygames0
@@ -32,22 +32,22 @@ import net.minecraft.particles.BasicParticleType;
  */
 public class CombinationParticle extends PortalParticle {
 
-    public CombinationParticle(ClientWorld world, double x, double y, double z, double motionX, double motionY, double motionZ) {
+    public CombinationParticle(ClientLevel world, double x, double y, double z, double motionX, double motionY, double motionZ) {
         super(world, x, y, z, motionX, motionY, motionZ);
         this.rCol = 1;
         this.gCol = 1;
         this.bCol = 1;
     }
 
-    public static class Factory implements IParticleFactory<BasicParticleType> {
+    public static class Factory implements ParticleProvider<SimpleParticleType> {
 
-        private final IAnimatedSprite spriteSet;
+        private final SpriteSet spriteSet;
 
-        public Factory(IAnimatedSprite spriteSet) {
+        public Factory(SpriteSet spriteSet) {
             this.spriteSet = spriteSet;
         }
 
-        public Particle createParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+        public Particle createParticle(SimpleParticleType typeIn, ClientLevel worldIn, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
             PortalParticle portalparticle = new CombinationParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed);
             portalparticle.pickSprite(this.spriteSet);
             return portalparticle;

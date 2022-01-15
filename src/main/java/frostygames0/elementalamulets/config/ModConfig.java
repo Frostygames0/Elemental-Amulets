@@ -24,6 +24,7 @@ import frostygames0.elementalamulets.client.patchouli.ElementalGuideConfigFlags;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 import org.apache.commons.lang3.tuple.Pair;
 
 @Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -239,7 +240,7 @@ public class ModConfig {
     }
 
     @SubscribeEvent
-    public static void configEvent(net.minecraftforge.fml.config.ModConfig.ModConfigEvent event) {
+    public static void configEvent(ModConfigEvent event) {
         if (event.getConfig().getSpec() == ModConfig.SERVER_SPEC) {
             CachedValues.cacheServerConfig();
         }

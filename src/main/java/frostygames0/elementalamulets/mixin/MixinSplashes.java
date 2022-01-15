@@ -20,9 +20,9 @@
 package frostygames0.elementalamulets.mixin;
 
 import frostygames0.elementalamulets.config.ModConfig;
-import net.minecraft.client.util.Splashes;
-import net.minecraft.profiler.IProfiler;
-import net.minecraft.resources.IResourceManager;
+import net.minecraft.client.resources.SplashManager;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.util.profiling.ProfilerFiller;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -37,7 +37,7 @@ import java.util.List;
  * @author Frostygames0
  * @date 12.10.2021 22:45
  */
-@Mixin(Splashes.class)
+@Mixin(SplashManager.class)
 public class MixinSplashes {
 
     @Shadow
@@ -45,7 +45,7 @@ public class MixinSplashes {
     private List<String> splashes;
 
     @Inject(at = @At("RETURN"), method = "apply")
-    protected void elementalamulets_applyCustomSplashes(List<String> pObject, IResourceManager pResourceManager, IProfiler pProfiler, CallbackInfo ci) {
+    protected void elementalamulets_applyCustomSplashes(List<String> pObject, ResourceManager pResourceManager, ProfilerFiller pProfiler, CallbackInfo ci) {
         if (ModConfig.CachedValues.SHOW_SPLASHES) {
             this.splashes.add("Jeweller likes color lime!");
             this.splashes.add("§6Thanks for 4000 downloads on Elemental Amulets :)");

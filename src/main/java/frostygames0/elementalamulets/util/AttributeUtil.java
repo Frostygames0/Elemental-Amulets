@@ -19,8 +19,8 @@
 
 package frostygames0.elementalamulets.util;
 
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
 
 import java.util.UUID;
@@ -30,19 +30,19 @@ import java.util.UUID;
  * @date 21.10.2021 16:14
  */
 public final class AttributeUtil {
-    public static void applyModifier(ModifiableAttributeInstance attribute, AttributeModifier modifier) {
+    public static void applyModifier(AttributeInstance attribute, AttributeModifier modifier) {
         if (!attribute.hasModifier(modifier)) {
             attribute.addTransientModifier(modifier);
         }
     }
 
-    public static void removeModifier(ModifiableAttributeInstance attribute, AttributeModifier modifier) {
+    public static void removeModifier(AttributeInstance attribute, AttributeModifier modifier) {
         if (attribute.hasModifier(modifier)) {
             attribute.removeModifier(modifier);
         }
     }
 
-    public static void removeModifierByUUID(ModifiableAttributeInstance attribute, UUID modifier) {
+    public static void removeModifierByUUID(AttributeInstance attribute, UUID modifier) {
         if (attribute.getModifier(modifier) != null) {
             attribute.removeModifier(modifier);
         }

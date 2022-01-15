@@ -19,22 +19,19 @@
 
 package frostygames0.elementalamulets.client.screens;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import frostygames0.elementalamulets.ElementalAmulets;
+import com.mojang.blaze3d.vertex.PoseStack;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.TerraProtectionAmuletItem;
 import frostygames0.elementalamulets.util.AmuletHelper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.gui.AbstractGui;
-import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.client.gui.ForgeIngameGui;
+import net.minecraftforge.client.gui.IIngameOverlay;
 
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
@@ -43,25 +40,21 @@ import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
  * @author Frostygames0
  * @date 14.10.2021 20:00
  */
-@Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID, value = Dist.CLIENT)
-public class LeafChargeOverlay {
+public class LeafChargeOverlay implements IIngameOverlay {
 
-    @SuppressWarnings("deprecation")
-    @SubscribeEvent
-    public static void renderLeafOverlay(RenderGameOverlayEvent.Post event) {
+    @Override
+    public void render(ForgeIngameGui gui, PoseStack ms, float partialTicks, int width, int height) {
         Minecraft mc = Minecraft.getInstance();
-        TextureManager manager = Minecraft.getInstance().getTextureManager();
-        MatrixStack ms = event.getMatrixStack();
 
-        int posX = (event.getWindow().getGuiScaledWidth() / 2);
-        int posY = event.getWindow().getGuiScaledHeight() - 12;
+        int posX = (width / 2);
+        int posY = height - 12;
 
-        if (event.getType() == RenderGameOverlayEvent.ElementType.FOOD && ModConfig.CachedValues.RENDER_LEAF_CHARGE_OVERLAY) {
-            RenderSystem.color4f(1, 1, 1, 1);
+        if (gui.shouldDrawSurvivalElements() && ModConfig.CachedValues.RENDER_LEAF_CHARGE_OVERLAY) {
+            RenderSystem.setShader(GameRenderer::getPositionTexShader);
+            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+            RenderSystem.setShaderTexture(0, modPrefix("textures/gui/leaf_charge_overlay.png"));
 
-            manager.bind(modPrefix("textures/gui/leaf_charge_overlay.png"));
-
-            ClientPlayerEntity player = mc.player;
+            LocalPlayer player = mc.player;
             if (player != null) {
                 AmuletHelper.getAmuletInSlotOrBelt(ModItems.TERRA_PROTECTION_AMULET.get(), player).ifPresent(triple -> {
                     ItemStack stack = triple.getRight();
@@ -81,13 +74,10 @@ public class LeafChargeOverlay {
         }
     }
 
-    private static int drawLeafBar(MatrixStack ms, int size, int posX, int posY, int VOffset) {
+    private static void drawLeafBar(PoseStack ms, int size, int posX, int posY, int VOffset) {
         for (int j = 1; j <= size; j++) {
-            AbstractGui.blit(ms, posX, posY, 0, VOffset, 7, 7, 16, 16);
+            GuiComponent.blit(ms, posX, posY, 0, VOffset, 7, 7, 16, 16);
             posX += 8;
         }
-
-        return posX;
     }
-
 }

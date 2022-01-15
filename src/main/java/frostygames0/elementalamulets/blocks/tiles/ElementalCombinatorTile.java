@@ -25,34 +25,38 @@ import frostygames0.elementalamulets.blocks.containers.ElementalCombinatorContai
 import frostygames0.elementalamulets.capability.AutomationItemHandler;
 import frostygames0.elementalamulets.client.particles.ModParticles;
 import frostygames0.elementalamulets.config.ModConfig;
+import frostygames0.elementalamulets.init.ModBEs;
 import frostygames0.elementalamulets.init.ModBlocks;
 import frostygames0.elementalamulets.init.ModRecipes;
 import frostygames0.elementalamulets.init.ModStats;
-import frostygames0.elementalamulets.init.ModTiles;
 import frostygames0.elementalamulets.recipes.ElementalCombination;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityPredicate;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.effect.LightningBoltEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -63,20 +67,20 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class ElementalCombinatorTile extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
+public class ElementalCombinatorTile extends BlockEntity implements MenuProvider {
     private final ItemStackHandler handler = new ItemStackHandler(10) {
         @Override
         protected void onContentsChanged(int slot) {
             ElementalCombinatorTile.this.setChanged();
             if (slot == 0)
-                level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Constants.BlockFlags.BLOCK_UPDATE);
+                level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
         }
     };
     private final LazyOptional<IItemHandler> optional = LazyOptional.of(() -> new AutomationItemHandler(handler));
 
     private int combinationTime;
     private int totalTime;
-    private final IIntArray combinatorData = new IIntArray() {
+    private final ContainerData combinatorData = new ContainerData() {
         @Override
         public int get(int index) {
             switch (index) {
@@ -107,11 +111,10 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
         }
     };
 
-    public ElementalCombinatorTile() {
-        super(ModTiles.ELEMENTAL_COMBINATOR_TILE.get());
+    public ElementalCombinatorTile(BlockPos pWorldPosition, BlockState pBlockState) {
+        super(ModBEs.ELEMENTAL_COMBINATOR_TILE.get(), pWorldPosition, pBlockState);
     }
 
-    @Override
     public void tick() {
         if (level != null && !level.isClientSide()) {
             if (this.isCombining()) {
@@ -122,7 +125,7 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
                     if (ModConfig.CachedValues.FANCY_COMBINATION) {
                         if (this.combinationTime % 80 == 0) {
                             this.playSound(SoundEvents.BEACON_AMBIENT);
-                            ((ServerWorld) level).sendParticles(ModParticles.COMBINATION_PARTICLE.get(), worldPosition.getX() + 0.5, worldPosition.above().getY() + 0.4, worldPosition.getZ() + 0.5, 50, 0, 0, 0, 5);
+                            ((ServerLevel) level).sendParticles(ModParticles.COMBINATION_PARTICLE.get(), worldPosition.getX() + 0.5, worldPosition.above().getY() + 0.4, worldPosition.getZ() + 0.5, 50, 0, 0, 0, 5);
                         }
                     }
                     if (!this.getBlockState().getValue(ElementalCombinator.COMBINING)) {
@@ -136,9 +139,9 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
                             this.playSound(SoundEvents.ENCHANTMENT_TABLE_USE);
 
                             if (this.totalTime >= 100) { // Strike only when combining for 5 or more seconds
-                                LightningBoltEntity lightbolt = EntityType.LIGHTNING_BOLT.create(level);
+                                LightningBolt lightbolt = EntityType.LIGHTNING_BOLT.create(level);
                                 lightbolt.setVisualOnly(true);
-                                lightbolt.moveTo(Vector3d.atBottomCenterOf(worldPosition.above()));
+                                lightbolt.moveTo(Vec3.atBottomCenterOf(worldPosition.above()));
                                 this.level.addFreshEntity(lightbolt);
                             }
                         }
@@ -163,12 +166,12 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
 
             this.setChanged();
 
-            Vector3d vector = Vector3d.atBottomCenterOf(worldPosition);
-            level.getNearbyPlayers(EntityPredicate.DEFAULT, null,
-                            new AxisAlignedBB(vector.add(3, 2, 3), vector.subtract(3, 0, 3)))
+            Vec3 vector = Vec3.atBottomCenterOf(worldPosition);
+            level.getNearbyPlayers(TargetingConditions.DEFAULT, null,
+                            new AABB(vector.add(3, 2, 3), vector.subtract(3, 0, 3)))
                     .forEach(player -> {
-                        if (player instanceof ServerPlayerEntity) {
-                            ModCriteriaTriggers.ITEM_COMBINED.trigger((ServerPlayerEntity) player, result, (ServerWorld) level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ());
+                        if (player instanceof ServerPlayer) {
+                            ModCriteriaTriggers.ITEM_COMBINED.trigger((ServerPlayer) player, result, (ServerLevel) level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ());
                             player.awardStat(ModStats.TIMES_COMBINED);
                         }
                     });
@@ -204,7 +207,7 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
     }
 
     private void playSound(SoundEvent sound) {
-        this.level.playSound(null, worldPosition, sound, SoundCategory.BLOCKS, 1.0f, 1.0f);
+        this.level.playSound(null, worldPosition, sound, SoundSource.BLOCKS, 1.0f, 1.0f);
     }
 
     private int getFocusedLevel() {
@@ -221,27 +224,25 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
     }
 
     @Override
-    public CompoundNBT save(CompoundNBT compound) {
+    protected void saveAdditional(CompoundTag compound) {
         compound.putInt("CombinationTime", this.combinationTime);
         compound.putInt("TotalCombinationTime", this.totalTime);
         this.writeInventory(compound);
-        return super.save(compound);
     }
 
     @Override
-    public void load(BlockState state, CompoundNBT nbt) {
+    public void load(CompoundTag nbt) {
+        super.load(nbt);
         this.combinationTime = nbt.getInt("CombinationTime");
         this.totalTime = nbt.getInt("TotalCombinationTime");
         this.readInventory(nbt);
-        super.load(state, nbt);
     }
 
-    private CompoundNBT writeInventory(CompoundNBT compound) {
+    private void writeInventory(CompoundTag compound) {
         compound.put("Contents", handler.serializeNBT());
-        return compound;
     }
 
-    private void readInventory(CompoundNBT nbt) {
+    private void readInventory(CompoundTag nbt) {
         handler.deserializeNBT(nbt.getCompound("Contents"));
     }
 
@@ -255,35 +256,37 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
     }
 
     @Override
-    protected void invalidateCaps() {
+    public void invalidateCaps() {
         super.invalidateCaps();
         optional.invalidate();
     }
 
     @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        this.readInventory(pkt.getTag());
+    public CompoundTag getUpdateTag() {
+        CompoundTag tag = new CompoundTag();
+        this.writeInventory(tag);
+        return tag;
     }
 
     @Nullable
     @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(worldPosition, -1, this.writeInventory(new CompoundNBT()));
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
-    public ITextComponent getDisplayName() {
-        return new TranslationTextComponent("block.elementalamulets.elemental_combinator.guititle");
+    public Component getDisplayName() {
+        return new TranslatableComponent("block.elementalamulets.elemental_combinator.guititle");
     }
 
     @Nullable
     @Override
-    public Container createMenu(int p_createMenu_1_, PlayerInventory p_createMenu_2_, PlayerEntity p_createMenu_3_) {
+    public AbstractContainerMenu createMenu(int p_createMenu_1_, Inventory p_createMenu_2_, Player p_createMenu_3_) {
         return new ElementalCombinatorContainer(p_createMenu_1_, level, worldPosition, p_createMenu_2_, p_createMenu_3_, this.combinatorData);
     }
 
     @Override
-    public AxisAlignedBB getRenderBoundingBox() {
-        return new AxisAlignedBB(worldPosition.offset(-1, 0, -1), worldPosition.offset(1, 2, 1));
+    public AABB getRenderBoundingBox() {
+        return new AABB(worldPosition.offset(-1, 0, -1), worldPosition.offset(1, 2, 1));
     }
 }

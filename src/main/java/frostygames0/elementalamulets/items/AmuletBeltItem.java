@@ -22,27 +22,27 @@ package frostygames0.elementalamulets.items;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import frostygames0.elementalamulets.util.NBTUtil;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.Direction;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.server.ServerLifecycleHooks;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
@@ -57,7 +57,6 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 
-
 /**
  * @author Frostygames0
  * @date 10.09.2021 23:51
@@ -70,14 +69,14 @@ public class AmuletBeltItem extends Item implements ICurioItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack pStack, @Nullable World pLevel, List<ITextComponent> pTooltip, ITooltipFlag pFlag) {
+    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
         super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
         pStack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
-            pTooltip.add(new TranslationTextComponent("item.elementalamulets.amulet_belt.contents").withStyle(TextFormatting.GOLD));
+            pTooltip.add(new TranslatableComponent("item.elementalamulets.amulet_belt.contents").withStyle(ChatFormatting.GOLD));
             for (int i = 0; i < h.getSlots(); i++) {
                 ItemStack stack = h.getStackInSlot(i);
                 if (!stack.isEmpty()) {
-                    pTooltip.add(new StringTextComponent(i + 1 + ". ").withStyle(TextFormatting.YELLOW).append(stack.getDisplayName().copy().withStyle(TextFormatting.GRAY)));
+                    pTooltip.add(new TextComponent(i + 1 + ". ").withStyle(ChatFormatting.YELLOW).append(stack.getDisplayName().copy().withStyle(ChatFormatting.GRAY)));
                 }
             }
         });
@@ -85,7 +84,7 @@ public class AmuletBeltItem extends Item implements ICurioItem {
 
     @Override
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
-        if (livingEntity instanceof PlayerEntity) {
+        if (livingEntity instanceof Player) {
             stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
                 ICuriosHelper helper = CuriosApi.getCuriosHelper();
                 for (int i = 0; i < h.getSlots(); i++) {
@@ -112,7 +111,7 @@ public class AmuletBeltItem extends Item implements ICurioItem {
 
     @Override
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
-        if (slotContext.getWearer() instanceof PlayerEntity) {
+        if (slotContext.getWearer() instanceof Player) {
             if (!compareBelts(newStack, stack)) {
                 stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
                     ICuriosHelper helper = CuriosApi.getCuriosHelper();
@@ -134,7 +133,7 @@ public class AmuletBeltItem extends Item implements ICurioItem {
     @Override
     public void onEquip(SlotContext slotContext, ItemStack prevStack, ItemStack stack) {
         LivingEntity livingEntity = slotContext.getWearer();
-        if (livingEntity instanceof PlayerEntity) {
+        if (livingEntity instanceof Player) {
             if (!compareBelts(prevStack, stack)) {
                 stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
                     ICuriosHelper helper = CuriosApi.getCuriosHelper();
@@ -172,7 +171,7 @@ public class AmuletBeltItem extends Item implements ICurioItem {
 
     @Nullable
     @Override
-    public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
+    public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
         ItemStackHandler handler = new ItemStackHandler(5) {
             @Nonnull
             @Override
@@ -194,14 +193,14 @@ public class AmuletBeltItem extends Item implements ICurioItem {
                 MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
                 if (server != null) {
                     UUID UUID = NBTUtil.getUUID(stack, WEARER_UUID_TAG);
-                    PlayerEntity wearer = server.getPlayerList().getPlayer(UUID);
+                    Player wearer = server.getPlayerList().getPlayer(UUID);
                     if (wearer != null) {
                         if (CuriosApi.getCuriosHelper().findEquippedCurio(stack.getItem(), wearer).map(ImmutableTriple::getRight).orElse(ItemStack.EMPTY) == stack) { // Workaround so It won't unEquip when not worn.
                             Item itemAmulet = amulet.getItem();
                             LazyOptional<ICurio> curio = CuriosApi.getCuriosHelper().getCurio(amulet);
                             if (curio.isPresent() && itemAmulet instanceof AmuletItem) {
                                 if (((AmuletItem) itemAmulet).usesCurioMethods()) {
-                                    curio.orElseThrow(NullPointerException::new).onUnequip(new SlotContext(SlotTypePreset.BELT.getIdentifier(), wearer), ItemStack.EMPTY);
+                                    curio.orElseThrow(NullPointerException::new).onUnequip(new SlotContext(SlotTypePreset.BELT.getIdentifier(), wearer, 0, false, false), ItemStack.EMPTY);
                                 }
                             }
                         }
@@ -214,14 +213,14 @@ public class AmuletBeltItem extends Item implements ICurioItem {
         };
         LazyOptional<IItemHandler> optional = LazyOptional.of(() -> handler);
 
-        return new ICapabilitySerializable<CompoundNBT>() {
+        return new ICapabilitySerializable<CompoundTag>() {
             @Override
-            public CompoundNBT serializeNBT() {
+            public CompoundTag serializeNBT() {
                 return handler.serializeNBT();
             }
 
             @Override
-            public void deserializeNBT(CompoundNBT nbt) {
+            public void deserializeNBT(CompoundTag nbt) {
                 handler.deserializeNBT(nbt);
             }
 
@@ -239,8 +238,8 @@ public class AmuletBeltItem extends Item implements ICurioItem {
 
     @Nullable
     @Override
-    public CompoundNBT getShareTag(ItemStack stack) {
-        CompoundNBT tag = stack.getOrCreateTag();
+    public CompoundTag getShareTag(ItemStack stack) {
+        CompoundTag tag = stack.getOrCreateTag();
         stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
             if (h instanceof ItemStackHandler) {
                 tag.put("SyncContents", ((ItemStackHandler) h).serializeNBT());
@@ -250,7 +249,7 @@ public class AmuletBeltItem extends Item implements ICurioItem {
     }
 
     @Override
-    public void readShareTag(ItemStack stack, @Nullable CompoundNBT nbt) {
+    public void readShareTag(ItemStack stack, @Nullable CompoundTag nbt) {
         super.readShareTag(stack, nbt);
 
         if (nbt != null) {

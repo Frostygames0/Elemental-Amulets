@@ -23,15 +23,15 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import frostygames0.elementalamulets.init.ModRecipes;
 import frostygames0.elementalamulets.recipes.ingredient.AmuletIngredient;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tags.ITag;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.Tag;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.registries.ForgeRegistries;
 
 
@@ -57,7 +57,7 @@ public class ElementalCombinationBuilder {
         this.result = item;
     }
 
-    public static ElementalCombinationBuilder create(IItemProvider item) {
+    public static ElementalCombinationBuilder create(ItemLike item) {
         return new ElementalCombinationBuilder(new ItemStack(item.asItem()));
     }
 
@@ -70,31 +70,31 @@ public class ElementalCombinationBuilder {
         return this;
     }
 
-    public ElementalCombinationBuilder addElemental(IItemProvider item) {
+    public ElementalCombinationBuilder addElemental(ItemLike item) {
         this.addElemental(new ItemStack(item.asItem()));
         return this;
     }
 
-    public ElementalCombinationBuilder addIngredient(ITag<Item> tag, int quantity) {
+    public ElementalCombinationBuilder addIngredient(Tag<Item> tag, int quantity) {
         for (int i = 0; i < quantity; i++) {
             this.ingredients.add(Ingredient.of(tag));
         }
         return this;
     }
 
-    public ElementalCombinationBuilder addIngredient(ITag<Item> tag) {
+    public ElementalCombinationBuilder addIngredient(Tag<Item> tag) {
         this.addIngredient(tag, 1);
         return this;
     }
 
-    public ElementalCombinationBuilder addIngredient(int quantity, IItemProvider... item) {
+    public ElementalCombinationBuilder addIngredient(int quantity, ItemLike... item) {
         for (int i = 0; i < quantity; i++) {
             this.ingredients.add(Ingredient.of(item));
         }
         return this;
     }
 
-    public ElementalCombinationBuilder addIngredient(IItemProvider... item) {
+    public ElementalCombinationBuilder addIngredient(ItemLike... item) {
         this.addIngredient(1, item);
         return this;
     }
@@ -109,12 +109,12 @@ public class ElementalCombinationBuilder {
         return this;
     }
 
-    public void build(Consumer<IFinishedRecipe> consumerIn) {
+    public void build(Consumer<FinishedRecipe> consumerIn) {
         ResourceLocation id = modPrefix(ForgeRegistries.ITEMS.getKey(this.result.getItem()).getPath()); // Replacing namespace so recipe would go to correct folder
         this.build(consumerIn, id);
     }
 
-    public void build(Consumer<IFinishedRecipe> consumerIn, ResourceLocation id) {
+    public void build(Consumer<FinishedRecipe> consumerIn, ResourceLocation id) {
         this.validate();
         consumerIn.accept(new Result(id, elemental, ingredients, result, combinationTime, tagTransfer));
     }
@@ -128,7 +128,7 @@ public class ElementalCombinationBuilder {
     }
 
 
-    public static class Result implements IFinishedRecipe {
+    public static class Result implements FinishedRecipe {
         private final ResourceLocation id;
         private final AmuletIngredient elemental;
         private final List<Ingredient> ingredients;
@@ -170,7 +170,7 @@ public class ElementalCombinationBuilder {
             resultJson.addProperty("item", result.getItem().getRegistryName().toString());
             if (result.getCount() > 1) resultJson.addProperty("count", result.getCount());
             if (result.hasTag()) {
-                CompoundNBT copy = result.getTag().copy();
+                CompoundTag copy = result.getTag().copy();
                 if (copy.contains("Damage")) copy.remove("Damage"); // Please don't ask why am I removing damage's tag
                 resultJson.addProperty("nbt", copy.toString());
             }
@@ -183,7 +183,7 @@ public class ElementalCombinationBuilder {
         }
 
         @Override
-        public IRecipeSerializer<?> getType() {
+        public RecipeSerializer<?> getType() {
             return ModRecipes.ELEMENTAL_COMBINATION.get();
         }
 

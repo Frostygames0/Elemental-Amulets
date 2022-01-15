@@ -21,14 +21,14 @@ package frostygames0.elementalamulets.init;
 
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.blocks.tiles.ElementalCombinatorTile;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
-public class ModTiles {
-    public static final DeferredRegister<TileEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, ElementalAmulets.MOD_ID);
+public class ModBEs {
+    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, ElementalAmulets.MOD_ID);
 
-    public static final RegistryObject<TileEntityType<ElementalCombinatorTile>> ELEMENTAL_COMBINATOR_TILE = TILES.register("elemental_combinator",
-            () -> TileEntityType.Builder.of(ElementalCombinatorTile::new, ModBlocks.ELEMENTAL_COMBINATOR.get()).build(null));
+    public static final RegistryObject<BlockEntityType<ElementalCombinatorTile>> ELEMENTAL_COMBINATOR_TILE = BLOCK_ENTITIES.register("elemental_combinator",
+            () -> BlockEntityType.Builder.of(ElementalCombinatorTile::new, ModBlocks.ELEMENTAL_COMBINATOR.get()).build(null));
 }

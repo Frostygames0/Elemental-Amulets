@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[36,)"
+loaderVersion="[39,)"
 license="GNU Lesser General Public License v3 (LGPLv3)"
 issueTrackerURL="https://github.com/Frostygames0/elemental-amulets/issues"
 
@@ -16,24 +16,24 @@ issueTrackerURL="https://github.com/Frostygames0/elemental-amulets/issues"
       [[dependencies.elementalamulets]]
         modId="forge"
         mandatory=true
-        versionRange="[36,)"
+        versionRange="[39,)"
         ordering="NONE"
         side="BOTH"
 
       [[dependencies.elementalamulets]]
         modId="minecraft"
         mandatory=true
-        versionRange="[1.16.5]"
+        versionRange="[1.18.1]"
         ordering="NONE"
         side="BOTH"
 
       [[dependencies.elementalamulets]]
         modId="curios"
         mandatory=true
-        versionRange="[1.16.5-4.0.5.0,)"
+        versionRange="[1.18.1-5.0.5.1,)"
 
       [[dependencies.elementalamulets]]
         modId="patchouli"
         mandatory=false
-        versionRange="[1.16.4-51,)"
+        versionRange="[1.18.1-64,)"
 

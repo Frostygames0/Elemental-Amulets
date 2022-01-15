@@ -24,12 +24,12 @@ import frostygames0.elementalamulets.items.amulets.JumpAmuletItem;
 import frostygames0.elementalamulets.network.CUpdatePlayerVelocityPacket;
 import frostygames0.elementalamulets.network.ModNetworkHandler;
 import frostygames0.elementalamulets.util.AmuletHelper;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -37,8 +37,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 class JumpAmuletEffect {
 
     static void onLivingHurt(LivingHurtEvent event) {
-        if (event.getEntityLiving() instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+        if (event.getEntityLiving() instanceof Player player) {
             if (!player.level.isClientSide()) {
                 if (event.getSource() == DamageSource.FALL) {
                     AmuletHelper.getAmuletInSlotOrBelt(ModItems.JUMP_AMULET.get(), player).ifPresent((triple) -> {
@@ -58,8 +57,7 @@ class JumpAmuletEffect {
     }
 
     static void onLivingAttack(LivingAttackEvent event) {
-        if (event.getEntityLiving() instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+        if (event.getEntityLiving() instanceof Player player) {
             if (!player.level.isClientSide()) {
                 if (event.getSource() == DamageSource.FALL) {
                     AmuletHelper.getAmuletInSlotOrBelt(ModItems.JUMP_AMULET.get(), player).ifPresent((triple) -> {
@@ -77,17 +75,16 @@ class JumpAmuletEffect {
     }
 
     static void onLivingJump(LivingEvent.LivingJumpEvent event) {
-        if (event.getEntityLiving() instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity) event.getEntityLiving();
-            World world = player.getCommandSenderWorld();
+        if (event.getEntityLiving() instanceof Player player) {
+            Level world = player.getCommandSenderWorld();
             if (!world.isClientSide) {
                 if (world.getFluidState(player.blockPosition()).isEmpty()) {
                     AmuletHelper.getAmuletInSlotOrBelt(ModItems.JUMP_AMULET.get(), player).ifPresent(triple -> {
                         ItemStack stack = triple.getRight();
                         JumpAmuletItem item = (JumpAmuletItem) stack.getItem();
 
-                        Vector3d vector = player.getDeltaMovement().add(0, item.getJump(stack), 0);
-                        ModNetworkHandler.sendToClient(new CUpdatePlayerVelocityPacket(vector.x, vector.y, vector.z), (ServerPlayerEntity) player);
+                        Vec3 vector = player.getDeltaMovement().add(0, item.getJump(stack), 0);
+                        ModNetworkHandler.sendToClient(new CUpdatePlayerVelocityPacket(vector.x, vector.y, vector.z), (ServerPlayer) player);
                     });
                 }
             }

@@ -19,10 +19,10 @@
 
 package frostygames0.elementalamulets.network;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraftforge.fml.network.NetworkDirection;
-import net.minecraftforge.fml.network.NetworkRegistry;
-import net.minecraftforge.fml.network.simple.SimpleChannel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.network.NetworkDirection;
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.simple.SimpleChannel;
 
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
@@ -65,7 +65,7 @@ public class ModNetworkHandler {
                 .add();
     }
 
-    public static void sendToClient(Object packet, ServerPlayerEntity player) {
+    public static void sendToClient(Object packet, ServerPlayer player) {
         INSTANCE.sendTo(packet, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
     }
 

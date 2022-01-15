@@ -19,36 +19,41 @@
 
 package frostygames0.elementalamulets.items.amulets;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.advancements.triggers.ModCriteriaTriggers;
 import frostygames0.elementalamulets.client.models.AmuletModel;
 import frostygames0.elementalamulets.init.ModStats;
 import frostygames0.elementalamulets.util.NBTUtil;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.ItemRenderer;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import top.theillusivec4.curios.api.SlotContext;
+import top.theillusivec4.curios.api.client.ICurioRenderer;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
@@ -58,12 +63,12 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.ListIterator;
 
-// TODO Remake this getTier nonsense with hasTier
-public abstract class AmuletItem extends Item implements ICurioItem {
+public abstract class AmuletItem extends Item implements ICurioItem, ICurioRenderer {
     public static final String TIER_TAG = ElementalAmulets.MOD_ID + ":tier";
     public static final int MAX_TIER = 4;
 
     private final boolean hasTier;
+    private AmuletModel<Player> model;
 
     public AmuletItem(Properties properties, boolean hasTier) {
         super(properties);
@@ -77,29 +82,29 @@ public abstract class AmuletItem extends Item implements ICurioItem {
     public static ItemStack getStackWithTier(ItemStack stack, int tier) {
         if (stack.getItem() instanceof AmuletItem) {
             if (((AmuletItem) stack.getItem()).hasTier) {
-                NBTUtil.putInteger(stack, TIER_TAG, MathHelper.clamp(tier, 1, MAX_TIER));
+                NBTUtil.putInteger(stack, TIER_TAG, Mth.clamp(tier, 1, MAX_TIER));
             }
         }
         return stack;
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
         super.appendHoverText(stack, worldIn, tooltip, flagIn);
         // Tier
         if (this.getTier(stack) > 0)
-            tooltip.add(new TranslationTextComponent("item.elementalamulets.common_amulet.tooltip.tier", new StringTextComponent(String.valueOf(this.getTier(stack))).withStyle(TextFormatting.YELLOW)).withStyle(TextFormatting.GOLD));
+            tooltip.add(new TranslatableComponent("item.elementalamulets.common_amulet.tooltip.tier", new TextComponent(String.valueOf(this.getTier(stack))).withStyle(ChatFormatting.YELLOW)).withStyle(ChatFormatting.GOLD));
 
         // Elemental Power (Cool looking durability)
         if (stack.isDamaged()) {
-            tooltip.add(new TranslationTextComponent("item.elementalamulets.common_amulet.elemental_power",
-                    new StringTextComponent(
-                            stack.getMaxDamage() - stack.getDamageValue() + " / " + stack.getMaxDamage()).withStyle(TextFormatting.YELLOW)
-            ).withStyle(TextFormatting.GOLD));
+            tooltip.add(new TranslatableComponent("item.elementalamulets.common_amulet.elemental_power",
+                    new TextComponent(
+                            stack.getMaxDamage() - stack.getDamageValue() + " / " + stack.getMaxDamage()).withStyle(ChatFormatting.YELLOW)
+            ).withStyle(ChatFormatting.GOLD));
         }
 
         // Tooltip
-        tooltip.add(new TranslationTextComponent(getOrCreateDescriptionId() + ".tooltip").withStyle(TextFormatting.GRAY));
+        tooltip.add(new TranslatableComponent(getOrCreateDescriptionId() + ".tooltip").withStyle(ChatFormatting.GRAY));
     }
 
     @Override
@@ -126,8 +131,8 @@ public abstract class AmuletItem extends Item implements ICurioItem {
     public void onEquip(SlotContext slotContext, ItemStack prevStack, ItemStack stack) {
         if (prevStack.getItem() != stack.getItem()) {
             LivingEntity entity = slotContext.getWearer();
-            if (!entity.level.isClientSide() && entity instanceof ServerPlayerEntity) {
-                ServerPlayerEntity player = (ServerPlayerEntity) entity;
+            if (!entity.level.isClientSide() && entity instanceof ServerPlayer) {
+                ServerPlayer player = (ServerPlayer) entity;
 
                 ModCriteriaTriggers.SUCCESS_USE.trigger(player, stack);
                 player.awardStat(ModStats.AMULET_WORN_STAT);
@@ -141,7 +146,7 @@ public abstract class AmuletItem extends Item implements ICurioItem {
     }
 
     @Override
-    public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
+    public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
         if (!this.hasTier) super.fillItemCategory(group, items);
         else {
             if (allowdedIn(group)) {
@@ -154,22 +159,23 @@ public abstract class AmuletItem extends Item implements ICurioItem {
     }
 
     @Override
-    public boolean canRender(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
-        return true;
-    }
+    public <T extends LivingEntity, M extends EntityModel<T>> void render(ItemStack stack, SlotContext slotContext, PoseStack matrixStack, RenderLayerParent<T, M> renderLayerParent, MultiBufferSource renderTypeBuffer, int light, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+        if(model == null) {
+            model = new AmuletModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(AmuletModel.LAYER_LOCATION));
+        } else {
+            if(slotContext.entity().isInvisible())
+                return;
 
-    @Override
-    public void render(String identifier, int index, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int light, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack stack) {
-        matrixStack.pushPose();
-        ICurio.RenderHelper.translateIfSneaking(matrixStack, livingEntity);
-        ICurio.RenderHelper.rotateIfSneaking(matrixStack, livingEntity);
+            matrixStack.pushPose();
+            ICurioRenderer.translateIfSneaking(matrixStack, slotContext.entity());
+            ICurioRenderer.rotateIfSneaking(matrixStack, slotContext.entity());
 
-        matrixStack.scale(0.7f, 0.7f, 0.7f); // Makes amulet smaller gugugaga
+            matrixStack.scale(0.7f, 0.7f, 0.7f); // Makes amulet smaller gugugaga
 
-        AmuletModel amuletModel = new AmuletModel();
-        IVertexBuilder vertexBuilder = ItemRenderer.getFoilBuffer(renderTypeBuffer, amuletModel.renderType(AmuletModel.getTexture(this, stack)), false, stack.hasFoil());
-        amuletModel.renderToBuffer(matrixStack, vertexBuilder, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-        matrixStack.popPose();
+            VertexConsumer vertexBuilder = ItemRenderer.getFoilBuffer(renderTypeBuffer, model.renderType(AmuletModel.getTexture(this, stack)), false, stack.hasFoil());
+            model.renderToBuffer(matrixStack, vertexBuilder, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+            matrixStack.popPose();
+        }
     }
 
     @Override
@@ -208,10 +214,10 @@ public abstract class AmuletItem extends Item implements ICurioItem {
         static void onTooltipEvent(final ItemTooltipEvent event) {
             ItemStack stack = event.getItemStack();
             if (stack.getItem() instanceof AmuletItem) {
-                for (ListIterator<ITextComponent> iterator = event.getToolTip().listIterator(); iterator.hasNext(); ) {
-                    ITextComponent tooltip = iterator.next();
-                    if (tooltip instanceof TranslationTextComponent) {
-                        if (((TranslationTextComponent) tooltip).getKey().equals("item.durability")) {
+                for (ListIterator<Component> iterator = event.getToolTip().listIterator(); iterator.hasNext(); ) {
+                    Component tooltip = iterator.next();
+                    if (tooltip instanceof TranslatableComponent) {
+                        if (((TranslatableComponent) tooltip).getKey().equals("item.durability")) {
                             iterator.remove();
                         }
                     }

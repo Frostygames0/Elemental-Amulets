@@ -19,59 +19,53 @@
 
 package frostygames0.elementalamulets.client.models;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
-import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.entity.LivingEntity;
 
-public class LeafShield<T extends LivingEntity> extends EntityModel<T> {
-    private final ModelRenderer leafPart1;
-    private final ModelRenderer cube_r1_r1;
-    private final ModelRenderer leafPart2;
-    private final ModelRenderer cube_r2_r1;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
 
-    public LeafShield() {
-        texWidth = 64;
-        texHeight = 64;
 
-        leafPart1 = new ModelRenderer(this);
-        leafPart1.setPos(0.0F, 24.0F, 0.0F);
-        leafPart1.texOffs(10, 6).addBox(-8.0F, -12.0F, -4.0F, 1.0F, 6.0F, 8.0F, 0.0F, false);
-        leafPart1.texOffs(20, 0).addBox(-4.0F, -12.0F, -8.0F, 8.0F, 6.0F, 1.0F, 0.0F, false);
+public class LeafShield<T extends Entity> extends EntityModel<T> {
+    public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("player"), "leaf_shield");
+    private final ModelPart leafPart1;
+    private final ModelPart leafPart2;
 
-        cube_r1_r1 = new ModelRenderer(this);
-        cube_r1_r1.setPos(0.0F, 0.0F, 0.0F);
-        leafPart1.addChild(cube_r1_r1);
-        setRotationAngle(cube_r1_r1, 0.0F, 0.7854F, 0.0F);
-        cube_r1_r1.texOffs(20, 7).addBox(-3.0F, -12.0F, -8.35F, 6.0F, 6.0F, 1.0F, 0.0F, false);
+    public LeafShield(ModelPart root) {
+        this.leafPart1 = root.getChild("leafPart1");
+        this.leafPart2 = root.getChild("leafPart2");
+    }
 
-        leafPart2 = new ModelRenderer(this);
-        leafPart2.setPos(0.0F, 24.0F, 0.0F);
-        leafPart2.texOffs(0, 0).addBox(7.0F, -12.0F, -4.0F, 1.0F, 6.0F, 8.0F, 0.0F, false);
-        leafPart2.texOffs(0, 20).addBox(-4.0F, -12.0F, 7.0F, 8.0F, 6.0F, 1.0F, 0.0F, false);
+    public static LayerDefinition createBodyLayer() {
+        MeshDefinition meshdefinition = new MeshDefinition();
+        PartDefinition partdefinition = meshdefinition.getRoot();
 
-        cube_r2_r1 = new ModelRenderer(this);
-        cube_r2_r1.setPos(0.0F, 0.0F, 0.0F);
-        leafPart2.addChild(cube_r2_r1);
-        setRotationAngle(cube_r2_r1, 0.0F, 0.7854F, 0.0F);
-        cube_r2_r1.texOffs(18, 20).addBox(-3.0F, -12.0F, 7.35F, 6.0F, 6.0F, 1.0F, 0.0F, false);
+        PartDefinition leafPart1 = partdefinition.addOrReplaceChild("leafPart1", CubeListBuilder.create().texOffs(10, 6).addBox(-8.0F, -12.0F, -4.0F, 1.0F, 6.0F, 8.0F, new CubeDeformation(0.0F))
+                .texOffs(20, 0).addBox(-4.0F, -12.0F, -8.0F, 8.0F, 6.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 24.0F, 0.0F));
+
+        PartDefinition cube_r1_r1 = leafPart1.addOrReplaceChild("cube_r1_r1", CubeListBuilder.create().texOffs(20, 7).addBox(-3.0F, -12.0F, -8.35F, 6.0F, 6.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.7854F, 0.0F));
+
+        PartDefinition leafPart2 = partdefinition.addOrReplaceChild("leafPart2", CubeListBuilder.create().texOffs(0, 0).addBox(7.0F, -12.0F, -4.0F, 1.0F, 6.0F, 8.0F, new CubeDeformation(0.0F))
+                .texOffs(0, 20).addBox(-4.0F, -12.0F, 7.0F, 8.0F, 6.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 24.0F, 0.0F));
+
+        PartDefinition cube_r2_r1 = leafPart2.addOrReplaceChild("cube_r2_r1", CubeListBuilder.create().texOffs(18, 20).addBox(-3.0F, -12.0F, 7.35F, 6.0F, 6.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.0F, 0.0F, 0.0F, 0.7854F, 0.0F));
+
+        return LayerDefinition.create(meshdefinition, 64, 64);
     }
 
     @Override
     public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        //previously the render function, render code was moved to a method below
+
     }
 
     @Override
-    public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        leafPart1.render(matrixStack, buffer, packedLight, packedOverlay);
-        leafPart2.render(matrixStack, buffer, packedLight, packedOverlay);
-    }
-
-    public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-        modelRenderer.xRot = x;
-        modelRenderer.yRot = y;
-        modelRenderer.zRot = z;
+    public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+        leafPart1.render(poseStack, buffer, packedLight, packedOverlay);
+        leafPart2.render(poseStack, buffer, packedLight, packedOverlay);
     }
 }

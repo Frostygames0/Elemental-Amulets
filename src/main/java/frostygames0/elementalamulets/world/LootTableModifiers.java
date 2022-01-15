@@ -23,12 +23,12 @@ import com.google.gson.JsonObject;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootTables;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.event.RegistryEvent;
@@ -58,7 +58,7 @@ public class LootTableModifiers {
         private final float shipwreckChance;
         private final float netherChance;
 
-        public TreasureLoot(ILootCondition[] conditionsIn, float desertChance, float buriedChance, float shipwreckChance, float netherChance) {
+        public TreasureLoot(LootItemCondition[] conditionsIn, float desertChance, float buriedChance, float shipwreckChance, float netherChance) {
             super(conditionsIn);
             this.desertChance = desertChance;
             this.buriedChance = buriedChance;
@@ -71,13 +71,13 @@ public class LootTableModifiers {
         protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
             List<AmuletItem> amulets = ModItems.getAmulets();
             if (ModConfig.CachedValues.MODIFY_VANILLA_LOOT) {
-                if (LootTables.DESERT_PYRAMID.equals(context.getQueriedLootTableId()) && RANDOM.nextDouble() <= desertChance) {
+                if (BuiltInLootTables.DESERT_PYRAMID.equals(context.getQueriedLootTableId()) && RANDOM.nextDouble() <= desertChance) {
                     generatedLoot.add(AmuletItem.getStackWithTier(new ItemStack(amulets.get(RANDOM.nextInt(amulets.size()))), 1));
-                } else if (LootTables.BURIED_TREASURE.equals(context.getQueriedLootTableId()) && RANDOM.nextDouble() <= buriedChance) {
+                } else if (BuiltInLootTables.BURIED_TREASURE.equals(context.getQueriedLootTableId()) && RANDOM.nextDouble() <= buriedChance) {
                     generatedLoot.add(new ItemStack(ModItems.AETHER_ELEMENT.get(), 2));
-                } else if (LootTables.SHIPWRECK_TREASURE.equals(context.getQueriedLootTableId()) && RANDOM.nextDouble() <= shipwreckChance) {
+                } else if (BuiltInLootTables.SHIPWRECK_TREASURE.equals(context.getQueriedLootTableId()) && RANDOM.nextDouble() <= shipwreckChance) {
                     generatedLoot.add(new ItemStack(ModItems.WATER_ELEMENT.get(), 5));
-                } else if (LootTables.NETHER_BRIDGE.equals(context.getQueriedLootTableId()) && RANDOM.nextDouble() <= netherChance) {
+                } else if (BuiltInLootTables.NETHER_BRIDGE.equals(context.getQueriedLootTableId()) && RANDOM.nextDouble() <= netherChance) {
                     generatedLoot.add(new ItemStack(ModItems.FIRE_ELEMENT.get(), 4));
                 }
             }
@@ -87,11 +87,11 @@ public class LootTableModifiers {
         public static class Serializer extends GlobalLootModifierSerializer<TreasureLoot> {
 
             @Override
-            public TreasureLoot read(ResourceLocation location, JsonObject object, ILootCondition[] aiLootCondition) {
-                float desert = JSONUtils.getAsFloat(object, "desert_pyramid", 0.1f);
-                float treasure = JSONUtils.getAsFloat(object, "buried_treasure", 0.3f);
-                float shipwreck = JSONUtils.getAsFloat(object, "shipwreck_treasure", 0.3f);
-                float nether = JSONUtils.getAsFloat(object, "nether_bridge", 0.2f);
+            public TreasureLoot read(ResourceLocation location, JsonObject object, LootItemCondition[] aiLootCondition) {
+                float desert = GsonHelper.getAsFloat(object, "desert_pyramid", 0.1f);
+                float treasure = GsonHelper.getAsFloat(object, "buried_treasure", 0.3f);
+                float shipwreck = GsonHelper.getAsFloat(object, "shipwreck_treasure", 0.3f);
+                float nether = GsonHelper.getAsFloat(object, "nether_bridge", 0.2f);
                 return new TreasureLoot(aiLootCondition, desert, treasure, shipwreck, nether);
             }
 

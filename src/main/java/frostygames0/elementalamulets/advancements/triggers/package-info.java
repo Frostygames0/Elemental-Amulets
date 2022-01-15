@@ -25,7 +25,7 @@
 @MethodsReturnNonnullByDefault
 package frostygames0.elementalamulets.advancements.triggers;
 
-import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.MethodsReturnNonnullByDefault;
 
 
 import javax.annotation.ParametersAreNonnullByDefault;

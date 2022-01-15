@@ -22,39 +22,34 @@ package frostygames0.elementalamulets.init;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.blocks.CelestialFocus;
 import frostygames0.elementalamulets.blocks.ElementalCombinator;
-import net.minecraft.block.*;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.item.DyeColor;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.IBlockReader;
-import net.minecraftforge.common.ToolType;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.OreBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-
-
-import java.util.Random;
+import net.minecraftforge.registries.RegistryObject;
 
 public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ElementalAmulets.MOD_ID);
 
     public static final RegistryObject<Block> ELEMENTAL_COMBINATOR = BLOCKS.register("elemental_combinator",
-            () -> new ElementalCombinator(AbstractBlock.Properties.of(Material.STONE, DyeColor.RED).strength(3.5f).sound(SoundType.STONE).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).harvestLevel(0)
+            () -> new ElementalCombinator(BlockBehaviour.Properties.of(Material.STONE, DyeColor.RED).strength(3.5f).sound(SoundType.STONE).requiresCorrectToolForDrops()
                     .lightLevel(state -> state.getValue(ElementalCombinator.COMBINING) ? 15 : 5).isRedstoneConductor(ModBlocks::never)));
 
     public static final RegistryObject<Block> CELESTIAL_FOCUS = BLOCKS.register("celestial_focus",
-            () -> new CelestialFocus(AbstractBlock.Properties.of(Material.WOOD, DyeColor.BROWN).strength(2f).sound(SoundType.WOOD).harvestTool(ToolType.AXE)
+            () -> new CelestialFocus(BlockBehaviour.Properties.of(Material.WOOD, DyeColor.BROWN).strength(2f).sound(SoundType.WOOD)
                     .noOcclusion().isViewBlocking(ModBlocks::never).isSuffocating(ModBlocks::never)));
 
     public static final RegistryObject<Block> ELEMENTAL_ORE = BLOCKS.register("elemental_ore",
-            () -> new OreBlock(AbstractBlock.Properties.of(Material.STONE).strength(3.5f).sound(SoundType.STONE).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).harvestLevel(1)) {
-                @Override
-                protected int xpOnDrop(Random p_220281_1_) {
-                    return MathHelper.nextInt(p_220281_1_, 0, 2);
-                }
-            });
+            () -> new OreBlock(BlockBehaviour.Properties.of(Material.STONE).strength(3.5f).sound(SoundType.STONE).requiresCorrectToolForDrops(), UniformInt.of(0, 2)));
 
 
     // Shards
@@ -70,10 +65,10 @@ public class ModBlocks {
             () -> createShardsBlock(MaterialColor.SNOW));
 
     private static Block createShardsBlock(MaterialColor color) {
-        return new Block(AbstractBlock.Properties.of(Material.GLASS, color).strength(0.8f).sound(SoundType.GLASS).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE));
+        return new Block(BlockBehaviour.Properties.of(Material.GLASS, color).strength(0.8f).sound(SoundType.GLASS).requiresCorrectToolForDrops());
     }
 
-    private static boolean never(BlockState blockState, IBlockReader iBlockReader, BlockPos blockPos) {
+    private static boolean never(BlockState blockState, BlockGetter iBlockReader, BlockPos blockPos) {
         return false;
     }
 }

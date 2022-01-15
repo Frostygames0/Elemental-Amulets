@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "elementalamulets:air_element"
+            "items": [
+              "elementalamulets:air_element"
+            ]
           }
         ]
       }

@@ -24,16 +24,16 @@ import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.init.ModTags;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import frostygames0.elementalamulets.recipes.ElementalCombination;
-import net.minecraft.advancements.criterion.InventoryChangeTrigger;
-import net.minecraft.block.Block;
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.data.*;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.tags.ITag;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.tags.Tag;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.IItemProvider;
+import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.Tags;
 
 
@@ -41,24 +41,29 @@ import java.util.function.Consumer;
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
+
 /*
 TODO: While it works fine and doesn't affect gameplay at all, it's still a very painful piece of shit that contains my early code :)
 Basically, do not worry about this and release mod
 */
-public class RecipeProvider extends net.minecraft.data.RecipeProvider {
+public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
     public RecipeProvider(DataGenerator generatorIn) {
         super(generatorIn);
     }
 
 
     @Override
-    protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) {
+    protected void buildCraftingRecipes (Consumer<FinishedRecipe> consumer) {
         this.registerVanillaRecipes(consumer);
         this.registerModRecipes(consumer);
     }
 
     // Vanilla recipes(crafting, smelting, etc.)
-    private void registerVanillaRecipes(Consumer<IFinishedRecipe> consumer) {
+    private void registerVanillaRecipes(Consumer<FinishedRecipe> consumer) {
         ShapedRecipeBuilder.shaped(ModBlocks.ELEMENTAL_COMBINATOR.get())
                 .pattern("_=_")
                 .pattern("#4#")
@@ -68,12 +73,12 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .define('4', ModItems.ELEMENTAL_SHARDS.get())
                 .define('0', Tags.Items.COBBLESTONE)
                 .define('#', ItemTags.PLANKS)
-                .unlockedBy("has_item", InventoryChangeTrigger.Instance.hasItems(ModItems.ELEMENTAL_SHARDS.get()))
+                .unlockedBy("has_item", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.ELEMENTAL_SHARDS.get()))
                 .save(consumer);
         ShapelessRecipeBuilder.shapeless(ModItems.ELEMENTAL_GUIDE.get())
                 .requires(Items.BOOK)
                 .requires(ModTags.Items.ELEMENTS)
-                .unlockedBy("has_item", InventoryChangeTrigger.Instance.hasItems(ModItems.ELEMENTAL_SHARDS.get()))
+                .unlockedBy("has_item", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.ELEMENTAL_SHARDS.get()))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(ModItems.EMPTY_AMULET.get())
                 .pattern(" ##")
@@ -81,7 +86,7 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .pattern("xx ")
                 .define('#', Tags.Items.STRING)
                 .define('x', ModItems.ELEMENTAL_SHARDS.get())
-                .unlockedBy("has_item", InventoryChangeTrigger.Instance.hasItems(ModItems.ELEMENTAL_SHARDS.get()))
+                .unlockedBy("has_item", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.ELEMENTAL_SHARDS.get()))
                 .save(consumer);
         ShapedRecipeBuilder.shaped(ModBlocks.CELESTIAL_FOCUS.get())
                 .pattern("/0/")
@@ -90,7 +95,7 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .define('/', Tags.Items.RODS_WOODEN)
                 .define('0', ModItems.ALL_SEEING_LENS.get())
                 .define('.', Items.IRON_NUGGET)
-                .unlockedBy("has_item", InventoryChangeTrigger.Instance.hasItems(ModItems.ALL_SEEING_LENS.get()))
+                .unlockedBy("has_item", InventoryChangeTrigger.TriggerInstance.hasItems(ModItems.ALL_SEEING_LENS.get()))
                 .save(consumer);
         oreSmelting(ModBlocks.ELEMENTAL_ORE.get(), ModItems.ELEMENTAL_SHARDS.get(), 0.7f, 200, consumer);
 
@@ -102,7 +107,7 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
     }
 
     // Elemental Combination recipes
-    private void registerModRecipes(Consumer<IFinishedRecipe> consumer) {
+    private void registerModRecipes(Consumer<FinishedRecipe> consumer) {
         classicElementRecipe(ModItems.AIR_ELEMENT.get(), ModTags.Items.AIR_ELEMENT_CONVERTIBLE, consumer);
         classicElementRecipe(ModItems.FIRE_ELEMENT.get(), ModTags.Items.FIRE_ELEMENT_CONVERTIBLE, consumer);
         classicElementRecipe(ModItems.WATER_ELEMENT.get(), ModTags.Items.WATER_ELEMENT_CONVERTIBLE, consumer);
@@ -190,7 +195,7 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
 
     /* Helper Methods! */
 
-    private static void amuletRecipeSpecial(Item amulet, ItemStack elemental, IItemProvider specialStack, IItemProvider element, Consumer<IFinishedRecipe> consumer) {
+    private static void amuletRecipeSpecial(Item amulet, ItemStack elemental, ItemLike specialStack, ItemLike element, Consumer<FinishedRecipe> consumer) {
         ElementalCombinationBuilder.create(amulet.getDefaultInstance())
                 .addElemental(elemental)
                 .addIngredient(3, element)
@@ -201,10 +206,10 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .addIngredient(Items.LAPIS_LAZULI)
                 .setCombinationTime(350)
                 .isTagTransferred()
-                .build(consumer, modPrefix("amulets/" + amulet.getItem().getRegistryName().getPath() + "_tier1"));
+                .build(consumer, modPrefix("amulets/" + amulet.getRegistryName().getPath() + "_tier1"));
     }
 
-    private static void amuletRecipeTier1(Item amulet, IItemProvider element, Consumer<IFinishedRecipe> consumer) {
+    private static void amuletRecipeTier1(Item amulet, ItemLike element, Consumer<FinishedRecipe> consumer) {
         ElementalCombinationBuilder.create(amulet.getDefaultInstance())
                 .addElemental(ModItems.EMPTY_AMULET.get())
                 .addIngredient(3, element)
@@ -213,10 +218,10 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .addIngredient(Items.LAPIS_LAZULI)
                 .setCombinationTime(200)
                 .isTagTransferred()
-                .build(consumer, modPrefix("amulets/" + amulet.getItem().getRegistryName().getPath() + "_tier1"));
+                .build(consumer, modPrefix("amulets/" + amulet.getRegistryName().getPath() + "_tier1"));
     }
 
-    private static void amuletRecipeTier2(Item amulet, IItemProvider upgrader, IItemProvider element, Consumer<IFinishedRecipe> consumer) {
+    private static void amuletRecipeTier2(Item amulet, ItemLike upgrader, ItemLike element, Consumer<FinishedRecipe> consumer) {
         ElementalCombinationBuilder.create(AmuletItem.getStackWithTier(new ItemStack(amulet), 2))
                 .addElemental(AmuletItem.getStackWithTier(new ItemStack(amulet), 1))
                 .addIngredient(element)
@@ -230,7 +235,7 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .build(consumer, modPrefix("amulets/" + amulet.getRegistryName().getPath() + "_tier2"));
     }
 
-    private static void amuletRecipeTier2Special(Item amulet, IItemProvider upgrader, IItemProvider upgrader2, IItemProvider element, Consumer<IFinishedRecipe> consumer) {
+    private static void amuletRecipeTier2Special(Item amulet, ItemLike upgrader, ItemLike upgrader2, ItemLike element, Consumer<FinishedRecipe> consumer) {
         ElementalCombinationBuilder.create(AmuletItem.getStackWithTier(new ItemStack(amulet), 2))
                 .addElemental(AmuletItem.getStackWithTier(new ItemStack(amulet), 1))
                 .addIngredient(upgrader)
@@ -246,7 +251,7 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .build(consumer, modPrefix("amulets/" + amulet.getRegistryName().getPath() + "_tier2"));
     }
 
-    private static void amuletRecipeTier3(Item amulet, IItemProvider upgrader, IItemProvider upgrader2, IItemProvider element, Consumer<IFinishedRecipe> consumer) {
+    private static void amuletRecipeTier3(Item amulet, ItemLike upgrader, ItemLike upgrader2, ItemLike element, Consumer<FinishedRecipe> consumer) {
         ElementalCombinationBuilder.create(AmuletItem.getStackWithTier(new ItemStack(amulet), 3))
                 .addElemental(AmuletItem.getStackWithTier(new ItemStack(amulet), 2))
                 .addIngredient(upgrader)
@@ -262,7 +267,7 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .build(consumer, modPrefix("amulets/" + amulet.getRegistryName().getPath() + "_tier3"));
     }
 
-    private static void amuletRecipeTier4(Item amulet, IItemProvider upgrader, Consumer<IFinishedRecipe> consumer) {
+    private static void amuletRecipeTier4(Item amulet, ItemLike upgrader, Consumer<FinishedRecipe> consumer) {
         ElementalCombinationBuilder.create(AmuletItem.getStackWithTier(new ItemStack(amulet), 4))
                 .addElemental(AmuletItem.getStackWithTier(new ItemStack(amulet), 3))
                 .addIngredient(upgrader)
@@ -278,31 +283,31 @@ public class RecipeProvider extends net.minecraft.data.RecipeProvider {
                 .build(consumer, modPrefix("amulets/" + amulet.getRegistryName().getPath() + "_tier4"));
     }
 
-    private static void classicElementRecipe(IItemProvider elementIn, ITag<Item> convertibles, Consumer<IFinishedRecipe> consumerIn) {
+    private static void classicElementRecipe(ItemLike elementIn, Tag<Item> convertibles, Consumer<FinishedRecipe> consumerIn) {
         ElementalCombinationBuilder.create(new ItemStack(elementIn, 2))
                 .addElemental(ModItems.ELEMENTAL_SHARDS.get())
                 .addIngredient(convertibles, ElementalCombination.MAX_INGREDIENTS - 2)
                 .build(consumerIn, modPrefix("elements/" + elementIn.asItem().getRegistryName().getPath()));
     }
 
-    private static void oreSmelting(Block oreBlock, Item resultOre, float exp, int cookTime, Consumer<IFinishedRecipe> consumerIn) {
-        CookingRecipeBuilder.smelting(Ingredient.of(oreBlock),
+    private static void oreSmelting(Block oreBlock, Item resultOre, float exp, int cookTime, Consumer<FinishedRecipe> consumerIn) {
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(oreBlock),
                         resultOre, exp, cookTime)
-                .unlockedBy("has_item", InventoryChangeTrigger.Instance.hasItems(oreBlock))
+                .unlockedBy("has_item", InventoryChangeTrigger.TriggerInstance.hasItems(oreBlock))
                 .save(consumerIn, resultOre.getRegistryName());
-        CookingRecipeBuilder.blasting(Ingredient.of(oreBlock),
+        SimpleCookingRecipeBuilder.blasting(Ingredient.of(oreBlock),
                         resultOre, exp, cookTime / 2)
-                .unlockedBy("has_item", InventoryChangeTrigger.Instance.hasItems(oreBlock))
+                .unlockedBy("has_item", InventoryChangeTrigger.TriggerInstance.hasItems(oreBlock))
                 .save(consumerIn, resultOre.getRegistryName() + "_from_blasting");
     }
 
-    private static void shardsBlockRecipe(Block shardsBlock, Item shardsItem, Consumer<IFinishedRecipe> consumerIn) {
+    private static void shardsBlockRecipe(Block shardsBlock, Item shardsItem, Consumer<FinishedRecipe> consumerIn) {
         ShapedRecipeBuilder.shaped(shardsBlock)
                 .pattern("***")
                 .pattern("***")
                 .pattern("***")
                 .define('*', shardsItem)
-                .unlockedBy("has_item", InventoryChangeTrigger.Instance.hasItems(shardsItem))
+                .unlockedBy("has_item", InventoryChangeTrigger.TriggerInstance.hasItems(shardsItem))
                 .save(consumerIn);
     }
 }

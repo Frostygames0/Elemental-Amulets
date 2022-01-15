@@ -21,11 +21,12 @@
  * @author Frostygames0
  * @date 26.11.2021 18:42
  */
+// FIXME Structure generation is completely broken!
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 package frostygames0.elementalamulets.world.structures;
 
-import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.MethodsReturnNonnullByDefault;
 
 
 import javax.annotation.ParametersAreNonnullByDefault;

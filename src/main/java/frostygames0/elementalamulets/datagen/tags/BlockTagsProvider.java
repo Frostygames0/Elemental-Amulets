@@ -20,6 +20,7 @@
 package frostygames0.elementalamulets.datagen.tags;
 
 import frostygames0.elementalamulets.ElementalAmulets;
+import frostygames0.elementalamulets.init.ModBlocks;
 import frostygames0.elementalamulets.init.ModTags;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.tags.BlockTags;
@@ -32,7 +33,7 @@ import javax.annotation.Nullable;
  * @author Frostygames0
  * @date 05.12.2021 16:49
  */
-public class BlockTagsProvider extends net.minecraft.data.BlockTagsProvider {
+public class BlockTagsProvider extends net.minecraft.data.tags.BlockTagsProvider {
     public BlockTagsProvider(DataGenerator pGenerator, @Nullable ExistingFileHelper existingFileHelper) {
         super(pGenerator, ElementalAmulets.MOD_ID, existingFileHelper);
     }
@@ -40,5 +41,8 @@ public class BlockTagsProvider extends net.minecraft.data.BlockTagsProvider {
     @Override
     protected void addTags() {
         this.tag(ModTags.Blocks.EARTH_AMULET_BOOSTABLE).addTags(BlockTags.FLOWERS, BlockTags.CROPS);
+        this.tag(ModTags.Blocks.SHARD_BLOCKS).add(ModBlocks.ELEMENTAL_SHARDS_BLOCK.get(), ModBlocks.AIR_SHARDS_BLOCK.get(), ModBlocks.FIRE_SHARDS_BLOCK.get(), ModBlocks.WATER_SHARDS_BLOCK.get(), ModBlocks.EARTH_SHARDS_BLOCK.get());
+
+        this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(ModBlocks.ELEMENTAL_COMBINATOR.get()).addTag(ModTags.Blocks.SHARD_BLOCKS);
     }
 }

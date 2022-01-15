@@ -20,11 +20,11 @@
 package frostygames0.elementalamulets.network;
 
 import frostygames0.elementalamulets.blocks.tiles.ElementalCombinatorTile;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.network.NetworkEvent;
 
 
 import java.util.function.Supplier;
@@ -40,24 +40,22 @@ public class SCombinePacket {
         this.pos = pos;
     }
 
-    public SCombinePacket(PacketBuffer buf) {
+    public SCombinePacket(FriendlyByteBuf buf) {
         this.pos = buf.readBlockPos();
     }
 
-    public void toBytes(PacketBuffer buf) {
+    public void toBytes(FriendlyByteBuf buf) {
         buf.writeBlockPos(this.pos);
     }
 
     public void handle(Supplier<NetworkEvent.Context> sup) {
         NetworkEvent.Context ctx = sup.get();
         ctx.enqueueWork(() -> {
-            World world = ctx.getSender().level;
-            if (world != null) {
-                if (world.hasChunkAt(pos)) {
-                    TileEntity tile = world.getBlockEntity(pos);
-                    if (tile instanceof ElementalCombinatorTile) {
-                        ((ElementalCombinatorTile) tile).startCombination();
-                    }
+            Level world = ctx.getSender().level;
+            if (world.hasChunkAt(pos)) {
+                BlockEntity tile = world.getBlockEntity(pos);
+                if (tile instanceof ElementalCombinatorTile) {
+                    ((ElementalCombinatorTile) tile).startCombination();
                 }
             }
         });

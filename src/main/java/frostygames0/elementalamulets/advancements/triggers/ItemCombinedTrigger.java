@@ -20,12 +20,11 @@
 package frostygames0.elementalamulets.advancements.triggers;
 
 import com.google.gson.JsonObject;
-import net.minecraft.advancements.criterion.*;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.ConditionArrayParser;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.advancements.critereon.*;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
 
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
@@ -36,15 +35,15 @@ import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
  * @author Frostygames0
  * @date 02.06.2021 10:19
  */
-public class ItemCombinedTrigger extends AbstractCriterionTrigger<ItemCombinedTrigger.Instance> {
+public class ItemCombinedTrigger extends SimpleCriterionTrigger<ItemCombinedTrigger.Instance> {
     public static final ResourceLocation ID = modPrefix("item_elemental_combined");
 
     @Override
-    protected Instance createInstance(JsonObject json, EntityPredicate.AndPredicate entityPredicate, ConditionArrayParser conditionsParser) {
+    protected Instance createInstance(JsonObject json, EntityPredicate.Composite entityPredicate, DeserializationContext conditionsParser) {
         return new ItemCombinedTrigger.Instance(entityPredicate, ItemPredicate.fromJson(json.get("item")), LocationPredicate.fromJson(json.get("location")));
     }
 
-    public void trigger(ServerPlayerEntity player, ItemStack stack, ServerWorld world, double x, double y, double z) {
+    public void trigger(ServerPlayer player, ItemStack stack, ServerLevel world, double x, double y, double z) {
         trigger(player, instance -> instance.test(stack, world, x, y, z));
     }
 
@@ -53,17 +52,17 @@ public class ItemCombinedTrigger extends AbstractCriterionTrigger<ItemCombinedTr
         return ID;
     }
 
-    public static class Instance extends CriterionInstance {
+    public static class Instance extends AbstractCriterionTriggerInstance {
         private final ItemPredicate item;
         private final LocationPredicate location;
 
-        public Instance(EntityPredicate.AndPredicate playerCondition, ItemPredicate item, LocationPredicate location) {
+        public Instance(EntityPredicate.Composite playerCondition, ItemPredicate item, LocationPredicate location) {
             super(ID, playerCondition);
             this.item = item;
             this.location = location;
         }
 
-        boolean test(ItemStack stack, ServerWorld world, double x, double y, double z) {
+        boolean test(ItemStack stack, ServerLevel world, double x, double y, double z) {
             return item.matches(stack) && location.matches(world, x, y, z);
         }
     }

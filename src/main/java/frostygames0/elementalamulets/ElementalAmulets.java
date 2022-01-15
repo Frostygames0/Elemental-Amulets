@@ -26,13 +26,10 @@ import frostygames0.elementalamulets.init.*;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import frostygames0.elementalamulets.network.ModNetworkHandler;
 import frostygames0.elementalamulets.world.LootTableModifiers;
-import frostygames0.elementalamulets.world.ModFeatures;
-import frostygames0.elementalamulets.world.structures.ModStructures;
-import frostygames0.elementalamulets.world.structures.StructureFeatures;
-import net.minecraft.block.ComposterBlock;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -56,7 +53,7 @@ public class ElementalAmulets {
 
     public static final String MOD_ID = "elementalamulets";
     public static final Logger LOGGER = LogManager.getLogger();
-    public static final ItemGroup GROUP = new ItemGroup(MOD_ID) {
+    public static final CreativeModeTab GROUP = new CreativeModeTab(MOD_ID) {
         @Override
         public ItemStack makeIcon() {
             return AmuletItem.getStackWithTier(new ItemStack(ModItems.FIRE_AMULET.get()), 3);
@@ -69,11 +66,11 @@ public class ElementalAmulets {
 
         ModItems.ITEMS.register(bus);
         ModBlocks.BLOCKS.register(bus);
-        ModTiles.TILES.register(bus);
-        ModContainers.CONTAINERS.register(bus);
+        ModBEs.BLOCK_ENTITIES.register(bus);
+        ModMenus.MENUS.register(bus);
         ModRecipes.SERIALIZERS.register(bus);
         ModVillagers.register(bus);
-        ModStructures.STRUCTURES.register(bus);
+        //ModStructures.STRUCTURES.register(bus);
         ModParticles.PARTICLES.register(bus);
 
         bus.addGenericListener(GlobalLootModifierSerializer.class, LootTableModifiers::registerLootModifierSerializer); // Loot modification register
@@ -103,10 +100,10 @@ public class ElementalAmulets {
     private void commonSetup(final FMLCommonSetupEvent event) {
         ModNetworkHandler.registerMessages();
         event.enqueueWork(() -> {
-            ModStructures.setupStructures();
-            StructureFeatures.register();
+            //ModStructures.setupStructures();
+            //StructureFeatures.register();
 
-            ModFeatures.register();
+            //ModFeatures.register();
 
             ModCriteriaTriggers.register();
             ModStats.registerStats();

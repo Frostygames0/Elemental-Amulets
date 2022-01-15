@@ -20,10 +20,10 @@
 package frostygames0.elementalamulets.items.amulets;
 
 import frostygames0.elementalamulets.util.AmuletHelper;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Effects;
-import net.minecraft.world.World;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import top.theillusivec4.curios.api.SlotContext;
 
 public class InvisibilityAmuletItem extends AmuletItem {
@@ -33,26 +33,21 @@ public class InvisibilityAmuletItem extends AmuletItem {
 
     @Override
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
-        World world = livingEntity.getCommandSenderWorld();
+        Level world = livingEntity.getCommandSenderWorld();
         if (!world.isClientSide()) {
             if (livingEntity.isShiftKeyDown()) {
                 if (!livingEntity.isInvisible()) livingEntity.setInvisible(true);
             } else {
-                if (!livingEntity.hasEffect(Effects.INVISIBILITY)) livingEntity.setInvisible(false);
+                if (!livingEntity.hasEffect(MobEffects.INVISIBILITY)) livingEntity.setInvisible(false);
             }
         }
-    }
-
-    @Override
-    public boolean canRender(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
-        return !livingEntity.isInvisible();
     }
 
     @Override
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
         LivingEntity entity = slotContext.getWearer();
         if (AmuletHelper.compareAmulets(stack, newStack)) {
-            if (entity.isInvisible() && !entity.hasEffect(Effects.INVISIBILITY)) {
+            if (entity.isInvisible() && !entity.hasEffect(MobEffects.INVISIBILITY)) {
                 entity.setInvisible(false);
             }
         }

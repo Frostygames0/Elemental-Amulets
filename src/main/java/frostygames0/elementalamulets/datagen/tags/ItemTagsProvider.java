@@ -25,16 +25,16 @@ import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.init.ModTags;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.item.Items;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 
 import javax.annotation.Nullable;
 
-public class ItemTagsProvider extends net.minecraft.data.ItemTagsProvider {
-    public ItemTagsProvider(DataGenerator dataGenerator, net.minecraft.data.BlockTagsProvider blockProvider, @Nullable ExistingFileHelper existingFileHelper) {
+public class ItemTagsProvider extends net.minecraft.data.tags.ItemTagsProvider {
+    public ItemTagsProvider(DataGenerator dataGenerator, net.minecraft.data.tags.BlockTagsProvider blockProvider, @Nullable ExistingFileHelper existingFileHelper) {
         super(dataGenerator, blockProvider, ElementalAmulets.MOD_ID, existingFileHelper);
     }
 

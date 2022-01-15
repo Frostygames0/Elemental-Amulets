@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "elementalamulets:fire_element"
+            "items": [
+              "elementalamulets:fire_element"
+            ]
           }
         ]
       }

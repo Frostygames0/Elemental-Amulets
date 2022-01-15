@@ -31,13 +31,13 @@ import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.registration.*;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tags.ITag;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.Tag;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 
 import java.util.List;
@@ -76,24 +76,24 @@ public class JEIPlugin implements IModPlugin {
         registration.addRecipes(ModRecipes.getRecipes(Minecraft.getInstance().level), ElementalCombinationCategory.ID);
 
         // Item descriptions
-        registration.addIngredientInfo(ModItems.getAmulets().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.amulets.description"));
-        registration.addIngredientInfo(mapTagAsItemList(ModTags.Items.ELEMENTS), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.elements.description"));
-        registration.addIngredientInfo(new ItemStack(ModItems.ALL_SEEING_LENS.get()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.all_seeing_lens.description"));
+        registration.addIngredientInfo(ModItems.getAmulets().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new TranslatableComponent("jei.elementalamulets.amulets.description"));
+        registration.addIngredientInfo(mapTagAsItemList(ModTags.Items.ELEMENTS), VanillaTypes.ITEM, new TranslatableComponent("jei.elementalamulets.elements.description"));
+        registration.addIngredientInfo(new ItemStack(ModItems.ALL_SEEING_LENS.get()), VanillaTypes.ITEM, new TranslatableComponent("jei.elementalamulets.all_seeing_lens.description"));
 
-        registration.addIngredientInfo(mapTagAsItemList(ModTags.Items.SHARD_BLOCKS), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.shards_blocks.description"));
+        registration.addIngredientInfo(mapTagAsItemList(ModTags.Items.SHARD_BLOCKS), VanillaTypes.ITEM, new TranslatableComponent("jei.elementalamulets.shards_blocks.description"));
         // Elements description
-        registration.addIngredientInfo(mapTagAsItemList(ModTags.Items.AIR_ELEMENT_CONVERTIBLE), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.convertibles.description", new TranslationTextComponent(ModItems.AIR_ELEMENT.get().getDescriptionId()).withStyle(TextFormatting.GRAY)));
-        registration.addIngredientInfo(mapTagAsItemList(ModTags.Items.WATER_ELEMENT_CONVERTIBLE), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.convertibles.description", new TranslationTextComponent(ModItems.WATER_ELEMENT.get().getDescriptionId()).withStyle(TextFormatting.AQUA)));
-        registration.addIngredientInfo(mapTagAsItemList(ModTags.Items.FIRE_ELEMENT_CONVERTIBLE), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.convertibles.description"), new TranslationTextComponent(ModItems.FIRE_ELEMENT.get().getDescriptionId()).withStyle(TextFormatting.RED));
-        registration.addIngredientInfo(mapTagAsItemList(ModTags.Items.EARTH_ELEMENT_CONVERTIBLE), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.convertibles.description"), new TranslationTextComponent(ModItems.EARTH_ELEMENT.get().getDescriptionId()).withStyle(TextFormatting.DARK_GREEN));
-        registration.addIngredientInfo(ModItems.AETHER_ELEMENT.get().getDefaultInstance(), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.aether_element.description"));
+        registration.addIngredientInfo(mapTagAsItemList(ModTags.Items.AIR_ELEMENT_CONVERTIBLE), VanillaTypes.ITEM, new TranslatableComponent("jei.elementalamulets.convertibles.description", new TranslatableComponent(ModItems.AIR_ELEMENT.get().getDescriptionId()).withStyle(ChatFormatting.GRAY)));
+        registration.addIngredientInfo(mapTagAsItemList(ModTags.Items.WATER_ELEMENT_CONVERTIBLE), VanillaTypes.ITEM, new TranslatableComponent("jei.elementalamulets.convertibles.description", new TranslatableComponent(ModItems.WATER_ELEMENT.get().getDescriptionId()).withStyle(ChatFormatting.AQUA)));
+        registration.addIngredientInfo(mapTagAsItemList(ModTags.Items.FIRE_ELEMENT_CONVERTIBLE), VanillaTypes.ITEM, new TranslatableComponent("jei.elementalamulets.convertibles.description"), new TranslatableComponent(ModItems.FIRE_ELEMENT.get().getDescriptionId()).withStyle(ChatFormatting.RED));
+        registration.addIngredientInfo(mapTagAsItemList(ModTags.Items.EARTH_ELEMENT_CONVERTIBLE), VanillaTypes.ITEM, new TranslatableComponent("jei.elementalamulets.convertibles.description"), new TranslatableComponent(ModItems.EARTH_ELEMENT.get().getDescriptionId()).withStyle(ChatFormatting.DARK_GREEN));
+        registration.addIngredientInfo(ModItems.AETHER_ELEMENT.get().getDefaultInstance(), VanillaTypes.ITEM, new TranslatableComponent("jei.elementalamulets.aether_element.description"));
         // Misc. Description
-        registration.addIngredientInfo(new ItemStack(ModItems.ELEMENTAL_GUIDE.get()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.guide_book.description"));
-        registration.addIngredientInfo(new ItemStack(ModBlocks.ELEMENTAL_COMBINATOR.get()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.elemental_combinator.description"));
-        registration.addIngredientInfo(new ItemStack(ModBlocks.ELEMENTAL_ORE.get()), VanillaTypes.ITEM, new TranslationTextComponent("jei.elementalamulets.elemental_ore.whereabouts"));
+        registration.addIngredientInfo(new ItemStack(ModItems.ELEMENTAL_GUIDE.get()), VanillaTypes.ITEM, new TranslatableComponent("jei.elementalamulets.guide_book.description"));
+        registration.addIngredientInfo(new ItemStack(ModBlocks.ELEMENTAL_COMBINATOR.get()), VanillaTypes.ITEM, new TranslatableComponent("jei.elementalamulets.elemental_combinator.description"));
+        registration.addIngredientInfo(new ItemStack(ModBlocks.ELEMENTAL_ORE.get()), VanillaTypes.ITEM, new TranslatableComponent("jei.elementalamulets.elemental_ore.whereabouts"));
     }
 
-    private static List<ItemStack> mapTagAsItemList(ITag.INamedTag<Item> tag) {
+    private static List<ItemStack> mapTagAsItemList(Tag.Named<Item> tag) {
         return tag.getValues().stream().map(ItemStack::new).collect(Collectors.toList());
     }
 

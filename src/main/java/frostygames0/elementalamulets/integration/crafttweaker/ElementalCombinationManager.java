@@ -19,20 +19,19 @@
 
 package frostygames0.elementalamulets.integration.crafttweaker;
 
-import com.blamejared.crafttweaker.CraftTweaker;
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
-import com.blamejared.crafttweaker.api.annotations.ZenRegister;
-import com.blamejared.crafttweaker.api.item.IIngredient;
+import com.blamejared.crafttweaker.api.action.recipe.ActionAddRecipe;
+import com.blamejared.crafttweaker.api.annotation.ZenRegister;
+import com.blamejared.crafttweaker.api.ingredient.IIngredient;
 import com.blamejared.crafttweaker.api.item.IItemStack;
-import com.blamejared.crafttweaker.api.managers.IRecipeManager;
-import com.blamejared.crafttweaker.impl.actions.recipes.ActionAddRecipe;
+import com.blamejared.crafttweaker.api.recipe.manager.base.IRecipeManager;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import frostygames0.elementalamulets.init.ModRecipes;
 import frostygames0.elementalamulets.recipes.ElementalCombination;
 import frostygames0.elementalamulets.recipes.ingredient.AmuletIngredient;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.RecipeType;
 import org.openzen.zencode.java.ZenCodeType;
 
 
@@ -68,16 +67,16 @@ public class ElementalCombinationManager implements IRecipeManager {
     @ZenCodeType.Method
     public void addRecipe(String name, IItemStack output, IIngredient[] ingredients, IItemStack elemental, int combinationTime, @ZenCodeType.OptionalBoolean boolean tagTransfer) {
         name = fixRecipeName(name);
-        ResourceLocation id = new ResourceLocation(CraftTweaker.MODID, name);
+        ResourceLocation id = new ResourceLocation("crafttweaker", name);
         if (ingredients.length > ElementalCombination.MAX_INGREDIENTS)
-            CraftTweakerAPI.logError("Recipe: " + id + " of type: " + this.getRecipeType() + " is incorrect/unobtainable! Elemental Combination can only accept " + ElementalCombination.MAX_INGREDIENTS + " ingredients! You've provided " + ingredients.length);
+            CraftTweakerAPI.LOGGER.error("Recipe: " + id + " of type: " + this.getRecipeType() + " is incorrect/unobtainable! Elemental Combination can only accept " + ElementalCombination.MAX_INGREDIENTS + " ingredients! You've provided " + ingredients.length);
         CraftTweakerAPI.apply(new ActionAddRecipe(this,
                 new ElementalCombination(id, Arrays.stream(ingredients).map(IIngredient::asVanillaIngredient).collect(Collectors.toCollection(NonNullList::create)),
                         new AmuletIngredient(elemental.getInternal()), output.getInternal(), combinationTime, tagTransfer)));
     }
 
     @Override
-    public IRecipeType<?> getRecipeType() {
+    public RecipeType<?> getRecipeType() {
         return ModRecipes.ELEMENTAL_COMBINATION_TYPE;
     }
 }

@@ -26,14 +26,14 @@ import frostygames0.elementalamulets.items.ElementItem;
 import frostygames0.elementalamulets.items.ElementalGuideItem;
 import frostygames0.elementalamulets.items.amulets.*;
 import frostygames0.elementalamulets.util.ElementalRarity;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 
 import javax.annotation.Nullable;
@@ -63,8 +63,8 @@ public class ModItems {
     public static final RegistryObject<BlockItem> FIRE_SHARDS_BLOCK = ITEMS.register("fire_shards_block",
             () -> new BlockItem(ModBlocks.FIRE_SHARDS_BLOCK.get(), new Item.Properties().tab(ElementalAmulets.GROUP).rarity(ElementalRarity.FIRE)) {
                 @Override
-                public int getBurnTime(ItemStack itemStack, @Nullable IRecipeType<?> recipeType) {
-                    if (recipeType == IRecipeType.BLASTING) {
+                public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
+                    if (recipeType == RecipeType.BLASTING) {
                         return 22000;
                     }
                     return 20000;
@@ -87,8 +87,8 @@ public class ModItems {
     public static final RegistryObject<Item> FIRE_ELEMENT = ITEMS.register("fire_element",
             () -> new ElementItem(ElementalRarity.FIRE) {
                 @Override
-                public int getBurnTime(ItemStack itemStack, @Nullable IRecipeType<?> recipeType) {
-                    if (recipeType == IRecipeType.BLASTING) {
+                public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
+                    if (recipeType == RecipeType.BLASTING) {
                         return 5000;
                     }
                     return 4500;

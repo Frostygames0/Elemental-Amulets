@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "elementalamulets:all_seeing_lens"
+            "items": [
+              "elementalamulets:all_seeing_lens"
+            ]
           }
         ]
       }

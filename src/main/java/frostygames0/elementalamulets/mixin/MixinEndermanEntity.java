@@ -21,8 +21,8 @@ package frostygames0.elementalamulets.mixin;
 
 import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.util.AmuletHelper;
-import net.minecraft.entity.monster.EndermanEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.monster.EnderMan;
+import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -32,11 +32,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  * @author Frostygames0
  * @date 20.10.2021 20:02
  */
-@Mixin(EndermanEntity.class)
+@Mixin(EnderMan.class)
 public class MixinEndermanEntity {
 
     @Inject(at = @At("HEAD"), method = "isLookingAtMe", cancellable = true)
-    public void elementalamulets_ignorePlayerWithAmulet(PlayerEntity player, CallbackInfoReturnable<Boolean> ci) {
+    public void elementalamulets_ignorePlayerWithAmulet(Player player, CallbackInfoReturnable<Boolean> ci) {
         if (AmuletHelper.getAmuletInSlotOrBelt(ModItems.PACIFYING_AMULET.get(), player).isPresent())
             ci.setReturnValue(false);
     }

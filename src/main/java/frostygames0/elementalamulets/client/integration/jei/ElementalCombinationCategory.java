@@ -22,7 +22,7 @@ package frostygames0.elementalamulets.client.integration.jei;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import frostygames0.elementalamulets.client.screens.ElementalCombinatorScreen;
 import frostygames0.elementalamulets.init.ModBlocks;
 import frostygames0.elementalamulets.recipes.ElementalCombination;
@@ -35,10 +35,10 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 
 
 import java.util.Collections;
@@ -54,7 +54,7 @@ public class ElementalCombinationCategory implements IRecipeCategory<ElementalCo
     private final IDrawable background;
     private final IDrawable icon;
     private final LoadingCache<Integer, IDrawableAnimated> cachedArrows;
-    private final ITextComponent localizedName;
+    private final Component localizedName;
 
     public ElementalCombinationCategory(IGuiHelper helper) {
         this.background = helper.drawableBuilder(ElementalCombinatorScreen.GUI, 6, 5, 149, 74)
@@ -69,7 +69,7 @@ public class ElementalCombinationCategory implements IRecipeCategory<ElementalCo
                                 .buildAnimated(combinationTime, IDrawableAnimated.StartDirection.LEFT, false);
                     }
                 });
-        this.localizedName = new TranslationTextComponent("jei.elementalamulets.elemental_separation");
+        this.localizedName = new TranslatableComponent("jei.elementalamulets.elemental_separation");
     }
 
     private IDrawableAnimated getArrow(ElementalCombination recipe) {
@@ -91,12 +91,7 @@ public class ElementalCombinationCategory implements IRecipeCategory<ElementalCo
     }
 
     @Override
-    public String getTitle() {
-        return this.localizedName.getString();
-    }
-
-    @Override
-    public ITextComponent getTitleAsTextComponent() {
+    public Component getTitle() {
         return this.localizedName;
     }
 
@@ -139,21 +134,21 @@ public class ElementalCombinationCategory implements IRecipeCategory<ElementalCo
     }
 
     @Override
-    public void draw(ElementalCombination recipe, MatrixStack matrixStack, double mouseX, double mouseY) {
+    public void draw(ElementalCombination recipe, PoseStack matrixStack, double mouseX, double mouseY) {
         matrixStack.pushPose();
         // Drawing arrow
         this.getArrow(recipe).draw(matrixStack, 84, 29);
 
         // Drawing text
-        ITextComponent cooldown = new TranslationTextComponent("jei.elementalamulets.cooldown", recipe.getCombinationTime() / 20.0f);
+        Component cooldown = new TranslatableComponent("jei.elementalamulets.cooldown", recipe.getCombinationTime() / 20.0f);
         Minecraft.getInstance().font.draw(matrixStack, cooldown, 4, 77, 0xFF808080);
         matrixStack.popPose();
     }
 
     @Override
-    public List<ITextComponent> getTooltipStrings(ElementalCombination recipe, double mouseX, double mouseY) {
+    public List<Component> getTooltipStrings(ElementalCombination recipe, double mouseX, double mouseY) {
         if (mouseX >= 139 && mouseX <= 148 && mouseY <= 5 && mouseY >= 0) {
-            return Collections.singletonList(new TranslationTextComponent("jei.elementalamulets.shapeless"));
+            return Collections.singletonList(new TranslatableComponent("jei.elementalamulets.shapeless"));
         }
         return Collections.emptyList();
     }

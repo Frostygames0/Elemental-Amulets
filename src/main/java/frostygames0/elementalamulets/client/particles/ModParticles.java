@@ -21,9 +21,9 @@ package frostygames0.elementalamulets.client.particles;
 
 import frostygames0.elementalamulets.ElementalAmulets;
 import net.minecraft.client.Minecraft;
-import net.minecraft.particles.BasicParticleType;
-import net.minecraft.particles.ParticleType;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -34,8 +34,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ModParticles {
     public static final DeferredRegister<ParticleType<?>> PARTICLES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, ElementalAmulets.MOD_ID);
 
-    public static final RegistryObject<BasicParticleType> COMBINATION_PARTICLE = PARTICLES.register("combination",
-            () -> new BasicParticleType(true));
+    public static final RegistryObject<SimpleParticleType> COMBINATION_PARTICLE = PARTICLES.register("combination",
+            () -> new SimpleParticleType(true));
 
     public static void registerFactories() {
         Minecraft.getInstance().particleEngine.register(COMBINATION_PARTICLE.get(), CombinationParticle.Factory::new);

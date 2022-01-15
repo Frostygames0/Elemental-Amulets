@@ -23,15 +23,15 @@ import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.PacifyingAmuletItem;
 import frostygames0.elementalamulets.util.AmuletHelper;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.CooldownTracker;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.item.ItemCooldowns;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
 /**
@@ -40,8 +40,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
  */
 class PacifyingAmuletEffect {
     static void onLivingHurt(LivingHurtEvent event) {
-        if (event.getEntityLiving() instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+        if (event.getEntityLiving() instanceof Player player) {
             if (!player.level.isClientSide()) {
                 AmuletHelper.getAmuletInSlotOrBelt(ModItems.PACIFYING_AMULET.get(), player).ifPresent(triple -> {
                     ItemStack amulet = triple.getRight();
@@ -52,23 +51,21 @@ class PacifyingAmuletEffect {
                     if (damager == player)
                         return;
 
-                    CooldownTracker tracker = player.getCooldowns();
+                    ItemCooldowns tracker = player.getCooldowns();
                     if (tracker.isOnCooldown(item))
                         return;
 
-                    if (damager instanceof LivingEntity) {
-                        LivingEntity livingDamager = (LivingEntity) damager;
+                    if (damager instanceof LivingEntity livingDamager) {
 
                         int disorientationTime = ModConfig.CachedValues.PACIFYING_AMULET_DISORIENTATION_TIME;
 
-                        if (livingDamager.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, disorientationTime, 2, true, true, true))) {
-                            if (livingDamager instanceof PlayerEntity) {
-                                PlayerEntity damagingPlayer = (PlayerEntity) livingDamager;
-                                damagingPlayer.addEffect(new EffectInstance(Effects.BLINDNESS, (disorientationTime / 2), 2));
-                                damagingPlayer.addEffect(new EffectInstance(Effects.CONFUSION, disorientationTime, 2));
-                                damagingPlayer.displayClientMessage(new TranslationTextComponent("item.elementalamulets.pacifying_amulet.tired").withStyle(TextFormatting.RED), true);
+                        if (livingDamager.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, disorientationTime, 2, true, true, true))) {
+                            if (livingDamager instanceof Player damagingPlayer) {
+                                damagingPlayer.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, (disorientationTime / 2), 2));
+                                damagingPlayer.addEffect(new MobEffectInstance(MobEffects.CONFUSION, disorientationTime, 2));
+                                damagingPlayer.displayClientMessage(new TranslatableComponent("item.elementalamulets.pacifying_amulet.tired").withStyle(ChatFormatting.RED), true);
                             }
-                            player.displayClientMessage(new TranslationTextComponent("item.elementalamulets.pacifying_amulet.tired_success").withStyle(TextFormatting.GREEN), true);
+                            player.displayClientMessage(new TranslatableComponent("item.elementalamulets.pacifying_amulet.tired_success").withStyle(ChatFormatting.GREEN), true);
                         }
                     }
                 });

@@ -19,31 +19,33 @@
 
 package frostygames0.elementalamulets.items;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author Frostygames0
  * @date 23.10.2021 13:05
  */
 public class AncientTabletItem extends Item {
+    private final Random random = new Random();
     public AncientTabletItem(Properties pProperties) {
         super(pProperties);
     }
 
     @Override
-    public void appendHoverText(ItemStack pStack, @Nullable World pLevel, List<ITextComponent> pTooltip, ITooltipFlag pFlag) {
+    public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
         super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
-        pTooltip.add(new TranslationTextComponent("item.elementalamulets.ancient_tablet.tooltip").withStyle(TextFormatting.GRAY));
+        pTooltip.add(new TranslatableComponent("item.elementalamulets.ancient_tablet.tooltip").withStyle(ChatFormatting.GRAY));
     }
 
     @Override
@@ -51,6 +53,7 @@ public class AncientTabletItem extends Item {
         return true;
     }
 
+    // TODO find random to random
     @Override
     public ItemStack getContainerItem(ItemStack itemStack) {
         ItemStack stack = new ItemStack(this);
