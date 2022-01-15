@@ -21,7 +21,7 @@ package frostygames0.elementalamulets.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
-import frostygames0.elementalamulets.blocks.tiles.ElementalCombinatorTile;
+import frostygames0.elementalamulets.blocks.tiles.ElementalCombinatorBlockEntity;
 import frostygames0.elementalamulets.config.ModConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
@@ -40,15 +40,15 @@ import net.minecraftforge.items.CapabilityItemHandler;
  * @author Frostygames0
  * @date 13.06.2021 18:11
  */
-public class ElementalCombinatorRenderer implements BlockEntityRenderer<ElementalCombinatorTile> {
-    private BlockRenderDispatcher blockRenderer;
+public class ElementalCombinatorRenderer implements BlockEntityRenderer<ElementalCombinatorBlockEntity> {
+    private final BlockRenderDispatcher blockRenderer;
 
     public ElementalCombinatorRenderer(BlockEntityRendererProvider.Context pContext) {
         this.blockRenderer = pContext.getBlockRenderDispatcher();
     }
 
     @Override
-    public void render(ElementalCombinatorTile tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
+    public void render(ElementalCombinatorBlockEntity tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
         Level world = tileEntityIn.getLevel();
 
         ItemStack stack = tileEntityIn.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).map(h -> h.getStackInSlot(0)).orElse(ItemStack.EMPTY);

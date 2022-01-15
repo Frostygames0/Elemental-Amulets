@@ -67,11 +67,11 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class ElementalCombinatorTile extends BlockEntity implements MenuProvider {
+public class ElementalCombinatorBlockEntity extends BlockEntity implements MenuProvider {
     private final ItemStackHandler handler = new ItemStackHandler(10) {
         @Override
         protected void onContentsChanged(int slot) {
-            ElementalCombinatorTile.this.setChanged();
+            ElementalCombinatorBlockEntity.this.setChanged();
             if (slot == 0)
                 level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
         }
@@ -83,25 +83,18 @@ public class ElementalCombinatorTile extends BlockEntity implements MenuProvider
     private final ContainerData combinatorData = new ContainerData() {
         @Override
         public int get(int index) {
-            switch (index) {
-                case 0:
-                    return ElementalCombinatorTile.this.combinationTime;
-                case 1:
-                    return ElementalCombinatorTile.this.totalTime;
-                default:
-                    return 0;
-            }
+            return switch (index) {
+                case 0 -> ElementalCombinatorBlockEntity.this.combinationTime;
+                case 1 -> ElementalCombinatorBlockEntity.this.totalTime;
+                default -> 0;
+            };
         }
 
         @Override
         public void set(int index, int value) {
             switch (index) {
-                case 0:
-                    ElementalCombinatorTile.this.combinationTime = value;
-                    break;
-                case 1:
-                    ElementalCombinatorTile.this.totalTime = value;
-                    break;
+                case 0 -> ElementalCombinatorBlockEntity.this.combinationTime = value;
+                case 1 -> ElementalCombinatorBlockEntity.this.totalTime = value;
             }
         }
 
@@ -111,7 +104,7 @@ public class ElementalCombinatorTile extends BlockEntity implements MenuProvider
         }
     };
 
-    public ElementalCombinatorTile(BlockPos pWorldPosition, BlockState pBlockState) {
+    public ElementalCombinatorBlockEntity(BlockPos pWorldPosition, BlockState pBlockState) {
         super(ModBEs.ELEMENTAL_COMBINATOR_TILE.get(), pWorldPosition, pBlockState);
     }
 

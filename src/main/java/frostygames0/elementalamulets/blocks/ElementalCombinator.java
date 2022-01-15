@@ -19,7 +19,7 @@
 
 package frostygames0.elementalamulets.blocks;
 
-import frostygames0.elementalamulets.blocks.tiles.ElementalCombinatorTile;
+import frostygames0.elementalamulets.blocks.tiles.ElementalCombinatorBlockEntity;
 import frostygames0.elementalamulets.config.ModConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
@@ -58,11 +58,11 @@ public class ElementalCombinator extends Block implements EntityBlock {
             return InteractionResult.SUCCESS;
         }
         BlockEntity te = worldIn.getBlockEntity(pos);
-        if (te instanceof ElementalCombinatorTile elementalCombinatorTile) {
+        if (te instanceof ElementalCombinatorBlockEntity elementalCombinatorBlockEntity) {
             if (!player.isShiftKeyDown()) {
-                NetworkHooks.openGui((ServerPlayer) player, elementalCombinatorTile, elementalCombinatorTile.getBlockPos());
+                NetworkHooks.openGui((ServerPlayer) player, elementalCombinatorBlockEntity, elementalCombinatorBlockEntity.getBlockPos());
             } else {
-                if (ModConfig.CachedValues.OLD_FASHIONED_WAY) elementalCombinatorTile.startCombination();
+                if (ModConfig.CachedValues.OLD_FASHIONED_WAY) elementalCombinatorBlockEntity.startCombination();
             }
         } else {
             throw new IllegalStateException("Block Entity is not correct! Cannot do any action!");
@@ -79,7 +79,7 @@ public class ElementalCombinator extends Block implements EntityBlock {
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!state.is(newState.getBlock())) {
             BlockEntity tileEntity = worldIn.getBlockEntity(pos);
-            if (tileEntity instanceof ElementalCombinatorTile) {
+            if (tileEntity instanceof ElementalCombinatorBlockEntity) {
                 tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
                     for (int i = 0; i < h.getSlots(); i++) {
                         popResource(worldIn, pos, h.getStackInSlot(i));
@@ -98,7 +98,7 @@ public class ElementalCombinator extends Block implements EntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pPos, BlockState pState) {
-        return new ElementalCombinatorTile(pPos, pState);
+        return new ElementalCombinatorBlockEntity(pPos, pState);
     }
 
     @Nullable
@@ -106,7 +106,7 @@ public class ElementalCombinator extends Block implements EntityBlock {
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
         if(!pLevel.isClientSide()) {
             return (lvl, pos, stt, te) -> {
-                if (te instanceof ElementalCombinatorTile tile) tile.tick();
+                if (te instanceof ElementalCombinatorBlockEntity tile) tile.tick();
             };
         }
         return null;

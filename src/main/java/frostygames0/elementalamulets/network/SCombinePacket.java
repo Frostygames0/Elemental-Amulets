@@ -19,11 +19,11 @@
 
 package frostygames0.elementalamulets.network;
 
-import frostygames0.elementalamulets.blocks.tiles.ElementalCombinatorTile;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.level.block.entity.BlockEntity;
+import frostygames0.elementalamulets.blocks.tiles.ElementalCombinatorBlockEntity;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.network.NetworkEvent;
 
 
@@ -54,8 +54,8 @@ public class SCombinePacket {
             Level world = ctx.getSender().level;
             if (world.hasChunkAt(pos)) {
                 BlockEntity tile = world.getBlockEntity(pos);
-                if (tile instanceof ElementalCombinatorTile) {
-                    ((ElementalCombinatorTile) tile).startCombination();
+                if (tile instanceof ElementalCombinatorBlockEntity) {
+                    ((ElementalCombinatorBlockEntity) tile).startCombination();
                 }
             }
         });
