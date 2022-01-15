@@ -21,32 +21,27 @@ package frostygames0.elementalamulets.items.amulets;
 
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.mixin.accessors.AccessorTargetGoal;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.world.entity.NeutralMob;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.ai.goal.GoalSelector;
 import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.ai.goal.target.TargetGoal;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.item.ItemCooldowns;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Vec3i;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.phys.AABB;
 import top.theillusivec4.curios.api.CuriosApi;
-
-
-import java.util.stream.Collectors;
-
-import net.minecraft.world.item.Item.Properties;
 
 /**
  * @author Frostygames0
@@ -62,8 +57,7 @@ public class PacifyingAmuletItem extends AmuletItem {
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
         Level world = livingEntity.level;
         if (!world.isClientSide()) {
-            if (livingEntity instanceof Player) {
-                Player player = (Player) livingEntity;
+            if (livingEntity instanceof Player player) {
                 ItemCooldowns tracker = player.getCooldowns();
 
                 if (tracker.isOnCooldown(this))
@@ -78,8 +72,7 @@ public class PacifyingAmuletItem extends AmuletItem {
 
                         GoalSelector selector = mob.targetSelector;
                         for (WrappedGoal priGoal : selector.getRunningGoals().toList()) {
-                            if (priGoal.getGoal() instanceof TargetGoal) {
-                                TargetGoal goal = (TargetGoal) priGoal.getGoal();
+                            if (priGoal.getGoal() instanceof TargetGoal goal) {
 
                                 if (((AccessorTargetGoal) goal).getTargetMob() == player)
                                     // This should stop mobs that use TargetGoal to be angry after they stop being angry
