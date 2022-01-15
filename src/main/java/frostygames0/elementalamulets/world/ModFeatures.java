@@ -46,6 +46,7 @@ public class ModFeatures {
 
     public static void register() {
         Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, modPrefix("elemental_ore"), ELEMENTAL_ORE.get());
+        // ABOBA
     }
 
     @SubscribeEvent(priority = EventPriority.HIGH)
