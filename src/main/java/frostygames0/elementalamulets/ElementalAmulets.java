@@ -26,6 +26,9 @@ import frostygames0.elementalamulets.init.*;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import frostygames0.elementalamulets.network.ModNetworkHandler;
 import frostygames0.elementalamulets.world.LootTableModifiers;
+import frostygames0.elementalamulets.world.structures.CultTempleStructure;
+import frostygames0.elementalamulets.world.structures.ModStructures;
+import frostygames0.elementalamulets.world.structures.StructureFeatures;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
@@ -70,7 +73,7 @@ public class ElementalAmulets {
         ModMenus.MENUS.register(bus);
         ModRecipes.SERIALIZERS.register(bus);
         ModVillagers.register(bus);
-        //ModStructures.STRUCTURES.register(bus);
+        ModStructures.STRUCTURES.register(bus);
         ModParticles.PARTICLES.register(bus);
 
         bus.addGenericListener(GlobalLootModifierSerializer.class, LootTableModifiers::registerLootModifierSerializer); // Loot modification register
@@ -85,6 +88,7 @@ public class ElementalAmulets {
 
         forgeBus.addListener(ModCommands::registerCommandsEvent);
         forgeBus.addListener(ModVillagers.Structures::addHouses);
+        forgeBus.addListener(CultTempleStructure::addMobsToSpawn);
     }
 
     // use this instead, when you need a ResourceLocation with mod's id
@@ -100,8 +104,8 @@ public class ElementalAmulets {
     private void commonSetup(final FMLCommonSetupEvent event) {
         ModNetworkHandler.registerMessages();
         event.enqueueWork(() -> {
-            //ModStructures.setupStructures();
-            //StructureFeatures.register();
+            ModStructures.setupStructures();
+            StructureFeatures.register();
 
             //ModFeatures.register();
 

@@ -16,28 +16,29 @@
  *     You should have received a copy of the GNU Lesser General Public License
  *     along with Elemental Amulets.  If not, see <https://www.gnu.org/licenses/>.
  */
-/*
+
 package frostygames0.elementalamulets.world.structures;
 
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableMultimap;
 import com.mojang.serialization.Codec;
 import frostygames0.elementalamulets.ElementalAmulets;
-import frostygames0.elementalamulets.config.ModConfig;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.FlatLevelSource;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.StructureSettings;
+import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.StructureFeatureConfiguration;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
@@ -54,7 +55,7 @@ import java.util.Map;
 public class ModStructures {
     public static final DeferredRegister<StructureFeature<?>> STRUCTURES = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, ElementalAmulets.MOD_ID);
 
-    public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> CULT_TEMPLE = STRUCTURES.register("cult_temple", CultTempleStructure::new);
+    public static final RegistryObject<StructureFeature<JigsawConfiguration>> CULT_TEMPLE = STRUCTURES.register("cult_temple", CultTempleStructure::new);
 
     public static void setupStructures() {
         setup(CULT_TEMPLE.get(), new StructureFeatureConfiguration(50, 12, 234235432));
@@ -80,39 +81,76 @@ public class ModStructures {
 
     private static Method GETCODEC_METHOD;
 
-    @SuppressWarnings("unchecked")
     @SubscribeEvent
     public static void addDimensionalSpacing(final WorldEvent.Load event) {
-        if (event.getWorld() instanceof ServerLevel) {
-            ServerLevel serverWorld = (ServerLevel) event.getWorld();
+        if (event.getWorld() instanceof ServerLevel serverLevel) {
+            ChunkGenerator chunkGenerator = serverLevel.getChunkSource().getGenerator();
 
-            // Skips TerraForged generator
-            try {
-                if (GETCODEC_METHOD == null)
-                    GETCODEC_METHOD = ObfuscationReflectionHelper.findMethod(ChunkGenerator.class, "func_230347_a_");
-                ResourceLocation cgRL = Registry.CHUNK_GENERATOR.getKey((Codec<? extends ChunkGenerator>) GETCODEC_METHOD.invoke(serverWorld.getChunkSource().getGenerator()));
-                if (cgRL != null && cgRL.getNamespace().equals("terraforged")) return;
-            } catch (Exception e) {
-                ElementalAmulets.LOGGER.error("Was unable to check if " + serverWorld.dimension().location() + " is using Terraforged's ChunkGenerator.");
-            }
-
-            if (serverWorld.getChunkSource().getGenerator() instanceof FlatLevelSource &&
-                    serverWorld.dimension().equals(Level.OVERWORLD)) {
+            // Skip superflat worlds to prevent issues with it. Plus, users don't want structures clogging up their superflat worlds.
+            if (chunkGenerator instanceof FlatLevelSource && serverLevel.dimension().equals(Level.OVERWORLD)) {
                 return;
             }
 
-            Map<StructureFeature<?>, StructureFeatureConfiguration> tempMap = new HashMap<>(serverWorld.getChunkSource().getGenerator().getSettings().structureConfig());
+
+            /*
+             * Because only way to add structure is this as forge removed this from their event %(
+             */
+            StructureSettings worldStructureConfig = chunkGenerator.getSettings();
+
+            // Create a mutable map we will use for easier adding to biomes
+            HashMap<StructureFeature<?>, HashMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> STStructureToMultiMap = new HashMap<>();
+
+            // Add the resourcekey of all biomes that this Configured Structure can spawn in.
+            for (Map.Entry<ResourceKey<Biome>, Biome> biomeEntry : serverLevel.registryAccess().ownedRegistryOrThrow(Registry.BIOME_REGISTRY).entrySet()) {
+                // Skip all ocean, end, nether, and none category biomes.
+                // You can do checks for other traits that the biome has.
+                Biome.BiomeCategory biomeCategory = biomeEntry.getValue().getBiomeCategory();
+                if (biomeCategory != Biome.BiomeCategory.OCEAN && biomeCategory != Biome.BiomeCategory.THEEND && biomeCategory != Biome.BiomeCategory.NETHER && biomeCategory != Biome.BiomeCategory.NONE) {
+                    if (biomeCategory == Biome.BiomeCategory.JUNGLE)
+                        associateBiomeToConfiguredStructure(STStructureToMultiMap, StructureFeatures.CONFIGURED_CULT_TEMPLE, biomeEntry.getKey());
+                }
+            }
+            ImmutableMap.Builder<StructureFeature<?>, ImmutableMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> tempStructureToMultiMap = ImmutableMap.builder();
+            worldStructureConfig.configuredStructures.entrySet().stream().filter(entry -> !STStructureToMultiMap.containsKey(entry.getKey())).forEach(tempStructureToMultiMap::put);
+            STStructureToMultiMap.forEach((key, value) -> tempStructureToMultiMap.put(key, ImmutableMultimap.copyOf(value)));
+            worldStructureConfig.configuredStructures = tempStructureToMultiMap.build();
+
+
+            try {
+                if (GETCODEC_METHOD == null)
+                    GETCODEC_METHOD = ObfuscationReflectionHelper.findMethod(ChunkGenerator.class, "codec");
+                ResourceLocation cgRL = Registry.CHUNK_GENERATOR.getKey((Codec<? extends ChunkGenerator>) GETCODEC_METHOD.invoke(chunkGenerator));
+                if (cgRL != null && cgRL.getNamespace().equals("terraforged")) return;
+            } catch (Exception e) {
+                ElementalAmulets.LOGGER.error("Was unable to check if " + serverLevel.dimension().location() + " is using Terraforged's ChunkGenerator.");
+            }
+
+            Map<StructureFeature<?>, StructureFeatureConfiguration> tempMap = new HashMap<>(worldStructureConfig.structureConfig());
             tempMap.putIfAbsent(ModStructures.CULT_TEMPLE.get(), StructureSettings.DEFAULTS.get(ModStructures.CULT_TEMPLE.get()));
-            serverWorld.getChunkSource().getGenerator().getSettings().structureConfig = tempMap;
+            worldStructureConfig.structureConfig = tempMap;
         }
     }
 
-    @SubscribeEvent(priority = EventPriority.HIGH)
-    public static void addStructuresToWorld(BiomeLoadingEvent event) {
-        if (event.getCategory() == Biome.BiomeCategory.JUNGLE && ModConfig.CachedValues.GENERATE_CULT_TEMPLE)
-            event.getGeneration()..add(() -> StructureFeatures.CONFIGURED_CULT_TEMPLE);
+    /**
+     * Helper method that handles setting up the map to multimap relationship to help prevent issues.
+     */
+    private static void associateBiomeToConfiguredStructure(Map<StructureFeature<?>, HashMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> STStructureToMultiMap, ConfiguredStructureFeature<?, ?> configuredStructureFeature, ResourceKey<Biome> biomeRegistryKey) {
+        STStructureToMultiMap.putIfAbsent(configuredStructureFeature.feature, HashMultimap.create());
+        HashMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>> configuredStructureToBiomeMultiMap = STStructureToMultiMap.get(configuredStructureFeature.feature);
+        if (configuredStructureToBiomeMultiMap.containsValue(biomeRegistryKey)) {
+            ElementalAmulets.LOGGER.error("""
+                                Detected 2 ConfiguredStructureFeatures that share the same base StructureFeature trying to be added to same biome. One will be prevented from spawning.
+                                This issue happens with vanilla too and is why a Snowy Village and Plains Village cannot spawn in the same biome because they both use the Village base structure.
+                                The two conflicting ConfiguredStructures are: {}, {}
+                                The biome that is attempting to be shared: {}
+                            """,
+                    BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE.getId(configuredStructureFeature),
+                    BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE.getId(configuredStructureToBiomeMultiMap.entries().stream().filter(e -> e.getValue() == biomeRegistryKey).findFirst().get().getKey()),
+                    biomeRegistryKey
+            );
+        } else {
+            configuredStructureToBiomeMultiMap.put(configuredStructureFeature, biomeRegistryKey);
+        }
     }
 
-
 }
-*/

@@ -16,25 +16,22 @@
  *     You should have received a copy of the GNU Lesser General Public License
  *     along with Elemental Amulets.  If not, see <https://www.gnu.org/licenses/>.
  */
-/*
+
 package frostygames0.elementalamulets.world.structures;
 
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
-import net.minecraft.world.level.levelgen.flat.FlatLevelGeneratorSettings;
-import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import net.minecraft.data.worldgen.PlainVillagePools;
 import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
 
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 public class StructureFeatures {
-    public static ConfiguredStructureFeature<?, ?> CONFIGURED_CULT_TEMPLE = ModStructures.CULT_TEMPLE.get().configured(FeatureConfiguration.NONE);
+    public static ConfiguredStructureFeature<?, ?> CONFIGURED_CULT_TEMPLE = ModStructures.CULT_TEMPLE.get().configured(new JigsawConfiguration(() -> PlainVillagePools.START, 0));
 
     public static void register() {
         Registry.register(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, modPrefix("cult_temple"), CONFIGURED_CULT_TEMPLE);
-
-        FlatLevelGeneratorSettings.STRUCTURE_FEATURES.put(ModStructures.CULT_TEMPLE.get(), CONFIGURED_CULT_TEMPLE);
     }
 }
-*/
