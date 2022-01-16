@@ -42,7 +42,8 @@ public class WaterAmuletItem extends AmuletItem {
     }
 
     @Override
-    public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
+    public void curioTick(SlotContext ctx, ItemStack stack) {
+        LivingEntity livingEntity = ctx.entity();
         if (!livingEntity.level.isClientSide()) {
             AttributeInstance att = livingEntity.getAttribute(ForgeMod.SWIM_SPEED.get());
             AttributeModifier attMod = new AttributeModifier(MODIFIER_UUID, modPrefix("swim_speed_boost").toString(),
@@ -59,7 +60,7 @@ public class WaterAmuletItem extends AmuletItem {
 
     @Override
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
-        AttributeInstance att = slotContext.getWearer().getAttribute(ForgeMod.SWIM_SPEED.get());
+        AttributeInstance att = slotContext.entity().getAttribute(ForgeMod.SWIM_SPEED.get());
         if (AmuletHelper.compareAmulets(stack, newStack)) {
             AttributeUtil.removeModifierByUUID(att, MODIFIER_UUID);
         }

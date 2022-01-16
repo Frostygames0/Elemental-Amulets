@@ -35,9 +35,9 @@ class FireAmuletEffect {
             if (!player.level.isClientSide()) {
                 if (source.isFire()) {
                     AmuletHelper.getAmuletInSlotOrBelt(ModItems.FIRE_AMULET.get(), player).ifPresent((triple) -> {
-                        FireAmuletItem amulet = (FireAmuletItem) triple.getRight().getItem();
-                        float fire = 1 - amulet.getFireResist(triple.getRight());
-                        float lava = 1 - amulet.getLavaResist(triple.getRight());
+                        FireAmuletItem amulet = (FireAmuletItem) triple.stack().getItem();
+                        float fire = 1 - amulet.getFireResist(triple.stack());
+                        float lava = 1 - amulet.getLavaResist(triple.stack());
                         if (source == DamageSource.IN_FIRE || source == DamageSource.ON_FIRE) {
                             if (fire < 0.001f) event.setCanceled(true);
                         } else {
@@ -55,9 +55,9 @@ class FireAmuletEffect {
             if (!player.level.isClientSide()) {
                 if (source.isFire()) {
                     AmuletHelper.getAmuletInSlotOrBelt(ModItems.FIRE_AMULET.get(), player).ifPresent((triple) -> {
-                        FireAmuletItem amulet = (FireAmuletItem) triple.getRight().getItem();
-                        float fire = 1 - amulet.getFireResist(triple.getRight());
-                        float lava = 1 - amulet.getLavaResist(triple.getRight());
+                        FireAmuletItem amulet = (FireAmuletItem) triple.stack().getItem();
+                        float fire = 1 - amulet.getFireResist(triple.stack());
+                        float lava = 1 - amulet.getLavaResist(triple.stack());
                         if (source == DamageSource.IN_FIRE || source == DamageSource.ON_FIRE) {
                             if (fire < 0.999f) {
                                 if (fire < 0.001f) {

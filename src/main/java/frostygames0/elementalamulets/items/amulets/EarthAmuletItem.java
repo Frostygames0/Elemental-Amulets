@@ -36,6 +36,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.BiomeDictionary;
+import top.theillusivec4.curios.api.SlotContext;
 
 
 import java.util.Random;
@@ -50,11 +51,11 @@ public class EarthAmuletItem extends AmuletItem {
     }
 
     @Override
-    public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
+    public void curioTick(SlotContext ctx, ItemStack stack) {
+        LivingEntity livingEntity = ctx.entity();
         Level world = livingEntity.level;
         if (!world.isClientSide()) {
-            if (livingEntity instanceof Player) {
-                Player player = (Player) livingEntity;
+            if (livingEntity instanceof Player player) {
                 ItemCooldowns cooldownTracker = player.getCooldowns();
                 if (!cooldownTracker.isOnCooldown(this)) {
                     int boosted = boostLocalPlants(world, stack, player.blockPosition(), world.random);
@@ -75,8 +76,7 @@ public class EarthAmuletItem extends AmuletItem {
             BlockState blockState = world.getBlockState(blockPos);
             Block block = blockState.getBlock();
 
-            if (block instanceof BonemealableBlock) {
-                BonemealableBlock growable = (BonemealableBlock) block;
+            if (block instanceof BonemealableBlock growable) {
                 if (random.nextInt(50) <= this.getTier(amulet)) {
                     if (growable.isValidBonemealTarget(world, blockPos, blockState, false) &&
                             ModTags.Blocks.EARTH_AMULET_BOOSTABLE.contains(block)) {

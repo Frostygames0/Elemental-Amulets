@@ -40,7 +40,7 @@ class TerraProtectionAmuletEffect {
         if (event.getEntityLiving() instanceof Player player) {
             if (!player.level.isClientSide()) {
                 AmuletHelper.getAmuletInSlotOrBelt(ModItems.TERRA_PROTECTION_AMULET.get(), player).ifPresent(triple -> {
-                    ItemStack stack = triple.getRight();
+                    ItemStack stack = triple.stack();
                     TerraProtectionAmuletItem amulet = (TerraProtectionAmuletItem) stack.getItem();
                     if (amulet.canProtect(stack)) {
                         if (event.getSource().getEntity() instanceof LivingEntity attacker) {
@@ -62,7 +62,7 @@ class TerraProtectionAmuletEffect {
         if (target instanceof Player entity) {
             if (!entity.level.isClientSide()) {
                 AmuletHelper.getAmuletInSlotOrBelt(ModItems.TERRA_PROTECTION_AMULET.get(), entity).ifPresent(triple -> {
-                    ItemStack stack = triple.getRight();
+                    ItemStack stack = triple.stack();
                     TerraProtectionAmuletItem amulet = (TerraProtectionAmuletItem) stack.getItem(); // For future
                     if (amulet.canProtect(stack)) {
                         projectile.setDeltaMovement(projectile.getDeltaMovement().reverse().scale(0.5)); // I don't want arrows to shoot with the same speed as it looks awful
@@ -88,7 +88,7 @@ class TerraProtectionAmuletEffect {
         if (event.getEntityLiving() instanceof Player player) {
             if (!player.level.isClientSide()) {
                 AmuletHelper.getAmuletInSlotOrBelt(ModItems.TERRA_PROTECTION_AMULET.get(), player).ifPresent(triple -> {
-                    ItemStack stack = triple.getRight();
+                    ItemStack stack = triple.stack();
                     TerraProtectionAmuletItem amulet = (TerraProtectionAmuletItem) stack.getItem();
                     event.setCanceled(amulet.canProtect(stack));
                 });

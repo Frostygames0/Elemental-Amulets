@@ -39,7 +39,7 @@ class KnockbackAmuletEffect {
                 AmuletHelper.getAmuletInSlotOrBelt(ModItems.KNOCKBACK_AMULET.get(), player).ifPresent(triple -> {
                     if (event.getSource().getEntity() instanceof LivingEntity attacker) {
 
-                        ItemStack stack = triple.getRight();
+                        ItemStack stack = triple.stack();
                         KnockbackAmuletItem amulet = (KnockbackAmuletItem) stack.getItem();
                         attacker.knockback(amulet.getKnockback(stack), Mth.sin(player.getYRot() * ((float) Math.PI / 180F)), -Mth.cos(player.getYRot() * ((float) Math.PI / 180F)));
                     }

@@ -41,7 +41,7 @@ class JumpAmuletEffect {
             if (!player.level.isClientSide()) {
                 if (event.getSource() == DamageSource.FALL) {
                     AmuletHelper.getAmuletInSlotOrBelt(ModItems.JUMP_AMULET.get(), player).ifPresent((triple) -> {
-                        float fallResist = ((JumpAmuletItem) triple.getRight().getItem()).getFallResist(triple.getRight());
+                        float fallResist = ((JumpAmuletItem) triple.stack().getItem()).getFallResist(triple.stack());
                         if (!event.isCanceled() && fallResist > 0) {
                             float finalDamage = Math.max(0, (event.getAmount() - fallResist));
                             if (finalDamage == 0) {
@@ -61,7 +61,7 @@ class JumpAmuletEffect {
             if (!player.level.isClientSide()) {
                 if (event.getSource() == DamageSource.FALL) {
                     AmuletHelper.getAmuletInSlotOrBelt(ModItems.JUMP_AMULET.get(), player).ifPresent((triple) -> {
-                        float fallResist = ((JumpAmuletItem) triple.getRight().getItem()).getFallResist(triple.getRight());
+                        float fallResist = ((JumpAmuletItem) triple.stack().getItem()).getFallResist(triple.stack());
                         if (!event.isCanceled() && fallResist > 0) {
                             float finalDamage = Math.max(0, (event.getAmount() - fallResist));
                             if (finalDamage == 0) {
@@ -80,7 +80,7 @@ class JumpAmuletEffect {
             if (!world.isClientSide) {
                 if (world.getFluidState(player.blockPosition()).isEmpty()) {
                     AmuletHelper.getAmuletInSlotOrBelt(ModItems.JUMP_AMULET.get(), player).ifPresent(triple -> {
-                        ItemStack stack = triple.getRight();
+                        ItemStack stack = triple.stack();
                         JumpAmuletItem item = (JumpAmuletItem) stack.getItem();
 
                         Vec3 vector = player.getDeltaMovement().add(0, item.getJump(stack), 0);

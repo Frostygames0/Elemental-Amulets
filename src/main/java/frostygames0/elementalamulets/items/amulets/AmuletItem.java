@@ -130,7 +130,7 @@ public abstract class AmuletItem extends Item implements ICurioItem, ICurioRende
     @Override
     public void onEquip(SlotContext slotContext, ItemStack prevStack, ItemStack stack) {
         if (prevStack.getItem() != stack.getItem()) {
-            LivingEntity entity = slotContext.getWearer();
+            LivingEntity entity = slotContext.entity();
             if (!entity.level.isClientSide() && entity instanceof ServerPlayer player) {
 
                 ModCriteriaTriggers.SUCCESS_USE.trigger(player, stack);
@@ -200,7 +200,7 @@ public abstract class AmuletItem extends Item implements ICurioItem, ICurioRende
     }
 
     /**
-     * Defines if amulet uses curio methods (like {@link ICurioItem#curioTick(String, int, LivingEntity, ItemStack)}
+     * Defines if amulet uses curio methods (like {@link ICurioItem#curioTick(SlotContext, ItemStack)}
      */
     public boolean usesCurioMethods() {
         return true;

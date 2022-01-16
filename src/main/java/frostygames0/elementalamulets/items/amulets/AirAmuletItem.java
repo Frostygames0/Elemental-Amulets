@@ -45,8 +45,8 @@ public class AirAmuletItem extends AmuletItem {
     }
 
     @Override
-    public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
-
+    public void curioTick(SlotContext ctx, ItemStack stack) {
+        LivingEntity livingEntity = ctx.entity();
         AttributeInstance gravity = livingEntity.getAttribute(ForgeMod.ENTITY_GRAVITY.get());
         AttributeModifier attMod = new AttributeModifier(AirAmuletItem.MODIFIER_UUID, modPrefix("air_speed").toString(),
                 this.getFloating(stack), AttributeModifier.Operation.ADDITION);
@@ -61,7 +61,7 @@ public class AirAmuletItem extends AmuletItem {
 
     @Override
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
-        AttributeInstance att = slotContext.getWearer().getAttribute(ForgeMod.ENTITY_GRAVITY.get());
+        AttributeInstance att = slotContext.entity().getAttribute(ForgeMod.ENTITY_GRAVITY.get());
         if (!AmuletHelper.compareAmulets(stack, newStack)) {
             AttributeUtil.removeModifierByUUID(att, MODIFIER_UUID);
         }

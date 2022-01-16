@@ -42,6 +42,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.SlotContext;
 
 /**
  * @author Frostygames0
@@ -54,7 +55,8 @@ public class PacifyingAmuletItem extends AmuletItem {
     }
 
     @Override
-    public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
+    public void curioTick(SlotContext ctx, ItemStack stack) {
+        LivingEntity livingEntity = ctx.entity();
         Level world = livingEntity.level;
         if (!world.isClientSide()) {
             if (livingEntity instanceof Player player) {
@@ -80,7 +82,7 @@ public class PacifyingAmuletItem extends AmuletItem {
                             }
                         }
                         angerable.stopBeingAngry();
-                        stack.hurtAndBreak(1, player, playerEnt -> this.onAmuletBreak(identifier, index, playerEnt));
+                        stack.hurtAndBreak(1, player, playerEnt -> this.onAmuletBreak(ctx));
 
                         // Makes heart particles around entity :>
                         ((ServerLevel) world).sendParticles(ParticleTypes.HEART, mob.getX(), mob.getY(), mob.getZ(), 20, 0, 0, 0, 1);
@@ -91,7 +93,7 @@ public class PacifyingAmuletItem extends AmuletItem {
     }
 
     @Override
-    public void curioBreak(ItemStack stack, LivingEntity livingEntity) {
+    public void curioBreak(SlotContext ctx, ItemStack stack) {
         Minecraft mc = Minecraft.getInstance();
 
         mc.gameRenderer.displayItemActivation(stack);
@@ -104,10 +106,11 @@ public class PacifyingAmuletItem extends AmuletItem {
     }
 
     // Call this in ItemStack#hurtAndBreak's consumer
-    public void onAmuletBreak(String identifier, int index, LivingEntity entity) {
+    public void onAmuletBreak(SlotContext ctx) {
         if (!ModConfig.CachedValues.PACIFYING_AMULET_ANGER_ONBREAK)
             return;
 
+        LivingEntity entity = ctx.entity();
         for (Mob mob : getAngerablesAround(entity)) {
             NeutralMob angerable = (NeutralMob) mob;
             angerable.setTarget(entity);
@@ -115,7 +118,7 @@ public class PacifyingAmuletItem extends AmuletItem {
                 ((Player) entity).getCooldowns().addCooldown(this, ModConfig.CachedValues.PACIFYING_AMULET_BREAK_COOLDOWN);
             }
 
-            CuriosApi.getCuriosHelper().onBrokenCurio(identifier, index, entity);
+            CuriosApi.getCuriosHelper().onBrokenCurio(ctx);
         }
     }
 
