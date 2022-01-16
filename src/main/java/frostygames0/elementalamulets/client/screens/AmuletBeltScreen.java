@@ -21,7 +21,7 @@ package frostygames0.elementalamulets.client.screens;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import frostygames0.elementalamulets.blocks.menu.AmuletBeltContainer;
+import frostygames0.elementalamulets.blocks.menu.AmuletBeltMenu;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
@@ -35,10 +35,10 @@ import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
  * @author Frostygames0
  * @date 10.09.2021 23:55
  */
-public class AmuletBeltScreen extends AbstractContainerScreen<AmuletBeltContainer> {
+public class AmuletBeltScreen extends AbstractContainerScreen<AmuletBeltMenu> {
     public static final ResourceLocation GUI = modPrefix("textures/gui/amulet_belt_gui.png");
 
-    public AmuletBeltScreen(AmuletBeltContainer screenContainer, Inventory inv, Component titleIn) {
+    public AmuletBeltScreen(AmuletBeltMenu screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn);
         this.titleLabelY = this.topPos + 43;
     }

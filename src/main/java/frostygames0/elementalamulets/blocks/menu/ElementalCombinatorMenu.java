@@ -36,14 +36,14 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 
-public class ElementalCombinatorContainer extends AbstractContainerMenu {
+public class ElementalCombinatorMenu extends AbstractContainerMenu {
     private final BlockEntity tileEntity;
     private final Player playerEntity;
     private final IItemHandler playerInventory;
     private final ContainerData data;
 
-    public ElementalCombinatorContainer(int id, Level world, BlockPos pos, Inventory playerInventory, Player player, ContainerData data) {
-        super(ModMenus.ELEMENTAL_COMBINATOR_CONTAINER.get(), id);
+    public ElementalCombinatorMenu(int id, Level world, BlockPos pos, Inventory playerInventory, Player player, ContainerData data) {
+        super(ModMenus.ELEMENTAL_COMBINATOR_MENU.get(), id);
         this.tileEntity = world.getBlockEntity(pos);
         this.playerEntity = player;
         this.playerInventory = new InvWrapper(playerInventory);

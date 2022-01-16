@@ -63,8 +63,8 @@ public class ClientSetup {
         ModItems.getAmulets().forEach(amulet -> CuriosRendererRegistry.register(amulet, () -> amulet));
         event.enqueueWork(() -> {
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.CELESTIAL_FOCUS.get(), RenderType.translucent());
-            MenuScreens.register(ModMenus.ELEMENTAL_COMBINATOR_CONTAINER.get(), ElementalCombinatorScreen::new);
-            MenuScreens.register(ModMenus.AMULET_BELT_CONTAINER.get(), AmuletBeltScreen::new);
+            MenuScreens.register(ModMenus.ELEMENTAL_COMBINATOR_MENU.get(), ElementalCombinatorScreen::new);
+            MenuScreens.register(ModMenus.AMULET_BELT_MENU.get(), AmuletBeltScreen::new);
 
             ModItems.getAmulets().forEach(
                     item -> ItemProperties.register(item, new ResourceLocation(AmuletItem.TIER_TAG),
@@ -74,7 +74,7 @@ public class ClientSetup {
 
     @SubscribeEvent
     public static void registerRenderer(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(ModBEs.ELEMENTAL_COMBINATOR_TILE.get(), ElementalCombinatorRenderer::new);
+        event.registerBlockEntityRenderer(ModBEs.ELEMENTAL_COMBINATOR_BE.get(), ElementalCombinatorRenderer::new);
     }
 
     @SubscribeEvent

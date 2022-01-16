@@ -34,12 +34,12 @@ import net.minecraftforge.items.wrapper.InvWrapper;
  * @author Frostygames0
  * @date 10.09.2021 23:54
  */
-public class AmuletBeltContainer extends AbstractContainerMenu {
+public class AmuletBeltMenu extends AbstractContainerMenu {
     private final ItemStack belt;
     private final IItemHandler playerInventory;
 
-    public AmuletBeltContainer(int id, Inventory playerInventory, ItemStack belt) {
-        super(ModMenus.AMULET_BELT_CONTAINER.get(), id);
+    public AmuletBeltMenu(int id, Inventory playerInventory, ItemStack belt) {
+        super(ModMenus.AMULET_BELT_MENU.get(), id);
         this.belt = belt;
         this.playerInventory = new InvWrapper(playerInventory);
         belt.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> addSlotRange(h, 0, 44, 54, 5, 18));

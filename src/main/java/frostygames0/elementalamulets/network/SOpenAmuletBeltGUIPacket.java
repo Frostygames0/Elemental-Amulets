@@ -19,7 +19,7 @@
 
 package frostygames0.elementalamulets.network;
 
-import frostygames0.elementalamulets.blocks.menu.AmuletBeltContainer;
+import frostygames0.elementalamulets.blocks.menu.AmuletBeltMenu;
 import frostygames0.elementalamulets.init.ModItems;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
@@ -41,9 +41,9 @@ public class SOpenAmuletBeltGUIPacket {
         NetworkEvent.Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
             ServerPlayer sender = ctx.getSender();
-            ItemStack stack = CuriosApi.getCuriosHelper().findEquippedCurio(ModItems.AMULET_BELT.get(), sender).map(triple -> triple.right).orElse(ItemStack.EMPTY);
+            ItemStack stack = CuriosApi.getCuriosHelper().findFirstCurio(sender, ModItems.AMULET_BELT.get()).map(triple -> triple.stack()).orElse(ItemStack.EMPTY);
             if (!stack.isEmpty()) {
-                NetworkHooks.openGui(sender, new SimpleMenuProvider((id, playerInventory, player) -> new AmuletBeltContainer(id, playerInventory, stack), new TranslatableComponent(stack.getDescriptionId())), buf -> buf.writeItem(stack));
+                NetworkHooks.openGui(sender, new SimpleMenuProvider((id, playerInventory, player) -> new AmuletBeltMenu(id, playerInventory, stack), new TranslatableComponent(stack.getDescriptionId())), buf -> buf.writeItem(stack));
             }
         });
         ctx.setPacketHandled(true);

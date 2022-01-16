@@ -29,6 +29,6 @@ import net.minecraftforge.registries.RegistryObject;
 public class ModBEs {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, ElementalAmulets.MOD_ID);
 
-    public static final RegistryObject<BlockEntityType<ElementalCombinatorBlockEntity>> ELEMENTAL_COMBINATOR_TILE = BLOCK_ENTITIES.register("elemental_combinator",
+    public static final RegistryObject<BlockEntityType<ElementalCombinatorBlockEntity>> ELEMENTAL_COMBINATOR_BE = BLOCK_ENTITIES.register("elemental_combinator",
             () -> BlockEntityType.Builder.of(ElementalCombinatorBlockEntity::new, ModBlocks.ELEMENTAL_COMBINATOR.get()).build(null));
 }

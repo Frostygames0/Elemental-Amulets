@@ -21,7 +21,7 @@ package frostygames0.elementalamulets.blocks.entities;
 
 import frostygames0.elementalamulets.advancements.triggers.ModCriteriaTriggers;
 import frostygames0.elementalamulets.blocks.ElementalCombinator;
-import frostygames0.elementalamulets.blocks.menu.ElementalCombinatorContainer;
+import frostygames0.elementalamulets.blocks.menu.ElementalCombinatorMenu;
 import frostygames0.elementalamulets.capability.AutomationItemHandler;
 import frostygames0.elementalamulets.client.particles.ModParticles;
 import frostygames0.elementalamulets.config.ModConfig;
@@ -105,7 +105,7 @@ public class ElementalCombinatorBlockEntity extends BlockEntity implements MenuP
     };
 
     public ElementalCombinatorBlockEntity(BlockPos pWorldPosition, BlockState pBlockState) {
-        super(ModBEs.ELEMENTAL_COMBINATOR_TILE.get(), pWorldPosition, pBlockState);
+        super(ModBEs.ELEMENTAL_COMBINATOR_BE.get(), pWorldPosition, pBlockState);
     }
 
     public void tick() {
@@ -275,7 +275,7 @@ public class ElementalCombinatorBlockEntity extends BlockEntity implements MenuP
     @Nullable
     @Override
     public AbstractContainerMenu createMenu(int p_createMenu_1_, Inventory p_createMenu_2_, Player p_createMenu_3_) {
-        return new ElementalCombinatorContainer(p_createMenu_1_, level, worldPosition, p_createMenu_2_, p_createMenu_3_, this.combinatorData);
+        return new ElementalCombinatorMenu(p_createMenu_1_, level, worldPosition, p_createMenu_2_, p_createMenu_3_, this.combinatorData);
     }
 
     @Override

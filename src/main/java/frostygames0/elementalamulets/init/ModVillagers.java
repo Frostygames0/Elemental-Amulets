@@ -24,6 +24,7 @@ import com.mojang.datafixers.util.Pair;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
+import frostygames0.elementalamulets.world.structures.ModStructures;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
@@ -40,7 +41,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.MapItem;
 import net.minecraft.world.item.trading.MerchantOffer;
-import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.feature.structures.StructurePoolElement;
 import net.minecraft.world.level.levelgen.feature.structures.StructureTemplatePool;
 import net.minecraft.world.level.saveddata.maps.MapDecoration;
@@ -99,7 +99,7 @@ public class ModVillagers {
 
             List<VillagerTrades.ItemListing> trades5 = trades.get(5);
             trades5.add(new BasicItemListing(new ItemStack(Items.EMERALD, 25), new ItemStack(ModItems.AETHER_ELEMENT.get()), new ItemStack(ModItems.AMULET_BELT.get()), 1, 30, 2.5f));
-            trades5.add(new CultTempleTrade(30, 1, 10));
+            trades5.add(new CultTempleListing(30, 1, 10));
         }
     }
 
@@ -108,12 +108,12 @@ public class ModVillagers {
         event.getRareTrades().add(new EmeraldsForRandomAmulet(45, 25, 1.5f));
     }
 
-    public static class CultTempleTrade implements VillagerTrades.ItemListing {
+    public static class CultTempleListing implements VillagerTrades.ItemListing {
         private final int emerald;
         private final int maxUses;
         private final int villagerXp;
 
-        public CultTempleTrade(int emerald, int maxUses, int villagerXp) {
+        public CultTempleListing(int emerald, int maxUses, int villagerXp) {
             this.emerald = emerald;
             this.maxUses = maxUses;
             this.villagerXp = villagerXp;
@@ -125,7 +125,7 @@ public class ModVillagers {
             if (!(pTrader.level instanceof ServerLevel serverworld)) {
                 return null;
             } else {
-                BlockPos blockpos = serverworld.findNearestMapFeature(StructureFeature.VILLAGE, pTrader.blockPosition(), 2000, true);
+                BlockPos blockpos = serverworld.findNearestMapFeature(ModStructures.CULT_TEMPLE.get(), pTrader.blockPosition(), 2000, true);
                 if (blockpos != null) {
                     ItemStack itemstack = MapItem.create(serverworld, blockpos.getX(), blockpos.getZ(), (byte) 3, true, true);
                     MapItem.renderBiomePreviewMap(serverworld, itemstack);

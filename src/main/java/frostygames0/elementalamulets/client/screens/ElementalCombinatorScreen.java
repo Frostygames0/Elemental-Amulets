@@ -21,7 +21,7 @@ package frostygames0.elementalamulets.client.screens;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import frostygames0.elementalamulets.blocks.menu.ElementalCombinatorContainer;
+import frostygames0.elementalamulets.blocks.menu.ElementalCombinatorMenu;
 import frostygames0.elementalamulets.network.ModNetworkHandler;
 import frostygames0.elementalamulets.network.SCombinePacket;
 import net.minecraft.client.gui.components.Button;
@@ -35,12 +35,12 @@ import net.minecraft.world.entity.player.Inventory;
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
-public class ElementalCombinatorScreen extends AbstractContainerScreen<ElementalCombinatorContainer> {
+public class ElementalCombinatorScreen extends AbstractContainerScreen<ElementalCombinatorMenu> {
     public static final ResourceLocation GUI = modPrefix("textures/gui/elemental_combinator_gui.png");
 
     private CombinationButton combineButton;
 
-    public ElementalCombinatorScreen(ElementalCombinatorContainer screenContainer, Inventory inv, Component titleIn) {
+    public ElementalCombinatorScreen(ElementalCombinatorMenu screenContainer, Inventory inv, Component titleIn) {
         super(screenContainer, inv, titleIn);
         this.inventoryLabelX += 92;
         this.titleLabelX = this.leftPos + 85;

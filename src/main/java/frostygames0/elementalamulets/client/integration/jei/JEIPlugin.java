@@ -20,7 +20,7 @@
 package frostygames0.elementalamulets.client.integration.jei;
 
 import frostygames0.elementalamulets.ElementalAmulets;
-import frostygames0.elementalamulets.blocks.menu.ElementalCombinatorContainer;
+import frostygames0.elementalamulets.blocks.menu.ElementalCombinatorMenu;
 import frostygames0.elementalamulets.client.screens.ElementalCombinatorScreen;
 import frostygames0.elementalamulets.init.ModBlocks;
 import frostygames0.elementalamulets.init.ModItems;
@@ -99,7 +99,7 @@ public class JEIPlugin implements IModPlugin {
 
     @Override
     public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
-        registration.addRecipeTransferHandler(ElementalCombinatorContainer.class, ElementalCombinationCategory.ID, 1, 9, 10, 36);
+        registration.addRecipeTransferHandler(ElementalCombinatorMenu.class, ElementalCombinationCategory.ID, 1, 9, 10, 36);
     }
 
     @Override

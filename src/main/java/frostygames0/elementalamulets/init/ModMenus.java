@@ -20,8 +20,8 @@
 package frostygames0.elementalamulets.init;
 
 import frostygames0.elementalamulets.ElementalAmulets;
-import frostygames0.elementalamulets.blocks.menu.AmuletBeltContainer;
-import frostygames0.elementalamulets.blocks.menu.ElementalCombinatorContainer;
+import frostygames0.elementalamulets.blocks.menu.AmuletBeltMenu;
+import frostygames0.elementalamulets.blocks.menu.ElementalCombinatorMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.SimpleContainerData;
@@ -35,18 +35,18 @@ import net.minecraftforge.registries.RegistryObject;
 public class ModMenus {
     public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(ForgeRegistries.CONTAINERS, ElementalAmulets.MOD_ID);
 
-    public static final RegistryObject<MenuType<ElementalCombinatorContainer>> ELEMENTAL_COMBINATOR_CONTAINER = MENUS.register("elemental_combinator", () -> IForgeMenuType.create(
+    public static final RegistryObject<MenuType<ElementalCombinatorMenu>> ELEMENTAL_COMBINATOR_MENU = MENUS.register("elemental_combinator", () -> IForgeMenuType.create(
             ((windowId, inv, data) -> {
                 BlockPos pos = data.readBlockPos();
                 Level world = inv.player.getCommandSenderWorld();
-                return new ElementalCombinatorContainer(windowId, world, pos, inv, inv.player, new SimpleContainerData(2));
+                return new ElementalCombinatorMenu(windowId, world, pos, inv, inv.player, new SimpleContainerData(2));
             })
     ));
 
-    public static final RegistryObject<MenuType<AmuletBeltContainer>> AMULET_BELT_CONTAINER = MENUS.register("amulet_belt", () -> IForgeMenuType.create(
+    public static final RegistryObject<MenuType<AmuletBeltMenu>> AMULET_BELT_MENU = MENUS.register("amulet_belt", () -> IForgeMenuType.create(
             ((windowId, inv, data) -> {
                 ItemStack belt = data.readItem();
-                return new AmuletBeltContainer(windowId, inv, belt);
+                return new AmuletBeltMenu(windowId, inv, belt);
             })
     ));
 
