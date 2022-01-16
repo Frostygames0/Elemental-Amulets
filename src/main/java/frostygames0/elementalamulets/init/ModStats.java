@@ -19,9 +19,9 @@
 
 package frostygames0.elementalamulets.init;
 
-import net.minecraft.stats.Stats;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.stats.Stats;
 
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;

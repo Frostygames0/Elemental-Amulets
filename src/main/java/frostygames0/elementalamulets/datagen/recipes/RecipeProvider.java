@@ -25,26 +25,25 @@ import frostygames0.elementalamulets.init.ModTags;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import frostygames0.elementalamulets.recipes.ElementalCombination;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.data.*;
+import net.minecraft.data.DataGenerator;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.Tag;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.tags.Tag;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.Tags;
 
 
 import java.util.function.Consumer;
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
-
-import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
-import net.minecraft.data.recipes.ShapelessRecipeBuilder;
-import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 
 /*
 TODO: While it works fine and doesn't affect gameplay at all, it's still a very painful piece of shit that contains my early code :)
@@ -57,7 +56,7 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
 
 
     @Override
-    protected void buildCraftingRecipes (Consumer<FinishedRecipe> consumer) {
+    protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
         this.registerVanillaRecipes(consumer);
         this.registerModRecipes(consumer);
     }

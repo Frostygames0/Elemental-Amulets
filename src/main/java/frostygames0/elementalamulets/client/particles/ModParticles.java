@@ -21,11 +21,11 @@ package frostygames0.elementalamulets.client.particles;
 
 import frostygames0.elementalamulets.ElementalAmulets;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.particles.ParticleType;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 /**
  * @author Frostygames0

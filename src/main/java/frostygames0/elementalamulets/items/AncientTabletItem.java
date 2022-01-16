@@ -38,6 +38,7 @@ import java.util.Random;
  */
 public class AncientTabletItem extends Item {
     private final Random random = new Random();
+
     public AncientTabletItem(Properties pProperties) {
         super(pProperties);
     }

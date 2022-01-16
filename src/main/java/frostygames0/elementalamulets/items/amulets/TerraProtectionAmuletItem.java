@@ -22,14 +22,14 @@ package frostygames0.elementalamulets.items.amulets;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.util.NBTUtil;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
-import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
 
@@ -37,8 +37,6 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
-
-import net.minecraft.world.item.Item.Properties;
 
 public class TerraProtectionAmuletItem extends AmuletItem {
     public static final DamageSource LEAF_CUT = new DamageSource(ElementalAmulets.MOD_ID + ".leaf_cut");

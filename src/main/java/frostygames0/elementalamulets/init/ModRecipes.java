@@ -22,17 +22,17 @@ package frostygames0.elementalamulets.init;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.recipes.ElementalCombination;
 import frostygames0.elementalamulets.recipes.ElementalCombinationSerializer;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.RecipeManager;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
-import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 
 import java.util.List;

@@ -131,8 +131,7 @@ public abstract class AmuletItem extends Item implements ICurioItem, ICurioRende
     public void onEquip(SlotContext slotContext, ItemStack prevStack, ItemStack stack) {
         if (prevStack.getItem() != stack.getItem()) {
             LivingEntity entity = slotContext.getWearer();
-            if (!entity.level.isClientSide() && entity instanceof ServerPlayer) {
-                ServerPlayer player = (ServerPlayer) entity;
+            if (!entity.level.isClientSide() && entity instanceof ServerPlayer player) {
 
                 ModCriteriaTriggers.SUCCESS_USE.trigger(player, stack);
                 player.awardStat(ModStats.AMULET_WORN_STAT);
@@ -160,10 +159,10 @@ public abstract class AmuletItem extends Item implements ICurioItem, ICurioRende
 
     @Override
     public <T extends LivingEntity, M extends EntityModel<T>> void render(ItemStack stack, SlotContext slotContext, PoseStack matrixStack, RenderLayerParent<T, M> renderLayerParent, MultiBufferSource renderTypeBuffer, int light, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        if(model == null) {
+        if (model == null) {
             model = new AmuletModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(AmuletModel.LAYER_LOCATION));
         } else {
-            if(slotContext.entity().isInvisible())
+            if (slotContext.entity().isInvisible())
                 return;
 
             matrixStack.pushPose();

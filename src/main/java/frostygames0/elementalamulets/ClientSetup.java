@@ -79,9 +79,9 @@ public class ClientSetup {
 
     @SubscribeEvent
     public static void registerLayers(EntityRenderersEvent.AddLayers event) {
-        for(String skinType : event.getSkins()) {
+        for (String skinType : event.getSkins()) {
             PlayerRenderer renderer = event.getSkin(skinType);
-            if(renderer != null) renderer.addLayer(new LeafShieldLayer<>(renderer, event.getEntityModels()));
+            if (renderer != null) renderer.addLayer(new LeafShieldLayer<>(renderer, event.getEntityModels()));
         }
     }
 

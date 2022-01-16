@@ -21,10 +21,10 @@ package frostygames0.elementalamulets.network;
 
 import frostygames0.elementalamulets.blocks.containers.AmuletBeltContainer;
 import frostygames0.elementalamulets.init.ModItems;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkHooks;
 import top.theillusivec4.curios.api.CuriosApi;

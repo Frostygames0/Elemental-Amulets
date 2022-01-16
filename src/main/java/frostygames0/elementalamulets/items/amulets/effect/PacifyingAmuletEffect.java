@@ -23,15 +23,15 @@ import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.PacifyingAmuletItem;
 import frostygames0.elementalamulets.util.AmuletHelper;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.ItemCooldowns;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
 /**
