@@ -57,7 +57,7 @@ public class LeafShieldLayer<T extends LivingEntity, M extends EntityModel<T>> e
         float angle = (pLivingEntity.tickCount + pPartialTicks) * 3.0F;
 
         AmuletHelper.getAmuletInSlotOrBelt(ModItems.TERRA_PROTECTION_AMULET.get(), pLivingEntity).ifPresent(triple -> {
-            ItemStack stack = triple.getRight();
+            ItemStack stack = triple.stack();
             if (!pLivingEntity.isInvisible()) {
                 if (ModConfig.CachedValues.RENDER_LEAF_SHIELD && ((TerraProtectionAmuletItem) stack.getItem()).canProtect(stack)) {
                     pMatrixStack.pushPose();

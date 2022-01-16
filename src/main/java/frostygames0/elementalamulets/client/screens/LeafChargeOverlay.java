@@ -57,7 +57,7 @@ public class LeafChargeOverlay implements IIngameOverlay {
             LocalPlayer player = mc.player;
             if (player != null) {
                 AmuletHelper.getAmuletInSlotOrBelt(ModItems.TERRA_PROTECTION_AMULET.get(), player).ifPresent(triple -> {
-                    ItemStack stack = triple.getRight();
+                    ItemStack stack = triple.stack();
                     TerraProtectionAmuletItem amulet = (TerraProtectionAmuletItem) stack.getItem();
 
                     int offset = posX + 98;
