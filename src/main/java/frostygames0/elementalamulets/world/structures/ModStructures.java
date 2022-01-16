@@ -31,6 +31,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.FlatLevelSource;
 import net.minecraft.world.level.levelgen.StructureSettings;
@@ -98,21 +99,19 @@ public class ModStructures {
             StructureSettings worldStructureConfig = chunkGenerator.getSettings();
 
             // Create a mutable map we will use for easier adding to biomes
-            HashMap<StructureFeature<?>, HashMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> STStructureToMultiMap = new HashMap<>();
+            HashMap<StructureFeature<?>, HashMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> structureToMMap = new HashMap<>();
 
             // Add the resourcekey of all biomes that this Configured Structure can spawn in.
             for (Map.Entry<ResourceKey<Biome>, Biome> biomeEntry : serverLevel.registryAccess().ownedRegistryOrThrow(Registry.BIOME_REGISTRY).entrySet()) {
-                // Skip all ocean, end, nether, and none category biomes.
-                // You can do checks for other traits that the biome has.
                 Biome.BiomeCategory biomeCategory = biomeEntry.getValue().getBiomeCategory();
                 if (biomeCategory != Biome.BiomeCategory.OCEAN && biomeCategory != Biome.BiomeCategory.THEEND && biomeCategory != Biome.BiomeCategory.NETHER && biomeCategory != Biome.BiomeCategory.NONE) {
-                    if (biomeCategory == Biome.BiomeCategory.JUNGLE)
-                        associateBiomeToConfiguredStructure(STStructureToMultiMap, StructureFeatures.CONFIGURED_CULT_TEMPLE, biomeEntry.getKey());
+                    if (biomeCategory == Biome.BiomeCategory.JUNGLE && biomeEntry.getKey() != Biomes.SPARSE_JUNGLE)
+                        associateBiomeToConfiguredStructure(structureToMMap, StructureFeatures.CONFIGURED_CULT_TEMPLE, biomeEntry.getKey());
                 }
             }
             ImmutableMap.Builder<StructureFeature<?>, ImmutableMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> tempStructureToMultiMap = ImmutableMap.builder();
-            worldStructureConfig.configuredStructures.entrySet().stream().filter(entry -> !STStructureToMultiMap.containsKey(entry.getKey())).forEach(tempStructureToMultiMap::put);
-            STStructureToMultiMap.forEach((key, value) -> tempStructureToMultiMap.put(key, ImmutableMultimap.copyOf(value)));
+            worldStructureConfig.configuredStructures.entrySet().stream().filter(entry -> !structureToMMap.containsKey(entry.getKey())).forEach(tempStructureToMultiMap::put);
+            structureToMMap.forEach((key, value) -> tempStructureToMultiMap.put(key, ImmutableMultimap.copyOf(value)));
             worldStructureConfig.configuredStructures = tempStructureToMultiMap.build();
 
 
@@ -134,9 +133,9 @@ public class ModStructures {
     /**
      * Helper method that handles setting up the map to multimap relationship to help prevent issues.
      */
-    private static void associateBiomeToConfiguredStructure(Map<StructureFeature<?>, HashMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> STStructureToMultiMap, ConfiguredStructureFeature<?, ?> configuredStructureFeature, ResourceKey<Biome> biomeRegistryKey) {
-        STStructureToMultiMap.putIfAbsent(configuredStructureFeature.feature, HashMultimap.create());
-        HashMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>> configuredStructureToBiomeMultiMap = STStructureToMultiMap.get(configuredStructureFeature.feature);
+    private static void associateBiomeToConfiguredStructure(Map<StructureFeature<?>, HashMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> structureToMMap, ConfiguredStructureFeature<?, ?> configuredStructureFeature, ResourceKey<Biome> biomeRegistryKey) {
+        structureToMMap.putIfAbsent(configuredStructureFeature.feature, HashMultimap.create());
+        HashMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>> configuredStructureToBiomeMultiMap = structureToMMap.get(configuredStructureFeature.feature);
         if (configuredStructureToBiomeMultiMap.containsValue(biomeRegistryKey)) {
             ElementalAmulets.LOGGER.error("""
                                 Detected 2 ConfiguredStructureFeatures that share the same base StructureFeature trying to be added to same biome. One will be prevented from spawning.
