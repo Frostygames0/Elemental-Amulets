@@ -55,6 +55,7 @@ public class ModTags {
 
         public static final Tag.Named<Block> EARTH_AMULET_BOOSTABLE = forge(ElementalAmulets.MOD_ID + "/earth_amulet_boostable");
         public static final Tag.Named<Block> SHARD_BLOCKS = tag("shard_blocks");
+        public static final Tag.Named<Block> ELEMENTAL_ORE = tag("elemental_ore");
 
         private static Tag.Named<Block> tag(String name) {
             return BlockTags.bind(modPrefix(name).toString());

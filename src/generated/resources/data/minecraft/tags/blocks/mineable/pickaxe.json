@@ -2,7 +2,7 @@
   "replace": false,
   "values": [
     "elementalamulets:elemental_combinator",
-    "elementalamulets:elemental_ore",
-    "#elementalamulets:shard_blocks"
+    "#elementalamulets:shard_blocks",
+    "#elementalamulets:elemental_ore"
   ]
 }

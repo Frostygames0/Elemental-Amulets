@@ -50,6 +50,8 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> ELEMENTAL_ORE = BLOCKS.register("elemental_ore",
             () -> new OreBlock(BlockBehaviour.Properties.of(Material.STONE).strength(3.5f).sound(SoundType.STONE).requiresCorrectToolForDrops(), UniformInt.of(0, 2)));
+    public static final RegistryObject<Block> DEEPSLATE_ELEMENTAL_ORE = BLOCKS.register("deepslate_elemental_ore",
+            () -> new OreBlock(BlockBehaviour.Properties.of(Material.STONE).strength(4.0f).sound(SoundType.DEEPSLATE).requiresCorrectToolForDrops(), UniformInt.of(1, 3)));
 
 
     // Shards

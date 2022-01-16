@@ -30,12 +30,15 @@ import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.fml.common.Mod;
 
 
+import java.util.List;
+
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 @Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID)
 public class OreFeatures {
-    public static Lazy<ConfiguredFeature<?, ?>> ELEMENTAL_ORE = Lazy.of(() -> Feature.ORE.configured(
-            new OreConfiguration(net.minecraft.data.worldgen.features.OreFeatures.NATURAL_STONE, ModBlocks.ELEMENTAL_ORE.get().defaultBlockState(), 9)));
+    private static final Lazy<List<OreConfiguration.TargetBlockState>> ELEMENTAL_ORE_TARGETS = Lazy.of(() -> List.of(OreConfiguration.target(net.minecraft.data.worldgen.features.OreFeatures.STONE_ORE_REPLACEABLES, ModBlocks.ELEMENTAL_ORE.get().defaultBlockState()), OreConfiguration.target(net.minecraft.data.worldgen.features.OreFeatures.DEEPSLATE_ORE_REPLACEABLES, ModBlocks.DEEPSLATE_ELEMENTAL_ORE.get().defaultBlockState())));
+    public static final Lazy<ConfiguredFeature<?, ?>> ELEMENTAL_ORE = Lazy.of(() -> Feature.ORE.configured(
+            new OreConfiguration(ELEMENTAL_ORE_TARGETS.get(), 9)));
 
     public static void register() {
         Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, modPrefix("elemental_ore"), ELEMENTAL_ORE.get());

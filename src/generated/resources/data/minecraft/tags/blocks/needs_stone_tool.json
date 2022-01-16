@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "elementalamulets:elemental_ore"
+    "#elementalamulets:elemental_ore"
   ]
 }
