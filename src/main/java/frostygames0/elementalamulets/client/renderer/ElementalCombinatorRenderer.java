@@ -21,7 +21,7 @@ package frostygames0.elementalamulets.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
-import frostygames0.elementalamulets.blocks.tiles.ElementalCombinatorBlockEntity;
+import frostygames0.elementalamulets.blocks.entities.ElementalCombinatorBlockEntity;
 import frostygames0.elementalamulets.config.ModConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;

@@ -19,7 +19,7 @@
 
 package frostygames0.elementalamulets.network;
 
-import frostygames0.elementalamulets.blocks.containers.AmuletBeltContainer;
+import frostygames0.elementalamulets.blocks.menu.AmuletBeltContainer;
 import frostygames0.elementalamulets.init.ModItems;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;

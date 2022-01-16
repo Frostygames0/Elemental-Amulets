@@ -17,7 +17,7 @@
  *     along with Elemental Amulets.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package frostygames0.elementalamulets.blocks.containers;
+package frostygames0.elementalamulets.blocks.menu;
 
 import frostygames0.elementalamulets.init.ModMenus;
 import frostygames0.elementalamulets.items.AmuletBeltItem;

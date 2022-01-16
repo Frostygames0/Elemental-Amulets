@@ -21,7 +21,7 @@ package frostygames0.elementalamulets.client.screens;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import frostygames0.elementalamulets.blocks.containers.ElementalCombinatorContainer;
+import frostygames0.elementalamulets.blocks.menu.ElementalCombinatorContainer;
 import frostygames0.elementalamulets.network.ModNetworkHandler;
 import frostygames0.elementalamulets.network.SCombinePacket;
 import net.minecraft.client.gui.components.Button;
@@ -68,7 +68,6 @@ public class ElementalCombinatorScreen extends AbstractContainerScreen<Elemental
         this.renderTooltip(matrixStack, mouseX, mouseY);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     protected void renderBg(PoseStack matrixStack, float partialTicks, int x, int y) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
@@ -90,7 +89,6 @@ public class ElementalCombinatorScreen extends AbstractContainerScreen<Elemental
             super(pX, pY, 21, 14, TextComponent.EMPTY, pOnPress);
         }
 
-        @SuppressWarnings("deprecation")
         @Override
         public void renderButton(PoseStack pMatrixStack, int pMouseX, int pMouseY, float pPartialTicks) {
             RenderSystem.setShader(GameRenderer::getPositionTexShader);

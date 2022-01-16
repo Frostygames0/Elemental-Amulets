@@ -20,7 +20,7 @@
 package frostygames0.elementalamulets.client.integration.jei;
 
 import frostygames0.elementalamulets.ElementalAmulets;
-import frostygames0.elementalamulets.blocks.containers.ElementalCombinatorContainer;
+import frostygames0.elementalamulets.blocks.menu.ElementalCombinatorContainer;
 import frostygames0.elementalamulets.client.screens.ElementalCombinatorScreen;
 import frostygames0.elementalamulets.init.ModBlocks;
 import frostygames0.elementalamulets.init.ModItems;

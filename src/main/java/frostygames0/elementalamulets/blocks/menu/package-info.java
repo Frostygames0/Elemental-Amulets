@@ -23,7 +23,7 @@
  */
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-package frostygames0.elementalamulets.blocks.tiles;
+package frostygames0.elementalamulets.blocks.menu;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 

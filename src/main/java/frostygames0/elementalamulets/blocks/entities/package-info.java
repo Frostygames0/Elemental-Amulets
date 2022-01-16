@@ -23,7 +23,7 @@
  */
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-package frostygames0.elementalamulets.blocks.containers;
+package frostygames0.elementalamulets.blocks.entities;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 

@@ -20,7 +20,7 @@
 package frostygames0.elementalamulets.init;
 
 import frostygames0.elementalamulets.ElementalAmulets;
-import frostygames0.elementalamulets.blocks.tiles.ElementalCombinatorBlockEntity;
+import frostygames0.elementalamulets.blocks.entities.ElementalCombinatorBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;

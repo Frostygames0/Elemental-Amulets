@@ -19,7 +19,7 @@
 
 package frostygames0.elementalamulets.network;
 
-import frostygames0.elementalamulets.blocks.tiles.ElementalCombinatorBlockEntity;
+import frostygames0.elementalamulets.blocks.entities.ElementalCombinatorBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.level.Level;

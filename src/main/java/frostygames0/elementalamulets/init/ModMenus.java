@@ -20,8 +20,8 @@
 package frostygames0.elementalamulets.init;
 
 import frostygames0.elementalamulets.ElementalAmulets;
-import frostygames0.elementalamulets.blocks.containers.AmuletBeltContainer;
-import frostygames0.elementalamulets.blocks.containers.ElementalCombinatorContainer;
+import frostygames0.elementalamulets.blocks.menu.AmuletBeltContainer;
+import frostygames0.elementalamulets.blocks.menu.ElementalCombinatorContainer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.SimpleContainerData;

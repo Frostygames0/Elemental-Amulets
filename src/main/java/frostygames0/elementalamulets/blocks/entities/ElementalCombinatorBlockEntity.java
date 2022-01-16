@@ -17,11 +17,11 @@
  *     along with Elemental Amulets.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package frostygames0.elementalamulets.blocks.tiles;
+package frostygames0.elementalamulets.blocks.entities;
 
 import frostygames0.elementalamulets.advancements.triggers.ModCriteriaTriggers;
 import frostygames0.elementalamulets.blocks.ElementalCombinator;
-import frostygames0.elementalamulets.blocks.containers.ElementalCombinatorContainer;
+import frostygames0.elementalamulets.blocks.menu.ElementalCombinatorContainer;
 import frostygames0.elementalamulets.capability.AutomationItemHandler;
 import frostygames0.elementalamulets.client.particles.ModParticles;
 import frostygames0.elementalamulets.config.ModConfig;

@@ -21,7 +21,7 @@ package frostygames0.elementalamulets.client.screens;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import frostygames0.elementalamulets.blocks.containers.AmuletBeltContainer;
+import frostygames0.elementalamulets.blocks.menu.AmuletBeltContainer;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
@@ -50,7 +50,6 @@ public class AmuletBeltScreen extends AbstractContainerScreen<AmuletBeltContaine
         this.renderTooltip(matrixStack, mouseX, mouseY);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     protected void renderBg(PoseStack matrixStack, float partialTicks, int x, int y) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);

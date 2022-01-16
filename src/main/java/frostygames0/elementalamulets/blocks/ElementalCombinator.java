@@ -19,7 +19,7 @@
 
 package frostygames0.elementalamulets.blocks;
 
-import frostygames0.elementalamulets.blocks.tiles.ElementalCombinatorBlockEntity;
+import frostygames0.elementalamulets.blocks.entities.ElementalCombinatorBlockEntity;
 import frostygames0.elementalamulets.config.ModConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
