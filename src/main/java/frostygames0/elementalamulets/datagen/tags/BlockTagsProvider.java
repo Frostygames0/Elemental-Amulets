@@ -43,6 +43,7 @@ public class BlockTagsProvider extends net.minecraft.data.tags.BlockTagsProvider
         this.tag(ModTags.Blocks.EARTH_AMULET_BOOSTABLE).addTags(BlockTags.FLOWERS, BlockTags.CROPS);
         this.tag(ModTags.Blocks.SHARD_BLOCKS).add(ModBlocks.ELEMENTAL_SHARDS_BLOCK.get(), ModBlocks.AIR_SHARDS_BLOCK.get(), ModBlocks.FIRE_SHARDS_BLOCK.get(), ModBlocks.WATER_SHARDS_BLOCK.get(), ModBlocks.EARTH_SHARDS_BLOCK.get());
 
-        this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(ModBlocks.ELEMENTAL_COMBINATOR.get()).addTag(ModTags.Blocks.SHARD_BLOCKS);
+        this.tag(BlockTags.MINEABLE_WITH_PICKAXE).add(ModBlocks.ELEMENTAL_COMBINATOR.get(), ModBlocks.ELEMENTAL_ORE.get()).addTag(ModTags.Blocks.SHARD_BLOCKS);
+        this.tag(BlockTags.NEEDS_STONE_TOOL).add(ModBlocks.ELEMENTAL_ORE.get());
     }
 }

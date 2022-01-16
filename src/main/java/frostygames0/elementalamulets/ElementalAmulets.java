@@ -26,6 +26,7 @@ import frostygames0.elementalamulets.init.*;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import frostygames0.elementalamulets.network.ModNetworkHandler;
 import frostygames0.elementalamulets.world.LootTableModifiers;
+import frostygames0.elementalamulets.world.ores.OreFeatures;
 import frostygames0.elementalamulets.world.structures.CultTempleStructure;
 import frostygames0.elementalamulets.world.structures.ModStructures;
 import frostygames0.elementalamulets.world.structures.StructureFeatures;
@@ -107,7 +108,7 @@ public class ElementalAmulets {
             ModStructures.setupStructures();
             StructureFeatures.register();
 
-            //ModFeatures.register();
+            OreFeatures.register();
 
             ModCriteriaTriggers.register();
             ModStats.registerStats();
