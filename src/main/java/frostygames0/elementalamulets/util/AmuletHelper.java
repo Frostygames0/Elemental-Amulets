@@ -26,8 +26,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import org.apache.commons.lang3.tuple.ImmutableTriple;
 import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.SlotResult;
 import top.theillusivec4.curios.api.type.util.ICuriosHelper;
 
 
@@ -40,19 +40,19 @@ import java.util.Optional;
 public final class AmuletHelper {
 
     // This is a wrapper method for Amulet Belt to work
-    public static Optional<ImmutableTriple<String, Integer, ItemStack>> getAmuletInSlotOrBelt(Item item, LivingEntity entity) {
+    public static Optional<SlotResult> getAmuletInSlotOrBelt(Item item, LivingEntity entity) {
         ICuriosHelper helper = CuriosApi.getCuriosHelper();
-        if (helper.findEquippedCurio(item, entity).isPresent()) {
-            return helper.findEquippedCurio(item, entity);
+        if (helper.findFirstCurio(entity, item).isPresent()) {
+            return helper.findFirstCurio(entity, item);
         }
-        Optional<ImmutableTriple<String, Integer, ItemStack>> optional = helper.findEquippedCurio(ModItems.AMULET_BELT.get(), entity);
+        Optional<SlotResult> optional = helper.findFirstCurio(entity, ModItems.AMULET_BELT.get());
         if (optional.isPresent()) {
-            ImmutableTriple<String, Integer, ItemStack> triple = optional.get();
-            IItemHandler handler = triple.getRight().getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
+            SlotResult triple = optional.get();
+            IItemHandler handler = triple.stack().getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).orElseThrow(NullPointerException::new);
             for (int i = 0; i < handler.getSlots(); i++) {
                 ItemStack amulet = handler.getStackInSlot(i);
                 if (amulet.getItem() == item) {
-                    return Optional.of(ImmutableTriple.of(triple.getLeft(), triple.getMiddle(), amulet));
+                    return Optional.of(triple);
                 }
             }
         }

@@ -32,7 +32,8 @@ public class InvisibilityAmuletItem extends AmuletItem {
     }
 
     @Override
-    public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
+    public void curioTick(SlotContext ctx, ItemStack stack) {
+        LivingEntity livingEntity = ctx.entity();
         Level world = livingEntity.getCommandSenderWorld();
         if (!world.isClientSide()) {
             if (livingEntity.isShiftKeyDown()) {
@@ -45,7 +46,7 @@ public class InvisibilityAmuletItem extends AmuletItem {
 
     @Override
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
-        LivingEntity entity = slotContext.getWearer();
+        LivingEntity entity = slotContext.entity();
         if (AmuletHelper.compareAmulets(stack, newStack)) {
             if (entity.isInvisible() && !entity.hasEffect(MobEffects.INVISIBILITY)) {
                 entity.setInvisible(false);

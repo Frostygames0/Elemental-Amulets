@@ -43,7 +43,7 @@ class PacifyingAmuletEffect {
         if (event.getEntityLiving() instanceof Player player) {
             if (!player.level.isClientSide()) {
                 AmuletHelper.getAmuletInSlotOrBelt(ModItems.PACIFYING_AMULET.get(), player).ifPresent(triple -> {
-                    ItemStack amulet = triple.getRight();
+                    ItemStack amulet = triple.stack();
                     PacifyingAmuletItem item = (PacifyingAmuletItem) amulet.getItem();
 
                     Entity damager = event.getSource().getEntity();

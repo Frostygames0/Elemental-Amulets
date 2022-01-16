@@ -42,7 +42,8 @@ public class SpeedAmuletItem extends AmuletItem {
     }
 
     @Override
-    public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
+    public void curioTick(SlotContext ctx, ItemStack stack) {
+        LivingEntity livingEntity = ctx.entity();
         if (!livingEntity.level.isClientSide()) {
             AttributeInstance att = livingEntity.getAttribute(Attributes.MOVEMENT_SPEED);
             AttributeModifier attMod = new AttributeModifier(MODIFIER_UUID, modPrefix("speed_boost").toString(),
@@ -57,7 +58,7 @@ public class SpeedAmuletItem extends AmuletItem {
 
     @Override
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
-        AttributeInstance att = slotContext.getWearer().getAttribute(Attributes.MOVEMENT_SPEED);
+        AttributeInstance att = slotContext.entity().getAttribute(Attributes.MOVEMENT_SPEED);
         if (AmuletHelper.compareAmulets(stack, newStack)) {
             AttributeUtil.removeModifierByUUID(att, MODIFIER_UUID);
         }
