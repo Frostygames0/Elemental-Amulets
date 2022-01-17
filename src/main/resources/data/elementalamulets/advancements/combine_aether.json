@@ -15,7 +15,9 @@
     "combine_aether": {
       "trigger": "elementalamulets:item_elemental_combined",
       "conditions": {
-        "item": {"item": "elementalamulets:aether_element"}
+        "item": {
+          "items": ["elementalamulets:aether_element"]
+        }
       }
     }
   },

@@ -5,7 +5,7 @@
       "trigger": "elementalamulets:item_elemental_combined",
       "conditions": {
         "item": {
-          "item": "elementalamulets:earth_element"
+          "items": ["elementalamulets:earth_element"]
         }
       }
     }

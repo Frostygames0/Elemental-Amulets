@@ -18,8 +18,7 @@
       "conditions": {
         "items": [
           {
-            "item": "elementalamulets:ancient_tablet",
-            "count": 1
+            "items": ["elementalamulets:ancient_tablet"]
           }
         ]
       }

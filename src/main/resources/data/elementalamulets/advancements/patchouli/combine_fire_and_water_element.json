@@ -5,7 +5,7 @@
       "trigger": "elementalamulets:item_elemental_combined",
       "conditions": {
         "item": {
-          "item": "elementalamulets:fire_element"
+          "items": ["elementalamulets:fire_element"]
         }
       }
     },
@@ -13,7 +13,7 @@
       "trigger": "elementalamulets:item_elemental_combined",
       "conditions": {
         "item": {
-          "item": "elementalamulets:water_element"
+          "items": ["elementalamulets:water_element"]
         }
       }
     }

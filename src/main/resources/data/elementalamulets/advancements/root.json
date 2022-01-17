@@ -19,7 +19,7 @@
     "guide_used": {
       "trigger": "elementalamulets:success_use_item",
       "conditions": {
-        "item": {"item":"elementalamulets:guide_book"}
+        "item": {"items":["elementalamulets:guide_book"]}
       }
     }
   },

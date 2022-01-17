@@ -17,8 +17,7 @@
       "conditions": {
         "items": [
           {
-            "item": "elementalamulets:fire_element",
-            "count": 1
+            "items": ["elementalamulets:fire_element"]
           }
         ]
       }
@@ -28,8 +27,7 @@
       "conditions": {
         "items": [
           {
-            "item": "elementalamulets:water_element",
-            "count": 1
+            "items": ["elementalamulets:water_element"]
           }
         ]
       }
@@ -39,8 +37,7 @@
       "conditions": {
         "items": [
           {
-            "item": "elementalamulets:earth_element",
-            "count": 1
+            "items": ["elementalamulets:earth_element"]
           }
         ]
       }
@@ -50,8 +47,7 @@
       "conditions": {
         "items": [
           {
-            "item": "elementalamulets:air_element",
-            "count": 1
+            "items": ["elementalamulets:air_element"]
           }
         ]
       }

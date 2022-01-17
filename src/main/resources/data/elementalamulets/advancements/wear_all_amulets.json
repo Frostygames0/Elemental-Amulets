@@ -18,7 +18,7 @@
       "trigger": "elementalamulets:success_use_item",
       "conditions": {
         "item": {
-          "item": "elementalamulets:fire_amulet"
+          "items": ["elementalamulets:fire_amulet"]
         }
       }
     },
@@ -26,7 +26,7 @@
       "trigger": "elementalamulets:success_use_item",
       "conditions": {
         "item": {
-          "item": "elementalamulets:water_amulet"
+          "items": ["elementalamulets:water_amulet"]
         }
       }
     },
@@ -34,7 +34,7 @@
       "trigger": "elementalamulets:success_use_item",
       "conditions": {
         "item": {
-          "item": "elementalamulets:earth_amulet"
+          "items": ["elementalamulets:earth_amulet"]
         }
       }
     },
@@ -42,7 +42,7 @@
       "trigger": "elementalamulets:success_use_item",
       "conditions": {
         "item": {
-          "item": "elementalamulets:air_amulet"
+          "items": ["elementalamulets:air_amulet"]
         }
       }
     },
@@ -50,7 +50,7 @@
       "trigger": "elementalamulets:success_use_item",
       "conditions": {
         "item": {
-          "item": "elementalamulets:speed_amulet"
+          "items": ["elementalamulets:speed_amulet"]
         }
       }
     },
@@ -58,7 +58,7 @@
       "trigger": "elementalamulets:success_use_item",
       "conditions": {
         "item": {
-          "item": "elementalamulets:jump_amulet"
+          "items": ["elementalamulets:jump_amulet"]
         }
       }
     },
@@ -66,7 +66,7 @@
       "trigger": "elementalamulets:success_use_item",
       "conditions": {
         "item": {
-          "item": "elementalamulets:invisibility_amulet"
+          "items": ["elementalamulets:invisibility_amulet"]
         }
       }
     },
@@ -74,7 +74,7 @@
       "trigger": "elementalamulets:success_use_item",
       "conditions": {
         "item": {
-          "item": "elementalamulets:protection_amulet"
+          "items": "elementalamulets:protection_amulet"
         }
       }
     },
@@ -82,7 +82,7 @@
       "trigger": "elementalamulets:success_use_item",
       "conditions": {
         "item": {
-          "item": "elementalamulets:knockback_amulet"
+          "items": ["elementalamulets:knockback_amulet"]
         }
       }
     },
@@ -90,7 +90,7 @@
       "trigger": "elementalamulets:success_use_item",
       "conditions": {
         "item": {
-          "item": "elementalamulets:pacifying_amulet"
+          "items": ["elementalamulets:pacifying_amulet"]
         }
       }
     }

@@ -15,7 +15,7 @@
     "amulet_worn": {
       "trigger": "elementalamulets:success_use_item",
       "conditions": {
-        "item": {"item":"elementalamulets:pacifying_amulet"}
+        "item": {"items":["elementalamulets:pacifying_amulet"]}
       }
     }
   },

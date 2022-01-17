@@ -5,7 +5,7 @@
       "trigger": "elementalamulets:item_elemental_combined",
       "conditions": {
         "item": {
-          "item": "elementalamulets:knockback_amulet",
+          "items": ["elementalamulets:knockback_amulet"],
           "nbt": "{'elementalamulets:tier':2}"
         }
       }

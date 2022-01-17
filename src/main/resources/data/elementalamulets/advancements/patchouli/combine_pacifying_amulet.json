@@ -5,7 +5,7 @@
       "trigger": "elementalamulets:item_elemental_combined",
       "conditions": {
         "item": {
-          "item": "elementalamulets:pacifying_amulet"
+          "items": ["elementalamulets:pacifying_amulet"]
         }
       }
     }

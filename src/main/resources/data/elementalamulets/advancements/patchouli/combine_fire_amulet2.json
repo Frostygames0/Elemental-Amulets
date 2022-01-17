@@ -5,7 +5,7 @@
       "trigger": "elementalamulets:item_elemental_combined",
       "conditions": {
         "item": {
-          "item": "elementalamulets:fire_amulet",
+          "items": ["elementalamulets:fire_amulet"],
           "nbt": "{'elementalamulets:tier':2}"
         }
       }
