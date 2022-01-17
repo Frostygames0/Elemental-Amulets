@@ -8,8 +8,13 @@
     "1.16.5-0.6.2": "Fixed critical bug! Update immediately!",
     "1.16.5-0.7": "Upcoming update! Added Cult's temple, new amulets, amulet belt and many more"
   },
+  "1.18.1": {
+    "1.18.1-0.7": "Port to 1.18"
+  },
   "promos": {
     "1.16.5-latest": "1.16.5-0.7",
-    "1.16.5-recommended": "1.16.5-0.7"
+    "1.16.5-recommended": "1.16.5-0.7",
+    "1.18.1-latest": "1.18.1-0.7",
+    "1.18.1-recommended": "1.18.1-0.7"
   }
 }

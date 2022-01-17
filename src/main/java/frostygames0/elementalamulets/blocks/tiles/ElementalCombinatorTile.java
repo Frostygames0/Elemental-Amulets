@@ -19,6 +19,7 @@
 
 package frostygames0.elementalamulets.blocks.tiles;
 
+import com.sun.istack.internal.Nullable;
 import frostygames0.elementalamulets.advancements.triggers.ModCriteriaTriggers;
 import frostygames0.elementalamulets.blocks.ElementalCombinator;
 import frostygames0.elementalamulets.blocks.containers.ElementalCombinatorContainer;
@@ -31,12 +32,10 @@ import frostygames0.elementalamulets.init.ModStats;
 import frostygames0.elementalamulets.init.ModTiles;
 import frostygames0.elementalamulets.recipes.ElementalCombination;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.ItemStack;
@@ -61,9 +60,12 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public class ElementalCombinatorTile extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
+    private static final String TAG_CONTENTS = "Contents";
+    private static final String TAG_COMBINATION_TIME = "CombinationTime";
+    private static final String TAG_TOTAL_COMBINATION_TIME = "TotalCombinationTime";
+
     private final ItemStackHandler handler = new ItemStackHandler(10) {
         @Override
         protected void onContentsChanged(int slot) {
@@ -164,14 +166,13 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
             this.setChanged();
 
             Vector3d vector = Vector3d.atBottomCenterOf(worldPosition);
-            level.getNearbyPlayers(EntityPredicate.DEFAULT, null,
-                            new AxisAlignedBB(vector.add(3, 2, 3), vector.subtract(3, 0, 3)))
-                    .forEach(player -> {
-                        if (player instanceof ServerPlayerEntity) {
-                            ModCriteriaTriggers.ITEM_COMBINED.trigger((ServerPlayerEntity) player, result, (ServerWorld) level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ());
+            if (level instanceof ServerWorld) {
+                ((ServerWorld) level).getPlayers(player -> vector.distanceToSqr(player.position()) <= 16)
+                        .forEach(player -> {
+                            ModCriteriaTriggers.ITEM_COMBINED.trigger(player, result, (ServerWorld) level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ());
                             player.awardStat(ModStats.TIMES_COMBINED);
-                        }
-                    });
+                        });
+            }
         }
     }
 
@@ -230,19 +231,19 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
 
     @Override
     public void load(BlockState state, CompoundNBT nbt) {
-        this.combinationTime = nbt.getInt("CombinationTime");
-        this.totalTime = nbt.getInt("TotalCombinationTime");
+        this.combinationTime = nbt.getInt(TAG_COMBINATION_TIME);
+        this.totalTime = nbt.getInt(TAG_TOTAL_COMBINATION_TIME);
         this.readInventory(nbt);
         super.load(state, nbt);
     }
 
     private CompoundNBT writeInventory(CompoundNBT compound) {
-        compound.put("Contents", handler.serializeNBT());
+        compound.put(TAG_CONTENTS, handler.serializeNBT());
         return compound;
     }
 
     private void readInventory(CompoundNBT nbt) {
-        handler.deserializeNBT(nbt.getCompound("Contents"));
+        handler.deserializeNBT(nbt.getCompound(TAG_CONTENTS));
     }
 
     @Nonnull
