@@ -42,8 +42,8 @@ import java.util.List;
  */
 @Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID)
 public class OrePlacements {
-    public static final Lazy<PlacedFeature> ELEMENTAL_ORE_UPPER = Lazy.of(() -> PlacementUtils.register("elementalamulets:elemental_ore_upper", OreFeatures.ELEMENTAL_ORE.get().placed(orePlacement(20, HeightRangePlacement.triangle(VerticalAnchor.absolute(80), VerticalAnchor.absolute(384))))));
-    public static final Lazy<PlacedFeature> ELEMENTAL_ORE_MIDDLE = Lazy.of(() -> PlacementUtils.register("elementalamulets:elemental_ore_middle", OreFeatures.ELEMENTAL_ORE.get().placed(orePlacement(60, HeightRangePlacement.triangle(VerticalAnchor.absolute(-24), VerticalAnchor.absolute(56))))));
+    public static final Lazy<PlacedFeature> ELEMENTAL_ORE_UPPER = Lazy.of(() -> PlacementUtils.register("elementalamulets:elemental_ore_upper", OreFeatures.ELEMENTAL_ORE.get().placed(orePlacement(5, HeightRangePlacement.triangle(VerticalAnchor.absolute(80), VerticalAnchor.absolute(384))))));
+    public static final Lazy<PlacedFeature> ELEMENTAL_ORE_MIDDLE = Lazy.of(() -> PlacementUtils.register("elementalamulets:elemental_ore_middle", OreFeatures.ELEMENTAL_ORE.get().placed(orePlacement(10, HeightRangePlacement.triangle(VerticalAnchor.absolute(-24), VerticalAnchor.absolute(56))))));
     public static final Lazy<PlacedFeature> ELEMENTAL_ORE_SMALL = Lazy.of(() -> PlacementUtils.register("elementalamulets:elemental_ore_small", OreFeatures.ELEMENTAL_ORE.get().placed(orePlacement(10, HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(72))))));
 
     private static List<PlacementModifier> orePlacement(int count, PlacementModifier modifier) {
