@@ -62,8 +62,7 @@ public class AmuletIngredient extends Ingredient {
     public JsonElement toJson() {
         JsonObject json = new JsonObject();
         json.addProperty("item", stack.getItem().getRegistryName().toString());
-        if (stack.getItem() instanceof AmuletItem) {
-            AmuletItem item = (AmuletItem) stack.getItem();
+        if (stack.getItem() instanceof AmuletItem item) {
             if (item.hasTier()) {
                 json.addProperty("tier", item.getTier(stack));
             }
