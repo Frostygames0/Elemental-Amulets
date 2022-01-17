@@ -38,14 +38,12 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -68,6 +66,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class ElementalCombinatorBlockEntity extends BlockEntity implements MenuProvider {
+    private static final String TAG_CONTENTS = "Contents";
+    private static final String TAG_COMBINATION_TIME = "CombinationTime";
+    private static final String TAG_TOTAL_COMBINATION_TIME = "TotalCombinationTime";
+
     private final ItemStackHandler handler = new ItemStackHandler(10) {
         @Override
         protected void onContentsChanged(int slot) {
@@ -160,14 +162,13 @@ public class ElementalCombinatorBlockEntity extends BlockEntity implements MenuP
             this.setChanged();
 
             Vec3 vector = Vec3.atBottomCenterOf(worldPosition);
-            level.getNearbyPlayers(TargetingConditions.DEFAULT, null,
-                            new AABB(vector.add(3, 2, 3), vector.subtract(3, 0, 3)))
-                    .forEach(player -> {
-                        if (player instanceof ServerPlayer) {
-                            ModCriteriaTriggers.ITEM_COMBINED.trigger((ServerPlayer) player, result, (ServerLevel) level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ());
+            if (level instanceof ServerLevel) {
+                ((ServerLevel) level).getPlayers(player -> vector.distanceToSqr(player.position()) <= 16)
+                        .forEach(player -> {
+                            ModCriteriaTriggers.ITEM_COMBINED.trigger(player, result, (ServerLevel) level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ());
                             player.awardStat(ModStats.TIMES_COMBINED);
-                        }
-                    });
+                        });
+            }
         }
     }
 
@@ -218,25 +219,25 @@ public class ElementalCombinatorBlockEntity extends BlockEntity implements MenuP
 
     @Override
     protected void saveAdditional(CompoundTag compound) {
-        compound.putInt("CombinationTime", this.combinationTime);
-        compound.putInt("TotalCombinationTime", this.totalTime);
+        compound.putInt(TAG_COMBINATION_TIME, this.combinationTime);
+        compound.putInt(TAG_TOTAL_COMBINATION_TIME, this.totalTime);
         this.writeInventory(compound);
     }
 
     @Override
     public void load(CompoundTag nbt) {
         super.load(nbt);
-        this.combinationTime = nbt.getInt("CombinationTime");
-        this.totalTime = nbt.getInt("TotalCombinationTime");
+        this.combinationTime = nbt.getInt(TAG_COMBINATION_TIME);
+        this.totalTime = nbt.getInt(TAG_TOTAL_COMBINATION_TIME);
         this.readInventory(nbt);
     }
 
     private void writeInventory(CompoundTag compound) {
-        compound.put("Contents", handler.serializeNBT());
+        compound.put(TAG_CONTENTS, handler.serializeNBT());
     }
 
     private void readInventory(CompoundTag nbt) {
-        handler.deserializeNBT(nbt.getCompound("Contents"));
+        handler.deserializeNBT(nbt.getCompound(TAG_CONTENTS));
     }
 
     @Nonnull
