@@ -47,8 +47,8 @@ import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 public class CultTempleStructure extends StructureFeature<JigsawConfiguration> {
 
-    public static Lazy<List<MobSpawnSettings.SpawnerData>> MONSTERS = Lazy.of(() -> ImmutableList.of(new MobSpawnSettings.SpawnerData(EntityType.CREEPER, 100, 1, 2)));
-    public static Lazy<List<MobSpawnSettings.SpawnerData>> CREATURES = Lazy.of(() -> ImmutableList.of(new MobSpawnSettings.SpawnerData(EntityType.BAT, 100, 1, 4)));
+    public static final Lazy<List<MobSpawnSettings.SpawnerData>> MONSTERS = Lazy.of(() -> ImmutableList.of(new MobSpawnSettings.SpawnerData(EntityType.CREEPER, 100, 1, 2)));
+    public static final Lazy<List<MobSpawnSettings.SpawnerData>> CREATURES = Lazy.of(() -> ImmutableList.of(new MobSpawnSettings.SpawnerData(EntityType.BAT, 100, 1, 4)));
 
     public CultTempleStructure() {
         super(JigsawConfiguration.CODEC, CultTempleStructure::createPiecesGenerator);

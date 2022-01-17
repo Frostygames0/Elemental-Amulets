@@ -35,7 +35,7 @@ import java.util.UUID;
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 public class SpeedAmuletItem extends AmuletItem {
-    public static UUID MODIFIER_UUID = UUID.fromString("06c06b38-3779-4ca2-b678-7c111c77faef");
+    public static final UUID MODIFIER_UUID = UUID.fromString("06c06b38-3779-4ca2-b678-7c111c77faef");
 
     public SpeedAmuletItem(Properties properties) {
         super(properties);
