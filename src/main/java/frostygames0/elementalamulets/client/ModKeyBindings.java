@@ -38,7 +38,7 @@ import org.lwjgl.glfw.GLFW;
  */
 @Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID, value = Dist.CLIENT)
 public class ModKeyBindings {
-    public static KeyBinding OPEN_AMULET_BELT = new KeyBinding("key.elementalamulets.open_belt_gui", KeyConflictContext.IN_GAME, InputMappings.Type.KEYSYM, GLFW.GLFW_KEY_I, "key.categories.inventory");
+    public static final KeyBinding OPEN_AMULET_BELT = new KeyBinding("key.elementalamulets.open_belt_gui", KeyConflictContext.IN_GAME, InputMappings.Type.KEYSYM, GLFW.GLFW_KEY_I, "key.categories.inventory");
 
     public static void registerKeyBinds() {
         ClientRegistry.registerKeyBinding(OPEN_AMULET_BELT);

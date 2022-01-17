@@ -34,7 +34,7 @@ import java.util.UUID;
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 public class AirAmuletItem extends AmuletItem {
-    public static UUID MODIFIER_UUID = UUID.fromString("2589aeb9-2b6a-44dc-8fab-97c9743dacdf");
+    public static final UUID MODIFIER_UUID = UUID.fromString("2589aeb9-2b6a-44dc-8fab-97c9743dacdf");
 
     public AirAmuletItem(Properties properties) {
         super(properties, true);

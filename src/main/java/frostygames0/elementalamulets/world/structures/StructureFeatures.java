@@ -33,7 +33,7 @@ import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
  * @date 29.09.2021 15:46
  */
 public class StructureFeatures {
-    public static StructureFeature<?, ?> CONFIGURED_CULT_TEMPLE = ModStructures.CULT_TEMPLE.get().configured(IFeatureConfig.NONE);
+    public static final StructureFeature<?, ?> CONFIGURED_CULT_TEMPLE = ModStructures.CULT_TEMPLE.get().configured(IFeatureConfig.NONE);
 
     public static void register() {
         Registry.register(WorldGenRegistries.CONFIGURED_STRUCTURE_FEATURE, modPrefix("cult_temple"), CONFIGURED_CULT_TEMPLE);

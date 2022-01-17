@@ -35,7 +35,7 @@ import java.util.UUID;
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 public class WaterAmuletItem extends AmuletItem {
-    public static UUID MODIFIER_UUID = UUID.fromString("88f5e6ea-c12f-4cfd-b3f4-40d9ca8cdfad");
+    public static final UUID MODIFIER_UUID = UUID.fromString("88f5e6ea-c12f-4cfd-b3f4-40d9ca8cdfad");
 
     public WaterAmuletItem(Properties properties) {
         super(properties, true);
