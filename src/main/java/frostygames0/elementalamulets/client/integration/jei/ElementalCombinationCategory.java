@@ -59,7 +59,7 @@ public class ElementalCombinationCategory implements IRecipeCategory<ElementalCo
     public ElementalCombinationCategory(IGuiHelper helper) {
         this.background = helper.drawableBuilder(ElementalCombinatorScreen.GUI, 6, 5, 149, 74)
                 .addPadding(0, 10, 0, 0).build();
-        this.icon = helper.createDrawableIngredient(new ItemStack(ModBlocks.ELEMENTAL_COMBINATOR.get()));
+        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM, new ItemStack(ModBlocks.ELEMENTAL_COMBINATOR.get()));
         this.cachedArrows = CacheBuilder.newBuilder()
                 .maximumSize(25)
                 .build(new CacheLoader<Integer, IDrawableAnimated>() {
