@@ -32,7 +32,6 @@ import net.minecraftforge.registries.RegistryObject;
 
 
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class BlockStateProvider extends net.minecraftforge.client.model.generators.BlockStateProvider {
     public BlockStateProvider(DataGenerator gen, ExistingFileHelper exFileHelper) {
