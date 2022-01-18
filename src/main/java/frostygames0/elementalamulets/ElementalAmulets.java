@@ -113,7 +113,9 @@ public class ElementalAmulets {
             ModCriteriaTriggers.register();
             ModStats.registerStats();
 
-            ComposterBlock.COMPOSTABLES.put(ModItems.EARTH_ELEMENT.get(), 0.8f); // Earth element is now a compostable
+            var list = ComposterBlock.COMPOSTABLES;
+            list.put(ModItems.EARTH_SHARDS_BLOCK.get(), 1.0f);
+            list.put(ModItems.EARTH_ELEMENT.get(), 0.8f);
         });
     }
 }
