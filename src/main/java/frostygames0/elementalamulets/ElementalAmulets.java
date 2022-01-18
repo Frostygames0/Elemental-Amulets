@@ -29,9 +29,11 @@ import frostygames0.elementalamulets.world.LootTableModifiers;
 import frostygames0.elementalamulets.world.ModFeatures;
 import frostygames0.elementalamulets.world.structures.ModStructures;
 import frostygames0.elementalamulets.world.structures.StructureFeatures;
+import it.unimi.dsi.fastutil.objects.Object2FloatMap;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
@@ -111,7 +113,9 @@ public class ElementalAmulets {
             ModCriteriaTriggers.register();
             ModStats.registerStats();
 
-            ComposterBlock.COMPOSTABLES.put(ModItems.EARTH_ELEMENT.get(), 0.8f); // Earth element is now a compostable
+            Object2FloatMap<IItemProvider> list = ComposterBlock.COMPOSTABLES;
+            list.put(ModItems.EARTH_SHARDS_BLOCK.get(), 1.0f);
+            list.put(ModItems.EARTH_ELEMENT.get(), 0.8f);
         });
     }
 }
