@@ -63,6 +63,7 @@ public abstract class AmuletItem extends Item implements ICurioItem {
     public static final String TIER_TAG = ElementalAmulets.MOD_ID + ":tier";
     public static final int MAX_TIER = 4;
 
+    private AmuletModel model;
     private final boolean hasTier;
 
     public AmuletItem(Properties properties, boolean hasTier) {
@@ -104,7 +105,7 @@ public abstract class AmuletItem extends Item implements ICurioItem {
 
     @Override
     public int getMaxDamage(ItemStack stack) {
-        return 1000 * Math.max(this.getTier(stack), 1);
+        return super.getMaxDamage(stack) * Math.max(this.getTier(stack), 1);
     }
 
     @Override
@@ -160,16 +161,19 @@ public abstract class AmuletItem extends Item implements ICurioItem {
 
     @Override
     public void render(String identifier, int index, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int light, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch, ItemStack stack) {
-        matrixStack.pushPose();
-        ICurio.RenderHelper.translateIfSneaking(matrixStack, livingEntity);
-        ICurio.RenderHelper.rotateIfSneaking(matrixStack, livingEntity);
+        if (model == null) {
+            model = new AmuletModel();
+        } else {
+            matrixStack.pushPose();
+            ICurio.RenderHelper.translateIfSneaking(matrixStack, livingEntity);
+            ICurio.RenderHelper.rotateIfSneaking(matrixStack, livingEntity);
 
-        matrixStack.scale(0.7f, 0.7f, 0.7f); // Makes amulet smaller gugugaga
+            matrixStack.scale(0.7f, 0.7f, 0.7f); // Makes amulet smaller gugugaga
 
-        AmuletModel amuletModel = new AmuletModel();
-        IVertexBuilder vertexBuilder = ItemRenderer.getFoilBuffer(renderTypeBuffer, amuletModel.renderType(AmuletModel.getTexture(this, stack)), false, stack.hasFoil());
-        amuletModel.renderToBuffer(matrixStack, vertexBuilder, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-        matrixStack.popPose();
+            IVertexBuilder vertexBuilder = ItemRenderer.getFoilBuffer(renderTypeBuffer, model.renderType(AmuletModel.getTexture(this, stack)), false, stack.hasFoil());
+            model.renderToBuffer(matrixStack, vertexBuilder, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+            matrixStack.popPose();
+        }
     }
 
     @Override
