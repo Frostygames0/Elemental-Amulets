@@ -105,6 +105,7 @@ public class ElementalAmulets {
     private void commonSetup(final FMLCommonSetupEvent event) {
         ModNetworkHandler.registerMessages();
         event.enqueueWork(() -> {
+            ModItems.lookupAmulets();
             ModStructures.setupStructures();
             StructureFeatures.register();
 

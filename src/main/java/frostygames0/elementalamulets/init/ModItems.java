@@ -37,7 +37,6 @@ import net.minecraftforge.registries.RegistryObject;
 
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ModItems {
@@ -130,15 +129,21 @@ public class ModItems {
     public static final RegistryObject<KnockbackAmuletItem> KNOCKBACK_AMULET = ITEMS.register("knockback_amulet",
             () -> new KnockbackAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(Rarity.RARE).durability(1000)));
 
+    private static List<AmuletItem> amulets;
 
-    public static List<AmuletItem> getAmulets() {
-        List<AmuletItem> items = new ArrayList<>();
-        for (RegistryObject<Item> reg : ITEMS.getEntries()) {
-            Item item = reg.get();
-            if (item instanceof AmuletItem) items.add((AmuletItem) item);
-        }
-        return items;
+    // Looks up all amulets and caches them
+    public static void lookupAmulets() {
+        amulets = ITEMS.getEntries()
+                .stream()
+                .filter(RegistryObject::isPresent).map(RegistryObject::get)
+                .filter(item -> item instanceof AmuletItem).map(item -> (AmuletItem) item)
+                .toList();
     }
-
-
+    // Returns an immutable list of amulets from the cache(Throws error if it was not cached yet)
+    public static List<AmuletItem> getAmulets() {
+        if(amulets == null) {
+            throw new NullPointerException("Trying to access amulets before they were looked-up");
+        }
+        return amulets;
+    }
 }
