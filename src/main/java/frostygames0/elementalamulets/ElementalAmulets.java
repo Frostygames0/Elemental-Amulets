@@ -103,10 +103,9 @@ public class ElementalAmulets {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-        ModItems.lookupAmulets();
+        ModItems.AMULETS.get(); // I'm calling it, so it will be already cached on starting up
         ModNetworkHandler.registerMessages();
         event.enqueueWork(() -> {
-            ModItems.lookupAmulets();
             ModStructures.setupStructures();
             StructureFeatures.register();
 
