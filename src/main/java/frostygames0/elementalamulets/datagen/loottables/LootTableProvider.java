@@ -36,6 +36,7 @@ public class LootTableProvider extends BaseLootTableProvider {
     protected void addTables() {
         this.lootTables.put(ModBlocks.ELEMENTAL_COMBINATOR.get(), this.createTableNBT(ModBlocks.ELEMENTAL_COMBINATOR.get()));
         this.lootTables.put(ModBlocks.ELEMENTAL_ORE.get(), this.createOreTable(ModBlocks.ELEMENTAL_ORE.get(), ModItems.ELEMENTAL_SHARDS.get()));
+        this.lootTables.put(ModBlocks.DEEPSLATE_ELEMENTAL_ORE.get(), this.createOreTable(ModBlocks.DEEPSLATE_ELEMENTAL_ORE.get(), ModItems.ELEMENTAL_SHARDS.get()));
         this.lootTables.put(ModBlocks.CELESTIAL_FOCUS.get(), this.createDefaultTable(ModBlocks.CELESTIAL_FOCUS.get()));
 
         this.lootTables.put(ModBlocks.ELEMENTAL_SHARDS_BLOCK.get(), this.createShardsTable(ModBlocks.ELEMENTAL_SHARDS_BLOCK.get(), ModItems.ELEMENTAL_SHARDS.get()));
