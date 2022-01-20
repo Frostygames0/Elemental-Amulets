@@ -130,9 +130,9 @@ public class ModItems {
     public static final RegistryObject<KnockbackAmuletItem> KNOCKBACK_AMULET = ITEMS.register("knockback_amulet",
             () -> new KnockbackAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(Rarity.RARE).durability(1000)));
 
-    // an immutable list of amulets or caches them and then returns it.
-    // Can be an empty list if it's called before registration,
-    // so do not call it before registration ok?
+    /** An immutable list of amulets.
+     * Can be an empty if it's called before registration,
+     * so do not call it before registration ok? */
     public static final Lazy<List<AmuletItem>> AMULETS = Lazy.of(() -> ITEMS.getEntries()
             .stream()
             .filter(RegistryObject::isPresent).map(RegistryObject::get)
