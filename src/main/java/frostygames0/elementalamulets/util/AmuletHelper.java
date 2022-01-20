@@ -52,7 +52,7 @@ public final class AmuletHelper {
             for (int i = 0; i < handler.getSlots(); i++) {
                 ItemStack amulet = handler.getStackInSlot(i);
                 if (amulet.getItem() == item) {
-                    return Optional.of(triple);
+                    return Optional.of(new SlotResult(triple.slotContext(), amulet));
                 }
             }
         }
