@@ -112,7 +112,7 @@ public class ElementalCombinatorBlockEntity extends BlockEntity implements MenuP
     }
 
     public void tick() {
-        if (level != null && !level.isClientSide()) {
+        if (level != null) {
             if (this.isCombining()) {
                 ElementalCombination recipe = this.level.getRecipeManager().getRecipeFor(ModRecipes.ELEMENTAL_COMBINATION_TYPE, new RecipeWrapper(handler), this.level).orElse(null);
                 if (this.canCombine(recipe)) {
