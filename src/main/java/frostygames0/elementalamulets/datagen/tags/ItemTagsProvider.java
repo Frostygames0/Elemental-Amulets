@@ -42,7 +42,7 @@ public class ItemTagsProvider extends net.minecraft.data.ItemTagsProvider {
     @SuppressWarnings("unchecked")
     protected void addTags() {
         //Amulets
-        AmuletItem[] amulets = ModItems.getAmulets().toArray(new AmuletItem[0]);
+        AmuletItem[] amulets = ModItems.AMULETS.get().toArray(new AmuletItem[0]);
         this.tag(ModTags.Items.NECKLACES).add(amulets);
         this.tag(ModTags.Items.SHARD_BLOCKS).add(ModBlocks.ELEMENTAL_SHARDS_BLOCK.get().asItem(),
                 ModBlocks.FIRE_SHARDS_BLOCK.get().asItem(),

@@ -69,7 +69,7 @@ public class LootTableModifiers {
         @Nonnull
         @Override
         protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
-            List<AmuletItem> amulets = ModItems.getAmulets();
+            List<AmuletItem> amulets = ModItems.AMULETS.get();
             if (ModConfig.CachedValues.MODIFY_VANILLA_LOOT) {
                 if (LootTables.DESERT_PYRAMID.equals(context.getQueriedLootTableId()) && RANDOM.nextDouble() <= desertChance) {
                     generatedLoot.add(AmuletItem.getStackWithTier(new ItemStack(amulets.get(RANDOM.nextInt(amulets.size()))), 1));

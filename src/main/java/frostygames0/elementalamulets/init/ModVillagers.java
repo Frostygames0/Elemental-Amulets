@@ -155,7 +155,7 @@ public class ModVillagers {
         @Nullable
         @Override
         public MerchantOffer getOffer(Entity pTrader, Random pRand) {
-            List<AmuletItem> amulets = ModItems.getAmulets();
+            List<AmuletItem> amulets = ModItems.AMULETS.get();
             ItemStack stack = new ItemStack(amulets.get(pRand.nextInt(amulets.size())));
             return new MerchantOffer(new ItemStack(Items.EMERALD, this.emerald), AmuletItem.getStackWithTier(stack, 3), 1, villagerXp, priceMult);
         }
