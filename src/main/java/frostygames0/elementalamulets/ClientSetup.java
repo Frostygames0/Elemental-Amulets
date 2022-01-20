@@ -59,14 +59,15 @@ public class ClientSetup {
     @SubscribeEvent
     public static void clientSetup(final FMLClientSetupEvent event) {
         ModKeyBindings.registerKeyBinds();
-        OverlayRegistry.registerOverlayTop("Nature Charges", new LeafChargeOverlay());
-        ModItems.getAmulets().forEach(amulet -> CuriosRendererRegistry.register(amulet, () -> amulet));
+        OverlayRegistry.registerOverlayTop("Nature Charges (Terra-Protection amulet)", new LeafChargeOverlay());
+        var amulets = ModItems.getAmulets();
+        amulets.forEach(amulet -> CuriosRendererRegistry.register(amulet, () -> amulet));
         event.enqueueWork(() -> {
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.CELESTIAL_FOCUS.get(), RenderType.translucent());
             MenuScreens.register(ModMenus.ELEMENTAL_COMBINATOR_MENU.get(), ElementalCombinatorScreen::new);
             MenuScreens.register(ModMenus.AMULET_BELT_MENU.get(), AmuletBeltScreen::new);
 
-            ModItems.getAmulets().forEach(
+            amulets.forEach(
                     item -> ItemProperties.register(item, new ResourceLocation(AmuletItem.TIER_TAG),
                             (stack, world, entity, ipf) -> ModConfig.CachedValues.AMULETS_TIER_DIFFERENCE ? item.getTier(stack) : 0));
         });
