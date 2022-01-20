@@ -109,7 +109,7 @@ public abstract class AmuletItem extends Item implements ICurioItem, ICurioRende
 
     @Override
     public int getMaxDamage(ItemStack stack) {
-        return 1000 * Math.max(this.getTier(stack), 1);
+        return super.getMaxDamage(stack) * Math.max(this.getTier(stack), 1);
     }
 
     @Override
