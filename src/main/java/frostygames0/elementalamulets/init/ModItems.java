@@ -31,7 +31,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
 import net.minecraft.item.crafting.IRecipeType;
-import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -129,15 +128,18 @@ public class ModItems {
     public static final RegistryObject<Item> KNOCKBACK_AMULET = ITEMS.register("knockback_amulet",
             () -> new KnockbackAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(Rarity.RARE).durability(1000)));
 
-    /**
-     * An immutable list of amulets.
-     * Can be an empty if it's called before registration,
-     * so do not call it before registration ok?
-     */
-    public static final Lazy<List<AmuletItem>> AMULETS = Lazy.of(() -> ITEMS.getEntries()
-            .stream()
-            .filter(RegistryObject::isPresent).map(RegistryObject::get)
-            .filter(item -> item instanceof AmuletItem).map(item -> (AmuletItem) item)
-            .collect(Collectors.toList()));
+    private static List<AmuletItem> amulets;
+
+    public static List<AmuletItem> getAmulets() {
+        return amulets;
+    }
+
+    public static void lookupAmulets() {
+        amulets = ITEMS.getEntries()
+                .stream()
+                .filter(RegistryObject::isPresent).map(RegistryObject::get)
+                .filter(item -> item instanceof AmuletItem).map(item -> (AmuletItem) item)
+                .collect(Collectors.toList());
+    }
 
 }
