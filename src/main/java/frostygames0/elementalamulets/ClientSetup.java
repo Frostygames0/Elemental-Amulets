@@ -60,7 +60,7 @@ public class ClientSetup {
     public static void clientSetup(final FMLClientSetupEvent event) {
         ModKeyBindings.registerKeyBinds();
         OverlayRegistry.registerOverlayTop("Nature Charges (Terra-Protection amulet)", new LeafChargeOverlay());
-        var amulets = ModItems.AMULETS.get();
+        var amulets = ModItems.getAmulets();
         amulets.forEach(amulet -> CuriosRendererRegistry.register(amulet, () -> amulet));
         event.enqueueWork(() -> {
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.CELESTIAL_FOCUS.get(), RenderType.translucent());

@@ -51,7 +51,6 @@ public class ModItems {
             () -> new AncientTabletItem(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(Rarity.RARE).durability(100)));
 
     // Mod BlockItems
-    // TODO Maybe I should use registry event with foreach loop instead of creating constants that I'm not using
     public static final RegistryObject<BlockItem> ELEMENTAL_COMBINATOR = ITEMS.register("elemental_combinator",
             () -> new BlockItem(ModBlocks.ELEMENTAL_COMBINATOR.get(), new Item.Properties().tab(ElementalAmulets.GROUP)));
     public static final RegistryObject<BlockItem> CELESTIAL_FOCUS = ITEMS.register("celestial_focus",
@@ -130,12 +129,16 @@ public class ModItems {
     public static final RegistryObject<KnockbackAmuletItem> KNOCKBACK_AMULET = ITEMS.register("knockback_amulet",
             () -> new KnockbackAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(Rarity.RARE).durability(1000)));
 
-    /** An immutable list of amulets.
-     * Can be an empty if it's called before registration,
-     * so do not call it before registration ok? */
-    public static final Lazy<List<AmuletItem>> AMULETS = Lazy.of(() -> ITEMS.getEntries()
-            .stream()
-            .filter(RegistryObject::isPresent).map(RegistryObject::get)
-            .filter(item -> item instanceof AmuletItem).map(item -> (AmuletItem) item)
-            .toList());
+    private static List<AmuletItem> amulets;
+    public static List<AmuletItem> getAmulets() {
+        return amulets;
+    }
+
+    public static void lookupAmulets() {
+        amulets = ITEMS.getEntries()
+                .stream()
+                .filter(RegistryObject::isPresent).map(RegistryObject::get)
+                .filter(item -> item instanceof AmuletItem).map(item -> (AmuletItem) item)
+                .toList();
+    }
 }

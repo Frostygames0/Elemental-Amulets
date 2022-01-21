@@ -24,6 +24,7 @@ import frostygames0.elementalamulets.datagen.loottables.LootTableProvider;
 import frostygames0.elementalamulets.datagen.recipes.RecipeProvider;
 import frostygames0.elementalamulets.datagen.tags.BlockTagsProvider;
 import frostygames0.elementalamulets.datagen.tags.ItemTagsProvider;
+import frostygames0.elementalamulets.init.ModItems;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -34,6 +35,7 @@ import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 public class DataGenerators {
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {
+        ModItems.lookupAmulets(); // Looking them up as common setup is not running while datagen is happening
         DataGenerator generator = event.getGenerator();
         ExistingFileHelper helper = event.getExistingFileHelper();
         if (event.includeClient()) {
