@@ -24,6 +24,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableMultimap;
 import com.mojang.serialization.Codec;
 import frostygames0.elementalamulets.ElementalAmulets;
+import frostygames0.elementalamulets.config.ModConfig;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.resources.ResourceKey;
@@ -106,7 +107,7 @@ public class ModStructures {
                 Biome.BiomeCategory biomeCategory = biomeEntry.getValue().getBiomeCategory();
                 if (biomeCategory != Biome.BiomeCategory.OCEAN && biomeCategory != Biome.BiomeCategory.THEEND && biomeCategory != Biome.BiomeCategory.NETHER && biomeCategory != Biome.BiomeCategory.NONE) {
                     if (biomeCategory == Biome.BiomeCategory.JUNGLE && biomeEntry.getKey() != Biomes.SPARSE_JUNGLE)
-                        associateBiomeToConfiguredStructure(structureToMMap, StructureFeatures.CONFIGURED_CULT_TEMPLE, biomeEntry.getKey());
+                        if(ModConfig.CachedValues.GENERATE_CULT_TEMPLE) associateBiomeToConfiguredStructure(structureToMMap, StructureFeatures.CONFIGURED_CULT_TEMPLE, biomeEntry.getKey());
                 }
             }
             ImmutableMap.Builder<StructureFeature<?>, ImmutableMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> tempStructureToMultiMap = ImmutableMap.builder();
