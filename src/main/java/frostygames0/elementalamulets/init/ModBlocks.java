@@ -40,17 +40,17 @@ import net.minecraftforge.registries.RegistryObject;
 public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ElementalAmulets.MOD_ID);
 
-    public static final RegistryObject<Block> ELEMENTAL_COMBINATOR = BLOCKS.register("elemental_combinator",
+    public static final RegistryObject<ElementalCombinator> ELEMENTAL_COMBINATOR = BLOCKS.register("elemental_combinator",
             () -> new ElementalCombinator(BlockBehaviour.Properties.of(Material.STONE, DyeColor.RED).strength(3.5f).sound(SoundType.STONE).requiresCorrectToolForDrops()
                     .lightLevel(state -> state.getValue(ElementalCombinator.COMBINING) ? 15 : 5).isRedstoneConductor(ModBlocks::never)));
 
-    public static final RegistryObject<Block> CELESTIAL_FOCUS = BLOCKS.register("celestial_focus",
+    public static final RegistryObject<CelestialFocus> CELESTIAL_FOCUS = BLOCKS.register("celestial_focus",
             () -> new CelestialFocus(BlockBehaviour.Properties.of(Material.WOOD, DyeColor.BROWN).strength(2f).sound(SoundType.WOOD)
                     .noOcclusion().isViewBlocking(ModBlocks::never).isSuffocating(ModBlocks::never)));
 
-    public static final RegistryObject<Block> ELEMENTAL_ORE = BLOCKS.register("elemental_ore",
+    public static final RegistryObject<OreBlock> ELEMENTAL_ORE = BLOCKS.register("elemental_ore",
             () -> new OreBlock(BlockBehaviour.Properties.of(Material.STONE).strength(3.5f).sound(SoundType.STONE).requiresCorrectToolForDrops(), UniformInt.of(0, 2)));
-    public static final RegistryObject<Block> DEEPSLATE_ELEMENTAL_ORE = BLOCKS.register("deepslate_elemental_ore",
+    public static final RegistryObject<OreBlock> DEEPSLATE_ELEMENTAL_ORE = BLOCKS.register("deepslate_elemental_ore",
             () -> new OreBlock(BlockBehaviour.Properties.of(Material.STONE).strength(4.0f).sound(SoundType.DEEPSLATE).requiresCorrectToolForDrops(), UniformInt.of(1, 3)));
 
 
