@@ -4,6 +4,7 @@
   "icon": "elementalamulets:elemental_shards",
   "extra_recipe_mappings": {
     "elementalamulets:elemental_ore": 1,
+    "elementalamulets:deepslate_elemental_ore": 1,
     "elementalamulets:elemental_shards": 1
   },
   "pages": [

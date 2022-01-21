@@ -38,6 +38,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.Tag;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ItemLike;
 
 
 import java.util.List;
@@ -90,10 +91,10 @@ public class JEIPlugin implements IModPlugin {
         // Misc. Description
         registration.addIngredientInfo(new ItemStack(ModItems.ELEMENTAL_GUIDE.get()), VanillaTypes.ITEM, new TranslatableComponent("jei.elementalamulets.guide_book.description"));
         registration.addIngredientInfo(new ItemStack(ModBlocks.ELEMENTAL_COMBINATOR.get()), VanillaTypes.ITEM, new TranslatableComponent("jei.elementalamulets.elemental_combinator.description"));
-        registration.addIngredientInfo(new ItemStack(ModBlocks.ELEMENTAL_ORE.get()), VanillaTypes.ITEM, new TranslatableComponent("jei.elementalamulets.elemental_ore.whereabouts"));
+        registration.addIngredientInfo(mapTagAsItemList(ModTags.Blocks.ELEMENTAL_ORE), VanillaTypes.ITEM, new TranslatableComponent("jei.elementalamulets.elemental_ore.whereabouts"));
     }
 
-    private static List<ItemStack> mapTagAsItemList(Tag.Named<Item> tag) {
+    private static List<ItemStack> mapTagAsItemList(Tag.Named<? extends ItemLike> tag) {
         return tag.getValues().stream().map(ItemStack::new).collect(Collectors.toList());
     }
 
