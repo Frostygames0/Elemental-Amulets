@@ -44,10 +44,10 @@ public class ModItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ElementalAmulets.MOD_ID);
 
     // Mod's guide book
-    public static final RegistryObject<Item> ELEMENTAL_GUIDE = ITEMS.register("guide_book",
+    public static final RegistryObject<ElementalGuideItem> ELEMENTAL_GUIDE = ITEMS.register("guide_book",
             () -> new ElementalGuideItem(new Item.Properties().tab(ElementalAmulets.GROUP).stacksTo(1)));
 
-    public static final RegistryObject<Item> ANCIENT_TABLET = ITEMS.register("ancient_tablet",
+    public static final RegistryObject<AncientTabletItem> ANCIENT_TABLET = ITEMS.register("ancient_tablet",
             () -> new AncientTabletItem(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(Rarity.RARE).durability(100)));
 
     // Mod BlockItems
@@ -80,13 +80,13 @@ public class ModItems {
             () -> new BlockItem(ModBlocks.AIR_SHARDS_BLOCK.get(), new Item.Properties().tab(ElementalAmulets.GROUP).rarity(ElementalRarity.AIR)));
 
     // Elements
-    public static final RegistryObject<Item> ELEMENTAL_SHARDS = ITEMS.register("elemental_shards",
+    public static final RegistryObject<ElementItem> ELEMENTAL_SHARDS = ITEMS.register("elemental_shards",
             () -> new ElementItem(Rarity.COMMON));
-    public static final RegistryObject<Item> WATER_ELEMENT = ITEMS.register("water_element",
+    public static final RegistryObject<ElementItem> WATER_ELEMENT = ITEMS.register("water_element",
             () -> new ElementItem(ElementalRarity.WATER));
-    public static final RegistryObject<Item> EARTH_ELEMENT = ITEMS.register("earth_element",
+    public static final RegistryObject<ElementItem> EARTH_ELEMENT = ITEMS.register("earth_element",
             () -> new ElementItem(ElementalRarity.EARTH));
-    public static final RegistryObject<Item> FIRE_ELEMENT = ITEMS.register("fire_element",
+    public static final RegistryObject<ElementItem> FIRE_ELEMENT = ITEMS.register("fire_element",
             () -> new ElementItem(ElementalRarity.FIRE) {
                 @Override
                 public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
@@ -96,14 +96,14 @@ public class ModItems {
                     return 4500;
                 }
             });
-    public static final RegistryObject<Item> AIR_ELEMENT = ITEMS.register("air_element",
+    public static final RegistryObject<ElementItem> AIR_ELEMENT = ITEMS.register("air_element",
             () -> new ElementItem(ElementalRarity.AIR));
-    public static final RegistryObject<Item> AETHER_ELEMENT = ITEMS.register("aether_element",
+    public static final RegistryObject<ElementItem> AETHER_ELEMENT = ITEMS.register("aether_element",
             () -> new ElementItem(Rarity.RARE));
 
     public static final RegistryObject<Item> ALL_SEEING_LENS = ITEMS.register("all_seeing_lens",
             () -> new Item(new Item.Properties().tab(ElementalAmulets.GROUP).stacksTo(16).rarity(Rarity.UNCOMMON)));
-    public static final RegistryObject<Item> AMULET_BELT = ITEMS.register("amulet_belt",
+    public static final RegistryObject<AmuletBeltItem> AMULET_BELT = ITEMS.register("amulet_belt",
             () -> new AmuletBeltItem(new Item.Properties().tab(ElementalAmulets.GROUP).stacksTo(1).rarity(Rarity.UNCOMMON)));
 
     // Amulets
