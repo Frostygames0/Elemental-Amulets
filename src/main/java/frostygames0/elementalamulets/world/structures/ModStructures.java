@@ -62,7 +62,7 @@ public class ModStructures {
     public static void setupStructures() {
         setup(CULT_TEMPLE.get(), new StructureFeatureConfiguration(50, 12, 234235432));
     }
-
+    
     private static <T extends StructureFeature<?>> void setup(T structure, StructureFeatureConfiguration settings) {
         StructureFeature.STRUCTURES_REGISTRY.put(structure.getRegistryName().toString(), structure);
 
@@ -84,6 +84,7 @@ public class ModStructures {
     private static Method GETCODEC_METHOD;
 
     @SubscribeEvent
+    @SuppressWarnings("unchecked")
     public static void addDimensionalSpacing(final WorldEvent.Load event) {
         if (event.getWorld() instanceof ServerLevel serverLevel) {
             ChunkGenerator chunkGenerator = serverLevel.getChunkSource().getGenerator();
@@ -107,7 +108,7 @@ public class ModStructures {
                 Biome.BiomeCategory biomeCategory = biomeEntry.getValue().getBiomeCategory();
                 if (biomeCategory != Biome.BiomeCategory.OCEAN && biomeCategory != Biome.BiomeCategory.THEEND && biomeCategory != Biome.BiomeCategory.NETHER && biomeCategory != Biome.BiomeCategory.NONE) {
                     if (biomeCategory == Biome.BiomeCategory.JUNGLE && biomeEntry.getKey() != Biomes.SPARSE_JUNGLE)
-                        if(ModConfig.CachedValues.GENERATE_CULT_TEMPLE) associateBiomeToConfiguredStructure(structureToMMap, StructureFeatures.CONFIGURED_CULT_TEMPLE, biomeEntry.getKey());
+                        if(ModConfig.CachedValues.GENERATE_CULT_TEMPLE) associateBiomeToConfiguredStructure(structureToMMap, ModStructureFeatures.CONFIGURED_CULT_TEMPLE, biomeEntry.getKey());
                 }
             }
             ImmutableMap.Builder<StructureFeature<?>, ImmutableMultimap<ConfiguredStructureFeature<?, ?>, ResourceKey<Biome>>> tempStructureToMultiMap = ImmutableMap.builder();

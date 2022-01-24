@@ -28,7 +28,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfigura
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
-public class StructureFeatures {
+public class ModStructureFeatures {
     public static final ConfiguredStructureFeature<?, ?> CONFIGURED_CULT_TEMPLE = ModStructures.CULT_TEMPLE.get().configured(new JigsawConfiguration(() -> PlainVillagePools.START, 0));
 
     public static void register() {
