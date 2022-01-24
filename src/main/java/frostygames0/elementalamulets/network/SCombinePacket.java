@@ -41,20 +41,20 @@ public class SCombinePacket {
     }
 
     public SCombinePacket(PacketBuffer buf) {
-        this.pos = buf.readBlockPos();
+        this(buf.readBlockPos());
     }
 
     public void toBytes(PacketBuffer buf) {
         buf.writeBlockPos(this.pos);
     }
 
-    public void handle(Supplier<NetworkEvent.Context> sup) {
+    public static void handle(SCombinePacket msg, Supplier<NetworkEvent.Context> sup) {
         NetworkEvent.Context ctx = sup.get();
         ctx.enqueueWork(() -> {
             World world = ctx.getSender().level;
             if (world != null) {
-                if (world.hasChunkAt(pos)) {
-                    TileEntity tile = world.getBlockEntity(pos);
+                if (world.hasChunkAt(msg.pos)) {
+                    TileEntity tile = world.getBlockEntity(msg.pos);
                     if (tile instanceof ElementalCombinatorTile) {
                         ((ElementalCombinatorTile) tile).startCombination();
                     }

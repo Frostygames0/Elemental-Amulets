@@ -19,9 +19,9 @@
 
 package frostygames0.elementalamulets.network;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.network.PacketBuffer;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 
@@ -33,14 +33,12 @@ import java.util.function.Supplier;
  */
 public class CUpdatePlayerVelocityPacket {
 
-    private final double x;
-    private final double y;
-    private final double z;
+    final double x;
+    final double y;
+    final double z;
 
     public CUpdatePlayerVelocityPacket(PacketBuffer buf) {
-        this.x = buf.readDouble();
-        this.y = buf.readDouble();
-        this.z = buf.readDouble();
+        this(buf.readDouble(), buf.readDouble(), buf.readDouble());
     }
 
     public CUpdatePlayerVelocityPacket(double x, double y, double z) {
@@ -55,13 +53,10 @@ public class CUpdatePlayerVelocityPacket {
         buf.writeDouble(z);
     }
 
-    public void handle(Supplier<NetworkEvent.Context> sup) {
+    public static void handle(CUpdatePlayerVelocityPacket msg, Supplier<NetworkEvent.Context> sup) {
         NetworkEvent.Context ctx = sup.get();
         ctx.enqueueWork(() -> {
-            ClientPlayerEntity player = Minecraft.getInstance().player;
-            if (player != null) {
-                player.setDeltaMovement(x, y, z);
-            }
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientPacketHandler.handleUpdatePlayerVelocity(msg));
         });
         ctx.setPacketHandled(true);
     }
