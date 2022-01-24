@@ -27,8 +27,8 @@ import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import frostygames0.elementalamulets.network.ModNetworkHandler;
 import frostygames0.elementalamulets.world.LootTableModifiers;
 import frostygames0.elementalamulets.world.ModFeatures;
+import frostygames0.elementalamulets.world.structures.ModStructureFeatures;
 import frostygames0.elementalamulets.world.structures.ModStructures;
-import frostygames0.elementalamulets.world.structures.StructureFeatures;
 import it.unimi.dsi.fastutil.objects.Object2FloatMap;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.item.ItemGroup;
@@ -107,7 +107,7 @@ public class ElementalAmulets {
         ModNetworkHandler.registerMessages();
         event.enqueueWork(() -> {
             ModStructures.setupStructures();
-            StructureFeatures.register();
+            ModStructureFeatures.register();
 
             ModFeatures.register();
 

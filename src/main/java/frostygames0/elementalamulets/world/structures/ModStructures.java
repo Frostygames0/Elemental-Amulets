@@ -114,7 +114,7 @@ public class ModStructures {
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void addStructuresToWorld(BiomeLoadingEvent event) {
         if (event.getCategory() == Biome.Category.JUNGLE && ModConfig.CachedValues.GENERATE_CULT_TEMPLE)
-            event.getGeneration().getStructures().add(() -> StructureFeatures.CONFIGURED_CULT_TEMPLE);
+            event.getGeneration().getStructures().add(() -> ModStructureFeatures.CONFIGURED_CULT_TEMPLE);
     }
 
 
