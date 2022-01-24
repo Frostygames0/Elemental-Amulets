@@ -22,6 +22,8 @@ package frostygames0.elementalamulets.network;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 
 
@@ -31,22 +33,10 @@ import java.util.function.Supplier;
  * @author Frostygames0
  * @date 29.09.2021 21:52
  */
-public class CUpdatePlayerVelocityPacket {
-
-    private final double x;
-    private final double y;
-    private final double z;
+public record CUpdatePlayerVelocityPacket(double x, double y, double z) {
 
     public CUpdatePlayerVelocityPacket(FriendlyByteBuf buf) {
-        this.x = buf.readDouble();
-        this.y = buf.readDouble();
-        this.z = buf.readDouble();
-    }
-
-    public CUpdatePlayerVelocityPacket(double x, double y, double z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        this(buf.readDouble(), buf.readDouble(), buf.readDouble());
     }
 
     public void toBytes(FriendlyByteBuf buf) {
@@ -55,14 +45,9 @@ public class CUpdatePlayerVelocityPacket {
         buf.writeDouble(z);
     }
 
-    public void handle(Supplier<NetworkEvent.Context> sup) {
+    public static void handle(CUpdatePlayerVelocityPacket msg, Supplier<NetworkEvent.Context> sup) {
         NetworkEvent.Context ctx = sup.get();
-        ctx.enqueueWork(() -> {
-            LocalPlayer player = Minecraft.getInstance().player;
-            if (player != null) {
-                player.setDeltaMovement(x, y, z);
-            }
-        });
+        ctx.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientPacketHandler.handleUpdatePlayerVelocity(msg)));
         ctx.setPacketHandled(true);
     }
 }

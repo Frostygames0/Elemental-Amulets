@@ -33,27 +33,22 @@ import java.util.function.Supplier;
  * @author Frostygames0
  * @date 08.10.2021 23:08
  */
-public class SCombinePacket {
-    private final BlockPos pos;
-
-    public SCombinePacket(BlockPos pos) {
-        this.pos = pos;
-    }
+public record SCombinePacket(BlockPos pos) {
 
     public SCombinePacket(FriendlyByteBuf buf) {
-        this.pos = buf.readBlockPos();
+        this(buf.readBlockPos());
     }
 
     public void toBytes(FriendlyByteBuf buf) {
         buf.writeBlockPos(this.pos);
     }
 
-    public void handle(Supplier<NetworkEvent.Context> sup) {
+    public static void handle(SCombinePacket packet, Supplier<NetworkEvent.Context> sup) {
         NetworkEvent.Context ctx = sup.get();
         ctx.enqueueWork(() -> {
             Level world = ctx.getSender().level;
-            if (world.hasChunkAt(pos)) {
-                BlockEntity tile = world.getBlockEntity(pos);
+            if (world.hasChunkAt(packet.pos)) {
+                BlockEntity tile = world.getBlockEntity(packet.pos);
                 if (tile instanceof ElementalCombinatorBlockEntity) {
                     ((ElementalCombinatorBlockEntity) tile).startCombination();
                 }
