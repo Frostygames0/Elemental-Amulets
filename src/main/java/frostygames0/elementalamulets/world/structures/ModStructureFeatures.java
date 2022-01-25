@@ -24,14 +24,15 @@ import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.worldgen.PlainVillagePools;
 import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
+import net.minecraftforge.common.util.Lazy;
 
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 public class ModStructureFeatures {
-    public static final ConfiguredStructureFeature<?, ?> CONFIGURED_CULT_TEMPLE = ModStructures.CULT_TEMPLE.get().configured(new JigsawConfiguration(() -> PlainVillagePools.START, 0));
+    public static final Lazy<ConfiguredStructureFeature<?, ?>> CONFIGURED_CULT_TEMPLE = Lazy.of(() -> ModStructures.CULT_TEMPLE.get().configured(new JigsawConfiguration(() -> PlainVillagePools.START, 0)));
 
     public static void register() {
-        Registry.register(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, modPrefix("cult_temple"), CONFIGURED_CULT_TEMPLE);
+        Registry.register(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, modPrefix("cult_temple"), CONFIGURED_CULT_TEMPLE.get());
     }
 }
