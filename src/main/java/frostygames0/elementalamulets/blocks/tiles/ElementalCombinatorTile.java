@@ -19,7 +19,6 @@
 
 package frostygames0.elementalamulets.blocks.tiles;
 
-import com.sun.istack.internal.Nullable;
 import frostygames0.elementalamulets.advancements.triggers.ModCriteriaTriggers;
 import frostygames0.elementalamulets.blocks.ElementalCombinator;
 import frostygames0.elementalamulets.blocks.containers.ElementalCombinatorContainer;
@@ -60,6 +59,7 @@ import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class ElementalCombinatorTile extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
     private static final String TAG_CONTENTS = "Contents";
