@@ -34,7 +34,6 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.util.RecipeMatcher;
 
 
 import java.util.ArrayList;
@@ -64,17 +63,33 @@ public class ElementalCombination implements Recipe<Container> {
 
     @Override
     public boolean matches(Container inv, Level worldIn) {
-        List<ItemStack> inputs = new ArrayList<>();
+        if (ingredients.isEmpty())
+            return false;
+
+        List<Ingredient> toFind = new ArrayList<>(ingredients);
+
         for (int i = 2; i < inv.getContainerSize(); ++i) {
             ItemStack stack = inv.getItem(i);
-            if (!stack.isEmpty()) {
-                inputs.add(stack);
+
+            if (stack.isEmpty()) continue;
+
+            int index = -1;
+
+            for (int j = 0; j < toFind.size(); j++) {
+                if (toFind.get(j).test(stack)) {
+                    index = j;
+                    break;
+                }
             }
 
+            if (index != -1) {
+                toFind.remove(index);
+            } else
+                return false;
         }
-        return inputs.size() == ingredients.size() && this.elemental.test(inv.getItem(1))
-                && RecipeMatcher.findMatches(inputs, ingredients) != null;
+        return toFind.isEmpty() && this.elemental.test(inv.getItem(1));
     }
+
 
     @Override
     public ItemStack assemble(Container inv) {
