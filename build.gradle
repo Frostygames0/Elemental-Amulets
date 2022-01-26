@@ -103,16 +103,7 @@ repositories {
 dependencies {
     minecraft 'net.minecraftforge:forge:1.16.5-36.2.0'
 
-    if(System.getProperty("idea.sync.active") != "true") {
-        annotationProcessor 'org.spongepowered:mixin:0.8.4:processor'
-
-        //CT docs generation
-        /*
-        annotationProcessor "com.blamejared.crafttweaker:CraftTweaker-${mc_version}:${crafttweaker_version}"
-        annotationProcessor "com.blamejared.crafttweaker:Crafttweaker_Annotation_Processors-1.16.5:1.0.0.312"
-        annotationProcessor "org.reflections:reflections:0.9.10" // CT dependency
-         */
-    }
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
     // Curios API
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curios_version}")
