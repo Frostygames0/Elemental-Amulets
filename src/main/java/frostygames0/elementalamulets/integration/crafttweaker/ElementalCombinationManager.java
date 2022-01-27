@@ -45,7 +45,7 @@ import java.util.stream.Collectors;
 @Document("mods/elementalamulets/ElementalCombination")
 @ZenRegister
 @ZenCodeType.Name("mods.elementalamulets.ElementalCombination")
-public class ElementalCombinationManager implements IRecipeManager {
+public class ElementalCombinationManager implements IRecipeManager<ElementalCombination> {
 
     /**
      * This method adds a new Elemental Combination recipe.
@@ -70,13 +70,13 @@ public class ElementalCombinationManager implements IRecipeManager {
         ResourceLocation id = new ResourceLocation("crafttweaker", name);
         if (ingredients.length > ElementalCombination.MAX_INGREDIENTS)
             CraftTweakerAPI.LOGGER.error("Recipe: " + id + " of type: " + this.getRecipeType() + " is incorrect/unobtainable! Elemental Combination can only accept " + ElementalCombination.MAX_INGREDIENTS + " ingredients! You've provided " + ingredients.length);
-        CraftTweakerAPI.apply(new ActionAddRecipe(this,
+        CraftTweakerAPI.apply(new ActionAddRecipe<>(this,
                 new ElementalCombination(id, Arrays.stream(ingredients).map(IIngredient::asVanillaIngredient).collect(Collectors.toCollection(NonNullList::create)),
                         new AmuletIngredient(elemental.getInternal()), output.getInternal(), combinationTime, tagTransfer)));
     }
 
     @Override
-    public RecipeType<?> getRecipeType() {
+    public RecipeType<ElementalCombination> getRecipeType() {
         return ModRecipes.ELEMENTAL_COMBINATION_TYPE;
     }
 }
