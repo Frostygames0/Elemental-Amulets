@@ -86,7 +86,7 @@ public class PacifyingAmuletItem extends AmuletItem {
                         stack.hurtAndBreak(1, player, playerEnt -> this.onAmuletBreak(ctx));
 
                         // Makes heart particles around entity :>
-                        ((ServerLevel) world).sendParticles(ParticleTypes.HEART, mob.getX(), mob.getY(), mob.getZ(), 20, 0.25, 0.25, 0.25, 1);
+                        ((ServerLevel) world).sendParticles(ParticleTypes.HEART, mob.getX(), mob.getY(), mob.getZ(), 4, 0.25, 0.25, 0.25, 1);
                     }
                 }
             }
