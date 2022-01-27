@@ -28,6 +28,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkHooks;
 import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.SlotResult;
 
 
 import java.util.function.Supplier;
@@ -41,7 +42,7 @@ public class SOpenAmuletBeltGUIPacket {
         NetworkEvent.Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
             ServerPlayer sender = ctx.getSender();
-            ItemStack stack = CuriosApi.getCuriosHelper().findFirstCurio(sender, ModItems.AMULET_BELT.get()).map(triple -> triple.stack()).orElse(ItemStack.EMPTY);
+            ItemStack stack = CuriosApi.getCuriosHelper().findFirstCurio(sender, ModItems.AMULET_BELT.get()).map(SlotResult::stack).orElse(ItemStack.EMPTY);
             if (!stack.isEmpty()) {
                 NetworkHooks.openGui(sender, new SimpleMenuProvider((id, playerInventory, player) -> new AmuletBeltMenu(id, playerInventory, stack), new TranslatableComponent(stack.getDescriptionId())), buf -> buf.writeItem(stack));
             }
