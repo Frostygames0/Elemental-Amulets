@@ -19,7 +19,6 @@
 
 package frostygames0.elementalamulets.world.ores;
 
-import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.init.ModBlocks;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
@@ -28,7 +27,6 @@ import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.minecraftforge.common.util.Lazy;
-import net.minecraftforge.fml.common.Mod;
 
 
 import java.util.List;
