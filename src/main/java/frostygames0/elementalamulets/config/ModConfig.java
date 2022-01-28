@@ -240,7 +240,7 @@ public class ModConfig {
     }
 
     @SubscribeEvent
-    public static void configEvent(ModConfigEvent event) {
+    public static void configEvent(final ModConfigEvent event) {
         if (event.getConfig().getSpec() == ModConfig.SERVER_SPEC) {
             CachedValues.cacheServerConfig();
         }

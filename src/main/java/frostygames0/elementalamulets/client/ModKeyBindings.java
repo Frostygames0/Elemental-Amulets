@@ -45,7 +45,7 @@ public class ModKeyBindings {
     }
 
     @SubscribeEvent
-    public static void onClientTick(TickEvent.ClientTickEvent event) {
+    public static void onClientTick(final TickEvent.ClientTickEvent event) {
         if (event.phase == TickEvent.Phase.START) {
             if (OPEN_AMULET_BELT.isDown()) {
                 ModNetworkHandler.sendToServer(new SOpenAmuletBeltGUIPacket());

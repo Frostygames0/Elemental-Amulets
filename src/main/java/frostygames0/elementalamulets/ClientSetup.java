@@ -74,12 +74,12 @@ public class ClientSetup {
     }
 
     @SubscribeEvent
-    public static void registerRenderer(EntityRenderersEvent.RegisterRenderers event) {
+    public static void registerRenderer(final EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(ModBEs.ELEMENTAL_COMBINATOR_BE.get(), ElementalCombinatorRenderer::new);
     }
 
     @SubscribeEvent
-    public static void registerLayers(EntityRenderersEvent.AddLayers event) {
+    public static void registerLayers(final EntityRenderersEvent.AddLayers event) {
         for (String skinType : event.getSkins()) {
             PlayerRenderer renderer = event.getSkin(skinType);
             if (renderer != null) renderer.addLayer(new LeafShieldLayer<>(renderer, event.getEntityModels()));
@@ -87,7 +87,7 @@ public class ClientSetup {
     }
 
     @SubscribeEvent
-    public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
+    public static void registerLayerDefinitions(final EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(LeafShield.LAYER_LOCATION, LeafShield::createBodyLayer);
         event.registerLayerDefinition(AmuletModel.LAYER_LOCATION, AmuletModel::createBodyLayer);
     }

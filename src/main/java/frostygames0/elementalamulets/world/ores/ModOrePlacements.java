@@ -51,7 +51,7 @@ public class ModOrePlacements {
     }
 
     @SubscribeEvent(priority = EventPriority.HIGH)
-    public static void oreGeneration(BiomeLoadingEvent event) {
+    public static void oreGeneration(final BiomeLoadingEvent event) {
         BiomeGenerationSettingsBuilder gen = event.getGeneration();
         if (!event.getCategory().equals(Biome.BiomeCategory.NETHER) && !event.getCategory().equals(Biome.BiomeCategory.THEEND)) {
             if (ModConfig.CachedValues.GENERATE_ORES) {

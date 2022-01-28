@@ -65,8 +65,8 @@ public class ElementalAmulets {
     };
 
     public ElementalAmulets() {
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        IEventBus forgeBus = MinecraftForge.EVENT_BUS;
+        final IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        final IEventBus forgeBus = MinecraftForge.EVENT_BUS;
 
         ModItems.ITEMS.register(bus);
         ModBlocks.BLOCKS.register(bus);
