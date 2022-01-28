@@ -23,7 +23,7 @@
  */
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-package frostygames0.elementalamulets.client.integration.jei;
+package frostygames0.elementalamulets.integration.jei;
 
 import mcp.MethodsReturnNonnullByDefault;
 
