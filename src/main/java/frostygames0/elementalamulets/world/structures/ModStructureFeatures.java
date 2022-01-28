@@ -24,6 +24,7 @@ import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.gen.FlatGenerationSettings;
 import net.minecraft.world.gen.feature.IFeatureConfig;
 import net.minecraft.world.gen.feature.StructureFeature;
+import net.minecraftforge.common.util.Lazy;
 
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
@@ -33,11 +34,11 @@ import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
  * @date 29.09.2021 15:46
  */
 public class ModStructureFeatures {
-    public static final StructureFeature<?, ?> CONFIGURED_CULT_TEMPLE = ModStructures.CULT_TEMPLE.get().configured(IFeatureConfig.NONE);
+    public static final Lazy<StructureFeature<?, ?>> CONFIGURED_CULT_TEMPLE = Lazy.of(() -> ModStructures.CULT_TEMPLE.get().configured(IFeatureConfig.NONE));
 
     public static void register() {
-        Registry.register(WorldGenRegistries.CONFIGURED_STRUCTURE_FEATURE, modPrefix("cult_temple"), CONFIGURED_CULT_TEMPLE);
+        Registry.register(WorldGenRegistries.CONFIGURED_STRUCTURE_FEATURE, modPrefix("cult_temple"), CONFIGURED_CULT_TEMPLE.get());
 
-        FlatGenerationSettings.STRUCTURE_FEATURES.put(ModStructures.CULT_TEMPLE.get(), CONFIGURED_CULT_TEMPLE);
+        FlatGenerationSettings.STRUCTURE_FEATURES.put(ModStructures.CULT_TEMPLE.get(), CONFIGURED_CULT_TEMPLE.get());
     }
 }
