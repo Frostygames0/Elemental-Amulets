@@ -115,12 +115,12 @@ public class PacifyingAmuletItem extends AmuletItem {
         for (Mob mob : getAngerablesAround(entity)) {
             NeutralMob angerable = (NeutralMob) mob;
             angerable.setTarget(entity);
-            if (entity instanceof Player) {
-                ((Player) entity).getCooldowns().addCooldown(this, ModConfig.CachedValues.PACIFYING_AMULET_BREAK_COOLDOWN);
-            }
-
-            CuriosApi.getCuriosHelper().onBrokenCurio(ctx);
         }
+
+        if (entity instanceof Player) {
+            ((Player) entity).getCooldowns().addCooldown(this, ModConfig.CachedValues.PACIFYING_AMULET_BREAK_COOLDOWN);
+        }
+        CuriosApi.getCuriosHelper().onBrokenCurio(ctx);
     }
 
     private Iterable<Mob> getAngerablesAround(LivingEntity target) {
