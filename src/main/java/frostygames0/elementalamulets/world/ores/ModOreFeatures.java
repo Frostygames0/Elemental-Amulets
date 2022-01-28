@@ -35,7 +35,6 @@ import java.util.List;
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
-@Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID)
 public class ModOreFeatures {
     private static final Lazy<List<OreConfiguration.TargetBlockState>> ELEMENTAL_ORE_TARGETS = Lazy.of(() -> List.of(OreConfiguration.target(OreFeatures.STONE_ORE_REPLACEABLES, ModBlocks.ELEMENTAL_ORE.get().defaultBlockState()), OreConfiguration.target(OreFeatures.DEEPSLATE_ORE_REPLACEABLES, ModBlocks.DEEPSLATE_ELEMENTAL_ORE.get().defaultBlockState())));
     public static final Lazy<ConfiguredFeature<?, ?>> ELEMENTAL_ORE = Lazy.of(() -> Feature.ORE.configured(
