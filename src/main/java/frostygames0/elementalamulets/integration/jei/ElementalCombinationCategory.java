@@ -17,7 +17,7 @@
  *     along with Elemental Amulets.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package frostygames0.elementalamulets.client.integration.jei;
+package frostygames0.elementalamulets.integration.jei;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;

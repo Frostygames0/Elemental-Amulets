@@ -17,7 +17,7 @@
  *     along with Elemental Amulets.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package frostygames0.elementalamulets.client.integration.jei;
+package frostygames0.elementalamulets.integration.jei;
 
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.blocks.menu.ElementalCombinatorMenu;
