@@ -22,6 +22,7 @@ package frostygames0.elementalamulets.init;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.recipes.ElementalCombination;
 import frostygames0.elementalamulets.recipes.ElementalCombinationSerializer;
+import frostygames0.elementalamulets.recipes.ingredient.AmuletIngredient;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.crafting.Recipe;
@@ -29,8 +30,9 @@ import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
-import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -38,14 +40,19 @@ import net.minecraftforge.registries.RegistryObject;
 import java.util.List;
 import java.util.Map;
 
+import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
+
 public class ModRecipes {
 
     public static final RecipeType<ElementalCombination> ELEMENTAL_COMBINATION_TYPE = RecipeType.register(ElementalAmulets.MOD_ID + ":elemental_combination");
 
-    public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, ElementalAmulets.MOD_ID);
+    public static final RegistryObject<RecipeSerializer<ElementalCombination>> ELEMENTAL_COMBINATION = RegistryObject.of(modPrefix("elemental_combination"), ForgeRegistries.RECIPE_SERIALIZERS);
 
-    public static final RegistryObject<RecipeSerializer<ElementalCombination>> ELEMENTAL_COMBINATION = SERIALIZERS.register("elemental_combination",
-            ElementalCombinationSerializer::new);
+    public static void registerSerializers(RegistryEvent.Register<RecipeSerializer<?>> event) {
+        CraftingHelper.register(modPrefix("amulet_ingredient"), AmuletIngredient.Serializer.INSTANCE);
+
+        event.getRegistry().register(new ElementalCombinationSerializer().setRegistryName(modPrefix("elemental_combination")));
+    }
 
     public static List<ElementalCombination> getRecipes(Level world) {
         return world.getRecipeManager().getAllRecipesFor(ELEMENTAL_COMBINATION_TYPE);

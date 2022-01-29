@@ -33,6 +33,7 @@ import frostygames0.elementalamulets.world.structures.ModStructures;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
@@ -72,11 +73,11 @@ public class ElementalAmulets {
         ModBlocks.BLOCKS.register(bus);
         ModBEs.BLOCK_ENTITIES.register(bus);
         ModMenus.MENUS.register(bus);
-        ModRecipes.SERIALIZERS.register(bus);
         ModVillagers.register(bus);
         ModStructures.STRUCTURES.register(bus);
         ModParticles.PARTICLES.register(bus);
 
+        bus.addGenericListener(RecipeSerializer.class, ModRecipes::registerSerializers); // Registering recipe serializer via events, because I need to register AmuletIngredient here too.. -_-
         bus.addGenericListener(GlobalLootModifierSerializer.class, LootTableModifiers::registerLootModifierSerializer); // Loot modification register
 
         ModLoadingContext modCtx = ModLoadingContext.get();
