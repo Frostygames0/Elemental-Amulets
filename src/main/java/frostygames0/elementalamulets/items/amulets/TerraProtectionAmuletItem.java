@@ -22,6 +22,7 @@ package frostygames0.elementalamulets.items.amulets;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.util.NBTUtil;
+import frostygames0.elementalamulets.util.WorldUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -62,10 +63,14 @@ public class TerraProtectionAmuletItem extends AmuletItem {
     @Override
     public void curioTick(SlotContext ctx, ItemStack stack) {
         LivingEntity livingEntity = ctx.entity();
-        if (!livingEntity.level.isClientSide()) {
-            if (livingEntity.tickCount % ModConfig.CachedValues.PROTECTION_AMULET_CHARGE_TIME == 0) {
-                if (getCharges(stack) < getMaxCharge(stack)) {
-                    NBTUtil.putInteger(stack, CHARGES_TAG, getCharges(stack) + 1);
+        Level level = livingEntity.level;
+        if (!level.isClientSide()) {
+            boolean natural = WorldUtil.isNatural(level, livingEntity.blockPosition()) || ModConfig.CachedValues.PROTECTION_AMULET_IGNORE_NATURALITY;
+            if(natural) {
+                if (livingEntity.tickCount % ModConfig.CachedValues.PROTECTION_AMULET_CHARGE_TIME == 0) {
+                    if (getCharges(stack) < getMaxCharge(stack)) {
+                        NBTUtil.putInteger(stack, CHARGES_TAG, getCharges(stack) + 1);
+                    }
                 }
             }
         }
