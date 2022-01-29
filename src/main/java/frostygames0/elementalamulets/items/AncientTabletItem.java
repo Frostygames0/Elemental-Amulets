@@ -54,7 +54,6 @@ public class AncientTabletItem extends Item {
         return true;
     }
 
-    // TODO find random to random
     @Override
     public ItemStack getContainerItem(ItemStack itemStack) {
         ItemStack stack = new ItemStack(this);
