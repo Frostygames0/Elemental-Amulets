@@ -21,6 +21,7 @@ package frostygames0.elementalamulets.items.amulets;
 
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.init.ModTags;
+import frostygames0.elementalamulets.util.WorldUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IGrowable;
@@ -28,14 +29,11 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.CooldownTracker;
-import net.minecraft.util.RegistryKey;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.common.BiomeDictionary;
 
 
 import java.util.Random;
@@ -93,8 +91,7 @@ public class EarthAmuletItem extends AmuletItem {
     private void regenerate(LivingEntity living, ItemStack stack, int boosted) {
         World level = living.level;
         if (getTier(stack) > 1) {
-            RegistryKey<Biome> biome = level.getBiomeName(living.blockPosition()).orElseThrow(() -> new NullPointerException("Cannot identify a biome!"));
-            if (BiomeDictionary.hasType(biome, BiomeDictionary.Type.PLAINS) || BiomeDictionary.hasType(biome, BiomeDictionary.Type.FOREST)) {
+            if (WorldUtil.isNatural(level, living.blockPosition()) || ModConfig.CachedValues.EARTH_AMULET_IGNORE_NATURALITY) {
                 living.heal(0.1f * boosted);
 
                 if (living instanceof PlayerEntity) {

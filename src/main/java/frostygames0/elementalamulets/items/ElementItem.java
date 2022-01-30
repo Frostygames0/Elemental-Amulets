@@ -48,7 +48,6 @@ public class ElementItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        super.appendHoverText(stack, worldIn, tooltip, flagIn);
         tooltip.add(new TranslationTextComponent(this.getOrCreateDescriptionId() + ".tooltip").withStyle(TextFormatting.GRAY));
     }
 

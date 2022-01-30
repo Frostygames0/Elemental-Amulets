@@ -42,7 +42,6 @@ public class AncientTabletItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable World pLevel, List<ITextComponent> pTooltip, ITooltipFlag pFlag) {
-        super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
         pTooltip.add(new TranslationTextComponent("item.elementalamulets.ancient_tablet.tooltip").withStyle(TextFormatting.GRAY));
     }
 
