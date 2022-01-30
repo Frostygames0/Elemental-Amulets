@@ -22,6 +22,7 @@ package frostygames0.elementalamulets.items.amulets;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.util.NBTUtil;
+import frostygames0.elementalamulets.util.WorldUtil;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
@@ -47,8 +48,7 @@ public class TerraProtectionAmuletItem extends AmuletItem {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        super.appendHoverText(stack, worldIn, tooltip, flagIn);
+    protected void addAdditionalValues(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         int maxCharge = this.getMaxCharge(stack);
         if (maxCharge > 0) {
             tooltip.add(new TranslationTextComponent("item.elementalamulets.protection_amulet.charges",
@@ -61,10 +61,14 @@ public class TerraProtectionAmuletItem extends AmuletItem {
     @Override
     public void curioTick(String identifier, int index, LivingEntity livingEntity, ItemStack stack) {
         super.curioTick(identifier, index, livingEntity, stack);
-        if (!livingEntity.level.isClientSide()) {
-            if (livingEntity.tickCount % ModConfig.CachedValues.PROTECTION_AMULET_CHARGE_TIME == 0) {
-                if (getCharges(stack) < getMaxCharge(stack)) {
-                    NBTUtil.putInteger(stack, CHARGES_TAG, getCharges(stack) + 1);
+        World level = livingEntity.level;
+        if (!level.isClientSide()) {
+            boolean natural = WorldUtil.isNatural(level, livingEntity.blockPosition()) || ModConfig.CachedValues.PROTECTION_AMULET_IGNORE_NATURALITY;
+            if (natural) {
+                if (livingEntity.tickCount % ModConfig.CachedValues.PROTECTION_AMULET_CHARGE_TIME == 0) {
+                    if (getCharges(stack) < getMaxCharge(stack)) {
+                        NBTUtil.putInteger(stack, CHARGES_TAG, getCharges(stack) + 1);
+                    }
                 }
             }
         }

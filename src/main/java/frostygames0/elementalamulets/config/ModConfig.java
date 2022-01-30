@@ -49,8 +49,10 @@ public class ModConfig {
         private final ForgeConfigSpec.DoubleValue speedAmuletBoost;
         private final ForgeConfigSpec.DoubleValue protectionAmuletReflectDamageMult;
         private final ForgeConfigSpec.IntValue protectionAmuletChargeTime;
+        private final ForgeConfigSpec.BooleanValue protectionAmuletIgnoreNaturality;
         private final ForgeConfigSpec.DoubleValue waterAmuletSpeedBoost;
         private final ForgeConfigSpec.IntValue earthAmuletCooldown;
+        private final ForgeConfigSpec.BooleanValue earthAmuletIgnoreNaturality;
         private final ForgeConfigSpec.IntValue pacifyingAmuletBreakCooldown;
         private final ForgeConfigSpec.BooleanValue pacifyingAmuletAngerOnbreak;
         private final ForgeConfigSpec.IntValue pacifyingAmuletDisorientationTime;
@@ -87,6 +89,7 @@ public class ModConfig {
             builder.push("Amulet of Terra-Protection");
             protectionAmuletReflectDamageMult = builder.comment("How much damage will Leaf Shield absorb? [DEFAULT: 0.5]").defineInRange("protection_amulet_absorption", 0.5f, 0, Float.MAX_VALUE);
             protectionAmuletChargeTime = builder.comment("How long will leaf shield recharge one bar (in ticks, 1 sec - 20 ticks)? [DEFAULT: 80]").defineInRange("protection_amulet_recharge_time", 80, 0, Integer.MAX_VALUE);
+            protectionAmuletIgnoreNaturality = builder.comment("Ignore 'naturality' of the dimension player is in? (compass behaviour, bed, etc.) [DEFAULT: false]").define("protection_amulet_ignore_naturality", false);
             builder.pop();
 
             builder.push("Amulet of Water");
@@ -95,6 +98,7 @@ public class ModConfig {
 
             builder.push("Amulet of Earth");
             earthAmuletCooldown = builder.comment("How long will the Amulet of Earth be on cooldown? (in ticks, 1 sec - 20 ticks) [DEFAULT: 100]").defineInRange("earth_amulet_cooldown", 100, 0, Integer.MAX_VALUE);
+            earthAmuletIgnoreNaturality = builder.comment("Ignore 'naturality' of the dimension player is in? (compass behaviour, bed, etc.) [DEFAULT: false]").define("earth_amulet_ignore_naturality", false);
             builder.pop();
 
             builder.push("Pacifying Amulet");
@@ -185,8 +189,10 @@ public class ModConfig {
         public static double SPEED_AMULET_BOOST;
         public static double PROTECTION_AMULET_REFLECT_DAMAGE_MULT;
         public static int PROTECTION_AMULET_CHARGE_TIME;
+        public static boolean PROTECTION_AMULET_IGNORE_NATURALITY;
         public static double WATER_AMULET_SPEED_BOOST;
         public static int EARTH_AMULET_COOLDOWN;
+        public static boolean EARTH_AMULET_IGNORE_NATURALITY;
         public static int PACIFYING_AMULET_BREAK_COOLDOWN;
         public static boolean PACIFYING_AMULET_ANGER_ONBREAK;
         public static int PACIFYING_AMULET_DISORIENTATION_TIME;
@@ -202,8 +208,10 @@ public class ModConfig {
             SPEED_AMULET_BOOST = SERVER.speedAmuletBoost.get();
             PROTECTION_AMULET_REFLECT_DAMAGE_MULT = SERVER.protectionAmuletReflectDamageMult.get();
             PROTECTION_AMULET_CHARGE_TIME = SERVER.protectionAmuletChargeTime.get();
+            PROTECTION_AMULET_IGNORE_NATURALITY = SERVER.protectionAmuletIgnoreNaturality.get();
             WATER_AMULET_SPEED_BOOST = SERVER.waterAmuletSpeedBoost.get();
             EARTH_AMULET_COOLDOWN = SERVER.earthAmuletCooldown.get();
+            EARTH_AMULET_IGNORE_NATURALITY = SERVER.earthAmuletIgnoreNaturality.get();
             MODIFY_VANILLA_LOOT = SERVER.modifyVanillaLoot.get();
             PACIFYING_AMULET_BREAK_COOLDOWN = SERVER.pacifyingAmuletBreakCooldown.get();
             PACIFYING_AMULET_ANGER_ONBREAK = SERVER.pacifyingAmuletAngerOnbreak.get();
