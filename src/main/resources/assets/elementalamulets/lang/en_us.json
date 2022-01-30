@@ -39,7 +39,7 @@
   "item.elementalamulets.invisibility_amulet.tooltip": "%sWorks like potion, but permanent%s",
   "item.elementalamulets.protection_amulet": "Amulet of Terra Protection",
   "item.elementalamulets.protection_amulet.tooltip": "%sCreates powerful Leaf Shield around you!",
-  "item.elementalamulets.protection_amulet.charges": "Charges: %s",
+  "item.elementalamulets.protection_amulet.charges": "Charge: %s",
   "item.elementalamulets.water_amulet": "Amulet of Water",
   "item.elementalamulets.water_amulet.tooltip": "Gives you ability to breath underwater(tier >1), also allows you to swim faster",
   "item.elementalamulets.air_amulet": "Amulet of Air",
