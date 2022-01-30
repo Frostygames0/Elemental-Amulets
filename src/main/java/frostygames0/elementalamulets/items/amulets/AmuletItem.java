@@ -90,7 +90,6 @@ public abstract class AmuletItem extends Item implements ICurioItem, ICurioRende
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        super.appendHoverText(stack, worldIn, tooltip, flagIn);
         // Tier
         if (this.getTier(stack) > 0)
             tooltip.add(new TranslatableComponent("item.elementalamulets.common_amulet.tooltip.tier", new TextComponent(String.valueOf(this.getTier(stack))).withStyle(ChatFormatting.YELLOW)).withStyle(ChatFormatting.GOLD));
@@ -102,7 +101,7 @@ public abstract class AmuletItem extends Item implements ICurioItem, ICurioRende
                             stack.getMaxDamage() - stack.getDamageValue() + " / " + stack.getMaxDamage()).withStyle(ChatFormatting.YELLOW)
             ).withStyle(ChatFormatting.GOLD));
         }
-
+        this.addAdditionalValues(stack, worldIn, tooltip, flagIn);
         // Tooltip
         tooltip.add(new TranslatableComponent(getOrCreateDescriptionId() + ".tooltip").withStyle(ChatFormatting.GRAY));
     }
@@ -188,14 +187,24 @@ public abstract class AmuletItem extends Item implements ICurioItem, ICurioRende
         return new ICurio.SoundInfo(SoundEvents.ARMOR_EQUIP_GOLD, 1f, 1f);
     }
 
-    public int getTier(ItemStack stack) {
+    //---------------------//
+    // AMULET STUFF START  //
+    //---------------------//
+
+    /**
+     * Place to add additional values like nature charge and any other thingy, without overriding {@link Item#appendHoverText(ItemStack, Level, List, TooltipFlag)}
+     */
+    protected void addAdditionalValues(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+    }
+
+    public final int getTier(ItemStack stack) {
         if (this.hasTier()) {
             return NBTUtil.getInteger(stack, TIER_TAG);
         }
         return 0;
     }
 
-    public boolean hasTier() {
+    public final boolean hasTier() {
         return this.hasTier;
     }
 
