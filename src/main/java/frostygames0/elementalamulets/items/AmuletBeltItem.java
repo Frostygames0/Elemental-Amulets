@@ -69,7 +69,6 @@ public class AmuletBeltItem extends Item implements ICurioItem {
 
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
-        super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
         pStack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
             pTooltip.add(new TranslatableComponent("item.elementalamulets.amulet_belt.contents").withStyle(ChatFormatting.GOLD));
             for (int i = 0; i < h.getSlots(); i++) {

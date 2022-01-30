@@ -45,7 +45,6 @@ public class AncientTabletItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
-        super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
         pTooltip.add(new TranslatableComponent("item.elementalamulets.ancient_tablet.tooltip").withStyle(ChatFormatting.GRAY));
     }
 

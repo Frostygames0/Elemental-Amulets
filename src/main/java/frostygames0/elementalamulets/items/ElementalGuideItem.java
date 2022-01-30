@@ -51,7 +51,6 @@ public class ElementalGuideItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-        super.appendHoverText(stack, worldIn, tooltip, flagIn);
         tooltip.add(new TranslatableComponent("item.elementalamulets.guide_book.subtitle").withStyle(ChatFormatting.GRAY));
     }
 
