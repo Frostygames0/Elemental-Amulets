@@ -36,7 +36,7 @@ import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 
 class TerraProtectionAmuletEffect {
 
-    static void onLivingHurt(LivingHurtEvent event) {
+    static void onLivingHurt(final LivingHurtEvent event) {
         if (event.getEntityLiving() instanceof Player player) {
             if (!player.level.isClientSide()) {
                 AmuletHelper.getAmuletInSlotOrBelt(ModItems.TERRA_PROTECTION_AMULET.get(), player).ifPresent(triple -> {
@@ -54,7 +54,7 @@ class TerraProtectionAmuletEffect {
         }
     }
 
-    static void onProjectileImpact(ProjectileImpactEvent event) {
+    static void onProjectileImpact(final ProjectileImpactEvent event) {
         if (!(event.getRayTraceResult() instanceof EntityHitResult))
             return; // We need only projectiles that hit entity
         Entity projectile = event.getEntity();
@@ -84,7 +84,7 @@ class TerraProtectionAmuletEffect {
     }
 
     // Maybe use attribute instead so other things can affect it too?
-    static void onLivingKnockback(LivingKnockBackEvent event) {
+    static void onLivingKnockback(final LivingKnockBackEvent event) {
         if (event.getEntityLiving() instanceof Player player) {
             if (!player.level.isClientSide()) {
                 AmuletHelper.getAmuletInSlotOrBelt(ModItems.TERRA_PROTECTION_AMULET.get(), player).ifPresent(triple -> {

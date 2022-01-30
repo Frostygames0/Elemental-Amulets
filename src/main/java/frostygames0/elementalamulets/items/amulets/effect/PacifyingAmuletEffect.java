@@ -39,7 +39,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
  * @date 20.10.2021 20:10
  */
 class PacifyingAmuletEffect {
-    static void onLivingHurt(LivingHurtEvent event) {
+    static void onLivingHurt(final LivingHurtEvent event) {
         if (event.getEntityLiving() instanceof Player player) {
             if (!player.level.isClientSide()) {
                 AmuletHelper.getAmuletInSlotOrBelt(ModItems.PACIFYING_AMULET.get(), player).ifPresent(triple -> {
