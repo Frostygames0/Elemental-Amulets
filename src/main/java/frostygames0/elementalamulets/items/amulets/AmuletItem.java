@@ -94,6 +94,8 @@ public abstract class AmuletItem extends Item implements ICurioItem, ICurioRende
         if (this.getTier(stack) > 0)
             tooltip.add(new TranslatableComponent("item.elementalamulets.common_amulet.tooltip.tier", new TextComponent(String.valueOf(this.getTier(stack))).withStyle(ChatFormatting.YELLOW)).withStyle(ChatFormatting.GOLD));
 
+        this.addAdditionalValues(stack, worldIn, tooltip, flagIn);
+
         // Elemental Power (Cool looking durability)
         if (stack.isDamaged()) {
             tooltip.add(new TranslatableComponent("item.elementalamulets.common_amulet.elemental_power",
@@ -101,7 +103,6 @@ public abstract class AmuletItem extends Item implements ICurioItem, ICurioRende
                             stack.getMaxDamage() - stack.getDamageValue() + " / " + stack.getMaxDamage()).withStyle(ChatFormatting.YELLOW)
             ).withStyle(ChatFormatting.GOLD));
         }
-        this.addAdditionalValues(stack, worldIn, tooltip, flagIn);
         // Tooltip
         tooltip.add(new TranslatableComponent(getOrCreateDescriptionId() + ".tooltip").withStyle(ChatFormatting.GRAY));
     }
