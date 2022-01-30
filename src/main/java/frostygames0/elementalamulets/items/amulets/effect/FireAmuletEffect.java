@@ -29,7 +29,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
 class FireAmuletEffect {
 
-    static void onLivingAttack(LivingAttackEvent event) {
+    static void onLivingAttack(final LivingAttackEvent event) {
         if (event.getEntityLiving() instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) event.getEntityLiving();
             DamageSource source = event.getSource();
@@ -50,7 +50,7 @@ class FireAmuletEffect {
         }
     }
 
-    static void onLivingHurt(LivingHurtEvent event) {
+    static void onLivingHurt(final LivingHurtEvent event) {
         if (event.getEntityLiving() instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) event.getEntityLiving();
             DamageSource source = event.getSource();

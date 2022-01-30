@@ -39,7 +39,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
  * @date 20.10.2021 20:10
  */
 class PacifyingAmuletEffect {
-    static void onLivingHurt(LivingHurtEvent event) {
+    static void onLivingHurt(final LivingHurtEvent event) {
         if (event.getEntityLiving() instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) event.getEntityLiving();
             if (!player.level.isClientSide()) {
