@@ -72,7 +72,7 @@ public class LootTableModifiers {
             List<AmuletItem> amulets = ModItems.getAmulets();
             if (ModConfig.CachedValues.MODIFY_VANILLA_LOOT) {
                 if (LootTables.DESERT_PYRAMID.equals(context.getQueriedLootTableId()) && RANDOM.nextDouble() <= desertChance) {
-                    generatedLoot.add(AmuletItem.getStackWithTier(new ItemStack(amulets.get(RANDOM.nextInt(amulets.size()))), 1));
+                    generatedLoot.add(amulets.get(RANDOM.nextInt(amulets.size())).withTier(1));
                 } else if (LootTables.BURIED_TREASURE.equals(context.getQueriedLootTableId()) && RANDOM.nextDouble() <= buriedChance) {
                     generatedLoot.add(new ItemStack(ModItems.AETHER_ELEMENT.get(), 2));
                 } else if (LootTables.SHIPWRECK_TREASURE.equals(context.getQueriedLootTableId()) && RANDOM.nextDouble() <= shipwreckChance) {

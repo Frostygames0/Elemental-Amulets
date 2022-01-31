@@ -81,7 +81,7 @@ public class AmuletIngredient extends Ingredient {
             if (tier > AmuletItem.MAX_TIER || tier < 0) {
                 throw new JsonSyntaxException("Incorrect Tier! Can't be higher than 4 and lower than 0! Your tier is " + tier);
             }
-            return AmuletItem.getStackWithTier(new ItemStack(item), tier);
+            return ((AmuletItem) item).withTier(tier);
         }
         return new ItemStack(item, 1);
     }

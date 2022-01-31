@@ -75,15 +75,6 @@ public abstract class AmuletItem extends Item implements ICurioItem {
         this(properties, true);
     }
 
-    public static ItemStack getStackWithTier(ItemStack stack, int tier) {
-        if (stack.getItem() instanceof AmuletItem) {
-            if (((AmuletItem) stack.getItem()).hasTier) {
-                NBTUtil.putInteger(stack, TIER_TAG, MathHelper.clamp(tier, 1, MAX_TIER));
-            }
-        }
-        return stack;
-    }
-
     @Override
     public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         // Tier
@@ -138,7 +129,7 @@ public abstract class AmuletItem extends Item implements ICurioItem {
 
     @Override
     public ItemStack getDefaultInstance() {
-        return getStackWithTier(new ItemStack(this), 1);
+        return this.withTier(1);
     }
 
     @Override
@@ -147,8 +138,7 @@ public abstract class AmuletItem extends Item implements ICurioItem {
         else {
             if (allowdedIn(group)) {
                 for (int i = 1; i <= MAX_TIER; ++i) {
-                    ItemStack stack = new ItemStack(this);
-                    items.add(getStackWithTier(stack, i));
+                    items.add(this.withTier(i));
                 }
             }
         }
@@ -191,10 +181,23 @@ public abstract class AmuletItem extends Item implements ICurioItem {
     // AMULET STUFF START  //
     //---------------------//
 
+    public static ItemStack setStackTier(ItemStack stack, int tier) {
+        if (stack.getItem() instanceof AmuletItem) {
+            if (((AmuletItem) stack.getItem()).hasTier) {
+                NBTUtil.putInteger(stack, TIER_TAG, MathHelper.clamp(tier, 1, MAX_TIER));
+            }
+        }
+        return stack;
+    }
+
     /**
      * Place to add additional values like nature charge and any other thingy, without overriding {@link Item#appendHoverText(ItemStack, World, List, ITooltipFlag)}
      */
     protected void addAdditionalValues(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+    }
+
+    public final ItemStack withTier(int tier) {
+        return setStackTier(new ItemStack(this), tier);
     }
 
     public final int getTier(ItemStack stack) {

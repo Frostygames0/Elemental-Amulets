@@ -101,31 +101,31 @@ public class ModItems {
 
     public static final RegistryObject<Item> ALL_SEEING_LENS = ITEMS.register("all_seeing_lens",
             () -> new Item(new Item.Properties().tab(ElementalAmulets.GROUP).stacksTo(16).rarity(Rarity.UNCOMMON)));
-    public static final RegistryObject<Item> AMULET_BELT = ITEMS.register("amulet_belt",
+    public static final RegistryObject<AmuletBeltItem> AMULET_BELT = ITEMS.register("amulet_belt",
             () -> new AmuletBeltItem(new Item.Properties().tab(ElementalAmulets.GROUP).stacksTo(1).rarity(Rarity.UNCOMMON)));
 
     // Amulets
     public static final RegistryObject<Item> EMPTY_AMULET = ITEMS.register("empty_amulet",
             () -> new Item(new Item.Properties().tab(ElementalAmulets.GROUP).stacksTo(1)));
-    public static final RegistryObject<Item> WATER_AMULET = ITEMS.register("water_amulet",
+    public static final RegistryObject<WaterAmuletItem> WATER_AMULET = ITEMS.register("water_amulet",
             () -> new WaterAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(ElementalRarity.WATER).durability(1000)));
-    public static final RegistryObject<Item> EARTH_AMULET = ITEMS.register("earth_amulet",
+    public static final RegistryObject<EarthAmuletItem> EARTH_AMULET = ITEMS.register("earth_amulet",
             () -> new EarthAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(ElementalRarity.EARTH).durability(1000)));
-    public static final RegistryObject<Item> FIRE_AMULET = ITEMS.register("fire_amulet",
+    public static final RegistryObject<FireAmuletItem> FIRE_AMULET = ITEMS.register("fire_amulet",
             () -> new FireAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(ElementalRarity.FIRE).fireResistant().durability(1000)));
-    public static final RegistryObject<Item> AIR_AMULET = ITEMS.register("air_amulet",
+    public static final RegistryObject<AirAmuletItem> AIR_AMULET = ITEMS.register("air_amulet",
             () -> new AirAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(ElementalRarity.AIR).durability(1000)));
-    public static final RegistryObject<Item> SPEED_AMULET = ITEMS.register("speed_amulet",
+    public static final RegistryObject<SpeedAmuletItem> SPEED_AMULET = ITEMS.register("speed_amulet",
             () -> new SpeedAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(ElementalRarity.SPEED).durability(1000)));
-    public static final RegistryObject<Item> JUMP_AMULET = ITEMS.register("jump_amulet",
+    public static final RegistryObject<JumpAmuletItem> JUMP_AMULET = ITEMS.register("jump_amulet",
             () -> new JumpAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(ElementalRarity.JUMP).durability(1000)));
-    public static final RegistryObject<Item> TERRA_PROTECTION_AMULET = ITEMS.register("protection_amulet",
+    public static final RegistryObject<TerraProtectionAmuletItem> TERRA_PROTECTION_AMULET = ITEMS.register("protection_amulet",
             () -> new TerraProtectionAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(ElementalRarity.EARTH).durability(1000)));
-    public static final RegistryObject<Item> INVISIBILITY_AMULET = ITEMS.register("invisibility_amulet",
+    public static final RegistryObject<InvisibilityAmuletItem> INVISIBILITY_AMULET = ITEMS.register("invisibility_amulet",
             () -> new InvisibilityAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).durability(1000)));
-    public static final RegistryObject<Item> PACIFYING_AMULET = ITEMS.register("pacifying_amulet",
+    public static final RegistryObject<PacifyingAmuletItem> PACIFYING_AMULET = ITEMS.register("pacifying_amulet",
             () -> new PacifyingAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(Rarity.EPIC).durability(2000)));
-    public static final RegistryObject<Item> KNOCKBACK_AMULET = ITEMS.register("knockback_amulet",
+    public static final RegistryObject<KnockbackAmuletItem> KNOCKBACK_AMULET = ITEMS.register("knockback_amulet",
             () -> new KnockbackAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(Rarity.RARE).durability(1000)));
 
     private static List<AmuletItem> amulets;

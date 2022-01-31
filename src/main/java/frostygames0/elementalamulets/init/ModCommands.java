@@ -73,7 +73,7 @@ public class ModCommands {
 
         private static int execute(CommandSource source, Collection<ServerPlayerEntity> players, ItemInput item, int tier) throws CommandSyntaxException {
             for (ServerPlayerEntity player : players) {
-                ItemStack stack = AmuletItem.getStackWithTier(item.createItemStack(1, false), tier);
+                ItemStack stack = AmuletItem.setStackTier(item.createItemStack(1, false), tier);
                 if (item.getItem() instanceof AmuletItem) {
                     ItemHandlerHelper.giveItemToPlayer(player, stack);
                 } else {
