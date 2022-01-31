@@ -33,6 +33,7 @@ import it.unimi.dsi.fastutil.objects.Object2FloatMap;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
@@ -66,18 +67,18 @@ public class ElementalAmulets {
     };
 
     public ElementalAmulets() {
-        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        IEventBus forgeBus = MinecraftForge.EVENT_BUS;
+        final IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        final IEventBus forgeBus = MinecraftForge.EVENT_BUS;
 
         ModItems.ITEMS.register(bus);
         ModBlocks.BLOCKS.register(bus);
         ModTiles.TILES.register(bus);
         ModContainers.CONTAINERS.register(bus);
-        ModRecipes.SERIALIZERS.register(bus);
         ModVillagers.register(bus);
         ModStructures.STRUCTURES.register(bus);
         ModParticles.PARTICLES.register(bus);
 
+        bus.addGenericListener(IRecipeSerializer.class, ModRecipes::registerSerializers);
         bus.addGenericListener(GlobalLootModifierSerializer.class, LootTableModifiers::registerLootModifierSerializer); // Loot modification register
 
         ModLoadingContext modCtx = ModLoadingContext.get();
