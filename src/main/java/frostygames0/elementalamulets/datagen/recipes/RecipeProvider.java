@@ -194,7 +194,7 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
 
     /* Helper Methods! */
 
-    private static void amuletRecipeSpecial(Item amulet, ItemStack elemental, ItemLike specialStack, ItemLike element, Consumer<FinishedRecipe> consumer) {
+    private static void amuletRecipeSpecial(AmuletItem amulet, ItemStack elemental, ItemLike specialStack, ItemLike element, Consumer<FinishedRecipe> consumer) {
         ElementalCombinationBuilder.create(amulet.getDefaultInstance())
                 .addElemental(elemental)
                 .addIngredient(3, element)
@@ -208,7 +208,7 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
                 .build(consumer, modPrefix("amulets/" + amulet.getRegistryName().getPath() + "_tier1"));
     }
 
-    private static void amuletRecipeTier1(Item amulet, ItemLike element, Consumer<FinishedRecipe> consumer) {
+    private static void amuletRecipeTier1(AmuletItem amulet, ItemLike element, Consumer<FinishedRecipe> consumer) {
         ElementalCombinationBuilder.create(amulet.getDefaultInstance())
                 .addElemental(ModItems.EMPTY_AMULET.get())
                 .addIngredient(3, element)
@@ -220,9 +220,9 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
                 .build(consumer, modPrefix("amulets/" + amulet.getRegistryName().getPath() + "_tier1"));
     }
 
-    private static void amuletRecipeTier2(Item amulet, ItemLike upgrader, ItemLike element, Consumer<FinishedRecipe> consumer) {
-        ElementalCombinationBuilder.create(AmuletItem.getStackWithTier(new ItemStack(amulet), 2))
-                .addElemental(AmuletItem.getStackWithTier(new ItemStack(amulet), 1))
+    private static void amuletRecipeTier2(AmuletItem amulet, ItemLike upgrader, ItemLike element, Consumer<FinishedRecipe> consumer) {
+        ElementalCombinationBuilder.create(amulet.withTier(2))
+                .addElemental(amulet.withTier(1))
                 .addIngredient(element)
                 .addIngredient(2, upgrader)
                 .addIngredient(element)
@@ -234,9 +234,9 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
                 .build(consumer, modPrefix("amulets/" + amulet.getRegistryName().getPath() + "_tier2"));
     }
 
-    private static void amuletRecipeTier2Special(Item amulet, ItemLike upgrader, ItemLike upgrader2, ItemLike element, Consumer<FinishedRecipe> consumer) {
-        ElementalCombinationBuilder.create(AmuletItem.getStackWithTier(new ItemStack(amulet), 2))
-                .addElemental(AmuletItem.getStackWithTier(new ItemStack(amulet), 1))
+    private static void amuletRecipeTier2Special(AmuletItem amulet, ItemLike upgrader, ItemLike upgrader2, ItemLike element, Consumer<FinishedRecipe> consumer) {
+        ElementalCombinationBuilder.create(amulet.withTier(2))
+                .addElemental(amulet.withTier(1))
                 .addIngredient(upgrader)
                 .addIngredient(element)
                 .addIngredient(upgrader2)
@@ -250,9 +250,9 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
                 .build(consumer, modPrefix("amulets/" + amulet.getRegistryName().getPath() + "_tier2"));
     }
 
-    private static void amuletRecipeTier3(Item amulet, ItemLike upgrader, ItemLike upgrader2, ItemLike element, Consumer<FinishedRecipe> consumer) {
-        ElementalCombinationBuilder.create(AmuletItem.getStackWithTier(new ItemStack(amulet), 3))
-                .addElemental(AmuletItem.getStackWithTier(new ItemStack(amulet), 2))
+    private static void amuletRecipeTier3(AmuletItem amulet, ItemLike upgrader, ItemLike upgrader2, ItemLike element, Consumer<FinishedRecipe> consumer) {
+        ElementalCombinationBuilder.create(amulet.withTier(3))
+                .addElemental(amulet.withTier(2))
                 .addIngredient(upgrader)
                 .addIngredient(element)
                 .addIngredient(upgrader2)
@@ -266,9 +266,9 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
                 .build(consumer, modPrefix("amulets/" + amulet.getRegistryName().getPath() + "_tier3"));
     }
 
-    private static void amuletRecipeTier4(Item amulet, ItemLike upgrader, Consumer<FinishedRecipe> consumer) {
-        ElementalCombinationBuilder.create(AmuletItem.getStackWithTier(new ItemStack(amulet), 4))
-                .addElemental(AmuletItem.getStackWithTier(new ItemStack(amulet), 3))
+    private static void amuletRecipeTier4(AmuletItem amulet, ItemLike upgrader, Consumer<FinishedRecipe> consumer) {
+        ElementalCombinationBuilder.create(amulet.withTier(4))
+                .addElemental(amulet.withTier(3))
                 .addIngredient(upgrader)
                 .addIngredient(ModItems.AETHER_ELEMENT.get())
                 .addIngredient(upgrader)

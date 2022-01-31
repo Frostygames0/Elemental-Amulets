@@ -23,7 +23,6 @@ import frostygames0.elementalamulets.advancements.triggers.ModCriteriaTriggers;
 import frostygames0.elementalamulets.client.particles.ModParticles;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.init.*;
-import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import frostygames0.elementalamulets.network.ModNetworkHandler;
 import frostygames0.elementalamulets.world.LootTableModifiers;
 import frostygames0.elementalamulets.world.ores.ModOreFeatures;
@@ -61,7 +60,7 @@ public class ElementalAmulets {
     public static final CreativeModeTab GROUP = new CreativeModeTab(MOD_ID) {
         @Override
         public ItemStack makeIcon() {
-            return AmuletItem.getStackWithTier(new ItemStack(ModItems.FIRE_AMULET.get()), 3);
+            return ModItems.FIRE_AMULET.get().withTier(3);
         }
     };
 

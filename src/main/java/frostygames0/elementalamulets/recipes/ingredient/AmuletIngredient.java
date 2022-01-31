@@ -75,12 +75,12 @@ public class AmuletIngredient extends Ingredient {
 
         Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemName));
         if (item == null) throw new JsonSyntaxException("Item: " + itemName + " does not exist!");
-        if (item instanceof AmuletItem) {
+        if (item instanceof AmuletItem amulet) {
             int tier = GsonHelper.getAsInt(json, "tier", 1);
             if (tier > AmuletItem.MAX_TIER || tier < 0) {
                 throw new JsonSyntaxException("Incorrect Tier! Can't be higher than 4 and lower than 0! Your tier is " + tier);
             }
-            return AmuletItem.getStackWithTier(new ItemStack(item), tier);
+            return amulet.withTier(tier);
         }
         return new ItemStack(item, 1);
     }
