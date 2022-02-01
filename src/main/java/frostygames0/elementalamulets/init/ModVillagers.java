@@ -24,6 +24,7 @@ import com.mojang.datafixers.util.Pair;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
+import frostygames0.elementalamulets.util.AmuletUtil;
 import frostygames0.elementalamulets.world.structures.ModStructures;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.core.BlockPos;
@@ -154,7 +155,7 @@ public class ModVillagers {
         @Override
         public MerchantOffer getOffer(Entity pTrader, Random pRand) {
             List<AmuletItem> amulets = ModItems.getAmulets();
-            ItemStack stack = amulets.get(pRand.nextInt(amulets.size())).withTier(3);
+            ItemStack stack = AmuletUtil.setStackTier(amulets.get(pRand.nextInt(amulets.size())), 3);
             return new MerchantOffer(new ItemStack(Items.EMERALD, this.emerald), stack, 1, villagerXp, priceMult);
         }
     }

@@ -20,7 +20,7 @@
 package frostygames0.elementalamulets.items.amulets;
 
 import frostygames0.elementalamulets.config.ModConfig;
-import frostygames0.elementalamulets.util.AmuletHelper;
+import frostygames0.elementalamulets.util.AmuletUtil;
 import frostygames0.elementalamulets.util.AttributeUtil;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -59,7 +59,7 @@ public class SpeedAmuletItem extends AmuletItem {
     @Override
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
         AttributeInstance att = slotContext.entity().getAttribute(Attributes.MOVEMENT_SPEED);
-        if (AmuletHelper.compareAmulets(stack, newStack)) {
+        if (AmuletUtil.compareAmulets(stack, newStack)) {
             AttributeUtil.removeModifierByUUID(att, MODIFIER_UUID);
         }
     }

@@ -19,7 +19,7 @@
 
 package frostygames0.elementalamulets.items.amulets;
 
-import frostygames0.elementalamulets.util.AmuletHelper;
+import frostygames0.elementalamulets.util.AmuletUtil;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -47,7 +47,7 @@ public class InvisibilityAmuletItem extends AmuletItem {
     @Override
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
         LivingEntity entity = slotContext.entity();
-        if (AmuletHelper.compareAmulets(stack, newStack)) {
+        if (AmuletUtil.compareAmulets(stack, newStack)) {
             if (entity.isInvisible() && !entity.hasEffect(MobEffects.INVISIBILITY)) {
                 entity.setInvisible(false);
             }

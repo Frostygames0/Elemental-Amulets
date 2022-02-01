@@ -24,7 +24,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.TerraProtectionAmuletItem;
-import frostygames0.elementalamulets.util.AmuletHelper;
+import frostygames0.elementalamulets.util.AmuletUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.player.LocalPlayer;
@@ -56,7 +56,7 @@ public class LeafChargeOverlay implements IIngameOverlay {
 
             LocalPlayer player = mc.player;
             if (player != null) {
-                AmuletHelper.getAmuletInSlotOrBelt(ModItems.TERRA_PROTECTION_AMULET.get(), player).ifPresent(triple -> {
+                AmuletUtil.getAmuletInSlotOrBelt(ModItems.TERRA_PROTECTION_AMULET.get(), player).ifPresent(triple -> {
                     ItemStack stack = triple.stack();
                     TerraProtectionAmuletItem amulet = (TerraProtectionAmuletItem) stack.getItem();
 

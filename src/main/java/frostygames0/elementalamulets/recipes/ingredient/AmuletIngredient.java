@@ -23,7 +23,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
-import frostygames0.elementalamulets.util.AmuletHelper;
+import frostygames0.elementalamulets.util.AmuletUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -49,7 +49,7 @@ public class AmuletIngredient extends Ingredient {
     public boolean test(@Nullable ItemStack test) {
         if (test == null) return false;
         if (test.getItem() instanceof AmuletItem) {
-            return AmuletHelper.compareAmulets(this.stack, test);
+            return AmuletUtil.compareAmulets(this.stack, test);
         }
         return this.stack.getItem() == test.getItem();
     }
@@ -75,12 +75,12 @@ public class AmuletIngredient extends Ingredient {
 
         Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemName));
         if (item == null) throw new JsonSyntaxException("Item: " + itemName + " does not exist!");
-        if (item instanceof AmuletItem amulet) {
+        if (item instanceof AmuletItem) {
             int tier = GsonHelper.getAsInt(json, "tier", 1);
             if (tier > AmuletItem.MAX_TIER || tier < 0) {
                 throw new JsonSyntaxException("Incorrect Tier! Can't be higher than 4 and lower than 0! Your tier is " + tier);
             }
-            return amulet.withTier(tier);
+            return AmuletUtil.setStackTier(item, tier);
         }
         return new ItemStack(item, 1);
     }

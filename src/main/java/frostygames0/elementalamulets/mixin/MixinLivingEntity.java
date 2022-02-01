@@ -21,7 +21,7 @@ package frostygames0.elementalamulets.mixin;
 
 import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.WaterAmuletItem;
-import frostygames0.elementalamulets.util.AmuletHelper;
+import frostygames0.elementalamulets.util.AmuletUtil;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -39,7 +39,7 @@ public class MixinLivingEntity {
     @Inject(at = @At("RETURN"), method = "decreaseAirSupply", cancellable = true)
     protected void elementalamulets_decreaseAirWithWaterAmulet(int air, CallbackInfoReturnable<Integer> ci) {
         LivingEntity entity = (LivingEntity) (Object) this;
-        AmuletHelper.getAmuletInSlotOrBelt(ModItems.WATER_AMULET.get(), entity).ifPresent(triple -> {
+        AmuletUtil.getAmuletInSlotOrBelt(ModItems.WATER_AMULET.get(), entity).ifPresent(triple -> {
             ItemStack stack = triple.stack();
             WaterAmuletItem amulet = (WaterAmuletItem) stack.getItem();
 

@@ -21,7 +21,7 @@ package frostygames0.elementalamulets.items.amulets.effect;
 
 import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.KnockbackAmuletItem;
-import frostygames0.elementalamulets.util.AmuletHelper;
+import frostygames0.elementalamulets.util.AmuletUtil;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -36,7 +36,7 @@ class KnockbackAmuletEffect {
     static void onLivingHurt(final LivingHurtEvent event) {
         if (event.getEntityLiving() instanceof Player player) {
             if (!player.level.isClientSide()) {
-                AmuletHelper.getAmuletInSlotOrBelt(ModItems.KNOCKBACK_AMULET.get(), player).ifPresent(triple -> {
+                AmuletUtil.getAmuletInSlotOrBelt(ModItems.KNOCKBACK_AMULET.get(), player).ifPresent(triple -> {
                     if (event.getSource().getEntity() instanceof LivingEntity attacker) {
 
                         ItemStack stack = triple.stack();

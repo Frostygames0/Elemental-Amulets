@@ -22,7 +22,7 @@ package frostygames0.elementalamulets.items.amulets.effect;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.PacifyingAmuletItem;
-import frostygames0.elementalamulets.util.AmuletHelper;
+import frostygames0.elementalamulets.util.AmuletUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -42,7 +42,7 @@ class PacifyingAmuletEffect {
     static void onLivingHurt(final LivingHurtEvent event) {
         if (event.getEntityLiving() instanceof Player player) {
             if (!player.level.isClientSide()) {
-                AmuletHelper.getAmuletInSlotOrBelt(ModItems.PACIFYING_AMULET.get(), player).ifPresent(triple -> {
+                AmuletUtil.getAmuletInSlotOrBelt(ModItems.PACIFYING_AMULET.get(), player).ifPresent(triple -> {
                     ItemStack amulet = triple.stack();
                     PacifyingAmuletItem item = (PacifyingAmuletItem) amulet.getItem();
 

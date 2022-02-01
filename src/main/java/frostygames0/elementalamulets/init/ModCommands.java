@@ -26,6 +26,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
+import frostygames0.elementalamulets.util.AmuletUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -73,7 +74,7 @@ public class ModCommands {
 
         private static int execute(CommandSourceStack source, Collection<ServerPlayer> players, ItemInput item, int tier) throws CommandSyntaxException {
             for (ServerPlayer player : players) {
-                ItemStack stack = AmuletItem.setStackTier(item.createItemStack(1, false), tier);
+                ItemStack stack = AmuletUtil.setStackTier(item.createItemStack(1, false), tier);
                 if (item.getItem() instanceof AmuletItem) {
                     ItemHandlerHelper.giveItemToPlayer(player, stack);
                 } else {

@@ -21,7 +21,7 @@ package frostygames0.elementalamulets.items.amulets.effect;
 
 import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.TerraProtectionAmuletItem;
-import frostygames0.elementalamulets.util.AmuletHelper;
+import frostygames0.elementalamulets.util.AmuletUtil;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
@@ -39,7 +39,7 @@ class TerraProtectionAmuletEffect {
     static void onLivingHurt(final LivingHurtEvent event) {
         if (event.getEntityLiving() instanceof Player player) {
             if (!player.level.isClientSide()) {
-                AmuletHelper.getAmuletInSlotOrBelt(ModItems.TERRA_PROTECTION_AMULET.get(), player).ifPresent(triple -> {
+                AmuletUtil.getAmuletInSlotOrBelt(ModItems.TERRA_PROTECTION_AMULET.get(), player).ifPresent(triple -> {
                     ItemStack stack = triple.stack();
                     TerraProtectionAmuletItem amulet = (TerraProtectionAmuletItem) stack.getItem();
                     if (amulet.canProtect(stack)) {
@@ -61,7 +61,7 @@ class TerraProtectionAmuletEffect {
         Entity target = ((EntityHitResult) event.getRayTraceResult()).getEntity();
         if (target instanceof Player entity) {
             if (!entity.level.isClientSide()) {
-                AmuletHelper.getAmuletInSlotOrBelt(ModItems.TERRA_PROTECTION_AMULET.get(), entity).ifPresent(triple -> {
+                AmuletUtil.getAmuletInSlotOrBelt(ModItems.TERRA_PROTECTION_AMULET.get(), entity).ifPresent(triple -> {
                     ItemStack stack = triple.stack();
                     TerraProtectionAmuletItem amulet = (TerraProtectionAmuletItem) stack.getItem(); // For future
                     if (amulet.canProtect(stack)) {
@@ -87,7 +87,7 @@ class TerraProtectionAmuletEffect {
     static void onLivingKnockback(final LivingKnockBackEvent event) {
         if (event.getEntityLiving() instanceof Player player) {
             if (!player.level.isClientSide()) {
-                AmuletHelper.getAmuletInSlotOrBelt(ModItems.TERRA_PROTECTION_AMULET.get(), player).ifPresent(triple -> {
+                AmuletUtil.getAmuletInSlotOrBelt(ModItems.TERRA_PROTECTION_AMULET.get(), player).ifPresent(triple -> {
                     ItemStack stack = triple.stack();
                     TerraProtectionAmuletItem amulet = (TerraProtectionAmuletItem) stack.getItem();
                     event.setCanceled(amulet.canProtect(stack));

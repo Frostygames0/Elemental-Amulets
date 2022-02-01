@@ -25,7 +25,7 @@ import frostygames0.elementalamulets.client.models.LeafShield;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.TerraProtectionAmuletItem;
-import frostygames0.elementalamulets.util.AmuletHelper;
+import frostygames0.elementalamulets.util.AmuletUtil;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -56,7 +56,7 @@ public class LeafShieldLayer<T extends LivingEntity, M extends EntityModel<T>> e
     public void render(PoseStack pMatrixStack, MultiBufferSource pBuffer, int pPackedLight, T pLivingEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTicks, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
         float angle = (pLivingEntity.tickCount + pPartialTicks) * 3.0F;
 
-        AmuletHelper.getAmuletInSlotOrBelt(ModItems.TERRA_PROTECTION_AMULET.get(), pLivingEntity).ifPresent(triple -> {
+        AmuletUtil.getAmuletInSlotOrBelt(ModItems.TERRA_PROTECTION_AMULET.get(), pLivingEntity).ifPresent(triple -> {
             ItemStack stack = triple.stack();
             if (!pLivingEntity.isInvisible()) {
                 if (ModConfig.CachedValues.RENDER_LEAF_SHIELD && ((TerraProtectionAmuletItem) stack.getItem()).canProtect(stack)) {

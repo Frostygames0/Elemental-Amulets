@@ -24,6 +24,7 @@ import frostygames0.elementalamulets.client.particles.ModParticles;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.init.*;
 import frostygames0.elementalamulets.network.ModNetworkHandler;
+import frostygames0.elementalamulets.util.AmuletUtil;
 import frostygames0.elementalamulets.world.LootTableModifiers;
 import frostygames0.elementalamulets.world.ores.ModOreFeatures;
 import frostygames0.elementalamulets.world.structures.CultTempleStructure;
@@ -60,7 +61,7 @@ public class ElementalAmulets {
     public static final CreativeModeTab GROUP = new CreativeModeTab(MOD_ID) {
         @Override
         public ItemStack makeIcon() {
-            return ModItems.FIRE_AMULET.get().withTier(3);
+            return AmuletUtil.setStackTier(ModItems.FIRE_AMULET.get(), 3);
         }
     };
 
