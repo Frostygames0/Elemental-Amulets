@@ -23,7 +23,7 @@ import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.JumpAmuletItem;
 import frostygames0.elementalamulets.network.CUpdatePlayerVelocityPacket;
 import frostygames0.elementalamulets.network.ModNetworkHandler;
-import frostygames0.elementalamulets.util.AmuletHelper;
+import frostygames0.elementalamulets.util.AmuletUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -41,7 +41,7 @@ class JumpAmuletEffect {
             PlayerEntity player = (PlayerEntity) event.getEntityLiving();
             if (!player.level.isClientSide()) {
                 if (event.getSource() == DamageSource.FALL) {
-                    AmuletHelper.getAmuletInSlotOrBelt(ModItems.JUMP_AMULET.get(), player).ifPresent((triple) -> {
+                    AmuletUtil.getAmuletInSlotOrBelt(ModItems.JUMP_AMULET.get(), player).ifPresent((triple) -> {
                         float fallResist = ((JumpAmuletItem) triple.getRight().getItem()).getFallResist(triple.getRight());
                         if (!event.isCanceled() && fallResist > 0) {
                             float finalDamage = Math.max(0, (event.getAmount() - fallResist));
@@ -62,7 +62,7 @@ class JumpAmuletEffect {
             PlayerEntity player = (PlayerEntity) event.getEntityLiving();
             if (!player.level.isClientSide()) {
                 if (event.getSource() == DamageSource.FALL) {
-                    AmuletHelper.getAmuletInSlotOrBelt(ModItems.JUMP_AMULET.get(), player).ifPresent((triple) -> {
+                    AmuletUtil.getAmuletInSlotOrBelt(ModItems.JUMP_AMULET.get(), player).ifPresent((triple) -> {
                         float fallResist = ((JumpAmuletItem) triple.getRight().getItem()).getFallResist(triple.getRight());
                         if (!event.isCanceled() && fallResist > 0) {
                             float finalDamage = Math.max(0, (event.getAmount() - fallResist));
@@ -82,7 +82,7 @@ class JumpAmuletEffect {
             World world = player.getCommandSenderWorld();
             if (!world.isClientSide) {
                 if (world.getFluidState(player.blockPosition()).isEmpty()) {
-                    AmuletHelper.getAmuletInSlotOrBelt(ModItems.JUMP_AMULET.get(), player).ifPresent(triple -> {
+                    AmuletUtil.getAmuletInSlotOrBelt(ModItems.JUMP_AMULET.get(), player).ifPresent(triple -> {
                         ItemStack stack = triple.getRight();
                         JumpAmuletItem item = (JumpAmuletItem) stack.getItem();
 

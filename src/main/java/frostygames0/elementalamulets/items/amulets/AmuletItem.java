@@ -25,6 +25,7 @@ import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.advancements.triggers.ModCriteriaTriggers;
 import frostygames0.elementalamulets.client.models.AmuletModel;
 import frostygames0.elementalamulets.init.ModStats;
+import frostygames0.elementalamulets.util.AmuletUtil;
 import frostygames0.elementalamulets.util.NBTUtil;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
@@ -38,7 +39,6 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -129,7 +129,7 @@ public abstract class AmuletItem extends Item implements ICurioItem {
 
     @Override
     public ItemStack getDefaultInstance() {
-        return this.withTier(1);
+        return AmuletUtil.setStackTier(this, 1);
     }
 
     @Override
@@ -138,7 +138,7 @@ public abstract class AmuletItem extends Item implements ICurioItem {
         else {
             if (allowdedIn(group)) {
                 for (int i = 1; i <= MAX_TIER; ++i) {
-                    items.add(this.withTier(i));
+                    items.add(AmuletUtil.setStackTier(this, i));
                 }
             }
         }
@@ -181,23 +181,10 @@ public abstract class AmuletItem extends Item implements ICurioItem {
     // AMULET STUFF START  //
     //---------------------//
 
-    public static ItemStack setStackTier(ItemStack stack, int tier) {
-        if (stack.getItem() instanceof AmuletItem) {
-            if (((AmuletItem) stack.getItem()).hasTier) {
-                NBTUtil.putInteger(stack, TIER_TAG, MathHelper.clamp(tier, 1, MAX_TIER));
-            }
-        }
-        return stack;
-    }
-
     /**
      * Place to add additional values like nature charge and any other thingy, without overriding {@link Item#appendHoverText(ItemStack, World, List, ITooltipFlag)}
      */
     protected void addAdditionalValues(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-    }
-
-    public final ItemStack withTier(int tier) {
-        return setStackTier(new ItemStack(this), tier);
     }
 
     public final int getTier(ItemStack stack) {

@@ -25,7 +25,7 @@ import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.TerraProtectionAmuletItem;
-import frostygames0.elementalamulets.util.AmuletHelper;
+import frostygames0.elementalamulets.util.AmuletUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.AbstractGui;
@@ -63,7 +63,7 @@ public class LeafChargeOverlay {
 
             ClientPlayerEntity player = mc.player;
             if (player != null) {
-                AmuletHelper.getAmuletInSlotOrBelt(ModItems.TERRA_PROTECTION_AMULET.get(), player).ifPresent(triple -> {
+                AmuletUtil.getAmuletInSlotOrBelt(ModItems.TERRA_PROTECTION_AMULET.get(), player).ifPresent(triple -> {
                     ItemStack stack = triple.getRight();
                     TerraProtectionAmuletItem amulet = (TerraProtectionAmuletItem) stack.getItem();
 
@@ -81,13 +81,11 @@ public class LeafChargeOverlay {
         }
     }
 
-    private static int drawLeafBar(MatrixStack ms, int size, int posX, int posY, int VOffset) {
+    private static void drawLeafBar(MatrixStack ms, int size, int posX, int posY, int VOffset) {
         for (int j = 1; j <= size; j++) {
             AbstractGui.blit(ms, posX, posY, 0, VOffset, 7, 7, 16, 16);
             posX += 8;
         }
-
-        return posX;
     }
 
 }

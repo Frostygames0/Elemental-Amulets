@@ -24,6 +24,7 @@ import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
@@ -37,7 +38,20 @@ import java.util.Optional;
  * @author Frostygames0
  * @date 25.09.2021 15:04
  */
-public final class AmuletHelper {
+public final class AmuletUtil {
+
+    public static ItemStack setStackTier(ItemStack stack, int tier) {
+        if (stack.getItem() instanceof AmuletItem) {
+            if (((AmuletItem) stack.getItem()).hasTier()) {
+                NBTUtil.putInteger(stack, AmuletItem.TIER_TAG, MathHelper.clamp(tier, 1, AmuletItem.MAX_TIER));
+            }
+        }
+        return stack;
+    }
+
+    public static ItemStack setStackTier(Item item, int tier) {
+        return setStackTier(new ItemStack(item), tier);
+    }
 
     // This is a wrapper method for Amulet Belt to work
     public static Optional<ImmutableTriple<String, Integer, ItemStack>> getAmuletInSlotOrBelt(Item item, LivingEntity entity) {

@@ -23,7 +23,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
-import frostygames0.elementalamulets.util.AmuletHelper;
+import frostygames0.elementalamulets.util.AmuletUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
@@ -49,7 +49,7 @@ public class AmuletIngredient extends Ingredient {
     public boolean test(@Nullable ItemStack test) {
         if (test == null) return false;
         if (test.getItem() instanceof AmuletItem) {
-            return AmuletHelper.compareAmulets(this.stack, test);
+            return AmuletUtil.compareAmulets(this.stack, test);
         }
         return this.stack.getItem() == test.getItem();
     }
@@ -81,7 +81,7 @@ public class AmuletIngredient extends Ingredient {
             if (tier > AmuletItem.MAX_TIER || tier < 0) {
                 throw new JsonSyntaxException("Incorrect Tier! Can't be higher than 4 and lower than 0! Your tier is " + tier);
             }
-            return ((AmuletItem) item).withTier(tier);
+            return AmuletUtil.setStackTier(item, tier);
         }
         return new ItemStack(item, 1);
     }

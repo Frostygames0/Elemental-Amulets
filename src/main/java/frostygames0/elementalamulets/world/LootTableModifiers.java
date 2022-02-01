@@ -23,6 +23,7 @@ import com.google.gson.JsonObject;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
+import frostygames0.elementalamulets.util.AmuletUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootTables;
@@ -72,7 +73,7 @@ public class LootTableModifiers {
             List<AmuletItem> amulets = ModItems.getAmulets();
             if (ModConfig.CachedValues.MODIFY_VANILLA_LOOT) {
                 if (LootTables.DESERT_PYRAMID.equals(context.getQueriedLootTableId()) && RANDOM.nextDouble() <= desertChance) {
-                    generatedLoot.add(amulets.get(RANDOM.nextInt(amulets.size())).withTier(1));
+                    generatedLoot.add(AmuletUtil.setStackTier(amulets.get(RANDOM.nextInt(amulets.size())), 1));
                 } else if (LootTables.BURIED_TREASURE.equals(context.getQueriedLootTableId()) && RANDOM.nextDouble() <= buriedChance) {
                     generatedLoot.add(new ItemStack(ModItems.AETHER_ELEMENT.get(), 2));
                 } else if (LootTables.SHIPWRECK_TREASURE.equals(context.getQueriedLootTableId()) && RANDOM.nextDouble() <= shipwreckChance) {

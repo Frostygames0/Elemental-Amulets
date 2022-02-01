@@ -40,15 +40,15 @@ import java.util.Random;
 public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ElementalAmulets.MOD_ID);
 
-    public static final RegistryObject<ElementalCombinator> ELEMENTAL_COMBINATOR = BLOCKS.register("elemental_combinator",
+    public static final RegistryObject<Block> ELEMENTAL_COMBINATOR = BLOCKS.register("elemental_combinator",
             () -> new ElementalCombinator(AbstractBlock.Properties.of(Material.STONE, DyeColor.RED).strength(3.5f).sound(SoundType.STONE).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).harvestLevel(0)
                     .lightLevel(state -> state.getValue(ElementalCombinator.COMBINING) ? 15 : 5).isRedstoneConductor(ModBlocks::never)));
 
-    public static final RegistryObject<CelestialFocus> CELESTIAL_FOCUS = BLOCKS.register("celestial_focus",
+    public static final RegistryObject<Block> CELESTIAL_FOCUS = BLOCKS.register("celestial_focus",
             () -> new CelestialFocus(AbstractBlock.Properties.of(Material.WOOD, DyeColor.BROWN).strength(2f).sound(SoundType.WOOD).harvestTool(ToolType.AXE)
                     .noOcclusion().isViewBlocking(ModBlocks::never).isSuffocating(ModBlocks::never)));
 
-    public static final RegistryObject<OreBlock> ELEMENTAL_ORE = BLOCKS.register("elemental_ore",
+    public static final RegistryObject<Block> ELEMENTAL_ORE = BLOCKS.register("elemental_ore",
             () -> new OreBlock(AbstractBlock.Properties.of(Material.STONE).strength(3.5f).sound(SoundType.STONE).requiresCorrectToolForDrops().harvestTool(ToolType.PICKAXE).harvestLevel(1)) {
                 @Override
                 protected int xpOnDrop(Random p_220281_1_) {
