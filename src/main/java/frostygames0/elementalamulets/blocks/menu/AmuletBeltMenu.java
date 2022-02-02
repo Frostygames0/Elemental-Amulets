@@ -24,6 +24,7 @@ import frostygames0.elementalamulets.items.AmuletBeltItem;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -48,7 +49,34 @@ public class AmuletBeltMenu extends AbstractContainerMenu {
 
     @Override
     public ItemStack quickMoveStack(Player pPlayer, int index) {
-        return ItemStack.EMPTY;
+        ItemStack itemStack = ItemStack.EMPTY;
+        Slot slot = this.getSlot(index);
+        if(slot.hasItem()) {
+            ItemStack itemStack1 = slot.getItem();
+            itemStack = itemStack1.copy();
+            if(index >= 0 && index < 5) {
+                if(!this.moveItemStackTo(itemStack1, 5, 41, true)) {
+                    return ItemStack.EMPTY;
+                }
+            } else {
+                if(!this.moveItemStackTo(itemStack1, 0, 5, false)) {
+                    return ItemStack.EMPTY;
+                }
+            }
+
+            if (itemStack1.isEmpty()) {
+                slot.set(ItemStack.EMPTY);
+            } else {
+                slot.setChanged();
+            }
+
+            if (itemStack1.getCount() == itemStack.getCount()) {
+                return ItemStack.EMPTY;
+            }
+
+            slot.onTake(pPlayer, itemStack1);
+        }
+        return itemStack;
     }
 
     @Override
