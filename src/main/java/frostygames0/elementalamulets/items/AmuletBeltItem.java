@@ -42,6 +42,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.server.ServerLifecycleHooks;
+import org.jetbrains.annotations.NotNull;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.SlotResult;
@@ -170,9 +171,8 @@ public class AmuletBeltItem extends Item implements ICurioItem {
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
         ItemStackHandler handler = new ItemStackHandler(5) {
-            @Nonnull
             @Override
-            public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+            public boolean isItemValid(int slot, @NotNull ItemStack stack) {
                 boolean sameAmulet = false; // Checks if there is same amulet already in belt
                 for (int i = 0; i < this.getSlots(); i++) {
                     if (getStackInSlot(i).getItem() == stack.getItem()) {
@@ -180,29 +180,31 @@ public class AmuletBeltItem extends Item implements ICurioItem {
                         break;
                     }
                 }
-                return stack.getItem() instanceof AmuletItem && !sameAmulet ? super.insertItem(slot, stack, simulate) : stack;
+                return stack.getItem() instanceof AmuletItem && !sameAmulet;
             }
 
             @Nonnull
             @Override
             public ItemStack extractItem(int slot, int amount, boolean simulate) {
-                ItemStack amulet = getStackInSlot(slot);
-                MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
-                if (server != null) {
-                    UUID UUID = NBTUtil.getUUID(stack, WEARER_UUID_TAG);
-                    Player wearer = server.getPlayerList().getPlayer(UUID);
-                    if (wearer != null) {
-                        if (CuriosApi.getCuriosHelper().findFirstCurio(wearer, stack.getItem()).map(SlotResult::stack).orElse(ItemStack.EMPTY) == stack) { // Workaround so It won't unEquip when not worn.
-                            Item itemAmulet = amulet.getItem();
-                            LazyOptional<ICurio> curio = CuriosApi.getCuriosHelper().getCurio(amulet);
-                            if (curio.isPresent() && itemAmulet instanceof AmuletItem) {
-                                if (((AmuletItem) itemAmulet).usesCurioMethods()) {
-                                    curio.orElseThrow(NullPointerException::new).onUnequip(new SlotContext(SlotTypePreset.BELT.getIdentifier(), wearer, 0, false, false), ItemStack.EMPTY);
+                if(!simulate) {
+                    ItemStack amulet = getStackInSlot(slot);
+                    MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
+                    if (server != null) {
+                        UUID UUID = NBTUtil.getUUID(stack, WEARER_UUID_TAG);
+                        Player wearer = server.getPlayerList().getPlayer(UUID);
+                        if (wearer != null) {
+                            if (CuriosApi.getCuriosHelper().findFirstCurio(wearer, stack.getItem()).map(SlotResult::stack).orElse(ItemStack.EMPTY) == stack) { // Workaround so It won't unEquip when not worn.
+                                Item itemAmulet = amulet.getItem();
+                                LazyOptional<ICurio> curio = CuriosApi.getCuriosHelper().getCurio(amulet);
+                                if (curio.isPresent() && itemAmulet instanceof AmuletItem) {
+                                    if (((AmuletItem) itemAmulet).usesCurioMethods()) {
+                                        curio.orElseThrow(NullPointerException::new).onUnequip(new SlotContext(SlotTypePreset.BELT.getIdentifier(), wearer, 0, false, false), ItemStack.EMPTY);
+                                    }
                                 }
                             }
+                        } else {
+                            return amulet;
                         }
-                    } else {
-                        return amulet;
                     }
                 }
                 return super.extractItem(slot, amount, simulate);
