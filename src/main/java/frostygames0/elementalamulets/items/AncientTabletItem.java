@@ -37,7 +37,7 @@ import java.util.Random;
  * @date 23.10.2021 13:05
  */
 public class AncientTabletItem extends Item {
-    private final Random random = new Random();
+    private static final Random RANDOM = new Random();
 
     public AncientTabletItem(Properties pProperties) {
         super(pProperties);
@@ -56,7 +56,7 @@ public class AncientTabletItem extends Item {
     @Override
     public ItemStack getContainerItem(ItemStack itemStack) {
         ItemStack stack = new ItemStack(this);
-        stack.hurt(itemStack.getDamageValue() + 1, random, null);
+        stack.hurt(itemStack.getDamageValue() + 1, RANDOM, null);
         if (stack.getDamageValue() > stack.getMaxDamage()) {
             return ItemStack.EMPTY;
         }
