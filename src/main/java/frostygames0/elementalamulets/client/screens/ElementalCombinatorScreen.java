@@ -30,7 +30,7 @@ import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
@@ -86,7 +86,7 @@ public class ElementalCombinatorScreen extends ContainerScreen<ElementalCombinat
     static class CombinationButton extends Button {
 
         CombinationButton(int pX, int pY, Button.IPressable pOnPress) {
-            super(pX, pY, 21, 14, StringTextComponent.EMPTY, pOnPress);
+            super(pX, pY, 21, 14, new TranslationTextComponent("block.elementalamulets.elemental_combinator.combine_button"), pOnPress);
         }
 
         @SuppressWarnings("deprecation")

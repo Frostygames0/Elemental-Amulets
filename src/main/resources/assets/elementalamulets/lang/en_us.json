@@ -58,6 +58,7 @@
   "block.elementalamulets.elemental_combinator.cooldown": "%s is recharging! %1$ss left",
   "block.elementalamulets.elemental_combinator.no_sky": "%s can't see sky!",
   "block.elementalamulets.elemental_combinator.time_left": "%s seconds left!",
+  "block.elementalamulets.elemental_combinator.combine_button": "Combine",
   "block.elementalamulets.celestial_focus": "Celestial Focus",
   "block.elementalamulets.celestial_focus.tooltip": "The heavens themselves will increase the speed of elemental combination",
   "block.elementalamulets.elemental_ore": "Elemental Ore",
