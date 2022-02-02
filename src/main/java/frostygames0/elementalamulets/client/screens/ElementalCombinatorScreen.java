@@ -28,7 +28,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -86,7 +86,7 @@ public class ElementalCombinatorScreen extends AbstractContainerScreen<Elemental
     static class CombinationButton extends Button {
 
         CombinationButton(int pX, int pY, Button.OnPress pOnPress) {
-            super(pX, pY, 21, 14, TextComponent.EMPTY, pOnPress);
+            super(pX, pY, 21, 14, new TranslatableComponent("block.elementalamulets.elemental_combinator.combine_button"), pOnPress);
         }
 
         @Override

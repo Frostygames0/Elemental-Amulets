@@ -59,6 +59,7 @@
   "block.elementalamulets.elemental_combinator.cooldown": "Объединитель перезаряжается! %s сек. осталось",
   "block.elementalamulets.elemental_combinator.no_sky": "%s не может видеть небо!",
   "block.elementalamulets.elemental_combinator.time_left": "Осталось %s секунд",
+  "block.elementalamulets.elemental_combinator.combine_button": "Объединить",
   "block.elementalamulets.celestial_focus": "Небесный фокус",
   "block.elementalamulets.celestial_focus.tooltip": "Сами небеса ускорят элементальное объединение",
   "block.elementalamulets.elemental_ore": "Элементальная руда",
