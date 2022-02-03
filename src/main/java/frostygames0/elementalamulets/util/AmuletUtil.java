@@ -56,9 +56,11 @@ public final class AmuletUtil {
     // This is a wrapper method for Amulet Belt to work
     public static Optional<SlotResult> getAmuletInSlotOrBelt(Item item, LivingEntity entity) {
         ICuriosHelper helper = CuriosApi.getCuriosHelper();
-        if (helper.findFirstCurio(entity, item).isPresent()) {
-            return helper.findFirstCurio(entity, item);
-        }
+        Optional<SlotResult> possibleAmulet = helper.findFirstCurio(entity, item);
+
+        if(possibleAmulet.isPresent())
+            return possibleAmulet;
+
         Optional<SlotResult> optional = helper.findFirstCurio(entity, ModItems.AMULET_BELT.get());
         if (optional.isPresent()) {
             SlotResult triple = optional.get();

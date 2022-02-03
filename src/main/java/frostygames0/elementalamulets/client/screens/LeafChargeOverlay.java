@@ -29,6 +29,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.gui.ForgeIngameGui;
 import net.minecraftforge.client.gui.IIngameOverlay;
@@ -46,9 +47,6 @@ public class LeafChargeOverlay implements IIngameOverlay {
     public void render(ForgeIngameGui gui, PoseStack ms, float partialTicks, int width, int height) {
         Minecraft mc = Minecraft.getInstance();
 
-        int posX = (width / 2);
-        int posY = height - 12;
-
         if (gui.shouldDrawSurvivalElements() && ModConfig.CachedValues.RENDER_LEAF_CHARGE_OVERLAY) {
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
@@ -60,12 +58,21 @@ public class LeafChargeOverlay implements IIngameOverlay {
                     ItemStack stack = triple.stack();
                     TerraProtectionAmuletItem amulet = (TerraProtectionAmuletItem) stack.getItem();
 
-                    int offset = posX + 98;
+                    // Offsetted coordinates in 2d GUI space where bar starts
+                    int offsetX = (width / 2) + 98;
+                    int offsetY = height - 12;
 
                     RenderSystem.enableBlend();
 
-                    drawLeafBar(ms, Math.min(amulet.getMaxCharge(stack), 16), offset, posY, 0);
-                    drawLeafBar(ms, Math.min(amulet.getCharges(stack), 16), offset, posY, 8);
+                    int charge = amulet.getCharges(stack);
+                    int clampedMax = Mth.clamp(amulet.getMaxCharge(stack), 0, 16);
+
+                    drawLeafBar(ms, clampedMax, offsetX, offsetY, 0);
+                    drawLeafBar(ms, Mth.clamp(charge, 0, clampedMax), offsetX, offsetY, 8);
+
+                    if(charge > clampedMax) {
+                        gui.getFont().drawShadow(ms, '+' + String.valueOf(charge - clampedMax), offsetX + 2, offsetY - 10, 0xFF969696);
+                    }
 
                     RenderSystem.disableBlend();
 
