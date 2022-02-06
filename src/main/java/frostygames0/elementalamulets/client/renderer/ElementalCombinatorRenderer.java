@@ -26,7 +26,6 @@ import frostygames0.elementalamulets.config.ModConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -41,11 +40,8 @@ import net.minecraftforge.items.CapabilityItemHandler;
  * @date 13.06.2021 18:11
  */
 public class ElementalCombinatorRenderer implements BlockEntityRenderer<ElementalCombinatorBlockEntity> {
-    private final BlockRenderDispatcher blockRenderer;
 
-    public ElementalCombinatorRenderer(BlockEntityRendererProvider.Context pContext) {
-        this.blockRenderer = pContext.getBlockRenderDispatcher();
-    }
+    public ElementalCombinatorRenderer(BlockEntityRendererProvider.Context pContext) {}
 
     @Override
     public void render(ElementalCombinatorBlockEntity tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {
