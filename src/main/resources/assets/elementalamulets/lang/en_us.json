@@ -115,6 +115,7 @@
   "commands.elementalamulets.give.success": "Successfully gave Tier %s %2$s to: %3$s",
   "commands.elementalamulets.give.failure": "Error! %s is not an elemental amulet!",
 
+  "key.categories.elementalamulets": "Elemental Amulets",
   "key.elementalamulets.open_belt_gui": "Open the Amulet Belt interface",
 
   "filled_map.elementalamulets.cult_temple": "Map to the temple ruins",
