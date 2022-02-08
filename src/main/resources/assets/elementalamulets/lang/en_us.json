@@ -104,20 +104,15 @@
   "advancements.elementalamulets.strange_tablet.desc": "Find a strange tablet in the temple",
   "advancements.elementalamulets.order_to_calm": "I order you to calm!",
   "advancements.elementalamulets.order_to_calm.desc": "Wear a pacifying amulet for the first time",
-
   "stat.elementalamulets.amulets_worn": "Amulets worn",
   "stat.elementalamulets.guide_opened": "Guides opened",
   "stat.elementalamulets.times_combined": "Times combined",
-
   "death.attack.elementalamulets.leaf_cut": "%s was cut to death by leaf shield!",
-
   "commands.elementalamulets.give.success": "Successfully gave Tier %s %2$s to: %3$s",
   "commands.elementalamulets.give.failure": "Error! %s is not an elemental amulet!",
-
   "key.elementalamulets.open_belt_gui": "Open the Amulet Belt interface",
-
+  "key.categories.elementalamulets": "Elemental Amulets",
   "filled_map.elementalamulets.cult_temple": "Map to the temple ruins",
-
   "config.elementalamulets.elements_latin_variant": "Use latin names for the elements",
   "config.elementalamulets.show_splashes": "Show splashes",
   "config.elementalamulets.elemental_combinator_stack_display": "Display output of Elemental Combinator on top",

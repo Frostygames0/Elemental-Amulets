@@ -26,11 +26,12 @@ import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.TerraProtectionAmuletItem;
 import frostygames0.elementalamulets.util.AmuletUtil;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.AbstractGui;
-import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -50,16 +51,12 @@ public class LeafChargeOverlay {
     @SubscribeEvent
     public static void renderLeafOverlay(RenderGameOverlayEvent.Post event) {
         Minecraft mc = Minecraft.getInstance();
-        TextureManager manager = Minecraft.getInstance().getTextureManager();
         MatrixStack ms = event.getMatrixStack();
-
-        int posX = (event.getWindow().getGuiScaledWidth() / 2);
-        int posY = event.getWindow().getGuiScaledHeight() - 12;
 
         if (event.getType() == RenderGameOverlayEvent.ElementType.FOOD && ModConfig.CachedValues.RENDER_LEAF_CHARGE_OVERLAY) {
             RenderSystem.color4f(1, 1, 1, 1);
 
-            manager.bind(modPrefix("textures/gui/leaf_charge_overlay.png"));
+            mc.getTextureManager().bind(modPrefix("textures/gui/leaf_charge_overlay.png"));
 
             ClientPlayerEntity player = mc.player;
             if (player != null) {
@@ -67,12 +64,22 @@ public class LeafChargeOverlay {
                     ItemStack stack = triple.getRight();
                     TerraProtectionAmuletItem amulet = (TerraProtectionAmuletItem) stack.getItem();
 
-                    int offset = posX + 98;
+                    // Offsetted coordinates in 2d GUI space where bar starts
+                    MainWindow window = event.getWindow();
+                    int offsetX = (window.getGuiScaledWidth() / 2) + 98;
+                    int offsetY = window.getGuiScaledHeight() - 12;
 
                     RenderSystem.enableBlend();
 
-                    drawLeafBar(ms, Math.min(amulet.getMaxCharge(stack), 16), offset, posY, 0);
-                    drawLeafBar(ms, Math.min(amulet.getCharges(stack), 16), offset, posY, 8);
+                    int charge = amulet.getCharges(stack);
+                    int clampedMax = MathHelper.clamp(amulet.getMaxCharge(stack), 0, 16);
+
+                    drawLeafBar(ms, clampedMax, offsetX, offsetY, 0);
+                    drawLeafBar(ms, MathHelper.clamp(charge, 0, clampedMax), offsetX, offsetY, 8);
+
+                    if (charge > clampedMax) {
+                        mc.gui.getFont().drawShadow(ms, '+' + String.valueOf(charge - clampedMax), offsetX + 2, offsetY - 10, 0xFF969696);
+                    }
 
                     RenderSystem.disableBlend();
 

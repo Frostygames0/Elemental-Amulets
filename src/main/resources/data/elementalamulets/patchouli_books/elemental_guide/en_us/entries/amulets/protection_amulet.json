@@ -6,7 +6,7 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "$(l)$(earth)Amulet of Terra-Protection$() - is one of the $(o)'special'$() amulets. It's made by combining $(l:elementalamulets:amulets/earth_amulet)Amulet of Earth$() with high durability items(like shield and obsidian)$(br2)$(l)USAGE$(): $(li)Creates a sharp and very durable $(o)Leaf Shield$()! Reflects damage on entities!"
+      "text": "$(l)$(earth)Amulet of Terra-Protection$() - is one of the $(o)'special'$() amulets. It's made by combining $(l:elementalamulets:amulets/earth_amulet)Amulet of Earth$() with high durability items(like shield and obsidian)$(br2)$(l)USAGE$(): $(li)Creates a sharp and very durable $(o)Leaf Shield$()! Reflects damage on entities! $(br)$(l)IMPORTANT! Doesn't reflect potions.$()"
     },
     {
       "type": "elementalamulets:elemental_combination",
