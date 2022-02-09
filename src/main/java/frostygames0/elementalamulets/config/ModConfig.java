@@ -73,7 +73,6 @@ public class ModConfig {
             builder.comment("Anything that is related to the amulets [WARNING! Setting any of these values too high may cause bugs, lags and even crashes]")
                     .push("Amulets");
 
-
             builder.push("Amulet of Jump-Boost");
             jumpAmuletBoost = builder.comment("How high will players jump with Jump Amulet [DEFAULT: 0.3]").defineInRange("jump_amulet_boost", 0.3, 0, Float.MAX_VALUE);
             builder.pop();
@@ -90,7 +89,7 @@ public class ModConfig {
             builder.push("Amulet of Terra-Protection");
             protectionAmuletReflectDamageMult = builder.comment("How much damage will Leaf Shield absorb? [DEFAULT: 0.5]").defineInRange("protection_amulet_absorption", 0.5f, 0, Float.MAX_VALUE);
             protectionAmuletChargeTime = builder.comment("How long will leaf shield recharge one bar (in ticks, 1 sec - 20 ticks)? [DEFAULT: 80]").defineInRange("protection_amulet_recharge_time", 80, 0, Integer.MAX_VALUE);
-            protectionAmuletIgnoreNaturality = builder.comment("Ignore 'naturality' of the dimension player is in? (compass behaviour, bed, etc.) [DEFAULT: false]").define("protection_amulet_ignore_naturality", false);
+            protectionAmuletIgnoreNaturality = ignoreNaturality(builder, "protection_amulet");
             builder.pop();
 
             builder.push("Amulet of Water");
@@ -99,7 +98,7 @@ public class ModConfig {
 
             builder.push("Amulet of Earth");
             earthAmuletCooldown = builder.comment("How long will the Amulet of Earth be on cooldown? (in ticks, 1 sec - 20 ticks) [DEFAULT: 100]").defineInRange("earth_amulet_cooldown", 100, 0, Integer.MAX_VALUE);
-            earthAmuletIgnoreNaturality = builder.comment("Ignore 'naturality' of the dimension player is in? (compass behaviour, bed, etc.) [DEFAULT: false]").define("earth_amulet_ignore_naturality", false);
+            earthAmuletIgnoreNaturality = ignoreNaturality(builder, "earth_amulet");
             builder.pop();
 
             builder.push("Pacifying Amulet");
@@ -113,6 +112,10 @@ public class ModConfig {
             knockbackAmuletKnockbackMult = builder.comment("How strong will knockback be? [DEFAULT: 0.5]").defineInRange("knockback_amulet_knockback_mult", 0.5, 0, Double.MAX_VALUE);
 
             builder.pop(2);
+        }
+
+        private static ForgeConfigSpec.BooleanValue ignoreNaturality(ForgeConfigSpec.Builder builder, String name) {
+            return builder.comment("Ignore 'naturality' of the dimension player is in? (compass behaviour, bed, etc.) [DEFAULT: false]").define(name + "_ignore_naturality", false);
         }
     }
 
