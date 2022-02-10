@@ -25,6 +25,7 @@ import frostygames0.elementalamulets.util.NBTUtil;
 import frostygames0.elementalamulets.util.WorldUtil;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.text.ITextComponent;
@@ -43,8 +44,10 @@ public class TerraProtectionAmuletItem extends AmuletItem {
     public static final DamageSource LEAF_CUT = new DamageSource(ElementalAmulets.MOD_ID + ".leaf_cut");
     public static final String CHARGES_TAG = modPrefix("charge").toString();
 
-    public TerraProtectionAmuletItem(Properties properties) {
-        super(properties, true);
+    public TerraProtectionAmuletItem(Item.Properties properties) {
+        super(new AmuletItem.Properties(properties)
+                .usesCurioMethods()
+                .hasTier());
     }
 
     @Override

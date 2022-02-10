@@ -25,7 +25,9 @@ import net.minecraft.item.ItemStack;
 
 public class JumpAmuletItem extends AmuletItem {
     public JumpAmuletItem(Item.Properties properties) {
-        super(properties);
+        super(new AmuletItem.Properties(properties)
+                .generates()
+                .hasTier());
     }
 
     public float getJump(ItemStack stack) {
@@ -34,10 +36,5 @@ public class JumpAmuletItem extends AmuletItem {
 
     public float getFallResist(ItemStack stack) {
         return getJump(stack) * 10;
-    }
-
-    @Override
-    public boolean usesCurioMethods() {
-        return false;
     }
 }

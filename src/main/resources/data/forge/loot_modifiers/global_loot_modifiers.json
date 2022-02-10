@@ -1,6 +1,9 @@
 {
   "replace": false,
   "entries": [
-    "elementalamulets:vanilla_dungeons_loot"
+    "elementalamulets:aether_element",
+    "elementalamulets:fire_element",
+    "elementalamulets:random_amulet",
+    "elementalamulets:water_element"
   ]
 }

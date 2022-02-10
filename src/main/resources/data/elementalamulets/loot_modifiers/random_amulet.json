@@ -1,0 +1,13 @@
+{
+  "type": "elementalamulets:random_amulet_loot",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:chests/desert_pyramid"
+    },
+    {
+      "condition": "minecraft:random_chance",
+      "chance": 0.4
+    }
+  ]
+}

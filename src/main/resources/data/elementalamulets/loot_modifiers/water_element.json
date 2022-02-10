@@ -1,0 +1,39 @@
+{
+  "type": "elementalamulets:treasure_loot",
+  "conditions": [
+    {
+      "condition": "minecraft:alternative",
+      "terms": [
+        {
+          "condition": "forge:loot_table_id",
+          "loot_table_id": "minecraft:chests/shipwreck_treasure"
+        },
+        {
+          "condition": "forge:loot_table_id",
+          "loot_table_id": "minecraft:chests/underwater_ruin_small"
+        },
+        {
+          "condition": "forge:loot_table_id",
+          "loot_table_id": "minecraft:chests/underwater_ruin_big"
+        }
+      ]
+    },
+    {
+      "condition": "minecraft:random_chance",
+      "chance": 0.2
+    }
+  ],
+  "item_entry": {
+    "type": "minecraft:item",
+    "name": "elementalamulets:fire_element",
+    "functions": [
+      {
+        "function": "minecraft:set_count",
+        "count": {
+          "min": 1,
+          "max": 4
+        }
+      }
+    ]
+  }
+}

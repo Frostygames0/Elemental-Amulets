@@ -37,7 +37,6 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 
 
-import java.util.List;
 import java.util.Map;
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
@@ -52,10 +51,6 @@ public class ModRecipes {
         CraftingHelper.register(modPrefix("amulet_ingredient"), AmuletIngredient.Serializer.INSTANCE);
 
         event.getRegistry().register(new ElementalCombinationSerializer().setRegistryName(modPrefix("elemental_combination")));
-    }
-
-    public static List<ElementalCombination> getRecipes(World world) {
-        return world.getRecipeManager().getAllRecipesFor(ELEMENTAL_COMBINATION_TYPE);
     }
 
     public static <T extends IRecipe<C>, C extends IInventory> Map<ResourceLocation, T> getRecipesMap(IRecipeType<T> type, World world) {

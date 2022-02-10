@@ -31,6 +31,7 @@ import frostygames0.elementalamulets.world.structures.ModStructureFeatures;
 import frostygames0.elementalamulets.world.structures.ModStructures;
 import it.unimi.dsi.fastutil.objects.Object2FloatMap;
 import net.minecraft.block.ComposterBlock;
+import net.minecraft.entity.ai.brain.task.GiveHeroGiftsTask;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -118,6 +119,9 @@ public class ElementalAmulets {
             Object2FloatMap<IItemProvider> list = ComposterBlock.COMPOSTABLES;
             list.put(ModItems.EARTH_SHARDS_BLOCK.get(), 1.0f);
             list.put(ModItems.EARTH_ELEMENT.get(), 0.8f);
+
+            GiveHeroGiftsTask.GIFTS.put(ModVillagers.JEWELLER.get(), modPrefix("gameplay/hero_of_the_village/jeweller_gift"));
+
         });
     }
 }

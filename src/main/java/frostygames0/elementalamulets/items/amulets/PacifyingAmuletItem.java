@@ -30,6 +30,7 @@ import net.minecraft.entity.ai.goal.GoalSelector;
 import net.minecraft.entity.ai.goal.PrioritizedGoal;
 import net.minecraft.entity.ai.goal.TargetGoal;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.CooldownTracker;
@@ -52,8 +53,9 @@ import java.util.stream.Collectors;
  */
 public class PacifyingAmuletItem extends AmuletItem {
 
-    public PacifyingAmuletItem(Properties properties) {
-        super(properties, false);
+    public PacifyingAmuletItem(Item.Properties properties) {
+        super(new AmuletItem.Properties(properties)
+                .usesCurioMethods());
     }
 
     @Override

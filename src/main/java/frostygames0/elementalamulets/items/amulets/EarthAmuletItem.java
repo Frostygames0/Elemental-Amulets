@@ -27,6 +27,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.IGrowable;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.CooldownTracker;
 import net.minecraft.util.math.BlockPos;
@@ -43,8 +44,11 @@ import java.util.Random;
  * @date 19.09.2021 22:50
  */
 public class EarthAmuletItem extends AmuletItem {
-    public EarthAmuletItem(Properties properties) {
-        super(properties);
+    public EarthAmuletItem(Item.Properties properties) {
+        super(new AmuletItem.Properties(properties)
+                .usesCurioMethods()
+                .generates()
+                .hasTier());
     }
 
     @Override

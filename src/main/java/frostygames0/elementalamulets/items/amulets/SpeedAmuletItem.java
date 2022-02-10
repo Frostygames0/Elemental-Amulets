@@ -26,6 +26,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import top.theillusivec4.curios.api.SlotContext;
 
@@ -37,8 +38,11 @@ import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 public class SpeedAmuletItem extends AmuletItem {
     public static final UUID MODIFIER_UUID = UUID.fromString("06c06b38-3779-4ca2-b678-7c111c77faef");
 
-    public SpeedAmuletItem(Properties properties) {
-        super(properties);
+    public SpeedAmuletItem(Item.Properties properties) {
+        super(new AmuletItem.Properties(properties)
+                .usesCurioMethods()
+                .generates()
+                .hasTier());
     }
 
     @Override

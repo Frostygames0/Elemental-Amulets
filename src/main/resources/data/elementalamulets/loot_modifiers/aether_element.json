@@ -1,0 +1,17 @@
+{
+  "type": "elementalamulets:treasure_loot",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:chests/buried_treasure"
+    },
+    {
+      "condition": "minecraft:random_chance",
+      "chance": 0.4
+    }
+  ],
+  "item_entry": {
+    "type": "minecraft:item",
+    "name": "elementalamulets:aether_amulet"
+  }
+}
