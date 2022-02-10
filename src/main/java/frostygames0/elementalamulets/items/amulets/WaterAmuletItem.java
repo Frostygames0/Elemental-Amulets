@@ -25,6 +25,7 @@ import frostygames0.elementalamulets.util.AttributeUtil;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ForgeMod;
 import top.theillusivec4.curios.api.SlotContext;
@@ -37,8 +38,11 @@ import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 public class WaterAmuletItem extends AmuletItem {
     public static final UUID MODIFIER_UUID = UUID.fromString("88f5e6ea-c12f-4cfd-b3f4-40d9ca8cdfad");
 
-    public WaterAmuletItem(Properties properties) {
-        super(properties, true);
+    public WaterAmuletItem(Item.Properties properties) {
+        super(new AmuletItem.Properties(properties)
+                .usesCurioMethods()
+                .generates()
+                .hasTier());
     }
 
     @Override

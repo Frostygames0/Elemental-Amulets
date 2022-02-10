@@ -29,6 +29,7 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -44,8 +45,10 @@ public class TerraProtectionAmuletItem extends AmuletItem {
     public static final DamageSource LEAF_CUT = new DamageSource(ElementalAmulets.MOD_ID + ".leaf_cut");
     public static final String CHARGES_TAG = modPrefix("charge").toString();
 
-    public TerraProtectionAmuletItem(Properties properties) {
-        super(properties, true);
+    public TerraProtectionAmuletItem(Item.Properties properties) {
+        super(new AmuletItem.Properties(properties)
+                .usesCurioMethods()
+                .hasTier());
     }
 
     @Override

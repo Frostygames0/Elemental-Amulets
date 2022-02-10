@@ -24,6 +24,7 @@ import frostygames0.elementalamulets.util.AttributeUtil;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.ForgeMod;
 import top.theillusivec4.curios.api.SlotContext;
@@ -36,8 +37,11 @@ import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 public class AirAmuletItem extends AmuletItem {
     public static final UUID MODIFIER_UUID = UUID.fromString("2589aeb9-2b6a-44dc-8fab-97c9743dacdf");
 
-    public AirAmuletItem(Properties properties) {
-        super(properties, true);
+    public AirAmuletItem(Item.Properties properties) {
+        super(new AmuletItem.Properties(properties)
+                .usesCurioMethods()
+                .generates()
+                .hasTier());
     }
 
     public float getFloating(ItemStack stack) {

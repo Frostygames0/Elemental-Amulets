@@ -19,6 +19,7 @@
 
 package frostygames0.elementalamulets.world;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.init.ModItems;
@@ -27,17 +28,19 @@ import frostygames0.elementalamulets.util.AmuletUtil;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.storage.loot.BuiltInLootTables;
+import net.minecraft.world.level.storage.loot.Deserializers;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.registries.IForgeRegistry;
+import org.jetbrains.annotations.NotNull;
 
 
 import javax.annotation.Nonnull;
 import java.util.List;
-import java.util.Random;
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
@@ -48,40 +51,25 @@ import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 public class LootTableModifiers {
 
     public static void registerLootModifierSerializer(RegistryEvent.Register<GlobalLootModifierSerializer<?>> event) {
-        event.getRegistry().register(new TreasureLoot.Serializer().setRegistryName(modPrefix("vanilla_dungeons_loot")));
+        IForgeRegistry<GlobalLootModifierSerializer<?>> registry = event.getRegistry();
+        registry.register(new TreasureLoot.Serializer().setRegistryName(modPrefix("treasure_loot")));
+        registry.register(new RandomAmuletLoot.Serializer().setRegistryName(modPrefix("random_amulet_loot")));
     }
 
     public static class TreasureLoot extends LootModifier {
-        private static final Random RANDOM = new Random();
+        private static final Gson LOOT_GSON = Deserializers.createFunctionSerializer().create();
 
-        private final float desertChance;
-        private final float buriedChance;
-        private final float shipwreckChance;
-        private final float netherChance;
+        private final LootPoolEntryContainer item;
 
-        public TreasureLoot(LootItemCondition[] conditionsIn, float desertChance, float buriedChance, float shipwreckChance, float netherChance) {
+        public TreasureLoot(LootItemCondition[] conditionsIn, LootPoolEntryContainer item) {
             super(conditionsIn);
-            this.desertChance = desertChance;
-            this.buriedChance = buriedChance;
-            this.shipwreckChance = shipwreckChance;
-            this.netherChance = netherChance;
+            this.item = item;
         }
 
         @Nonnull
         @Override
         protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
-            List<AmuletItem> amulets = ModItems.getAmulets();
-            if (ModConfig.CachedValues.MODIFY_VANILLA_LOOT) {
-                if (BuiltInLootTables.DESERT_PYRAMID.equals(context.getQueriedLootTableId()) && RANDOM.nextDouble() <= desertChance) {
-                    generatedLoot.add(AmuletUtil.setStackTier(amulets.get(RANDOM.nextInt(amulets.size())), 1));
-                } else if (BuiltInLootTables.BURIED_TREASURE.equals(context.getQueriedLootTableId()) && RANDOM.nextDouble() <= buriedChance) {
-                    generatedLoot.add(new ItemStack(ModItems.AETHER_ELEMENT.get(), 2));
-                } else if (BuiltInLootTables.SHIPWRECK_TREASURE.equals(context.getQueriedLootTableId()) && RANDOM.nextDouble() <= shipwreckChance) {
-                    generatedLoot.add(new ItemStack(ModItems.WATER_ELEMENT.get(), 5));
-                } else if (BuiltInLootTables.NETHER_BRIDGE.equals(context.getQueriedLootTableId()) && RANDOM.nextDouble() <= netherChance) {
-                    generatedLoot.add(new ItemStack(ModItems.FIRE_ELEMENT.get(), 4));
-                }
-            }
+            if(ModConfig.CachedValues.MODIFY_VANILLA_LOOT) item.expand(context, generator -> generator.createItemStack(generatedLoot::add, context));
             return generatedLoot;
         }
 
@@ -89,21 +77,43 @@ public class LootTableModifiers {
 
             @Override
             public TreasureLoot read(ResourceLocation location, JsonObject object, LootItemCondition[] aiLootCondition) {
-                float desert = GsonHelper.getAsFloat(object, "desert_pyramid", 0.1f);
-                float treasure = GsonHelper.getAsFloat(object, "buried_treasure", 0.3f);
-                float shipwreck = GsonHelper.getAsFloat(object, "shipwreck_treasure", 0.3f);
-                float nether = GsonHelper.getAsFloat(object, "nether_bridge", 0.2f);
-                return new TreasureLoot(aiLootCondition, desert, treasure, shipwreck, nether);
+                LootPoolEntryContainer item = LOOT_GSON.fromJson(GsonHelper.getAsJsonObject(object, "item_entry"), LootPoolEntryContainer.class);
+                return new TreasureLoot(aiLootCondition, item);
             }
 
             @Override
             public JsonObject write(TreasureLoot instance) {
                 JsonObject json = makeConditions(instance.conditions);
-                json.addProperty("desert_pyramid", instance.desertChance);
-                json.addProperty("buried_treasure", instance.buriedChance);
-                json.addProperty("shipwreck_treasure", instance.shipwreckChance);
-                json.addProperty("nether_bridge", instance.netherChance);
+                json.add("item_entry", LOOT_GSON.toJsonTree(instance.item));
                 return json;
+            }
+        }
+    }
+
+    public static class RandomAmuletLoot extends LootModifier {
+
+        public RandomAmuletLoot(LootItemCondition[] conditionsIn) {
+            super(conditionsIn);
+        }
+
+        @NotNull
+        @Override
+        protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
+            List<AmuletItem> amulets = ModItems.getAmulets().stream().filter(AmuletItem::canBeGenerated).toList();
+            if(ModConfig.CachedValues.MODIFY_VANILLA_LOOT) generatedLoot.add(AmuletUtil.setStackTier(amulets.get(context.getRandom().nextInt(amulets.size())), 1));
+            return generatedLoot;
+        }
+
+        public static class Serializer extends GlobalLootModifierSerializer<RandomAmuletLoot> {
+
+            @Override
+            public RandomAmuletLoot read(ResourceLocation location, JsonObject object, LootItemCondition[] ailootcondition) {
+                return new RandomAmuletLoot(ailootcondition);
+            }
+
+            @Override
+            public JsonObject write(RandomAmuletLoot instance) {
+                return makeConditions(instance.conditions);
             }
         }
     }

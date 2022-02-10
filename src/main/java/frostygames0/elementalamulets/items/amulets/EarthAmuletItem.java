@@ -28,6 +28,7 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemCooldowns;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -44,8 +45,11 @@ import java.util.Random;
  * @date 19.09.2021 22:50
  */
 public class EarthAmuletItem extends AmuletItem {
-    public EarthAmuletItem(Properties properties) {
-        super(properties);
+    public EarthAmuletItem(Item.Properties properties) {
+        super(new AmuletItem.Properties(properties)
+                .usesCurioMethods()
+                .generates()
+                .hasTier());
     }
 
     @Override

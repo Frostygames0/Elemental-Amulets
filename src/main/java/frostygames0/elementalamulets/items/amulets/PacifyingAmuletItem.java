@@ -37,6 +37,7 @@ import net.minecraft.world.entity.ai.goal.GoalSelector;
 import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.ai.goal.target.TargetGoal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemCooldowns;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -50,9 +51,9 @@ import top.theillusivec4.curios.api.SlotContext;
  */
 // TODO For Future: move PacifyingAmuletItem#onAmuletBreak to AmuletItem class, since I know for sure that other amulets will have something on destruction too
 public class PacifyingAmuletItem extends AmuletItem {
-
-    public PacifyingAmuletItem(Properties properties) {
-        super(properties, false);
+    public PacifyingAmuletItem(Item.Properties properties) {
+        super(new AmuletItem.Properties(properties)
+                .usesCurioMethods());
     }
 
     @Override

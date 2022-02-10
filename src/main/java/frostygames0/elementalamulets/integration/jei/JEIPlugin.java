@@ -73,7 +73,8 @@ public class JEIPlugin implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
 
         // Adding the list of my recipes to jei
-        registration.addRecipes(ModRecipes.getRecipes(Minecraft.getInstance().level), ElementalCombinationCategory.ID);
+        registration.addRecipes(Minecraft.getInstance().level
+                .getRecipeManager().getAllRecipesFor(ModRecipes.ELEMENTAL_COMBINATION_TYPE), ElementalCombinationCategory.ID);
 
         // Item descriptions
         registration.addIngredientInfo(ModItems.getAmulets().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new TranslatableComponent("jei.elementalamulets.amulets.description"));

@@ -69,15 +69,16 @@ public abstract class AmuletItem extends Item implements ICurioItem, ICurioRende
     public static final int MAX_TIER = 4;
 
     private final boolean hasTier;
+    private final boolean usesCurioMethods;
+    private final boolean canBeGenerated;
+
     private AmuletModel<Player> model;
 
-    public AmuletItem(Properties properties, boolean hasTier) {
-        super(properties);
-        this.hasTier = hasTier;
-    }
-
-    public AmuletItem(Properties properties) {
-        this(properties, true);
+    public AmuletItem(Properties builder) {
+        super(builder.properties);
+        this.hasTier = builder.hasTier;
+        this.usesCurioMethods = builder.usesCurioMethods;
+        this.canBeGenerated = builder.canBeGenerated;
     }
 
 
@@ -219,11 +220,38 @@ public abstract class AmuletItem extends Item implements ICurioItem, ICurioRende
         return this.hasTier;
     }
 
-    /**
-     * Defines if amulet uses curio methods (like {@link ICurioItem#curioTick(SlotContext, ItemStack)}
-     */
-    public boolean usesCurioMethods() {
-        return true;
+    public final boolean usesCurioMethods() {
+        return this.usesCurioMethods;
+    }
+
+    public final boolean canBeGenerated() {
+        return this.canBeGenerated;
+    }
+
+    public static class Properties {
+        private final Item.Properties properties;
+        private boolean usesCurioMethods;
+        private boolean canBeGenerated;
+        private boolean hasTier;
+
+        public Properties(Item.Properties properties) {
+            this.properties = properties;
+        }
+
+        public Properties usesCurioMethods() {
+            this.usesCurioMethods = true;
+            return this;
+        }
+
+        public Properties hasTier() {
+            this.hasTier = true;
+            return this;
+        }
+
+        public Properties generates() {
+            this.canBeGenerated = true;
+            return this;
+        }
     }
 
     // Removes vanilla durability tooltip from the tooltip list

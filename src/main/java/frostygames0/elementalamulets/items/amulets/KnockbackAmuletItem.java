@@ -20,6 +20,7 @@
 package frostygames0.elementalamulets.items.amulets;
 
 import frostygames0.elementalamulets.config.ModConfig;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 /**
@@ -27,16 +28,12 @@ import net.minecraft.world.item.ItemStack;
  * @date 09.10.2021 11:44
  */
 public class KnockbackAmuletItem extends AmuletItem {
-    public KnockbackAmuletItem(Properties properties) {
-        super(properties);
+    public KnockbackAmuletItem(Item.Properties properties) {
+        super(new AmuletItem.Properties(properties)
+                .hasTier());
     }
 
     public float getKnockback(ItemStack item) {
         return (float) (getTier(item) * ModConfig.CachedValues.KNOCKBACK_AMULET_KNOCKBACK_MULT);
-    }
-
-    @Override
-    public boolean usesCurioMethods() {
-        return false;
     }
 }

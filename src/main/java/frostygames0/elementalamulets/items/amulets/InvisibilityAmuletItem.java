@@ -22,13 +22,16 @@ package frostygames0.elementalamulets.items.amulets;
 import frostygames0.elementalamulets.util.AmuletUtil;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import top.theillusivec4.curios.api.SlotContext;
 
 public class InvisibilityAmuletItem extends AmuletItem {
-    public InvisibilityAmuletItem(Properties properties) {
-        super(properties, false);
+    public InvisibilityAmuletItem(Item.Properties properties) {
+        super(new AmuletItem.Properties(properties)
+                .usesCurioMethods()
+                .generates());
     }
 
     @Override
