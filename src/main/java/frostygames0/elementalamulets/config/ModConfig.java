@@ -250,15 +250,15 @@ public class ModConfig {
     public static void configEvent(net.minecraftforge.fml.config.ModConfig.ModConfigEvent event) {
         if (event.getConfig().getSpec() == ModConfig.SERVER_SPEC) {
             CachedValues.cacheServerConfig();
+            ElementalGuideConfigFlags.updateServer();
         }
         if (event.getConfig().getSpec() == ModConfig.CLIENT_SPEC) {
             CachedValues.cacheClientConfig();
         }
         if (event.getConfig().getSpec() == ModConfig.COMMON_SPEC) {
             CachedValues.cacheCommonConfig();
+            ElementalGuideConfigFlags.updateCommon();
         }
-        // Updates config flags in patchouli
-        ElementalGuideConfigFlags.updateConfigFlags();
     }
 
 }
