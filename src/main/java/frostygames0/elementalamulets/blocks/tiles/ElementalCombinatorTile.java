@@ -122,7 +122,7 @@ public class ElementalCombinatorTile extends TileEntity implements ITickableTile
                     this.totalTime = recipe.getCombinationTime();
                     this.combinationTime += this.getFocusedLevel();
                     if (ModConfig.CachedValues.FANCY_COMBINATION) {
-                        if (this.combinationTime % 80 == 0) {
+                        if (this.level.getGameTime() % 80 == 0) {
                             this.playSound(SoundEvents.BEACON_AMBIENT);
                             ((ServerWorld) level).sendParticles(ModParticles.COMBINATION_PARTICLE.get(), worldPosition.getX() + 0.5, worldPosition.above().getY() + 0.4, worldPosition.getZ() + 0.5, 50, 0, 0, 0, 5);
                         }

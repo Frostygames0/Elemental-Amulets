@@ -61,11 +61,6 @@ public class AncientTabletItem extends Item {
     }
 
     @Override
-    public boolean isRepairable(ItemStack stack) {
-        return false;
-    }
-
-    @Override
     public boolean isEnchantable(ItemStack pStack) {
         return false;
     }
