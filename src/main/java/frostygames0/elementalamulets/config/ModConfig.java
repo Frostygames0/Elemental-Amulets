@@ -31,7 +31,7 @@ public class ModConfig {
 
     // Server Config
     public static final ForgeConfigSpec SERVER_SPEC;
-    public static final Server SERVER;
+    private static final Server SERVER;
 
     static {
         final Pair<Server, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Server::new);
@@ -117,7 +117,7 @@ public class ModConfig {
 
     // Client Config
     public static final ForgeConfigSpec CLIENT_SPEC;
-    public static final Client CLIENT;
+    private static final Client CLIENT;
 
     static {
         final Pair<Client, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Client::new);
@@ -154,7 +154,7 @@ public class ModConfig {
     }
 
     public static final ForgeConfigSpec COMMON_SPEC;
-    public static final Common COMMON;
+    private static final Common COMMON;
 
     static {
         final Pair<Common, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Common::new);
