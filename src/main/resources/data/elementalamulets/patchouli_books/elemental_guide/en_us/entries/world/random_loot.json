@@ -1,0 +1,12 @@
+{
+  "name": "Finding Treasures",
+  "category": "elementalamulets:world",
+  "icon": "minecraft:chest",
+  "flag": "elementalamulets:modify_vanilla_loot",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Sometimes you may find '$(o)elemental$()' items inside various structure chests.$()It can be an amulet or any crystallized element. You can turn them off by setting 'modify_vanilla_loot' config option"
+    }
+  ]
+}

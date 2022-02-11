@@ -44,8 +44,8 @@ import java.util.List;
 @Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID)
 public class ModOrePlacements {
     public static final Lazy<PlacedFeature> ELEMENTAL_ORE_UPPER = Lazy.of(() -> ModOreFeatures.ELEMENTAL_ORE.get().placed(orePlacement(5, HeightRangePlacement.triangle(VerticalAnchor.absolute(80), VerticalAnchor.absolute(384)))));
-    public static final Lazy<PlacedFeature> ELEMENTAL_ORE_MIDDLE = Lazy.of(() -> ModOreFeatures.ELEMENTAL_ORE.get().placed(orePlacement(10, HeightRangePlacement.triangle(VerticalAnchor.absolute(-24), VerticalAnchor.absolute(56)))));
-    public static final Lazy<PlacedFeature> ELEMENTAL_ORE_SMALL = Lazy.of(() -> ModOreFeatures.ELEMENTAL_ORE_SMALL.get().placed(orePlacement(10, HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(72)))));
+    public static final Lazy<PlacedFeature> ELEMENTAL_ORE_MIDDLE = Lazy.of(() -> ModOreFeatures.ELEMENTAL_ORE.get().placed(orePlacement(7, HeightRangePlacement.triangle(VerticalAnchor.absolute(-24), VerticalAnchor.absolute(56)))));
+    public static final Lazy<PlacedFeature> ELEMENTAL_ORE_SMALL = Lazy.of(() -> ModOreFeatures.ELEMENTAL_ORE_SMALL.get().placed(orePlacement(9, HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(72)))));
 
     private static List<PlacementModifier> orePlacement(int count, PlacementModifier modifier) {
         return List.of(CountPlacement.of(count), InSquarePlacement.spread(), modifier, BiomeFilter.biome());
