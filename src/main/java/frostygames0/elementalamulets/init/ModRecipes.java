@@ -21,7 +21,6 @@ package frostygames0.elementalamulets.init;
 
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.recipes.ElementalCombination;
-import frostygames0.elementalamulets.recipes.ElementalCombinationSerializer;
 import frostygames0.elementalamulets.recipes.ingredient.AmuletIngredient;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.crafting.IRecipe;
@@ -50,7 +49,7 @@ public class ModRecipes {
     public static void registerSerializers(RegistryEvent.Register<IRecipeSerializer<?>> event) {
         CraftingHelper.register(modPrefix("amulet_ingredient"), AmuletIngredient.Serializer.INSTANCE);
 
-        event.getRegistry().register(new ElementalCombinationSerializer().setRegistryName(modPrefix("elemental_combination")));
+        event.getRegistry().register(new ElementalCombination.Serializer().setRegistryName(modPrefix("elemental_combination")));
     }
 
     public static <T extends IRecipe<C>, C extends IInventory> Map<ResourceLocation, T> getRecipesMap(IRecipeType<T> type, World world) {

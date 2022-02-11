@@ -120,7 +120,7 @@ public class ElementalAmulets {
             list.put(ModItems.EARTH_SHARDS_BLOCK.get(), 1.0f);
             list.put(ModItems.EARTH_ELEMENT.get(), 0.8f);
 
-            GiveHeroGiftsTask.GIFTS.put(ModVillagers.JEWELLER.get(), modPrefix("gameplay/hero_of_the_village/jeweller_gift"));
+            GiveHeroGiftsTask.gifts.put(ModVillagers.JEWELLER.get(), modPrefix("gameplay/hero_of_the_village/jeweller_gift"));
 
         });
     }
