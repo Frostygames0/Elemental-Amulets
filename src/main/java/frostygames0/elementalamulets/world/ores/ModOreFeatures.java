@@ -34,9 +34,10 @@ import java.util.List;
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 public class ModOreFeatures {
-    private static final Lazy<List<OreConfiguration.TargetBlockState>> ELEMENTAL_ORE_TARGETS = Lazy.of(() -> List.of(OreConfiguration.target(OreFeatures.STONE_ORE_REPLACEABLES, ModBlocks.ELEMENTAL_ORE.get().defaultBlockState()), OreConfiguration.target(OreFeatures.DEEPSLATE_ORE_REPLACEABLES, ModBlocks.DEEPSLATE_ELEMENTAL_ORE.get().defaultBlockState())));
+    private static final List<OreConfiguration.TargetBlockState> ELEMENTAL_ORE_TARGETS = List.of(OreConfiguration.target(OreFeatures.STONE_ORE_REPLACEABLES, ModBlocks.ELEMENTAL_ORE.get().defaultBlockState()), OreConfiguration.target(OreFeatures.DEEPSLATE_ORE_REPLACEABLES, ModBlocks.DEEPSLATE_ELEMENTAL_ORE.get().defaultBlockState()));
     public static final Lazy<ConfiguredFeature<?, ?>> ELEMENTAL_ORE = Lazy.of(() -> Feature.ORE.configured(
-            new OreConfiguration(ELEMENTAL_ORE_TARGETS.get(), 9)));
+            new OreConfiguration(ELEMENTAL_ORE_TARGETS, 9)));
+    public static final Lazy<ConfiguredFeature<?, ?>> ELEMENTAL_ORE_SMALL = Lazy.of(() -> Feature.ORE.configured(new OreConfiguration(ELEMENTAL_ORE_TARGETS, 4)));
 
     public static void register() {
         Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, modPrefix("elemental_ore"), ELEMENTAL_ORE.get());
