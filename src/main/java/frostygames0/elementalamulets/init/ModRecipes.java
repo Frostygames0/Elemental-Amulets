@@ -20,6 +20,7 @@
 package frostygames0.elementalamulets.init;
 
 import frostygames0.elementalamulets.ElementalAmulets;
+import frostygames0.elementalamulets.mixin.accessors.InvokerRecipeManager;
 import frostygames0.elementalamulets.recipes.ElementalCombination;
 import frostygames0.elementalamulets.recipes.ingredient.AmuletIngredient;
 import net.minecraft.resources.ResourceLocation;
@@ -55,6 +56,6 @@ public class ModRecipes {
     public static <T extends Recipe<C>, C extends Container> Map<ResourceLocation, T> getRecipesMap(RecipeType<T> type, Level world) {
         Map<RecipeType<?>, Map<ResourceLocation, T>> recipes = ObfuscationReflectionHelper.getPrivateValue(RecipeManager.class, world.getRecipeManager(),
                 "f_44007_");
-        return recipes.get(type);
+        return ((InvokerRecipeManager)world.getRecipeManager()).callByType(type);
     }
 }
