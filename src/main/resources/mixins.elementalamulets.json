@@ -10,7 +10,8 @@
   "mixins": [
     "MixinEndermanEntity",
     "MixinLivingEntity",
-    "accessors.AccessorTargetGoal"
+    "accessors.AccessorTargetGoal",
+    "accessors.InvokerRecipeManager"
   ]
 
 }
