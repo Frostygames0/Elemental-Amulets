@@ -73,8 +73,8 @@ public class ModCommands {
         }
 
         private static int execute(CommandSource source, Collection<ServerPlayerEntity> players, ItemInput item, int tier) throws CommandSyntaxException {
+            ItemStack stack = AmuletUtil.setStackTier(item.createItemStack(1, false), tier);
             for (ServerPlayerEntity player : players) {
-                ItemStack stack = AmuletUtil.setStackTier(item.createItemStack(1, false), tier);
                 if (item.getItem() instanceof AmuletItem) {
                     ItemHandlerHelper.giveItemToPlayer(player, stack);
                 } else {
@@ -83,9 +83,9 @@ public class ModCommands {
 
             }
             if (players.size() == 1) {
-                source.sendSuccess(new TranslationTextComponent("commands.elementalamulets.give.success", tier, item.createItemStack(1, false).getDisplayName(), players.iterator().next().getDisplayName()), true);
+                source.sendSuccess(new TranslationTextComponent("commands.elementalamulets.give.success", tier, stack.getDisplayName(), players.iterator().next().getDisplayName()), true);
             } else {
-                source.sendSuccess(new TranslationTextComponent("commands.elementalamulets.give.success", tier, item.createItemStack(1, false).getDisplayName(), players.size()), true);
+                source.sendSuccess(new TranslationTextComponent("commands.elementalamulets.give.success", tier, stack.getDisplayName(), players.size()), true);
             }
 
             return players.size();

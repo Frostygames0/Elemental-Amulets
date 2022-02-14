@@ -41,11 +41,11 @@ import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 @Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID)
 public class ModFeatures {
-    public static final Lazy<ConfiguredFeature<?, ?>> ELEMENTAL_ORE = Lazy.of(() -> Feature.ORE.configured(
-            new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, ModBlocks.ELEMENTAL_ORE.get().defaultBlockState(), 9)).range(35).squared().count(5));
+    public static final Lazy<ConfiguredFeature<?, ?>> ELEMENTAL_ORE = Lazy.of(() -> Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, modPrefix("elemental_ore"),
+            Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, ModBlocks.ELEMENTAL_ORE.get().defaultBlockState(), 9)).range(35).squared().count(5)));
 
     public static void register() {
-        Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, modPrefix("elemental_ore"), ELEMENTAL_ORE.get());
+        ELEMENTAL_ORE.get();
     }
 
     @SubscribeEvent(priority = EventPriority.HIGH)
