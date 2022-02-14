@@ -30,9 +30,9 @@ import net.minecraftforge.common.util.Lazy;
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 public class ModStructureFeatures {
-    public static final Lazy<ConfiguredStructureFeature<?, ?>> CONFIGURED_CULT_TEMPLE = Lazy.of(() -> ModStructures.CULT_TEMPLE.get().configured(new JigsawConfiguration(() -> PlainVillagePools.START, 0)));
+    public static final Lazy<ConfiguredStructureFeature<?, ?>> CONFIGURED_CULT_TEMPLE = Lazy.of(() -> Registry.register(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, modPrefix("cult_temple"), ModStructures.CULT_TEMPLE.get().configured(new JigsawConfiguration(() -> PlainVillagePools.START, 0))));
 
     public static void register() {
-        Registry.register(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, modPrefix("cult_temple"), CONFIGURED_CULT_TEMPLE.get());
+        CONFIGURED_CULT_TEMPLE.get();
     }
 }
