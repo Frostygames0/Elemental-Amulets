@@ -52,15 +52,14 @@ public class WaterAmuletItem extends AmuletItem {
             AttributeInstance att = livingEntity.getAttribute(ForgeMod.SWIM_SPEED.get());
             AttributeModifier attMod = new AttributeModifier(MODIFIER_UUID, modPrefix("swim_speed_boost").toString(),
                     this.getSwimSpeed(stack), AttributeModifier.Operation.MULTIPLY_TOTAL);
-            if (livingEntity.isUnderWater()) {
-                if (livingEntity.isSwimming()) {
-                    AttributeUtil.applyModifier(att, attMod);
-                } else {
-                    AttributeUtil.removeModifier(att, attMod);
-                }
+            if (livingEntity.isUnderWater() && livingEntity.isSwimming()) {
+                AttributeUtil.applyModifier(att, attMod);
+            } else {
+                AttributeUtil.removeModifier(att, attMod);
             }
         }
     }
+
 
     @Override
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
