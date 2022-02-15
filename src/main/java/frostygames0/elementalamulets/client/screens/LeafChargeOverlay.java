@@ -59,13 +59,13 @@ public class LeafChargeOverlay implements IIngameOverlay {
                     TerraProtectionAmuletItem amulet = (TerraProtectionAmuletItem) stack.getItem();
 
                     // Offsetted coordinates in 2d GUI space where bar starts
-                    int offsetX = (width / 2) + 98;
-                    int offsetY = height - 12;
+                    final int offsetX = (width / 2) + 98;
+                    final int offsetY = height - 12;
 
                     RenderSystem.enableBlend();
 
-                    int charge = amulet.getCharges(stack);
-                    int clampedMax = Mth.clamp(amulet.getMaxCharge(stack), 0, 16);
+                    final int charge = amulet.getCharges(stack);
+                    final int clampedMax = Mth.clamp(amulet.getMaxCharge(stack), 0, 16);
 
                     drawLeafBar(ms, clampedMax, offsetX, offsetY, 0);
                     drawLeafBar(ms, Mth.clamp(charge, 0, clampedMax), offsetX, offsetY, 8);
