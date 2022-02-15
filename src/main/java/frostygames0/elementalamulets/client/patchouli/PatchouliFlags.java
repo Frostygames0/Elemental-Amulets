@@ -28,7 +28,7 @@ import vazkii.patchouli.api.PatchouliAPI;
  * @author Frostygames0
  * @date 28.10.2021 0:54
  */
-public class ElementalGuideConfigFlags {
+public class PatchouliFlags {
 
     public static void updateCommon() {
         if (ModList.get().isLoaded("patchouli")) {
