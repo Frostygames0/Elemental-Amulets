@@ -24,7 +24,6 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.advancements.triggers.ModCriteriaTriggers;
 import frostygames0.elementalamulets.client.models.AmuletModel;
-import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.init.ModStats;
 import frostygames0.elementalamulets.util.AmuletUtil;
 import frostygames0.elementalamulets.util.NBTUtil;
@@ -56,6 +55,8 @@ import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -63,6 +64,8 @@ import java.util.ListIterator;
 public abstract class AmuletItem extends Item implements ICurioItem {
     public static final String TIER_TAG = ElementalAmulets.MOD_ID + ":tier";
     public static final int MAX_TIER = 4;
+
+    private static final List<AmuletItem> AMULETS = new ArrayList<>();
 
     private final boolean hasTier;
     private final boolean usesCurioMethods;
@@ -76,7 +79,11 @@ public abstract class AmuletItem extends Item implements ICurioItem {
         this.usesCurioMethods = builder.usesCurioMethods;
         this.canBeGenerated = builder.canBeGenerated;
 
-        ModItems.AMULETS.add(this);
+        AMULETS.add(this);
+    }
+
+    public static List<AmuletItem> getAmulets() {
+        return Collections.unmodifiableList(AMULETS);
     }
 
     @Override
