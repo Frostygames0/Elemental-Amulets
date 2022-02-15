@@ -20,7 +20,7 @@
 package frostygames0.elementalamulets.config;
 
 import frostygames0.elementalamulets.ElementalAmulets;
-import frostygames0.elementalamulets.client.patchouli.ElementalGuideConfigFlags;
+import frostygames0.elementalamulets.client.patchouli.PatchouliFlags;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -254,14 +254,14 @@ public class ModConfig {
     public static void configEvent(final ModConfigEvent event) {
         if (event.getConfig().getSpec() == ModConfig.SERVER_SPEC) {
             CachedValues.cacheServerConfig();
-            ElementalGuideConfigFlags.updateServer();
+            PatchouliFlags.updateServer();
         }
         if (event.getConfig().getSpec() == ModConfig.CLIENT_SPEC) {
             CachedValues.cacheClientConfig();
         }
         if (event.getConfig().getSpec() == ModConfig.COMMON_SPEC) {
             CachedValues.cacheCommonConfig();
-            ElementalGuideConfigFlags.updateCommon();
+            PatchouliFlags.updateCommon();
         }
     }
 
