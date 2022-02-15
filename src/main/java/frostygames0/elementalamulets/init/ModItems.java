@@ -37,8 +37,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ElementalAmulets.MOD_ID);
@@ -127,18 +128,9 @@ public class ModItems {
     public static final RegistryObject<Item> KNOCKBACK_AMULET = ITEMS.register("knockback_amulet",
             () -> new KnockbackAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(Rarity.RARE).durability(1000).setNoRepair()));
 
-    private static List<AmuletItem> amulets;
+    public static final List<AmuletItem> AMULETS = new ArrayList<>();
 
     public static List<AmuletItem> getAmulets() {
-        return amulets;
+        return Collections.unmodifiableList(AMULETS);
     }
-
-    public static void lookupAmulets() {
-        amulets = ITEMS.getEntries()
-                .stream()
-                .filter(RegistryObject::isPresent).map(RegistryObject::get)
-                .filter(item -> item instanceof AmuletItem).map(item -> (AmuletItem) item)
-                .collect(Collectors.toList());
-    }
-
 }
