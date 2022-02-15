@@ -37,6 +37,8 @@ import net.minecraftforge.registries.RegistryObject;
 
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ModItems {
@@ -128,17 +130,9 @@ public class ModItems {
     public static final RegistryObject<Item> KNOCKBACK_AMULET = ITEMS.register("knockback_amulet",
             () -> new KnockbackAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(Rarity.RARE).durability(1000).setNoRepair()));
 
-    private static List<AmuletItem> amulets;
+    public static final List<AmuletItem> AMULETS = new ArrayList<>();
 
     public static List<AmuletItem> getAmulets() {
-        return amulets;
-    }
-
-    public static void lookupAmulets() {
-        amulets = ITEMS.getEntries()
-                .stream()
-                .filter(RegistryObject::isPresent).map(RegistryObject::get)
-                .filter(item -> item instanceof AmuletItem).map(item -> (AmuletItem) item)
-                .toList();
+        return Collections.unmodifiableList(AMULETS);
     }
 }

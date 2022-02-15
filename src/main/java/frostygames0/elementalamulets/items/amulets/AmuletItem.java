@@ -24,6 +24,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.advancements.triggers.ModCriteriaTriggers;
 import frostygames0.elementalamulets.client.models.AmuletModel;
+import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.init.ModStats;
 import frostygames0.elementalamulets.util.AmuletUtil;
 import frostygames0.elementalamulets.util.NBTUtil;
@@ -79,6 +80,8 @@ public abstract class AmuletItem extends Item implements ICurioItem, ICurioRende
         this.hasTier = builder.hasTier;
         this.usesCurioMethods = builder.usesCurioMethods;
         this.canBeGenerated = builder.canBeGenerated;
+
+        ModItems.AMULETS.add(this);
     }
 
 
