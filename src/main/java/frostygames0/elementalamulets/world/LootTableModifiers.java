@@ -22,7 +22,6 @@ package frostygames0.elementalamulets.world;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import frostygames0.elementalamulets.config.ModConfig;
-import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import frostygames0.elementalamulets.util.AmuletUtil;
 import net.minecraft.resources.ResourceLocation;
@@ -99,7 +98,7 @@ public class LootTableModifiers {
         @NotNull
         @Override
         protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
-            List<AmuletItem> amulets = ModItems.getAmulets().stream().filter(AmuletItem::canBeGenerated).toList();
+            List<AmuletItem> amulets = AmuletItem.getAmulets().stream().filter(AmuletItem::canBeGenerated).toList();
             if(ModConfig.CachedValues.MODIFY_VANILLA_LOOT) generatedLoot.add(AmuletUtil.setStackTier(amulets.get(context.getRandom().nextInt(amulets.size())), 1));
             return generatedLoot;
         }

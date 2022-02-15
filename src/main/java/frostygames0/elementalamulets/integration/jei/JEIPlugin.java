@@ -64,7 +64,7 @@ public class JEIPlugin implements IModPlugin {
 
     @Override
     public void registerItemSubtypes(ISubtypeRegistration registration) {
-        for (AmuletItem item : ModItems.getAmulets()) {
+        for (AmuletItem item : AmuletItem.getAmulets()) {
             registration.registerSubtypeInterpreter(item, (stack, ctx) -> String.valueOf(item.getTier(stack)));
         }
     }
@@ -77,7 +77,7 @@ public class JEIPlugin implements IModPlugin {
                 .getRecipeManager().getAllRecipesFor(ModRecipes.ELEMENTAL_COMBINATION_TYPE), ElementalCombinationCategory.ID);
 
         // Item descriptions
-        registration.addIngredientInfo(ModItems.getAmulets().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new TranslatableComponent("jei.elementalamulets.amulets.description"));
+        registration.addIngredientInfo(AmuletItem.getAmulets().stream().map(ItemStack::new).collect(Collectors.toList()), VanillaTypes.ITEM, new TranslatableComponent("jei.elementalamulets.amulets.description"));
         registration.addIngredientInfo(mapTagAsItemList(ModTags.Items.ELEMENTS), VanillaTypes.ITEM, new TranslatableComponent("jei.elementalamulets.elements.description"));
         registration.addIngredientInfo(new ItemStack(ModItems.ALL_SEEING_LENS.get()), VanillaTypes.ITEM, new TranslatableComponent("jei.elementalamulets.all_seeing_lens.description"));
 

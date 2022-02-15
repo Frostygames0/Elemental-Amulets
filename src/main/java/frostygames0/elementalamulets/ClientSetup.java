@@ -31,7 +31,6 @@ import frostygames0.elementalamulets.client.screens.LeafChargeOverlay;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.init.ModBEs;
 import frostygames0.elementalamulets.init.ModBlocks;
-import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.init.ModMenus;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -61,7 +60,7 @@ public class ClientSetup {
     public static void clientSetup(final FMLClientSetupEvent event) {
         ModKeyBindings.registerKeyBinds();
         OverlayRegistry.registerOverlayAbove(ForgeIngameGui.PLAYER_HEALTH_ELEMENT,"Nature Charges (Terra-Protection amulet)", new LeafChargeOverlay());
-        var amulets = ModItems.getAmulets();
+        var amulets = AmuletItem.getAmulets();
         amulets.forEach(amulet -> CuriosRendererRegistry.register(amulet, () -> amulet));
         event.enqueueWork(() -> {
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.CELESTIAL_FOCUS.get(), RenderType.translucent());
