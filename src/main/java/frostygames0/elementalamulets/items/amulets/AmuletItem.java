@@ -60,7 +60,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 
-// TODO Remake this getTier nonsense with hasTier
 public abstract class AmuletItem extends Item implements ICurioItem {
     public static final String TIER_TAG = ElementalAmulets.MOD_ID + ":tier";
     public static final int MAX_TIER = 4;
