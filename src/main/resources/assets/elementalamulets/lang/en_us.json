@@ -46,6 +46,7 @@
   "item.elementalamulets.air_amulet.tooltip": "Allows you to control air around you(slow down falling. Hold SHIFT to stop!",
   "item.elementalamulets.earth_amulet": "Amulet of Earth",
   "item.elementalamulets.earth_amulet.tooltip": "Boosts plant growth when worn, regenerates health in green areas(tier >1)",
+  "item.elementalamulets.earth_amulet.regeneration": "Your health slowly regenerates...",
   "item.elementalamulets.pacifying_amulet": "Pacifying Amulet",
   "item.elementalamulets.pacifying_amulet.tooltip": "Passive mobs don't fight back, and aggressive ones get disoriented",
   "item.elementalamulets.pacifying_amulet.onbreak": "%s is broken! All nearby mobs are angry at you!",
@@ -53,6 +54,7 @@
   "item.elementalamulets.pacifying_amulet.tired_success": "Your target is feeling tired!",
   "item.elementalamulets.knockback_amulet": "Amulet of Knockback",
   "item.elementalamulets.knockback_amulet.tooltip": "Knocks back any attacking enemy",
+
   "block.elementalamulets.elemental_combinator": "Elemental Combinator",
   "block.elementalamulets.elemental_combinator.guititle": "Combination",
   "block.elementalamulets.elemental_combinator.cooldown": "%s is recharging! %1$ss left",
@@ -68,8 +70,11 @@
   "block.elementalamulets.water_shards_block": "Water Shards Block",
   "block.elementalamulets.earth_shards_block": "Earth Shards Block",
   "block.elementalamulets.air_shards_block": "Air Shards Block",
+
   "player.elementalamulets.brokenamulet.warn": "Your %s just got broken!",
+
   "entity.minecraft.villager.elementalamulets.jeweller": "Jeweller",
+
   "jei.elementalamulets.cooldown": "Time to combine - %ss",
   "jei.elementalamulets.elemental_separation": "Elemental Combination",
   "jei.elementalamulets.shapeless": "Shapeless recipe (except the central slot).",
@@ -82,8 +87,10 @@
   "jei.elementalamulets.all_seeing_lens.description": "A very rare item, only one person knows how to do it.\nJeweller sells it on level 4",
   "jei.elementalamulets.elemental_ore.whereabouts": "Elemental Ore - is a block that contains Elemental Shards inside.\nCan be found up to Y:40 and sometimes higher",
   "jei.elementalamulets.shards_blocks.description": "A pile of shards, for compact storage!",
+
   "patchouli.elementalamulets.landing": "Hello $(thing)$(playername)!$() Welcome to the Elemental Guide, a great source of knowledge!$(br2)It will help you with Elemental Amulets mod!",
   "patchouli.elementalamulets.not_present": "Patchouli is not installed! The Elemental Guide cannot work without it!",
+
   "advancements.elementalamulets.desc": "Things that you will achieve in your adventure",
   "advancements.elementalamulets.guide": "Great source of knowledge!",
   "advancements.elementalamulets.guide.desc": "Obtain the elemental guide.",
@@ -106,9 +113,9 @@
   "advancements.elementalamulets.order_to_calm": "I order you to calm!",
   "advancements.elementalamulets.order_to_calm.desc": "Wear a pacifying amulet for the first time",
 
-  "stat.elementalamulets.amulets_worn": "Amulets worn",
-  "stat.elementalamulets.guide_opened": "Guides opened",
-  "stat.elementalamulets.times_combined": "Times combined",
+  "stat.elementalamulets.amulets_worn": "[ELEMENTAL AMULETS] Amulets worn",
+  "stat.elementalamulets.guide_opened": "[ELEMENTAL AMULETS] Guides opened",
+  "stat.elementalamulets.times_combined": "[ELEMENTAL AMULETS] Times combined",
 
   "death.attack.elementalamulets.leaf_cut": "%s was cut to death by leaf shield!",
 
