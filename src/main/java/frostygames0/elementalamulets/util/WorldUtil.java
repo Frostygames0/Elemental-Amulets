@@ -12,7 +12,6 @@ import net.minecraftforge.common.BiomeDictionary;
  * @author Frostygames0
  * @date 30.01.2022 1:13
  */
-// TODO: I'm still thinking about it....
 public final class WorldUtil {
     public static ResourceKey<Biome> getBiomeAtPos(Level level, BlockPos pos) {
         return level.getBiomeName(pos).orElseThrow(() -> new NullPointerException("Cannot identify biome at: "+ level.dimension().getRegistryName()+", pos: [" + pos.toShortString() + "]!"));
