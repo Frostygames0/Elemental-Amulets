@@ -8,7 +8,7 @@
     "MixinSplashes"
   ],
   "mixins": [
-    "MixinEndermanEntity",
+    "MixinEnderMan",
     "MixinLivingEntity",
     "accessors.AccessorTargetGoal",
     "accessors.InvokerRecipeManager"

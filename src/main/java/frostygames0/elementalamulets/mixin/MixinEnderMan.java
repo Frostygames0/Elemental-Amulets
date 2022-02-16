@@ -33,7 +33,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  * @date 20.10.2021 20:02
  */
 @Mixin(EnderMan.class)
-public class MixinEndermanEntity {
+public class MixinEnderMan {
 
     @Inject(at = @At("HEAD"), method = "isLookingAtMe", cancellable = true)
     public void elementalamulets_ignorePlayerWithAmulet(Player player, CallbackInfoReturnable<Boolean> ci) {
