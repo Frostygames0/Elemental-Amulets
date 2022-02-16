@@ -23,6 +23,7 @@ import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.KnockbackAmuletItem;
 import frostygames0.elementalamulets.util.AmuletUtil;
 import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -37,11 +38,14 @@ class KnockbackAmuletEffect {
         if (event.getEntityLiving() instanceof Player player) {
             if (!player.level.isClientSide()) {
                 AmuletUtil.getAmuletInSlotOrBelt(ModItems.KNOCKBACK_AMULET.get(), player).ifPresent(triple -> {
-                    if (event.getSource().getEntity() instanceof LivingEntity attacker) {
+                    DamageSource source = event.getSource();
 
-                        ItemStack stack = triple.stack();
-                        KnockbackAmuletItem amulet = (KnockbackAmuletItem) stack.getItem();
-                        attacker.knockback(amulet.getKnockback(stack), Mth.sin(player.getYRot() * ((float) Math.PI / 180F)), -Mth.cos(player.getYRot() * ((float) Math.PI / 180F)));
+                    if(!source.isProjectile()) {
+                        if (source.getEntity() instanceof LivingEntity attacker) {
+                            ItemStack stack = triple.stack();
+                            KnockbackAmuletItem amulet = (KnockbackAmuletItem) stack.getItem();
+                            attacker.knockback(amulet.getKnockback(stack), Mth.sin(player.getYRot() * ((float) Math.PI / 180F)), -Mth.cos(player.getYRot() * ((float) Math.PI / 180F)));
+                        }
                     }
                 });
             }

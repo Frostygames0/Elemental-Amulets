@@ -31,6 +31,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -191,7 +192,7 @@ public abstract class AmuletItem extends Item implements ICurioItem, ICurioRende
 
             matrixStack.scale(0.7f, 0.7f, 0.7f); // Makes amulet smaller gugugaga
 
-            VertexConsumer vertexBuilder = ItemRenderer.getFoilBuffer(renderTypeBuffer, model.renderType(AmuletModel.getTexture(this, stack)), false, stack.hasFoil());
+            VertexConsumer vertexBuilder = ItemRenderer.getArmorFoilBuffer(renderTypeBuffer, RenderType.armorCutoutNoCull(AmuletModel.getTexture(this, stack)), false, stack.hasFoil());
             model.renderToBuffer(matrixStack, vertexBuilder, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
             matrixStack.popPose();
         }
