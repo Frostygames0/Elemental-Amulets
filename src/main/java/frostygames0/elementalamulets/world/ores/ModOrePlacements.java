@@ -57,7 +57,6 @@ public class ModOrePlacements {
         ELEMENTAL_ORE_UPPER.get();
         ELEMENTAL_ORE_MIDDLE.get();
         ELEMENTAL_ORE_SMALL.get();
-
     }
 
     @SubscribeEvent(priority = EventPriority.HIGH)
