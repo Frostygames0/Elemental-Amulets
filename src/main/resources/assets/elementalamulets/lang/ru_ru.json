@@ -46,6 +46,7 @@
   "item.elementalamulets.air_amulet.tooltip": "Управляйте воздухом! Удерживайте SHIFT чтобы остановиться",
   "item.elementalamulets.earth_amulet": "Амулет земли",
   "item.elementalamulets.earth_amulet.tooltip": "Фермерство и другие зеленые занятия будут ускорены",
+  "item.elementalamulets.earth_amulet.regeneration": "Ваше здоровье потихоньку восстанавливается...",
   "item.elementalamulets.pacifying_amulet": "Амулет успокоения",
   "item.elementalamulets.pacifying_amulet.tooltip": "Пассивные мобы не дают сдачи,\nа агресивные дезорентируются",
   "item.elementalamulets.pacifying_amulet.onbreak": "%s сломан! Все ближайшие мобы злы на вас",
@@ -67,7 +68,9 @@
   "block.elementalamulets.water_shards_block": "Блок водянных осколков",
   "block.elementalamulets.earth_shards_block": "Блок землянных осколковв",
   "block.elementalamulets.air_shards_block": "Блок воздушных осколков",
+
   "player.elementalamulets.brokenamulet.warn": "Ваш %s был сломан!",
+
   "entity.minecraft.villager.elementalamulets.jeweller": "Ювелир",
   "jei.elementalamulets.cooldown": "Время комбинации - %s сек",
   "jei.elementalamulets.elemental_separation": "Элементальное объединение",
@@ -81,7 +84,7 @@
   "jei.elementalamulets.all_seeing_lens.description": "Очень редкий предмет, только один человек знает как его сделать\n Ювелир продает это на 4 уровне",
   "jei.elementalamulets.elemental_ore.whereabouts": "Элементальная руда - это блок который содержит элементальные осколки\nМожет быть найден на Y:40 и иногда выше",
   "jei.elementalamulets.shards_blocks.description": "Куча осколков, для компактного хранения!",
-  "patchouli.elementalamulets.landing": "Hello $(thing)$(playername)!$() This $(l)magical guide $() will provide you with all knowledge you need! $(br)Book will expand itself when a new knowledge is acquired! Everything(almost) about this mod is described here!",
+  "patchouli.elementalamulets.landing": "Здравствуй, $(thing)$(playername)!$() Это $(l)магическое руководство$() даст вам все необходимые знания! $(br)Книга расширяет саму себя по мере исследования! Всё(почти) о моде описано здесь!",
   "patchouli.elementalamulets.not_present": "Patchouli не обнаружен!! Пожалуйста установите Patchouli, если вы хотите открыть книгу",
   "advancements.elementalamulets.desc": "То чего вы достигнете в вашем приключении",
   "advancements.elementalamulets.guide": "Великий источник знаний!",
@@ -104,20 +107,15 @@
   "advancements.elementalamulets.strange_tablet.desc": "Найдите странную табличку в храме",
   "advancements.elementalamulets.order_to_calm": "Я приказываю успокоиться!",
   "advancements.elementalamulets.order_to_calm.desc": "Оденьте амулет успокоения впервые",
-
-  "stat.elementalamulets.amulets_worn": "Надето амулетов",
-  "stat.elementalamulets.guide_opened": "Открыто гидов",
-  "stat.elementalamulets.times_combined": "Скомбинировано",
-
+  "stat.elementalamulets.amulets_worn": "[ELEMENTAL AMULETS] Надето амулетов",
+  "stat.elementalamulets.guide_opened": "[ELEMENTAL AMULETS] Открыто гидов",
+  "stat.elementalamulets.times_combined": "[ELEMENTAL AMULETS] Скомбинировано",
   "death.attack.elementalamulets.leaf_cut": "%s был изрезан досмерти листощитом",
-
   "commands.elementalamulets.give.success": "Успешно выдал %2$s уровня %s: %3$s",
   "commands.elementalamulets.give.failure": "Ошибка! %s не является элементальным амулетом",
-
   "key.elementalamulets.open_belt_gui": "Открыть интерфейс амулетного пояса",
-
+  "key.categories.elementalamulets": "Elemental Amulets",
   "filled_map.elementalamulets.cult_temple": "Карта к руинам храма",
-
   "config.elementalamulets.elements_latin_variant": "Использовать латинский для имен стихий",
   "config.elementalamulets.show_splashes": "Показывать сплэши",
   "config.elementalamulets.elemental_combinator_stack_display": "Отображать выводной слот объединителя элементаля",
