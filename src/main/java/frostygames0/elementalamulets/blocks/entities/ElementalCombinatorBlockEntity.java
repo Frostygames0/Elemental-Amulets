@@ -111,7 +111,7 @@ public class ElementalCombinatorBlockEntity extends BlockEntity implements MenuP
         super(ModBEs.ELEMENTAL_COMBINATOR_BE.get(), pWorldPosition, pBlockState);
     }
 
-    public void tick() {
+    public void serverTick() {
         if (level != null) {
             if (this.isCombining()) {
                 ElementalCombination recipe = this.level.getRecipeManager().getRecipeFor(ModRecipes.ELEMENTAL_COMBINATION_TYPE, new RecipeWrapper(handler), this.level).orElse(null);

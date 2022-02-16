@@ -106,7 +106,7 @@ public class ElementalCombinator extends Block implements EntityBlock {
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState, BlockEntityType<T> pBlockEntityType) {
         if (!pLevel.isClientSide()) {
             return (lvl, pos, stt, te) -> {
-                if (te instanceof ElementalCombinatorBlockEntity tile) tile.tick();
+                if (te instanceof ElementalCombinatorBlockEntity tile) tile.serverTick();
             };
         }
         return null;
