@@ -42,10 +42,10 @@ public class ModItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ElementalAmulets.MOD_ID);
 
     // Mod's guide book
-    public static final RegistryObject<ElementalGuideItem> ELEMENTAL_GUIDE = ITEMS.register("guide_book",
+    public static final RegistryObject<Item> ELEMENTAL_GUIDE = ITEMS.register("guide_book",
             () -> new ElementalGuideItem(new Item.Properties().tab(ElementalAmulets.GROUP).stacksTo(1)));
 
-    public static final RegistryObject<AncientTabletItem> ANCIENT_TABLET = ITEMS.register("ancient_tablet",
+    public static final RegistryObject<Item> ANCIENT_TABLET = ITEMS.register("ancient_tablet",
             () -> new AncientTabletItem(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(Rarity.RARE).durability(100).setNoRepair()));
 
     // Mod BlockItems
