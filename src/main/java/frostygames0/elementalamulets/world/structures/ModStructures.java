@@ -119,7 +119,7 @@ public class ModStructures {
 
             try {
                 if (GETCODEC_METHOD == null)
-                    GETCODEC_METHOD = ObfuscationReflectionHelper.findMethod(ChunkGenerator.class, "codec");
+                    GETCODEC_METHOD = ObfuscationReflectionHelper.findMethod(ChunkGenerator.class, "m_6909_");
                 ResourceLocation cgRL = Registry.CHUNK_GENERATOR.getKey((Codec<? extends ChunkGenerator>) GETCODEC_METHOD.invoke(chunkGenerator));
                 if (cgRL != null && cgRL.getNamespace().equals("terraforged")) return;
             } catch (Exception e) {
