@@ -68,7 +68,7 @@ public class TerraProtectionAmuletItem extends AmuletItem {
         Level level = livingEntity.level;
         if (!level.isClientSide()) {
             boolean natural = WorldUtil.isNatural(level, livingEntity.blockPosition()) || ModConfig.CachedValues.PROTECTION_AMULET_IGNORE_NATURALITY;
-            if(natural) {
+            if (natural) {
                 if (livingEntity.tickCount % ModConfig.CachedValues.PROTECTION_AMULET_CHARGE_TIME == 0) {
                     if (getCharges(stack) < getMaxCharge(stack)) {
                         NBTUtil.putInteger(stack, CHARGES_TAG, getCharges(stack) + 1);

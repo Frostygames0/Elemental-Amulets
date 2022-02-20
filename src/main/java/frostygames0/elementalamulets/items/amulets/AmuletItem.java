@@ -119,12 +119,12 @@ public abstract class AmuletItem extends Item implements ICurioItem, ICurioRende
     // I had to override them, as they used maxDamage and not getMaxDamage()
     @Override
     public int getBarWidth(ItemStack pStack) {
-        return Math.round(13.0F - (float)pStack.getDamageValue() * 13.0F / (float)this.getMaxDamage(pStack));
+        return Math.round(13.0F - (float) pStack.getDamageValue() * 13.0F / (float) this.getMaxDamage(pStack));
     }
 
     @Override
     public int getBarColor(ItemStack pStack) {
-        float f = Math.max(0.0F, ((float)this.getMaxDamage(pStack) - (float)pStack.getDamageValue()) / (float)this.getMaxDamage(pStack));
+        float f = Math.max(0.0F, ((float) this.getMaxDamage(pStack) - (float) pStack.getDamageValue()) / (float) this.getMaxDamage(pStack));
         return Mth.hsvToRgb(f / 3.0F, 1.0F, 1.0F);
     }
 

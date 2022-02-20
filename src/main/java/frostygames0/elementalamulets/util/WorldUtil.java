@@ -7,19 +7,18 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 
 
-
 /**
  * @author Frostygames0
  * @date 30.01.2022 1:13
  */
 public final class WorldUtil {
     public static ResourceKey<Biome> getBiomeAtPos(Level level, BlockPos pos) {
-        return level.getBiomeName(pos).orElseThrow(() -> new NullPointerException("Cannot identify biome at: "+ level.dimension().getRegistryName()+", pos: [" + pos.toShortString() + "]!"));
+        return level.getBiomeName(pos).orElseThrow(() -> new NullPointerException("Cannot identify biome at: " + level.dimension().getRegistryName() + ", pos: [" + pos.toShortString() + "]!"));
     }
 
     public static boolean isType(ResourceKey<Biome> biome, BiomeDictionary.Type... types) {
-        for(var type : types) {
-            if(!BiomeDictionary.hasType(biome, type))
+        for (var type : types) {
+            if (!BiomeDictionary.hasType(biome, type))
                 return false;
         }
         return true;

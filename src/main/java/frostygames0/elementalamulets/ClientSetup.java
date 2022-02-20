@@ -43,7 +43,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.client.gui.ForgeIngameGui;
 import net.minecraftforge.client.gui.OverlayRegistry;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -59,7 +58,7 @@ public class ClientSetup {
     @SubscribeEvent
     public static void clientSetup(final FMLClientSetupEvent event) {
         ModKeyBindings.registerKeyBinds();
-        OverlayRegistry.registerOverlayAbove(ForgeIngameGui.PLAYER_HEALTH_ELEMENT,"Nature Charges (Terra-Protection amulet)", new LeafChargeOverlay());
+        OverlayRegistry.registerOverlayTop("Nature Charges (Terra-Protection amulet)", new LeafChargeOverlay());
         var amulets = AmuletItem.getAmulets();
         amulets.forEach(amulet -> CuriosRendererRegistry.register(amulet, () -> amulet));
         event.enqueueWork(() -> {

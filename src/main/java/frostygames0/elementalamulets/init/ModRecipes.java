@@ -52,6 +52,6 @@ public class ModRecipes {
     }
 
     public static <T extends Recipe<C>, C extends Container> Map<ResourceLocation, T> getRecipesMap(RecipeType<T> type, Level world) {
-        return ((InvokerRecipeManager)world.getRecipeManager()).callByType(type);
+        return ((InvokerRecipeManager) world.getRecipeManager()).callByType(type);
     }
 }

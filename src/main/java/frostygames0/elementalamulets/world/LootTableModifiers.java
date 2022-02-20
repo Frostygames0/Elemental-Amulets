@@ -68,7 +68,8 @@ public class LootTableModifiers {
         @Nonnull
         @Override
         protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
-            if(ModConfig.CachedValues.MODIFY_VANILLA_LOOT) item.expand(context, generator -> generator.createItemStack(generatedLoot::add, context));
+            if (ModConfig.CachedValues.MODIFY_VANILLA_LOOT)
+                item.expand(context, generator -> generator.createItemStack(generatedLoot::add, context));
             return generatedLoot;
         }
 
@@ -99,7 +100,8 @@ public class LootTableModifiers {
         @Override
         protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
             List<AmuletItem> amulets = AmuletItem.getAmulets().stream().filter(AmuletItem::canBeGenerated).toList();
-            if(ModConfig.CachedValues.MODIFY_VANILLA_LOOT) generatedLoot.add(AmuletUtil.setStackTier(amulets.get(context.getRandom().nextInt(amulets.size())), 1));
+            if (ModConfig.CachedValues.MODIFY_VANILLA_LOOT)
+                generatedLoot.add(AmuletUtil.setStackTier(amulets.get(context.getRandom().nextInt(amulets.size())), 1));
             return generatedLoot;
         }
 

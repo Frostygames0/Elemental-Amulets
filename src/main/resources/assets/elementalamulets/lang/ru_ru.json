@@ -54,7 +54,10 @@
   "item.elementalamulets.pacifying_amulet.tired_success": "Ваш враг устал",
   "item.elementalamulets.knockback_amulet": "Амулет отдачи",
   "item.elementalamulets.knockback_amulet.tooltip": "Откидывает назад любого атакующего моба",
-
+  "item.elementalamulets.water_walker_amulet": "Амулет ходка по воде",
+  "item.elementalamulets.water_walker_amulet.tooltip": "Замораживает воду под вами, чтобы ходить по ней",
+  "item.elementalamulets.lava_walker_amulet": "Амулет ходка по лаве",
+  "item.elementalamulets.lava_walker_amulet.tooltip": "Затвердивает лаву под вами, чтобы ходить по ней",
   "block.elementalamulets.elemental_combinator": "Объединитель элементаля",
   "block.elementalamulets.elemental_combinator.guititle": "Объединение",
   "block.elementalamulets.elemental_combinator.cooldown": "Объединитель перезаряжается! %s сек. осталось",

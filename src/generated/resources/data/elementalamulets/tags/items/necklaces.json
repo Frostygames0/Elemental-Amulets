@@ -10,6 +10,8 @@
     "elementalamulets:protection_amulet",
     "elementalamulets:invisibility_amulet",
     "elementalamulets:pacifying_amulet",
-    "elementalamulets:knockback_amulet"
+    "elementalamulets:knockback_amulet",
+    "elementalamulets:water_walker_amulet",
+    "elementalamulets:lava_walker_amulet"
   ]
 }

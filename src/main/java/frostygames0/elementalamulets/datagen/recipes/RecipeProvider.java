@@ -221,8 +221,8 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
     }
 
     private static void amuletRecipeTier2(Item amulet, ItemLike upgrader, ItemLike element, Consumer<FinishedRecipe> consumer) {
-        ElementalCombinationBuilder.create(AmuletUtil.setStackTier(amulet,2))
-                .addElemental(AmuletUtil.setStackTier(amulet,1))
+        ElementalCombinationBuilder.create(AmuletUtil.setStackTier(amulet, 2))
+                .addElemental(AmuletUtil.setStackTier(amulet, 1))
                 .addIngredient(element)
                 .addIngredient(2, upgrader)
                 .addIngredient(element)
@@ -235,8 +235,8 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
     }
 
     private static void amuletRecipeTier2Special(Item amulet, ItemLike upgrader, ItemLike upgrader2, ItemLike element, Consumer<FinishedRecipe> consumer) {
-        ElementalCombinationBuilder.create(AmuletUtil.setStackTier(amulet,2))
-                .addElemental(AmuletUtil.setStackTier(amulet,1))
+        ElementalCombinationBuilder.create(AmuletUtil.setStackTier(amulet, 2))
+                .addElemental(AmuletUtil.setStackTier(amulet, 1))
                 .addIngredient(upgrader)
                 .addIngredient(element)
                 .addIngredient(upgrader2)
@@ -251,8 +251,8 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
     }
 
     private static void amuletRecipeTier3(Item amulet, ItemLike upgrader, ItemLike upgrader2, ItemLike element, Consumer<FinishedRecipe> consumer) {
-        ElementalCombinationBuilder.create(AmuletUtil.setStackTier(amulet,3))
-                .addElemental(AmuletUtil.setStackTier(amulet,2))
+        ElementalCombinationBuilder.create(AmuletUtil.setStackTier(amulet, 3))
+                .addElemental(AmuletUtil.setStackTier(amulet, 2))
                 .addIngredient(upgrader)
                 .addIngredient(element)
                 .addIngredient(upgrader2)
@@ -267,8 +267,8 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
     }
 
     private static void amuletRecipeTier4(Item amulet, ItemLike upgrader, Consumer<FinishedRecipe> consumer) {
-        ElementalCombinationBuilder.create(AmuletUtil.setStackTier(amulet,4))
-                .addElemental(AmuletUtil.setStackTier(amulet,3))
+        ElementalCombinationBuilder.create(AmuletUtil.setStackTier(amulet, 4))
+                .addElemental(AmuletUtil.setStackTier(amulet, 3))
                 .addIngredient(upgrader)
                 .addIngredient(ModItems.AETHER_ELEMENT.get())
                 .addIngredient(upgrader)

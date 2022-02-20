@@ -49,6 +49,7 @@ class EffectEventHandler {
     public static void onAttack(final LivingAttackEvent event) {
         JumpAmuletEffect.onLivingAttack(event);
         FireAmuletEffect.onLivingAttack(event);
+        FluidWalkerAmuletEffect.Lava.onLivingAttack(event);
     }
 
     @SubscribeEvent

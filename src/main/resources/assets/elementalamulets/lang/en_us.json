@@ -54,7 +54,10 @@
   "item.elementalamulets.pacifying_amulet.tired_success": "Your target is feeling tired!",
   "item.elementalamulets.knockback_amulet": "Amulet of Knockback",
   "item.elementalamulets.knockback_amulet.tooltip": "Knocks back any attacking enemy",
-
+  "item.elementalamulets.water_walker_amulet": "Water-Walker amulet",
+  "item.elementalamulets.water_walker_amulet.tooltip": "Freezes water under you to walk on it",
+  "item.elementalamulets.lava_walker_amulet": "Lava-Walker amulet",
+  "item.elementalamulets.lava_walker_amulet.tooltip": "Hardens lava under you to walk on it",
   "block.elementalamulets.elemental_combinator": "Elemental Combinator",
   "block.elementalamulets.elemental_combinator.guititle": "Combination",
   "block.elementalamulets.elemental_combinator.cooldown": "%s is recharging! %1$ss left",

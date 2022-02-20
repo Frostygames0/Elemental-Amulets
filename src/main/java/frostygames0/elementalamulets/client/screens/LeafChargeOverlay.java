@@ -70,7 +70,7 @@ public class LeafChargeOverlay implements IIngameOverlay {
                     drawLeafBar(ms, clampedMax, offsetX, offsetY, 0);
                     drawLeafBar(ms, Mth.clamp(charge, 0, clampedMax), offsetX, offsetY, 8);
 
-                    if(charge > clampedMax) {
+                    if (charge > clampedMax) {
                         gui.getFont().drawShadow(ms, '+' + String.valueOf(charge - clampedMax), offsetX + 2, offsetY - 10, 0xFF969696);
                     }
 

@@ -17,10 +17,9 @@
  *     along with Elemental Amulets.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package frostygames0.elementalamulets.client.patchouli;
+package frostygames0.elementalamulets.config;
 
 import frostygames0.elementalamulets.ElementalAmulets;
-import frostygames0.elementalamulets.config.ModConfig;
 import net.minecraftforge.fml.ModList;
 import vazkii.patchouli.api.PatchouliAPI;
 

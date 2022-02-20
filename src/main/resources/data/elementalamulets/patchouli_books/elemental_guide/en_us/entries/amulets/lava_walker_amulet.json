@@ -1,0 +1,11 @@
+{
+  "name": "item.elementalamulets.lava_walker_amulet",
+  "category": "elementalamulets:amulets",
+  "icon": "elementalamulets:lava_walker_amulet",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(item)Lava-Walker amulet$() - is one of the modified version of $(o)Amulet of Fire-Resistance$().$(br2)Allows to walk on lava, much like $(thing)Frost-Walker$() enchantment works, but with lava."
+    }
+  ]
+}

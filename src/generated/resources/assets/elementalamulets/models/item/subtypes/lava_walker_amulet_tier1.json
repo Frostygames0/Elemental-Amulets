@@ -1,0 +1,6 @@
+{
+  "parent": "elementalamulets:item/lava_walker_amulet",
+  "textures": {
+    "layer1": "elementalamulets:item/amulet_tiers/level1"
+  }
+}

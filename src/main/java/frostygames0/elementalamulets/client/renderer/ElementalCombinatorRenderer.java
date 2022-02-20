@@ -41,7 +41,8 @@ import net.minecraftforge.items.CapabilityItemHandler;
  */
 public class ElementalCombinatorRenderer implements BlockEntityRenderer<ElementalCombinatorBlockEntity> {
 
-    public ElementalCombinatorRenderer(BlockEntityRendererProvider.Context pContext) {}
+    public ElementalCombinatorRenderer(BlockEntityRendererProvider.Context pContext) {
+    }
 
     @Override
     public void render(ElementalCombinatorBlockEntity tileEntityIn, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int combinedLightIn, int combinedOverlayIn) {

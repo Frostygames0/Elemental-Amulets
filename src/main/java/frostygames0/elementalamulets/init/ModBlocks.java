@@ -22,6 +22,7 @@ package frostygames0.elementalamulets.init;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.blocks.CelestialFocus;
 import frostygames0.elementalamulets.blocks.ElementalCombinator;
+import frostygames0.elementalamulets.blocks.MeltingMagmaBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.DyeColor;
@@ -66,11 +67,21 @@ public class ModBlocks {
     public static final RegistryObject<Block> AIR_SHARDS_BLOCK = BLOCKS.register("air_shards_block",
             () -> createShardsBlock(MaterialColor.SNOW));
 
+    public static final RegistryObject<Block> MELTING_MAGMA_BLOCK = BLOCKS.register("melting_magma_block",
+            () -> new MeltingMagmaBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.NETHER)
+                    .noDrops().lightLevel((state) -> 3)
+                    .randomTicks().strength(0.5F)
+                    .hasPostProcess(ModBlocks::always).emissiveRendering(ModBlocks::always)));
+
     private static Block createShardsBlock(MaterialColor color) {
         return new Block(BlockBehaviour.Properties.of(Material.GLASS, color).strength(0.8f).sound(SoundType.GLASS).requiresCorrectToolForDrops());
     }
 
     private static boolean never(BlockState blockState, BlockGetter iBlockReader, BlockPos blockPos) {
         return false;
+    }
+
+    private static boolean always(BlockState blockState, BlockGetter iBlockReader, BlockPos blockPos) {
+        return true;
     }
 }

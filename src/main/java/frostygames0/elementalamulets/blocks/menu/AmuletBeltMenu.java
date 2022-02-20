@@ -51,15 +51,15 @@ public class AmuletBeltMenu extends AbstractContainerMenu {
     public ItemStack quickMoveStack(Player pPlayer, int index) {
         ItemStack itemStack = ItemStack.EMPTY;
         Slot slot = this.getSlot(index);
-        if(slot.hasItem()) {
+        if (slot.hasItem()) {
             ItemStack itemStack1 = slot.getItem();
             itemStack = itemStack1.copy();
-            if(index >= 0 && index < 5) {
-                if(!this.moveItemStackTo(itemStack1, 5, 41, true)) {
+            if (index >= 0 && index < 5) {
+                if (!this.moveItemStackTo(itemStack1, 5, 41, true)) {
                     return ItemStack.EMPTY;
                 }
             } else {
-                if(!this.moveItemStackTo(itemStack1, 0, 5, false)) {
+                if (!this.moveItemStackTo(itemStack1, 0, 5, false)) {
                     return ItemStack.EMPTY;
                 }
             }

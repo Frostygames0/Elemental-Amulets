@@ -46,7 +46,7 @@ public class MixinLivingEntity {
             int tier = amulet.getTier(stack);
 
             if (tier > 1) {
-                if(entity.getRandom().nextInt((tier + 1) * 2) > 0) {
+                if (entity.getRandom().nextInt((tier + 1) * 2) > 0) {
                     ci.setReturnValue(air);
                 }
             }

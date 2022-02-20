@@ -272,7 +272,7 @@ public class ElementalCombinatorBlockEntity extends BlockEntity implements MenuP
     @Override
     public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
         CompoundTag tag = pkt.getTag();
-        if(tag != null) {
+        if (tag != null) {
             this.readInventory(tag);
         }
     }

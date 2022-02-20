@@ -186,7 +186,7 @@ public class AmuletBeltItem extends Item implements ICurioItem {
             @Nonnull
             @Override
             public ItemStack extractItem(int slot, int amount, boolean simulate) {
-                if(!simulate) {
+                if (!simulate) {
                     ItemStack amulet = getStackInSlot(slot);
                     MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
                     if (server != null) {

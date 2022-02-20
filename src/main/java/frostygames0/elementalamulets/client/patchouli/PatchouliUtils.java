@@ -61,7 +61,7 @@ public class PatchouliUtils {
         if (!playerWarned) {
             playerWarned = true;
             if (ModList.get().isLoaded(CRAFTTWEAKER)) {
-                ElementalAmulets.LOGGER.warn("CraftTweaker detected! It looks like you deleted the recipe {} and didn't add a replacement for it!\n"+
+                ElementalAmulets.LOGGER.warn("CraftTweaker detected! It looks like you deleted the recipe {} and didn't add a replacement for it!\n" +
                         " To add a replacement for it, just add a new recipe with the same path as the deleted recipe.", name.toString());
             }
         }

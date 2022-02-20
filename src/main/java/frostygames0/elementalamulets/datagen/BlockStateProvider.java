@@ -21,6 +21,7 @@ package frostygames0.elementalamulets.datagen;
 
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.blocks.ElementalCombinator;
+import frostygames0.elementalamulets.blocks.MeltingMagmaBlock;
 import frostygames0.elementalamulets.init.ModBlocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.level.block.Block;
@@ -52,6 +53,16 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
                         mcLoc("block/furnace_top"),
                         modLoc("block/" + name(ModBlocks.ELEMENTAL_COMBINATOR.get()) + "_up_off"));
             }
+        });
+
+        blockstateBlock(ModBlocks.MELTING_MAGMA_BLOCK.get(), state -> {
+            String name = name(ModBlocks.MELTING_MAGMA_BLOCK.get());
+            return switch (state.getValue(MeltingMagmaBlock.AGE)) {
+                case 1 -> models().cubeAll(name + "_1", modLoc("block/" + name + "_1"));
+                case 2 -> models().cubeAll(name + "_2", modLoc("block/" + name + "_2"));
+                case 3 -> models().cubeAll(name + "_3", modLoc("block/" + name + "_3"));
+                default -> models().cubeAll(name, modLoc("block/" + name));
+            };
         });
 
         // Elemental Stone

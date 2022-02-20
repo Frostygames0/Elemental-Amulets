@@ -1,0 +1,11 @@
+{
+  "name": "item.elementalamulets.water_walker_amulet",
+  "category": "elementalamulets:amulets",
+  "icon": "elementalamulets_walker_amulet",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(l)$(item)Water-Walker amulet$() - is one of the modified version of $(o)Amulet of Water$().$(br2)Allows to walk on water, much like $(thing)Frost-Walker$() enchantment works.$(br2)On tier 2+ allows walking on $(item)Powder Snow$()."
+    }
+  ]
+}

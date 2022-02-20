@@ -40,7 +40,7 @@ class KnockbackAmuletEffect {
                 AmuletUtil.getAmuletInSlotOrBelt(ModItems.KNOCKBACK_AMULET.get(), player).ifPresent(triple -> {
                     DamageSource source = event.getSource();
 
-                    if(!source.isProjectile()) {
+                    if (!source.isProjectile()) {
                         if (source.getEntity() instanceof LivingEntity attacker) {
                             ItemStack stack = triple.stack();
                             KnockbackAmuletItem amulet = (KnockbackAmuletItem) stack.getItem();

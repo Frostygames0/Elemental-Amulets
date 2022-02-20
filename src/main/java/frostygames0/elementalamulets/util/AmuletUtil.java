@@ -58,7 +58,7 @@ public final class AmuletUtil {
         ICuriosHelper helper = CuriosApi.getCuriosHelper();
         Optional<SlotResult> possibleAmulet = helper.findFirstCurio(entity, item);
 
-        if(possibleAmulet.isPresent())
+        if (possibleAmulet.isPresent())
             return possibleAmulet;
 
         Optional<SlotResult> optional = helper.findFirstCurio(entity, ModItems.AMULET_BELT.get());

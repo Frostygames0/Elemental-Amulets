@@ -10,6 +10,7 @@
   "mixins": [
     "MixinEnderMan",
     "MixinLivingEntity",
+    "MixinPowderSnowBlock",
     "accessors.AccessorTargetGoal",
     "accessors.InvokerRecipeManager"
   ]
