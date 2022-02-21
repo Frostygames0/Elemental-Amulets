@@ -23,6 +23,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
 
+import javax.annotation.Nullable;
 import java.util.UUID;
 
 /**
@@ -30,20 +31,20 @@ import java.util.UUID;
  * @date 21.10.2021 16:14
  */
 public final class AttributeUtil {
-    public static void applyModifier(AttributeInstance attribute, AttributeModifier modifier) {
-        if (!attribute.hasModifier(modifier)) {
+    public static void applyModifier(@Nullable AttributeInstance attribute, AttributeModifier modifier) {
+        if (attribute != null && !attribute.hasModifier(modifier)) {
             attribute.addTransientModifier(modifier);
         }
     }
 
-    public static void removeModifier(AttributeInstance attribute, AttributeModifier modifier) {
-        if (attribute.hasModifier(modifier)) {
+    public static void removeModifier(@Nullable AttributeInstance attribute, AttributeModifier modifier) {
+        if (attribute != null && attribute.hasModifier(modifier)) {
             attribute.removeModifier(modifier);
         }
     }
 
-    public static void removeModifierByUUID(AttributeInstance attribute, UUID modifier) {
-        if (attribute.getModifier(modifier) != null) {
+    public static void removeModifierByUUID(@Nullable AttributeInstance attribute, UUID modifier) {
+        if (attribute != null && attribute.getModifier(modifier) != null) {
             attribute.removeModifier(modifier);
         }
     }
