@@ -1,5 +1,6 @@
 package frostygames0.elementalamulets.mixin;
 
+import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import frostygames0.elementalamulets.util.AmuletUtil;
@@ -26,8 +27,10 @@ public class MixinPowderSnowBlock {
                 ItemStack stack = triple.stack();
                 AmuletItem item = (AmuletItem) stack.getItem();
 
-                if (item.getTier(stack) > 1)
-                    cir.setReturnValue(true);
+                if (ModConfig.CachedValues.WATER_WALKER_AMULET_WALK_ON_POWDER_SNOW) {
+                    if (item.getTier(stack) > 1)
+                        cir.setReturnValue(true);
+                }
             });
         }
     }

@@ -111,7 +111,7 @@ public class AmuletBeltItem extends Item implements ICurioItem {
     @Override
     public void onUnequip(SlotContext slotContext, ItemStack newStack, ItemStack stack) {
         if (slotContext.entity() instanceof Player) {
-            if (!compareBelts(newStack, stack)) {
+            if (notSame(newStack, stack)) {
                 stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
                     ICuriosHelper helper = CuriosApi.getCuriosHelper();
                     for (int i = 0; i < h.getSlots(); i++) {
@@ -132,7 +132,7 @@ public class AmuletBeltItem extends Item implements ICurioItem {
     @Override
     public void onEquip(SlotContext slotContext, ItemStack prevStack, ItemStack stack) {
         if (slotContext.entity() instanceof Player player) {
-            if (!compareBelts(prevStack, stack)) {
+            if (notSame(prevStack, stack)) {
                 stack.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> {
                     ICuriosHelper helper = CuriosApi.getCuriosHelper();
                     for (int i = 0; i < h.getSlots(); i++) {
@@ -152,15 +152,20 @@ public class AmuletBeltItem extends Item implements ICurioItem {
 
     @Override
     public boolean canEquipFromUse(SlotContext slotContext, ItemStack stack) {
-        return true;
+        return this.canEquip(slotContext, stack);
     }
 
-    private static boolean compareBelts(ItemStack stack, ItemStack other) {
+    @Override
+    public boolean canEquip(SlotContext slotContext, ItemStack stack) {
+        return CuriosApi.getCuriosHelper().findFirstCurio(slotContext.entity(), this).isEmpty();
+    }
+
+    private static boolean notSame(ItemStack stack, ItemStack other) {
         Item amulet = stack.getItem();
         Item secondAmulet = other.getItem();
         if (!(amulet instanceof AmuletBeltItem) || !(secondAmulet instanceof AmuletBeltItem))
-            return false;
-        return ItemStack.tagMatches(stack, other);
+            return true;
+        return !ItemStack.tagMatches(stack, other);
     }
 
     /*------------------------------------------------------*/
