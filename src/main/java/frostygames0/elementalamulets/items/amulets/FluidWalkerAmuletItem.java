@@ -6,9 +6,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import top.theillusivec4.curios.api.SlotContext;
 
@@ -56,9 +56,10 @@ public class FluidWalkerAmuletItem extends AmuletItem {
                         BlockState blockstate1 = level.getBlockState(mutablePos);
 
                         if (blockstate1.isAir()) {
-
                             BlockState blockstate2 = level.getBlockState(blockpos);
-                            boolean canBeFrozen = blockstate2.getFluidState().getType() == fluid.get() && blockstate2.getValue(LiquidBlock.LEVEL) == 0;
+
+                            FluidState fluidState = blockstate2.getFluidState();
+                            boolean canBeFrozen = blockstate2.getMaterial().isLiquid() && fluidState.is(fluid.get()) && fluidState.isSource();
 
                             if (canBeFrozen && blockstate.canSurvive(level, blockpos) && level.isUnobstructed(blockstate, blockpos, CollisionContext.empty())) {
                                 level.setBlockAndUpdate(blockpos, blockstate);
