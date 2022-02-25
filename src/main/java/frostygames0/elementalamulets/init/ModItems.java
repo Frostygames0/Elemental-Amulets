@@ -32,7 +32,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -129,8 +128,8 @@ public class ModItems {
     public static final RegistryObject<Item> KNOCKBACK_AMULET = ITEMS.register("knockback_amulet",
             () -> new KnockbackAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(Rarity.RARE).durability(1000).setNoRepair()));
     public static final RegistryObject<Item> WATER_WALKER_AMULET = ITEMS.register("water_walker_amulet",
-            () -> new FluidWalkerAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(Rarity.EPIC).durability(1000).setNoRepair(), () -> Blocks.FROSTED_ICE, () -> Fluids.WATER));
+            () -> new FluidWalkerAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(Rarity.EPIC).durability(1000).setNoRepair(), () -> Blocks.FROSTED_ICE, () -> Blocks.WATER));
     public static final RegistryObject<Item> LAVA_WALKER_AMULET = ITEMS.register("lava_walker_amulet",
-            () -> new FluidWalkerAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(Rarity.EPIC).durability(1000).setNoRepair(), ModBlocks.MELTING_MAGMA_BLOCK, () -> Fluids.LAVA));
+            () -> new FluidWalkerAmuletItem(new Item.Properties().tab(ElementalAmulets.GROUP).rarity(Rarity.EPIC).durability(1000).setNoRepair(), ModBlocks.MELTING_MAGMA_BLOCK, () -> Blocks.LAVA));
 
 }

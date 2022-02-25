@@ -6,9 +6,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import top.theillusivec4.curios.api.SlotContext;
 
@@ -22,9 +21,9 @@ import java.util.function.Supplier;
 public class FluidWalkerAmuletItem extends AmuletItem {
 
     private final Supplier<? extends Block> block;
-    private final Supplier<? extends Fluid> fluid;
+    private final Supplier<? extends Block> fluid;
 
-    public FluidWalkerAmuletItem(Item.Properties properties, Supplier<? extends Block> block, Supplier<? extends Fluid> fluid) {
+    public FluidWalkerAmuletItem(Item.Properties properties, Supplier<? extends Block> block, Supplier<? extends Block> fluid) {
         super(new Properties(properties)
                 .hasTier()
                 .usesCurioMethods());
@@ -58,8 +57,9 @@ public class FluidWalkerAmuletItem extends AmuletItem {
                         if (blockstate1.isAir()) {
                             BlockState blockstate2 = level.getBlockState(blockpos);
 
-                            FluidState fluidState = blockstate2.getFluidState();
-                            boolean canBeFrozen = blockstate2.getMaterial().isLiquid() && fluidState.is(fluid.get()) && fluidState.isSource();
+                            Block fluidBlock = fluid.get();
+                            boolean canBeFrozen = fluidBlock instanceof LiquidBlock
+                                    && blockstate2.is(fluidBlock) && blockstate2.getValue(LiquidBlock.LEVEL) == 0;
 
                             if (canBeFrozen && blockstate.canSurvive(level, blockpos) && level.isUnobstructed(blockstate, blockpos, CollisionContext.empty())) {
                                 level.setBlockAndUpdate(blockpos, blockstate);
