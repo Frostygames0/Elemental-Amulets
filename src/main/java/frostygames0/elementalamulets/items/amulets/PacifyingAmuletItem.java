@@ -35,9 +35,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.CooldownTracker;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -128,11 +125,10 @@ public class PacifyingAmuletItem extends AmuletItem {
     }
 
     private Iterable<MobEntity> getAngerablesAround(LivingEntity target) {
-        BlockPos position = target.blockPosition();
-        return target.level.getLoadedEntitiesOfClass(MobEntity.class, new AxisAlignedBB(position.subtract(new Vector3i(6, 5, 6)), position.offset(new Vector3i(6, 5, 6))), entity -> {
+        return target.level.getLoadedEntitiesOfClass(MobEntity.class, target.getBoundingBox().inflate(6, 5, 6), entity -> {
             if (entity instanceof IAngerable) {
                 IAngerable angerable = (IAngerable) entity;
-                return entity.canSee(target) && angerable.getPersistentAngerTarget() != null && angerable.getPersistentAngerTarget().equals(target.getUUID());
+                return angerable.getPersistentAngerTarget() != null && angerable.getPersistentAngerTarget().equals(target.getUUID());
             }
             return false;
         });
