@@ -24,8 +24,6 @@ import frostygames0.elementalamulets.mixin.accessors.AccessorTargetGoal;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Vec3i;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
@@ -41,7 +39,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemCooldowns;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.AABB;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
 
@@ -125,8 +122,7 @@ public class PacifyingAmuletItem extends AmuletItem {
     }
 
     private Iterable<Mob> getAngerablesAround(LivingEntity target) {
-        BlockPos position = target.blockPosition();
-        return target.level.getEntitiesOfClass(Mob.class, new AABB(position.subtract(new Vec3i(6, 5, 6)), position.offset(new Vec3i(6, 5, 6))), entity -> {
+        return target.level.getEntitiesOfClass(Mob.class, target.getBoundingBox().inflate(6, 5, 6), entity -> {
             if (entity instanceof NeutralMob angerable) {
                 return angerable.getPersistentAngerTarget() != null && angerable.getPersistentAngerTarget().equals(target.getUUID());
             }
