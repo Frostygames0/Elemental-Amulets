@@ -24,6 +24,7 @@ import frostygames0.elementalamulets.blocks.ElementalCombinator;
 import frostygames0.elementalamulets.blocks.MeltingMagmaBlock;
 import frostygames0.elementalamulets.init.ModBlocks;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
@@ -76,7 +77,7 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
         simpleBlock(ModBlocks.AIR_SHARDS_BLOCK.get());
         simpleBlock(ModBlocks.FIRE_SHARDS_BLOCK.get());
 
-        for (Block block : ModBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).toList()) {
+        for (Block block : ModBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).filter(block -> block.asItem() != Items.AIR).toList()) {
             simpleBlockItem(block, models().getExistingFile(modLoc("block/" + name(block))));
         }
     }
