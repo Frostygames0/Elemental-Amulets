@@ -10,7 +10,7 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
  * @author Frostygames0
  * @date 19.02.2022 19:01
  */
-public class FluidWalkerAmuletEffect {
+class FluidWalkerAmuletEffect {
     static class Lava {
         static void onLivingAttack(LivingAttackEvent event) {
             if (event.getEntityLiving() instanceof Player player) {
