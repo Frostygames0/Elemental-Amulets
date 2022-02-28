@@ -21,15 +21,11 @@ package frostygames0.elementalamulets.items.amulets.effect;
 
 import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.items.amulets.JumpAmuletItem;
-import frostygames0.elementalamulets.network.CUpdatePlayerVelocityPacket;
-import frostygames0.elementalamulets.network.ModNetworkHandler;
 import frostygames0.elementalamulets.util.AmuletUtil;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -83,8 +79,8 @@ class JumpAmuletEffect {
                         ItemStack stack = triple.stack();
                         JumpAmuletItem item = (JumpAmuletItem) stack.getItem();
 
-                        Vec3 vector = player.getDeltaMovement().add(0, item.getJump(stack), 0);
-                        ModNetworkHandler.sendToClient(new CUpdatePlayerVelocityPacket(vector.x, vector.y, vector.z), (ServerPlayer) player);
+                        player.setDeltaMovement(player.getDeltaMovement().add(0, item.getJump(stack), 0));
+                        player.hurtMarked = true;
                     });
                 }
             }

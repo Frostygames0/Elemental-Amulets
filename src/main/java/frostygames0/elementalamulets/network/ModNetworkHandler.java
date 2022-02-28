@@ -53,11 +53,6 @@ public class ModNetworkHandler {
                 .decoder(buf -> new SOpenAmuletBeltGUIPacket())
                 .consumer(SOpenAmuletBeltGUIPacket::handle)
                 .add();
-        INSTANCE.messageBuilder(CUpdatePlayerVelocityPacket.class, nextID())
-                .encoder(CUpdatePlayerVelocityPacket::toBytes)
-                .decoder(CUpdatePlayerVelocityPacket::new)
-                .consumer(CUpdatePlayerVelocityPacket::handle)
-                .add();
         INSTANCE.messageBuilder(SCombinePacket.class, nextID())
                 .encoder(SCombinePacket::toBytes)
                 .decoder(SCombinePacket::new)

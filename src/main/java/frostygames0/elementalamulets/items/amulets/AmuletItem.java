@@ -192,7 +192,7 @@ public abstract class AmuletItem extends Item implements ICurioItem, ICurioRende
 
             matrixStack.scale(0.7f, 0.7f, 0.7f); // Makes amulet smaller gugugaga
 
-            VertexConsumer vertexBuilder = ItemRenderer.getArmorFoilBuffer(renderTypeBuffer, RenderType.armorCutoutNoCull(AmuletModel.getTexture(this, stack)), false, stack.hasFoil());
+            VertexConsumer vertexBuilder = ItemRenderer.getArmorFoilBuffer(renderTypeBuffer, RenderType.entityTranslucent(AmuletModel.getTexture(this, stack)), false, stack.hasFoil());
             model.renderToBuffer(matrixStack, vertexBuilder, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
             matrixStack.popPose();
         }
