@@ -21,16 +21,24 @@ package frostygames0.elementalamulets.capability;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.items.ItemStackHandler;
 
 
 import javax.annotation.Nonnull;
 
-public class AutomationItemHandler implements IItemHandlerModifiable {
+// Wraps another item handler, to be exposed as capability, to restrict inserting items to output
+public class RestrictiveItemHandler implements IItemHandlerModifiable {
     private final IItemHandlerModifiable handler;
 
-    public AutomationItemHandler(IItemHandlerModifiable handler) {
+    // Dummy constructor
+    public RestrictiveItemHandler(int size) {
+        this(new ItemStackHandler(size));
+    }
+
+    public RestrictiveItemHandler(IItemHandlerModifiable handler) {
         this.handler = handler;
     }
+
 
     @Override
     public void setStackInSlot(int slot, @Nonnull ItemStack stack) {

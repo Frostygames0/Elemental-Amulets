@@ -23,6 +23,7 @@ import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import frostygames0.elementalamulets.util.NBTUtil;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -64,6 +65,8 @@ import java.util.UUID;
 public class AmuletBeltItem extends Item implements ICurioItem {
     private static final String WEARER_UUID_TAG = ElementalAmulets.MOD_ID + ":wearer_UUID";
 
+    public static final int HANDLER_SIZE = 5;
+
     public AmuletBeltItem(Properties properties) {
         super(properties);
     }
@@ -79,6 +82,8 @@ public class AmuletBeltItem extends Item implements ICurioItem {
                 }
             }
         });
+        pTooltip.add(new TranslatableComponent("item.elementalamulets.amulet_belt.tooltip").withStyle(ChatFormatting.GRAY));
+        pTooltip.add(new TranslatableComponent("item.elementalamulets.amulet_belt." + (Screen.hasShiftDown() ? "instability" : "collapsed_warn")).withStyle(ChatFormatting.DARK_GRAY));
     }
 
     @Override
@@ -160,7 +165,7 @@ public class AmuletBeltItem extends Item implements ICurioItem {
         return CuriosApi.getCuriosHelper().findFirstCurio(slotContext.entity(), this).isEmpty();
     }
 
-    private static boolean notSame(ItemStack stack, ItemStack other) {
+    public static boolean notSame(ItemStack stack, ItemStack other) {
         Item amulet = stack.getItem();
         Item secondAmulet = other.getItem();
         if (!(amulet instanceof AmuletBeltItem) || !(secondAmulet instanceof AmuletBeltItem))
@@ -213,6 +218,11 @@ public class AmuletBeltItem extends Item implements ICurioItem {
                     }
                 }
                 return super.extractItem(slot, amount, simulate);
+            }
+
+            @Override
+            public int getSlotLimit(int slot) {
+                return 1;
             }
         };
         LazyOptional<IItemHandler> optional = LazyOptional.of(() -> handler);

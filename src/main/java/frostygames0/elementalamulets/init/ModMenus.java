@@ -22,11 +22,7 @@ package frostygames0.elementalamulets.init;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.blocks.menu.AmuletBeltMenu;
 import frostygames0.elementalamulets.blocks.menu.ElementalCombinatorMenu;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.inventory.SimpleContainerData;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -36,18 +32,9 @@ public class ModMenus {
     public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(ForgeRegistries.CONTAINERS, ElementalAmulets.MOD_ID);
 
     public static final RegistryObject<MenuType<ElementalCombinatorMenu>> ELEMENTAL_COMBINATOR_MENU = MENUS.register("elemental_combinator", () -> IForgeMenuType.create(
-            ((windowId, inv, data) -> {
-                BlockPos pos = data.readBlockPos();
-                Level world = inv.player.getCommandSenderWorld();
-                return new ElementalCombinatorMenu(windowId, world, pos, inv, inv.player, new SimpleContainerData(2));
-            })
-    ));
+            ((windowId, inv, data) -> new ElementalCombinatorMenu(windowId, data.readBlockPos(), inv))));
 
     public static final RegistryObject<MenuType<AmuletBeltMenu>> AMULET_BELT_MENU = MENUS.register("amulet_belt", () -> IForgeMenuType.create(
-            ((windowId, inv, data) -> {
-                ItemStack belt = data.readItem();
-                return new AmuletBeltMenu(windowId, inv, belt);
-            })
-    ));
+            ((windowId, inv, data) -> new AmuletBeltMenu(windowId, inv, data.readItem()))));
 
 }

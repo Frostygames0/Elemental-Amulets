@@ -30,6 +30,10 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
+import top.theillusivec4.curios.api.CuriosApi;
+
+
+import static frostygames0.elementalamulets.items.AmuletBeltItem.HANDLER_SIZE;
 
 /**
  * @author Frostygames0
@@ -41,12 +45,20 @@ public class AmuletBeltMenu extends AbstractContainerMenu {
 
     public AmuletBeltMenu(int id, Inventory playerInventory, ItemStack belt) {
         super(ModMenus.AMULET_BELT_MENU.get(), id);
-        this.belt = belt;
+
         this.playerInventory = new InvWrapper(playerInventory);
-        belt.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(h -> addSlotRange(h, 0, 44, 54, 5, 18));
+        this.belt = belt;
+        belt.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(handler -> {
+            if (handler.getSlots() < HANDLER_SIZE)
+                throw new IllegalArgumentException("Elemental Combinator's container size is too small, expected 10!");
+
+            addSlotRange(handler, 0, 44, 54, HANDLER_SIZE, 18);
+        });
+
         this.bindPlayerInventory(8, 83);
     }
 
+    // TODO Remake it a little
     @Override
     public ItemStack quickMoveStack(Player pPlayer, int index) {
         ItemStack itemStack = ItemStack.EMPTY;
@@ -81,7 +93,7 @@ public class AmuletBeltMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player playerIn) {
-        return !belt.isEmpty() && belt.getItem() instanceof AmuletBeltItem;
+        return CuriosApi.getCuriosHelper().findFirstCurio(playerIn, stack -> !AmuletBeltItem.notSame(stack, belt)).isPresent();
     }
 
     private int addSlotRange(IItemHandler handler, int index1, int x, int y, int amount, int dx) {

@@ -1,11 +1,13 @@
 {
   "itemGroup.elementalamulets": "Elemental Amulets",
-
   "item.elementalamulets.guide_book": "Элементальное руководство",
   "item.elementalamulets.guide_book.subtitle": "Содержит в себе все знания о элементальных амулетах",
   "item.elementalamulets.all_seeing_lens": "Всевидящая линза",
   "item.elementalamulets.amulet_belt": "Пояс для амулетов",
   "item.elementalamulets.amulet_belt.contents": "Амулеты внутри:",
+  "item.elementalamulets.amulet_belt.tooltip": "Повзоляет носить до 5 амулетов в одном слоте",
+  "item.elementalamulets.amulet_belt.instability": "Предупреждение! Этот предмет немного нестабилен,\nперезайдите если эффекты амулетов остались после снятия",
+  "item.elementalamulets.amulet_belt.collapsed_warn": "Предупреждение, нестабильно! Нажмите [SHIFT] для большей инфо.",
   "item.elementalamulets.ancient_tablet": "Древняя табличка",
   "item.elementalamulets.ancient_tablet.tooltip": "Странная бирюзовая табличка из средневековья со странными рисунками на ней",
   "item.elementalamulets.elemental_shards": "Элементальные осколки",

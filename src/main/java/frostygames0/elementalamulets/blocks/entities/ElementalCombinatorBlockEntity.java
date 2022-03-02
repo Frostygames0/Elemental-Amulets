@@ -22,7 +22,7 @@ package frostygames0.elementalamulets.blocks.entities;
 import frostygames0.elementalamulets.advancements.triggers.ModCriteriaTriggers;
 import frostygames0.elementalamulets.blocks.ElementalCombinator;
 import frostygames0.elementalamulets.blocks.menu.ElementalCombinatorMenu;
-import frostygames0.elementalamulets.capability.AutomationItemHandler;
+import frostygames0.elementalamulets.capability.RestrictiveItemHandler;
 import frostygames0.elementalamulets.client.particles.ModParticles;
 import frostygames0.elementalamulets.config.ModConfig;
 import frostygames0.elementalamulets.init.ModBEs;
@@ -71,7 +71,11 @@ public class ElementalCombinatorBlockEntity extends BlockEntity implements MenuP
     private static final String TAG_COMBINATION_TIME = "CombinationTime";
     private static final String TAG_TOTAL_COMBINATION_TIME = "TotalCombinationTime";
 
-    private final ItemStackHandler handler = new ItemStackHandler(10) {
+    public static final int HANDLER_SIZE = 10;
+    public static final int DATA_SIZE = 2;
+
+    // Internal handler with no restrictions
+    private final ItemStackHandler internalHandler = new ItemStackHandler(HANDLER_SIZE) {
         @Override
         protected void onContentsChanged(int slot) {
             ElementalCombinatorBlockEntity.this.setChanged();
@@ -79,7 +83,10 @@ public class ElementalCombinatorBlockEntity extends BlockEntity implements MenuP
                 level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_CLIENTS);
         }
     };
-    private final LazyOptional<IItemHandler> optional = LazyOptional.of(() -> new AutomationItemHandler(handler));
+
+    // Restricted handler which restricts inserting into slot 0 (output)
+    private final IItemHandler restrictedHandler = new RestrictiveItemHandler(internalHandler);
+    private final LazyOptional<IItemHandler> optional = LazyOptional.of(() -> restrictedHandler);
 
     private int combinationTime;
     private int totalTime;
@@ -103,7 +110,7 @@ public class ElementalCombinatorBlockEntity extends BlockEntity implements MenuP
 
         @Override
         public int getCount() {
-            return 2;
+            return DATA_SIZE;
         }
     };
 
@@ -114,7 +121,7 @@ public class ElementalCombinatorBlockEntity extends BlockEntity implements MenuP
     public void serverTick() {
         if (level != null) {
             if (this.isCombining()) {
-                ElementalCombination recipe = this.level.getRecipeManager().getRecipeFor(ModRecipes.ELEMENTAL_COMBINATION_TYPE, new RecipeWrapper(handler), this.level).orElse(null);
+                ElementalCombination recipe = this.level.getRecipeManager().getRecipeFor(ModRecipes.ELEMENTAL_COMBINATION_TYPE, new RecipeWrapper(internalHandler), this.level).orElse(null);
                 if (this.canCombine(recipe)) {
                     this.totalTime = recipe.getCombinationTime();
                     this.combinationTime += this.getFocusedLevel();
@@ -152,12 +159,12 @@ public class ElementalCombinatorBlockEntity extends BlockEntity implements MenuP
 
     private void combine(@Nullable ElementalCombination recipe) {
         if (this.canCombine(recipe)) {
-            ItemStack result = recipe.assemble(new RecipeWrapper(handler));
-            NonNullList<ItemStack> remainingItems = recipe.getRemainingItems(new RecipeWrapper(handler));
-            handler.insertItem(0, result, false);
-            for (int i = 1; i < handler.getSlots(); ++i) {
-                handler.extractItem(i, 1, false);
-                handler.insertItem(i, remainingItems.get(i), false); // inserting remaining items
+            ItemStack result = recipe.assemble(new RecipeWrapper(internalHandler));
+            NonNullList<ItemStack> remainingItems = recipe.getRemainingItems(new RecipeWrapper(internalHandler));
+            internalHandler.insertItem(0, result, false);
+            for (int i = 1; i < internalHandler.getSlots(); ++i) {
+                internalHandler.extractItem(i, 1, false);
+                internalHandler.insertItem(i, remainingItems.get(i), false); // inserting remaining items
             }
 
             this.setChanged();
@@ -175,8 +182,8 @@ public class ElementalCombinatorBlockEntity extends BlockEntity implements MenuP
 
     private boolean canCombine(@Nullable ElementalCombination recipe) {
         if (recipe != null) {
-            ItemStack result = recipe.assemble(new RecipeWrapper(handler));
-            return !result.isEmpty() && handler.insertItem(0, result, true).isEmpty() && level.canSeeSky(worldPosition.above());
+            ItemStack result = recipe.assemble(new RecipeWrapper(internalHandler));
+            return !result.isEmpty() && internalHandler.insertItem(0, result, true).isEmpty() && level.canSeeSky(worldPosition.above());
         }
         return false;
     }
@@ -234,11 +241,11 @@ public class ElementalCombinatorBlockEntity extends BlockEntity implements MenuP
     }
 
     private void writeInventory(CompoundTag compound) {
-        compound.put(TAG_CONTENTS, handler.serializeNBT());
+        compound.put(TAG_CONTENTS, internalHandler.serializeNBT());
     }
 
     private void readInventory(CompoundTag nbt) {
-        handler.deserializeNBT(nbt.getCompound(TAG_CONTENTS));
+        internalHandler.deserializeNBT(nbt.getCompound(TAG_CONTENTS));
     }
 
     @Nonnull
@@ -278,18 +285,18 @@ public class ElementalCombinatorBlockEntity extends BlockEntity implements MenuP
     }
 
     @Override
+    public AABB getRenderBoundingBox() {
+        return new AABB(worldPosition.offset(-1, 0, -1), worldPosition.offset(1, 2, 1));
+    }
+
+    @Override
     public Component getDisplayName() {
         return new TranslatableComponent("block.elementalamulets.elemental_combinator.guititle");
     }
 
     @Nullable
     @Override
-    public AbstractContainerMenu createMenu(int p_createMenu_1_, Inventory p_createMenu_2_, Player p_createMenu_3_) {
-        return new ElementalCombinatorMenu(p_createMenu_1_, level, worldPosition, p_createMenu_2_, p_createMenu_3_, this.combinatorData);
-    }
-
-    @Override
-    public AABB getRenderBoundingBox() {
-        return new AABB(worldPosition.offset(-1, 0, -1), worldPosition.offset(1, 2, 1));
+    public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player player) {
+        return new ElementalCombinatorMenu(windowId, this.worldPosition, playerInventory, this.restrictedHandler, this.combinatorData);
     }
 }
