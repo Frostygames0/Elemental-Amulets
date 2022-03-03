@@ -60,6 +60,7 @@
   "item.elementalamulets.water_walker_amulet.tooltip": "Freezes water under you to walk on it",
   "item.elementalamulets.lava_walker_amulet": "Lava-Walker amulet",
   "item.elementalamulets.lava_walker_amulet.tooltip": "Hardens lava under you to walk on it",
+
   "block.elementalamulets.elemental_combinator": "Elemental Combinator",
   "block.elementalamulets.elemental_combinator.guititle": "Combination",
   "block.elementalamulets.elemental_combinator.cooldown": "%s is recharging! %1$ss left",
@@ -121,17 +122,12 @@
   "stat.elementalamulets.amulets_worn": "[ELEMENTAL AMULETS] Amulets worn",
   "stat.elementalamulets.guide_opened": "[ELEMENTAL AMULETS] Guides opened",
   "stat.elementalamulets.times_combined": "[ELEMENTAL AMULETS] Times combined",
-
   "death.attack.elementalamulets.leaf_cut": "%s was cut to death by leaf shield!",
-
   "commands.elementalamulets.give.success": "Successfully gave Tier %s %2$s to: %3$s",
   "commands.elementalamulets.give.failure": "Error! %s is not an elemental amulet!",
-
   "key.categories.elementalamulets": "Elemental Amulets",
   "key.elementalamulets.open_belt_gui": "Open the Amulet Belt interface",
-
-  "filled_map.elementalamulets.cult_temple": "Map to the temple ruins",
-
+  "filled_map.elementalamulets.cult_temple": "Map to the ruins of the temple",
   "config.elementalamulets.elements_latin_variant": "Use latin names for the elements",
   "config.elementalamulets.show_splashes": "Show splashes",
   "config.elementalamulets.elemental_combinator_stack_display": "Display output of Elemental Combinator on top",

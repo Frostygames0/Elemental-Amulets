@@ -54,6 +54,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.client.ICurioRenderer;
 import top.theillusivec4.curios.api.type.capability.ICurio;
@@ -212,6 +213,13 @@ public abstract class AmuletItem extends Item implements ICurioItem, ICurioRende
     //---------------------//
     // AMULET STUFF START  //
     //---------------------//
+
+    /**
+     * Call this when amulet breaks, by default calls onBrokenCurio api
+     */
+    public void onAmuletBreak(SlotContext ctx) {
+        CuriosApi.getCuriosHelper().onBrokenCurio(ctx);
+    }
 
     /**
      * Place to add additional values like nature charge and any other thingy, without overriding {@link Item#appendHoverText(ItemStack, Level, List, TooltipFlag)}

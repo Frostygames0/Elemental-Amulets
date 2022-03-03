@@ -39,7 +39,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemCooldowns;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
 
 /**
@@ -105,9 +104,12 @@ public class PacifyingAmuletItem extends AmuletItem {
     }
 
     // Call this in ItemStack#hurtAndBreak's consumer
+    @Override
     public void onAmuletBreak(SlotContext ctx) {
         if (!ModConfig.CachedValues.PACIFYING_AMULET_ANGER_ONBREAK)
             return;
+
+        super.onAmuletBreak(ctx);
 
         LivingEntity entity = ctx.entity();
         for (Mob mob : getAngerablesAround(entity)) {
@@ -118,7 +120,6 @@ public class PacifyingAmuletItem extends AmuletItem {
         if (entity instanceof Player) {
             ((Player) entity).getCooldowns().addCooldown(this, ModConfig.CachedValues.PACIFYING_AMULET_BREAK_COOLDOWN);
         }
-        CuriosApi.getCuriosHelper().onBrokenCurio(ctx);
     }
 
     private Iterable<Mob> getAngerablesAround(LivingEntity target) {

@@ -42,9 +42,11 @@ public class SOpenAmuletBeltGUIPacket {
         NetworkEvent.Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
             ServerPlayer sender = ctx.getSender();
-            ItemStack stack = CuriosApi.getCuriosHelper().findFirstCurio(sender, ModItems.AMULET_BELT.get()).map(SlotResult::stack).orElse(ItemStack.EMPTY);
-            if (!stack.isEmpty()) {
-                NetworkHooks.openGui(sender, new SimpleMenuProvider((id, playerInventory, player) -> new AmuletBeltMenu(id, playerInventory, stack), new TranslatableComponent(stack.getDescriptionId())), buf -> buf.writeItem(stack));
+            if (sender != null) {
+                ItemStack stack = CuriosApi.getCuriosHelper().findFirstCurio(sender, ModItems.AMULET_BELT.get()).map(SlotResult::stack).orElse(ItemStack.EMPTY);
+                if (!stack.isEmpty()) {
+                    NetworkHooks.openGui(sender, new SimpleMenuProvider((id, playerInventory, player) -> new AmuletBeltMenu(id, playerInventory, stack), new TranslatableComponent(stack.getDescriptionId())), buf -> buf.writeItem(stack));
+                }
             }
         });
         ctx.setPacketHandled(true);

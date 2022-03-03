@@ -40,6 +40,11 @@ import static frostygames0.elementalamulets.items.AmuletBeltItem.HANDLER_SIZE;
  * @date 10.09.2021 23:54
  */
 public class AmuletBeltMenu extends AbstractContainerMenu {
+    private static final int INV_SLOT_START = 5;
+    private static final int INV_SLOT_END = 32;
+    private static final int USE_ROW_START = 32;
+    private static final int USE_ROW_END = 41;
+
     private final ItemStack belt;
     private final IItemHandler playerInventory;
 
@@ -58,7 +63,6 @@ public class AmuletBeltMenu extends AbstractContainerMenu {
         this.bindPlayerInventory(8, 83);
     }
 
-    // TODO Remake it a little
     @Override
     public ItemStack quickMoveStack(Player pPlayer, int index) {
         ItemStack itemStack = ItemStack.EMPTY;
@@ -67,12 +71,18 @@ public class AmuletBeltMenu extends AbstractContainerMenu {
             ItemStack itemStack1 = slot.getItem();
             itemStack = itemStack1.copy();
             if (index >= 0 && index < 5) {
-                if (!this.moveItemStackTo(itemStack1, 5, 41, true)) {
+                if (!this.moveItemStackTo(itemStack1, INV_SLOT_START, USE_ROW_END, true)) {
                     return ItemStack.EMPTY;
                 }
             } else {
-                if (!this.moveItemStackTo(itemStack1, 0, 5, false)) {
-                    return ItemStack.EMPTY;
+                if (!this.moveItemStackTo(itemStack1, 1, 5, false)) {
+                    if (index < INV_SLOT_END) {
+                        if (!this.moveItemStackTo(itemStack1, USE_ROW_START, USE_ROW_END, false)) {
+                            return ItemStack.EMPTY;
+                        }
+                    } else if (!this.moveItemStackTo(itemStack1, INV_SLOT_START, INV_SLOT_END, false)) {
+                        return ItemStack.EMPTY;
+                    }
                 }
             }
 

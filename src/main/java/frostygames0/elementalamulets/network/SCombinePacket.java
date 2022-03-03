@@ -22,6 +22,7 @@ package frostygames0.elementalamulets.network;
 import frostygames0.elementalamulets.blocks.entities.ElementalCombinatorBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.network.NetworkEvent;
@@ -46,11 +47,14 @@ public record SCombinePacket(BlockPos pos) {
     public static void handle(SCombinePacket packet, Supplier<NetworkEvent.Context> sup) {
         NetworkEvent.Context ctx = sup.get();
         ctx.enqueueWork(() -> {
-            Level world = ctx.getSender().level;
-            if (world.hasChunkAt(packet.pos)) {
-                BlockEntity tile = world.getBlockEntity(packet.pos);
-                if (tile instanceof ElementalCombinatorBlockEntity) {
-                    ((ElementalCombinatorBlockEntity) tile).startCombination();
+            ServerPlayer sender = ctx.getSender();
+            if (sender != null) {
+                Level world = sender.level;
+                if (world.hasChunkAt(packet.pos)) {
+                    BlockEntity tile = world.getBlockEntity(packet.pos);
+                    if (tile instanceof ElementalCombinatorBlockEntity) {
+                        ((ElementalCombinatorBlockEntity) tile).startCombination();
+                    }
                 }
             }
         });
