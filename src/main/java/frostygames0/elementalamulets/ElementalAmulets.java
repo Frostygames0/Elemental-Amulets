@@ -92,7 +92,6 @@ public class ElementalAmulets {
 
         forgeBus.addListener(ModCommands::registerCommandsEvent);
         forgeBus.addListener(ModVillagers.Structures::addHouses);
-        forgeBus.addListener(CultTempleStructure::addMobsToSpawn);
     }
 
     // use this instead, when you need a ResourceLocation with mod's id
@@ -108,9 +107,6 @@ public class ElementalAmulets {
     private void commonSetup(final FMLCommonSetupEvent event) {
         ModNetworkHandler.registerMessages();
         event.enqueueWork(() -> {
-            ModStructures.setupStructures();
-            ModStructureFeatures.register();
-
             ModOreFeatures.register();
             ModOrePlacements.register();
 

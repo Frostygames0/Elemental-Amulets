@@ -76,12 +76,11 @@ public class EarthAmuletItem extends AmuletItem {
                 centerPos.getX() + 4, centerPos.getY() + 3, centerPos.getZ() + 4)) {
 
             BlockState blockState = world.getBlockState(blockPos);
-            Block block = blockState.getBlock();
 
-            if (block instanceof BonemealableBlock growable) {
+            if (blockState.getBlock() instanceof BonemealableBlock growable) {
                 if (random.nextInt(50) <= this.getTier(amulet)) {
                     if (growable.isValidBonemealTarget(world, blockPos, blockState, false) &&
-                            ModTags.Blocks.EARTH_AMULET_BOOSTABLE.contains(block)) {
+                            blockState.is(ModTags.Blocks.EARTH_AMULET_BOOSTABLE)) {
 
                         growable.performBonemeal((ServerLevel) world, random, blockPos, blockState);
                         boosted++;

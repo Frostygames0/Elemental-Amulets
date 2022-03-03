@@ -21,6 +21,7 @@ package frostygames0.elementalamulets.world.ores;
 
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.config.ModConfig;
+import net.minecraft.core.Holder;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
@@ -42,12 +43,12 @@ import java.util.List;
  */
 @Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID)
 public class ModOrePlacements {
-    public static final Lazy<PlacedFeature> ELEMENTAL_ORE_UPPER = Lazy.of(() -> PlacementUtils.register(ElementalAmulets.MOD_ID + ":elemental_ore_upper",
-            ModOreFeatures.ELEMENTAL_ORE.get().placed(orePlacement(5, HeightRangePlacement.triangle(VerticalAnchor.absolute(80), VerticalAnchor.absolute(384))))));
-    public static final Lazy<PlacedFeature> ELEMENTAL_ORE_MIDDLE = Lazy.of(() -> PlacementUtils.register(ElementalAmulets.MOD_ID + ":elemental_ore_middle",
-            ModOreFeatures.ELEMENTAL_ORE.get().placed(orePlacement(7, HeightRangePlacement.triangle(VerticalAnchor.absolute(-24), VerticalAnchor.absolute(56))))));
-    public static final Lazy<PlacedFeature> ELEMENTAL_ORE_SMALL = Lazy.of(() -> PlacementUtils.register(ElementalAmulets.MOD_ID + ":elemental_ore_small",
-            ModOreFeatures.ELEMENTAL_ORE_SMALL.get().placed(orePlacement(9, HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(72))))));
+    public static final Lazy<Holder<PlacedFeature>> ELEMENTAL_ORE_UPPER = Lazy.of(() -> PlacementUtils.register(ElementalAmulets.MOD_ID + ":elemental_ore_upper",
+            ModOreFeatures.ELEMENTAL_ORE.get(), orePlacement(5, HeightRangePlacement.triangle(VerticalAnchor.absolute(80), VerticalAnchor.absolute(384)))));
+    public static final Lazy<Holder<PlacedFeature>> ELEMENTAL_ORE_MIDDLE = Lazy.of(() -> PlacementUtils.register(ElementalAmulets.MOD_ID + ":elemental_ore_middle",
+            ModOreFeatures.ELEMENTAL_ORE.get(), orePlacement(7, HeightRangePlacement.triangle(VerticalAnchor.absolute(-24), VerticalAnchor.absolute(56)))));
+    public static final Lazy<Holder<PlacedFeature>> ELEMENTAL_ORE_SMALL = Lazy.of(() -> PlacementUtils.register(ElementalAmulets.MOD_ID + ":elemental_ore_small",
+            ModOreFeatures.ELEMENTAL_ORE_SMALL.get(), orePlacement(9, HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(72)))));
 
     private static List<PlacementModifier> orePlacement(int count, PlacementModifier modifier) {
         return List.of(CountPlacement.of(count), InSquarePlacement.spread(), modifier, BiomeFilter.biome());

@@ -19,12 +19,16 @@
 
 package frostygames0.elementalamulets.world.ores;
 
+import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.init.ModBlocks;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.data.worldgen.features.OreFeatures;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.minecraftforge.common.util.Lazy;
 
@@ -36,10 +40,11 @@ import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 public class ModOreFeatures {
     private static final List<OreConfiguration.TargetBlockState> ELEMENTAL_ORE_TARGETS = List.of(OreConfiguration.target(OreFeatures.STONE_ORE_REPLACEABLES, ModBlocks.ELEMENTAL_ORE.get().defaultBlockState()), OreConfiguration.target(OreFeatures.DEEPSLATE_ORE_REPLACEABLES, ModBlocks.DEEPSLATE_ELEMENTAL_ORE.get().defaultBlockState()));
 
-    public static final Lazy<ConfiguredFeature<?, ?>> ELEMENTAL_ORE = Lazy.of(() -> Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, modPrefix("elemental_ore"),
-            Feature.ORE.configured(new OreConfiguration(ELEMENTAL_ORE_TARGETS, 8))));
-    public static final Lazy<ConfiguredFeature<?, ?>> ELEMENTAL_ORE_SMALL = Lazy.of(() -> Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, modPrefix("elemental_ore_small"),
-            Feature.ORE.configured(new OreConfiguration(ELEMENTAL_ORE_TARGETS, 4))));
+
+    public static final Lazy<Holder<ConfiguredFeature<OreConfiguration, ?>>> ELEMENTAL_ORE = Lazy.of(() -> FeatureUtils.register(ElementalAmulets.MOD_ID + "elemental_ore",
+            Feature.ORE, new OreConfiguration(ELEMENTAL_ORE_TARGETS, 8)));
+    public static final Lazy<Holder<ConfiguredFeature<OreConfiguration, ?>>> ELEMENTAL_ORE_SMALL = Lazy.of(() -> FeatureUtils.register(ElementalAmulets.MOD_ID + "elemental_ore_small",
+            Feature.ORE, new OreConfiguration(ELEMENTAL_ORE_TARGETS, 4)));
 
     public static void register() {
         ELEMENTAL_ORE.get();

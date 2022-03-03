@@ -20,12 +20,16 @@
 package frostygames0.elementalamulets.init;
 
 import frostygames0.elementalamulets.ElementalAmulets;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraftforge.common.Tags;
 
 
@@ -33,36 +37,46 @@ import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 public class ModTags {
     public static class Items {
-        public static final Tag.Named<Item> NECKLACES = tag("necklaces");
-        public static final Tag.Named<Item> ELEMENTS = tag("elements");
-        public static final Tag.Named<Item> SHARD_BLOCKS = tag("shard_blocks");
+        public static final TagKey<Item> NECKLACES = tag("necklaces");
+        public static final TagKey<Item> ELEMENTS = tag("elements");
+        public static final TagKey<Item> SHARD_BLOCKS = tag("shard_blocks");
 
-        public static final Tag.Named<Item> FIRE_ELEMENT_CONVERTIBLE = forge(ElementalAmulets.MOD_ID + "/fire_element_convertible");
-        public static final Tag.Named<Item> WATER_ELEMENT_CONVERTIBLE = forge(ElementalAmulets.MOD_ID + "/water_element_convertible");
-        public static final Tag.Named<Item> AIR_ELEMENT_CONVERTIBLE = forge(ElementalAmulets.MOD_ID + "/air_element_convertible");
-        public static final Tag.Named<Item> EARTH_ELEMENT_CONVERTIBLE = forge(ElementalAmulets.MOD_ID + "/earth_element_convertible");
+        public static final TagKey<Item> FIRE_ELEMENT_CONVERTIBLE = forge(ElementalAmulets.MOD_ID + "/fire_element_convertible");
+        public static final TagKey<Item> WATER_ELEMENT_CONVERTIBLE = forge(ElementalAmulets.MOD_ID + "/water_element_convertible");
+        public static final TagKey<Item> AIR_ELEMENT_CONVERTIBLE = forge(ElementalAmulets.MOD_ID + "/air_element_convertible");
+        public static final TagKey<Item> EARTH_ELEMENT_CONVERTIBLE = forge(ElementalAmulets.MOD_ID + "/earth_element_convertible");
 
-        private static Tag.Named<Item> tag(String name) {
-            return ItemTags.bind(modPrefix(name).toString());
+        private static TagKey<Item> tag(String name) {
+            return ItemTags.create(modPrefix(name));
         }
 
-        private static Tag.Named<Item> forge(String name) {
-            return ItemTags.createOptional(new ResourceLocation("forge", name));
+
+        private static TagKey<Item> forge(String name) {
+            return ItemTags.create(new ResourceLocation("forge", name));
         }
     }
 
     public static class Blocks {
 
-        public static final Tag.Named<Block> EARTH_AMULET_BOOSTABLE = forge(ElementalAmulets.MOD_ID + "/earth_amulet_boostable");
-        public static final Tag.Named<Block> SHARD_BLOCKS = tag("shard_blocks");
-        public static final Tag.Named<Block> ELEMENTAL_ORE = tag("elemental_ore");
+        public static final TagKey<Block> EARTH_AMULET_BOOSTABLE = forge(ElementalAmulets.MOD_ID + "/earth_amulet_boostable");
+        public static final TagKey<Block> SHARD_BLOCKS = tag("shard_blocks");
+        public static final TagKey<Block> ELEMENTAL_ORE = tag("elemental_ore");
 
-        private static Tag.Named<Block> tag(String name) {
-            return BlockTags.bind(modPrefix(name).toString());
+        private static TagKey<Block> tag(String name) {
+            return BlockTags.create(modPrefix(name));
         }
 
-        private static Tags.IOptionalNamedTag<Block> forge(String name) {
-            return BlockTags.createOptional(new ResourceLocation("forge", name));
+
+        private static TagKey<Block> forge(String name) {
+            return BlockTags.create(new ResourceLocation("forge", name));
+        }
+    }
+
+    public static class Structures {
+        public static final TagKey<ConfiguredStructureFeature<?, ?>> ON_JEWELLER_MAP = create("on_jeweller_map");
+
+        private static TagKey<ConfiguredStructureFeature<?, ?>> create(String name) {
+            return TagKey.create(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY, modPrefix(name));
         }
     }
 

@@ -42,8 +42,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.MapItem;
 import net.minecraft.world.item.trading.MerchantOffer;
-import net.minecraft.world.level.levelgen.feature.structures.StructurePoolElement;
-import net.minecraft.world.level.levelgen.feature.structures.StructureTemplatePool;
+import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement;
+import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 import net.minecraft.world.level.saveddata.maps.MapDecoration;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 import net.minecraftforge.common.BasicItemListing;
@@ -126,7 +126,7 @@ public class ModVillagers {
             if (!(pTrader.level instanceof ServerLevel serverworld)) {
                 return null;
             } else {
-                BlockPos blockpos = serverworld.findNearestMapFeature(ModStructures.CULT_TEMPLE.get(), pTrader.blockPosition(), 2000, true);
+                BlockPos blockpos = serverworld.findNearestMapFeature(ModTags.Structures.ON_JEWELLER_MAP, pTrader.blockPosition(), 2000, true);
                 if (blockpos != null) {
                     ItemStack itemstack = MapItem.create(serverworld, blockpos.getX(), blockpos.getZ(), (byte) 3, true, true);
                     MapItem.renderBiomePreviewMap(serverworld, itemstack);
