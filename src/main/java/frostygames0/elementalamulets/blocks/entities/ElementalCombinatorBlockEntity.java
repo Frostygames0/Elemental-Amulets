@@ -88,8 +88,11 @@ public class ElementalCombinatorBlockEntity extends BlockEntity implements MenuP
     private final IItemHandler restrictedHandler = new RestrictiveItemHandler(internalHandler);
     private final LazyOptional<IItemHandler> optional = LazyOptional.of(() -> restrictedHandler);
 
+    @Nullable
+    private ElementalCombination recipe;
     private int combinationTime;
     private int totalTime;
+
     private final ContainerData combinatorData = new ContainerData() {
         @Override
         public int get(int index) {
@@ -121,7 +124,7 @@ public class ElementalCombinatorBlockEntity extends BlockEntity implements MenuP
     public void serverTick() {
         if (level != null) {
             if (this.isCombining()) {
-                ElementalCombination recipe = this.level.getRecipeManager().getRecipeFor(ModRecipes.ELEMENTAL_COMBINATION_TYPE, new RecipeWrapper(internalHandler), this.level).orElse(null);
+                ElementalCombination recipe = this.getCombinationRecipe();
                 if (this.canCombine(recipe)) {
                     this.totalTime = recipe.getCombinationTime();
                     this.combinationTime += this.getFocusedLevel();
@@ -161,6 +164,7 @@ public class ElementalCombinatorBlockEntity extends BlockEntity implements MenuP
         if (this.canCombine(recipe)) {
             ItemStack result = recipe.assemble(new RecipeWrapper(internalHandler));
             NonNullList<ItemStack> remainingItems = recipe.getRemainingItems(new RecipeWrapper(internalHandler));
+
             internalHandler.insertItem(0, result, false);
             for (int i = 1; i < internalHandler.getSlots(); ++i) {
                 internalHandler.extractItem(i, 1, false);
@@ -178,6 +182,16 @@ public class ElementalCombinatorBlockEntity extends BlockEntity implements MenuP
                         });
             }
         }
+    }
+
+    @Nullable
+    private ElementalCombination getCombinationRecipe() {
+        var wrapper = new RecipeWrapper(internalHandler);
+
+        if (this.recipe != null && recipe.matches(wrapper, level))
+            return this.recipe;
+
+        return this.recipe = level.getRecipeManager().getRecipeFor(ModRecipes.ELEMENTAL_COMBINATION_TYPE, wrapper, level).orElse(null);
     }
 
     private boolean canCombine(@Nullable ElementalCombination recipe) {
