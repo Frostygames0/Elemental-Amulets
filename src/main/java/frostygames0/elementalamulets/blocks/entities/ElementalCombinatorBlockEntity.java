@@ -88,8 +88,11 @@ public class ElementalCombinatorBlockEntity extends BlockEntity implements MenuP
     private final IItemHandler restrictedHandler = new RestrictiveItemHandler(internalHandler);
     private final LazyOptional<IItemHandler> optional = LazyOptional.of(() -> restrictedHandler);
 
+    // Caching recipes
     @Nullable
     private ElementalCombination recipe;
+    private final RecipeWrapper wrappedHandler = new RecipeWrapper(internalHandler);
+
     private int combinationTime;
     private int totalTime;
 
@@ -175,7 +178,7 @@ public class ElementalCombinatorBlockEntity extends BlockEntity implements MenuP
 
             Vec3 vector = Vec3.atBottomCenterOf(worldPosition);
             if (level instanceof ServerLevel) {
-                ((ServerLevel) level).getPlayers(player -> vector.distanceToSqr(player.position()) <= 16)
+                ((ServerLevel) level).getPlayers(player -> vector.distanceTo(player.position()) <= 16)
                         .forEach(player -> {
                             ModCriteriaTriggers.ITEM_COMBINED.trigger(player, result, (ServerLevel) level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ());
                             player.awardStat(ModStats.TIMES_COMBINED);
@@ -186,12 +189,10 @@ public class ElementalCombinatorBlockEntity extends BlockEntity implements MenuP
 
     @Nullable
     private ElementalCombination getCombinationRecipe() {
-        var wrapper = new RecipeWrapper(internalHandler);
-
-        if (this.recipe != null && recipe.matches(wrapper, level))
+        if (this.recipe != null && recipe.matches(this.wrappedHandler, level))
             return this.recipe;
 
-        return this.recipe = level.getRecipeManager().getRecipeFor(ModRecipes.ELEMENTAL_COMBINATION_TYPE, wrapper, level).orElse(null);
+        return this.recipe = level.getRecipeManager().getRecipeFor(ModRecipes.ELEMENTAL_COMBINATION_TYPE, this.wrappedHandler, level).orElse(null);
     }
 
     private boolean canCombine(@Nullable ElementalCombination recipe) {
