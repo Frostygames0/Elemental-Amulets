@@ -16,7 +16,7 @@
  *     You should have received a copy of the GNU Lesser General Public License
  *     along with Elemental Amulets.  If not, see <https://www.gnu.org/licenses/>.
  */
-
+/*
 package frostygames0.elementalamulets.client.patchouli;
 
 import frostygames0.elementalamulets.recipes.ElementalCombination;
@@ -63,3 +63,4 @@ public class ElementalCombinationProcessor implements IComponentProcessor {
         return null;
     }
 }
+*/

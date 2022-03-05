@@ -16,7 +16,7 @@
  *     You should have received a copy of the GNU Lesser General Public License
  *     along with Elemental Amulets.  If not, see <https://www.gnu.org/licenses/>.
  */
-
+/*
 package frostygames0.elementalamulets.config;
 
 import frostygames0.elementalamulets.ElementalAmulets;
@@ -26,7 +26,7 @@ import vazkii.patchouli.api.PatchouliAPI;
 /**
  * @author Frostygames0
  * @date 28.10.2021 0:54
- */
+ *
 public class PatchouliFlags {
 
     public static void updateCommon() {
@@ -45,3 +45,4 @@ public class PatchouliFlags {
         }
     }
 }
+*/

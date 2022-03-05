@@ -19,12 +19,8 @@
 
 package frostygames0.elementalamulets.world.structures;
 
-import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.NoiseColumn;
-import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.GenerationStep;
@@ -35,18 +31,12 @@ import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.PieceGenerator;
 import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
 import net.minecraft.world.level.levelgen.structure.pools.JigsawPlacement;
-import net.minecraftforge.common.util.Lazy;
-import net.minecraftforge.event.world.StructureSpawnListGatherEvent;
 
 
-import java.util.List;
 import java.util.Optional;
 
 
 public class CultTempleStructure extends StructureFeature<JigsawConfiguration> {
-
-    public static final Lazy<List<MobSpawnSettings.SpawnerData>> MONSTERS = Lazy.of(() -> ImmutableList.of(new MobSpawnSettings.SpawnerData(EntityType.CREEPER, 100, 1, 2)));
-    public static final Lazy<List<MobSpawnSettings.SpawnerData>> CREATURES = Lazy.of(() -> ImmutableList.of(new MobSpawnSettings.SpawnerData(EntityType.BAT, 100, 1, 4)));
 
     public CultTempleStructure() {
         super(JigsawConfiguration.CODEC, CultTempleStructure::createPiecesGenerator);
@@ -73,10 +63,18 @@ public class CultTempleStructure extends StructureFeature<JigsawConfiguration> {
     public static Optional<PieceGenerator<JigsawConfiguration>> createPiecesGenerator(PieceGeneratorSupplier.Context<JigsawConfiguration> context) {
         if (!isFeatureChunk(context)) return Optional.empty();
 
+        PieceGeneratorSupplier.Context<JigsawConfiguration> newContext = new PieceGeneratorSupplier.Context<>(
+                context.chunkGenerator(), context.biomeSource(),
+                context.seed(), context.chunkPos(),
+                new JigsawConfiguration(context.config().startPool(), 12), // Bypassing Codec's limit of 7 :P
+                context.heightAccessor(), context.validBiome(),
+                context.structureManager(),
+                context.registryAccess());
+
         BlockPos blockpos = context.chunkPos().getMiddleBlockPosition(0);
 
         return JigsawPlacement.addPieces(
-                context,
+                newContext,
                 PoolElementStructurePiece::new,
                 blockpos,
                 false,

@@ -27,12 +27,13 @@ import frostygames0.elementalamulets.client.screens.ElementalCombinatorScreen;
 import frostygames0.elementalamulets.init.ModBlocks;
 import frostygames0.elementalamulets.recipes.ElementalCombination;
 import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.drawable.IDrawableAnimated;
-import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.recipe.IFocusGroup;
+import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
@@ -41,15 +42,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 
-import java.util.Collections;
 import java.util.List;
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 public class ElementalCombinationCategory implements IRecipeCategory<ElementalCombination> {
-    private static final int OUTPUT_SLOT = 0;
-    private static final int ELEMENTAL_SLOT = 1;
-
     public static final ResourceLocation ID = modPrefix("elemental_combination");
     private final IDrawable background;
     private final IDrawable icon;
@@ -106,50 +103,39 @@ public class ElementalCombinationCategory implements IRecipeCategory<ElementalCo
     }
 
     @Override
-    public void setIngredients(ElementalCombination recipe, IIngredients ingredients) {
-        ingredients.setInputIngredients(recipe.getIngredients());
-        ingredients.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
+    public void setRecipe(IRecipeLayoutBuilder builder, ElementalCombination recipe, IFocusGroup focuses) {
+        var ingredients = recipe.getIngredients();
+
+        var slots = List.of(
+                builder.addSlot(RecipeIngredientRole.INPUT, 29, 29),
+                builder.addSlot(RecipeIngredientRole.INPUT, 29, 5),
+                builder.addSlot(RecipeIngredientRole.INPUT, 49, 9),
+                builder.addSlot(RecipeIngredientRole.INPUT, 53, 29),
+                builder.addSlot(RecipeIngredientRole.INPUT, 49, 49),
+                builder.addSlot(RecipeIngredientRole.INPUT, 29, 53),
+                builder.addSlot(RecipeIngredientRole.INPUT, 9, 49),
+                builder.addSlot(RecipeIngredientRole.INPUT, 5, 29),
+                builder.addSlot(RecipeIngredientRole.INPUT, 9, 9)
+        );
+
+        for (int i = 0; i < ingredients.size(); i++) {
+            slots.get(i).addIngredients(ingredients.get(i));
+        }
+
+        builder.addSlot(RecipeIngredientRole.OUTPUT, 128, 29).addItemStack(recipe.getResultItem());
+
+        builder.setShapeless();
     }
 
     @Override
-    public void setRecipe(IRecipeLayout recipeLayout, ElementalCombination recipe, IIngredients ingredients) {
-        IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
-        // Elemental Slot
-        guiItemStacks.init(ELEMENTAL_SLOT, true, 28, 28);
-        // Ingredient slots
-        guiItemStacks.init(2, true, 28, 4);
-        guiItemStacks.init(3, true, 48, 8);
-        guiItemStacks.init(4, true, 52, 28);
-        guiItemStacks.init(5, true, 48, 48);
-        guiItemStacks.init(6, true, 28, 52);
-        guiItemStacks.init(7, true, 8, 48);
-        guiItemStacks.init(8, true, 4, 28);
-        guiItemStacks.init(9, true, 8, 8);
-        // Output slot
-        guiItemStacks.init(OUTPUT_SLOT, false, 127, 28);
-
-        guiItemStacks.set(ingredients);
-
-        recipeLayout.setShapeless();
-    }
-
-    @Override
-    public void draw(ElementalCombination recipe, PoseStack matrixStack, double mouseX, double mouseY) {
-        matrixStack.pushPose();
+    public void draw(ElementalCombination recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
+        stack.pushPose();
         // Drawing arrow
-        this.getArrow(recipe).draw(matrixStack, 84, 29);
+        this.getArrow(recipe).draw(stack, 84, 29);
 
         // Drawing text
         Component cooldown = new TranslatableComponent("jei.elementalamulets.cooldown", recipe.getCombinationTime() / 20.0f);
-        Minecraft.getInstance().font.draw(matrixStack, cooldown, 4, 77, 0xFF808080);
-        matrixStack.popPose();
-    }
-
-    @Override
-    public List<Component> getTooltipStrings(ElementalCombination recipe, double mouseX, double mouseY) {
-        if (mouseX >= 139 && mouseX <= 148 && mouseY <= 5 && mouseY >= 0) {
-            return Collections.singletonList(new TranslatableComponent("jei.elementalamulets.shapeless"));
-        }
-        return Collections.emptyList();
+        Minecraft.getInstance().font.draw(stack, cooldown, 4, 77, 0xFF808080);
+        stack.popPose();
     }
 }

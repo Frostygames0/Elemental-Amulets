@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "elementalamulets:cult_temple",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 50,
+    "separation": 12,
+    "salt": 234235432
+  }
+}

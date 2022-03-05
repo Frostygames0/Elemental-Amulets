@@ -25,6 +25,7 @@ import frostygames0.elementalamulets.init.ModItems;
 import frostygames0.elementalamulets.init.ModTags;
 import frostygames0.elementalamulets.items.amulets.AmuletItem;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.Tags;
@@ -51,8 +52,8 @@ public class ItemTagsProvider extends net.minecraft.data.tags.ItemTagsProvider {
                 ModBlocks.AIR_SHARDS_BLOCK.get().asItem());
 
         // Curios tag
-        this.tag(ItemTags.bind("curios:necklace")).addTag(ModTags.Items.NECKLACES);
-        this.tag(ItemTags.bind("curios:belt")).add(ModItems.AMULET_BELT.get());
+        this.tag(ItemTags.create(new ResourceLocation("curios:necklace"))).addTag(ModTags.Items.NECKLACES);
+        this.tag(ItemTags.create(new ResourceLocation("curios:belt"))).add(ModItems.AMULET_BELT.get());
 
         // Elements
         this.tag(ModTags.Items.ELEMENTS).add(ModItems.AIR_ELEMENT.get(), ModItems.EARTH_ELEMENT.get(), ModItems.FIRE_ELEMENT.get(), ModItems.WATER_ELEMENT.get(), ModItems.ELEMENTAL_SHARDS.get());

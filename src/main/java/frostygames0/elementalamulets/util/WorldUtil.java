@@ -13,7 +13,7 @@ import net.minecraftforge.common.BiomeDictionary;
  */
 public final class WorldUtil {
     public static ResourceKey<Biome> getBiomeAtPos(Level level, BlockPos pos) {
-        return level.getBiomeName(pos).orElseThrow(() -> new NullPointerException("Cannot identify biome at: " + level.dimension().getRegistryName() + ", pos: [" + pos.toShortString() + "]!"));
+        return level.getBiome(pos).unwrapKey().orElseThrow(() -> new NullPointerException("Cannot identify biome at: " + level.dimension().getRegistryName() + ", pos: [" + pos.toShortString() + "]!"));
     }
 
     public static boolean isType(ResourceKey<Biome> biome, BiomeDictionary.Type... types) {

@@ -1,0 +1,34 @@
+{
+  "type": "elementalamulets:cult_temple",
+  "biomes": "#elementalamulets:has_structure/cult_temple",
+  "adapt_noise": false,
+  "spawn_overrides": {
+    "monster": {
+      "bounding_box": "piece",
+      "spawns": [
+        {
+          "type": "minecraft:creeper",
+          "weight": 100,
+          "minCount": 1,
+          "maxCount": 2
+        }
+      ]
+    },
+    "ambient": {
+      "bounding_box": "piece",
+      "spawns": [
+        {
+          "type": "minecraft:bat",
+          "weight": 100,
+          "minCount": 1,
+          "maxCount": 4
+        }
+      ]
+    }
+  },
+  "config": {
+    "start_pool": "elementalamulets:cult_temple/entrance",
+    "_comment": "Overridden in code to 12",
+    "size": 1
+  }
+}

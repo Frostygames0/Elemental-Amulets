@@ -24,13 +24,11 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.Tag;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
-import net.minecraft.world.level.levelgen.feature.StructureFeature;
-import net.minecraftforge.common.Tags;
 
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
@@ -77,6 +75,14 @@ public class ModTags {
 
         private static TagKey<ConfiguredStructureFeature<?, ?>> create(String name) {
             return TagKey.create(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY, modPrefix(name));
+        }
+    }
+
+    public static class Biomes {
+        public static final TagKey<Biome> HAS_CULT_TEMPLE = create("has_structure/cult_temple");
+
+        private static TagKey<Biome> create(String name) {
+            return TagKey.create(Registry.BIOME_REGISTRY, modPrefix(name));
         }
     }
 

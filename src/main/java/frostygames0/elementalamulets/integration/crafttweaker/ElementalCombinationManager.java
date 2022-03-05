@@ -16,7 +16,7 @@
  *     You should have received a copy of the GNU Lesser General Public License
  *     along with Elemental Amulets.  If not, see <https://www.gnu.org/licenses/>.
  */
-
+/*
 package frostygames0.elementalamulets.integration.crafttweaker;
 
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
@@ -41,7 +41,7 @@ import java.util.stream.Collectors;
 /**
  * @author Frostygames0
  * @date 02.06.2021 18:57
- */
+ *
 @Document("mods/elementalamulets/ElementalCombination")
 @ZenRegister
 @ZenCodeType.Name("mods.elementalamulets.ElementalCombination")
@@ -63,7 +63,7 @@ public class ElementalCombinationManager implements IRecipeManager<ElementalComb
      * @docParam elemental <item:elementalamulets:elemental_shards>
      * @docParam ingredients [<item:minecraft:gold_ingot>, <item:minecraft:gold_ingot>]
      * @docParam combinationTime {@link ElementalCombination#DEFAULT_COMBINATION}
-     */
+     *
     @ZenCodeType.Method
     public void addRecipe(String name, IItemStack output, IIngredient[] ingredients, IItemStack elemental, int combinationTime, @ZenCodeType.OptionalBoolean boolean tagTransfer) {
         name = fixRecipeName(name);
@@ -80,3 +80,4 @@ public class ElementalCombinationManager implements IRecipeManager<ElementalComb
         return ModRecipes.ELEMENTAL_COMBINATION_TYPE;
     }
 }
+*/

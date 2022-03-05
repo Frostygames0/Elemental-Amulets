@@ -33,13 +33,17 @@ import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.registration.*;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.Registry;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
 
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -91,11 +95,25 @@ public class JEIPlugin implements IModPlugin {
         // Misc. Description
         registration.addIngredientInfo(new ItemStack(ModItems.ELEMENTAL_GUIDE.get()), VanillaTypes.ITEM, new TranslatableComponent("jei.elementalamulets.guide_book.description"));
         registration.addIngredientInfo(new ItemStack(ModBlocks.ELEMENTAL_COMBINATOR.get()), VanillaTypes.ITEM, new TranslatableComponent("jei.elementalamulets.elemental_combinator.description"));
-        registration.addIngredientInfo(mapTagAsItemList(ModTags.Blocks.ELEMENTAL_ORE), VanillaTypes.ITEM, new TranslatableComponent("jei.elementalamulets.elemental_ore.whereabouts"));
+        registration.addIngredientInfo(mapTagAsBlockList(ModTags.Blocks.ELEMENTAL_ORE), VanillaTypes.ITEM, new TranslatableComponent("jei.elementalamulets.elemental_ore.whereabouts"));
     }
 
-    private static List<ItemStack> mapTagAsItemList(Tag.Named<? extends ItemLike> tag) {
-        return tag.getValues().stream().map(ItemStack::new).collect(Collectors.toList());
+    @SuppressWarnings("deprecation")
+    private static List<ItemStack> mapTagAsItemList(TagKey<Item> itemTag) {
+        return mapToStackList(Registry.ITEM, itemTag);
+    }
+
+    @SuppressWarnings("deprecation")
+    private static List<ItemStack> mapTagAsBlockList(TagKey<Block> blockTag) {
+        return mapToStackList(Registry.BLOCK, blockTag);
+    }
+
+    // Returns list of ItemStack from tags
+    private static <T extends ItemLike> List<ItemStack> mapToStackList(Registry<T> registry, TagKey<T> tag) {
+        var optional = registry.getTag(tag);
+        if (optional.isPresent())
+            return optional.get().stream().map(holder -> new ItemStack(holder.value())).toList();
+        return Collections.emptyList();
     }
 
     @Override

@@ -31,7 +31,7 @@ import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -282,7 +282,7 @@ public class RecipeProvider extends net.minecraft.data.recipes.RecipeProvider {
                 .build(consumer, modPrefix("amulets/" + amulet.getRegistryName().getPath() + "_tier4"));
     }
 
-    private static void classicElementRecipe(ItemLike elementIn, Tag<Item> convertibles, Consumer<FinishedRecipe> consumerIn) {
+    private static void classicElementRecipe(ItemLike elementIn, TagKey<Item> convertibles, Consumer<FinishedRecipe> consumerIn) {
         ElementalCombinationBuilder.create(new ItemStack(elementIn, 2))
                 .addElemental(ModItems.ELEMENTAL_SHARDS.get())
                 .addIngredient(convertibles, ElementalCombination.MAX_INGREDIENTS - 2)

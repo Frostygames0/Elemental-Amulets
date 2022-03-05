@@ -49,7 +49,7 @@ public class FluidWalkerAmuletItem extends AmuletItem {
                 float freeze = Math.min(5, this.getTier(stack) + 1) / 2.0f;
 
                 for (BlockPos blockpos : BlockPos.betweenClosed(pos.offset(-freeze, -1.0f, -freeze), pos.offset(freeze, -1.0f, freeze))) {
-                    if (blockpos.closerThan(entity.position(), freeze)) {
+                    if (blockpos.closerToCenterThan(entity.position(), freeze)) {
 
                         mutablePos.set(blockpos.getX(), blockpos.getY() + 1, blockpos.getZ());
                         BlockState blockstate1 = level.getBlockState(mutablePos);
