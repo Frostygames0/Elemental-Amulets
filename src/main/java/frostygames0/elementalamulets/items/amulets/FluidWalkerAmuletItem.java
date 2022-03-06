@@ -64,6 +64,10 @@ public class FluidWalkerAmuletItem extends AmuletItem {
                             if (canBeFrozen && blockstate.canSurvive(level, blockpos) && level.isUnobstructed(blockstate, blockpos, CollisionContext.empty())) {
                                 level.setBlockAndUpdate(blockpos, blockstate);
                                 level.scheduleTick(blockpos, blockToFreeze, entity.getRandom().nextInt(60, 120));
+
+                                if (entity.getRandom().nextInt((int) (1.5f * this.getTier(stack))) == 0) {
+                                    stack.hurtAndBreak(1, entity, ent -> this.onAmuletBreak(slotContext));
+                                }
                             }
                         }
                     }

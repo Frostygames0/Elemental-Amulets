@@ -41,7 +41,6 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
@@ -116,24 +115,6 @@ public abstract class AmuletItem extends Item implements ICurioItem, ICurioRende
     public int getMaxDamage(ItemStack stack) {
         return super.getMaxDamage(stack) * Math.max(this.getTier(stack), 1);
     }
-
-    // I had to override them, as they used maxDamage and not getMaxDamage()
-    @Override
-    public int getBarWidth(ItemStack pStack) {
-        return Math.round(13.0F - (float) pStack.getDamageValue() * 13.0F / (float) this.getMaxDamage(pStack));
-    }
-
-    @Override
-    public int getBarColor(ItemStack pStack) {
-        float f = Math.max(0.0F, ((float) this.getMaxDamage(pStack) - (float) pStack.getDamageValue()) / (float) this.getMaxDamage(pStack));
-        return Mth.hsvToRgb(f / 3.0F, 1.0F, 1.0F);
-    }
-
-    @Override
-    public boolean canBeDepleted() {
-        return true;
-    }
-    // End of 'fixing'
 
     @Override
     public boolean isEnchantable(ItemStack pStack) {
