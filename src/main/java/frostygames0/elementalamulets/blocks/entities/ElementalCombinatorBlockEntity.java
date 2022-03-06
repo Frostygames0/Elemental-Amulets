@@ -90,6 +90,8 @@ public class ElementalCombinatorBlockEntity extends BlockEntity implements MenuP
 
     @Nullable
     private ElementalCombination recipe;
+    private final RecipeWrapper wrappedHandler = new RecipeWrapper(internalHandler);
+
     private int combinationTime;
     private int totalTime;
 
@@ -186,12 +188,10 @@ public class ElementalCombinatorBlockEntity extends BlockEntity implements MenuP
 
     @Nullable
     private ElementalCombination getCombinationRecipe() {
-        var wrapper = new RecipeWrapper(internalHandler);
-
-        if (this.recipe != null && recipe.matches(wrapper, level))
+        if (this.recipe != null && recipe.matches(wrappedHandler, level))
             return this.recipe;
 
-        return this.recipe = level.getRecipeManager().getRecipeFor(ModRecipes.ELEMENTAL_COMBINATION_TYPE, wrapper, level).orElse(null);
+        return this.recipe = level.getRecipeManager().getRecipeFor(ModRecipes.ELEMENTAL_COMBINATION_TYPE, wrappedHandler, level).orElse(null);
     }
 
     private boolean canCombine(@Nullable ElementalCombination recipe) {

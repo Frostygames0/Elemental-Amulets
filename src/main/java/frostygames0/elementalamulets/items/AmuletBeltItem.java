@@ -83,7 +83,7 @@ public class AmuletBeltItem extends Item implements ICurioItem {
             }
         });
         pTooltip.add(new TranslatableComponent("item.elementalamulets.amulet_belt.tooltip").withStyle(ChatFormatting.GRAY));
-        pTooltip.add(new TranslatableComponent("item.elementalamulets.amulet_belt." + (Screen.hasShiftDown() ? "instability" : "collapsed_warn")).withStyle(ChatFormatting.DARK_GRAY));
+        pTooltip.add(new TranslatableComponent("item.elementalamulets.amulet_belt." + (Screen.hasShiftDown() ? "instability" : "collapsed_warn")).withStyle(ChatFormatting.RED));
     }
 
     @Override
