@@ -178,7 +178,7 @@ public class ElementalCombinatorBlockEntity extends BlockEntity implements MenuP
 
             Vec3 vector = Vec3.atBottomCenterOf(worldPosition);
             if (level instanceof ServerLevel) {
-                ((ServerLevel) level).getPlayers(player -> vector.distanceTo(player.position()) <= 16)
+                ((ServerLevel) level).getPlayers(player -> vector.distanceToSqr(player.position()) <= 16)
                         .forEach(player -> {
                             ModCriteriaTriggers.ITEM_COMBINED.trigger(player, result, (ServerLevel) level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ());
                             player.awardStat(ModStats.TIMES_COMBINED);
