@@ -34,6 +34,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.ModList;
+import vazkii.patchouli.api.PatchouliAPI;
 
 
 import javax.annotation.Nullable;
@@ -57,7 +58,7 @@ public class ElementalGuideItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
         if (playerIn instanceof ServerPlayer) {
             if (ModList.get().isLoaded("patchouli")) {
-                //PatchouliAPI.get().openBookGUI((ServerPlayer) playerIn, BOOK_ID);
+                PatchouliAPI.get().openBookGUI((ServerPlayer) playerIn, BOOK_ID);
                 ModCriteriaTriggers.SUCCESS_USE.trigger((ServerPlayer) playerIn, playerIn.getItemInHand(handIn));
                 playerIn.awardStat(ModStats.GUIDE_OPENED);
                 return InteractionResultHolder.success(playerIn.getItemInHand(handIn));
