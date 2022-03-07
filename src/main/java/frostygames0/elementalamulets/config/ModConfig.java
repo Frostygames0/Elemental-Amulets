@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2021
+ *  Copyright (c) 2021-2022
  *
  *     This file is part of Elemental Amulets, a Minecraft Mod.
  *
@@ -176,7 +176,7 @@ public class ModConfig {
 
         public Common(ForgeConfigSpec.Builder builder) {
             builder.push("World generation");
-            generateCultTemple = builder.comment("Generate Cult's temple ruins? [DEFAULT: true, requires world restart]").translation("config.elementalamulets.generate_cult_temple").worldRestart().define("generate_cult_temple", true);
+            generateCultTemple = builder.comment("[DOESN'T WORK IN 1.18+] Generate Cult's temple ruins? [DEFAULT: true, requires world restart]").translation("config.elementalamulets.generate_cult_temple").worldRestart().define("generate_cult_temple", true);
             generateJewellerHouse = builder.comment("Generate Jeweller's house? [DEFAULT: true, requires world restart]").translation("config.elementalamulets.generate_jeweller_house").worldRestart().define("generate_jeweller_house", true);
             generateOres = builder.comment("Generate Elemental Shards ore? [DEFAULT: true, requires world restart]").translation("config.elementalamulets.generate_ores").worldRestart().define("generate_ores", true);
             builder.pop();

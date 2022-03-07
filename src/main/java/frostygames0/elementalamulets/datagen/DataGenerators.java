@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2021
+ *  Copyright (c) 2021-2022
  *
  *     This file is part of Elemental Amulets, a Minecraft Mod.
  *
@@ -22,8 +22,10 @@ package frostygames0.elementalamulets.datagen;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.datagen.loottables.LootTableProvider;
 import frostygames0.elementalamulets.datagen.recipes.RecipeProvider;
+import frostygames0.elementalamulets.datagen.tags.BiomeTagsProvider;
 import frostygames0.elementalamulets.datagen.tags.BlockTagsProvider;
 import frostygames0.elementalamulets.datagen.tags.ItemTagsProvider;
+import frostygames0.elementalamulets.datagen.tags.StructureTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -44,6 +46,8 @@ public class DataGenerators {
             BlockTagsProvider blockTagsProvider = new BlockTagsProvider(generator, helper);
             generator.addProvider(blockTagsProvider);
             generator.addProvider(new ItemTagsProvider(generator, blockTagsProvider, helper));
+            generator.addProvider(new BiomeTagsProvider(generator, helper));
+            generator.addProvider(new StructureTagsProvider(generator, helper));
 
             generator.addProvider(new RecipeProvider(generator));
             generator.addProvider(new LootTableProvider(generator));

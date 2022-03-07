@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2021
+ *  Copyright (c) 2021-2022
  *
  *     This file is part of Elemental Amulets, a Minecraft Mod.
  *
@@ -19,7 +19,6 @@
 
 package frostygames0.elementalamulets.init;
 
-import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.mixin.accessors.InvokerRecipeManager;
 import frostygames0.elementalamulets.recipes.ElementalCombination;
 import frostygames0.elementalamulets.recipes.ingredient.AmuletIngredient;
@@ -40,15 +39,16 @@ import java.util.Map;
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 public class ModRecipes {
+    private static final ResourceLocation ELEMENTAL_COMBINATION_LOC = modPrefix("elemental_combination");
 
-    public static final RecipeType<ElementalCombination> ELEMENTAL_COMBINATION_TYPE = RecipeType.register(ElementalAmulets.MOD_ID + ":elemental_combination");
+    public static final RecipeType<ElementalCombination> ELEMENTAL_COMBINATION_TYPE = RecipeType.register(ELEMENTAL_COMBINATION_LOC.toString());
 
-    public static final RegistryObject<RecipeSerializer<ElementalCombination>> ELEMENTAL_COMBINATION = RegistryObject.of(modPrefix("elemental_combination"), ForgeRegistries.RECIPE_SERIALIZERS);
+    public static final RegistryObject<RecipeSerializer<ElementalCombination>> ELEMENTAL_COMBINATION = RegistryObject.of(ELEMENTAL_COMBINATION_LOC, ForgeRegistries.RECIPE_SERIALIZERS);
 
     public static void registerSerializers(RegistryEvent.Register<RecipeSerializer<?>> event) {
         CraftingHelper.register(modPrefix("amulet_ingredient"), AmuletIngredient.Serializer.INSTANCE);
 
-        event.getRegistry().register(new ElementalCombination.Serializer().setRegistryName(modPrefix("elemental_combination")));
+        event.getRegistry().register(new ElementalCombination.Serializer().setRegistryName(ELEMENTAL_COMBINATION_LOC));
     }
 
     public static <T extends Recipe<C>, C extends Container> Map<ResourceLocation, T> getRecipesMap(RecipeType<T> type, Level world) {

@@ -110,15 +110,15 @@ dependencies {
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curios_version}:api")
 
     //Patchouli API
-    //compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")
-    //runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
+    compileOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}:api")
+    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
 
     // Just Enough Items
     compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api")
     runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
 
     // CraftTweaker
-    //compileOnly fg.deobf("com.blamejared.crafttweaker:CraftTweaker-forge-${crafttweaker_version}")
+    //compileOnly fg.deobf("com.blamejared.crafttweaker:CraftTweaker-forge-${mc_version}:${crafttweaker_version}")
 }
 
 mixin {

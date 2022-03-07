@@ -32,8 +32,8 @@ issueTrackerURL="https://github.com/Frostygames0/elemental-amulets/issues"
         mandatory=true
         versionRange="[1.18.2-5.0.6.3,)"
 
-      #[[dependencies.elementalamulets]]
-        #modId="patchouli"
-        #mandatory=false
-        #versionRange="[1.18.1-65,)"
+      [[dependencies.elementalamulets]]
+        modId="patchouli"
+        mandatory=false
+        versionRange="[1.18.2-66,)"
 
