@@ -50,6 +50,6 @@ public class StructureTagsProvider extends TagsProvider<ConfiguredStructureFeatu
 
     @Override
     public String getName() {
-        return "Configured structure feature tags";
+        return "Configured Structure Feature Tags";
     }
 }

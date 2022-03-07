@@ -46,6 +46,6 @@ public class BiomeTagsProvider extends TagsProvider<Biome> {
 
     @Override
     public String getName() {
-        return "Biome tags provider";
+        return "Biome Tags";
     }
 }

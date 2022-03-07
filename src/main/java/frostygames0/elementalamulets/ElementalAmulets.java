@@ -87,6 +87,7 @@ public class ElementalAmulets {
 
         bus.addListener(this::enqueueIMC);
         bus.addListener(this::commonSetup);
+        bus.addListener(ModVillagers::handleRenaming); // Changed poi type's name from jeweller_poi to elemental_combinator
 
         forgeBus.addListener(ModCommands::registerCommandsEvent);
         forgeBus.addListener(ModVillagers.Structures::addHouses);

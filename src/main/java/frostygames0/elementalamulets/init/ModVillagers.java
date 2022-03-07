@@ -46,6 +46,7 @@ import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 import net.minecraft.world.level.saveddata.maps.MapDecoration;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 import net.minecraftforge.common.BasicItemListing;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.event.village.WandererTradesEvent;
@@ -63,19 +64,30 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
+
 @Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID)
 public class ModVillagers {
     public static final DeferredRegister<VillagerProfession> PROFESSIONS = DeferredRegister.create(ForgeRegistries.PROFESSIONS, ElementalAmulets.MOD_ID);
     public static final DeferredRegister<PoiType> POI_TYPES = DeferredRegister.create(ForgeRegistries.POI_TYPES, ElementalAmulets.MOD_ID);
 
-    public static final RegistryObject<PoiType> JEWELLER_POI = POI_TYPES.register("jeweller",
-            () -> new PoiType("jeweller", PoiType.getBlockStates(ModBlocks.ELEMENTAL_COMBINATOR.get()), 1, 1));
+    public static final RegistryObject<PoiType> ELEMENTAL_COMBINATOR_POI = POI_TYPES.register("elemental_combinator",
+            () -> new PoiType("elemental_combinator", PoiType.getBlockStates(ModBlocks.ELEMENTAL_COMBINATOR.get()), 1, 1));
     public static final RegistryObject<VillagerProfession> JEWELLER = PROFESSIONS.register("jeweller",
-            () -> new VillagerProfession("jeweller", JEWELLER_POI.get(), ImmutableSet.of(ModItems.ELEMENTAL_ORE.get(), ModItems.FIRE_ELEMENT.get(), ModItems.EARTH_ELEMENT.get(), ModItems.WATER_ELEMENT.get(), ModItems.AIR_ELEMENT.get()), ImmutableSet.of(), SoundEvents.ENCHANTMENT_TABLE_USE));
+            () -> new VillagerProfession("jeweller", ELEMENTAL_COMBINATOR_POI.get(), ImmutableSet.of(ModItems.ELEMENTAL_ORE.get(), ModItems.FIRE_ELEMENT.get(), ModItems.EARTH_ELEMENT.get(), ModItems.WATER_ELEMENT.get(), ModItems.AIR_ELEMENT.get()), ImmutableSet.of(), SoundEvents.ENCHANTMENT_TABLE_USE));
 
     public static void register(IEventBus bus) {
         POI_TYPES.register(bus);
         PROFESSIONS.register(bus);
+    }
+
+    // Changed poi type's name from jeweller_poi to elemental_combinator
+    public static void handleRenaming(final RegistryEvent.MissingMappings<PoiType> event) {
+        for (var mapping : event.getMappings(ElementalAmulets.MOD_ID)) {
+            if (mapping.key.equals(modPrefix("jeweller_poi")))
+                mapping.remap(ELEMENTAL_COMBINATOR_POI.get());
+            break;
+        }
     }
 
     @SubscribeEvent
