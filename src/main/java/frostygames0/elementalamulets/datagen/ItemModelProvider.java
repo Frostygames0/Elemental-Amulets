@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2021
+ *  Copyright (c) 2021-2022
  *
  *     This file is part of Elemental Amulets, a Minecraft Mod.
  *

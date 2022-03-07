@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2021
+ *  Copyright (c) 2021-2022
  *
  *     This file is part of Elemental Amulets, a Minecraft Mod.
  *
@@ -32,7 +32,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemCooldowns;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import top.theillusivec4.curios.api.SlotContext;
