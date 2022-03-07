@@ -19,13 +19,6 @@
 
 /**
  * @author Frostygames0
- * @date 26.11.2021 18:42
+ * @date 07.03.2022 15:36
  */
-@ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
-package frostygames0.elementalamulets.blocks;
-
-import net.minecraft.MethodsReturnNonnullByDefault;
-
-
-import javax.annotation.ParametersAreNonnullByDefault;
+package frostygames0.elementalamulets.datagen.tags;
