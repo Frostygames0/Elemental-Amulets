@@ -121,10 +121,10 @@ public class ElementalCombinationBuilder {
 
     private void validate() {
         if (this.elemental == null || this.elemental.getMatchingStack().isEmpty())
-            throw new IllegalStateException("Elemental cannot be empty!");
+            throw new IllegalArgumentException("Elemental cannot be empty!");
         if (this.ingredients.size() > 8)
-            throw new IllegalStateException("Elemental combinator has only 8 ingredient slots!");
-        if (this.ingredients.isEmpty()) throw new IllegalStateException("Ingredients cannot be empty!");
+            throw new IllegalArgumentException("Elemental combinator has only 8 ingredient slots!");
+        if (this.ingredients.isEmpty()) throw new IllegalArgumentException("Ingredients cannot be empty!");
     }
 
 

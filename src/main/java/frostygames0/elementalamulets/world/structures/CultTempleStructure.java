@@ -60,7 +60,7 @@ public class CultTempleStructure extends StructureFeature<JigsawConfiguration> {
     }
 
 
-    protected static boolean isFeatureChunk(PieceGeneratorSupplier.Context<JigsawConfiguration> context) {
+    private static boolean isFeatureChunk(PieceGeneratorSupplier.Context<JigsawConfiguration> context) {
         BlockPos centerOfChunk = context.chunkPos().getWorldPosition();
 
         ChunkGenerator chunkGen = context.chunkGenerator();
