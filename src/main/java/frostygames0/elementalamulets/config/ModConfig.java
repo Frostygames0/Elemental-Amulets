@@ -259,14 +259,14 @@ public class ModConfig {
     public static void configEvent(final ModConfigEvent event) {
         if (event.getConfig().getSpec() == ModConfig.SERVER_SPEC) {
             CachedValues.cacheServerConfig();
-            //PatchouliFlags.updateServer();
+            PatchouliFlags.updateServer();
         }
         if (event.getConfig().getSpec() == ModConfig.CLIENT_SPEC) {
             CachedValues.cacheClientConfig();
         }
         if (event.getConfig().getSpec() == ModConfig.COMMON_SPEC) {
             CachedValues.cacheCommonConfig();
-            //PatchouliFlags.updateCommon();
+            PatchouliFlags.updateCommon();
         }
     }
 

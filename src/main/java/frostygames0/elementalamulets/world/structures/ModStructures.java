@@ -19,7 +19,9 @@
 
 package frostygames0.elementalamulets.world.structures;
 
+import com.google.common.collect.ImmutableMap;
 import frostygames0.elementalamulets.ElementalAmulets;
+import net.minecraft.util.datafix.fixes.StructuresBecomeConfiguredFix;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
 import net.minecraftforge.registries.DeferredRegister;
@@ -30,4 +32,18 @@ public class ModStructures {
     public static final DeferredRegister<StructureFeature<?>> STRUCTURES = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, ElementalAmulets.MOD_ID);
 
     public static final RegistryObject<StructureFeature<JigsawConfiguration>> CULT_TEMPLE = STRUCTURES.register("cult_temple", CultTempleStructure::new);
+
+    /*
+     * TEMPORARY #8505 FIX, IF FORGE DOESN'T FIX IT BEFORE RELEASE
+     * I'm changing data fixer's conversion map to include my structure,
+     * as absence of structure here causes exception and chunk regeneration
+     */
+    public static void fixStructure() {
+        String id = ModStructures.CULT_TEMPLE.getId().toString();
+
+        StructuresBecomeConfiguredFix.CONVERSION_MAP = ImmutableMap.<String, StructuresBecomeConfiguredFix.Conversion>builder()
+                .putAll(StructuresBecomeConfiguredFix.CONVERSION_MAP)
+                .put(id, StructuresBecomeConfiguredFix.Conversion.trivial(id))
+                .build();
+    }
 }
