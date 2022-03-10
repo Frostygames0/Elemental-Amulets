@@ -15,82 +15,122 @@
   },
   "criteria": {
     "fire_amulet": {
-      "trigger": "elementalamulets:success_use_item",
+      "trigger": "curios:equip_curio",
       "conditions": {
         "item": {
-          "items": ["elementalamulets:fire_amulet"]
+          "items": [
+            "elementalamulets:fire_amulet"
+          ]
         }
       }
     },
     "water_amulet": {
-      "trigger": "elementalamulets:success_use_item",
+      "trigger": "curios:equip_curio",
       "conditions": {
         "item": {
-          "items": ["elementalamulets:water_amulet"]
+          "items": [
+            "elementalamulets:water_amulet"
+          ]
         }
       }
     },
     "earth_amulet": {
-      "trigger": "elementalamulets:success_use_item",
+      "trigger": "curios:equip_curio",
       "conditions": {
         "item": {
-          "items": ["elementalamulets:earth_amulet"]
+          "items": [
+            "elementalamulets:earth_amulet"
+          ]
         }
       }
     },
     "air_amulet": {
-      "trigger": "elementalamulets:success_use_item",
+      "trigger": "curios:equip_curio",
       "conditions": {
         "item": {
-          "items": ["elementalamulets:air_amulet"]
+          "items": [
+            "elementalamulets:air_amulet"
+          ]
         }
       }
     },
     "speed_amulet": {
-      "trigger": "elementalamulets:success_use_item",
+      "trigger": "curios:equip_curio",
       "conditions": {
         "item": {
-          "items": ["elementalamulets:speed_amulet"]
+          "items": [
+            "elementalamulets:speed_amulet"
+          ]
         }
       }
     },
     "jump_amulet": {
-      "trigger": "elementalamulets:success_use_item",
+      "trigger": "curios:equip_curio",
       "conditions": {
         "item": {
-          "items": ["elementalamulets:jump_amulet"]
+          "items": [
+            "elementalamulets:jump_amulet"
+          ]
         }
       }
     },
     "invisibility_amulet": {
-      "trigger": "elementalamulets:success_use_item",
+      "trigger": "curios:equip_curio",
       "conditions": {
         "item": {
-          "items": ["elementalamulets:invisibility_amulet"]
+          "items": [
+            "elementalamulets:invisibility_amulet"
+          ]
         }
       }
     },
     "protection_amulet": {
-      "trigger": "elementalamulets:success_use_item",
+      "trigger": "curios:equip_curio",
       "conditions": {
         "item": {
-          "items": ["elementalamulets:protection_amulet"]
+          "items": [
+            "elementalamulets:protection_amulet"
+          ]
         }
       }
     },
     "knockback_amulet": {
-      "trigger": "elementalamulets:success_use_item",
+      "trigger": "curios:equip_curio",
       "conditions": {
         "item": {
-          "items": ["elementalamulets:knockback_amulet"]
+          "items": [
+            "elementalamulets:knockback_amulet"
+          ]
         }
       }
     },
     "pacifying_amulet": {
-      "trigger": "elementalamulets:success_use_item",
+      "trigger": "curios:equip_curio",
       "conditions": {
         "item": {
-          "items": ["elementalamulets:pacifying_amulet"]
+          "items": [
+            "elementalamulets:pacifying_amulet"
+          ]
+        }
+      }
+    },
+    "water_walker_amulet": {
+      "trigger": "curios:equip_curio",
+      "conditions": {
+        "item": {
+          "items": [
+            "elementalamulets:water_walker_amulet"
+          ]
+        }
+      }
+    },
+    "lava_walker_amulet": {
+      "trigger": "curios:equip_curio",
+      "conditions": {
+        "item": {
+          "items": [
+            "elementalamulets:lava_walker_amulet"
+          ]
         }
       }
     }
@@ -125,6 +165,12 @@
     ],
     [
       "pacifying_amulet"
+    ],
+    [
+      "water_walker_amulet"
+    ],
+    [
+      "lava_walker_amulet"
     ]
   ]
 }

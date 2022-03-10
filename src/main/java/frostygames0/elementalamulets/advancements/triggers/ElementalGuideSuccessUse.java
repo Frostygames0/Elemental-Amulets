@@ -20,27 +20,26 @@
 package frostygames0.elementalamulets.advancements.triggers;
 
 import com.google.gson.JsonObject;
-import net.minecraft.advancements.critereon.*;
+import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import net.minecraft.advancements.critereon.DeserializationContext;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.item.ItemStack;
 
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 /**
- * Works like ConsumeItemTrigger but triggers ONLY when action was successful
- * E.G: When amulet is worn or guide is opened
- *
  * @author Frostygames0
  * @date 02.06.2021 10:01
  */
-public class ItemSuccessUseTrigger extends SimpleCriterionTrigger<ItemSuccessUseTrigger.Instance> {
-    public static final ResourceLocation ID = modPrefix("success_use_item");
+public class ElementalGuideSuccessUse extends SimpleCriterionTrigger<ElementalGuideSuccessUse.Instance> {
+    public static final ResourceLocation ID = modPrefix("elemental_guide_used");
 
     @Override
     protected Instance createInstance(JsonObject json, EntityPredicate.Composite entityPredicate, DeserializationContext conditionsParser) {
-        return new ItemSuccessUseTrigger.Instance(entityPredicate, ItemPredicate.fromJson(json.get("item")));
+        return new ElementalGuideSuccessUse.Instance(entityPredicate);
     }
 
     @Override
@@ -48,24 +47,13 @@ public class ItemSuccessUseTrigger extends SimpleCriterionTrigger<ItemSuccessUse
         return ID;
     }
 
-    public void trigger(ServerPlayer player, ItemStack stack) {
-        trigger(player, instance -> instance.test(stack));
+    public void trigger(ServerPlayer player) {
+        trigger(player, instance -> true);
     }
 
     public static class Instance extends AbstractCriterionTriggerInstance {
-        private final ItemPredicate item;
-
-        public Instance(EntityPredicate.Composite playerCondition, ItemPredicate item) {
+        public Instance(EntityPredicate.Composite playerCondition) {
             super(ID, playerCondition);
-            this.item = item;
-        }
-
-        boolean test(ItemStack stack) {
-            return this.item.matches(stack);
-        }
-
-        public ItemPredicate getItem() {
-            return this.item;
         }
     }
 }
