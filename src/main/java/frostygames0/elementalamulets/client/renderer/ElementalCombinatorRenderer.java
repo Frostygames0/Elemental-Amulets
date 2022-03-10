@@ -35,10 +35,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.items.CapabilityItemHandler;
 
-/**
- * @author Frostygames0
- * @date 13.06.2021 18:11
- */
 public class ElementalCombinatorRenderer implements BlockEntityRenderer<ElementalCombinatorBlockEntity> {
 
     public ElementalCombinatorRenderer(BlockEntityRendererProvider.Context pContext) {

@@ -34,10 +34,6 @@ import net.minecraft.world.item.ItemCooldowns;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
-/**
- * @author Frostygames0
- * @date 20.10.2021 20:10
- */
 class PacifyingAmuletEffect {
     static void onLivingHurt(final LivingHurtEvent event) {
         if (event.getEntityLiving() instanceof Player player) {

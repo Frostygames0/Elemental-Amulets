@@ -25,10 +25,6 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 
-/**
- * @author Frostygames0
- * @date 19.02.2022 19:01
- */
 class FluidWalkerAmuletEffect {
     static class Lava {
         static void onLivingAttack(LivingAttackEvent event) {

@@ -31,10 +31,6 @@ import net.minecraft.world.entity.player.Inventory;
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
-/**
- * @author Frostygames0
- * @date 10.09.2021 23:55
- */
 public class AmuletBeltScreen extends AbstractContainerScreen<AmuletBeltMenu> {
     public static final ResourceLocation GUI = modPrefix("textures/gui/amulet_belt_gui.png");
 

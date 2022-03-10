@@ -23,11 +23,6 @@ import frostygames0.elementalamulets.ElementalAmulets;
 import net.minecraftforge.fml.ModList;
 import vazkii.patchouli.api.PatchouliAPI;
 
-/**
- * @author Frostygames0
- * @date 28.10.2021 0:54
- */
-
 public class PatchouliFlags {
 
     public static void updateCommon() {

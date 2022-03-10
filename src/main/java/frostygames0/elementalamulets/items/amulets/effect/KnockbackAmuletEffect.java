@@ -29,10 +29,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
-/**
- * @author Frostygames0
- * @date 09.10.2021 11:51
- */
 class KnockbackAmuletEffect {
     static void onLivingHurt(final LivingHurtEvent event) {
         if (event.getEntityLiving() instanceof Player player) {

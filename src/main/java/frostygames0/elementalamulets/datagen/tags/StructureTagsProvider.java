@@ -34,10 +34,6 @@ import org.jetbrains.annotations.Nullable;
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
-/**
- * @author Frostygames0
- * @date 07.03.2022 14:52
- */
 public class StructureTagsProvider extends TagsProvider<ConfiguredStructureFeature<?, ?>> {
     public StructureTagsProvider(DataGenerator pGenerator, @Nullable ExistingFileHelper existingFileHelper) {
         super(pGenerator, BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, ElementalAmulets.MOD_ID, existingFileHelper, TagManager.getTagDir(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE.key()).substring(5));

@@ -17,12 +17,6 @@
  *     along with Elemental Amulets.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-/**
- * @author Frostygames0
- * @date 26.11.2021 18:42
- * <p>
- * This a package for amulet effects, all effect classes are package-private, since I don't use them anywhere else and using it anywhere else is a bad idea :)
- */
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 package frostygames0.elementalamulets.items.amulets.effect;

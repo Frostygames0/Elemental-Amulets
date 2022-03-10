@@ -30,10 +30,6 @@ import net.minecraftforge.fml.ModList;
 import javax.annotation.Nullable;
 import java.util.Map;
 
-/**
- * @author Frostygames0
- * @date 02.06.2021 18:24
- */
 public class PatchouliUtils {
     private static boolean playerWarned;
 

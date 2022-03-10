@@ -32,10 +32,6 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
-/**
- * @author Frostygames0
- * @date 23.10.2021 13:05
- */
 public class AncientTabletItem extends Item {
     private static final Random RANDOM = new Random();
 

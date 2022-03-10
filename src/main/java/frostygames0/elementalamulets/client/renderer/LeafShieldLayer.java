@@ -39,10 +39,6 @@ import net.minecraft.world.item.ItemStack;
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
-/**
- * @author Frostygames0
- * @date 10.10.2021 11:33
- */
 public class LeafShieldLayer<T extends LivingEntity, M extends EntityModel<T>> extends RenderLayer<T, M> {
 
     private final LeafShield<T> leafShieldModel;

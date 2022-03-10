@@ -30,10 +30,6 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-/**
- * @author Frostygames0
- * @date 08.10.2021 23:08
- */
 public record SCombinePacket(BlockPos pos) {
 
     public SCombinePacket(FriendlyByteBuf buf) {

@@ -34,12 +34,8 @@ import net.minecraft.world.level.Level;
 import javax.annotation.Nullable;
 import java.util.List;
 
-/**
- * I made this class because I need elements to have description and multi-name
- *
- * @author Frostygames0
- * @date 01.06.2021 17:40
- */
+
+//I made this class because I need elements to have description and multi-name
 public class ElementItem extends Item {
 
     public ElementItem(Rarity color) {

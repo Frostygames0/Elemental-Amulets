@@ -58,10 +58,6 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * @author Frostygames0
- * @date 10.09.2021 23:51
- */
 public class AmuletBeltItem extends Item implements ICurioItem {
     private static final String WEARER_UUID_TAG = ElementalAmulets.MOD_ID + ":wearer_UUID";
 

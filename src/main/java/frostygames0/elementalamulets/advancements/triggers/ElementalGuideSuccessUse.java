@@ -30,10 +30,6 @@ import net.minecraft.server.level.ServerPlayer;
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
-/**
- * @author Frostygames0
- * @date 02.06.2021 10:01
- */
 public class ElementalGuideSuccessUse extends SimpleCriterionTrigger<ElementalGuideSuccessUse.Instance> {
     public static final ResourceLocation ID = modPrefix("elemental_guide_used");
 

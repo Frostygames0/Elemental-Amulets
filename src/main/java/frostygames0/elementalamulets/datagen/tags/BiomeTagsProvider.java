@@ -30,10 +30,6 @@ import net.minecraft.world.level.biome.Biomes;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
 
-/**
- * @author Frostygames0
- * @date 07.03.2022 14:51
- */
 public class BiomeTagsProvider extends TagsProvider<Biome> {
     public BiomeTagsProvider(DataGenerator pGenerator, @Nullable ExistingFileHelper existingFileHelper) {
         super(pGenerator, BuiltinRegistries.BIOME, ElementalAmulets.MOD_ID, existingFileHelper, TagManager.getTagDir(BuiltinRegistries.BIOME.key()).substring(5));

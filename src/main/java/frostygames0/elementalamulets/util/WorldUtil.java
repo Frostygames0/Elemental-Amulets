@@ -26,10 +26,6 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 
 
-/**
- * @author Frostygames0
- * @date 30.01.2022 1:13
- */
 public final class WorldUtil {
     public static ResourceKey<Biome> getBiomeAtPos(Level level, BlockPos pos) {
         return level.getBiome(pos).unwrapKey().orElseThrow(() -> new NullPointerException("Cannot identify biome at: " + level.dimension().getRegistryName() + ", pos: [" + pos.toShortString() + "]!"));

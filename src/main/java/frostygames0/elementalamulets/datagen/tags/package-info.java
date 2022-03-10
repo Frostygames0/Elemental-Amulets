@@ -17,11 +17,6 @@
  *     along with Elemental Amulets.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-/**
- * @author Frostygames0
- * @date 07.03.2022 15:17
- */
-
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 package frostygames0.elementalamulets.datagen.tags;

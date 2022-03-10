@@ -33,10 +33,6 @@ import top.theillusivec4.curios.api.SlotContext;
 
 import java.util.function.Supplier;
 
-/**
- * @author Frostygames0
- * @date 17.02.2022 13:34
- */
 public class FluidWalkerAmuletItem extends AmuletItem {
 
     private final Supplier<? extends Block> block;

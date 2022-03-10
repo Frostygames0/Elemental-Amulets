@@ -43,10 +43,6 @@ import java.util.List;
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
-/**
- * @author Frostygames0
- * @date 21.09.2021 15:47
- */
 public class LootTableModifiers {
 
     public static void registerLootModifierSerializer(RegistryEvent.Register<GlobalLootModifierSerializer<?>> event) {

@@ -26,10 +26,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-/**
- * @author Frostygames0
- * @date 21.10.2021 16:14
- */
 public final class AttributeUtil {
     public static void applyModifier(@Nullable AttributeInstance attribute, AttributeModifier modifier) {
         if (attribute != null && !attribute.hasModifier(modifier)) {

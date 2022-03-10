@@ -45,10 +45,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import javax.annotation.Nullable;
 import java.util.List;
 
-/**
- * @author Frostygames0
- * @date 15.09.2021 18:33
- */
 @SuppressWarnings("deprecation")
 public class CelestialFocus extends Block implements SimpleWaterloggedBlock {
 

@@ -26,10 +26,6 @@ import net.minecraft.stats.Stats;
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
-/**
- * @author Frostygames0
- * @date 26.09.2021 17:22
- */
 public class ModStats {
     public static final ResourceLocation AMULET_WORN_STAT = modPrefix("amulets_worn");
     public static final ResourceLocation TIMES_COMBINED = modPrefix("times_combined");
