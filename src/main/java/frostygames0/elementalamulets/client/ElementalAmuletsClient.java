@@ -17,9 +17,9 @@
  *     along with Elemental Amulets.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package frostygames0.elementalamulets;
+package frostygames0.elementalamulets.client;
 
-import frostygames0.elementalamulets.client.ModKeyBindings;
+import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.client.models.AmuletModel;
 import frostygames0.elementalamulets.client.models.LeafShield;
 import frostygames0.elementalamulets.client.particles.ModParticles;
@@ -54,7 +54,7 @@ import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 @Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class ClientSetup {
+public class ElementalAmuletsClient {
 
     @SubscribeEvent
     public static void clientSetup(final FMLClientSetupEvent event) {
