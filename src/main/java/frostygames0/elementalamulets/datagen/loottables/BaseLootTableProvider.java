@@ -53,10 +53,6 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @author Frostygames0
- * @date 11.06.2021 18:11
- */
 public abstract class BaseLootTableProvider extends LootTableProvider {
     protected static final LootItemCondition.Builder SILK_TOUCH = MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.Ints.atLeast(1))));
 

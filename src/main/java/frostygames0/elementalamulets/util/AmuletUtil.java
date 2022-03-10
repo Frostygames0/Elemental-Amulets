@@ -34,10 +34,6 @@ import top.theillusivec4.curios.api.type.util.ICuriosHelper;
 
 import java.util.Optional;
 
-/**
- * @author Frostygames0
- * @date 25.09.2021 15:04
- */
 public final class AmuletUtil {
 
     public static ItemStack setStackTier(ItemStack stack, int tier) {

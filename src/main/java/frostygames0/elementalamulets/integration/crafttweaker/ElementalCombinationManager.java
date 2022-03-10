@@ -38,10 +38,6 @@ import org.openzen.zencode.java.ZenCodeType;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-/**
- * @author Frostygames0
- * @date 02.06.2021 18:57
- */
 @Document("mods/elementalamulets/ElementalCombination")
 @ZenRegister
 @ZenCodeType.Name("mods.elementalamulets.ElementalCombination")

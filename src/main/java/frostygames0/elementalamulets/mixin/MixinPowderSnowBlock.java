@@ -32,10 +32,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-/**
- * @author Frostygames0
- * @date 19.02.2022 19:07
- */
 @Mixin(PowderSnowBlock.class)
 public class MixinPowderSnowBlock {
 

@@ -26,10 +26,6 @@ import net.minecraft.client.particle.PortalParticle;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.core.particles.SimpleParticleType;
 
-/**
- * @author Frostygames0
- * @date 03.06.2021 18:40
- */
 public class CombinationParticle extends PortalParticle {
 
     public CombinationParticle(ClientLevel world, double x, double y, double z, double motionX, double motionY, double motionZ) {

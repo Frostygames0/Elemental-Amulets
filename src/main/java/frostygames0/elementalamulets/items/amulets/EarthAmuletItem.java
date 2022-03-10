@@ -40,10 +40,6 @@ import top.theillusivec4.curios.api.SlotContext;
 
 import java.util.Random;
 
-/**
- * @author Frostygames0
- * @date 19.09.2021 22:50
- */
 public class EarthAmuletItem extends AmuletItem {
     public EarthAmuletItem(Item.Properties properties) {
         super(new AmuletItem.Properties(properties)

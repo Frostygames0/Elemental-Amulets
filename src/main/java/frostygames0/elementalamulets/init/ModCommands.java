@@ -44,10 +44,6 @@ import net.minecraftforge.items.ItemHandlerHelper;
 
 import java.util.Collection;
 
-/**
- * @author Frostygames0
- * @date 14.06.2021 11:15
- */
 public class ModCommands {
 
     public static void registerCommandsEvent(final RegisterCommandsEvent event) {

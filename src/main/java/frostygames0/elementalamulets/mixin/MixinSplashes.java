@@ -33,10 +33,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
 
-/**
- * @author Frostygames0
- * @date 12.10.2021 22:45
- */
 @Mixin(SplashManager.class)
 public class MixinSplashes {
 

@@ -61,7 +61,7 @@ public class ItemTagsProvider extends net.minecraft.data.tags.ItemTagsProvider {
         // Water
         this.tag(ModTags.Items.WATER_ELEMENT_CONVERTIBLE).add(Items.WATER_BUCKET, Items.WET_SPONGE, Items.PRISMARINE_CRYSTALS, Items.PRISMARINE_SHARD).addTag(ItemTags.FISHES);
         // Air
-        this.tag(ModTags.Items.AIR_ELEMENT_CONVERTIBLE).add(Items.FEATHER).addTags(ItemTags.SAND, ItemTags.WOOL);
+        this.tag(ModTags.Items.AIR_ELEMENT_CONVERTIBLE).add(Items.FEATHER).addTags(ItemTags.SAND, ItemTags.WOOL).add(Items.SUGAR);
         // Earth
         this.tag(ModTags.Items.EARTH_ELEMENT_CONVERTIBLE).add(Items.DIRT, Items.COARSE_DIRT, Items.GRASS_BLOCK).addTags(ItemTags.FLOWERS, ItemTags.LEAVES, ItemTags.LOGS).addTags(Tags.Items.SEEDS, Tags.Items.CROPS);
     }

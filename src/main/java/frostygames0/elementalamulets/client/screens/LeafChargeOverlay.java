@@ -37,10 +37,6 @@ import net.minecraftforge.client.gui.IIngameOverlay;
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
-/**
- * @author Frostygames0
- * @date 14.10.2021 20:00
- */
 public class LeafChargeOverlay implements IIngameOverlay {
 
     @Override

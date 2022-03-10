@@ -59,7 +59,7 @@ public class ElementalGuideItem extends Item {
         if (playerIn instanceof ServerPlayer) {
             if (ModList.get().isLoaded("patchouli")) {
                 PatchouliAPI.get().openBookGUI((ServerPlayer) playerIn, BOOK_ID);
-                ModCriteriaTriggers.SUCCESS_USE.trigger((ServerPlayer) playerIn, playerIn.getItemInHand(handIn));
+                ModCriteriaTriggers.ELEMENTAL_GUIDE_USE.trigger((ServerPlayer) playerIn);
                 playerIn.awardStat(ModStats.GUIDE_OPENED);
                 return InteractionResultHolder.success(playerIn.getItemInHand(handIn));
             } else {

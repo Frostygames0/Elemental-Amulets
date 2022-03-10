@@ -23,10 +23,6 @@ import frostygames0.elementalamulets.init.ModBlocks;
 import frostygames0.elementalamulets.init.ModItems;
 import net.minecraft.data.DataGenerator;
 
-/**
- * @author Frostygames0
- * @date 11.06.2021 18:56
- */
 public class LootTableProvider extends BaseLootTableProvider {
     public LootTableProvider(DataGenerator dataGeneratorIn) {
         super(dataGeneratorIn);

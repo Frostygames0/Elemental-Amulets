@@ -46,11 +46,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
-/**
- * @author Frostygames0
- * @date 17.02.2022 16:26
- */
-
 @SuppressWarnings("deprecation")
 public class MeltingMagmaBlock extends Block {
     public static final IntegerProperty AGE = BlockStateProperties.AGE_3;

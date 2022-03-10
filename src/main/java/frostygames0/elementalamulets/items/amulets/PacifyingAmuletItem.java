@@ -41,10 +41,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import top.theillusivec4.curios.api.SlotContext;
 
-/**
- * @author Frostygames0
- * @date 14.10.2021 22:15
- */
 // TODO For Future: move PacifyingAmuletItem#onAmuletBreak to AmuletItem class, since I know for sure that other amulets will have something on destruction too
 public class PacifyingAmuletItem extends AmuletItem {
     public PacifyingAmuletItem(Item.Properties properties) {

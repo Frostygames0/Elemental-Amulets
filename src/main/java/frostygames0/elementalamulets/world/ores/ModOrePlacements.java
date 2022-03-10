@@ -36,10 +36,6 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
 
-/**
- * @author Frostygames0
- * @date 16.01.2022 4:22
- */
 @Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID)
 public class ModOrePlacements {
     public static final Lazy<PlacedFeature> ELEMENTAL_ORE_UPPER = Lazy.of(() -> PlacementUtils.register(ElementalAmulets.MOD_ID + ":elemental_ore_upper",

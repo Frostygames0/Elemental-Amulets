@@ -17,9 +17,9 @@
  *     along with Elemental Amulets.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package frostygames0.elementalamulets;
+package frostygames0.elementalamulets.client;
 
-import frostygames0.elementalamulets.client.ModKeyBindings;
+import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.client.models.AmuletModel;
 import frostygames0.elementalamulets.client.models.LeafShield;
 import frostygames0.elementalamulets.client.particles.ModParticles;
@@ -39,6 +39,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
@@ -53,7 +54,7 @@ import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
 @Mod.EventBusSubscriber(modid = ElementalAmulets.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class ClientSetup {
+public class ElementalAmuletsClient {
 
     @SubscribeEvent
     public static void clientSetup(final FMLClientSetupEvent event) {
@@ -93,7 +94,9 @@ public class ClientSetup {
 
     @SubscribeEvent
     public static void textureStitch(final TextureStitchEvent.Pre event) {
-        event.addSprite(modPrefix("item/necklace_slot"));
+        if (event.getAtlas().location() == InventoryMenu.BLOCK_ATLAS) {
+            event.addSprite(modPrefix("item/necklace_slot"));
+        }
     }
 
     @SubscribeEvent

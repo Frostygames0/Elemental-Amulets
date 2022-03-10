@@ -35,10 +35,6 @@ import top.theillusivec4.curios.api.CuriosApi;
 
 import static frostygames0.elementalamulets.items.AmuletBeltItem.HANDLER_SIZE;
 
-/**
- * @author Frostygames0
- * @date 10.09.2021 23:54
- */
 public class AmuletBeltMenu extends AbstractContainerMenu {
     private static final int INV_SLOT_START = 5;
     private static final int INV_SLOT_END = 32;

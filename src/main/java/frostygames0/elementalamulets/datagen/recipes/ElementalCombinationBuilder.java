@@ -42,10 +42,6 @@ import java.util.function.Consumer;
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
-/**
- * @author Frostygames0
- * @date 31.05.2021 23:28
- */
 public class ElementalCombinationBuilder {
     private final ItemStack result;
     private AmuletIngredient elemental;

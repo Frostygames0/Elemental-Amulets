@@ -13,13 +13,17 @@
   },
   "criteria": {
     "amulet_worn": {
-      "trigger": "elementalamulets:success_use_item",
+      "trigger": "curios:equip_curio",
       "conditions": {
-        "item": {"tag":"elementalamulets:necklaces"}
+        "item": {
+          "tag": "elementalamulets:necklaces"
+        }
       }
     }
   },
-  "requirements": [[
-    "amulet_worn"
-  ]]
+  "requirements": [
+    [
+      "amulet_worn"
+    ]
+  ]
 }

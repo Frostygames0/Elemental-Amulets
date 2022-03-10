@@ -17,13 +17,13 @@
   },
   "criteria": {
     "guide_used": {
-      "trigger": "elementalamulets:success_use_item",
-      "conditions": {
-        "item": {"items":["elementalamulets:guide_book"]}
-      }
+      "trigger": "elementalamulets:elemental_guide_used",
+      "conditions": {}
     }
   },
-  "requirements": [[
-    "guide_used"
-  ]]
+  "requirements": [
+    [
+      "guide_used"
+    ]
+  ]
 }

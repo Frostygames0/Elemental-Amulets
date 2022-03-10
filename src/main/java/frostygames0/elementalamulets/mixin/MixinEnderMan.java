@@ -28,10 +28,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-/**
- * @author Frostygames0
- * @date 20.10.2021 20:02
- */
 @Mixin(EnderMan.class)
 public class MixinEnderMan {
 

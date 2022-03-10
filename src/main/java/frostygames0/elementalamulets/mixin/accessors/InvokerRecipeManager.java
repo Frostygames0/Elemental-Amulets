@@ -30,10 +30,6 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 import java.util.Map;
 
-/**
- * @author Frostygames0
- * @date 12.02.2022 22:34
- */
 @Mixin(RecipeManager.class)
 public interface InvokerRecipeManager {
 

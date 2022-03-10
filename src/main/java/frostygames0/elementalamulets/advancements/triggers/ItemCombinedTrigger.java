@@ -29,12 +29,7 @@ import net.minecraft.world.item.ItemStack;
 
 import static frostygames0.elementalamulets.ElementalAmulets.modPrefix;
 
-/**
- * Triggered when combination happens.
- *
- * @author Frostygames0
- * @date 02.06.2021 10:19
- */
+//Triggered when combination happens.
 public class ItemCombinedTrigger extends SimpleCriterionTrigger<ItemCombinedTrigger.Instance> {
     public static final ResourceLocation ID = modPrefix("item_elemental_combined");
 

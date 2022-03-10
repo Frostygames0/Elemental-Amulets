@@ -3,6 +3,7 @@
   "values": [
     "minecraft:feather",
     "#minecraft:sand",
-    "#minecraft:wool"
+    "#minecraft:wool",
+    "minecraft:sugar"
   ]
 }

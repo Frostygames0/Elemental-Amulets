@@ -17,10 +17,6 @@
  *     along with Elemental Amulets.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-/**
- * @author Frostygames0
- * @date 26.11.2021 18:42
- */
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 package frostygames0.elementalamulets.datagen.loottables;

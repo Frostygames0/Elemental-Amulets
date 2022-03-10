@@ -29,10 +29,6 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 
 import javax.annotation.Nullable;
 
-/**
- * @author Frostygames0
- * @date 05.12.2021 16:49
- */
 public class BlockTagsProvider extends net.minecraft.data.tags.BlockTagsProvider {
     public BlockTagsProvider(DataGenerator pGenerator, @Nullable ExistingFileHelper existingFileHelper) {
         super(pGenerator, ElementalAmulets.MOD_ID, existingFileHelper);

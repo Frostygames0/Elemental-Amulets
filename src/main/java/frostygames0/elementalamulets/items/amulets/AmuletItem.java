@@ -22,7 +22,6 @@ package frostygames0.elementalamulets.items.amulets;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import frostygames0.elementalamulets.ElementalAmulets;
-import frostygames0.elementalamulets.advancements.triggers.ModCriteriaTriggers;
 import frostygames0.elementalamulets.client.models.AmuletModel;
 import frostygames0.elementalamulets.init.ModStats;
 import frostygames0.elementalamulets.util.AmuletUtil;
@@ -155,8 +154,6 @@ public abstract class AmuletItem extends Item implements ICurioItem, ICurioRende
         if (prevStack.getItem() != stack.getItem()) {
             LivingEntity entity = slotContext.entity();
             if (!entity.level.isClientSide() && entity instanceof ServerPlayer player) {
-
-                ModCriteriaTriggers.SUCCESS_USE.trigger(player, stack);
                 player.awardStat(ModStats.AMULET_WORN_STAT);
             }
         }

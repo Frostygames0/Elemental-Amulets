@@ -23,10 +23,6 @@ import frostygames0.elementalamulets.config.ModConfig;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
-/**
- * @author Frostygames0
- * @date 09.10.2021 11:44
- */
 public class KnockbackAmuletItem extends AmuletItem {
     public KnockbackAmuletItem(Item.Properties properties) {
         super(new AmuletItem.Properties(properties)

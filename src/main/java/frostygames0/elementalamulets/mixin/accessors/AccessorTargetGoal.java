@@ -24,10 +24,6 @@ import net.minecraft.world.entity.ai.goal.target.TargetGoal;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
-/**
- * @author Frostygames0
- * @date 10.11.2021 15:31
- */
 @Mixin(TargetGoal.class)
 public interface AccessorTargetGoal {
     @Accessor

@@ -30,7 +30,6 @@ import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 
-
 public class LeafShield<T extends Entity> extends EntityModel<T> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(new ResourceLocation("player"), "leaf_shield");
     private final ModelPart leafPart1;
