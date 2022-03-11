@@ -44,10 +44,10 @@ import net.minecraftforge.network.NetworkHooks;
 import javax.annotation.Nullable;
 
 @SuppressWarnings("deprecation")
-public class ElementalCombinator extends Block implements EntityBlock {
+public class ElementalCombinatorBlock extends Block implements EntityBlock {
     public static final BooleanProperty COMBINING = BooleanProperty.create("combining");
 
-    public ElementalCombinator(Properties properties) {
+    public ElementalCombinatorBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(COMBINING, false));
     }

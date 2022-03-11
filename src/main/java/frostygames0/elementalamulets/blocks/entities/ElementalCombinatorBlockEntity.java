@@ -20,7 +20,7 @@
 package frostygames0.elementalamulets.blocks.entities;
 
 import frostygames0.elementalamulets.advancements.triggers.ModCriteriaTriggers;
-import frostygames0.elementalamulets.blocks.ElementalCombinator;
+import frostygames0.elementalamulets.blocks.ElementalCombinatorBlock;
 import frostygames0.elementalamulets.blocks.menu.ElementalCombinatorMenu;
 import frostygames0.elementalamulets.capability.RestrictiveItemHandler;
 import frostygames0.elementalamulets.client.particles.ModParticles;
@@ -136,8 +136,8 @@ public class ElementalCombinatorBlockEntity extends BlockEntity implements MenuP
                             ((ServerLevel) level).sendParticles(ModParticles.COMBINATION_PARTICLE.get(), worldPosition.getX() + 0.5, worldPosition.above().getY() + 0.4, worldPosition.getZ() + 0.5, 50, 0, 0, 0, 5);
                         }
                     }
-                    if (!this.getBlockState().getValue(ElementalCombinator.COMBINING)) {
-                        this.level.setBlockAndUpdate(worldPosition, this.getBlockState().setValue(ElementalCombinator.COMBINING, true));
+                    if (!this.getBlockState().getValue(ElementalCombinatorBlock.COMBINING)) {
+                        this.level.setBlockAndUpdate(worldPosition, this.getBlockState().setValue(ElementalCombinatorBlock.COMBINING, true));
                     }
                     if (this.totalTime <= this.combinationTime) {
                         this.stopCombination();
@@ -213,7 +213,7 @@ public class ElementalCombinatorBlockEntity extends BlockEntity implements MenuP
     private void stopCombination() {
         if (this.isCombining()) {
             this.combinationTime = 0;
-            this.level.setBlockAndUpdate(worldPosition, this.getBlockState().setValue(ElementalCombinator.COMBINING, false));
+            this.level.setBlockAndUpdate(worldPosition, this.getBlockState().setValue(ElementalCombinatorBlock.COMBINING, false));
             this.setChanged();
         }
     }

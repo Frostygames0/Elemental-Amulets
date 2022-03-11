@@ -20,7 +20,7 @@
 package frostygames0.elementalamulets.datagen;
 
 import frostygames0.elementalamulets.ElementalAmulets;
-import frostygames0.elementalamulets.blocks.ElementalCombinator;
+import frostygames0.elementalamulets.blocks.ElementalCombinatorBlock;
 import frostygames0.elementalamulets.blocks.MeltingMagmaBlock;
 import frostygames0.elementalamulets.init.ModBlocks;
 import net.minecraft.data.DataGenerator;
@@ -43,7 +43,7 @@ public class BlockStateProvider extends net.minecraftforge.client.model.generato
     @Override
     protected void registerStatesAndModels() {
         blockstateBlock(ModBlocks.ELEMENTAL_COMBINATOR.get(), state -> {
-            if (state.getValue(ElementalCombinator.COMBINING)) {
+            if (state.getValue(ElementalCombinatorBlock.COMBINING)) {
                 return models().cubeBottomTop(name(ModBlocks.ELEMENTAL_COMBINATOR.get()) + "_on",
                         modLoc("block/" + name(ModBlocks.ELEMENTAL_COMBINATOR.get()) + "_side"),
                         mcLoc("block/furnace_top"),
