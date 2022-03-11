@@ -20,8 +20,8 @@
 package frostygames0.elementalamulets.init;
 
 import frostygames0.elementalamulets.ElementalAmulets;
-import frostygames0.elementalamulets.blocks.CelestialFocus;
-import frostygames0.elementalamulets.blocks.ElementalCombinator;
+import frostygames0.elementalamulets.blocks.CelestialFocusBlock;
+import frostygames0.elementalamulets.blocks.ElementalCombinatorBlock;
 import frostygames0.elementalamulets.blocks.MeltingMagmaBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -42,11 +42,11 @@ public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ElementalAmulets.MOD_ID);
 
     public static final RegistryObject<Block> ELEMENTAL_COMBINATOR = BLOCKS.register("elemental_combinator",
-            () -> new ElementalCombinator(BlockBehaviour.Properties.of(Material.STONE, DyeColor.RED).strength(3.5f).sound(SoundType.STONE).requiresCorrectToolForDrops()
-                    .lightLevel(state -> state.getValue(ElementalCombinator.COMBINING) ? 15 : 5).isRedstoneConductor(ModBlocks::never)));
+            () -> new ElementalCombinatorBlock(BlockBehaviour.Properties.of(Material.STONE, DyeColor.RED).strength(3.5f).sound(SoundType.STONE).requiresCorrectToolForDrops()
+                    .lightLevel(state -> state.getValue(ElementalCombinatorBlock.COMBINING) ? 15 : 5).isRedstoneConductor(ModBlocks::never)));
 
     public static final RegistryObject<Block> CELESTIAL_FOCUS = BLOCKS.register("celestial_focus",
-            () -> new CelestialFocus(BlockBehaviour.Properties.of(Material.WOOD, DyeColor.BROWN).strength(2f).sound(SoundType.WOOD)
+            () -> new CelestialFocusBlock(BlockBehaviour.Properties.of(Material.WOOD, DyeColor.BROWN).strength(2f).sound(SoundType.WOOD)
                     .noOcclusion().isViewBlocking(ModBlocks::never).isSuffocating(ModBlocks::never)));
 
     public static final RegistryObject<Block> ELEMENTAL_ORE = BLOCKS.register("elemental_ore",

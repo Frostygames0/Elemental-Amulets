@@ -46,7 +46,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 @SuppressWarnings("deprecation")
-public class CelestialFocus extends Block implements SimpleWaterloggedBlock {
+public class CelestialFocusBlock extends Block implements SimpleWaterloggedBlock {
 
     private static final VoxelShape STAND = Shapes.or(box(0, 0, 0, 2, 16, 2),
             box(0, 0, 14, 2, 16, 16),
@@ -61,7 +61,7 @@ public class CelestialFocus extends Block implements SimpleWaterloggedBlock {
 
     private static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
-    public CelestialFocus(Properties p_i48440_1_) {
+    public CelestialFocusBlock(Properties p_i48440_1_) {
         super(p_i48440_1_);
         this.registerDefaultState(this.stateDefinition.any().setValue(WATERLOGGED, false));
     }
