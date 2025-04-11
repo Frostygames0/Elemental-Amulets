@@ -1,0 +1,18 @@
+{
+  "values": {
+    "#minecraft:crimson_stems": {
+      "elementalamulets:fire": 10
+    },
+    "#minecraft:logs_that_burn": {
+      "elementalamulets:earth": 32,
+      "elementalamulets:water": 100
+    },
+    "minecraft:sponge": {
+      "elementalamulets:water": 3
+    },
+    "minecraft:water_bucket": {
+      "elementalamulets:aether": 2,
+      "elementalamulets:water": 3
+    }
+  }
+}

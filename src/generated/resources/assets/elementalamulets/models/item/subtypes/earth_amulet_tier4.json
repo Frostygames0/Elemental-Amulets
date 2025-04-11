@@ -1,6 +1,0 @@
-{
-  "parent": "elementalamulets:item/earth_amulet",
-  "textures": {
-    "layer1": "elementalamulets:item/amulet_tiers/level4"
-  }
-}

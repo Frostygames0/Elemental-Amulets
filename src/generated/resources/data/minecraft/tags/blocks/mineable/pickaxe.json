@@ -1,8 +1,0 @@
-{
-  "replace": false,
-  "values": [
-    "elementalamulets:elemental_combinator",
-    "#elementalamulets:shard_blocks",
-    "#elementalamulets:elemental_ore"
-  ]
-}

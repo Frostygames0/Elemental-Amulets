@@ -1,0 +1,19 @@
+{
+  "block.elementalamulets.primitive_elemental_extractor": "Primitive Elemental Extractor",
+  "command.elementalamulets.found_n_elements": "%s elements registered:",
+  "command.elementalamulets.found_no_elements": "No elements registered! Something probably went wrong!",
+  "command.elementalamulets.no_registry_error": "Unable to find registry for elements! Something went terribly wrong!",
+  "container.elementalamulets.elemental_extractor": "Extractor",
+  "elements.elementalamulets.aether.description": "The quintessence of this world! Responsible for all unexplainable and magical things!",
+  "elements.elementalamulets.aether.name": "Aether",
+  "elements.elementalamulets.air.name": "Air",
+  "elements.elementalamulets.earth.name": "Earth",
+  "elements.elementalamulets.fire.name": "Fire",
+  "elements.elementalamulets.water.name": "Water",
+  "item.elementalamulets.elemental_sense_ring": "Ring of Elemental Sense",
+  "item.elementalamulets.elemental_shard": "Elemental Shard",
+  "itemGroup.elementalamulets": "Elemental Amulets",
+  "tooltip.elementalamulets.element_storage_stored": "Stored",
+  "tooltip.elementalamulets.elemental_composition": "Elemental Composition",
+  "tooltip.elementalamulets.elemental_composition.hidden": "Press [SHIFT] to see the elemental composition..."
+}

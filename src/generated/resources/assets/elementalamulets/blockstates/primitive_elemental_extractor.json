@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "elementalamulets:block/primitive_elemental_extractor",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "elementalamulets:block/primitive_elemental_extractor"
+    },
+    "facing=south": {
+      "model": "elementalamulets:block/primitive_elemental_extractor",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "elementalamulets:block/primitive_elemental_extractor",
+      "y": 270
+    }
+  }
+}

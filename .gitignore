@@ -1,16 +1,26 @@
+# eclipse
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
 
+# idea
 out
 *.ipr
 *.iws
 *.iml
 .idea
+
+# gradle
 build
 .gradle
+
+# other
+eclipse
 run
-runServer
-uselessShit
-docsOut
-src/generated/resources/.cache
-README.md
-src/generated/resources/README.md
-changelog*.txt
+runs
+run-data
+
+repo

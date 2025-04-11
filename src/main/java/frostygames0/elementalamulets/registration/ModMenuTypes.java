@@ -1,0 +1,19 @@
+package frostygames0.elementalamulets.registration;
+
+import frostygames0.elementalamulets.ElementalAmulets;
+import frostygames0.elementalamulets.inventory.menu.extractor.PrimitiveElementalExtractorMenu;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.inventory.MenuType;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
+
+public final class ModMenuTypes {
+    private ModMenuTypes() {
+    }
+
+    public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(Registries.MENU, ElementalAmulets.MOD_ID);
+
+    public static final DeferredHolder<MenuType<?>, MenuType<PrimitiveElementalExtractorMenu>> PRIMITIVE_ELEMENTAL_EXTRACTOR =
+            MENU_TYPES.register("primitive_elemental_extractor", () -> new MenuType<>(PrimitiveElementalExtractorMenu::new, FeatureFlags.DEFAULT_FLAGS));
+}

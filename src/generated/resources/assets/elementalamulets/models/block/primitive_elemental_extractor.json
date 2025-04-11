@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "elementalamulets:block/primitive_elemental_extractor_bottom",
+    "east": "elementalamulets:block/primitive_elemental_extractor_side",
+    "north": "elementalamulets:block/primitive_elemental_extractor_front",
+    "particle": "elementalamulets:block/primitive_elemental_extractor",
+    "south": "elementalamulets:block/primitive_elemental_extractor_back",
+    "up": "elementalamulets:block/primitive_elemental_extractor",
+    "west": "elementalamulets:block/primitive_elemental_extractor_side"
+  }
+}
