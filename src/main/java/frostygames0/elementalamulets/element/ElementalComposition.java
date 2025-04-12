@@ -55,8 +55,14 @@ public record ElementalComposition(Map<Holder<Element>, Integer> elementAmounts)
             var holder = entry.getKey();
             var amount = entry.getValue();
 
+
             copy.putIfAbsent(holder, 0);
-            copy.put(holder, copy.get(holder) + amount);
+            var amountToMerge = copy.get(holder) + amount;
+            if (amountToMerge == 0) {
+                copy.remove(holder);
+            } else {
+                copy.put(holder, amountToMerge);
+            }
         }
 
         return new ElementalComposition(copy);

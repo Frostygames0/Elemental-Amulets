@@ -9,12 +9,15 @@ import net.minecraft.nbt.NbtOps;
 import net.minecraft.util.Mth;
 import net.neoforged.neoforge.common.util.INBTSerializable;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
 public class ElementStorage implements IElementStorage, INBTSerializable<CompoundTag> {
     private final int maxCapacity;
     private final int maxDistinctElements;
 
-    private ElementalComposition storage = ElementalComposition.EMPTY;
-    private int totalAmount = 0;
+    private Map<Holder<Element>, Integer> storage = new HashMap<>();
     private int currentDistinctElements = 0;
 
     public ElementStorage(int maxCapacity, int maxDistinctElements) {
@@ -22,24 +25,19 @@ public class ElementStorage implements IElementStorage, INBTSerializable<Compoun
         this.maxDistinctElements = maxDistinctElements;
     }
 
-    public ElementStorage(int maxCapacity) {
-        this(maxCapacity, -1);
-    }
-
     @Override
     public ElementalComposition getStored() {
-        return this.storage;
+        return new ElementalComposition(this.storage);
     }
 
     @Override
-    public void setStored(ElementalComposition composition) {
-        this.verifyStorageBoundaries(composition);
+    public void setStored(ElementalComposition elementalComposition) {
+        this.verifyStorageBoundaries(elementalComposition);
 
-        this.storage = composition;
-        this.totalAmount = this.storage.getTotalAmount();
-        this.currentDistinctElements = this.storage.elementAmounts().size();
+        this.storage = new HashMap<>(elementalComposition.elementAmounts());
+        this.currentDistinctElements = this.storage.size();
 
-        onChanged();
+        this.onChanged();
     }
 
     private void verifyStorageBoundaries(ElementalComposition composition) {
@@ -58,9 +56,17 @@ public class ElementStorage implements IElementStorage, INBTSerializable<Compoun
             return 0;
         }
 
-        int elementAdded = Mth.clamp(this.maxCapacity - this.totalAmount, 0, amount);
-        if (!simulate && elementAdded != 0) {
-            setStored(this.storage.merge(ElementalComposition.fromSingle(element, elementAdded)));
+        int elementAdded = Mth.clamp(this.maxCapacity - this.getTotalAmount(), 0, amount);
+        if (!simulate) {
+            //setStored(this.storage.merge(ElementalComposition.fromSingle(element, elementAdded)));
+
+            if (this.storage.containsKey(element)) {
+                this.storage.put(element, this.storage.get(element) + elementAdded); // TODO This is broken
+            } else {
+                this.storage.putIfAbsent(element, elementAdded);
+            }
+
+            this.onChanged();
         }
 
         return elementAdded;
@@ -76,16 +82,26 @@ public class ElementStorage implements IElementStorage, INBTSerializable<Compoun
             return 0;
         }
 
-        int elementTaken = Math.min(getElementAmount(element), amount);
+        var currentAmount = getElementAmount(element);
+        int elementTaken = Math.min(currentAmount, amount);
+
         if (!simulate && elementTaken != 0) {
-            this.setStored(this.storage.merge(ElementalComposition.fromSingle(element, -elementTaken)));
+            //this.setStored(this.storage.merge(ElementalComposition.fromSingle(element, -elementTaken)));
+
+            if (currentAmount - elementTaken == 0) {
+                this.storage.remove(element);
+            } else {
+                this.storage.put(element, currentAmount - elementTaken);
+            }
+
+            this.onChanged();
         }
         return elementTaken;
     }
 
     @Override
     public boolean canAddElement(Holder<Element> element) {
-        if (this.getStored().elementAmounts().containsKey(element)) {
+        if (this.storage.containsKey(element)) {
             return true;
         }
 
@@ -94,7 +110,12 @@ public class ElementStorage implements IElementStorage, INBTSerializable<Compoun
 
     @Override
     public boolean canTakeElement(Holder<Element> element) {
-        return this.getStored().elementAmounts().containsKey(element);
+        return this.storage.containsKey(element);
+    }
+
+    @Override
+    public Set<Holder<Element>> getAllStoredElementTypes() {
+        return this.storage.keySet();
     }
 
     @Override
@@ -114,19 +135,18 @@ public class ElementStorage implements IElementStorage, INBTSerializable<Compoun
 
     @Override
     public int getTotalAmount() {
-        return this.totalAmount;
+        return this.storage.values().stream().reduce(0, Integer::sum);
     }
 
     @Override
     public int getElementAmount(Holder<Element> element) {
-        return this.storage.elementAmounts().getOrDefault(element, 0);
+        return this.storage.getOrDefault(element, 0);
     }
 
     @Override
     public boolean containsElement(Holder<Element> element) {
-        return this.storage.elementAmounts().containsKey(element);
+        return this.storage.containsKey(element);
     }
-
 
     @Override
     public CompoundTag serializeNBT(HolderLookup.Provider provider) {
