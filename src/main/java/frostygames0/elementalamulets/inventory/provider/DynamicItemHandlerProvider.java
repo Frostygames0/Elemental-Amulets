@@ -7,11 +7,13 @@ import net.neoforged.neoforge.items.IItemHandler;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DynamicItemHandlerProvider implements IDynamicItemHandlerProvider {
     private final EnumProperty<Direction> property;
 
-    private final EnumMap<Direction, IItemHandler> map = new EnumMap<>(Direction.class);
+    private final Map<Direction, IItemHandler> map = new HashMap<>();
     private final EnumMap<BlockFace, IItemHandler> relativeMap;
 
     private BlockState state;
@@ -25,7 +27,7 @@ public class DynamicItemHandlerProvider implements IDynamicItemHandlerProvider {
         var oldState = state;
         this.state = newState;
 
-        if (this.state.getValue(property) != oldState.getValue(property)) {
+        if (oldState == null || this.state.getValue(property) != oldState.getValue(property)) {
             var newFace = this.state.getValue(property);
 
             map.clear();
@@ -39,8 +41,8 @@ public class DynamicItemHandlerProvider implements IDynamicItemHandlerProvider {
                     case BACK -> map.put(newFace.getOpposite(), handler);
                     case RIGHT -> map.put(newFace.getClockWise(), handler);
                     case LEFT -> map.put(newFace.getCounterClockWise(), handler);
-                    case TOP -> map.put(newFace.getClockWise(Direction.Axis.X), handler);
-                    case BOTTOM -> map.put(newFace.getCounterClockWise(Direction.Axis.X), handler);
+                    case TOP -> map.put(newFace.getCounterClockWise(Direction.Axis.X), handler);
+                    case BOTTOM -> map.put(newFace.getClockWise(Direction.Axis.X), handler);
                     case ANY -> map.put(null, handler); // Internal ItemHandler
                 }
             }
@@ -57,10 +59,6 @@ public class DynamicItemHandlerProvider implements IDynamicItemHandlerProvider {
         return new Builder();
     }
 
-    public static Builder extendExisting(DynamicItemHandlerProvider existing) {
-        return new Builder(existing.relativeMap);
-    }
-
     public static class Builder {
         private final EnumMap<BlockFace, IItemHandler> relativeMap;
 
@@ -68,18 +66,8 @@ public class DynamicItemHandlerProvider implements IDynamicItemHandlerProvider {
             this.relativeMap = new EnumMap<>(BlockFace.class);
         }
 
-        private Builder(EnumMap<BlockFace, IItemHandler> existing) {
-            this();
-            this.relativeMap.putAll(existing);
-        }
-
         public Builder addItemHandlerForFace(BlockFace blockFace, IItemHandler handler) {
             relativeMap.put(blockFace, handler);
-            return this;
-        }
-
-        public Builder removeItemHandlerForFace(BlockFace blockFace) {
-            relativeMap.remove(blockFace);
             return this;
         }
 

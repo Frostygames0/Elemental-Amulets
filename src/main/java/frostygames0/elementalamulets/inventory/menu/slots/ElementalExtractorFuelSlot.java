@@ -1,5 +1,6 @@
 package frostygames0.elementalamulets.inventory.menu.slots;
 
+import frostygames0.elementalamulets.block.entity.extractor.AbstractElementalExtractorBlockEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.items.IItemHandler;
@@ -16,6 +17,6 @@ public class ElementalExtractorFuelSlot extends SlotItemHandler {
 
     @Override
     public boolean mayPlace(ItemStack stack) {
-        return true;
+        return AbstractElementalExtractorBlockEntity.isFuel(stack, this.level);
     }
 }

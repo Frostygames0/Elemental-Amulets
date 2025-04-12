@@ -79,7 +79,6 @@ public final class Elements {
 
         for (var elementHolder : nonPrimordialElements) {
             if (ElementHelper.hasCycle(elementHolder)) {
-                ;
                 var presentableName = String.format("%s [%s]", elementHolder.value().name().getString(), elementHolder.getKey().location());
                 throw new IllegalStateException(
                         String.format("A cycle has been found while traversing the composition of %s.", presentableName));

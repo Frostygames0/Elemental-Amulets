@@ -14,7 +14,7 @@ public class OutputSlot extends SlotItemHandler {
 
     @Override
     public boolean mayPlace(ItemStack stack) {
-        return true;
+        return false;
     }
 
     @Override
