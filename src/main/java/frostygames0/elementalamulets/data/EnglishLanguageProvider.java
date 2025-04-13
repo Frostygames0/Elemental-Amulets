@@ -49,6 +49,8 @@ public class EnglishLanguageProvider extends LanguageProvider {
         add("command.elementalamulets.found_no_elements", "No elements registered! Something probably went wrong!");
         add("command.elementalamulets.found_n_elements", "%s elements registered:");
         add("command.elementalamulets.no_registry_error", "Unable to find registry for elements! Something went terribly wrong!");
+        add("generic.elementalamulets.round_brackets", "(%s)");
+        add("generic.elementalamulets.mixed", "Mixed");
     }
 
     private void addElement(ResourceKey<Element> key, String name) {

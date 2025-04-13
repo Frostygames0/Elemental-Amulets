@@ -10,6 +10,8 @@
   "elements.elementalamulets.earth.name": "Earth",
   "elements.elementalamulets.fire.name": "Fire",
   "elements.elementalamulets.water.name": "Water",
+  "generic.elementalamulets.mixed": "Mixed",
+  "generic.elementalamulets.round_brackets": "(%s)",
   "item.elementalamulets.elemental_sense_ring": "Ring of Elemental Sense",
   "item.elementalamulets.elemental_shard": "Elemental Shard",
   "itemGroup.elementalamulets": "Elemental Amulets",

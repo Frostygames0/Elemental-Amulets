@@ -16,16 +16,15 @@ public final class ElementalShardItem extends Item {
 
         var suffix = Component.empty();
 
-        if (composition.isPresent() && !composition.get().isEmpty()) {
-            suffix.append(" (");
+        if (composition.isPresent() && !composition.orElseThrow().isEmpty()) {
+            var elementAmounts = composition.orElseThrow().elementAmounts();
+            var inside = elementAmounts.size() > 1
+                    ? Component.translatable("generic.elementalamulets.mixed")
+                    : elementAmounts.keySet().stream().findFirst().orElseThrow().value().colorizeNameMutable();
 
-            var elementAmounts = composition.get().elementAmounts();
-            var elementName = elementAmounts.size() > 1 ? Component.literal("Mixed") : elementAmounts.keySet().stream().findFirst().orElseThrow().value().colorizeNameMutable();
-            suffix.append(elementName);
-
-            suffix.append(")");
+            suffix.append(Component.translatable("generic.elementalamulets.round_brackets", inside));
         }
 
-        return super.getName(stack).copy().append(suffix);
+        return super.getName(stack).copy().append(" ").append(suffix);
     }
 }
