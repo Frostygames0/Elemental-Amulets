@@ -265,11 +265,6 @@ public class PrimitiveElementalExtractorBlockEntity extends AbstractElementalExt
     }
 
     @Override
-    public Component getDisplayName() {
-        return Component.empty();
-    }
-
-    @Override
     public @Nullable AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
         return new PrimitiveElementalExtractorMenu(containerId, playerInventory,
                 this.baseInventory, this.additionalInventory,

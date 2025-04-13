@@ -9,6 +9,7 @@ import frostygames0.elementalamulets.inventory.provider.IItemHandlerProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.inventory.ContainerData;
@@ -258,5 +259,10 @@ public abstract class AbstractElementalExtractorBlockEntity extends BlockEntity 
         tag.putInt(TAG_TOTAL_EXTRACTION_TIME, this.totalExtractionTime);
         tag.putInt(TAG_LIT_TIME_REMAINING, this.litTimeRemaining);
         tag.putInt(TAG_TOTAL_LIT_TIME, this.totalLitTime);
+    }
+
+    @Override
+    public Component getDisplayName() {
+        return Component.translatable("container.elementalamulets.elemental_extractor");
     }
 }
