@@ -79,8 +79,7 @@ public final class Elements {
 
         for (var elementHolder : nonPrimordialElements) {
             if (ElementHelper.hasCompositionCycle(elementHolder)) {
-                var presentableName = String.format("%s [%s]", elementHolder.value().name().getString(), elementHolder.getKey().location());
-                throw new IllegalStateException(String.format("A cycle was found while traversing the composition of %s.", presentableName));
+                throw new IllegalStateException(String.format("A cycle was found while traversing the composition of element %s.", elementHolder.getKey()));
             }
         }
         LOGGER.info("The check of Elements registry for composition loops was successfully completed! :)");
