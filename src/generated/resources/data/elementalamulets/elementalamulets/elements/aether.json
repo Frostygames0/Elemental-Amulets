@@ -1,10 +1,10 @@
 {
   "color": -3326227,
   "composition": [
-    "elementalamulets:air",
-    "elementalamulets:water",
+    "elementalamulets:earth",
     "elementalamulets:fire",
-    "elementalamulets:earth"
+    "elementalamulets:air",
+    "elementalamulets:water"
   ],
   "description": {
     "translate": "elements.elementalamulets.aether.description"

@@ -12,7 +12,7 @@ public final class ElementalShardItem extends Item {
 
     @Override
     public Component getName(ItemStack stack) {
-        var composition = ElementHelper.getItemComposition(stack);
+        var composition = ElementHelper.getStackElementalComposition(stack);
 
         var suffix = Component.empty();
 

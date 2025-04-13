@@ -1,6 +1,5 @@
 package frostygames0.elementalamulets.client.gui;
 
-import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.element.storage.IElementStorage;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.ComponentPath;
@@ -21,15 +20,15 @@ import java.util.List;
 import java.util.Optional;
 
 public class ElementStorageBarWidget extends AbstractWidget {
-    private static final ResourceLocation OVERLAY = ElementalAmulets.id("element_storage_bar/bar_overlay");
-
+    private final ResourceLocation overlay;
     private final Font font;
     private final IElementStorage storage;
     private final boolean horizontal;
 
-    public ElementStorageBarWidget(IElementStorage storage, Font font, boolean horizontal, int x, int y, int width, int height) {
+    public ElementStorageBarWidget(ResourceLocation overlay, IElementStorage storage, Font font, boolean horizontal, int x, int y, int width, int height) {
         super(x, y, width, height, CommonComponents.EMPTY);
 
+        this.overlay = overlay;
         this.storage = storage;
         this.font = font;
         this.horizontal = horizontal;
@@ -62,6 +61,7 @@ public class ElementStorageBarWidget extends AbstractWidget {
         }
     }
 
+    // TODO Implement vertical render
     private void renderBar(GuiGraphics graphics) {
         int x = this.getX();
         int y = this.getY();
@@ -77,7 +77,7 @@ public class ElementStorageBarWidget extends AbstractWidget {
             x += progress;
         }
 
-        graphics.blitSprite(RenderType::guiTextured, OVERLAY, this.getX(), this.getY(), getWidth(), getHeight());
+        graphics.blitSprite(RenderType::guiTextured, this.overlay, this.getX(), this.getY(), getWidth(), getHeight());
     }
 
     private void renderTooltip(GuiGraphics graphics, int mouseX, int mouseY) {

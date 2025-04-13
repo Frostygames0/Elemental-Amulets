@@ -4,12 +4,11 @@ import frostygames0.elementalamulets.block.entity.extractor.AbstractElementalExt
 import frostygames0.elementalamulets.element.storage.IElementStorage;
 import frostygames0.elementalamulets.inventory.menu.SyncedElementalStorageMenu;
 import frostygames0.elementalamulets.inventory.menu.slots.ElementalExtractorFuelSlot;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
@@ -19,19 +18,21 @@ public abstract class AbstractElementalExtractorMenu extends SyncedElementalStor
     public static final int FUEL_SLOT = AbstractElementalExtractorBlockEntity.FUEL_SLOT;
 
     public static final int BASE_INVENTORY_SIZE = AbstractElementalExtractorBlockEntity.BASE_INVENTORY_SIZE;
+    public static final int BASE_CONTAINER_DATA_SIZE = AbstractElementalExtractorBlockEntity.BASE_CONTAINER_DATA_SIZE;
 
     protected final IItemHandler baseInventory;
 
     protected final ContainerLevelAccess access;
     protected final Level level;
 
-    private final int firstAdditionalSlotIndex;
+    protected final ContainerData baseContainerData;
+
     private final int lastSlotIndex;
-    private final ElementalExtractorSlotDefinitions.AdditionalQuickMoveHandler additionalQuickMove;
 
     protected AbstractElementalExtractorMenu(MenuType<?> menuType, int containerId,
                                              Inventory playerInventory, IItemHandler baseInventory,
                                              IElementStorage storage, ContainerLevelAccess access,
+                                             ContainerData baseContainerData,
                                              ElementalExtractorSlotDefinitions slotDefinitions) {
         super(menuType, containerId, playerInventory.player, storage);
 
@@ -39,23 +40,21 @@ public abstract class AbstractElementalExtractorMenu extends SyncedElementalStor
         this.access = access;
         this.level = this.player.level();
 
-        this.addSlot(new SlotItemHandler(this.baseInventory, INPUT_SLOT, 44, 11));
-        this.addSlot(new ElementalExtractorFuelSlot(this.baseInventory, FUEL_SLOT, 44, 47, this.level));
+        this.baseContainerData = baseContainerData;
+        this.addDataSlots(this.baseContainerData);
 
         this.addInputSlot(slotDefinitions);
         this.addFuelSlot(slotDefinitions);
         this.addAdditionalSlots(slotDefinitions);
 
-        this.firstAdditionalSlotIndex = slotDefinitions.getFirstAdditionalSlotIndex();
         this.lastSlotIndex = slotDefinitions.getLastSlotIndex();
-        this.additionalQuickMove = slotDefinitions.getAdditionalQuickMoveHandler();
 
         this.addStandardInventorySlots(playerInventory, 8, 84);
     }
 
     private void addInputSlot(ElementalExtractorSlotDefinitions slotDefinitions) {
         var slotDefinition = slotDefinitions.getInputSlot();
-        this.addSlot(new ElementalExtractorFuelSlot(this.baseInventory, slotDefinition.slot(), slotDefinition.x(), slotDefinition.y(), this.level));
+        this.addSlot(new SlotItemHandler(this.baseInventory, slotDefinition.slot(), slotDefinition.x(), slotDefinition.y()));
     }
 
     private void addFuelSlot(ElementalExtractorSlotDefinitions slotDefinitions) {
@@ -76,95 +75,42 @@ public abstract class AbstractElementalExtractorMenu extends SyncedElementalStor
         }
     }
 
-    @Override
-    public ItemStack quickMoveStack(Player player, int index) {
-        ItemStack itemstack = ItemStack.EMPTY;
-        Slot slot = this.slots.get(index);
-
-        if (slot != null && slot.hasItem()) {
-            ItemStack itemstack1 = slot.getItem();
-            itemstack = itemstack1.copy();
-            int inventoryStart = this.getInventorySlotStart();
-            int inventoryEnd = this.getUseRowEnd();
-
-            if (index == INPUT_SLOT || index == FUEL_SLOT) {
-                if (!this.moveItemStackTo(itemstack1, inventoryStart, inventoryEnd, true)) {
-                    return ItemStack.EMPTY;
-                }
-            } else {
-                if (index >= this.getFirstAdditionalSlotIndex() && index <= this.getLastSlotIndex()) {
-                    //return this.additionalQuickMove.apply(player, index);
-                } else if (index >= this.getInventorySlotStart() && index < this.getInventorySlotEnd()) {
-                    if (!this.moveItemStackTo(itemstack1, this.getUseRowStart(), this.getUseRowEnd(), false)) {
-                        return ItemStack.EMPTY;
-                    }
-                } else if (index >= this.getUseRowStart() && index < this.getUseRowEnd()) {
-                    if (!this.moveItemStackTo(itemstack1, this.getInventorySlotStart(), this.getInventorySlotEnd(), false)) {
-                        return ItemStack.EMPTY;
-                    }
-                }
-            }
-
-
-//            if (index == this.getResultSlot()) {
-//                if (!this.moveItemStackTo(itemstack1, i, j, true)) {
-//                    return ItemStack.EMPTY;
-//                }
-//
-//                slot.onQuickCraft(itemstack1, itemstack);
-//            } else if (index >= 0 && index < this.getResultSlot()) {
-//                if (!this.moveItemStackTo(itemstack1, i, j, false)) {
-//                    return ItemStack.EMPTY;
-//                }
-//            } else if (this.canMoveIntoInputSlots(itemstack1) && index >= this.getInventorySlotStart() && index < this.getUseRowEnd()) {
-//                if (!this.moveItemStackTo(itemstack1, 0, this.getResultSlot(), false)) {
-//                    return ItemStack.EMPTY;
-//                }
-//            } else if (index >= this.getInventorySlotStart() && index < this.getInventorySlotEnd()) {
-//                if (!this.moveItemStackTo(itemstack1, this.getUseRowStart(), this.getUseRowEnd(), false)) {
-//                    return ItemStack.EMPTY;
-//                }
-//            } else if (index >= this.getUseRowStart() && index < this.getUseRowEnd() && !this.moveItemStackTo(itemstack1, this.getInventorySlotStart(), this.getInventorySlotEnd(), false)) {
-//                return ItemStack.EMPTY;
-//            }
-
-            if (itemstack1.isEmpty()) {
-                slot.setByPlayer(ItemStack.EMPTY);
-            } else {
-                slot.setChanged();
-            }
-
-            if (itemstack1.getCount() == itemstack.getCount()) {
-                return ItemStack.EMPTY;
-            }
-
-            slot.onTake(player, itemstack1);
-        }
-
-        return itemstack;
-    }
-
-    public int getFirstAdditionalSlotIndex() {
-        return this.firstAdditionalSlotIndex;
-    }
-
-    public int getLastSlotIndex() {
+    protected int getLastSlotIndex() {
         return this.lastSlotIndex;
     }
 
-    private int getInventorySlotStart() {
+    protected int getInventorySlotStart() {
         return this.getLastSlotIndex() + 1;
     }
 
-    private int getInventorySlotEnd() {
+    protected int getInventorySlotEnd() {
         return this.getInventorySlotStart() + 27;
     }
 
-    private int getUseRowStart() {
+    protected int getUseRowStart() {
         return this.getInventorySlotEnd();
     }
 
-    private int getUseRowEnd() {
+    protected int getUseRowEnd() {
         return this.getUseRowStart() + 9;
+    }
+
+    public boolean isLit() {
+        return this.baseContainerData.get(2) > 0;
+    }
+
+    public float getLitProgress() {
+        int i = this.baseContainerData.get(3);
+        if (i == 0) {
+            i = 200;
+        }
+
+        return Mth.clamp((float) this.baseContainerData.get(2) / (float) i, 0.0F, 1.0F);
+    }
+
+    public float getExtractionProgress() {
+        int i = this.baseContainerData.get(0);
+        int j = this.baseContainerData.get(1);
+        return j != 0 && i != 0 ? Mth.clamp((float) i / (float) j, 0.0F, 1.0F) : 0.0F;
     }
 }

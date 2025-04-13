@@ -1,6 +1,5 @@
 package frostygames0.elementalamulets;
 
-import frostygames0.elementalamulets.client.ClientSetup;
 import frostygames0.elementalamulets.registration.*;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
@@ -17,14 +16,6 @@ public final class ElementalAmulets {
     }
 
     public ElementalAmulets(IEventBus modBus, Dist dist) {
-        registerThings(modBus);
-
-        if (dist.isClient()) {
-            registerClientThings(modBus);
-        }
-    }
-
-    private static void registerThings(IEventBus modBus) {
         ModDataComponents.DATA_COMPONENTS.register(modBus);
         ModBlocks.BLOCKS.register(modBus);
         ModBlockEntities.BLOCK_ENTITY_TYPES.register(modBus);
@@ -38,11 +29,5 @@ public final class ElementalAmulets {
         modBus.addListener(ModNetworkPayloadHandlers::onRegisterPayloadHandlers);
 
         NeoForge.EVENT_BUS.addListener(ModCommandHandler::onRegisterCommands);
-    }
-
-    private static void registerClientThings(IEventBus modBus) {
-        modBus.addListener(ClientSetup::onRegisterItemTintSources);
-        modBus.addListener(ClientSetup::onRegisterClientTooltipComponentFactories);
-        modBus.addListener(ClientSetup::onRegisterMenuScreens);
     }
 }

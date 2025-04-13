@@ -7,18 +7,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RenderTooltipEvent;
 
-@EventBusSubscriber(Dist.CLIENT)
 public class ElementalCompositionTooltipHandler {
     private static final Component HIDDEN = Component.translatable("tooltip.elementalamulets.elemental_composition.hidden").withStyle(Style.EMPTY.withColor(ChatFormatting.DARK_GRAY).withItalic(true));
     private static final Component COMPOSITION_TITLE = Component.translatable("tooltip.elementalamulets.elemental_composition").withStyle(ChatFormatting.GOLD);
 
-    @SubscribeEvent
-    private static void onTooltipRenderEvent(RenderTooltipEvent.GatherComponents event) {
+    public static void onTooltipRenderEvent(RenderTooltipEvent.GatherComponents event) {
 
         var clientPlayer = Minecraft.getInstance().player;
         if (clientPlayer == null || !ElementHelper.canSenseElements(clientPlayer)) {
@@ -26,7 +21,7 @@ public class ElementalCompositionTooltipHandler {
         }
 
         var tooltipElements = event.getTooltipElements();
-        var composition = ElementHelper.getItemComposition(event.getItemStack());
+        var composition = ElementHelper.getStackElementalComposition(event.getItemStack());
 
         if (composition.isEmpty() || composition.get().isEmpty()) {
             return;

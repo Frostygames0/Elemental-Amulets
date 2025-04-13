@@ -6,7 +6,6 @@ import frostygames0.elementalamulets.registration.ModItems;
 import net.minecraft.core.Holder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.ItemLike;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -44,7 +43,11 @@ public final class ElementHelper {
         return new ElementalComposition(map);
     }
 
-    public static Optional<ElementalComposition> getItemComposition(ItemStack stack) {
+    public static boolean hasElementalComposition(ItemStack stack) {
+        return getStackElementalComposition(stack).isPresent();
+    }
+
+    public static Optional<ElementalComposition> getStackElementalComposition(ItemStack stack) {
         var dataMap = stack.getItemHolder().getData(ModDataMaps.ELEMENTAL_COMPOSITION);
         var dataComponent = stack.get(ModDataComponents.ELEMENTAL_COMPOSITION);
 
@@ -56,16 +59,20 @@ public final class ElementHelper {
             return Optional.of(dataMap);
         }
 
-        return dataComponent == null ? Optional.empty() : Optional.of(dataComponent);
+        return dataComponent != null && !dataComponent.isEmpty() ? Optional.of(dataComponent) : Optional.empty();
     }
 
     public static boolean isStackAnEmptyElementalShard(ItemStack stack) {
-        return stack.is(ModItems.ELEMENT_SHARD) && stack.getOrDefault(ModDataComponents.ELEMENTAL_COMPOSITION, ElementalComposition.EMPTY).isEmpty();
+        return isStackAnElementalShard(stack) && stack.getOrDefault(ModDataComponents.ELEMENTAL_COMPOSITION, ElementalComposition.EMPTY).isEmpty();
     }
 
-    public static ItemStack createStackForElement(ItemLike shardItem, Holder<Element> elementHolder, int amount) {
-        var stack = new ItemStack(shardItem);
-        stack.set(ModDataComponents.ELEMENTAL_COMPOSITION, ElementalComposition.fromSingle(elementHolder, amount));
+    public static boolean isStackAnElementalShard(ItemStack stack) {
+        return stack.is(ModItems.ELEMENT_SHARD);
+    }
+
+    public static ItemStack createShardWithElement(Holder<Element> elementHolder) {
+        var stack = new ItemStack(ModItems.ELEMENT_SHARD.get());
+        stack.set(ModDataComponents.ELEMENTAL_COMPOSITION, ElementalComposition.fromSingle(elementHolder, 1));
         return stack;
     }
 
@@ -73,17 +80,17 @@ public final class ElementHelper {
         return player.isCreative() || player.getOffhandItem().is(ModItems.RING_OF_ELEMENTAL_SENSE);
     }
 
-    public static boolean hasCycle(Holder<Element> element) {
-        return hasCycle(element, new HashSet<>(), new HashSet<>());
+    public static boolean hasCompositionCycle(Holder<Element> element) {
+        return hasCompositionCycle(element, new HashSet<>(), new HashSet<>());
     }
 
-    private static boolean hasCycle(Holder<Element> current, Set<Holder<Element>> visited, Set<Holder<Element>> recursionStack) {
+    private static boolean hasCompositionCycle(Holder<Element> current, Set<Holder<Element>> visited, Set<Holder<Element>> recursionStack) {
         visited.add(current);
         recursionStack.add(current);
 
         for (var element : current.value().composition()) {
             if (!visited.contains(element)) {
-                if (hasCycle(element, visited, recursionStack)) {
+                if (hasCompositionCycle(element, visited, recursionStack)) {
                     return true;
                 }
             } else if (recursionStack.contains(element)) {

@@ -5,13 +5,13 @@ import frostygames0.elementalamulets.element.ElementalComposition;
 import frostygames0.elementalamulets.element.storage.ElementStorage;
 import frostygames0.elementalamulets.element.storage.IElementStorage;
 import frostygames0.elementalamulets.element.storage.IElementStorageProvider;
-import frostygames0.elementalamulets.inventory.InsertOnlyRangedWrapper;
 import frostygames0.elementalamulets.inventory.provider.IItemHandlerProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -20,20 +20,22 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
+// An elemental extractor with default logic, but it doesn't expose item handler capability or drops contents
 public abstract class AbstractElementalExtractorBlockEntity extends BlockEntity implements MenuProvider, IElementStorageProvider, IItemHandlerProvider {
     private static final String TAG_BASE_INVENTORY = "baseInventory";
     private static final String TAG_EXTRACTION_TIME = "extractionTime";
     private static final String TAG_TOTAL_EXTRACTION_TIME = "totalExtractionTime";
-    private static final String TAG_LIT_TIME = "litTime";
+    private static final String TAG_LIT_TIME_REMAINING = "litTimeRemaining";
     private static final String TAG_TOTAL_LIT_TIME = "totalLitTime";
     private static final String TAG_ELEMENT_STORAGE = "elementStorage";
 
     public static final int INPUT_SLOT = 0;
     public static final int FUEL_SLOT = 1;
     public static final int BASE_INVENTORY_SIZE = 2;
+
+    public static final int BASE_CONTAINER_DATA_SIZE = 4;
 
     protected final ItemStackHandler baseInventory = new ItemStackHandler(BASE_INVENTORY_SIZE) {
         @Override
@@ -61,9 +63,6 @@ public abstract class AbstractElementalExtractorBlockEntity extends BlockEntity 
         }
     };
 
-    protected final IItemHandler inputInsertOnlyWrapper = new InsertOnlyRangedWrapper(this.baseInventory, INPUT_SLOT, INPUT_SLOT + 1);
-    protected final IItemHandler fuelInsertOnlyWrapper = new InsertOnlyRangedWrapper(this.baseInventory, FUEL_SLOT, FUEL_SLOT + 1);
-
     protected AbstractElementalExtractorBlockEntity(BlockEntityType<?> blockEntityType,
                                                     BlockPos pos, BlockState state,
                                                     int storageCapacity, int distinctElementCount) {
@@ -86,6 +85,35 @@ public abstract class AbstractElementalExtractorBlockEntity extends BlockEntity 
     private int litTimeRemaining;
     private int totalLitTime;
 
+    protected final ContainerData baseContainerData = new ContainerData() {
+        @Override
+        public int get(int index) {
+            return switch (index) {
+                case 0 -> AbstractElementalExtractorBlockEntity.this.extractionTimer;
+                case 1 -> AbstractElementalExtractorBlockEntity.this.totalExtractionTime;
+                case 2 -> AbstractElementalExtractorBlockEntity.this.litTimeRemaining;
+                case 3 -> AbstractElementalExtractorBlockEntity.this.totalLitTime;
+                default -> throw new IllegalStateException("Unexpected value: " + index);
+            };
+        }
+
+        @Override
+        public void set(int index, int value) {
+            switch (index) {
+                case 0 -> AbstractElementalExtractorBlockEntity.this.extractionTimer = value;
+                case 1 -> AbstractElementalExtractorBlockEntity.this.totalExtractionTime = value;
+                case 2 -> AbstractElementalExtractorBlockEntity.this.litTimeRemaining = value;
+                case 3 -> AbstractElementalExtractorBlockEntity.this.totalLitTime = value;
+                default -> throw new IllegalStateException("Unexpected value: " + index);
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return BASE_CONTAINER_DATA_SIZE;
+        }
+    };
+
     public void serverTick() {
         boolean wasLitAtStartOfTick = this.isLit();
 
@@ -97,9 +125,9 @@ public abstract class AbstractElementalExtractorBlockEntity extends BlockEntity 
         var fuelStack = this.baseInventory.getStackInSlot(FUEL_SLOT);
 
         var stacksArePresent = !extractableStack.isEmpty() && !fuelStack.isEmpty();
-        var isActiveOrCanBe = this.isLit() || stacksArePresent;
+        var isActiveOrCanBe = this.isLit() || stacksArePresent || this.canBeAdditionallyLit();
         if (isActiveOrCanBe) {
-            var canBeLit = !this.isLit() && this.canBeFullyExtractedFrom(extractableStack);
+            var canBeLit = !this.isLit() && (this.canBeFullyExtractedFrom(extractableStack) || this.canBeAdditionallyLit());
             if (canBeLit) {
                 this.litTimeRemaining = getBurnTime(fuelStack, this.level);
                 this.totalLitTime = this.litTimeRemaining;
@@ -141,7 +169,11 @@ public abstract class AbstractElementalExtractorBlockEntity extends BlockEntity 
         }
     }
 
-    private boolean isLit() {
+    protected boolean canBeAdditionallyLit() {
+        return false;
+    }
+
+    protected boolean isLit() {
         return this.litTimeRemaining > 0;
     }
 
@@ -154,17 +186,21 @@ public abstract class AbstractElementalExtractorBlockEntity extends BlockEntity 
     }
 
     protected int calculateExtractionTime(ItemStack stack) {
-        var composition = ElementHelper.getItemComposition(stack);
+        var composition = ElementHelper.getStackElementalComposition(stack);
         return composition.map(elementalComposition -> elementalComposition.getTotalAmount() * 20).orElse(0);
     }
 
     private boolean canBeFullyExtractedFrom(ItemStack stack) {
-        var composition = ElementHelper.getItemComposition(stack);
+        if (!ElementHelper.hasElementalComposition(stack)) {
+            return false;
+        }
+
+        var composition = ElementHelper.getStackElementalComposition(stack);
         return composition.filter(this::canInsertAllElementsOfStack).isPresent();
     }
 
     private void insertCompositionOfStackIntoStorage(ItemStack stack) {
-        var composition = ElementHelper.getItemComposition(stack);
+        var composition = ElementHelper.getStackElementalComposition(stack);
         if (composition.isEmpty()) {
             return;
         }
@@ -208,8 +244,8 @@ public abstract class AbstractElementalExtractorBlockEntity extends BlockEntity 
         this.baseInventory.deserializeNBT(registries, tag.getCompound(TAG_BASE_INVENTORY));
         this.extractionTimer = tag.getInt(TAG_EXTRACTION_TIME);
         this.totalExtractionTime = tag.getInt(TAG_TOTAL_EXTRACTION_TIME);
-        this.litTimeRemaining = tag.getInt(TAG_TOTAL_LIT_TIME);
-        this.totalLitTime = tag.getInt(TAG_TOTAL_EXTRACTION_TIME);
+        this.litTimeRemaining = tag.getInt(TAG_LIT_TIME_REMAINING);
+        this.totalLitTime = tag.getInt(TAG_TOTAL_LIT_TIME);
     }
 
     @Override
@@ -220,7 +256,7 @@ public abstract class AbstractElementalExtractorBlockEntity extends BlockEntity 
         tag.put(TAG_BASE_INVENTORY, this.baseInventory.serializeNBT(registries));
         tag.putInt(TAG_EXTRACTION_TIME, this.extractionTimer);
         tag.putInt(TAG_TOTAL_EXTRACTION_TIME, this.totalExtractionTime);
-        tag.putInt(TAG_LIT_TIME, this.litTimeRemaining);
+        tag.putInt(TAG_LIT_TIME_REMAINING, this.litTimeRemaining);
         tag.putInt(TAG_TOTAL_LIT_TIME, this.totalLitTime);
     }
 }

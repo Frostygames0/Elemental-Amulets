@@ -18,7 +18,6 @@ public class ElementStorage implements IElementStorage, INBTSerializable<Compoun
     private final int maxDistinctElements;
 
     private Map<Holder<Element>, Integer> storage = new HashMap<>();
-    private int currentDistinctElements = 0;
 
     public ElementStorage(int maxCapacity, int maxDistinctElements) {
         this.maxCapacity = maxCapacity;
@@ -32,17 +31,19 @@ public class ElementStorage implements IElementStorage, INBTSerializable<Compoun
 
     @Override
     public void setStored(ElementalComposition elementalComposition) {
-        this.verifyStorageBoundaries(elementalComposition);
+        this.verifyStorage(elementalComposition);
 
         this.storage = new HashMap<>(elementalComposition.elementAmounts());
-        this.currentDistinctElements = this.storage.size();
 
         this.onChanged();
     }
 
-    private void verifyStorageBoundaries(ElementalComposition composition) {
+    private void verifyStorage(ElementalComposition composition) {
+        if (composition.elementAmounts().size() > this.maxDistinctElements) {
+            throw new IllegalStateException("Provided composition contains more distinct elements than this storage can contain!");
+        }
         if (composition.getTotalAmount() > this.maxCapacity) {
-            throw new IndexOutOfBoundsException("Provided composition's size is bigger than max capacity of this storage!");
+            throw new IllegalStateException("Provided composition's size is bigger than max capacity of this storage!");
         }
     }
 
@@ -105,7 +106,7 @@ public class ElementStorage implements IElementStorage, INBTSerializable<Compoun
             return true;
         }
 
-        return (this.currentDistinctElements + 1) <= this.maxDistinctElements;
+        return (this.getDistinctElementsAmount() + 1) <= this.maxDistinctElements;
     }
 
     @Override
@@ -115,12 +116,12 @@ public class ElementStorage implements IElementStorage, INBTSerializable<Compoun
 
     @Override
     public Set<Holder<Element>> getAllStoredElementTypes() {
-        return this.storage.keySet();
+        return Set.copyOf(this.storage.keySet()); // TODO I don't think that creating a copy of all stored element types is a good idea, but it works for now
     }
 
     @Override
     public int getDistinctElementsAmount() {
-        return this.currentDistinctElements;
+        return this.storage.size();
     }
 
     @Override

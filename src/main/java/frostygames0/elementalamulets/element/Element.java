@@ -13,6 +13,7 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.RegistryFixedCodec;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.ExtraCodecs;
 import net.neoforged.neoforge.common.util.NeoForgeExtraCodecs;
 
@@ -32,6 +33,7 @@ public record Element(Component name, Optional<Component> description, int color
             ).apply(instance, Element::new));
 
     public Element {
+        color = ARGB.opaque(color);
         composition = ImmutableSet.copyOf(composition);
     }
 
