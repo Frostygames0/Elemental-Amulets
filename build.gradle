@@ -19,6 +19,10 @@ group = mod_group_id
 
 repositories {
     mavenLocal()
+    maven {
+        name = "Curios"
+        url = uri("https://maven.theillusivec4.top/")
+    }
 }
 
 base {
@@ -112,7 +116,8 @@ configurations {
 }
 
 dependencies {
-
+    runtimeOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}+${minecraft_version}"
+    compileOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}+${minecraft_version}:api"
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
@@ -129,7 +134,9 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
             mod_license            : mod_license,
             mod_version            : mod_version,
             mod_authors            : mod_authors,
-            mod_description        : mod_description
+            mod_description        : mod_description,
+            additional_credits     : additional_credits,
+            curios_version_range   : curios_version_range
     ]
     inputs.properties replaceProperties
     expand replaceProperties

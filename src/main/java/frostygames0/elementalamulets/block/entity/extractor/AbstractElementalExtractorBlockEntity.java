@@ -5,6 +5,7 @@ import frostygames0.elementalamulets.element.ElementalComposition;
 import frostygames0.elementalamulets.element.storage.ElementStorage;
 import frostygames0.elementalamulets.element.storage.IElementStorage;
 import frostygames0.elementalamulets.element.storage.IElementStorageProvider;
+import frostygames0.elementalamulets.element.storage.OperationMode;
 import frostygames0.elementalamulets.inventory.provider.IItemHandlerProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -18,6 +19,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -43,16 +45,16 @@ public abstract class AbstractElementalExtractorBlockEntity extends BlockEntity 
         protected void onContentsChanged(int slot) {
             super.onContentsChanged(slot);
             if (slot == INPUT_SLOT) {
-                AbstractElementalExtractorBlockEntity.this.totalExtractionTime = calculateExtractionTime(this.getStackInSlot(slot));
+                totalExtractionTime = calculateExtractionTime(getStackInSlot(slot));
             }
 
-            AbstractElementalExtractorBlockEntity.this.setChanged();
+            setChanged();
         }
 
         @Override
         public boolean isItemValid(int slot, ItemStack stack) {
             if (slot == FUEL_SLOT) {
-                return isFuel(stack, AbstractElementalExtractorBlockEntity.this.level);
+                return isFuel(stack, level);
             }
 
             return super.isItemValid(slot, stack);
@@ -63,20 +65,6 @@ public abstract class AbstractElementalExtractorBlockEntity extends BlockEntity 
             return super.getSlotLimit(slot);
         }
     };
-
-    protected AbstractElementalExtractorBlockEntity(BlockEntityType<?> blockEntityType,
-                                                    BlockPos pos, BlockState state,
-                                                    int storageCapacity, int distinctElementCount) {
-        super(blockEntityType, pos, state);
-
-        this.elementStorage = new ElementStorage(storageCapacity, distinctElementCount) {
-            @Override
-            public void onChanged() {
-                super.onChanged();
-                AbstractElementalExtractorBlockEntity.this.setChanged();
-            }
-        };
-    }
 
     protected final ElementStorage elementStorage;
 
@@ -90,10 +78,10 @@ public abstract class AbstractElementalExtractorBlockEntity extends BlockEntity 
         @Override
         public int get(int index) {
             return switch (index) {
-                case 0 -> AbstractElementalExtractorBlockEntity.this.extractionTimer;
-                case 1 -> AbstractElementalExtractorBlockEntity.this.totalExtractionTime;
-                case 2 -> AbstractElementalExtractorBlockEntity.this.litTimeRemaining;
-                case 3 -> AbstractElementalExtractorBlockEntity.this.totalLitTime;
+                case 0 -> extractionTimer;
+                case 1 -> totalExtractionTime;
+                case 2 -> litTimeRemaining;
+                case 3 -> totalLitTime;
                 default -> throw new IllegalStateException("Unexpected value: " + index);
             };
         }
@@ -101,10 +89,10 @@ public abstract class AbstractElementalExtractorBlockEntity extends BlockEntity 
         @Override
         public void set(int index, int value) {
             switch (index) {
-                case 0 -> AbstractElementalExtractorBlockEntity.this.extractionTimer = value;
-                case 1 -> AbstractElementalExtractorBlockEntity.this.totalExtractionTime = value;
-                case 2 -> AbstractElementalExtractorBlockEntity.this.litTimeRemaining = value;
-                case 3 -> AbstractElementalExtractorBlockEntity.this.totalLitTime = value;
+                case 0 -> extractionTimer = value;
+                case 1 -> totalExtractionTime = value;
+                case 2 -> litTimeRemaining = value;
+                case 3 -> totalLitTime = value;
                 default -> throw new IllegalStateException("Unexpected value: " + index);
             }
         }
@@ -115,58 +103,75 @@ public abstract class AbstractElementalExtractorBlockEntity extends BlockEntity 
         }
     };
 
-    public void serverTick() {
-        boolean wasLitAtStartOfTick = this.isLit();
+    protected AbstractElementalExtractorBlockEntity(BlockEntityType<?> blockEntityType,
+                                                    BlockPos pos, BlockState state,
+                                                    int storageCapacity, int distinctElementCount) {
+        super(blockEntityType, pos, state);
 
-        if (this.isLit()) {
-            this.litTimeRemaining--;
+        elementStorage = new ElementStorage(storageCapacity, distinctElementCount) {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                setChanged();
+            }
+        };
+    }
+
+    public static final BlockEntityTicker<AbstractElementalExtractorBlockEntity> TICKER =
+            ((level1, pos, state, blockEntity) -> blockEntity.serverTick());
+
+    public void serverTick() {
+        boolean wasLitAtStartOfTick = isLit();
+
+        if (isLit()) {
+            litTimeRemaining--;
         }
 
-        var extractableStack = this.baseInventory.getStackInSlot(INPUT_SLOT);
-        var fuelStack = this.baseInventory.getStackInSlot(FUEL_SLOT);
+        var extractableStack = baseInventory.getStackInSlot(INPUT_SLOT);
+        var fuelStack = baseInventory.getStackInSlot(FUEL_SLOT);
 
         var stacksArePresent = !extractableStack.isEmpty() && !fuelStack.isEmpty();
-        var isActiveOrCanBe = this.isLit() || stacksArePresent || this.canBeAdditionallyLit();
+        var isActiveOrCanBe = isLit() || stacksArePresent || canBeAdditionallyLit();
         if (isActiveOrCanBe) {
-            var canBeLit = !this.isLit() && (this.canBeFullyExtractedFrom(extractableStack) || this.canBeAdditionallyLit());
+            var canBeLit = !isLit() && (canBeFullyExtractedFrom(extractableStack) || canBeAdditionallyLit());
             if (canBeLit) {
-                this.litTimeRemaining = getBurnTime(fuelStack, this.level);
-                this.totalLitTime = this.litTimeRemaining;
+                litTimeRemaining = getBurnTime(fuelStack, level);
+                totalLitTime = litTimeRemaining;
 
-                if (this.isLit()) { // If was succesfully lit, consume fuel
+                if (isLit()) { // If was succesfully lit, consume fuel
                     var remainder = fuelStack.getCraftingRemainder();
                     if (!remainder.isEmpty()) {
-                        this.baseInventory.setStackInSlot(FUEL_SLOT, remainder);
+                        baseInventory.setStackInSlot(FUEL_SLOT, remainder);
                     } else if (!fuelStack.isEmpty()) {
                         fuelStack.shrink(1);
                     }
                 }
             }
 
-            var canPerformExtraction = this.isLit() && this.canBeFullyExtractedFrom(extractableStack);
+            var canPerformExtraction = isLit() && canBeFullyExtractedFrom(extractableStack);
             if (canPerformExtraction) {
-                this.extractionTimer++;
-                if (this.extractionTimer == this.totalExtractionTime) {
-                    this.extractionTimer = 0;
-                    this.totalExtractionTime = this.calculateExtractionTime(extractableStack);
+                extractionTimer++;
+                if (extractionTimer == totalExtractionTime) {
+                    extractionTimer = 0;
+                    totalExtractionTime = calculateExtractionTime(extractableStack);
 
-                    if (this.canBeFullyExtractedFrom(extractableStack)) {
-                        this.insertCompositionOfStackIntoStorage(extractableStack);
+                    if (canBeFullyExtractedFrom(extractableStack)) {
+                        insertCompositionOfStackIntoStorage(extractableStack);
                         extractableStack.shrink(1);
                     }
                 }
             } else {
-                this.extractionTimer = 0;
+                extractionTimer = 0;
             }
         } else if (extractionTimer > 0) {
-            this.extractionTimer = Mth.clamp(this.extractionTimer - 2, 0, this.extractionTimer);
+            extractionTimer = Mth.clamp(extractionTimer - 2, 0, extractionTimer);
         }
 
-        if (wasLitAtStartOfTick != this.isLit()) {
-            this.setChanged();
+        if (wasLitAtStartOfTick != isLit()) {
+            setChanged();
 
-            var newState = getBlockState().setValue(BlockStateProperties.LIT, this.isLit());
-            this.level.setBlockAndUpdate(this.worldPosition, newState);
+            var newState = getBlockState().setValue(BlockStateProperties.LIT, isLit());
+            level.setBlockAndUpdate(worldPosition, newState);
         }
     }
 
@@ -175,7 +180,7 @@ public abstract class AbstractElementalExtractorBlockEntity extends BlockEntity 
     }
 
     protected boolean isLit() {
-        return this.litTimeRemaining > 0;
+        return litTimeRemaining > 0;
     }
 
     public static boolean isFuel(ItemStack stack, Level level) {
@@ -209,7 +214,7 @@ public abstract class AbstractElementalExtractorBlockEntity extends BlockEntity 
         for (var entry : composition.get().elementAmounts().entrySet()) {
             var element = entry.getKey();
             var amount = entry.getValue();
-            this.elementStorage.addElement(element, amount, false);
+            elementStorage.addElement(element, amount, OperationMode.PERFORM);
         }
     }
 
@@ -217,11 +222,11 @@ public abstract class AbstractElementalExtractorBlockEntity extends BlockEntity 
         for (var entry : composition.elementAmounts().entrySet()) {
             var element = entry.getKey();
             var amount = entry.getValue();
-            if (!this.elementStorage.canAddElement(element)) {
+            if (!elementStorage.canAddElement(element)) {
                 return false;
             }
 
-            int added = this.elementStorage.addElement(entry.getKey(), entry.getValue(), true);
+            int added = elementStorage.addElement(entry.getKey(), entry.getValue(), OperationMode.SIMULATE);
             if (added != amount) {
                 return false;
             }
@@ -232,7 +237,7 @@ public abstract class AbstractElementalExtractorBlockEntity extends BlockEntity 
 
     @Override
     public IElementStorage getElementStorage() {
-        return this.elementStorage;
+        return elementStorage;
     }
 
     public abstract void dropContents();
@@ -241,24 +246,24 @@ public abstract class AbstractElementalExtractorBlockEntity extends BlockEntity 
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
 
-        this.elementStorage.deserializeNBT(registries, tag.getCompound(TAG_ELEMENT_STORAGE));
-        this.baseInventory.deserializeNBT(registries, tag.getCompound(TAG_BASE_INVENTORY));
-        this.extractionTimer = tag.getInt(TAG_EXTRACTION_TIME);
-        this.totalExtractionTime = tag.getInt(TAG_TOTAL_EXTRACTION_TIME);
-        this.litTimeRemaining = tag.getInt(TAG_LIT_TIME_REMAINING);
-        this.totalLitTime = tag.getInt(TAG_TOTAL_LIT_TIME);
+        elementStorage.deserializeNBT(registries, tag.getCompound(TAG_ELEMENT_STORAGE));
+        baseInventory.deserializeNBT(registries, tag.getCompound(TAG_BASE_INVENTORY));
+        extractionTimer = tag.getInt(TAG_EXTRACTION_TIME);
+        totalExtractionTime = tag.getInt(TAG_TOTAL_EXTRACTION_TIME);
+        litTimeRemaining = tag.getInt(TAG_LIT_TIME_REMAINING);
+        totalLitTime = tag.getInt(TAG_TOTAL_LIT_TIME);
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
 
-        tag.put(TAG_ELEMENT_STORAGE, this.elementStorage.serializeNBT(registries));
-        tag.put(TAG_BASE_INVENTORY, this.baseInventory.serializeNBT(registries));
-        tag.putInt(TAG_EXTRACTION_TIME, this.extractionTimer);
-        tag.putInt(TAG_TOTAL_EXTRACTION_TIME, this.totalExtractionTime);
-        tag.putInt(TAG_LIT_TIME_REMAINING, this.litTimeRemaining);
-        tag.putInt(TAG_TOTAL_LIT_TIME, this.totalLitTime);
+        tag.put(TAG_ELEMENT_STORAGE, elementStorage.serializeNBT(registries));
+        tag.put(TAG_BASE_INVENTORY, baseInventory.serializeNBT(registries));
+        tag.putInt(TAG_EXTRACTION_TIME, extractionTimer);
+        tag.putInt(TAG_TOTAL_EXTRACTION_TIME, totalExtractionTime);
+        tag.putInt(TAG_LIT_TIME_REMAINING, litTimeRemaining);
+        tag.putInt(TAG_TOTAL_LIT_TIME, totalLitTime);
     }
 
     @Override

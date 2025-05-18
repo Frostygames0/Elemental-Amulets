@@ -2,7 +2,7 @@ package frostygames0.elementalamulets.block.extractor;
 
 import com.mojang.serialization.MapCodec;
 import frostygames0.elementalamulets.block.entity.extractor.PrimitiveElementalExtractorBlockEntity;
-import frostygames0.elementalamulets.registration.ModBlockEntities;
+import frostygames0.elementalamulets.initialization.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;

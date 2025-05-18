@@ -1,11 +1,14 @@
 package frostygames0.elementalamulets.client;
 
 import frostygames0.elementalamulets.inventory.menu.SyncedElementalStorageMenu;
-import frostygames0.elementalamulets.network.SyncElementStorageWithClientMenu;
+import frostygames0.elementalamulets.network.SendElementStorageToClientMenu;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public class ClientPacketHandler {
-    public static void handleSyncElementStorageWithClientMenu(SyncElementStorageWithClientMenu message, IPayloadContext context) {
+public final class ClientPacketHandler {
+    private ClientPacketHandler() {
+    }
+
+    public static void handleSyncElementStorageWithClientMenu(SendElementStorageToClientMenu message, IPayloadContext context) {
         context.enqueueWork(() -> {
             var player = context.player();
             if (message.containerId() == player.containerMenu.containerId) {

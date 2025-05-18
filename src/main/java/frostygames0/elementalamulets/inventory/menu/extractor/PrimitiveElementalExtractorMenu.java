@@ -5,10 +5,10 @@ import frostygames0.elementalamulets.block.entity.extractor.PrimitiveElementalEx
 import frostygames0.elementalamulets.element.ElementHelper;
 import frostygames0.elementalamulets.element.storage.ElementStorage;
 import frostygames0.elementalamulets.element.storage.IElementStorage;
-import frostygames0.elementalamulets.inventory.menu.slots.EmptyElementalShardSlot;
+import frostygames0.elementalamulets.initialization.ModBlocks;
+import frostygames0.elementalamulets.initialization.ModMenuTypes;
 import frostygames0.elementalamulets.inventory.menu.slots.OutputSlot;
-import frostygames0.elementalamulets.registration.ModBlocks;
-import frostygames0.elementalamulets.registration.ModMenuTypes;
+import frostygames0.elementalamulets.inventory.menu.slots.extractor.EmptyElementalShardSlot;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -36,7 +36,7 @@ public class PrimitiveElementalExtractorMenu extends AbstractElementalExtractorM
                 baseInventory, storage, access, baseContainerData, createAdditionalSlots(additionalInventory));
 
         this.additionalContainerData = additionalContainerData;
-        this.addDataSlots(this.additionalContainerData);
+        addDataSlots(this.additionalContainerData);
     }
 
     public PrimitiveElementalExtractorMenu(int containerId, Inventory playerInventory) {
@@ -71,39 +71,39 @@ public class PrimitiveElementalExtractorMenu extends AbstractElementalExtractorM
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
-        Slot slot = this.slots.get(index);
+        Slot slot = slots.get(index);
 
         if (slot != null && slot.hasItem()) {
             ItemStack itemstack1 = slot.getItem();
             itemstack = itemstack1.copy();
-            int inventoryStart = this.getInventorySlotStart();
-            int inventoryEnd = this.getUseRowEnd();
+            int inventoryStart = getInventorySlotStart();
+            int inventoryEnd = getUseRowEnd();
 
-            var isInsideExtractorSlot = index >= INPUT_SLOT && index <= this.getLastSlotIndex();
+            var isInsideExtractorSlot = index >= INPUT_SLOT && index <= getLastSlotIndex();
 
             if (isInsideExtractorSlot) {
-                if (!this.moveItemStackTo(itemstack1, inventoryStart, inventoryEnd, true)) {
+                if (!moveItemStackTo(itemstack1, inventoryStart, inventoryEnd, true)) {
                     return ItemStack.EMPTY;
                 }
             } else {
-                if (ElementHelper.isStackAnEmptyElementalShard(itemstack1)) {
-                    if (!this.moveItemStackTo(itemstack1, SHARD_SLOT, SHARD_SLOT + 1, false)) {
+                if (ElementHelper.isStackAnEmptyElementumShard(itemstack1)) {
+                    if (!moveItemStackTo(itemstack1, SHARD_SLOT, SHARD_SLOT + 1, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (AbstractElementalExtractorBlockEntity.isFuel(itemstack1, this.level)) {
-                    if (!this.moveItemStackTo(itemstack1, FUEL_SLOT, FUEL_SLOT + 1, false)) {
+                } else if (AbstractElementalExtractorBlockEntity.isFuel(itemstack1, level)) {
+                    if (!moveItemStackTo(itemstack1, FUEL_SLOT, FUEL_SLOT + 1, false)) {
                         return ItemStack.EMPTY;
                     }
                 } else if (ElementHelper.hasElementalComposition(itemstack1)) {
-                    if (!this.moveItemStackTo(itemstack1, INPUT_SLOT, INPUT_SLOT + 1, false)) {
+                    if (!moveItemStackTo(itemstack1, INPUT_SLOT, INPUT_SLOT + 1, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (index >= this.getInventorySlotStart() && index < this.getInventorySlotEnd()) {
-                    if (!this.moveItemStackTo(itemstack1, this.getUseRowStart(), this.getUseRowEnd(), false)) {
+                } else if (index >= getInventorySlotStart() && index < getInventorySlotEnd()) {
+                    if (!moveItemStackTo(itemstack1, getUseRowStart(), getUseRowEnd(), false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (index >= this.getUseRowStart() && index < this.getUseRowEnd()) {
-                    if (!this.moveItemStackTo(itemstack1, this.getInventorySlotStart(), this.getInventorySlotEnd(), false)) {
+                } else if (index >= getUseRowStart() && index < getUseRowEnd()) {
+                    if (!moveItemStackTo(itemstack1, getInventorySlotStart(), getInventorySlotEnd(), false)) {
                         return ItemStack.EMPTY;
                     }
                 }
@@ -127,12 +127,12 @@ public class PrimitiveElementalExtractorMenu extends AbstractElementalExtractorM
 
     @Override
     public boolean stillValid(Player player) {
-        return AbstractContainerMenu.stillValid(this.access, player, ModBlocks.PRIMITIVE_ELEMENTAL_EXTRACTOR.get());
+        return AbstractContainerMenu.stillValid(access, player, ModBlocks.PRIMITIVE_ELEMENTAL_EXTRACTOR.get());
     }
 
     public float getConversionProgress() {
-        int i = this.additionalContainerData.get(0);
-        int j = this.additionalContainerData.get(1);
+        int i = additionalContainerData.get(0);
+        int j = additionalContainerData.get(1);
         return j != 0 && i != 0 ? Mth.clamp((float) i / (float) j, 0.0F, 1.0F) : 0.0F;
     }
 }

@@ -25,9 +25,8 @@ public class ElementStorageBarWidget extends AbstractWidget {
     private final IElementStorage storage;
     private final boolean horizontal;
 
-    public ElementStorageBarWidget(ResourceLocation overlay, IElementStorage storage, Font font, boolean horizontal, int x, int y, int width, int height) {
+    public ElementStorageBarWidget(IElementStorage storage, Font font, boolean horizontal, int x, int y, int width, int height, @Nullable ResourceLocation overlay) {
         super(x, y, width, height, CommonComponents.EMPTY);
-
         this.overlay = overlay;
         this.storage = storage;
         this.font = font;
@@ -55,42 +54,44 @@ public class ElementStorageBarWidget extends AbstractWidget {
 
     @Override
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        this.renderBar(graphics);
-        if (this.isHovered()) {
-            this.renderTooltip(graphics, mouseX, mouseY);
+        renderBar(graphics);
+        if (isHovered()) {
+            renderTooltip(graphics, mouseX, mouseY);
         }
     }
 
     // TODO Implement vertical render
     private void renderBar(GuiGraphics graphics) {
-        int x = this.getX();
-        int y = this.getY();
+        int x = getX();
+        int y = getY();
 
-        for (var entry : this.storage.getStored().elementAmounts().entrySet()) {
+        for (var entry : storage.getStored().elementAmounts().entrySet()) {
             var color = entry.getKey().value().color();
             var amount = entry.getValue();
 
-            var progress = Mth.ceil(((float) amount / (float) this.storage.getMaxCapacity()) * this.getWidth());
-            int maxX = Math.clamp(x + progress, 0, this.getX() + this.getWidth());
+            var progress = Mth.ceil(((float) amount / (float) storage.getMaxCapacity()) * getWidth());
+            int maxX = Math.clamp(x + progress, 0, getX() + getWidth());
 
-            graphics.fill(x, y, maxX, y + this.getHeight(), color);
+            graphics.fill(x, y, maxX, y + getHeight(), color);
             x += progress;
         }
 
-        graphics.blitSprite(RenderType::guiTextured, this.overlay, this.getX(), this.getY(), getWidth(), getHeight());
+        if (overlay != null) {
+            graphics.blitSprite(RenderType::guiTextured, overlay, getX(), getY(), getWidth(), getHeight());
+        }
     }
 
     private void renderTooltip(GuiGraphics graphics, int mouseX, int mouseY) {
         var title = Component.translatable("tooltip.elementalamulets.element_storage_stored");
 
-        var amountFraction = String.format("%d/%d", this.storage.getTotalAmount(), this.storage.getMaxCapacity());
-        var distinctFraction = String.format("%d/%d", this.storage.getDistinctElementsAmount(), this.storage.getMaxDistinctElementsStored());
+        var amountFraction = String.format("%d/%d", storage.getTotalAmount(), storage.getMaxCapacity());
+        var distinctFraction = String.format("%d/%d", storage.getDistinctElementsAmount(), storage.getMaxDistinctElementsStored());
         var both = String.format(" (%s - %s)", amountFraction, distinctFraction);
 
         title.append(both).withStyle(ChatFormatting.GOLD);
 
-        var composition = this.storage.getStored();
-        graphics.renderTooltip(this.font,
+        var composition = storage.getStored();
+        graphics.renderTooltip(font,
                 List.of(title),
                 composition.isEmpty() ? Optional.empty() : Optional.of(composition),
                 mouseX, mouseY);

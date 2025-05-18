@@ -1,7 +1,8 @@
 package frostygames0.elementalamulets.data;
 
 import frostygames0.elementalamulets.ElementalAmulets;
-import frostygames0.elementalamulets.registration.ModBlocks;
+import frostygames0.elementalamulets.initialization.ModBlocks;
+import frostygames0.elementalamulets.initialization.tags.ModBlockTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.BlockTags;
@@ -16,6 +17,19 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        tag(BlockTags.MINEABLE_WITH_PICKAXE).add(ModBlocks.PRIMITIVE_ELEMENTAL_EXTRACTOR.get());
+        tag(ModBlockTags.ELEMENTUM_CRYSTAL_ORES)
+                .add(ModBlocks.ELEMENTUM_CRYSTAL_ORE.get())
+                .add(ModBlocks.ELEMENTUM_CRYSTAL_DEEPSLATE_ORE.get());
+
+        tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                .add(ModBlocks.PRIMITIVE_ELEMENTAL_EXTRACTOR.get())
+                .add(ModBlocks.ELEMENTAL_PIPE.get())
+                .addTag(ModBlockTags.ELEMENTUM_CRYSTAL_ORES);
+
+        tag(BlockTags.NEEDS_STONE_TOOL)
+                .addTag(ModBlockTags.ELEMENTUM_CRYSTAL_ORES);
+
+        tag(BlockTags.NEEDS_IRON_TOOL)
+                .add(ModBlocks.ELEMENTAL_PIPE.get());
     }
 }

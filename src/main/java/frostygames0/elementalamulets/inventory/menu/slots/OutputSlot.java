@@ -19,6 +19,6 @@ public class OutputSlot extends SlotItemHandler {
 
     @Override
     public int getMaxStackSize() {
-        return this.maxStackSize;
+        return maxStackSize;
     }
 }

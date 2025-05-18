@@ -10,11 +10,9 @@ public interface IElementStorage {
 
     ElementalComposition getStored();
 
-    void setStored(ElementalComposition composition);
+    int addElement(Holder<Element> element, int amount, OperationMode operationMode);
 
-    int addElement(Holder<Element> element, int amount, boolean simulate);
-
-    int takeElement(Holder<Element> element, int amount, boolean simulate);
+    int takeElement(Holder<Element> element, int amount, OperationMode operationMode);
 
     boolean canAddElement(Holder<Element> element);
 
@@ -36,4 +34,5 @@ public interface IElementStorage {
 
     default void onChanged() {
     }
+
 }

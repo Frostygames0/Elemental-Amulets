@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#c:is_overworld",
+  "features": "elementalamulets:elementum_crystal_ore_lower",
+  "step": "underground_ores"
+}

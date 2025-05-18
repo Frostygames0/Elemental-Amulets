@@ -1,0 +1,7 @@
+{
+  "parent": "elementalamulets:block/pipe/connections_templates/center",
+  "textures": {
+    "particle": "elementalamulets:block/elemental_pipe",
+    "texture": "elementalamulets:block/elemental_pipe"
+  }
+}

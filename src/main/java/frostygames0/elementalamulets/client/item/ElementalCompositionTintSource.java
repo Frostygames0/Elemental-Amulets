@@ -4,7 +4,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import frostygames0.elementalamulets.element.Element;
 import frostygames0.elementalamulets.element.ElementalComposition;
-import frostygames0.elementalamulets.registration.ModDataComponents;
+import frostygames0.elementalamulets.initialization.ModDataComponents;
 import net.minecraft.client.color.item.ItemTintSource;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.Holder;
@@ -19,7 +19,7 @@ import java.util.Map;
 public record ElementalCompositionTintSource(int defaultColor) implements ItemTintSource {
     public static final int DEFAULT_COLOR = 0xFF6CD0D0;
 
-    public static MapCodec<ElementalCompositionTintSource> MAP_CODEC = RecordCodecBuilder.mapCodec(
+    public static final MapCodec<ElementalCompositionTintSource> MAP_CODEC = RecordCodecBuilder.mapCodec(
             p_387230_ ->
                     p_387230_.group(
                             ExtraCodecs.RGB_COLOR_CODEC.fieldOf("default").forGetter(ElementalCompositionTintSource::defaultColor)
@@ -36,7 +36,7 @@ public record ElementalCompositionTintSource(int defaultColor) implements ItemTi
         var elementAmounts = data.elementAmounts();
 
         if (elementAmounts.isEmpty()) {
-            return this.defaultColor;
+            return defaultColor;
         } else if (elementAmounts.size() == 1) {
             return elementAmounts
                     .entrySet()

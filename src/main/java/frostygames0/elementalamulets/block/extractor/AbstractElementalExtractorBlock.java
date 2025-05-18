@@ -31,7 +31,7 @@ public abstract class AbstractElementalExtractorBlock extends BaseEntityBlock {
 
     public AbstractElementalExtractorBlock(BlockBehaviour.Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any()
+        registerDefaultState(stateDefinition.any()
                 .setValue(FACING, Direction.NORTH)
                 .setValue(LIT, false));
     }
@@ -40,7 +40,7 @@ public abstract class AbstractElementalExtractorBlock extends BaseEntityBlock {
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+        return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
     }
 
     @Override
@@ -62,7 +62,7 @@ public abstract class AbstractElementalExtractorBlock extends BaseEntityBlock {
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (!level.isClientSide) {
-            this.openContainer(level, pos, player);
+            openContainer(level, pos, player);
         }
 
         return InteractionResult.SUCCESS;
@@ -86,7 +86,11 @@ public abstract class AbstractElementalExtractorBlock extends BaseEntityBlock {
     protected static <T extends BlockEntity> BlockEntityTicker<T> createExtractorTicker(
             Level level, BlockEntityType<T> serverType,
             BlockEntityType<? extends AbstractElementalExtractorBlockEntity> clientType) {
-        return level.isClientSide ? null : createTickerHelper(serverType, clientType,
+        if (level.isClientSide) {
+            return null;
+        }
+
+        return createTickerHelper(serverType, clientType,
                 (level1, pos, state, blockEntity)
                         -> blockEntity.serverTick());
     }

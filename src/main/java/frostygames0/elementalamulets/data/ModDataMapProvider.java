@@ -1,8 +1,8 @@
 package frostygames0.elementalamulets.data;
 
 import frostygames0.elementalamulets.element.ElementalComposition;
-import frostygames0.elementalamulets.registration.Elements;
-import frostygames0.elementalamulets.registration.ModDataMaps;
+import frostygames0.elementalamulets.initialization.ModDataMaps;
+import frostygames0.elementalamulets.initialization.ModElements;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.tags.ItemTags;
@@ -22,18 +22,18 @@ public class ModDataMapProvider extends DataMapProvider {
     protected void gather(@NotNull HolderLookup.Provider provider) {
         builder(ModDataMaps.ELEMENTAL_COMPOSITION)
                 .add(Items.WATER_BUCKET.builtInRegistryHolder(), ElementalComposition.builder(provider)
-                        .addElement(Elements.WATER, 3)
-                        .addElement(Elements.AETHER, 2)
+                        .addElement(ModElements.WATER, 3)
+                        .addElement(ModElements.AETHER, 2)
                         .build(), false)
                 .add(Items.SPONGE.builtInRegistryHolder(), ElementalComposition.builder(provider)
-                        .addElement(Elements.WATER, 3)
+                        .addElement(ModElements.WATER, 3)
                         .build(), false)
                 .add(ItemTags.LOGS_THAT_BURN, ElementalComposition.builder(provider)
-                        .addElement(Elements.EARTH, 32)
-                        .addElement(Elements.WATER, 100)
+                        .addElement(ModElements.EARTH, 32)
+                        .addElement(ModElements.WATER, 100)
                         .build(), false)
                 .add(ItemTags.CRIMSON_STEMS, ElementalComposition.builder(provider)
-                        .addElement(Elements.FIRE, 10)
+                        .addElement(ModElements.FIRE, 10)
                         .build(), false);
 
     }

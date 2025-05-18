@@ -10,7 +10,7 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DynamicItemHandlerProvider implements IDynamicItemHandlerProvider {
+public class DynamicItemHandlerProvider {
     private final EnumProperty<Direction> property;
 
     private final Map<Direction, IItemHandler> map = new HashMap<>();
@@ -25,14 +25,14 @@ public class DynamicItemHandlerProvider implements IDynamicItemHandlerProvider {
 
     public void updateSides(BlockState newState) {
         var oldState = state;
-        this.state = newState;
+        state = newState;
 
-        if (oldState == null || this.state.getValue(property) != oldState.getValue(property)) {
-            var newFace = this.state.getValue(property);
+        if (oldState == null || state.getValue(property) != oldState.getValue(property)) {
+            var newFace = state.getValue(property);
 
             map.clear();
 
-            for (var entry : this.relativeMap.entrySet()) {
+            for (var entry : relativeMap.entrySet()) {
                 var relative = entry.getKey();
                 var handler = entry.getValue();
 
@@ -50,7 +50,6 @@ public class DynamicItemHandlerProvider implements IDynamicItemHandlerProvider {
     }
 
 
-    @Override
     public IItemHandler getItemHandlerForDirection(@Nullable Direction direction) {
         return map.getOrDefault(direction, null);
     }
@@ -63,7 +62,7 @@ public class DynamicItemHandlerProvider implements IDynamicItemHandlerProvider {
         private final EnumMap<BlockFace, IItemHandler> relativeMap;
 
         private Builder() {
-            this.relativeMap = new EnumMap<>(BlockFace.class);
+            relativeMap = new EnumMap<>(BlockFace.class);
         }
 
         public Builder addItemHandlerForFace(BlockFace blockFace, IItemHandler handler) {

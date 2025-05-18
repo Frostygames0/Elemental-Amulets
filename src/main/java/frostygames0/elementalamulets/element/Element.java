@@ -3,7 +3,7 @@ package frostygames0.elementalamulets.element;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import frostygames0.elementalamulets.registration.Elements;
+import frostygames0.elementalamulets.initialization.ModElements;
 import net.minecraft.core.Holder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -21,8 +21,8 @@ import java.util.Optional;
 import java.util.Set;
 
 public record Element(Component name, Optional<Component> description, int color, Set<Holder<Element>> composition) {
-    public static final Codec<Holder<Element>> CODEC = RegistryFixedCodec.create(Elements.ELEMENTS_REGISTRY_KEY);
-    public static final StreamCodec<RegistryFriendlyByteBuf, Holder<Element>> STREAM_CODEC = ByteBufCodecs.holderRegistry(Elements.ELEMENTS_REGISTRY_KEY);
+    public static final Codec<Holder<Element>> CODEC = RegistryFixedCodec.create(ModElements.ELEMENTS);
+    public static final StreamCodec<RegistryFriendlyByteBuf, Holder<Element>> STREAM_CODEC = ByteBufCodecs.holderRegistry(ModElements.ELEMENTS);
 
     public static final Codec<Element> DIRECT_CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
@@ -42,7 +42,7 @@ public record Element(Component name, Optional<Component> description, int color
     }
 
     public MutableComponent colorizeNameMutable() {
-        return this.name.plainCopy().withColor(this.color);
+        return name.plainCopy().withColor(color);
     }
 
     public static Element createWithDefaultTranslationKeys(ResourceLocation resourceLocation, int color, Set<Holder<Element>> composition, boolean hasDescription) {
@@ -53,10 +53,10 @@ public record Element(Component name, Optional<Component> description, int color
     }
 
     public static String getNameTranslationKey(ResourceLocation resourceLocation) {
-        return resourceLocation.toLanguageKey(Elements.ELEMENTS_REGISTRY_KEY.location().getPath(), "name");
+        return resourceLocation.toLanguageKey(ModElements.ELEMENTS.location().getPath(), "name");
     }
 
     public static String getDescriptionTranslationKey(ResourceLocation resourceLocation) {
-        return resourceLocation.toLanguageKey(Elements.ELEMENTS_REGISTRY_KEY.location().getPath(), "description");
+        return resourceLocation.toLanguageKey(ModElements.ELEMENTS.location().getPath(), "description");
     }
 }

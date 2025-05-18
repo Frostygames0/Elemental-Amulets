@@ -24,48 +24,49 @@ public class AbstractElementalExtractorScreen<T extends AbstractElementalExtract
     protected void init() {
         super.init();
 
-        var elementStorageBarWidget = this.widgets.elementStorageBar();
-        var storageScale = new ElementStorageBarWidget(elementStorageBarWidget.sprite(),
-                this.menu.getStored(),
-                this.font,
+        var elementStorageBarWidget = widgets.elementStorageBar();
+        var storageScale = new ElementStorageBarWidget(
+                menu.getStored(),
+                font,
                 true,
-                this.leftPos + elementStorageBarWidget.x(),
-                this.topPos + elementStorageBarWidget.y(),
-                elementStorageBarWidget.width(), elementStorageBarWidget.height()); // 36 4
+                leftPos + elementStorageBarWidget.x(),
+                topPos + elementStorageBarWidget.y(),
+                elementStorageBarWidget.width(), elementStorageBarWidget.height(),
+                elementStorageBarWidget.sprite()); // 36 4
 
-        this.addRenderableWidget(storageScale);
+        addRenderableWidget(storageScale);
     }
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.render(graphics, mouseX, mouseY, partialTick);
-        this.renderTooltip(graphics, mouseX, mouseY);
+        renderTooltip(graphics, mouseX, mouseY);
     }
 
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
-        guiGraphics.blit(RenderType::guiTextured, this.backgroundTexture, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
+        guiGraphics.blit(RenderType::guiTextured, backgroundTexture, leftPos, topPos, 0, 0, imageWidth, imageHeight, 256, 256);
 
-        this.renderLitProgress(guiGraphics);
-        this.renderExtractionProgress(guiGraphics);
+        renderLitProgress(guiGraphics);
+        renderExtractionProgress(guiGraphics);
     }
 
     private void renderExtractionProgress(GuiGraphics graphics) {
         var definition = widgets.extractionProgressSprite();
 
-        int j = Mth.ceil(this.menu.getExtractionProgress() * definition.width());
-        graphics.blitSprite(RenderType::guiTextured, definition.sprite(), definition.width(), definition.height(), 0, 0, this.leftPos + definition.x(), this.topPos + definition.y(), j, definition.height());
+        int j = Mth.ceil(menu.getExtractionProgress() * definition.width());
+        graphics.blitSprite(RenderType::guiTextured, definition.sprite(), definition.width(), definition.height(), 0, 0, leftPos + definition.x(), topPos + definition.y(), j, definition.height());
     }
 
     private void renderLitProgress(GuiGraphics graphics) {
-        if (this.menu.isLit()) {
+        if (menu.isLit()) {
             var definition = widgets.litProgressSprite();
-            var l = Mth.ceil(this.menu.getLitProgress() * (definition.height() - 1)) + 1;
+            var l = Mth.ceil(menu.getLitProgress() * (definition.height() - 1)) + 1;
 
             graphics.blitSprite(RenderType::guiTextured,
                     definition.sprite(), definition.width(), definition.height(),
                     0, definition.height() - l,
-                    this.leftPos + definition.x(), this.topPos + definition.y() + definition.height() - l,
+                    leftPos + definition.x(), topPos + definition.y() + definition.height() - l,
                     definition.width(), l);
         }
     }

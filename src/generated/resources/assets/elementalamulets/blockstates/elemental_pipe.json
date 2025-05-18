@@ -1,0 +1,14 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "elementalamulets:block/elemental_pipe_connections"
+      }
+    },
+    {
+      "apply": {
+        "model": "elementalamulets:block/elemental_pipe_center"
+      }
+    }
+  ]
+}

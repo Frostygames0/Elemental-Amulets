@@ -32,7 +32,7 @@ public class PrimitiveElementalExtractorScreen extends AbstractElementalExtracto
     protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
         super.renderBg(guiGraphics, partialTick, mouseX, mouseY);
 
-        int j = Mth.ceil(this.menu.getConversionProgress() * 14);
-        guiGraphics.blitSprite(RenderType::guiTextured, PROGRESS_ARROW, 14, 8, 0, 0, this.leftPos + 99, this.topPos + 33, j, 8);
+        int j = Mth.ceil(menu.getConversionProgress() * 14);
+        guiGraphics.blitSprite(RenderType::guiTextured, PROGRESS_ARROW, 14, 8, 0, 0, leftPos + 99, topPos + 33, j, 8);
     }
 }

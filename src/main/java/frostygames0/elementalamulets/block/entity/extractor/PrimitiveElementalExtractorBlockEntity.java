@@ -3,20 +3,20 @@ package frostygames0.elementalamulets.block.entity.extractor;
 import frostygames0.elementalamulets.block.extractor.AbstractElementalExtractorBlock;
 import frostygames0.elementalamulets.element.Element;
 import frostygames0.elementalamulets.element.ElementHelper;
+import frostygames0.elementalamulets.element.storage.OperationMode;
+import frostygames0.elementalamulets.initialization.ModBlockEntities;
 import frostygames0.elementalamulets.inventory.ExtractOnlyRangedWrapper;
 import frostygames0.elementalamulets.inventory.InsertOnlyRangedWrapper;
 import frostygames0.elementalamulets.inventory.ItemHandlerHelper;
 import frostygames0.elementalamulets.inventory.menu.extractor.PrimitiveElementalExtractorMenu;
 import frostygames0.elementalamulets.inventory.provider.BlockFace;
 import frostygames0.elementalamulets.inventory.provider.DynamicItemHandlerProvider;
-import frostygames0.elementalamulets.registration.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -50,6 +50,7 @@ public class PrimitiveElementalExtractorBlockEntity extends AbstractElementalExt
     public static final int ADDITIONAL_CONTAINER_DATA_SIZE = 2;
 
     public static final int TOTAL_CONVERSION_TIME = 40;
+    public static final int TIME_UNTIL_EXPLOSION = 100;
 
     private final ItemStackHandler additionalInventory = new ItemStackHandler(ADDITIONAL_INVENTORY_SIZE) {
         @Override
@@ -63,7 +64,7 @@ public class PrimitiveElementalExtractorBlockEntity extends AbstractElementalExt
             if (slot >= RESULTS_SLOTS_START && slot <= RESULTS_SLOTS_END) {
                 return false;
             } else if (slot == EMPTY_SHARD_SLOT) {
-                return ElementHelper.isStackAnEmptyElementalShard(stack);
+                return ElementHelper.isStackAnEmptyElementumShard(stack);
             }
 
             return super.isItemValid(slot, stack);
@@ -78,28 +79,28 @@ public class PrimitiveElementalExtractorBlockEntity extends AbstractElementalExt
         }
     };
 
-    private final IItemHandler inputInsertOnlyWrapper = new InsertOnlyRangedWrapper(this.baseInventory, INPUT_SLOT, INPUT_SLOT + 1);
-    private final IItemHandler fuelInsertOnlyWrapper = new InsertOnlyRangedWrapper(this.baseInventory, FUEL_SLOT, FUEL_SLOT + 1);
-    private final IItemHandler shardInsertOnlyWrapper = new InsertOnlyRangedWrapper(this.additionalInventory, EMPTY_SHARD_SLOT, EMPTY_SHARD_SLOT + 1);
-    private final IItemHandler resultsExtractOnlyWrapper = new ExtractOnlyRangedWrapper(this.additionalInventory, RESULTS_SLOTS_START, RESULTS_SLOTS_END + 1);
+    private final IItemHandler inputInsertOnlyWrapper = new InsertOnlyRangedWrapper(baseInventory, INPUT_SLOT, INPUT_SLOT + 1);
+    private final IItemHandler fuelInsertOnlyWrapper = new InsertOnlyRangedWrapper(baseInventory, FUEL_SLOT, FUEL_SLOT + 1);
+    private final IItemHandler shardInsertOnlyWrapper = new InsertOnlyRangedWrapper(additionalInventory, EMPTY_SHARD_SLOT, EMPTY_SHARD_SLOT + 1);
+    private final IItemHandler resultsExtractOnlyWrapper = new ExtractOnlyRangedWrapper(additionalInventory, RESULTS_SLOTS_START, RESULTS_SLOTS_END + 1);
 
-    private final IItemHandler mergedItemHandler = new CombinedInvWrapper(this.baseInventory, this.additionalInventory);
+    private final IItemHandler mergedItemHandler = new CombinedInvWrapper(baseInventory, additionalInventory);
 
     private final DynamicItemHandlerProvider dynamicItemHandlerProvider = DynamicItemHandlerProvider.builder()
-            .addItemHandlerForFace(BlockFace.FRONT, this.fuelInsertOnlyWrapper)
-            .addItemHandlerForFace(BlockFace.BACK, this.fuelInsertOnlyWrapper)
-            .addItemHandlerForFace(BlockFace.LEFT, this.shardInsertOnlyWrapper)
-            .addItemHandlerForFace(BlockFace.RIGHT, this.shardInsertOnlyWrapper)
-            .addItemHandlerForFace(BlockFace.TOP, this.inputInsertOnlyWrapper)
-            .addItemHandlerForFace(BlockFace.BOTTOM, this.resultsExtractOnlyWrapper)
-            .addItemHandlerForFace(BlockFace.ANY, this.mergedItemHandler)
+            .addItemHandlerForFace(BlockFace.FRONT, fuelInsertOnlyWrapper)
+            .addItemHandlerForFace(BlockFace.BACK, fuelInsertOnlyWrapper)
+            .addItemHandlerForFace(BlockFace.LEFT, shardInsertOnlyWrapper)
+            .addItemHandlerForFace(BlockFace.RIGHT, shardInsertOnlyWrapper)
+            .addItemHandlerForFace(BlockFace.TOP, inputInsertOnlyWrapper)
+            .addItemHandlerForFace(BlockFace.BOTTOM, resultsExtractOnlyWrapper)
+            .addItemHandlerForFace(BlockFace.ANY, mergedItemHandler)
             .build(AbstractElementalExtractorBlock.FACING);
 
     private final ContainerData additionalData = new ContainerData() {
         @Override
         public int get(int index) {
             return switch (index) {
-                case 0 -> PrimitiveElementalExtractorBlockEntity.this.shardConversionTimer;
+                case 0 -> shardConversionTimer;
                 case 1 -> TOTAL_CONVERSION_TIME; //PrimitiveElementalExtractorBlockEntity.this.totalShardConversionTime;
                 default -> throw new IllegalStateException("Unexpected value: " + index);
             };
@@ -108,7 +109,7 @@ public class PrimitiveElementalExtractorBlockEntity extends AbstractElementalExt
         @Override
         public void set(int index, int value) {
             switch (index) {
-                case 0 -> PrimitiveElementalExtractorBlockEntity.this.shardConversionTimer = value;
+                case 0 -> shardConversionTimer = value;
                 case 1 -> {
                 }
                 default -> throw new IllegalStateException("Unexpected value: " + index);
@@ -127,68 +128,67 @@ public class PrimitiveElementalExtractorBlockEntity extends AbstractElementalExt
 
     public PrimitiveElementalExtractorBlockEntity(BlockPos pos, BlockState blockState) {
         super(ModBlockEntities.PRIMITIVE_ELEMENTAL_EXTRACTOR.get(), pos, blockState, ELEMENT_STORAGE_CAPACITY, MAX_DISTINCT_ELEMENTS_STORED);
-        this.dynamicItemHandlerProvider.updateSides(this.getBlockState());
+        dynamicItemHandlerProvider.updateSides(getBlockState());
     }
 
     @Override
     public void serverTick() {
         super.serverTick();
 
-        var emptyShardStack = this.additionalInventory.getStackInSlot(EMPTY_SHARD_SLOT);
-        var canBeConverted = this.elementStorage.getTotalAmount() > 0 && emptyShardStack.getCount() > 0;
+        var emptyShardStack = additionalInventory.getStackInSlot(EMPTY_SHARD_SLOT);
+        var canBeConverted = elementStorage.getTotalAmount() > 0 && emptyShardStack.getCount() > 0;
 
         if (canBeConverted) {
-            var canAtleastOneBeConverted = false;
-            for (var element : this.elementStorage.getAllStoredElementTypes()) {
-                if (!this.elementStorage.canTakeElement(element)) {
+            var canAtLeastOneBeConverted = false;
+            for (var element : elementStorage.getAllStoredElementTypes()) {
+                if (!elementStorage.canTakeElement(element)) {
                     continue;
                 }
 
                 var canConvert = tryAddShardToResult(element, true);
-                var canTake = this.elementStorage.takeElement(element, 1, true) == 1;
-                var hasEnoughEmptyShards = this.additionalInventory.getStackInSlot(EMPTY_SHARD_SLOT).getCount() > 0;
+                var canTake = elementStorage.takeElement(element, 1, OperationMode.SIMULATE) == 1;
+                var hasEnoughEmptyShards = additionalInventory.getStackInSlot(EMPTY_SHARD_SLOT).getCount() > 0;
 
                 if (!canConvert || !canTake || !hasEnoughEmptyShards) {
                     continue;
                 }
 
-                canAtleastOneBeConverted = true;
-                if (this.shardConversionTimer == TOTAL_CONVERSION_TIME) {
-                    this.tryAddShardToResult(element, false);
-                    this.elementStorage.takeElement(element, 1, false);
+                canAtLeastOneBeConverted = true;
+                if (shardConversionTimer == TOTAL_CONVERSION_TIME) {
+                    tryAddShardToResult(element, false);
+                    elementStorage.takeElement(element, 1, OperationMode.PERFORM);
 
                     emptyShardStack.shrink(1);
 
                     shardConversionTimer = 0;
                 } else {
-                    this.shardConversionTimer++;
+                    shardConversionTimer++;
                 }
 
                 break;
             }
 
-            if (!canAtleastOneBeConverted && this.shardConversionTimer > 0) {
-                this.shardConversionTimer = 0;
+            if (!canAtLeastOneBeConverted && shardConversionTimer > 0) {
+                shardConversionTimer = 0;
             }
-        } else if (this.shardConversionTimer > 0) {
-            this.shardConversionTimer = 0;
+        } else if (shardConversionTimer > 0) {
+            shardConversionTimer = 0;
         }
 
-        if (this.elementStorage.getTotalAmount() == this.elementStorage.getMaxCapacity()) {
-            this.explosionTimer++;
+        if (elementStorage.getTotalAmount() == elementStorage.getMaxCapacity()) {
+            explosionTimer++;
 
-            if (this.explosionTimer == 1) {
-                this.level.playSound(null, this.worldPosition, SoundEvents.TNT_PRIMED, SoundSource.BLOCKS, 1f, 1f);
+            if (explosionTimer == 1) {
+                level.playSound(null, worldPosition, SoundEvents.TNT_PRIMED, SoundSource.BLOCKS, 1f, 1f);
             }
 
-            ((ServerLevel) this.level).sendParticles(ParticleTypes.SMOKE, this.worldPosition.getX() + 0.5, this.worldPosition.getY() + 1, this.worldPosition.getZ() + 0.5, 1, 0.1, 0.1, 0.1, 0);
+            ((ServerLevel) level).sendParticles(ParticleTypes.LARGE_SMOKE, worldPosition.getX() + 0.5, worldPosition.getY() + 1, worldPosition.getZ() + 0.5, 1, 0.1, 0.1, 0.1, 0);
 
-            if (this.explosionTimer == 100) {
-                this.level.removeBlock(this.worldPosition, false);
-                this.level.explode(null, this.worldPosition.getX(), this.worldPosition.getY(), this.worldPosition.getZ(), 3f, Level.ExplosionInteraction.BLOCK);
+            if (explosionTimer == TIME_UNTIL_EXPLOSION) {
+                level.explode(null, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), 3f, Level.ExplosionInteraction.BLOCK);
             }
-        } else if (this.explosionTimer > 0) {
-            this.explosionTimer = 0;
+        } else if (explosionTimer > 0) {
+            explosionTimer = 0;
         }
     }
 
@@ -196,17 +196,17 @@ public class PrimitiveElementalExtractorBlockEntity extends AbstractElementalExt
         var shard = ElementHelper.createShardWithElement(elementHolder);
 
         for (int i = RESULTS_SLOTS_START; i <= RESULTS_SLOTS_END; i++) {
-            var stackInSlot = this.additionalInventory.getStackInSlot(i);
+            var stackInSlot = additionalInventory.getStackInSlot(i);
 
             if (stackInSlot.isEmpty()) {
                 if (!simulate) {
-                    this.additionalInventory.setStackInSlot(i, shard);
+                    additionalInventory.setStackInSlot(i, shard);
                 }
                 return true;
             }
 
             var stackSize = stackInSlot.getCount();
-            var slotLimit = this.additionalInventory.getSlotLimit(i);
+            var slotLimit = additionalInventory.getSlotLimit(i);
 
             if (stackSize == slotLimit) {
                 continue;
@@ -231,22 +231,22 @@ public class PrimitiveElementalExtractorBlockEntity extends AbstractElementalExt
 
     @Override
     public IItemHandler getItemHandlerForDirection(@Nullable Direction direction) {
-        return this.dynamicItemHandlerProvider.getItemHandlerForDirection(direction);
+        return dynamicItemHandlerProvider.getItemHandlerForDirection(direction);
     }
 
     @Override
     @SuppressWarnings("deprecation")
     public void setBlockState(BlockState blockState) {
         super.setBlockState(blockState);
-        this.dynamicItemHandlerProvider.updateSides(this.getBlockState());
+        dynamicItemHandlerProvider.updateSides(getBlockState());
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
 
-        tag.put(TAG_ADDITIONAL_INVENTORY, this.additionalInventory.serializeNBT(registries));
-        tag.putInt(TAG_CONVERSION_TIMER, this.shardConversionTimer);
+        tag.put(TAG_ADDITIONAL_INVENTORY, additionalInventory.serializeNBT(registries));
+        tag.putInt(TAG_CONVERSION_TIMER, shardConversionTimer);
         //tag.putInt(TAG_TOTAL_CONVERSION_TIME, this.totalShardConversionTime);
     }
 
@@ -254,21 +254,21 @@ public class PrimitiveElementalExtractorBlockEntity extends AbstractElementalExt
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
 
-        this.additionalInventory.deserializeNBT(registries, tag.getCompound(TAG_ADDITIONAL_INVENTORY));
-        this.shardConversionTimer = tag.getInt(TAG_CONVERSION_TIMER);
+        additionalInventory.deserializeNBT(registries, tag.getCompound(TAG_ADDITIONAL_INVENTORY));
+        shardConversionTimer = tag.getInt(TAG_CONVERSION_TIMER);
         //this.totalShardConversionTime = tag.getInt(TAG_TOTAL_CONVERSION_TIME);
     }
 
     @Override
     public void dropContents() {
-        ItemHandlerHelper.dropItemHandlerContents(this.level, this.worldPosition, this.mergedItemHandler);
+        ItemHandlerHelper.dropItemHandlerContents(level, worldPosition, mergedItemHandler);
     }
 
     @Override
     public @Nullable AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
         return new PrimitiveElementalExtractorMenu(containerId, playerInventory,
-                this.baseInventory, this.additionalInventory,
-                this.baseContainerData, this.additionalData,
-                this.elementStorage, ContainerLevelAccess.create(this.level, this.worldPosition));
+                baseInventory, additionalInventory,
+                baseContainerData, additionalData,
+                elementStorage, ContainerLevelAccess.create(level, worldPosition));
     }
 }

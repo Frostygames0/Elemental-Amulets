@@ -2,7 +2,7 @@ package frostygames0.elementalamulets.client.gui.tooltip;
 
 import frostygames0.elementalamulets.element.Element;
 import frostygames0.elementalamulets.element.ElementalComposition;
-import frostygames0.elementalamulets.registration.Elements;
+import frostygames0.elementalamulets.initialization.ModElements;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -48,7 +48,7 @@ public class ClientElementalCompositionTooltip implements ClientTooltipComponent
 
     @Override
     public void renderImage(@NotNull Font font, int x, int y, int width, int height, @NotNull GuiGraphics guiGraphics) {
-        renderComposition(this.elementalComposition, guiGraphics, font, x + OFFSET_X, y);
+        renderComposition(elementalComposition, guiGraphics, font, x + OFFSET_X, y);
     }
 
     private static void renderComposition(Map<Holder<Element>, Integer> composition, GuiGraphics guiGraphics, Font font, int x, int y) {
@@ -77,6 +77,6 @@ public class ClientElementalCompositionTooltip implements ClientTooltipComponent
     }
 
     private static ResourceLocation getSpritePath(ResourceLocation resourceLocation) {
-        return ResourceLocation.fromNamespaceAndPath(resourceLocation.getNamespace(), Elements.ELEMENTS_REGISTRY_KEY.location().getPath() + "/" + resourceLocation.getPath());
+        return ResourceLocation.fromNamespaceAndPath(resourceLocation.getNamespace(), ModElements.ELEMENTS.location().getPath() + "/" + resourceLocation.getPath());
     }
 }

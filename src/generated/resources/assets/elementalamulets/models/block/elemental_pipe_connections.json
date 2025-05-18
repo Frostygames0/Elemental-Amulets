@@ -1,0 +1,24 @@
+{
+  "connector": {
+    "parent": "elementalamulets:block/pipe/connections_templates/connector",
+    "textures": {
+      "particle": "elementalamulets:block/elemental_pipe",
+      "texture": "elementalamulets:block/elemental_pipe"
+    }
+  },
+  "connector_short": {
+    "parent": "elementalamulets:block/pipe/connections_templates/connector_short",
+    "textures": {
+      "particle": "elementalamulets:block/elemental_pipe",
+      "texture": "elementalamulets:block/elemental_pipe"
+    }
+  },
+  "loader": "elementalamulets:pipe",
+  "rim": {
+    "parent": "elementalamulets:block/pipe/connections_templates/rim",
+    "textures": {
+      "particle": "elementalamulets:block/elemental_pipe",
+      "texture": "elementalamulets:block/elemental_pipe"
+    }
+  }
+}

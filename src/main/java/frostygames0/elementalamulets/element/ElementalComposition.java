@@ -2,18 +2,22 @@ package frostygames0.elementalamulets.element;
 
 import com.google.common.collect.ImmutableMap;
 import com.mojang.serialization.Codec;
-import frostygames0.elementalamulets.registration.Elements;
+import frostygames0.elementalamulets.initialization.ModElements;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
+import net.minecraft.world.level.Level;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public record ElementalComposition(Map<Holder<Element>, Integer> elementAmounts) implements TooltipComponent {
     public static final ElementalComposition EMPTY = new ElementalComposition(Map.of());
@@ -32,12 +36,12 @@ public record ElementalComposition(Map<Holder<Element>, Integer> elementAmounts)
     }
 
     public boolean isEmpty() {
-        return this.elementAmounts.isEmpty();
+        return elementAmounts.isEmpty();
     }
 
     public int getTotalAmount() {
         int total = 0;
-        for (var amount : this.elementAmounts.values()) {
+        for (var amount : elementAmounts.values()) {
             total += amount;
         }
 
@@ -72,8 +76,20 @@ public record ElementalComposition(Map<Holder<Element>, Integer> elementAmounts)
         return new ElementalComposition(ImmutableMap.of(elementHolder, amount));
     }
 
+    public static Optional<CompoundTag> toNbtTag(HolderLookup.Provider provider, ElementalComposition elementalComposition) {
+        return CODEC.encodeStart(provider.createSerializationContext(NbtOps.INSTANCE), elementalComposition).resultOrPartial().map(tag -> (CompoundTag) tag);
+    }
+
+    public static Optional<ElementalComposition> fromNbtTag(HolderLookup.Provider provider, CompoundTag tag) {
+        return CODEC.parse(provider.createSerializationContext(NbtOps.INSTANCE), tag).resultOrPartial();
+    }
+
     public static Builder builder(HolderLookup.Provider lookupProvider) {
         return new Builder(lookupProvider);
+    }
+
+    public static Builder builder(Level level) {
+        return new Builder(level.registryAccess());
     }
 
     public static class Builder {
@@ -81,7 +97,7 @@ public record ElementalComposition(Map<Holder<Element>, Integer> elementAmounts)
         private final ImmutableMap.Builder<Holder<Element>, Integer> builder;
 
         public Builder(HolderLookup.Provider lookupProvider) {
-            holderLookup = lookupProvider.lookupOrThrow(Elements.ELEMENTS_REGISTRY_KEY);
+            holderLookup = lookupProvider.lookupOrThrow(ModElements.ELEMENTS);
             builder = ImmutableMap.builder();
         }
 
@@ -90,11 +106,6 @@ public record ElementalComposition(Map<Holder<Element>, Integer> elementAmounts)
 
             builder.put(elementHolder, amount);
 
-            return this;
-        }
-
-        public Builder addElement(Holder<Element> element, int amount) {
-            builder.put(element, amount);
             return this;
         }
 

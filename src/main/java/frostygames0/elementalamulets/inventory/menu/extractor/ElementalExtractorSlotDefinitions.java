@@ -19,15 +19,15 @@ public class ElementalExtractorSlotDefinitions {
     }
 
     public SlotDefinition getInputSlot() {
-        return this.inputSlot;
+        return inputSlot;
     }
 
     public SlotDefinition getFuelSlot() {
-        return this.fuelSlot;
+        return fuelSlot;
     }
 
     public List<SlotDefinition> getAdditionalSlots() {
-        return this.additionalSlots;
+        return additionalSlots;
     }
 
     public int getLastSlotIndex() {
@@ -45,12 +45,12 @@ public class ElementalExtractorSlotDefinitions {
         private final ImmutableList.Builder<SlotDefinition> additionalSlots = ImmutableList.builder();
 
         public Builder addInputSlot(int slot, int x, int y) {
-            this.inputSlot = new SlotDefinition(slot, x, y, Optional.empty());
+            inputSlot = new SlotDefinition(slot, x, y, Optional.empty());
             return this;
         }
 
         public Builder addFuelSlot(int slot, int x, int y) {
-            this.fuelSlot = new SlotDefinition(slot, x, y, Optional.empty());
+            fuelSlot = new SlotDefinition(slot, x, y, Optional.empty());
             return this;
         }
 
@@ -60,15 +60,15 @@ public class ElementalExtractorSlotDefinitions {
         }
 
         public ElementalExtractorSlotDefinitions build() {
-            if (this.inputSlot == null) {
+            if (inputSlot == null) {
                 throw new NullPointerException("Input slot must be added!");
             }
 
-            if (this.fuelSlot == null) {
+            if (fuelSlot == null) {
                 throw new NullPointerException("Fuel slot must be added!");
             }
 
-            return new ElementalExtractorSlotDefinitions(this.inputSlot, this.fuelSlot, this.additionalSlots.build());
+            return new ElementalExtractorSlotDefinitions(inputSlot, fuelSlot, additionalSlots.build());
         }
     }
 

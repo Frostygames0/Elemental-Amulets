@@ -2,7 +2,8 @@ package frostygames0.elementalamulets.inventory.menu;
 
 import frostygames0.elementalamulets.element.ElementalComposition;
 import frostygames0.elementalamulets.element.storage.IElementStorage;
-import frostygames0.elementalamulets.network.SyncElementStorageWithClientMenu;
+import frostygames0.elementalamulets.element.storage.IElementStorageModifiable;
+import frostygames0.elementalamulets.network.SendElementStorageToClientMenu;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -21,28 +22,29 @@ public abstract class SyncedElementalStorageMenu extends AbstractContainerMenu {
         super(menuType, containerId);
 
         this.player = player;
-        this.stored = storage;
+        stored = storage;
     }
 
     @Override
     public void broadcastChanges() {
         super.broadcastChanges();
 
-        var currentValue = this.stored.getStored();
-        if (!currentValue.equals(this.oldValue)) {
-            if (this.player instanceof ServerPlayer serverPlayer) {
-                PacketDistributor.sendToPlayer(serverPlayer, new SyncElementStorageWithClientMenu(this.containerId, currentValue));
+        var currentValue = stored.getStored();
+        if (!currentValue.equals(oldValue)) {
+            if (player instanceof ServerPlayer serverPlayer) {
+                PacketDistributor.sendToPlayer(serverPlayer, new SendElementStorageToClientMenu(containerId, currentValue));
             }
 
-            this.oldValue = currentValue;
+            oldValue = currentValue;
         }
     }
 
+    // I'd recommend to override this if your storage doesn't implement modifiable, and you don't want an exception
     public void setStored(ElementalComposition storage) {
-        this.stored.setStored(storage);
+        ((IElementStorageModifiable) stored).setStored(storage);
     }
 
     public IElementStorage getStored() {
-        return this.stored;
+        return stored;
     }
 }

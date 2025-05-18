@@ -1,0 +1,92 @@
+{
+  "credit": "Made with Blockbench",
+  "texture_size": [
+    32,
+    32
+  ],
+  "elements": [
+    {
+      "name": "rim_n",
+      "from": [
+        5,
+        5,
+        0
+      ],
+      "to": [
+        11,
+        11,
+        1
+      ],
+      "rotation": {
+        "angle": 0,
+        "axis": "y",
+        "origin": [
+          7,
+          9,
+          1
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            3,
+            6,
+            0,
+            3
+          ],
+          "rotation": 90,
+          "texture": "#texture"
+        },
+        "east": {
+          "uv": [
+            0,
+            6,
+            3,
+            6.5
+          ],
+          "rotation": 90,
+          "texture": "#texture"
+        },
+        "south": {
+          "uv": [
+            3,
+            0,
+            0,
+            3
+          ],
+          "rotation": 90,
+          "texture": "#texture"
+        },
+        "west": {
+          "uv": [
+            0,
+            6,
+            3,
+            6.5
+          ],
+          "rotation": 270,
+          "texture": "#texture"
+        },
+        "up": {
+          "uv": [
+            0,
+            6,
+            3,
+            6.5
+          ],
+          "texture": "#texture"
+        },
+        "down": {
+          "uv": [
+            0,
+            6,
+            3,
+            6.5
+          ],
+          "rotation": 180,
+          "texture": "#texture"
+        }
+      }
+    }
+  ]
+}

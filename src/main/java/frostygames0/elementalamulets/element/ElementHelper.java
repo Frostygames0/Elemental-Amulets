@@ -1,8 +1,8 @@
 package frostygames0.elementalamulets.element;
 
-import frostygames0.elementalamulets.registration.ModDataComponents;
-import frostygames0.elementalamulets.registration.ModDataMaps;
-import frostygames0.elementalamulets.registration.ModItems;
+import frostygames0.elementalamulets.initialization.ModDataComponents;
+import frostygames0.elementalamulets.initialization.ModDataMaps;
+import frostygames0.elementalamulets.initialization.ModItems;
 import net.minecraft.core.Holder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -62,16 +62,16 @@ public final class ElementHelper {
         return dataComponent != null && !dataComponent.isEmpty() ? Optional.of(dataComponent) : Optional.empty();
     }
 
-    public static boolean isStackAnEmptyElementalShard(ItemStack stack) {
-        return isStackAnElementalShard(stack) && stack.getOrDefault(ModDataComponents.ELEMENTAL_COMPOSITION, ElementalComposition.EMPTY).isEmpty();
+    public static boolean isStackAnEmptyElementumShard(ItemStack stack) {
+        return isStackAnElementumShard(stack) && stack.getOrDefault(ModDataComponents.ELEMENTAL_COMPOSITION, ElementalComposition.EMPTY).isEmpty();
     }
 
-    public static boolean isStackAnElementalShard(ItemStack stack) {
-        return stack.is(ModItems.ELEMENT_SHARD);
+    public static boolean isStackAnElementumShard(ItemStack stack) {
+        return stack.is(ModItems.ELEMENTUM_SHARD);
     }
 
     public static ItemStack createShardWithElement(Holder<Element> elementHolder) {
-        var stack = new ItemStack(ModItems.ELEMENT_SHARD.get());
+        var stack = new ItemStack(ModItems.ELEMENTUM_SHARD.get());
         stack.set(ModDataComponents.ELEMENTAL_COMPOSITION, ElementalComposition.fromSingle(elementHolder, 1));
         return stack;
     }

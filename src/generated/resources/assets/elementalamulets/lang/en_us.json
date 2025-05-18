@@ -1,7 +1,16 @@
 {
+  "block.elementalamulets.elemental_pipe": "Elemental Pipe",
+  "block.elementalamulets.elementum_crystal_deepslate_ore": "Elementum Crystal Deepslate Ore",
+  "block.elementalamulets.elementum_crystal_ore": "Elementum Crystal Ore",
   "block.elementalamulets.primitive_elemental_extractor": "Primitive Elemental Extractor",
+  "block.elementalamulets.simple_generator": "Simple Generator",
+  "block.elementalamulets.simple_storage": "Simple Storage",
+  "block.elementalamulets.test_block": "Test Block",
   "command.elementalamulets.found_n_elements": "%s elements registered:",
   "command.elementalamulets.found_no_elements": "No elements registered! Something probably went wrong!",
+  "command.elementalamulets.get_element.composition": "Composition:",
+  "command.elementalamulets.get_element.description": "Description: %s",
+  "command.elementalamulets.get_element.is_primordial": "Is Primordial?: %s",
   "command.elementalamulets.no_registry_error": "Unable to find registry for elements! Something went terribly wrong!",
   "container.elementalamulets.elemental_extractor": "Extractor",
   "elements.elementalamulets.aether.description": "The quintessence of this world! Responsible for all unexplainable and magical things!",
@@ -13,9 +22,10 @@
   "generic.elementalamulets.mixed": "Mixed",
   "generic.elementalamulets.round_brackets": "(%s)",
   "item.elementalamulets.elemental_sense_ring": "Ring of Elemental Sense",
-  "item.elementalamulets.elemental_shard": "Elemental Shard",
-  "itemGroup.elementalamulets": "Elemental Amulets",
+  "item.elementalamulets.elementum_shard": "Elementum Shard",
+  "key.elementalamulets.show_composition": "Show Elemental Composition",
+  "tab.elementalamulets.main": "Elemental Amulets",
   "tooltip.elementalamulets.element_storage_stored": "Stored",
   "tooltip.elementalamulets.elemental_composition": "Elemental Composition",
-  "tooltip.elementalamulets.elemental_composition.hidden": "Press [SHIFT] to see the elemental composition..."
+  "tooltip.elementalamulets.elemental_composition.hidden": "Press [%s] to see the elemental composition..."
 }

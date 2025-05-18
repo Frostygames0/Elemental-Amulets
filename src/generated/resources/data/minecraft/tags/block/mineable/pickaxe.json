@@ -1,5 +1,7 @@
 {
   "values": [
-    "elementalamulets:primitive_elemental_extractor"
+    "elementalamulets:primitive_elemental_extractor",
+    "elementalamulets:elemental_pipe",
+    "#elementalamulets:elementum_crystal_ores"
   ]
 }
