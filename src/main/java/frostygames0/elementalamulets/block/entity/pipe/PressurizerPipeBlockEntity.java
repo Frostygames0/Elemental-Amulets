@@ -89,6 +89,7 @@ public class PressurizerPipeBlockEntity extends BaseElementalPipeBlockEntity {
         return !front;
     }
 
+    // TODO There is bug somewhere (pressure distance)
     protected void distributePressureTo(Direction side) {
 
         PressurizerPipeBlockEntity.BlockFace start = new PressurizerPipeBlockEntity.BlockFace(worldPosition, side);

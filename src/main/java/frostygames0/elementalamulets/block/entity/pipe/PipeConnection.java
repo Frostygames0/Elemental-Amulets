@@ -285,6 +285,11 @@ public class PipeConnection {
         }
     }
 
+    @Override
+    public String toString() {
+        return String.format("%s - P: [I: %s, O: %s], F: [%s]", side.getName(), getInboundPressure(), getOutboundPressure(), flow == null ? "N" : flow.toString());
+    }
+
     private class Flow {
         private boolean inbound;
         private Holder<Element> element;
@@ -336,6 +341,11 @@ public class PipeConnection {
             } else {
                 complete = true;
             }
+        }
+
+        @Override
+        public String toString() {
+            return String.format("E: %s, I: %s, P: %s", element.value().name().getString(), inbound, complete ? "c" : progress);
         }
     }
 }

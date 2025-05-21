@@ -29,11 +29,12 @@ public class BaseElementalPipeDebugRenderer implements BlockEntityRenderer<BaseE
 //        }
 
         var i = 7;
-        renderTextOverPos(poseStack, bufferSource, "Elements in each connection", blockPos, i--, 0xFFFF0000);
+        renderTextOverPos(poseStack, bufferSource, "Connections", blockPos, i--, 0xFFFF0000);
         for (var direction : Direction.values()) {
-            var elementInsideConnection = blockEntity.getElement(direction, false).orElse(blockEntity.getElement(direction, true).orElse(null));
-            var text = String.format("%s - %s", direction.getName(), elementInsideConnection != null ? elementInsideConnection.value().name().getString() : "No Flow");
-            renderTextOverPos(poseStack, bufferSource, text, blockPos, i--, -1);
+            var connection = blockEntity.getConnection(direction);
+            if (connection != null) {
+                renderTextOverPos(poseStack, bufferSource, connection.toString(), blockPos, i--, -1);
+            }
         }
     }
 
@@ -44,8 +45,8 @@ public class BaseElementalPipeDebugRenderer implements BlockEntityRenderer<BaseE
 
     private static void renderTextOverPos(PoseStack poseStack, MultiBufferSource buffer, String text, BlockPos pos, int layer, int color) {
         double x = pos.getX() + 1;
-        double y = pos.getY() + 2 + layer * 0.2;
+        double y = pos.getY() + 1 + layer * 0.2;
         double z = pos.getZ() + 1;
-        DebugRenderer.renderFloatingText(poseStack, buffer, text, x, y, z, color, 0.02F, true, 0.0F, true);
+        DebugRenderer.renderFloatingText(poseStack, buffer, text, x, y, z, color, 0.007F, true, 0.0F, true);
     }
 }
