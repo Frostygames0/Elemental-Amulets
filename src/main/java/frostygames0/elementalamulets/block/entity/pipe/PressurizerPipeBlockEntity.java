@@ -25,8 +25,9 @@ public class PressurizerPipeBlockEntity extends BaseElementalPipeBlockEntity {
     @Override
     public boolean canHaveFlowToward(Direction side) {
         var blockState = getBlockState();
-        if (!(blockState.getBlock() instanceof PipePressurizerBlock))
+        if (!(blockState.getBlock() instanceof PipePressurizerBlock)) {
             return false;
+        }
 
         return PipePressurizerBlock.isOpen(blockState, side);
     }
@@ -59,13 +60,11 @@ public class PressurizerPipeBlockEntity extends BaseElementalPipeBlockEntity {
         }
     }
 
-    protected boolean isFrontSide(Direction side)
-    {
+    protected boolean isFrontSide(Direction side) {
         return side == getFrontFace();
     }
 
-    protected Direction getFrontFace()
-    {
+    protected Direction getFrontFace() {
         var state = getBlockState();
         if (!(state.getBlock() instanceof PipePressurizerBlock)) {
             return null;
@@ -74,8 +73,7 @@ public class PressurizerPipeBlockEntity extends BaseElementalPipeBlockEntity {
         return state.getValue(PipePressurizerBlock.FACING);
     }
 
-    public void updatePipesOnSide(Direction side)
-    {
+    public void updatePipesOnSide(Direction side) {
         if (isFrontSide(side)) {
             frontNeedsUpdate = true;
         } else {

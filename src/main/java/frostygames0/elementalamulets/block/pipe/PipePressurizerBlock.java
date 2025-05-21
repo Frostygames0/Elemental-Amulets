@@ -21,8 +21,7 @@ public class PipePressurizerBlock extends SpecialPipeBlock {
         super(properties);
     }
 
-    public static boolean isPressurizerPipe(BlockState state)
-    {
+    public static boolean isPressurizerPipe(BlockState state) {
         return state.getBlock() instanceof PipePressurizerBlock;
     }
 

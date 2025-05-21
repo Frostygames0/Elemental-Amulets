@@ -1,7 +1,6 @@
 package frostygames0.elementalamulets.block.pipe;
 
 import frostygames0.elementalamulets.block.entity.pipe.PipeHelper;
-import frostygames0.elementalamulets.initialization.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -81,10 +80,8 @@ public abstract class SpecialPipeBlock extends BaseEntityBlock {
     @Override
     protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess scheduledTickAccess, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
         var d = PipeHelper.validateNeighbourChange(state, level, pos, neighborState, neighborPos);
-        if (d != null)
-        {
-            if (isOpen(state, direction))
-            {
+        if (d != null) {
+            if (isOpen(state, direction)) {
                 scheduledTickAccess.scheduleTick(pos, this, 1, TickPriority.HIGH);
                 level.getBlockEntity(pos);
             }

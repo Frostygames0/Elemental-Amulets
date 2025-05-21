@@ -58,8 +58,7 @@ public class ModModelProvider extends ModelProvider {
         itemModelGenerators.itemModelOutput.accept(item.get(), ItemModelUtils.tintedModel(model, sources));
     }
 
-    private static void generateFullBlockPipe(BlockModelGenerators blockModels, Block block)
-    {
+    private static void generateFullBlockPipe(BlockModelGenerators blockModels, Block block) {
         var texture = TextureMapping.getBlockTexture(block, "_top");
         var sideTexture = TextureMapping.getBlockTexture(block, "_side");
 
@@ -77,8 +76,7 @@ public class ModModelProvider extends ModelProvider {
         );
     }
 
-    private static PropertyDispatch createPipeFacingDispatch()
-    {
+    private static PropertyDispatch createPipeFacingDispatch() {
         return PropertyDispatch.property(BlockStateProperties.FACING)
                 .select(Direction.UP, Variant.variant())
                 .select(Direction.DOWN, Variant.variant().with(VariantProperties.X_ROT, VariantProperties.Rotation.R180))

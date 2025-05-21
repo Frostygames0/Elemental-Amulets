@@ -45,8 +45,7 @@ public class PipeHelper {
 
                 BlockEntity blockEntity = world.getBlockEntity(target);
                 BlockState targetState = world.getBlockState(target);
-                if (PipePressurizerBlock.isPressurizerPipe(targetState))
-                {
+                if (PipePressurizerBlock.isPressurizerPipe(targetState)) {
                     if (blockEntity instanceof PressurizerPipeBlockEntity pressurizerPipe) {
                         if (!PipePressurizerBlock.isOpen(targetState, direction)) {
                             continue;
@@ -142,13 +141,15 @@ public class PipeHelper {
     }
 
     public static Direction validateNeighbourChange(BlockState state, LevelReader level, BlockPos pos, BlockState neighborState, BlockPos neighborPos) {
-        if (level.isClientSide())
+        if (level.isClientSide()) {
             return null;
+        }
         // calling getblockstate() as otherBlock param seems to contain the block which
         // was replaced
         var otherBlock = neighborState.getBlock();
-        if (otherBlock instanceof ElementalPipeBlock)
+        if (otherBlock instanceof ElementalPipeBlock) {
             return null;
+        }
 //        if (otherBlock instanceof AxisPipeBlock)
 //            return null;
 //        if (otherBlock instanceof PumpBlock)
@@ -158,8 +159,9 @@ public class PipeHelper {
 //        if (getStraightPipeAxis(state) == null && !AllBlocks.ENCASED_FLUID_PIPE.has(state))
 //            return null;
         for (Direction d : Direction.values()) {
-            if (!pos.relative(d).equals(neighborPos))
+            if (!pos.relative(d).equals(neighborPos)) {
                 continue;
+            }
             return d;
         }
         return null;

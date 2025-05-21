@@ -30,10 +30,8 @@ public abstract class BasePipeBlock extends BaseEntityBlock {
         state = updatePipeState(level, state, pos, direction);
 
         var d = PipeHelper.validateNeighbourChange(state, level, pos, neighborState, neighborPos);
-        if (d != null)
-        {
-            if (isOpen(state, direction))
-            {
+        if (d != null) {
+            if (isOpen(state, direction)) {
                 scheduledTickAccess.scheduleTick(pos, this, 1, TickPriority.HIGH);
             }
         }

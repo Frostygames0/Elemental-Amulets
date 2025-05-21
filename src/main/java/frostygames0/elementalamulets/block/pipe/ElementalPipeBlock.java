@@ -2,8 +2,8 @@ package frostygames0.elementalamulets.block.pipe;
 
 import com.mojang.serialization.MapCodec;
 import frostygames0.elementalamulets.block.entity.pipe.BaseElementalPipeBlockEntity;
-import frostygames0.elementalamulets.block.entity.pipe.PipeHelper;
 import frostygames0.elementalamulets.block.entity.pipe.ElementalPipeBlockEntity;
+import frostygames0.elementalamulets.block.entity.pipe.PipeHelper;
 import frostygames0.elementalamulets.initialization.ModBlockEntities;
 import frostygames0.elementalamulets.initialization.ModBlocks;
 import frostygames0.elementalamulets.initialization.ModCapabilities;
@@ -30,7 +30,6 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.pathfinder.PathComputationType;
-import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.ticks.TickPriority;
 import org.jetbrains.annotations.Nullable;
 
@@ -162,10 +161,8 @@ public class ElementalPipeBlock extends PipeBlock implements SimpleWaterloggedBl
 
         state = updatePipeState(level, state, pos, direction);
         var d = PipeHelper.validateNeighbourChange(state, level, pos, neighborState, neighborPos);
-        if (d != null)
-        {
-            if (isOpen(state, d))
-            {
+        if (d != null) {
+            if (isOpen(state, d)) {
                 scheduledTickAccess.scheduleTick(pos, this, 1, TickPriority.HIGH);
             }
         }

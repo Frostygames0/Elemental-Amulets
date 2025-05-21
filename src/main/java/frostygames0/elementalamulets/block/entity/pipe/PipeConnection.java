@@ -142,8 +142,7 @@ public class PipeConnection {
         }
 
         // TODO: I don't think this is needed at all
-        if (previousSource instanceof NothingFlowSource)
-        {
+        if (previousSource instanceof NothingFlowSource) {
             source = previousSource;
             return true;
         }

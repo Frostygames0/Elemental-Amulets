@@ -2,7 +2,6 @@ package frostygames0.elementalamulets.block.entity.pipe;
 
 import frostygames0.elementalamulets.block.pipe.ElementalPipeBlock;
 import frostygames0.elementalamulets.element.Element;
-import frostygames0.elementalamulets.initialization.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
