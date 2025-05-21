@@ -1,7 +1,7 @@
-package frostygames0.elementalamulets.block.entity;
+package frostygames0.elementalamulets.block.pipe;
 
 import com.mojang.serialization.MapCodec;
-import frostygames0.elementalamulets.block.SimpleStorageBlockEntity;
+import frostygames0.elementalamulets.block.entity.SimpleStorageBlockEntity;
 import frostygames0.elementalamulets.initialization.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;

@@ -33,7 +33,6 @@ public class ModBlockLootProvider extends BlockLootSubProvider {
 
         dropSelf(ModBlocks.SIMPLE_STORAGE.get());
         dropSelf(ModBlocks.SIMPLE_GENERATOR.get());
-        dropSelf(ModBlocks.TEST_BLOCK.get());
     }
 
     protected LootTable.Builder createElementumCrystalOreDrops(Block block) {

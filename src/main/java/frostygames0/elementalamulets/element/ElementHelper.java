@@ -4,6 +4,9 @@ import frostygames0.elementalamulets.initialization.ModDataComponents;
 import frostygames0.elementalamulets.initialization.ModDataMaps;
 import frostygames0.elementalamulets.initialization.ModItems;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.Tag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
@@ -100,5 +103,13 @@ public final class ElementHelper {
 
         recursionStack.remove(current);
         return false;
+    }
+
+    public static Optional<Holder<Element>> deserializeFromNbt(Tag tag, HolderLookup.Provider provider) {
+        return Element.CODEC.parse(provider.createSerializationContext(NbtOps.INSTANCE), tag).resultOrPartial();
+    }
+
+    public static Optional<Tag> serializeToNbt(Holder<Element> element, HolderLookup.Provider provider) {
+        return Element.CODEC.encodeStart(provider.createSerializationContext(NbtOps.INSTANCE), element).resultOrPartial();
     }
 }

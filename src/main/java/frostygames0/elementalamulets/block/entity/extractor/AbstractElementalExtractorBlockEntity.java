@@ -27,12 +27,12 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 
 // An elemental extractor with default logic, but it doesn't expose item handler capability or drops contents
 public abstract class AbstractElementalExtractorBlockEntity extends BlockEntity implements MenuProvider, IElementStorageProvider, IItemHandlerProvider {
-    private static final String TAG_BASE_INVENTORY = "baseInventory";
-    private static final String TAG_EXTRACTION_TIME = "extractionTime";
-    private static final String TAG_TOTAL_EXTRACTION_TIME = "totalExtractionTime";
-    private static final String TAG_LIT_TIME_REMAINING = "litTimeRemaining";
-    private static final String TAG_TOTAL_LIT_TIME = "totalLitTime";
-    private static final String TAG_ELEMENT_STORAGE = "elementStorage";
+    private static final String TAG_BASE_INVENTORY = "BaseInventory";
+    private static final String TAG_EXTRACTION_TIME = "ExtractionTime";
+    private static final String TAG_TOTAL_EXTRACTION_TIME = "TotalExtractionTime";
+    private static final String TAG_LIT_TIME_REMAINING = "LitTimeRemaining";
+    private static final String TAG_TOTAL_LIT_TIME = "TotalLitTime";
+    private static final String TAG_ELEMENT_STORAGE = "ElementStorage";
 
     public static final int INPUT_SLOT = 0;
     public static final int FUEL_SLOT = 1;

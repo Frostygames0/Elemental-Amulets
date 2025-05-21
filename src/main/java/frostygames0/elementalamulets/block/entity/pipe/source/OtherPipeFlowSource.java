@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.ref.WeakReference;
@@ -19,7 +20,7 @@ public class OtherPipeFlowSource extends FlowSource {
     }
 
     @Override
-    public void manage(Level level) {
+    public void manage(Level level, BlockEntity blockEntity) {
         if (pipeCache != null && pipeCache.get() != null && !pipeCache.get().isRemoved()) {
             return;
         }

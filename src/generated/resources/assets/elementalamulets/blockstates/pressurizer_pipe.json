@@ -1,27 +1,53 @@
 {
   "variants": {
-    "facing=down": {
+    "enabled=false,facing=down": {
+      "model": "elementalamulets:block/pressurizer_pipe_off",
+      "x": 180
+    },
+    "enabled=false,facing=east": {
+      "model": "elementalamulets:block/pressurizer_pipe_off",
+      "x": 90,
+      "y": 90
+    },
+    "enabled=false,facing=north": {
+      "model": "elementalamulets:block/pressurizer_pipe_off",
+      "x": 90
+    },
+    "enabled=false,facing=south": {
+      "model": "elementalamulets:block/pressurizer_pipe_off",
+      "x": 90,
+      "y": 180
+    },
+    "enabled=false,facing=up": {
+      "model": "elementalamulets:block/pressurizer_pipe_off"
+    },
+    "enabled=false,facing=west": {
+      "model": "elementalamulets:block/pressurizer_pipe_off",
+      "x": 90,
+      "y": 270
+    },
+    "enabled=true,facing=down": {
       "model": "elementalamulets:block/pressurizer_pipe",
       "x": 180
     },
-    "facing=east": {
+    "enabled=true,facing=east": {
       "model": "elementalamulets:block/pressurizer_pipe",
       "x": 90,
       "y": 90
     },
-    "facing=north": {
+    "enabled=true,facing=north": {
       "model": "elementalamulets:block/pressurizer_pipe",
       "x": 90
     },
-    "facing=south": {
+    "enabled=true,facing=south": {
       "model": "elementalamulets:block/pressurizer_pipe",
       "x": 90,
       "y": 180
     },
-    "facing=up": {
+    "enabled=true,facing=up": {
       "model": "elementalamulets:block/pressurizer_pipe"
     },
-    "facing=west": {
+    "enabled=true,facing=west": {
       "model": "elementalamulets:block/pressurizer_pipe",
       "x": 90,
       "y": 270

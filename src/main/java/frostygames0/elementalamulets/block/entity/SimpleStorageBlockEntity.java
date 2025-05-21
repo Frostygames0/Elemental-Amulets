@@ -1,4 +1,4 @@
-package frostygames0.elementalamulets.block;
+package frostygames0.elementalamulets.block.entity;
 
 import frostygames0.elementalamulets.element.ElementalComposition;
 import frostygames0.elementalamulets.element.storage.ElementStorage;
@@ -30,7 +30,7 @@ public class SimpleStorageBlockEntity extends BlockEntity implements IElementSto
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
-        storage.deserializeNBT(registries, tag);
+        storage.deserializeNBT(registries, tag.getCompound("storage"));
         isInit = tag.getBoolean("init");
     }
 
@@ -52,6 +52,7 @@ public class SimpleStorageBlockEntity extends BlockEntity implements IElementSto
 
                 storage.setStored(composition);
                 isInit = true;
+                setChanged();
             }
         }
     }

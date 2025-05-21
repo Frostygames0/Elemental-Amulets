@@ -39,7 +39,6 @@ public class ModModelProvider extends ModelProvider {
         generatePipe(blockModels, ModBlocks.ELEMENTAL_PIPE.get());
         blockModels.createTrivialCube(ModBlocks.SIMPLE_STORAGE.get());
         blockModels.createTrivialCube(ModBlocks.SIMPLE_GENERATOR.get());
-        blockModels.createTrivialCube(ModBlocks.TEST_BLOCK.get());
         generateFullBlockPipe(blockModels, ModBlocks.PRESSURIZER_PIPE.get());
     }
 
@@ -59,6 +58,8 @@ public class ModModelProvider extends ModelProvider {
     }
 
     private static void generateFullBlockPipe(BlockModelGenerators blockModels, Block block) {
+        var modelTemplate = ModelTemplates.CUBE_BOTTOM_TOP;
+
         var texture = TextureMapping.getBlockTexture(block, "_top");
         var sideTexture = TextureMapping.getBlockTexture(block, "_side");
 
@@ -68,10 +69,15 @@ public class ModModelProvider extends ModelProvider {
                 .put(TextureSlot.SIDE, sideTexture)
                 .put(TextureSlot.PARTICLE, sideTexture);
 
-        var model = ModelTemplates.CUBE_BOTTOM_TOP.create(block, texturemapping, blockModels.modelOutput);
+        var enabledModel = modelTemplate.create(block, texturemapping, blockModels.modelOutput);
+
+        var disabledSideTexture = TextureMapping.getBlockTexture(block, "_side_off");
+        var disabledModel = modelTemplate.createWithSuffix(block, "_off", texturemapping.copyAndUpdate(TextureSlot.SIDE, disabledSideTexture), blockModels.modelOutput);
+
         blockModels.blockStateOutput.accept(
                 MultiVariantGenerator
-                        .multiVariant(block, Variant.variant().with(VariantProperties.MODEL, model))
+                        .multiVariant(block)
+                        .with(BlockModelGenerators.createBooleanModelDispatch(BlockStateProperties.ENABLED, enabledModel, disabledModel))
                         .with(createPipeFacingDispatch())
         );
     }

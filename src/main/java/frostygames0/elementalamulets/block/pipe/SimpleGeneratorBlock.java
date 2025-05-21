@@ -1,4 +1,4 @@
-package frostygames0.elementalamulets.block.entity;
+package frostygames0.elementalamulets.block.pipe;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;

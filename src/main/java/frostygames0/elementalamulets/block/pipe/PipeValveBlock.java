@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-public class PipeValveBlock extends SpecialPipeBlock {
+public class PipeValveBlock extends AxisPipeBlock {
     public static final MapCodec<PipeValveBlock> CODEC = simpleCodec(PipeValveBlock::new);
 
     public PipeValveBlock(Properties properties) {

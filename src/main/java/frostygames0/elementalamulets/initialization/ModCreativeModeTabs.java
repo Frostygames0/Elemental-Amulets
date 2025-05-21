@@ -33,10 +33,9 @@ public final class ModCreativeModeTabs {
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> TESTING =
             TABS.register("testing", () -> CreativeModeTab.builder()
                     .title(Component.literal("Elemental Amulets: Testing"))
-                    .icon(ModItems.TEST_BLOCK::toStack)
+                    .icon(ModBlocks.SIMPLE_STORAGE::toStack)
                     .withLabelColor(0xFFFF0000)
                     .displayItems(((parameters, output) -> {
-                        output.accept(ModItems.TEST_BLOCK);
                         output.accept(ModItems.SIMPLE_GENERATOR);
                         output.accept(ModItems.SIMPLE_STORAGE);
                     }))

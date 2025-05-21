@@ -1,10 +1,12 @@
 package frostygames0.elementalamulets.block.entity.pipe.source;
 
 import frostygames0.elementalamulets.element.Element;
+import frostygames0.elementalamulets.element.storage.IElementStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
 import javax.annotation.Nullable;
 
@@ -17,7 +19,12 @@ public abstract class FlowSource {
         this.blockPos = blockPos;
     }
 
-    public void manage(Level level) {
+    public void manage(Level level, BlockEntity blockEntity) {
+    }
+
+    @Nullable
+    public IElementStorage getElementStorage() {
+        return null;
     }
 
     @Nullable

@@ -1,9 +1,8 @@
 package frostygames0.elementalamulets.initialization;
 
 import frostygames0.elementalamulets.ElementalAmulets;
-import frostygames0.elementalamulets.block.SimpleGeneratorBlockEntity;
-import frostygames0.elementalamulets.block.SimpleStorageBlockEntity;
-import frostygames0.elementalamulets.block.entity.TestBlockEntity;
+import frostygames0.elementalamulets.block.entity.SimpleGeneratorBlockEntity;
+import frostygames0.elementalamulets.block.entity.SimpleStorageBlockEntity;
 import frostygames0.elementalamulets.block.entity.extractor.PrimitiveElementalExtractorBlockEntity;
 import frostygames0.elementalamulets.block.entity.pipe.ElementalPipeBlockEntity;
 import frostygames0.elementalamulets.block.entity.pipe.PressurizerPipeBlockEntity;
@@ -33,8 +32,6 @@ public final class ModBlockEntities {
             BLOCK_ENTITY_TYPES.register("simple_storage", () -> new BlockEntityType<>(SimpleStorageBlockEntity::new, Set.of(ModBlocks.SIMPLE_STORAGE.get())));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SimpleGeneratorBlockEntity>> SIMPLE_GENERATOR =
             BLOCK_ENTITY_TYPES.register("simple_generator", () -> new BlockEntityType<>(SimpleGeneratorBlockEntity::new, Set.of(ModBlocks.SIMPLE_GENERATOR.get())));
-    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TestBlockEntity>> TEST_BLOCK =
-            BLOCK_ENTITY_TYPES.register("test_block", () -> new BlockEntityType<>(TestBlockEntity::new, Set.of(ModBlocks.TEST_BLOCK.get())));
 
     public static void register(IEventBus bus) {
         BLOCK_ENTITY_TYPES.register(bus);

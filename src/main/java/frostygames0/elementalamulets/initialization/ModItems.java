@@ -38,8 +38,6 @@ public final class ModItems {
     public static final DeferredItem<BlockItem> EXTRACTOR_PIPE =
             ITEMS.registerSimpleBlockItem(ModBlocks.PRESSURIZER_PIPE);
 
-    public static final DeferredItem<BlockItem> TEST_BLOCK =
-            ITEMS.registerSimpleBlockItem(ModBlocks.TEST_BLOCK);
     public static final DeferredItem<BlockItem> SIMPLE_STORAGE =
             ITEMS.registerSimpleBlockItem(ModBlocks.SIMPLE_STORAGE);
     public static final DeferredItem<BlockItem> SIMPLE_GENERATOR =

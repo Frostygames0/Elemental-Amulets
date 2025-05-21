@@ -2,14 +2,18 @@ package frostygames0.elementalamulets.block.entity.pipe;
 
 import com.mojang.datafixers.util.Pair;
 import frostygames0.elementalamulets.block.pipe.ElementalPipeBlock;
-import frostygames0.elementalamulets.block.pipe.PipePressurizerBlock;
+import frostygames0.elementalamulets.block.pipe.PressurizerPipe;
+import frostygames0.elementalamulets.initialization.ModCapabilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 import java.util.*;
 
@@ -45,9 +49,9 @@ public class PipeHelper {
 
                 BlockEntity blockEntity = world.getBlockEntity(target);
                 BlockState targetState = world.getBlockState(target);
-                if (PipePressurizerBlock.isPressurizerPipe(targetState)) {
+                if (PressurizerPipe.isPressurizerPipe(targetState)) {
                     if (blockEntity instanceof PressurizerPipeBlockEntity pressurizerPipe) {
-                        if (!PipePressurizerBlock.isOpen(targetState, direction)) {
+                        if (!PressurizerPipe.isOpen(targetState, direction)) {
                             continue;
                         }
 
@@ -79,6 +83,7 @@ public class PipeHelper {
         discoveredPressurizers.forEach(pair -> pair.getFirst().updatePipesOnSide(pair.getSecond()));
     }
 
+    // TODO Maybe I can replace this
     public static List<Direction> getPipeConnections(BaseElementalPipeBlockEntity pipe) {
         List<Direction> list = new ArrayList<>();
         for (Direction d : Direction.values()) {
@@ -136,7 +141,7 @@ public class PipeHelper {
         }
     }
 
-    public static Optional<BaseElementalPipeBlockEntity> getPipeBlockEntity(LevelAccessor level, BlockPos blockPos) {
+    public static Optional<BaseElementalPipeBlockEntity> getPipeBlockEntity(BlockGetter level, BlockPos blockPos) {
         return level.getBlockEntity(blockPos) instanceof BaseElementalPipeBlockEntity pipe ? Optional.of(pipe) : Optional.empty();
     }
 
@@ -144,20 +149,14 @@ public class PipeHelper {
         if (level.isClientSide()) {
             return null;
         }
-        // calling getblockstate() as otherBlock param seems to contain the block which
-        // was replaced
+
         var otherBlock = neighborState.getBlock();
         if (otherBlock instanceof ElementalPipeBlock) {
             return null;
         }
-//        if (otherBlock instanceof AxisPipeBlock)
-//            return null;
-//        if (otherBlock instanceof PumpBlock)
-//            return null;
-//        if (otherBlock instanceof LiquidBlock)
-//            return null;
-//        if (getStraightPipeAxis(state) == null && !AllBlocks.ENCASED_FLUID_PIPE.has(state))
-//            return null;
+        if (otherBlock instanceof PressurizerPipe) {
+            return null;
+        }
         for (Direction d : Direction.values()) {
             if (!pos.relative(d).equals(neighborPos)) {
                 continue;
@@ -165,5 +164,39 @@ public class PipeHelper {
             return d;
         }
         return null;
+    }
+
+    public static boolean isOpenEnd(BlockGetter getter, BlockPos pos, Direction side) {
+        BlockPos connectedPos = pos.relative(side);
+        BlockState connectedState = getter.getBlockState(connectedPos);
+        var pipeOptional = getPipeBlockEntity(getter, connectedPos);
+        if (pipeOptional.isPresent() && pipeOptional.get().canHaveFlowToward(side.getOpposite())) {
+            return false;
+        }
+
+        if (PressurizerPipe.isPressurizerPipe(connectedState) && PressurizerPipe.isOpen(connectedState, side)) {
+            return false;
+        }
+
+        if (Block.isFaceFull(connectedState.getCollisionShape(getter, connectedPos), side.getOpposite())) {
+            return false;
+        }
+
+        if (hasElementStorageCap(getter, connectedPos, side.getOpposite())) {
+            return false;
+        }
+
+        return connectedState.canBeReplaced() && connectedState.getDestroySpeed(getter, connectedPos) != -1
+                || connectedState.hasProperty(BlockStateProperties.WATERLOGGED);
+    }
+
+    public static boolean hasElementStorageCap(BlockGetter getter, BlockPos blockPos, Direction side) {
+        var blockEntity = getter.getBlockEntity(blockPos);
+        if (blockEntity == null || blockEntity.getLevel() == null) {
+            return false;
+        }
+
+        var capability = blockEntity.getLevel().getCapability(ModCapabilities.ELEMENT_STORAGE_BLOCK, blockPos, side);
+        return capability != null;
     }
 }

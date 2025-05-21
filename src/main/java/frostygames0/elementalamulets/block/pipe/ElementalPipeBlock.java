@@ -5,7 +5,6 @@ import frostygames0.elementalamulets.block.entity.pipe.BaseElementalPipeBlockEnt
 import frostygames0.elementalamulets.block.entity.pipe.ElementalPipeBlockEntity;
 import frostygames0.elementalamulets.block.entity.pipe.PipeHelper;
 import frostygames0.elementalamulets.initialization.ModBlockEntities;
-import frostygames0.elementalamulets.initialization.ModBlocks;
 import frostygames0.elementalamulets.initialization.ModCapabilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -67,10 +66,6 @@ public class ElementalPipeBlock extends PipeBlock implements SimpleWaterloggedBl
     public static boolean canConnectTo(BlockAndTintGetter levelReader, BlockPos blockPos, Direction direction) {
         var relativeBlockPos = blockPos.relative(direction);
         var neighboringBlock = levelReader.getBlockState(relativeBlockPos);
-
-        if (neighboringBlock.is(ModBlocks.TEST_BLOCK)) {
-            return true;
-        }
 
         if (levelReader instanceof Level level) {
             var storage = level.getCapability(ModCapabilities.ELEMENT_STORAGE_BLOCK, relativeBlockPos, null);

@@ -222,7 +222,7 @@ public abstract class BaseElementalPipeBlockEntity extends BlockEntity {
             return;
         }
 
-        interfaces.values().forEach(connection -> connection.deserializeNBT(tag, registries));
+        interfaces.values().forEach(connection -> connection.deserializeNBT(tag, worldPosition, registries));
     }
 
     @Override

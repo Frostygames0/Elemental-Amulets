@@ -1,17 +1,16 @@
 package frostygames0.elementalamulets.block.entity.pipe;
 
 import com.mojang.datafixers.util.Pair;
-import frostygames0.elementalamulets.block.pipe.PipePressurizerBlock;
+import frostygames0.elementalamulets.block.pipe.PressurizerPipe;
 import frostygames0.elementalamulets.initialization.ModBlockEntities;
 import frostygames0.elementalamulets.initialization.ModCapabilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtUtils;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
+import javax.annotation.Nullable;
 import java.util.*;
 
 public class PressurizerPipeBlockEntity extends BaseElementalPipeBlockEntity {
@@ -25,11 +24,11 @@ public class PressurizerPipeBlockEntity extends BaseElementalPipeBlockEntity {
     @Override
     public boolean canHaveFlowToward(Direction side) {
         var blockState = getBlockState();
-        if (!(blockState.getBlock() instanceof PipePressurizerBlock)) {
+        if (!(blockState.getBlock() instanceof PressurizerPipe)) {
             return false;
         }
 
-        return PipePressurizerBlock.isOpen(blockState, side);
+        return PressurizerPipe.isOpen(blockState, side);
     }
 
     @Override
@@ -57,6 +56,7 @@ public class PressurizerPipeBlockEntity extends BaseElementalPipeBlockEntity {
 
             connection.setPressure(pull, PipeConnection.MAX_PRESSURE);
             connection.setPressure(!pull, 0);
+            syncData();
         }
     }
 
@@ -64,13 +64,22 @@ public class PressurizerPipeBlockEntity extends BaseElementalPipeBlockEntity {
         return side == getFrontFace();
     }
 
-    protected Direction getFrontFace() {
+    private boolean isCorrectBlock() {
         var state = getBlockState();
-        if (!(state.getBlock() instanceof PipePressurizerBlock)) {
+        return state.getBlock() instanceof PressurizerPipe;
+    }
+
+    @Nullable
+    protected Direction getFrontFace() {
+        if (!isCorrectBlock()) {
             return null;
         }
 
-        return state.getValue(PipePressurizerBlock.FACING);
+        return getBlockState().getValue(PressurizerPipe.FACING);
+    }
+
+    protected boolean isEnabled() {
+        return isCorrectBlock() ? getBlockState().getValue(PressurizerPipe.ENABLED) : false;
     }
 
     public void updatePipesOnSide(Direction side) {
@@ -87,8 +96,11 @@ public class PressurizerPipeBlockEntity extends BaseElementalPipeBlockEntity {
         return !front;
     }
 
-    // TODO There is bug somewhere (pressure distance)
+    // OPTIMIZE I don't really like this distribution, but it'll do for now
     protected void distributePressureTo(Direction side) {
+        if (!isEnabled()) {
+            return;
+        }
 
         PressurizerPipeBlockEntity.BlockFace start = new PressurizerPipeBlockEntity.BlockFace(worldPosition, side);
         boolean pull = isPullingOnSide(isFrontSide(side));
@@ -99,7 +111,7 @@ public class PressurizerPipeBlockEntity extends BaseElementalPipeBlockEntity {
             PipeHelper.traversePipesAndResetNetworks(level, worldPosition, side.getOpposite());
         }
 
-        if (!hasReachedValidEndpoint(level, start, pull)) {
+        if (!isValidEndpoint(level, start, pull)) {
 
             pipeGraph.computeIfAbsent(worldPosition, $ -> Pair.of(0, new IdentityHashMap<>()))
                     .getSecond()
@@ -144,7 +156,7 @@ public class PressurizerPipeBlockEntity extends BaseElementalPipeBlockEntity {
                     if (blockFace.isEquivalent(start)) {
                         continue;
                     }
-                    if (hasReachedValidEndpoint(level, blockFace, pull)) {
+                    if (isValidEndpoint(level, blockFace, pull)) {
                         pipeGraph.computeIfAbsent(currentPos, $ -> Pair.of(distance, new IdentityHashMap<>()))
                                 .getSecond()
                                 .put(face, pull);
@@ -258,13 +270,13 @@ public class PressurizerPipeBlockEntity extends BaseElementalPipeBlockEntity {
         return atLeastOneBranchSuccessful;
     }
 
-    private boolean hasReachedValidEndpoint(Level level, PressurizerPipeBlockEntity.BlockFace blockFace, boolean pull) {
+    private boolean isValidEndpoint(Level level, PressurizerPipeBlockEntity.BlockFace blockFace, boolean pull) {
         BlockPos connectedPos = blockFace.getConnectedPos();
         BlockState connectedState = level.getBlockState(connectedPos);
         BlockEntity blockEntity = level.getBlockEntity(connectedPos);
         Direction face = blockFace.getFace();
 
-        if (PipePressurizerBlock.isPressurizerPipe(connectedState) && PipePressurizerBlock.isOpen(connectedState, face)) {
+        if (PressurizerPipe.isPressurizerPipe(connectedState) && PressurizerPipe.isOpen(connectedState, face)) {
             if (blockEntity instanceof PressurizerPipeBlockEntity pressurizerPipe) {
                 return pressurizerPipe.isPullingOnSide(pressurizerPipe.isFrontSide(blockFace.getOppositeFace())) != pull;
             }
@@ -277,16 +289,15 @@ public class PressurizerPipeBlockEntity extends BaseElementalPipeBlockEntity {
             }
         }
 
-        var cap = level.getCapability(ModCapabilities.ELEMENT_STORAGE_BLOCK, connectedPos, null);
+        var cap = level.getCapability(ModCapabilities.ELEMENT_STORAGE_BLOCK, connectedPos, blockFace.getOppositeFace());
         if (cap != null) {
             return true;
         }
 
-        // open endpoint
-        return true;
+        return PipeHelper.isOpenEnd(level, blockFace.getPos(), face);
     }
 
-    public static class BlockFace extends Pair<BlockPos, Direction> {
+    private static class BlockFace extends Pair<BlockPos, Direction> {
 
         public BlockFace(BlockPos first, Direction second) {
             super(first, second);
@@ -318,18 +329,5 @@ public class PressurizerPipeBlockEntity extends BaseElementalPipeBlockEntity {
         public BlockPos getConnectedPos() {
             return getPos().relative(getFace());
         }
-
-        public CompoundTag serializeNBT() {
-            CompoundTag compoundNBT = new CompoundTag();
-            compoundNBT.put("Pos", NbtUtils.writeBlockPos(getPos()));
-            //NBTHelper.writeEnum(compoundNBT, "Face", getFace());
-            return compoundNBT;
-        }
-
-        public static BlockFace fromNBT(CompoundTag compound) {
-            return new BlockFace(NbtUtils.readBlockPos(compound, "Pos").orElseThrow(),
-                    /*NBTHelper.readEnum(compound, "Face", Direction.class)*/null);
-        }
-
     }
 }

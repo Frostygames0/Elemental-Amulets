@@ -19,10 +19,10 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.ticks.TickPriority;
 
-public abstract class SpecialPipeBlock extends BaseEntityBlock {
+public abstract class AxisPipeBlock extends BaseEntityBlock {
     public static final EnumProperty<Direction> FACING = BlockStateProperties.FACING;
 
-    public SpecialPipeBlock(Properties properties) {
+    public AxisPipeBlock(Properties properties) {
         super(properties);
     }
 

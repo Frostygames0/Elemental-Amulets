@@ -1,17 +1,14 @@
 package frostygames0.elementalamulets.block.entity.pipe;
 
-import frostygames0.elementalamulets.block.entity.pipe.source.FlowSource;
-import frostygames0.elementalamulets.block.entity.pipe.source.NothingFlowSource;
-import frostygames0.elementalamulets.block.entity.pipe.source.OtherPipeFlowSource;
-import frostygames0.elementalamulets.block.entity.pipe.source.TestBlockFlowSource;
+import frostygames0.elementalamulets.block.entity.pipe.source.*;
 import frostygames0.elementalamulets.element.Element;
-import frostygames0.elementalamulets.initialization.ModBlocks;
+import frostygames0.elementalamulets.element.ElementHelper;
+import frostygames0.elementalamulets.initialization.ModCapabilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtOps;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
@@ -19,6 +16,14 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 
 public class PipeConnection {
+    public static final String TAG_FLOW = "Flow";
+    public static final String TAG_INBOUND_PRESSURE = "InboundPressure";
+    public static final String TAG_OUTBOUND_PRESSURE = "OutboundPressure";
+    public static final String TAG_ELEMENT_STORAGE_FLOW_SOURCE = "ElementStorageFlowSource";
+    public static final String TAG_INBOUND = "Inbound";
+    public static final String TAG_ELEMENT = "Element";
+    public static final String TAG_PROGRESS = "Progress";
+
     public static final float MAX_PRESSURE = 16f;
     private static final Boolean[] TRUE_AND_FALSE = new Boolean[]{true, false};
 
@@ -107,7 +112,7 @@ public class PipeConnection {
             return;
         }
 
-        source.manage(level);
+        source.manage(level, level.getBlockEntity(blockPos));
     }
 
 
@@ -131,23 +136,22 @@ public class PipeConnection {
             return false;
         }
 
-        if (level.getBlockState(relativePos).is(ModBlocks.TEST_BLOCK)) {
-            source = new TestBlockFlowSource(side, blockPos);
+        if (PipeHelper.isOpenEnd(level, blockPos, side)) {
+            source = new OpenFlowSource();
             return true;
         }
 
-        if (level.getBlockEntity(relativePos) instanceof BaseElementalPipeBlockEntity) {
-            source = new OtherPipeFlowSource(side, blockPos);
+        var cap = level.getCapability(ModCapabilities.ELEMENT_STORAGE_BLOCK, relativePos, side.getOpposite());
+        if (cap != null) {
+            if (previousSource instanceof ElementStorageFlowSource elementStorageFlowSource && elementStorageFlowSource.getElementStorage() == cap) {
+                source = previousSource;
+            } else {
+                source = new ElementStorageFlowSource(side, blockPos);
+            }
             return true;
         }
 
-        // TODO: I don't think this is needed at all
-        if (previousSource instanceof NothingFlowSource) {
-            source = previousSource;
-            return true;
-        }
-
-        source = new NothingFlowSource(side, blockPos);
+        source = PipeHelper.getPipeBlockEntity(level, relativePos).isPresent() ? new OtherPipeFlowSource(side, blockPos) : new BlockedFlowSource();
         return true;
     }
 
@@ -256,22 +260,31 @@ public class PipeConnection {
         var connectionTag = new CompoundTag();
         tag.put(side.getName(), connectionTag);
 
-        connectionTag.putFloat("InboundPressure", inboundPressure);
-        connectionTag.putFloat("OutboundPressure", outboundPressure);
+        connectionTag.putFloat(TAG_INBOUND_PRESSURE, inboundPressure);
+        connectionTag.putFloat(TAG_OUTBOUND_PRESSURE, outboundPressure);
+
+        if (source instanceof ElementStorageFlowSource elementStorageFlowSource) {
+            connectionTag.put(TAG_ELEMENT_STORAGE_FLOW_SOURCE, elementStorageFlowSource.serializeNBT(provider));
+        }
 
         if (hasFlow()) {
-            flow.serializeNBT(connectionTag, provider);
+            connectionTag.put(TAG_FLOW, flow.serializeNBT(provider));
         }
     }
 
-    public void deserializeNBT(CompoundTag tag, HolderLookup.Provider provider) {
+    public void deserializeNBT(CompoundTag tag, BlockPos blockPos, HolderLookup.Provider provider) {
         var connectionTag = tag.getCompound(side.getName());
 
-        inboundPressure = Mth.clamp(connectionTag.getFloat("InboundPressure"), 0, MAX_PRESSURE);
-        outboundPressure = Mth.clamp(connectionTag.getFloat("OutboundPressure"), 0, MAX_PRESSURE);
+        inboundPressure = Mth.clamp(connectionTag.getFloat(TAG_INBOUND_PRESSURE), 0, MAX_PRESSURE);
+        outboundPressure = Mth.clamp(connectionTag.getFloat(TAG_OUTBOUND_PRESSURE), 0, MAX_PRESSURE);
 
-        if (connectionTag.contains("Flow")) {
-            var flowTag = connectionTag.getCompound("Flow");
+        source = null;
+        if (connectionTag.contains(TAG_ELEMENT_STORAGE_FLOW_SOURCE)) {
+            source = ElementStorageFlowSource.deserializeFromNBT(blockPos, connectionTag.getCompound(TAG_ELEMENT_STORAGE_FLOW_SOURCE), provider);
+        }
+
+        if (connectionTag.contains(TAG_FLOW)) {
+            var flowTag = connectionTag.getCompound(TAG_FLOW);
             var flow = this.flow;
             if (flow == null) {
                 flow = new Flow(false, null);
@@ -315,28 +328,27 @@ public class PipeConnection {
             }
         }
 
-        private void serializeNBT(CompoundTag tag, HolderLookup.Provider provider) {
+        private CompoundTag serializeNBT(HolderLookup.Provider provider) {
             var flowTag = new CompoundTag();
-            tag.put("Flow", flowTag);
 
-            flowTag.putBoolean("Inbound", inbound);
+            flowTag.putBoolean(TAG_INBOUND, inbound);
 
-            Element.CODEC.encodeStart(provider.createSerializationContext(NbtOps.INSTANCE), element)
-                    .ifSuccess(elemTag -> flowTag.put("Element", elemTag));
+            ElementHelper.serializeToNbt(element, provider).ifPresent(tag -> flowTag.put(TAG_ELEMENT, tag));
 
             if (!complete) {
-                flowTag.putFloat("Progress", progress);
+                flowTag.putFloat(TAG_PROGRESS, progress);
             }
+
+            return flowTag;
         }
 
         private void deserializeNBT(CompoundTag tag, HolderLookup.Provider provider) {
-            inbound = tag.getBoolean("Inbound");
+            inbound = tag.getBoolean(TAG_INBOUND);
 
-            Element.CODEC.parse(provider.createSerializationContext(NbtOps.INSTANCE), tag.get("Element"))
-                    .ifSuccess(elem -> element = elem);
+            element = ElementHelper.deserializeFromNbt(tag.get(TAG_ELEMENT), provider).orElse(null);
 
-            if (tag.contains("Progress")) {
-                progress = tag.getFloat("Progress");
+            if (tag.contains(TAG_PROGRESS)) {
+                progress = tag.getFloat(TAG_PROGRESS);
             } else {
                 complete = true;
             }
