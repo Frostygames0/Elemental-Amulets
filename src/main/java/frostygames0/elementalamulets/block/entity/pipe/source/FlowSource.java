@@ -17,11 +17,11 @@ public abstract class FlowSource {
         this.blockPos = blockPos;
     }
 
-    public abstract boolean isEndpoint();
-
     public void manage(Level level) {
     }
 
     @Nullable
     public abstract Holder<Element> getElement();
+
+    public abstract boolean isEndpoint();
 }

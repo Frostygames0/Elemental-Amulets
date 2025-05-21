@@ -1,6 +1,6 @@
 package frostygames0.elementalamulets.block.entity.pipe.source;
 
-import frostygames0.elementalamulets.block.entity.pipe.ElementalPipeBlockEntity;
+import frostygames0.elementalamulets.block.entity.pipe.BaseElementalPipeBlockEntity;
 import frostygames0.elementalamulets.block.entity.pipe.PipeHelper;
 import frostygames0.elementalamulets.element.Element;
 import net.minecraft.core.BlockPos;
@@ -12,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 import java.lang.ref.WeakReference;
 
 public class OtherPipeFlowSource extends FlowSource {
-    private WeakReference<ElementalPipeBlockEntity> pipeCache;
+    private WeakReference<BaseElementalPipeBlockEntity> pipeCache;
 
     public OtherPipeFlowSource(Direction direction, BlockPos blockPos) {
         super(direction, blockPos);

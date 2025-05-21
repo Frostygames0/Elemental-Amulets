@@ -1,8 +1,9 @@
 package frostygames0.elementalamulets.block.pipe;
 
 import com.mojang.serialization.MapCodec;
-import frostygames0.elementalamulets.block.entity.pipe.ElementalPipeBlockEntity;
+import frostygames0.elementalamulets.block.entity.pipe.BaseElementalPipeBlockEntity;
 import frostygames0.elementalamulets.block.entity.pipe.PipeHelper;
+import frostygames0.elementalamulets.block.entity.pipe.ElementalPipeBlockEntity;
 import frostygames0.elementalamulets.initialization.ModBlockEntities;
 import frostygames0.elementalamulets.initialization.ModBlocks;
 import frostygames0.elementalamulets.initialization.ModCapabilities;
@@ -60,6 +61,10 @@ public class ElementalPipeBlock extends PipeBlock implements SimpleWaterloggedBl
         return state.getBlock() instanceof ElementalPipeBlock;
     }
 
+    public static boolean isOpen(BlockState state, Direction side) {
+        return state.getValue(PROPERTY_BY_DIRECTION.get(side));
+    }
+
     public static boolean canConnectTo(BlockAndTintGetter levelReader, BlockPos blockPos, Direction direction) {
         var relativeBlockPos = blockPos.relative(direction);
         var neighboringBlock = levelReader.getBlockState(relativeBlockPos);
@@ -75,26 +80,34 @@ public class ElementalPipeBlock extends PipeBlock implements SimpleWaterloggedBl
             }
         }
 
-        return isPipe(neighboringBlock);
-    }
-
-    public static boolean shouldHaveRim(LevelReader levelReader, BlockPos blockPos, Direction direction) {
-        var relativeBlockPos = blockPos.relative(direction);
-        var neighboringBlock = levelReader.getBlockState(relativeBlockPos);
-
-        if (levelReader instanceof Level level) {
-            var storage = level.getCapability(ModCapabilities.ELEMENT_STORAGE_BLOCK, relativeBlockPos, null);
-            if (storage != null) {
-                return true;
-            }
-        }
-
-        if (!isPipe(neighboringBlock)) {
+        if (isPipe(neighboringBlock)) {
             return true;
         }
 
-        return !canConnectTo(levelReader, blockPos, direction);
+        if (!(levelReader.getBlockEntity(relativeBlockPos) instanceof BaseElementalPipeBlockEntity basePipe)) {
+            return false;
+        }
+
+        return basePipe.canHaveFlowToward(direction.getOpposite());
     }
+
+//    public static boolean shouldHaveRim(LevelReader levelReader, BlockPos blockPos, Direction direction) {
+//        var relativeBlockPos = blockPos.relative(direction);
+//        var neighboringBlock = levelReader.getBlockState(relativeBlockPos);
+//
+//        if (levelReader instanceof Level level) {
+//            var storage = level.getCapability(ModCapabilities.ELEMENT_STORAGE_BLOCK, relativeBlockPos, null);
+//            if (storage != null) {
+//                return true;
+//            }
+//        }
+//
+//        if (!isPipe(neighboringBlock)) {
+//            return true;
+//        }
+//
+//        return !canConnectTo(levelReader, blockPos, direction);
+//    }
 
     @Override
     protected MapCodec<? extends ElementalPipeBlock> codec() {
@@ -121,16 +134,8 @@ public class ElementalPipeBlock extends PipeBlock implements SimpleWaterloggedBl
     }
 
     @Override
-    protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, @Nullable Orientation orientation, boolean movedByPiston) {
-        super.neighborChanged(state, level, pos, neighborBlock, orientation, movedByPiston);
-        if (!level.isClientSide) {
-            level.scheduleTick(pos, this, 1, TickPriority.HIGH);
-        }
-    }
-
-    @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (state.getBlock() != newState.getBlock() && !level.isClientSide) {
+        if (!state.is(newState.getBlock()) && !level.isClientSide) {
             PipeHelper.propagateChangedPipe(level, pos, state);
         }
 
@@ -139,16 +144,13 @@ public class ElementalPipeBlock extends PipeBlock implements SimpleWaterloggedBl
 
     @Override
     protected void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
-        super.onPlace(state, level, pos, oldState, movedByPiston);
         if (state != oldState && !level.isClientSide) {
             level.scheduleTick(pos, this, 1, TickPriority.HIGH);
         }
     }
 
-
     @Override
     protected void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        super.tick(state, level, pos, random);
         PipeHelper.propagateChangedPipe(level, pos, state);
     }
 
@@ -158,10 +160,19 @@ public class ElementalPipeBlock extends PipeBlock implements SimpleWaterloggedBl
             scheduledTickAccess.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
         }
 
-        return updatePipeState(level, state, pos, direction);
+        state = updatePipeState(level, state, pos, direction);
+        var d = PipeHelper.validateNeighbourChange(state, level, pos, neighborState, neighborPos);
+        if (d != null)
+        {
+            if (isOpen(state, d))
+            {
+                scheduledTickAccess.scheduleTick(pos, this, 1, TickPriority.HIGH);
+            }
+        }
+
+        return state;
     }
 
-    // Thanks to Create and it's creators!
     private static BlockState updatePipeState(BlockAndTintGetter level, BlockState state, BlockPos blockPos, Direction lookingDirection) {
         var previousState = state;
         var previouslyConnectedSides = Arrays.stream(Direction.values())

@@ -6,6 +6,7 @@ import frostygames0.elementalamulets.block.entity.SimpleGeneratorBlock;
 import frostygames0.elementalamulets.block.entity.SimpleStorageBlock;
 import frostygames0.elementalamulets.block.extractor.PrimitiveElementalExtractorBlock;
 import frostygames0.elementalamulets.block.pipe.ElementalPipeBlock;
+import frostygames0.elementalamulets.block.pipe.PipePressurizerBlock;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
@@ -44,6 +45,13 @@ public final class ModBlocks {
                     BlockBehaviour.Properties.ofFullCopy(Blocks.CHAIN)
                             .mapColor(DyeColor.GRAY)
                             .sound(SoundType.COPPER_GRATE));
+    public static final DeferredBlock<PipePressurizerBlock> PRESSURIZER_PIPE =
+            BLOCKS.registerBlock("pressurizer_pipe",
+                    PipePressurizerBlock::new,
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.CHAIN)
+                            .mapColor(DyeColor.GRAY)
+                            .sound(SoundType.COPPER_GRATE));
+
 
     public static final DeferredBlock<Block> TEST_BLOCK = BLOCKS.registerBlock("test_block", TestBlock::new);
 

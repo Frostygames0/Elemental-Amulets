@@ -1,7 +1,7 @@
 package frostygames0.elementalamulets.client;
 
 import frostygames0.elementalamulets.ElementalAmulets;
-import frostygames0.elementalamulets.client.debug.ElementalPipeDebugRenderer;
+import frostygames0.elementalamulets.client.debug.BaseElementalPipeDebugRenderer;
 import frostygames0.elementalamulets.client.gui.PrimitiveElementalExtractorScreen;
 import frostygames0.elementalamulets.client.gui.tooltip.ClientElementalCompositionTooltip;
 import frostygames0.elementalamulets.client.gui.tooltip.ElementalCompositionTooltipHandler;
@@ -49,6 +49,7 @@ public class ElementalAmuletsClient {
 
     @SubscribeEvent
     private void onRegisterEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(ModBlockEntities.ELEMENTAL_PIPE.get(), ctx -> new ElementalPipeDebugRenderer());
+        event.registerBlockEntityRenderer(ModBlockEntities.ELEMENTAL_PIPE.get(), ctx -> new BaseElementalPipeDebugRenderer());
+        event.registerBlockEntityRenderer(ModBlockEntities.PRESSURIZER_PIPE.get(), ctx -> new BaseElementalPipeDebugRenderer());
     }
 }

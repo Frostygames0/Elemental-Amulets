@@ -24,6 +24,7 @@ public final class ModCreativeModeTabs {
                         output.accept(ModItems.RING_OF_ELEMENTAL_SENSE);
                         output.accept(ModItems.ELEMENTAL_EXTRACTOR);
                         output.accept(ModItems.ELEMENTAL_PIPE);
+                        output.accept(ModItems.EXTRACTOR_PIPE);
                         output.accept(ModItems.ELEMENTUM_CRYSTAL_ORE);
                         output.accept(ModItems.ELEMENTUM_CRYSTAL_DEEPSLATE_ORE);
                     })

@@ -19,6 +19,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 
 public class PipeConnection {
+    public static final float MAX_PRESSURE = 16f;
     private static final Boolean[] TRUE_AND_FALSE = new Boolean[]{true, false};
 
     private final Direction side;
@@ -27,6 +28,8 @@ public class PipeConnection {
     private float outboundPressure;
 
     private FlowSource source;
+    private FlowSource previousSource;
+
     private Flow flow;
 
     public PipeConnection(Direction side) {
@@ -133,8 +136,15 @@ public class PipeConnection {
             return true;
         }
 
-        if (level.getBlockEntity(relativePos) instanceof ElementalPipeBlockEntity) {
+        if (level.getBlockEntity(relativePos) instanceof BaseElementalPipeBlockEntity) {
             source = new OtherPipeFlowSource(side, blockPos);
+            return true;
+        }
+
+        // TODO: I don't think this is needed at all
+        if (previousSource instanceof NothingFlowSource)
+        {
+            source = previousSource;
             return true;
         }
 
@@ -211,11 +221,19 @@ public class PipeConnection {
         return getOutboundPressure() - getInboundPressure();
     }
 
+    void setPressure(boolean inbound, float pressure) {
+        if (inbound) {
+            inboundPressure = pressure;
+        } else {
+            outboundPressure = pressure;
+        }
+    }
+
     public void addPressure(boolean inbound, float pressure) {
         if (inbound) {
-            inboundPressure += pressure;
+            inboundPressure = Mth.clamp(inboundPressure + pressure, 0, MAX_PRESSURE);
         } else {
-            outboundPressure += pressure;
+            outboundPressure = Mth.clamp(outboundPressure + pressure, 0, MAX_PRESSURE);
         }
     }
 
@@ -223,8 +241,10 @@ public class PipeConnection {
         inboundPressure = 0;
         outboundPressure = 0;
 
-//        if (this.source.isPresent())
-//            this.previousSource = this.source;
+        if (source != null) {
+            previousSource = source;
+        }
+
         source = null;
         resetNetwork();
     }
@@ -248,8 +268,8 @@ public class PipeConnection {
     public void deserializeNBT(CompoundTag tag, HolderLookup.Provider provider) {
         var connectionTag = tag.getCompound(side.getName());
 
-        inboundPressure = connectionTag.getFloat("InboundPressure");
-        outboundPressure = connectionTag.getFloat("OutboundPressure");
+        inboundPressure = Mth.clamp(connectionTag.getFloat("InboundPressure"), 0, MAX_PRESSURE);
+        outboundPressure = Mth.clamp(connectionTag.getFloat("OutboundPressure"), 0, MAX_PRESSURE);
 
         if (connectionTag.contains("Flow")) {
             var flowTag = connectionTag.getCompound("Flow");
@@ -266,9 +286,6 @@ public class PipeConnection {
     }
 
     private class Flow {
-        // A small explanation.
-        // Inbound flow is a flow which comes from some external source
-        // Outbound flow is a flow which comes from pipe itself
         private boolean inbound;
         private Holder<Element> element;
 

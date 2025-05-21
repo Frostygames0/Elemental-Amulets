@@ -5,6 +5,7 @@ import frostygames0.elementalamulets.block.SimpleGeneratorBlockEntity;
 import frostygames0.elementalamulets.block.SimpleStorageBlockEntity;
 import frostygames0.elementalamulets.block.entity.TestBlockEntity;
 import frostygames0.elementalamulets.block.entity.extractor.PrimitiveElementalExtractorBlockEntity;
+import frostygames0.elementalamulets.block.entity.pipe.PressurizerPipeBlockEntity;
 import frostygames0.elementalamulets.block.entity.pipe.ElementalPipeBlockEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -25,6 +26,8 @@ public final class ModBlockEntities {
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<ElementalPipeBlockEntity>> ELEMENTAL_PIPE =
             BLOCK_ENTITY_TYPES.register("elemental_pipe", () -> new BlockEntityType<>(ElementalPipeBlockEntity::new, Set.of(ModBlocks.ELEMENTAL_PIPE.get())));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<PressurizerPipeBlockEntity>> PRESSURIZER_PIPE =
+            BLOCK_ENTITY_TYPES.register("pressurizer_pipe", () -> new BlockEntityType<>(PressurizerPipeBlockEntity::new, Set.of(ModBlocks.PRESSURIZER_PIPE.get())));
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SimpleStorageBlockEntity>> SIMPLE_STORAGE =
             BLOCK_ENTITY_TYPES.register("simple_storage", () -> new BlockEntityType<>(SimpleStorageBlockEntity::new, Set.of(ModBlocks.SIMPLE_STORAGE.get())));

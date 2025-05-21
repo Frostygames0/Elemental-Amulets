@@ -8,15 +8,14 @@ import net.minecraft.client.color.item.ItemTintSource;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
-import net.minecraft.client.data.models.blockstates.MultiPartGenerator;
-import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
-import net.minecraft.client.data.models.blockstates.Variant;
-import net.minecraft.client.data.models.blockstates.VariantProperties;
+import net.minecraft.client.data.models.blockstates.*;
 import net.minecraft.client.data.models.model.*;
+import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.client.model.generators.template.ExtendedModelTemplateBuilder;
 
 import java.util.Optional;
@@ -41,6 +40,7 @@ public class ModModelProvider extends ModelProvider {
         blockModels.createTrivialCube(ModBlocks.SIMPLE_STORAGE.get());
         blockModels.createTrivialCube(ModBlocks.SIMPLE_GENERATOR.get());
         blockModels.createTrivialCube(ModBlocks.TEST_BLOCK.get());
+        generateFullBlockPipe(blockModels, ModBlocks.PRESSURIZER_PIPE.get());
     }
 
     private static void registerItemModels(ItemModelGenerators itemModels) {
@@ -56,6 +56,36 @@ public class ModModelProvider extends ModelProvider {
     private static void generateTintedFlatItem(ItemModelGenerators itemModelGenerators, Supplier<? extends Item> item, ItemTintSource... sources) {
         var model = itemModelGenerators.createFlatItemModel(item.get(), ModelTemplates.FLAT_ITEM);
         itemModelGenerators.itemModelOutput.accept(item.get(), ItemModelUtils.tintedModel(model, sources));
+    }
+
+    private static void generateFullBlockPipe(BlockModelGenerators blockModels, Block block)
+    {
+        var texture = TextureMapping.getBlockTexture(block, "_top");
+        var sideTexture = TextureMapping.getBlockTexture(block, "_side");
+
+        TextureMapping texturemapping = new TextureMapping()
+                .put(TextureSlot.TOP, texture)
+                .put(TextureSlot.BOTTOM, texture)
+                .put(TextureSlot.SIDE, sideTexture)
+                .put(TextureSlot.PARTICLE, sideTexture);
+
+        var model = ModelTemplates.CUBE_BOTTOM_TOP.create(block, texturemapping, blockModels.modelOutput);
+        blockModels.blockStateOutput.accept(
+                MultiVariantGenerator
+                        .multiVariant(block, Variant.variant().with(VariantProperties.MODEL, model))
+                        .with(createPipeFacingDispatch())
+        );
+    }
+
+    private static PropertyDispatch createPipeFacingDispatch()
+    {
+        return PropertyDispatch.property(BlockStateProperties.FACING)
+                .select(Direction.UP, Variant.variant())
+                .select(Direction.DOWN, Variant.variant().with(VariantProperties.X_ROT, VariantProperties.Rotation.R180))
+                .select(Direction.NORTH, Variant.variant().with(VariantProperties.X_ROT, VariantProperties.Rotation.R90))
+                .select(Direction.SOUTH, Variant.variant().with(VariantProperties.X_ROT, VariantProperties.Rotation.R90).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180))
+                .select(Direction.WEST, Variant.variant().with(VariantProperties.X_ROT, VariantProperties.Rotation.R90).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270))
+                .select(Direction.EAST, Variant.variant().with(VariantProperties.X_ROT, VariantProperties.Rotation.R90).with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90));
     }
 
     private static void generateElementalExtractor(BlockModelGenerators blockModels, Block block) {

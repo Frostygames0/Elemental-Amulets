@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "elementalamulets:block/pressurizer_pipe",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "elementalamulets:block/pressurizer_pipe",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "elementalamulets:block/pressurizer_pipe",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "elementalamulets:block/pressurizer_pipe",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "elementalamulets:block/pressurizer_pipe"
+    },
+    "facing=west": {
+      "model": "elementalamulets:block/pressurizer_pipe",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

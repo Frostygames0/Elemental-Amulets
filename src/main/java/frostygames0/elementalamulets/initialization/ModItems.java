@@ -35,6 +35,8 @@ public final class ModItems {
             ITEMS.registerSimpleBlockItem(ModBlocks.ELEMENTUM_CRYSTAL_DEEPSLATE_ORE);
     public static final DeferredItem<BlockItem> ELEMENTAL_PIPE =
             ITEMS.registerSimpleBlockItem(ModBlocks.ELEMENTAL_PIPE);
+    public static final DeferredItem<BlockItem> EXTRACTOR_PIPE =
+            ITEMS.registerSimpleBlockItem(ModBlocks.PRESSURIZER_PIPE);
 
     public static final DeferredItem<BlockItem> TEST_BLOCK =
             ITEMS.registerSimpleBlockItem(ModBlocks.TEST_BLOCK);

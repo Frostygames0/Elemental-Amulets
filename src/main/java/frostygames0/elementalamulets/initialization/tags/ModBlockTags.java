@@ -7,6 +7,7 @@ import net.minecraft.world.level.block.Block;
 
 public class ModBlockTags {
     public static final TagKey<Block> ELEMENTUM_CRYSTAL_ORES = createTagKey("elementum_crystal_ores");
+    public static final TagKey<Block> ELEMENTAL_PIPES = createTagKey("elemental_pipes");
 
     private static TagKey<Block> createTagKey(String name) {
         return TagKey.create(Registries.BLOCK, ElementalAmulets.id(name));

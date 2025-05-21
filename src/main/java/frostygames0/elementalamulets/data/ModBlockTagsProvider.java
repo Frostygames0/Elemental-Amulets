@@ -21,6 +21,10 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 .add(ModBlocks.ELEMENTUM_CRYSTAL_ORE.get())
                 .add(ModBlocks.ELEMENTUM_CRYSTAL_DEEPSLATE_ORE.get());
 
+        tag(ModBlockTags.ELEMENTAL_PIPES)
+                .add(ModBlocks.ELEMENTAL_PIPE.get())
+                .add(ModBlocks.PRESSURIZER_PIPE.get());
+
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(ModBlocks.PRIMITIVE_ELEMENTAL_EXTRACTOR.get())
                 .add(ModBlocks.ELEMENTAL_PIPE.get())
@@ -30,6 +34,6 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 .addTag(ModBlockTags.ELEMENTUM_CRYSTAL_ORES);
 
         tag(BlockTags.NEEDS_IRON_TOOL)
-                .add(ModBlocks.ELEMENTAL_PIPE.get());
+                .addTag(ModBlockTags.ELEMENTAL_PIPES);
     }
 }

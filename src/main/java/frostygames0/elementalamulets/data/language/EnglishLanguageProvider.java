@@ -45,6 +45,7 @@ public class EnglishLanguageProvider extends LanguageProvider {
         addBlock(ModBlocks.ELEMENTUM_CRYSTAL_ORE, "Elementum Crystal Ore");
         addBlock(ModBlocks.ELEMENTUM_CRYSTAL_DEEPSLATE_ORE, "Elementum Crystal Deepslate Ore");
         addBlock(ModBlocks.ELEMENTAL_PIPE, "Elemental Pipe");
+        addBlock(ModBlocks.PRESSURIZER_PIPE, "Pressurizer Pipe");
 
         addBlock(ModBlocks.TEST_BLOCK, "Test Block");
         addBlock(ModBlocks.SIMPLE_STORAGE, "Simple Storage");

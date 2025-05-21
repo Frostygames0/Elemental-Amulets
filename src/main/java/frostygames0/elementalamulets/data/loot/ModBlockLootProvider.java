@@ -6,7 +6,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -30,6 +29,7 @@ public class ModBlockLootProvider extends BlockLootSubProvider {
         add(ModBlocks.ELEMENTUM_CRYSTAL_ORE.get(), builder -> createElementumCrystalOreDrops(ModBlocks.ELEMENTUM_CRYSTAL_ORE.get()));
         add(ModBlocks.ELEMENTUM_CRYSTAL_DEEPSLATE_ORE.get(), builder -> createElementumCrystalOreDrops(ModBlocks.ELEMENTUM_CRYSTAL_DEEPSLATE_ORE.get()));
         dropSelf(ModBlocks.ELEMENTAL_PIPE.get());
+        dropSelf(ModBlocks.PRESSURIZER_PIPE.get());
 
         dropSelf(ModBlocks.SIMPLE_STORAGE.get());
         dropSelf(ModBlocks.SIMPLE_GENERATOR.get());
@@ -37,7 +37,7 @@ public class ModBlockLootProvider extends BlockLootSubProvider {
     }
 
     protected LootTable.Builder createElementumCrystalOreDrops(Block block) {
-        HolderLookup.RegistryLookup<Enchantment> registrylookup = registries.lookupOrThrow(Registries.ENCHANTMENT);
+        var registrylookup = registries.lookupOrThrow(Registries.ENCHANTMENT);
         return createSilkTouchDispatchTable(
                 block,
                 applyExplosionDecay(

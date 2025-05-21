@@ -1,6 +1,6 @@
 package frostygames0.elementalamulets.client.model;
 
-import frostygames0.elementalamulets.block.entity.pipe.ElementalPipeBlockEntity;
+import frostygames0.elementalamulets.block.entity.pipe.BaseElementalPipeBlockEntity;
 import frostygames0.elementalamulets.block.pipe.ElementalPipeBlock;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -46,9 +46,8 @@ public class PipeConnectionsBakedModel implements IDynamicBakedModel {
     public ModelData getModelData(BlockAndTintGetter level, BlockPos pos, BlockState state, ModelData modelData1) {
         var modelData = new PipeConnectionsBakedModel.PipeModelData();
         for (var direction : Direction.values()) {
-            var property = state.getValue(ElementalPipeBlock.PROPERTY_BY_DIRECTION.get(direction));
-            if (property) {
-                modelData.addConnection(direction, ElementalPipeBlockEntity.ConnectionType.NORMAL);
+            if (ElementalPipeBlock.isOpen(state, direction)) {
+                modelData.addConnection(direction, BaseElementalPipeBlockEntity.ConnectionType.NORMAL);
             }
         }
 
@@ -81,11 +80,11 @@ public class PipeConnectionsBakedModel implements IDynamicBakedModel {
     private void addRims(List<BakedQuad> quads, PipeModelData pipeModelData, @Nullable BlockState blockState, @Nullable Direction direction, RandomSource randomSource, ModelData modelData, @Nullable RenderType renderType) {
         for (int i = 0; i < 6; i++) {
             var type = pipeModelData.getConnection(Direction.from3DDataValue(i));
-            if (type == ElementalPipeBlockEntity.ConnectionType.NONE) {
+            if (type == BaseElementalPipeBlockEntity.ConnectionType.NONE) {
                 continue;
             }
 
-            if (type == ElementalPipeBlockEntity.ConnectionType.RIM) {
+            if (type == BaseElementalPipeBlockEntity.ConnectionType.RIM) {
                 quads.addAll(rims[i].getQuads(blockState, direction, randomSource, modelData, renderType));
                 quads.addAll(shortenedConnections[i].getQuads(blockState, direction, randomSource, modelData, renderType));
             } else {
@@ -122,18 +121,18 @@ public class PipeConnectionsBakedModel implements IDynamicBakedModel {
     public final static class PipeModelData {
         public static final ModelProperty<PipeModelData> PROPERTY = new ModelProperty<>();
 
-        private final ElementalPipeBlockEntity.ConnectionType[] connections;
+        private final BaseElementalPipeBlockEntity.ConnectionType[] connections;
 
         public PipeModelData() {
-            connections = new ElementalPipeBlockEntity.ConnectionType[6];
-            Arrays.fill(connections, ElementalPipeBlockEntity.ConnectionType.NONE);
+            connections = new BaseElementalPipeBlockEntity.ConnectionType[6];
+            Arrays.fill(connections, BaseElementalPipeBlockEntity.ConnectionType.NONE);
         }
 
-        public ElementalPipeBlockEntity.ConnectionType getConnection(Direction direction) {
+        public BaseElementalPipeBlockEntity.ConnectionType getConnection(Direction direction) {
             return connections[direction.get3DDataValue()];
         }
 
-        public void addConnection(Direction direction, ElementalPipeBlockEntity.ConnectionType type) {
+        public void addConnection(Direction direction, BaseElementalPipeBlockEntity.ConnectionType type) {
             connections[direction.get3DDataValue()] = type;
         }
     }

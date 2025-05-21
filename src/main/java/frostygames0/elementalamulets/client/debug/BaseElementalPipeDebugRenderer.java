@@ -1,7 +1,7 @@
 package frostygames0.elementalamulets.client.debug;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import frostygames0.elementalamulets.block.entity.pipe.ElementalPipeBlockEntity;
+import frostygames0.elementalamulets.block.entity.pipe.BaseElementalPipeBlockEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.debug.DebugRenderer;
@@ -9,10 +9,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.phys.AABB;
 
-public class ElementalPipeDebugRenderer implements BlockEntityRenderer<ElementalPipeBlockEntity> {
+public class BaseElementalPipeDebugRenderer implements BlockEntityRenderer<BaseElementalPipeBlockEntity> {
 
     @Override
-    public void render(ElementalPipeBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
+    public void render(BaseElementalPipeBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
         var blockPos = blockEntity.getBlockPos();
 
 //        var camera = Minecraft.getInstance().gameRenderer.getMainCamera();
@@ -38,7 +38,7 @@ public class ElementalPipeDebugRenderer implements BlockEntityRenderer<Elemental
     }
 
     @Override
-    public AABB getRenderBoundingBox(ElementalPipeBlockEntity blockEntity) {
+    public AABB getRenderBoundingBox(BaseElementalPipeBlockEntity blockEntity) {
         return AABB.INFINITE;
     }
 
