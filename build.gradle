@@ -62,13 +62,27 @@ neoForge {
         client {
             client()
 
+            jvmArgument '-XX:+AllowEnhancedClassRedefinition'
+
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        }
+
+        clientWithAuth {
+            client()
+            devLogin = true
+
+            jvmArgument '-XX:+AllowEnhancedClassRedefinition'
+
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
 
         server {
             server()
+
+            jvmArgument '-XX:+AllowEnhancedClassRedefinition'
             programArgument '--nogui'
+
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
 
