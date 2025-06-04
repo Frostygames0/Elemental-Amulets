@@ -6,7 +6,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class BlockedFlowSource extends FlowSource {
     public BlockedFlowSource() {
-        super(null, null);
+        super(null);
     }
 
     @Override

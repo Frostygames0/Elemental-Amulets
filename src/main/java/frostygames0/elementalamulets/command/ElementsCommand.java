@@ -2,10 +2,8 @@ package frostygames0.elementalamulets.command;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.builder.ArgumentBuilder;
-import com.mojang.brigadier.context.CommandContext;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import frostygames0.elementalamulets.element.Element;
+import frostygames0.elementalamulets.element.ElementalHelper;
 import frostygames0.elementalamulets.initialization.ModElements;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
@@ -13,15 +11,13 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.ResourceKeyArgument;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
-import net.minecraft.network.chat.*;
+import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.network.chat.Component;
 import net.neoforged.neoforge.server.command.CommandUtils;
 
 import java.util.stream.Collectors;
 
 public class ElementsCommand {
-    private static final SimpleCommandExceptionType REGISTRY_NOT_FOUND_ERROR = new SimpleCommandExceptionType(CommandUtils.makeTranslatableWithFallback("command.elementalamulets.no_registry_error"));
-    private static final SimpleCommandExceptionType ELEMENT_NOT_FOUND_ERROR = new SimpleCommandExceptionType(CommandUtils.makeTranslatableWithFallback("command.elementalamulets.no_element_error"));
-
     private static final Component FOUND_NO_ELEMENTS = CommandUtils.makeTranslatableWithFallback("command.elementalamulets.found_no_elements");
 
     public static ArgumentBuilder<CommandSourceStack, ?> register() {
@@ -31,42 +27,36 @@ public class ElementsCommand {
     }
 
     private static ArgumentBuilder<CommandSourceStack, ?> createDumpCommand() {
-        return Commands.literal("dump")
+        return Commands.literal("list")
                 .requires(sc -> sc.hasPermission(Commands.LEVEL_ALL))
-                .executes(ElementsCommand::executeDumpCommand);
+                .executes(ctx -> listAllElements(ctx.getSource(), CommandHelper.getRegistry(ctx, ModElements.ELEMENTS)));
     }
 
     private static ArgumentBuilder<CommandSourceStack, ?> createInfoCommand() {
         return Commands.literal("get")
                 .requires(sc -> sc.hasPermission(Commands.LEVEL_ALL))
                 .then(Commands.argument("element", ResourceKeyArgument.key(ModElements.ELEMENTS))
-                        .executes(ElementsCommand::executeGetCommand));
+                        .executes(ctx -> getElementInfo(ctx.getSource(), CommandHelper.getElement(ctx, "element"))));
     }
 
-    private static int executeGetCommand(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
-        var source = ctx.getSource();
-        var resourceKey = CommandUtils.getResourceKey(ctx, "element", ModElements.ELEMENTS)
-                .orElseThrow(ELEMENT_NOT_FOUND_ERROR::create);
+    private static int getElementInfo(CommandSourceStack source, Holder<Element> element) {
+        var value = element.value();
 
-        var registry = getRegistryOrThrow(source);
+        source.sendSuccess(() -> Component.literal(String.format("[%s]", element.getRegisteredName())).withStyle(ChatFormatting.GOLD), false);
+        source.sendSuccess(() -> Component.literal(" ").append(Component.translatable("command.elementalamulets.get_element.name", value.colorizeNameMutable())), false);
+        source.sendSuccess(() -> Component.literal(" ").append(Component.translatable("command.elementalamulets.get_element.description", value.description().orElse(CommonComponents.GUI_NO))), false);
+        source.sendSuccess(() -> Component.literal(" ").append(Component.translatable("command.elementalamulets.get_element.is_primordial", value.isPrimordial() ? CommonComponents.GUI_YES : CommonComponents.GUI_NO)), false);
 
-        var element = registry.get(resourceKey)
-                .orElseThrow(ELEMENT_NOT_FOUND_ERROR::create);
+        var composition = value.composition();
+        if (!composition.isEmpty()) {
+            source.sendSuccess(() -> Component.literal(" ").append(Component.translatable("command.elementalamulets.get_element.composition")), false);
+            printSuccessPrettyElementsToSource(source, value.composition());
+        }
 
-        source.sendSuccess(() -> constructDetailedElementComponent(element), false);
         return Command.SINGLE_SUCCESS;
     }
 
-    private static Registry<Element> getRegistryOrThrow(CommandSourceStack commandSourceStack) throws CommandSyntaxException {
-        return commandSourceStack.registryAccess().lookup(ModElements.ELEMENTS)
-                .orElseThrow(REGISTRY_NOT_FOUND_ERROR::create);
-    }
-
-    private static int executeDumpCommand(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
-        var source = ctx.getSource();
-
-        var registry = getRegistryOrThrow(source);
-
+    private static int listAllElements(CommandSourceStack source, Registry<Element> registry) {
         var elements = registry.listElements().collect(Collectors.toSet());
         if (elements.isEmpty()) {
             source.sendFailure(FOUND_NO_ELEMENTS);
@@ -77,59 +67,14 @@ public class ElementsCommand {
                 CommandUtils.makeTranslatableWithFallback("command.elementalamulets.found_n_elements",
                         Component.literal(String.valueOf(elements.size())).withStyle(ChatFormatting.GOLD)), false);
 
-        for (var element : elements) {
-            var elementShortDescription = constructElementComponent(element)
-                    .withStyle(style ->
-                            style.withClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, String.format("/elementalamulets elements get %s", element.getKey().location())))
-                    );
-
-            source.sendSuccess(() -> Component.literal(" - ").append(elementShortDescription).withStyle(ChatFormatting.GRAY), false);
-        }
+        printSuccessPrettyElementsToSource(source, elements);
 
         return elements.size();
     }
 
-    private static MutableComponent constructElementComponent(Holder<Element> holderElement) {
-        return Component.empty().append(holderElement.value().colorizeNameMutable()).withStyle(style -> style.withClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, String.format("/elementalamulets elements get %s", holderElement.getKey().location()))))
-                .append(" ")
-                .append(ComponentUtils.wrapInSquareBrackets(Component.literal(holderElement.getKey().location().toString()))
-                        .withStyle(ChatFormatting.GRAY));
-    }
-
-    private static Component constructDetailedElementComponent(Holder<Element> elementHolder) {
-        var value = elementHolder.value();
-
-        var detailed = Component.empty()
-                .append(constructElementComponent(elementHolder))
-                .append("\n")
-                .append(CommandUtils.makeTranslatableWithFallback("command.elementalamulets.get_element.description",
-                                value.description()
-                                        .map(Component::copy)
-                                        .orElse(Component.literal("NONE")))
-                        .withStyle(ChatFormatting.GOLD))
-                .append("\n")
-                .append(CommandUtils.makeTranslatableWithFallback("command.elementalamulets.get_element.is_primordial",
-                        value.isPrimordial() ?
-                                CommonComponents.GUI_YES
-                                : CommonComponents.GUI_NO
-                ).withStyle(ChatFormatting.GOLD));
-
-        if (!value.composition().isEmpty()) {
-            detailed.append("\n")
-                    .append(CommandUtils.makeTranslatableWithFallback("command.elementalamulets.get_element.composition")
-                            .withStyle(ChatFormatting.GOLD))
-                    .append("\n");
-
-            for (var elementInside : elementHolder.value().composition()) {
-                var elementShortDesc = constructElementComponent(elementInside);
-                detailed.append(
-                                Component.literal(" - ")
-                                        .append(elementShortDesc)
-                                        .withStyle(ChatFormatting.GRAY))
-                        .append("\n");
-            }
+    private static <T extends Holder<Element>> void printSuccessPrettyElementsToSource(CommandSourceStack source, Iterable<T> elements) {
+        for (var element : elements) {
+            source.sendSuccess(() -> Component.literal(" - ").append(ElementalHelper.createFancyElementComponentForCommand(element)).withStyle(ChatFormatting.GRAY), false);
         }
-
-        return detailed;
     }
 }

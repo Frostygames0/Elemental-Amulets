@@ -19,6 +19,10 @@ public class ElementStorage implements IElementStorage, IElementStorageModifiabl
 
     private final Object2IntArrayMap<Holder<Element>> storage = new Object2IntArrayMap<>();
 
+    public ElementStorage(int maxCapacity) {
+        this(maxCapacity, Integer.MAX_VALUE);
+    }
+
     public ElementStorage(int maxCapacity, int maxDistinctElements) {
         this.maxCapacity = maxCapacity;
         this.maxDistinctElements = maxDistinctElements;

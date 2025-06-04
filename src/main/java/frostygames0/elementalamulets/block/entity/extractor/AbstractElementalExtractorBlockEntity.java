@@ -1,7 +1,7 @@
 package frostygames0.elementalamulets.block.entity.extractor;
 
-import frostygames0.elementalamulets.element.ElementHelper;
 import frostygames0.elementalamulets.element.ElementalComposition;
+import frostygames0.elementalamulets.element.ElementalHelper;
 import frostygames0.elementalamulets.element.storage.ElementStorage;
 import frostygames0.elementalamulets.element.storage.IElementStorage;
 import frostygames0.elementalamulets.element.storage.IElementStorageProvider;
@@ -117,9 +117,6 @@ public abstract class AbstractElementalExtractorBlockEntity extends BlockEntity 
         };
     }
 
-    public static final BlockEntityTicker<AbstractElementalExtractorBlockEntity> TICKER =
-            ((level1, pos, state, blockEntity) -> blockEntity.serverTick());
-
     public void serverTick() {
         boolean wasLitAtStartOfTick = isLit();
 
@@ -192,21 +189,21 @@ public abstract class AbstractElementalExtractorBlockEntity extends BlockEntity 
     }
 
     protected int calculateExtractionTime(ItemStack stack) {
-        var composition = ElementHelper.getStackElementalComposition(stack);
+        var composition = ElementalHelper.getStackElementalComposition(stack);
         return composition.map(elementalComposition -> elementalComposition.getTotalAmount() * 20).orElse(0);
     }
 
     private boolean canBeFullyExtractedFrom(ItemStack stack) {
-        if (!ElementHelper.hasElementalComposition(stack)) {
+        if (!ElementalHelper.hasElementalComposition(stack)) {
             return false;
         }
 
-        var composition = ElementHelper.getStackElementalComposition(stack);
+        var composition = ElementalHelper.getStackElementalComposition(stack);
         return composition.filter(this::canInsertAllElementsOfStack).isPresent();
     }
 
     private void insertCompositionOfStackIntoStorage(ItemStack stack) {
-        var composition = ElementHelper.getStackElementalComposition(stack);
+        var composition = ElementalHelper.getStackElementalComposition(stack);
         if (composition.isEmpty()) {
             return;
         }

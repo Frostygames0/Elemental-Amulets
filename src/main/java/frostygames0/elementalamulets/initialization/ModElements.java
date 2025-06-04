@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import com.mojang.logging.LogUtils;
 import frostygames0.elementalamulets.ElementalAmulets;
 import frostygames0.elementalamulets.element.Element;
-import frostygames0.elementalamulets.element.ElementHelper;
+import frostygames0.elementalamulets.element.ElementalHelper;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.data.worldgen.BootstrapContext;
@@ -78,11 +78,11 @@ public final class ModElements {
     }
 
     private static void checkElementsForCompositionCycles(Registry<Element> registry) {
-        LOGGER.debug("Checking Elements registry for composition cycles.");
+        LOGGER.info("Checking Elements registry for composition cycles.");
         var nonPrimordialElements = registry.listElements().filter(holder -> !holder.value().isPrimordial()).toList();
 
         for (var elementHolder : nonPrimordialElements) {
-            if (ElementHelper.hasCompositionCycle(elementHolder)) {
+            if (ElementalHelper.hasCompositionCycle(elementHolder)) {
                 throw new IllegalStateException(String.format("A cycle was found while traversing the composition of element %s.", elementHolder.getKey().location()));
             }
         }

@@ -2,7 +2,7 @@ package frostygames0.elementalamulets.client.gui.tooltip;
 
 import com.mojang.datafixers.util.Either;
 import frostygames0.elementalamulets.client.ModKeyMappings;
-import frostygames0.elementalamulets.element.ElementHelper;
+import frostygames0.elementalamulets.element.ElementalHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
@@ -17,12 +17,12 @@ public final class ElementalCompositionTooltipHandler {
 
     public static void onTooltipRenderEvent(RenderTooltipEvent.GatherComponents event) {
         var clientPlayer = Minecraft.getInstance().player;
-        if (clientPlayer == null || !ElementHelper.canSenseElements(clientPlayer)) {
+        if (clientPlayer == null || !ElementalHelper.canSenseElements(clientPlayer)) {
             return;
         }
 
         var tooltipElements = event.getTooltipElements();
-        var composition = ElementHelper.getStackElementalComposition(event.getItemStack());
+        var composition = ElementalHelper.getStackElementalComposition(event.getItemStack());
 
         if (composition.isEmpty() || composition.get().isEmpty()) {
             return;

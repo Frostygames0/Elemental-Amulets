@@ -1,7 +1,7 @@
 package frostygames0.elementalamulets.initialization;
 
 import frostygames0.elementalamulets.ElementalAmulets;
-import frostygames0.elementalamulets.element.ElementHelper;
+import frostygames0.elementalamulets.element.ElementalHelper;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -27,25 +27,15 @@ public final class ModCreativeModeTabs {
                         output.accept(ModItems.EXTRACTOR_PIPE);
                         output.accept(ModItems.ELEMENTUM_CRYSTAL_ORE);
                         output.accept(ModItems.ELEMENTUM_CRYSTAL_DEEPSLATE_ORE);
-                    })
-                    .build());
-
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> TESTING =
-            TABS.register("testing", () -> CreativeModeTab.builder()
-                    .title(Component.literal("Elemental Amulets: Testing"))
-                    .icon(ModBlocks.SIMPLE_STORAGE::toStack)
-                    .withLabelColor(0xFFFF0000)
-                    .displayItems(((parameters, output) -> {
-                        output.accept(ModItems.SIMPLE_GENERATOR);
                         output.accept(ModItems.SIMPLE_STORAGE);
-                    }))
+                    })
                     .build());
 
     private static void generateShardsForEachElement(CreativeModeTab.ItemDisplayParameters parameters, CreativeModeTab.Output output) {
         output.accept(ModItems.ELEMENTUM_SHARD);
         parameters.holders()
                 .lookupOrThrow(ModElements.ELEMENTS)
-                .listElements().forEach(element -> output.accept(ElementHelper.createShardWithElement(element)));
+                .listElements().forEach(element -> output.accept(ElementalHelper.createShardWithElement(element)));
     }
 
     public static void register(IEventBus bus) {

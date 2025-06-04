@@ -15,6 +15,7 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.ticks.TickPriority;
 
 public abstract class BasePipeBlock extends BaseEntityBlock {
+
     protected BasePipeBlock(Properties properties) {
         super(properties);
     }

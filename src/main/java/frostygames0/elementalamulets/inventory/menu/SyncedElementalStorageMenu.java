@@ -3,7 +3,7 @@ package frostygames0.elementalamulets.inventory.menu;
 import frostygames0.elementalamulets.element.ElementalComposition;
 import frostygames0.elementalamulets.element.storage.IElementStorage;
 import frostygames0.elementalamulets.element.storage.IElementStorageModifiable;
-import frostygames0.elementalamulets.network.SendElementStorageToClientMenu;
+import frostygames0.elementalamulets.network.ClientboundElementStorageMenuPayload;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 public abstract class SyncedElementalStorageMenu extends AbstractContainerMenu {
     protected final Player player;
 
-    private final IElementStorage stored;
+    private final IElementStorage storage;
 
     private ElementalComposition oldValue = ElementalComposition.EMPTY;
 
@@ -22,17 +22,17 @@ public abstract class SyncedElementalStorageMenu extends AbstractContainerMenu {
         super(menuType, containerId);
 
         this.player = player;
-        stored = storage;
+        this.storage = storage;
     }
 
     @Override
     public void broadcastChanges() {
         super.broadcastChanges();
 
-        var currentValue = stored.getStored();
+        var currentValue = storage.getStored();
         if (!currentValue.equals(oldValue)) {
             if (player instanceof ServerPlayer serverPlayer) {
-                PacketDistributor.sendToPlayer(serverPlayer, new SendElementStorageToClientMenu(containerId, currentValue));
+                PacketDistributor.sendToPlayer(serverPlayer, new ClientboundElementStorageMenuPayload(containerId, currentValue));
             }
 
             oldValue = currentValue;
@@ -40,11 +40,11 @@ public abstract class SyncedElementalStorageMenu extends AbstractContainerMenu {
     }
 
     // I'd recommend to override this if your storage doesn't implement modifiable, and you don't want an exception
-    public void setStored(ElementalComposition storage) {
-        ((IElementStorageModifiable) stored).setStored(storage);
+    public void setStorage(ElementalComposition storage) {
+        ((IElementStorageModifiable) this.storage).setStored(storage);
     }
 
-    public IElementStorage getStored() {
-        return stored;
+    public IElementStorage getStorage() {
+        return storage;
     }
 }

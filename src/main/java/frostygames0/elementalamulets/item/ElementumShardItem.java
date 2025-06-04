@@ -1,6 +1,6 @@
 package frostygames0.elementalamulets.item;
 
-import frostygames0.elementalamulets.element.ElementHelper;
+import frostygames0.elementalamulets.element.ElementalHelper;
 import frostygames0.elementalamulets.initialization.ModElements;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.DamageTypeTags;
@@ -15,7 +15,7 @@ public final class ElementumShardItem extends Item {
 
     @Override
     public Component getName(ItemStack stack) {
-        var composition = ElementHelper.getStackElementalComposition(stack);
+        var composition = ElementalHelper.getStackElementalComposition(stack);
 
         var suffix = Component.empty();
 
@@ -37,7 +37,7 @@ public final class ElementumShardItem extends Item {
             return super.canBeHurtBy(stack, source);
         }
 
-        var optionalComposition = ElementHelper.getStackElementalComposition(stack);
+        var optionalComposition = ElementalHelper.getStackElementalComposition(stack);
         if (optionalComposition.isEmpty()) {
             return super.canBeHurtBy(stack, source);
         }

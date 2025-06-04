@@ -1,6 +1,7 @@
 package frostygames0.elementalamulets;
 
 import frostygames0.elementalamulets.initialization.*;
+import frostygames0.elementalamulets.network.ModNetworkPayloadHandlers;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;

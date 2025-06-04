@@ -85,7 +85,7 @@ public class ElementStorageBarWidget extends AbstractWidget {
         var title = Component.translatable("tooltip.elementalamulets.element_storage_stored");
 
         var amountFraction = String.format("%d/%d", storage.getTotalAmount(), storage.getMaxCapacity());
-        var distinctFraction = String.format("%d/%d", storage.getDistinctElementsAmount(), storage.getMaxDistinctElementsStored());
+        var distinctFraction = String.format("%d/%s", storage.getDistinctElementsAmount(), storage.getMaxDistinctElementsStored() == Integer.MAX_VALUE ? "∞" : storage.getMaxDistinctElementsStored());
         var both = String.format(" (%s - %s)", amountFraction, distinctFraction);
 
         title.append(both).withStyle(ChatFormatting.GOLD);

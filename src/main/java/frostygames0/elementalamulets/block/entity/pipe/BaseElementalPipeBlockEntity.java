@@ -1,7 +1,7 @@
 package frostygames0.elementalamulets.block.entity.pipe;
 
-import frostygames0.elementalamulets.block.pipe.ElementalPipeBlock;
 import frostygames0.elementalamulets.element.Element;
+import frostygames0.elementalamulets.util.BlockFace;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -10,6 +10,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -57,7 +58,7 @@ public abstract class BaseElementalPipeBlockEntity extends BlockEntity {
             boolean sendUpdate = false;
             for (PipeConnection connection : connections) {
                 sendUpdate = connection.tryFlipFlowsIfPressureReversed();
-                connection.manageSource(level, worldPosition);
+                connection.manageSource(level);
             }
 
             if (sendUpdate) {
@@ -105,7 +106,7 @@ public abstract class BaseElementalPipeBlockEntity extends BlockEntity {
             var sendUpdate = false;
             for (PipeConnection connection : connections) {
                 Holder<Element> internalElement = singleSource != connection ? availableFlow : null;
-                sendUpdate |= connection.manageFlows(level, worldPosition, internalElement);
+                sendUpdate |= connection.manageFlows(level, internalElement);
             }
 
             if (sendUpdate) {
@@ -124,7 +125,9 @@ public abstract class BaseElementalPipeBlockEntity extends BlockEntity {
     }
 
     public void syncData() {
-        level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), ElementalPipeBlock.UPDATE_IMMEDIATE);
+        if (level instanceof ServerLevel serverLevel) {
+            serverLevel.getChunkSource().blockChanged(worldPosition);
+        }
     }
 
     public Optional<Holder<Element>> getElement(Direction side, boolean inbound) {
@@ -148,7 +151,7 @@ public abstract class BaseElementalPipeBlockEntity extends BlockEntity {
         interfaces = new IdentityHashMap<>();
         for (Direction d : DIRECTIONS) {
             if (canHaveFlowToward(d)) {
-                interfaces.put(d, new PipeConnection(d));
+                interfaces.put(d, new PipeConnection(new BlockFace(worldPosition, d)));
             }
         }
     }
@@ -179,7 +182,7 @@ public abstract class BaseElementalPipeBlockEntity extends BlockEntity {
                 if (!canHaveFlowToward(d)) {
                     interfaces.remove(d);
                 } else {
-                    interfaces.computeIfAbsent(d, PipeConnection::new);
+                    interfaces.computeIfAbsent(d, (d1) -> new PipeConnection(new BlockFace(worldPosition, d1)));
                 }
             }
         }
@@ -187,6 +190,7 @@ public abstract class BaseElementalPipeBlockEntity extends BlockEntity {
         phase = TickPhase.WAIT_FOR_PUMPS;
 
         setupConnectionsIfNotSetup();
+
         interfaces.values().forEach(PipeConnection::resetConnection);
         markDirtyAndSync();
     }
@@ -212,11 +216,12 @@ public abstract class BaseElementalPipeBlockEntity extends BlockEntity {
 
         for (Direction face : DIRECTIONS) {
             if (tag.contains(face.getName())) {
-                interfaces.computeIfAbsent(face, PipeConnection::new);
+                interfaces.computeIfAbsent(face, (d1) -> new PipeConnection(new BlockFace(worldPosition, d1)));
+            } else {
+                interfaces.remove(face);
             }
         }
 
-        // Invalid data (missing/outdated). Defer init to runtime
         if (interfaces.isEmpty()) {
             interfaces = null;
             return;
@@ -227,9 +232,11 @@ public abstract class BaseElementalPipeBlockEntity extends BlockEntity {
 
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
-        var tag = new CompoundTag();
+        var tag = super.getUpdateTag(registries);
+
         setupConnectionsIfNotSetup();
         saveAdditional(tag, registries);
+
         return tag;
     }
 

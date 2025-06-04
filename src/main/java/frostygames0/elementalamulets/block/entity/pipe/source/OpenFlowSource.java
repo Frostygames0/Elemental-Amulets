@@ -6,7 +6,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class OpenFlowSource extends FlowSource {
     public OpenFlowSource() {
-        super(null, null);
+        super(null);
     }
 
     @Override

@@ -26,7 +26,7 @@ public class AbstractElementalExtractorScreen<T extends AbstractElementalExtract
 
         var elementStorageBarWidget = widgets.elementStorageBar();
         var storageScale = new ElementStorageBarWidget(
-                menu.getStored(),
+                menu.getStorage(),
                 font,
                 true,
                 leftPos + elementStorageBarWidget.x(),

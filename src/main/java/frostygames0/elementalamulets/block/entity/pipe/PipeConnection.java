@@ -2,16 +2,17 @@ package frostygames0.elementalamulets.block.entity.pipe;
 
 import frostygames0.elementalamulets.block.entity.pipe.source.*;
 import frostygames0.elementalamulets.element.Element;
-import frostygames0.elementalamulets.element.ElementHelper;
-import frostygames0.elementalamulets.initialization.ModCapabilities;
+import frostygames0.elementalamulets.element.ElementalHelper;
+import frostygames0.elementalamulets.util.BlockFace;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import java.util.Optional;
 
@@ -25,9 +26,10 @@ public class PipeConnection {
     public static final String TAG_PROGRESS = "Progress";
 
     public static final float MAX_PRESSURE = 16f;
-    private static final Boolean[] TRUE_AND_FALSE = new Boolean[]{true, false};
 
-    private final Direction side;
+    public static final Boolean[] TRUE_AND_FALSE = new Boolean[]{true, false};
+
+    private final BlockFace blockFace;
 
     private float inboundPressure;
     private float outboundPressure;
@@ -37,13 +39,18 @@ public class PipeConnection {
 
     private Flow flow;
 
-    public PipeConnection(Direction side) {
-        this.side = side;
+    private PipeNetwork network;
+
+    public PipeConnection(BlockFace blockFace) {
+        this.blockFace = blockFace;
     }
 
-    public boolean manageFlows(Level level, BlockPos blockPos, @Nullable Holder<Element> internalElement) {
-        if (source == null) {
-            if (!tryLocateAndSetSource(level, blockPos)) {
+    public boolean manageFlows(Level level, @Nullable Holder<Element> internalElement) {
+        var retainedNetwork = network;
+        network = null;
+
+        if (!hasSource()) {
+            if (!tryLocateAndSetSource(level)) {
                 return false;
             }
         }
@@ -55,7 +62,7 @@ public class PipeConnection {
                 return false;
             }
 
-            // This weird piece of code tries to start the inbound flow first, and if it fails it tries to start the outbound flow
+            // This piece of code tries to start the inbound flow first, and if it fails it tries to start the outbound flow
             var isInboundPressureTheStrongest = comparePressure() < 0;
             for (var bool : TRUE_AND_FALSE) {
                 boolean inbound = isInboundPressureTheStrongest == bool;
@@ -75,7 +82,7 @@ public class PipeConnection {
             return false;
         }
 
-        var providedElement = flow.inbound ? source.getElement() : internalElement;
+        @Nullable var providedElement = flow.inbound ? source.getElement() : internalElement;
         // If we have a flow and either we have no pressure or element to flow or elements mismatch - stop the flow
         if (!hasPressure() || providedElement == null || !providedElement.equals(flow.element)) {
             flow = null;
@@ -85,7 +92,7 @@ public class PipeConnection {
         if (flow.inbound != comparePressure() < 0) {
             boolean inbound = !flow.inbound;
             if (inbound && (providedElement != null) || !inbound && (internalElement != null)) {
-                PipeHelper.traversePipesAndResetNetworks(level, blockPos, side);
+                PipeHelper.traversePipesAndResetNetworks(level, blockFace.pos(), blockFace.face());
                 tryStartingNewFlow(inbound, inbound ? source.getElement() : internalElement);
                 return true;
             }
@@ -98,23 +105,23 @@ public class PipeConnection {
             return false;
         }
 
-//        network = retainedNetwork;
-//        if (!hasNetwork())
-//            network = Optional.of(new FluidNetwork(world, new BlockFace(pos, side), flowSource::provideHandler));
-//        network.get()
-//                .tick();
+        network = retainedNetwork;
+        if (!hasNetwork()) {
+            network = new PipeNetwork(level, blockFace, source::getElementStorageProvider);
+        }
+
+        network.tick();
 
         return false;
     }
 
-    public void manageSource(Level level, BlockPos blockPos) {
-        if (source == null && !tryLocateAndSetSource(level, blockPos)) {
+    public void manageSource(Level level) {
+        if (!hasSource() && !tryLocateAndSetSource(level)) {
             return;
         }
 
-        source.manage(level, level.getBlockEntity(blockPos));
+        source.manage(level, level.getBlockEntity(blockFace.pos()));
     }
-
 
     public void tickFlow(Level level, BlockPos blockPos) {
         if (!hasFlow()) {
@@ -122,36 +129,55 @@ public class PipeConnection {
         }
 
         if (level.isClientSide) {
-            if (source == null) {
-                tryLocateAndSetSource(level, blockPos);
+            if (!hasSource()) {
+                tryLocateAndSetSource(level);
+            }
+
+            if (flow.complete && source instanceof OpenFlowSource) {
+                var adjacent = blockFace.getConnectedPos();
+                // TODO Make particles
+                level.addParticle(ParticleTypes.DRIPPING_WATER, adjacent.getX() + 0.5, adjacent.getY() + 0.5, adjacent.getZ(), 0.0, 0.0, 0.0);
             }
         }
 
         flow.tick();
     }
 
-    private boolean tryLocateAndSetSource(Level level, BlockPos blockPos) {
-        var relativePos = blockPos.relative(side);
+    public boolean hasNetwork() {
+        return network != null;
+    }
+
+    public boolean hasSource() {
+        return source != null;
+    }
+
+    FlowSource getSource() {
+        return source;
+    }
+
+    boolean tryLocateAndSetSource(Level level) {
+        var relativePos = blockFace.getConnectedPos();
         if (!level.isLoaded(relativePos)) {
             return false;
         }
 
-        if (PipeHelper.isOpenEnd(level, blockPos, side)) {
+        if (PipeHelper.isOpenEnd(level, blockFace.pos(), blockFace.face())) {
             source = new OpenFlowSource();
             return true;
         }
 
-        var cap = level.getCapability(ModCapabilities.ELEMENT_STORAGE_BLOCK, relativePos, side.getOpposite());
-        if (cap != null) {
-            if (previousSource instanceof ElementStorageFlowSource elementStorageFlowSource && elementStorageFlowSource.getElementStorage() == cap) {
+        var cap = ElementalHelper.getElementStorage(level, relativePos, blockFace.getOppositeFace());
+        if (cap.isPresent()) {
+            if (previousSource instanceof ElementStorageFlowSource elementStorageFlowSource
+                    && elementStorageFlowSource.getElementStorageProvider() != null && elementStorageFlowSource.getElementStorageProvider().getCapability() == cap.get()) {
                 source = previousSource;
             } else {
-                source = new ElementStorageFlowSource(side, blockPos);
+                source = new ElementStorageFlowSource(blockFace);
             }
             return true;
         }
 
-        source = PipeHelper.getPipeBlockEntity(level, relativePos).isPresent() ? new OtherPipeFlowSource(side, blockPos) : new BlockedFlowSource();
+        source = PipeHelper.getPipeBlockEntity(level, relativePos).isPresent() ? new OtherPipeFlowSource(blockFace) : new BlockedFlowSource();
         return true;
     }
 
@@ -179,8 +205,23 @@ public class PipeConnection {
         return true;
     }
 
+
+    @Nullable
+    @VisibleForTesting
+    Holder<Element> getElement() {
+        if (!hasFlow()) {
+            return null;
+        }
+
+        return flow.element;
+    }
+
     public Optional<Holder<Element>> getElement(boolean inbound) {
         if (!hasFlow()) {
+            return Optional.empty();
+        }
+
+        if (flow.element == null) {
             return Optional.empty();
         }
 
@@ -203,6 +244,10 @@ public class PipeConnection {
         return flow.inbound;
     }
 
+    public boolean isFlowComplete() {
+        return flow.complete;
+    }
+
     public boolean hasPressure() {
         return inboundPressure != 0 || outboundPressure != 0;
     }
@@ -220,15 +265,15 @@ public class PipeConnection {
      * positive number if outbound > inbound;
      * negative number if inbound > outbound;
      */
-    private float comparePressure() {
+    public float comparePressure() {
         return getOutboundPressure() - getInboundPressure();
     }
 
-    void setPressure(boolean inbound, float pressure) {
+    public void setPressure(boolean inbound, float pressure) {
         if (inbound) {
-            inboundPressure = pressure;
+            inboundPressure = Mth.clamp(pressure, 0, MAX_PRESSURE);
         } else {
-            outboundPressure = pressure;
+            outboundPressure = Mth.clamp(pressure, 0, MAX_PRESSURE);
         }
     }
 
@@ -253,15 +298,19 @@ public class PipeConnection {
     }
 
     public void resetNetwork() {
-
+        if (hasNetwork()) {
+            network.reset();
+        }
     }
 
     public void serializeNBT(CompoundTag tag, HolderLookup.Provider provider) {
         var connectionTag = new CompoundTag();
-        tag.put(side.getName(), connectionTag);
+        tag.put(blockFace.face().getName(), connectionTag);
 
-        connectionTag.putFloat(TAG_INBOUND_PRESSURE, inboundPressure);
-        connectionTag.putFloat(TAG_OUTBOUND_PRESSURE, outboundPressure);
+        if (hasPressure()) {
+            connectionTag.putFloat(TAG_INBOUND_PRESSURE, inboundPressure);
+            connectionTag.putFloat(TAG_OUTBOUND_PRESSURE, outboundPressure);
+        }
 
         if (source instanceof ElementStorageFlowSource elementStorageFlowSource) {
             connectionTag.put(TAG_ELEMENT_STORAGE_FLOW_SOURCE, elementStorageFlowSource.serializeNBT(provider));
@@ -273,7 +322,7 @@ public class PipeConnection {
     }
 
     public void deserializeNBT(CompoundTag tag, BlockPos blockPos, HolderLookup.Provider provider) {
-        var connectionTag = tag.getCompound(side.getName());
+        var connectionTag = tag.getCompound(blockFace.face().getName());
 
         inboundPressure = Mth.clamp(connectionTag.getFloat(TAG_INBOUND_PRESSURE), 0, MAX_PRESSURE);
         outboundPressure = Mth.clamp(connectionTag.getFloat(TAG_OUTBOUND_PRESSURE), 0, MAX_PRESSURE);
@@ -299,7 +348,7 @@ public class PipeConnection {
 
     @Override
     public String toString() {
-        return String.format("%s - P: [I: %s, O: %s], F: [%s]", side.getName(), getInboundPressure(), getOutboundPressure(), flow == null ? "N" : flow.toString());
+        return String.format("%s - P: [I: %s, O: %s], F: [%s]", blockFace.face().getName(), getInboundPressure(), getOutboundPressure(), flow == null ? "N" : flow.toString());
     }
 
     private class Flow {
@@ -333,7 +382,7 @@ public class PipeConnection {
 
             flowTag.putBoolean(TAG_INBOUND, inbound);
 
-            ElementHelper.serializeToNbt(element, provider).ifPresent(tag -> flowTag.put(TAG_ELEMENT, tag));
+            ElementalHelper.serializeToNbt(element, provider).ifPresent(tag -> flowTag.put(TAG_ELEMENT, tag));
 
             if (!complete) {
                 flowTag.putFloat(TAG_PROGRESS, progress);
@@ -345,7 +394,7 @@ public class PipeConnection {
         private void deserializeNBT(CompoundTag tag, HolderLookup.Provider provider) {
             inbound = tag.getBoolean(TAG_INBOUND);
 
-            element = ElementHelper.deserializeFromNbt(tag.get(TAG_ELEMENT), provider).orElse(null);
+            element = ElementalHelper.deserializeFromNbt(tag.get(TAG_ELEMENT), provider).orElse(null);
 
             if (tag.contains(TAG_PROGRESS)) {
                 progress = tag.getFloat(TAG_PROGRESS);
@@ -356,7 +405,7 @@ public class PipeConnection {
 
         @Override
         public String toString() {
-            return String.format("E: %s, I: %s, P: %s", element.value().name().getString(), inbound, complete ? "c" : progress);
+            return String.format("E: %s, I: %s, P: %s", element == null ? "NULL" : element.value().name().getString(), inbound, complete ? "c" : progress);
         }
     }
 }

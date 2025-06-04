@@ -3,8 +3,7 @@ package frostygames0.elementalamulets.block.entity.pipe.source;
 import frostygames0.elementalamulets.block.entity.pipe.BaseElementalPipeBlockEntity;
 import frostygames0.elementalamulets.block.entity.pipe.PipeHelper;
 import frostygames0.elementalamulets.element.Element;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
+import frostygames0.elementalamulets.util.BlockFace;
 import net.minecraft.core.Holder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -15,8 +14,8 @@ import java.lang.ref.WeakReference;
 public class OtherPipeFlowSource extends FlowSource {
     private WeakReference<BaseElementalPipeBlockEntity> pipeCache;
 
-    public OtherPipeFlowSource(Direction direction, BlockPos blockPos) {
-        super(direction, blockPos);
+    public OtherPipeFlowSource(BlockFace face) {
+        super(face);
     }
 
     @Override
@@ -26,7 +25,7 @@ public class OtherPipeFlowSource extends FlowSource {
         }
 
         pipeCache = null;
-        PipeHelper.getPipeBlockEntity(level, blockPos.relative(direction)).ifPresent(pipe -> pipeCache = new WeakReference<>(pipe));
+        PipeHelper.getPipeBlockEntity(level, face.getConnectedPos()).ifPresent(pipe -> pipeCache = new WeakReference<>(pipe));
     }
 
     @Override
@@ -35,7 +34,7 @@ public class OtherPipeFlowSource extends FlowSource {
             return null;
         }
 
-        return pipeCache.get().getElement(direction.getOpposite(), false).orElse(null);
+        return pipeCache.get().getElement(face.getOppositeFace(), false).orElse(null);
     }
 
     @Override

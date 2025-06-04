@@ -2,7 +2,7 @@ package frostygames0.elementalamulets.block.entity.extractor;
 
 import frostygames0.elementalamulets.block.extractor.AbstractElementalExtractorBlock;
 import frostygames0.elementalamulets.element.Element;
-import frostygames0.elementalamulets.element.ElementHelper;
+import frostygames0.elementalamulets.element.ElementalHelper;
 import frostygames0.elementalamulets.element.storage.OperationMode;
 import frostygames0.elementalamulets.initialization.ModBlockEntities;
 import frostygames0.elementalamulets.inventory.ExtractOnlyRangedWrapper;
@@ -64,7 +64,7 @@ public class PrimitiveElementalExtractorBlockEntity extends AbstractElementalExt
             if (slot >= RESULTS_SLOTS_START && slot <= RESULTS_SLOTS_END) {
                 return false;
             } else if (slot == EMPTY_SHARD_SLOT) {
-                return ElementHelper.isStackAnEmptyElementumShard(stack);
+                return ElementalHelper.isStackAnEmptyElementumShard(stack);
             }
 
             return super.isItemValid(slot, stack);
@@ -193,7 +193,7 @@ public class PrimitiveElementalExtractorBlockEntity extends AbstractElementalExt
     }
 
     private boolean tryAddShardToResult(Holder<Element> elementHolder, boolean simulate) {
-        var shard = ElementHelper.createShardWithElement(elementHolder);
+        var shard = ElementalHelper.createShardWithElement(elementHolder);
 
         for (int i = RESULTS_SLOTS_START; i <= RESULTS_SLOTS_END; i++) {
             var stackInSlot = additionalInventory.getStackInSlot(i);
@@ -266,7 +266,7 @@ public class PrimitiveElementalExtractorBlockEntity extends AbstractElementalExt
 
     @Override
     public @Nullable AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
-        return new PrimitiveElementalExtractorMenu(containerId, playerInventory,
+        return PrimitiveElementalExtractorMenu.forServer(containerId, playerInventory,
                 baseInventory, additionalInventory,
                 baseContainerData, additionalData,
                 elementStorage, ContainerLevelAccess.create(level, worldPosition));

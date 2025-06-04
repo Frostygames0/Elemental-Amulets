@@ -1,9 +1,11 @@
 package frostygames0.elementalamulets.block.entity.pipe.source;
 
 import frostygames0.elementalamulets.element.Element;
-import frostygames0.elementalamulets.element.ElementHelper;
+import frostygames0.elementalamulets.element.ElementalHelper;
 import frostygames0.elementalamulets.element.storage.IElementStorage;
 import frostygames0.elementalamulets.initialization.ModCapabilities;
+import frostygames0.elementalamulets.util.BlockFace;
+import frostygames0.elementalamulets.util.ICapabilityProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -19,11 +21,11 @@ public class ElementStorageFlowSource extends FlowSource {
     public static final String TAG_ELEMENT = "Element";
     public static final String TAG_DIRECTION = "Direction";
 
-    private BlockCapabilityCache<IElementStorage, @Nullable Direction> capCache;
+    private ICapabilityProvider<IElementStorage> capCache;
     private Holder<Element> cachedElement;
 
-    public ElementStorageFlowSource(Direction direction, BlockPos blockPos) {
-        super(direction, blockPos);
+    public ElementStorageFlowSource(BlockFace face) {
+        super(face);
     }
 
     @Override
@@ -37,22 +39,35 @@ public class ElementStorageFlowSource extends FlowSource {
         }
 
         var serverLevel = ((ServerLevel) level);
-        var relativeBE = level.getBlockEntity(blockPos.relative(direction));
+        var relativeBE = level.getBlockEntity(face.getConnectedPos());
         if (relativeBE == null) {
             return;
         }
 
-        capCache = BlockCapabilityCache.create(ModCapabilities.ELEMENT_STORAGE_BLOCK, serverLevel, relativeBE.getBlockPos(), direction.getOpposite(), () -> !blockEntity.isRemoved(), () -> capCache = null);
+        capCache = ICapabilityProvider.of(
+                BlockCapabilityCache.create(
+                        ModCapabilities.ELEMENT_STORAGE_BLOCK,
+                        serverLevel,
+                        relativeBE.getBlockPos(),
+                        face.getOppositeFace(),
+                        () -> !blockEntity.isRemoved(),
+                        () -> capCache = null)
+        );
     }
 
     @Override
-    public @Nullable IElementStorage getElementStorage() {
-        return capCache.getCapability();
+    public @Nullable ICapabilityProvider<IElementStorage> getElementStorageProvider() {
+        return capCache;
     }
 
     @Override
     public @Nullable Holder<Element> getElement() {
-        var storage = getElementStorage();
+        var storageSupplier = getElementStorageProvider();
+        if (storageSupplier == null) {
+            return null;
+        }
+
+        var storage = storageSupplier.getCapability();
         if (storage == null) {
             return null;
         }
@@ -71,23 +86,23 @@ public class ElementStorageFlowSource extends FlowSource {
     public CompoundTag serializeNBT(HolderLookup.Provider provider) {
         var sourceTag = new CompoundTag();
 
-        sourceTag.putString(TAG_DIRECTION, direction.getName());
+        sourceTag.putString(TAG_DIRECTION, face.face().getName());
 
         if (cachedElement != null) {
-            ElementHelper.serializeToNbt(cachedElement, provider).ifPresent(tag -> sourceTag.put(TAG_ELEMENT, tag));
+            ElementalHelper.serializeToNbt(cachedElement, provider).ifPresent(tag -> sourceTag.put(TAG_ELEMENT, tag));
         }
 
         return sourceTag;
     }
 
     public static ElementStorageFlowSource deserializeFromNBT(BlockPos blockPos, CompoundTag tag, HolderLookup.Provider provider) {
-        var element = ElementHelper.deserializeFromNbt(tag.get(TAG_ELEMENT), provider).orElse(null);
+        var element = ElementalHelper.deserializeFromNbt(tag.get(TAG_ELEMENT), provider).orElse(null);
         var direction = Direction.byName(tag.getString(TAG_DIRECTION));
         if (direction == null) {
             return null;
         }
 
-        var source = new ElementStorageFlowSource(direction, blockPos);
+        var source = new ElementStorageFlowSource(new BlockFace(blockPos, direction));
         source.cachedElement = element;
 
         return source;

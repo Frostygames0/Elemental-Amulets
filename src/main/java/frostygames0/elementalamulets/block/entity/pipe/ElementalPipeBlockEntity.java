@@ -13,6 +13,7 @@ public class ElementalPipeBlockEntity extends BaseElementalPipeBlockEntity {
 
     @Override
     public boolean canHaveFlowToward(Direction side) {
-        return ElementalPipeBlock.isPipe(getBlockState()) && ElementalPipeBlock.isOpen(getBlockState(), side);
+        var blockState = getBlockState();
+        return ElementalPipeBlock.isPipe(blockState) && ElementalPipeBlock.isOpen(blockState, side);
     }
 }

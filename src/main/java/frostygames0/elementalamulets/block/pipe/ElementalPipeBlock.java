@@ -4,8 +4,8 @@ import com.mojang.serialization.MapCodec;
 import frostygames0.elementalamulets.block.entity.pipe.BaseElementalPipeBlockEntity;
 import frostygames0.elementalamulets.block.entity.pipe.ElementalPipeBlockEntity;
 import frostygames0.elementalamulets.block.entity.pipe.PipeHelper;
+import frostygames0.elementalamulets.element.ElementalHelper;
 import frostygames0.elementalamulets.initialization.ModBlockEntities;
-import frostygames0.elementalamulets.initialization.ModCapabilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -29,8 +29,10 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.ticks.TickPriority;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.VisibleForTesting;
 
 import java.util.Arrays;
 
@@ -55,6 +57,11 @@ public class ElementalPipeBlock extends PipeBlock implements SimpleWaterloggedBl
         );
     }
 
+    @VisibleForTesting
+    public VoxelShape getShapeByDirection(Direction direction) {
+        return shapeByIndex[1 << direction.ordinal()];
+    }
+
     public static boolean isPipe(BlockState state) {
         return state.getBlock() instanceof ElementalPipeBlock;
     }
@@ -65,16 +72,13 @@ public class ElementalPipeBlock extends PipeBlock implements SimpleWaterloggedBl
 
     public static boolean canConnectTo(BlockAndTintGetter levelReader, BlockPos blockPos, Direction direction) {
         var relativeBlockPos = blockPos.relative(direction);
-        var neighboringBlock = levelReader.getBlockState(relativeBlockPos);
+        var relativeBlockState = levelReader.getBlockState(relativeBlockPos);
 
-        if (levelReader instanceof Level level) {
-            var storage = level.getCapability(ModCapabilities.ELEMENT_STORAGE_BLOCK, relativeBlockPos, null);
-            if (storage != null) {
-                return true;
-            }
+        if (ElementalHelper.hasElementStorage(levelReader, relativeBlockPos, direction.getOpposite())) {
+            return true;
         }
 
-        if (isPipe(neighboringBlock)) {
+        if (isPipe(relativeBlockState)) {
             return true;
         }
 
@@ -154,13 +158,14 @@ public class ElementalPipeBlock extends PipeBlock implements SimpleWaterloggedBl
             scheduledTickAccess.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
         }
 
+        scheduledTickAccess.scheduleTick(pos, this, 1, TickPriority.HIGH);
         state = updatePipeState(level, state, pos, direction);
-        var d = PipeHelper.validateNeighbourChange(state, level, pos, neighborState, neighborPos);
-        if (d != null) {
-            if (isOpen(state, d)) {
-                scheduledTickAccess.scheduleTick(pos, this, 1, TickPriority.HIGH);
-            }
-        }
+//        var d = PipeHelper.validateNeighbourChange(state, level, pos, neighborState, neighborPos);
+//        if (d != null) {
+//            if (isOpen(state, d)) {
+//                scheduledTickAccess.scheduleTick(pos, this, 1, TickPriority.HIGH);
+//            }
+//        }
 
         return state;
     }

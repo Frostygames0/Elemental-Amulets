@@ -40,8 +40,6 @@ public final class ModItems {
 
     public static final DeferredItem<BlockItem> SIMPLE_STORAGE =
             ITEMS.registerSimpleBlockItem(ModBlocks.SIMPLE_STORAGE);
-    public static final DeferredItem<BlockItem> SIMPLE_GENERATOR =
-            ITEMS.registerSimpleBlockItem(ModBlocks.SIMPLE_GENERATOR);
 
     public static void register(IEventBus bus) {
         ITEMS.register(bus);

@@ -2,7 +2,7 @@ package frostygames0.elementalamulets.inventory.menu.extractor;
 
 import frostygames0.elementalamulets.block.entity.extractor.AbstractElementalExtractorBlockEntity;
 import frostygames0.elementalamulets.block.entity.extractor.PrimitiveElementalExtractorBlockEntity;
-import frostygames0.elementalamulets.element.ElementHelper;
+import frostygames0.elementalamulets.element.ElementalHelper;
 import frostygames0.elementalamulets.element.storage.ElementStorage;
 import frostygames0.elementalamulets.element.storage.IElementStorage;
 import frostygames0.elementalamulets.initialization.ModBlocks;
@@ -39,8 +39,15 @@ public class PrimitiveElementalExtractorMenu extends AbstractElementalExtractorM
         addDataSlots(this.additionalContainerData);
     }
 
-    public PrimitiveElementalExtractorMenu(int containerId, Inventory playerInventory) {
-        this(containerId, playerInventory,
+    public static PrimitiveElementalExtractorMenu forServer(int containerId, Inventory playerInventory,
+                                                            IItemHandler baseInventory, IItemHandler additionalInventory,
+                                                            ContainerData baseContainerData, ContainerData additionalContainerData,
+                                                            IElementStorage storage, ContainerLevelAccess access) {
+        return new PrimitiveElementalExtractorMenu(containerId, playerInventory, baseInventory, additionalInventory, baseContainerData, additionalContainerData, storage, access);
+    }
+
+    public static PrimitiveElementalExtractorMenu forClient(int containerId, Inventory playerInventory) {
+        return new PrimitiveElementalExtractorMenu(containerId, playerInventory,
                 new ItemStackHandler(BASE_INVENTORY_SIZE),
                 new ItemStackHandler(ADDITIONAL_INVENTORY_SIZE),
                 new SimpleContainerData(BASE_CONTAINER_DATA_SIZE),
@@ -86,7 +93,7 @@ public class PrimitiveElementalExtractorMenu extends AbstractElementalExtractorM
                     return ItemStack.EMPTY;
                 }
             } else {
-                if (ElementHelper.isStackAnEmptyElementumShard(itemstack1)) {
+                if (ElementalHelper.isStackAnEmptyElementumShard(itemstack1)) {
                     if (!moveItemStackTo(itemstack1, SHARD_SLOT, SHARD_SLOT + 1, false)) {
                         return ItemStack.EMPTY;
                     }
@@ -94,7 +101,7 @@ public class PrimitiveElementalExtractorMenu extends AbstractElementalExtractorM
                     if (!moveItemStackTo(itemstack1, FUEL_SLOT, FUEL_SLOT + 1, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (ElementHelper.hasElementalComposition(itemstack1)) {
+                } else if (ElementalHelper.hasElementalComposition(itemstack1)) {
                     if (!moveItemStackTo(itemstack1, INPUT_SLOT, INPUT_SLOT + 1, false)) {
                         return ItemStack.EMPTY;
                     }

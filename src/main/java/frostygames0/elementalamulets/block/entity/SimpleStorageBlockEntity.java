@@ -1,64 +1,63 @@
 package frostygames0.elementalamulets.block.entity;
 
-import frostygames0.elementalamulets.element.ElementalComposition;
 import frostygames0.elementalamulets.element.storage.ElementStorage;
 import frostygames0.elementalamulets.element.storage.IElementStorage;
 import frostygames0.elementalamulets.element.storage.IElementStorageProvider;
 import frostygames0.elementalamulets.initialization.ModBlockEntities;
-import frostygames0.elementalamulets.initialization.ModElements;
+import frostygames0.elementalamulets.initialization.ModBlocks;
+import frostygames0.elementalamulets.inventory.menu.SimpleStorageMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 
-public class SimpleStorageBlockEntity extends BlockEntity implements IElementStorageProvider {
-    public static final BlockEntityTicker<SimpleStorageBlockEntity> TICKER =
-            (level1, pos, state, blockEntity) -> blockEntity.tick();
+public class SimpleStorageBlockEntity extends BlockEntity implements IElementStorageProvider, MenuProvider {
+    public static final String TAG_STORAGE = "Storage";
+    public static final int STORAGE_MAX_CAPACITY = 1000;
 
-    private final ElementStorage storage = new ElementStorage(1000, Integer.MAX_VALUE);
-    private boolean isInit = false;
+    private final ElementStorage storage = new ElementStorage(STORAGE_MAX_CAPACITY) {
+        @Override
+        public void onChanged() {
+            setChanged();
+        }
+    };
 
     public SimpleStorageBlockEntity(BlockPos pos, BlockState blockState) {
         super(ModBlockEntities.SIMPLE_STORAGE.get(), pos, blockState);
     }
 
-    public void tick() {
-    }
-
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
-        storage.deserializeNBT(registries, tag.getCompound("storage"));
-        isInit = tag.getBoolean("init");
+        storage.deserializeNBT(registries, tag.getCompound(TAG_STORAGE));
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
-        tag.put("storage", storage.serializeNBT(registries));
-        tag.putBoolean("init", isInit);
-    }
-
-    @Override
-    public void onLoad() {
-        if (hasLevel() && !level.isClientSide()) {
-            if (!isInit) {
-                var composition = ElementalComposition.builder(level)
-                        .addElement(ModElements.FIRE, 100)
-                        .addElement(ModElements.AIR, 100)
-                        .addElement(ModElements.AETHER, 10).build();
-
-                storage.setStored(composition);
-                isInit = true;
-                setChanged();
-            }
-        }
+        tag.put(TAG_STORAGE, storage.serializeNBT(registries));
     }
 
     @Override
     public IElementStorage getElementStorage() {
         return storage;
+    }
+
+    @Override
+    public Component getDisplayName() {
+        return ModBlocks.SIMPLE_STORAGE.get().getName();
+    }
+
+    @Override
+    public @Nullable AbstractContainerMenu createMenu(int containerId, Inventory playerInventory, Player player) {
+        return SimpleStorageMenu.forServer(containerId, playerInventory, storage, ContainerLevelAccess.create(level, worldPosition));
     }
 }

@@ -1,11 +1,10 @@
 package frostygames0.elementalamulets.initialization;
 
 import frostygames0.elementalamulets.ElementalAmulets;
+import frostygames0.elementalamulets.block.SimpleStorageBlock;
 import frostygames0.elementalamulets.block.extractor.PrimitiveElementalExtractorBlock;
 import frostygames0.elementalamulets.block.pipe.ElementalPipeBlock;
-import frostygames0.elementalamulets.block.pipe.PressurizerPipe;
-import frostygames0.elementalamulets.block.pipe.SimpleGeneratorBlock;
-import frostygames0.elementalamulets.block.pipe.SimpleStorageBlock;
+import frostygames0.elementalamulets.block.pipe.PressurizerPipeBlock;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Blocks;
@@ -43,15 +42,14 @@ public final class ModBlocks {
                     BlockBehaviour.Properties.ofFullCopy(Blocks.CHAIN)
                             .mapColor(DyeColor.GRAY)
                             .sound(SoundType.COPPER_GRATE));
-    public static final DeferredBlock<PressurizerPipe> PRESSURIZER_PIPE =
+    public static final DeferredBlock<PressurizerPipeBlock> PRESSURIZER_PIPE =
             BLOCKS.registerBlock("pressurizer_pipe",
-                    PressurizerPipe::new,
+                    PressurizerPipeBlock::new,
                     BlockBehaviour.Properties.ofFullCopy(Blocks.CHAIN)
                             .mapColor(DyeColor.GRAY)
                             .sound(SoundType.COPPER_GRATE));
 
     public static final DeferredBlock<SimpleStorageBlock> SIMPLE_STORAGE = BLOCKS.registerBlock("simple_storage", SimpleStorageBlock::new);
-    public static final DeferredBlock<SimpleGeneratorBlock> SIMPLE_GENERATOR = BLOCKS.registerBlock("simple_generator", SimpleGeneratorBlock::new);
 
     public static void register(IEventBus bus) {
         BLOCKS.register(bus);

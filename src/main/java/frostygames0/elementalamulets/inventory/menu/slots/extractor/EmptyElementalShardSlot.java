@@ -1,6 +1,6 @@
 package frostygames0.elementalamulets.inventory.menu.slots.extractor;
 
-import frostygames0.elementalamulets.element.ElementHelper;
+import frostygames0.elementalamulets.element.ElementalHelper;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
@@ -12,6 +12,6 @@ public class EmptyElementalShardSlot extends SlotItemHandler {
 
     @Override
     public boolean mayPlace(ItemStack stack) {
-        return ElementHelper.isStackAnEmptyElementumShard(stack);
+        return ElementalHelper.isStackAnEmptyElementumShard(stack);
     }
 }

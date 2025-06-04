@@ -1,9 +1,9 @@
 package frostygames0.elementalamulets.block.entity.pipe;
 
-import com.mojang.datafixers.util.Pair;
 import frostygames0.elementalamulets.block.pipe.ElementalPipeBlock;
-import frostygames0.elementalamulets.block.pipe.PressurizerPipe;
-import frostygames0.elementalamulets.initialization.ModCapabilities;
+import frostygames0.elementalamulets.block.pipe.PressurizerPipeBlock;
+import frostygames0.elementalamulets.element.ElementalHelper;
+import frostygames0.elementalamulets.util.MutablePair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
@@ -17,17 +17,20 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 import java.util.*;
 
-public class PipeHelper {
-    public static void propagateChangedPipe(LevelAccessor world, BlockPos pipePos, BlockState pipeState) {
-        List<Pair<Integer, BlockPos>> frontier = new ArrayList<>();
-        Set<BlockPos> visited = new HashSet<>();
-        Set<Pair<PressurizerPipeBlockEntity, Direction>> discoveredPressurizers = new HashSet<>();
+public final class PipeHelper {
+    private PipeHelper() {
+    }
 
-        frontier.add(Pair.of(0, pipePos));
+    public static void propagateChangedPipe(LevelAccessor world, BlockPos pipePos, BlockState pipeState) {
+        List<MutablePair<Integer, BlockPos>> frontier = new ArrayList<>();
+        Set<BlockPos> visited = new HashSet<>();
+        Set<MutablePair<PressurizerPipeBlockEntity, Direction>> discoveredPressurizers = new HashSet<>();
+
+        frontier.add(MutablePair.of(0, pipePos));
 
         // Visit all connected pumps to update their network
         while (!frontier.isEmpty()) {
-            Pair<Integer, BlockPos> pair = frontier.removeFirst();
+            MutablePair<Integer, BlockPos> pair = frontier.removeFirst();
             BlockPos currentPos = pair.getSecond();
             if (visited.contains(currentPos)) {
                 continue;
@@ -41,7 +44,7 @@ public class PipeHelper {
             var pipe = pipeOptional.get();
             pipe.resetConnections();
 
-            for (Direction direction : getPipeConnections(pipe)) {
+            for (Direction direction : getPipeConnections(world.getBlockState(currentPos), pipe)) {
                 BlockPos target = currentPos.relative(direction);
                 if (world instanceof Level l && !l.isLoaded(target)) {
                     continue;
@@ -49,13 +52,13 @@ public class PipeHelper {
 
                 BlockEntity blockEntity = world.getBlockEntity(target);
                 BlockState targetState = world.getBlockState(target);
-                if (PressurizerPipe.isPressurizerPipe(targetState)) {
+                if (PressurizerPipeBlock.isPressurizerPipe(targetState)) {
                     if (blockEntity instanceof PressurizerPipeBlockEntity pressurizerPipe) {
-                        if (!PressurizerPipe.isOpen(targetState, direction)) {
+                        if (!PressurizerPipeBlock.isOpen(targetState, direction)) {
                             continue;
                         }
 
-                        discoveredPressurizers.add(Pair.of(pressurizerPipe, direction.getOpposite()));
+                        discoveredPressurizers.add(MutablePair.of(pressurizerPipe, direction.getOpposite()));
                         continue;
                     }
                 }
@@ -75,7 +78,7 @@ public class PipeHelper {
                     continue;
                 }
                 if (targetPipe.canHaveFlowToward(direction.getOpposite())) {
-                    frontier.add(Pair.of(distance + 1, target));
+                    frontier.add(MutablePair.of(distance + 1, target));
                 }
             }
         }
@@ -84,7 +87,7 @@ public class PipeHelper {
     }
 
     // TODO Maybe I can replace this
-    public static List<Direction> getPipeConnections(BaseElementalPipeBlockEntity pipe) {
+    public static List<Direction> getPipeConnections(BlockState blockState, BaseElementalPipeBlockEntity pipe) {
         List<Direction> list = new ArrayList<>();
         for (Direction d : Direction.values()) {
             if (pipe.canHaveFlowToward(d)) {
@@ -154,9 +157,10 @@ public class PipeHelper {
         if (otherBlock instanceof ElementalPipeBlock) {
             return null;
         }
-        if (otherBlock instanceof PressurizerPipe) {
+        if (otherBlock instanceof PressurizerPipeBlock) {
             return null;
         }
+
         for (Direction d : Direction.values()) {
             if (!pos.relative(d).equals(neighborPos)) {
                 continue;
@@ -174,7 +178,7 @@ public class PipeHelper {
             return false;
         }
 
-        if (PressurizerPipe.isPressurizerPipe(connectedState) && PressurizerPipe.isOpen(connectedState, side)) {
+        if (PressurizerPipeBlock.isPressurizerPipe(connectedState) && PressurizerPipeBlock.isOpen(connectedState, side)) {
             return false;
         }
 
@@ -182,7 +186,7 @@ public class PipeHelper {
             return false;
         }
 
-        if (hasElementStorageCap(getter, connectedPos, side.getOpposite())) {
+        if (ElementalHelper.hasElementStorage(getter, connectedPos, side.getOpposite())) {
             return false;
         }
 
@@ -190,13 +194,4 @@ public class PipeHelper {
                 || connectedState.hasProperty(BlockStateProperties.WATERLOGGED);
     }
 
-    public static boolean hasElementStorageCap(BlockGetter getter, BlockPos blockPos, Direction side) {
-        var blockEntity = getter.getBlockEntity(blockPos);
-        if (blockEntity == null || blockEntity.getLevel() == null) {
-            return false;
-        }
-
-        var capability = blockEntity.getLevel().getCapability(ModCapabilities.ELEMENT_STORAGE_BLOCK, blockPos, side);
-        return capability != null;
-    }
 }
