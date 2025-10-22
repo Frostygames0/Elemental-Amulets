@@ -1,10 +1,10 @@
 package frostygames0.elementalamulets.block.entity.pipe;
 
+import com.mojang.datafixers.util.Pair;
 import frostygames0.elementalamulets.block.pipe.PressurizerPipeBlock;
 import frostygames0.elementalamulets.element.ElementalHelper;
 import frostygames0.elementalamulets.initialization.ModBlockEntities;
 import frostygames0.elementalamulets.util.BlockFace;
-import frostygames0.elementalamulets.util.MutablePair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;
@@ -110,7 +110,7 @@ public class PressurizerPipeBlockEntity extends BaseElementalPipeBlockEntity {
         BlockFace start = new BlockFace(worldPosition, side);
         boolean pull = isPullingOnSide(isFrontSide(side));
         Set<BlockFace> targets = new HashSet<>();
-        Map<BlockPos, MutablePair<Integer, Map<Direction, Boolean>>> pipeGraph = new HashMap<>();
+        Map<BlockPos, Pair<Integer, Map<Direction, Boolean>>> pipeGraph = new HashMap<>();
 
         if (!pull) {
             PipeHelper.traversePipesAndResetNetworks(level, worldPosition, side.getOpposite());
@@ -118,21 +118,21 @@ public class PressurizerPipeBlockEntity extends BaseElementalPipeBlockEntity {
 
         if (!isValidEndpoint(level, start, pull)) {
 
-            pipeGraph.computeIfAbsent(worldPosition, $ -> MutablePair.of(0, new IdentityHashMap<>()))
+            pipeGraph.computeIfAbsent(worldPosition, $ -> Pair.of(0, new IdentityHashMap<>()))
                     .getSecond()
                     .put(side, pull);
-            pipeGraph.computeIfAbsent(start.getConnectedPos(), $ -> MutablePair.of(1, new IdentityHashMap<>()))
+            pipeGraph.computeIfAbsent(start.getConnectedPos(), $ -> Pair.of(1, new IdentityHashMap<>()))
                     .getSecond()
                     .put(side.getOpposite(), !pull);
 
-            List<MutablePair<Integer, BlockPos>> frontier = new ArrayList<>();
+            List<Pair<Integer, BlockPos>> frontier = new ArrayList<>();
             Set<BlockPos> visited = new HashSet<>();
 
             int maxDistance = (int) PipeConnection.MAX_PRESSURE;
-            frontier.add(MutablePair.of(1, start.getConnectedPos()));
+            frontier.add(Pair.of(1, start.getConnectedPos()));
 
             while (!frontier.isEmpty()) {
-                MutablePair<Integer, BlockPos> entry = frontier.removeFirst();
+                Pair<Integer, BlockPos> entry = frontier.removeFirst();
                 int distance = entry.getFirst();
                 BlockPos currentPos = entry.getSecond();
 
@@ -162,7 +162,7 @@ public class PressurizerPipeBlockEntity extends BaseElementalPipeBlockEntity {
                         continue;
                     }
                     if (isValidEndpoint(level, blockFace, pull)) {
-                        pipeGraph.computeIfAbsent(currentPos, $ -> MutablePair.of(distance, new IdentityHashMap<>()))
+                        pipeGraph.computeIfAbsent(currentPos, $ -> Pair.of(distance, new IdentityHashMap<>()))
                                 .getSecond()
                                 .put(face, pull);
                         targets.add(blockFace);
@@ -178,20 +178,20 @@ public class PressurizerPipeBlockEntity extends BaseElementalPipeBlockEntity {
                     }
 
                     if (distance + 1 >= maxDistance) {
-                        pipeGraph.computeIfAbsent(currentPos, $ -> MutablePair.of(distance, new IdentityHashMap<>()))
+                        pipeGraph.computeIfAbsent(currentPos, $ -> Pair.of(distance, new IdentityHashMap<>()))
                                 .getSecond()
                                 .put(face, pull);
                         targets.add(blockFace);
                         continue;
                     }
 
-                    pipeGraph.computeIfAbsent(currentPos, $ -> MutablePair.of(distance, new IdentityHashMap<>()))
+                    pipeGraph.computeIfAbsent(currentPos, $ -> Pair.of(distance, new IdentityHashMap<>()))
                             .getSecond()
                             .put(face, pull);
-                    pipeGraph.computeIfAbsent(connectedPos, $ -> MutablePair.of(distance + 1, new IdentityHashMap<>()))
+                    pipeGraph.computeIfAbsent(connectedPos, $ -> Pair.of(distance + 1, new IdentityHashMap<>()))
                             .getSecond()
                             .put(face.getOpposite(), !pull);
-                    frontier.add(MutablePair.of(distance + 1, connectedPos));
+                    frontier.add(Pair.of(distance + 1, connectedPos));
                 }
             }
         }
@@ -227,13 +227,13 @@ public class PressurizerPipeBlockEntity extends BaseElementalPipeBlockEntity {
 
     }
 
-    protected boolean searchForEndpointRecursively(Map<BlockPos, MutablePair<Integer, Map<Direction, Boolean>>> pipeGraph,
+    protected boolean searchForEndpointRecursively(Map<BlockPos, Pair<Integer, Map<Direction, Boolean>>> pipeGraph,
                                                    Set<BlockFace> targets, Map<Integer, Set<BlockFace>> validFaces, BlockFace currentFace, boolean pull) {
         BlockPos currentPos = currentFace.pos();
         if (!pipeGraph.containsKey(currentPos)) {
             return false;
         }
-        MutablePair<Integer, Map<Direction, Boolean>> pair = pipeGraph.get(currentPos);
+        Pair<Integer, Map<Direction, Boolean>> pair = pipeGraph.get(currentPos);
         int distance = pair.getFirst();
 
         boolean atLeastOneBranchSuccessful = false;

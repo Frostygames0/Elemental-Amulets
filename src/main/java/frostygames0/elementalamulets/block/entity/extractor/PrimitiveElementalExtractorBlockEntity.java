@@ -1,16 +1,15 @@
 package frostygames0.elementalamulets.block.entity.extractor;
 
 import frostygames0.elementalamulets.block.extractor.AbstractElementalExtractorBlock;
-import frostygames0.elementalamulets.element.Element;
+import frostygames0.elementalamulets.element.ElementType;
 import frostygames0.elementalamulets.element.ElementalHelper;
-import frostygames0.elementalamulets.element.storage.OperationMode;
+import frostygames0.elementalamulets.element.storage.IElementStorage;
 import frostygames0.elementalamulets.initialization.ModBlockEntities;
 import frostygames0.elementalamulets.inventory.ExtractOnlyRangedWrapper;
 import frostygames0.elementalamulets.inventory.InsertOnlyRangedWrapper;
 import frostygames0.elementalamulets.inventory.ItemHandlerHelper;
 import frostygames0.elementalamulets.inventory.menu.extractor.PrimitiveElementalExtractorMenu;
-import frostygames0.elementalamulets.inventory.provider.BlockFace;
-import frostygames0.elementalamulets.inventory.provider.DynamicItemHandlerProvider;
+import frostygames0.elementalamulets.util.capability.SidedCapabilityProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -55,7 +54,6 @@ public class PrimitiveElementalExtractorBlockEntity extends AbstractElementalExt
     private final ItemStackHandler additionalInventory = new ItemStackHandler(ADDITIONAL_INVENTORY_SIZE) {
         @Override
         protected void onContentsChanged(int slot) {
-            super.onContentsChanged(slot);
             setChanged();
         }
 
@@ -86,14 +84,14 @@ public class PrimitiveElementalExtractorBlockEntity extends AbstractElementalExt
 
     private final IItemHandler mergedItemHandler = new CombinedInvWrapper(baseInventory, additionalInventory);
 
-    private final DynamicItemHandlerProvider dynamicItemHandlerProvider = DynamicItemHandlerProvider.builder()
-            .addItemHandlerForFace(BlockFace.FRONT, fuelInsertOnlyWrapper)
-            .addItemHandlerForFace(BlockFace.BACK, fuelInsertOnlyWrapper)
-            .addItemHandlerForFace(BlockFace.LEFT, shardInsertOnlyWrapper)
-            .addItemHandlerForFace(BlockFace.RIGHT, shardInsertOnlyWrapper)
-            .addItemHandlerForFace(BlockFace.TOP, inputInsertOnlyWrapper)
-            .addItemHandlerForFace(BlockFace.BOTTOM, resultsExtractOnlyWrapper)
-            .addItemHandlerForFace(BlockFace.ANY, mergedItemHandler)
+    private final SidedCapabilityProvider<IItemHandler> dynamicItemHandlerProvider = SidedCapabilityProvider.<IItemHandler>builder()
+            .addCapability(SidedCapabilityProvider.Face.FRONT, fuelInsertOnlyWrapper)
+            .addCapability(SidedCapabilityProvider.Face.BACK, fuelInsertOnlyWrapper)
+            .addCapability(SidedCapabilityProvider.Face.LEFT, shardInsertOnlyWrapper)
+            .addCapability(SidedCapabilityProvider.Face.RIGHT, shardInsertOnlyWrapper)
+            .addCapability(SidedCapabilityProvider.Face.TOP, inputInsertOnlyWrapper)
+            .addCapability(SidedCapabilityProvider.Face.BOTTOM, resultsExtractOnlyWrapper)
+            .addCapability(SidedCapabilityProvider.Face.ANY, mergedItemHandler)
             .build(AbstractElementalExtractorBlock.FACING);
 
     private final ContainerData additionalData = new ContainerData() {
@@ -128,7 +126,7 @@ public class PrimitiveElementalExtractorBlockEntity extends AbstractElementalExt
 
     public PrimitiveElementalExtractorBlockEntity(BlockPos pos, BlockState blockState) {
         super(ModBlockEntities.PRIMITIVE_ELEMENTAL_EXTRACTOR.get(), pos, blockState, ELEMENT_STORAGE_CAPACITY, MAX_DISTINCT_ELEMENTS_STORED);
-        dynamicItemHandlerProvider.updateSides(getBlockState());
+        dynamicItemHandlerProvider.onUpdateState(getBlockState());
     }
 
     @Override
@@ -146,7 +144,7 @@ public class PrimitiveElementalExtractorBlockEntity extends AbstractElementalExt
                 }
 
                 var canConvert = tryAddShardToResult(element, true);
-                var canTake = elementStorage.takeElement(element, 1, OperationMode.SIMULATE) == 1;
+                var canTake = elementStorage.takeElement(element, 1, IElementStorage.Operation.SIMULATE) == 1;
                 var hasEnoughEmptyShards = additionalInventory.getStackInSlot(EMPTY_SHARD_SLOT).getCount() > 0;
 
                 if (!canConvert || !canTake || !hasEnoughEmptyShards) {
@@ -156,7 +154,7 @@ public class PrimitiveElementalExtractorBlockEntity extends AbstractElementalExt
                 canAtLeastOneBeConverted = true;
                 if (shardConversionTimer == TOTAL_CONVERSION_TIME) {
                     tryAddShardToResult(element, false);
-                    elementStorage.takeElement(element, 1, OperationMode.PERFORM);
+                    elementStorage.takeElement(element, 1, IElementStorage.Operation.PERFORM);
 
                     emptyShardStack.shrink(1);
 
@@ -192,7 +190,7 @@ public class PrimitiveElementalExtractorBlockEntity extends AbstractElementalExt
         }
     }
 
-    private boolean tryAddShardToResult(Holder<Element> elementHolder, boolean simulate) {
+    private boolean tryAddShardToResult(Holder<ElementType> elementHolder, boolean simulate) {
         var shard = ElementalHelper.createShardWithElement(elementHolder);
 
         for (int i = RESULTS_SLOTS_START; i <= RESULTS_SLOTS_END; i++) {
@@ -230,15 +228,15 @@ public class PrimitiveElementalExtractorBlockEntity extends AbstractElementalExt
     }
 
     @Override
-    public IItemHandler getItemHandlerForDirection(@Nullable Direction direction) {
-        return dynamicItemHandlerProvider.getItemHandlerForDirection(direction);
+    public IItemHandler getItemHandler(@Nullable Direction side) {
+        return dynamicItemHandlerProvider.getCapability(side);
     }
 
     @Override
     @SuppressWarnings("deprecation")
     public void setBlockState(BlockState blockState) {
         super.setBlockState(blockState);
-        dynamicItemHandlerProvider.updateSides(getBlockState());
+        dynamicItemHandlerProvider.onUpdateState(getBlockState());
     }
 
     @Override

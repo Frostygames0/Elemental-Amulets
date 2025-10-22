@@ -1,7 +1,7 @@
 package frostygames0.elementalamulets.block.entity.pipe;
 
 import frostygames0.elementalamulets.block.entity.pipe.source.*;
-import frostygames0.elementalamulets.element.Element;
+import frostygames0.elementalamulets.element.ElementType;
 import frostygames0.elementalamulets.element.ElementalHelper;
 import frostygames0.elementalamulets.util.BlockFace;
 import net.minecraft.core.BlockPos;
@@ -45,9 +45,12 @@ public class PipeConnection {
         this.blockFace = blockFace;
     }
 
-    public boolean manageFlows(Level level, @Nullable Holder<Element> internalElement) {
+    public boolean manageFlows(Level level, @Nullable Holder<ElementType> internalElement) {
         var retainedNetwork = network;
-        network = null;
+        if (network != null) {
+            network.onProbablyRemoved();
+            network = null;
+        }
 
         if (!hasSource()) {
             if (!tryLocateAndSetSource(level)) {
@@ -91,7 +94,7 @@ public class PipeConnection {
 
         if (flow.inbound != comparePressure() < 0) {
             boolean inbound = !flow.inbound;
-            if (inbound && (providedElement != null) || !inbound && (internalElement != null)) {
+            if (inbound || internalElement != null) {
                 PipeHelper.traversePipesAndResetNetworks(level, blockFace.pos(), blockFace.face());
                 tryStartingNewFlow(inbound, inbound ? source.getElement() : internalElement);
                 return true;
@@ -101,6 +104,7 @@ public class PipeConnection {
         if (!source.isEndpoint()) {
             return false;
         }
+
         if (!flow.inbound) {
             return false;
         }
@@ -123,7 +127,7 @@ public class PipeConnection {
         source.manage(level, level.getBlockEntity(blockFace.pos()));
     }
 
-    public void tickFlow(Level level, BlockPos blockPos) {
+    public void tickFlow(Level level) {
         if (!hasFlow()) {
             return;
         }
@@ -181,7 +185,7 @@ public class PipeConnection {
         return true;
     }
 
-    private boolean tryStartingNewFlow(boolean inbound, @Nullable Holder<Element> element) {
+    private boolean tryStartingNewFlow(boolean inbound, @Nullable Holder<ElementType> element) {
         if (element == null) {
             return false;
         }
@@ -202,13 +206,14 @@ public class PipeConnection {
         if (!flow.complete) {
             flow = null;
         }
+
         return true;
     }
 
 
     @Nullable
     @VisibleForTesting
-    Holder<Element> getElement() {
+    Holder<ElementType> getElement() {
         if (!hasFlow()) {
             return null;
         }
@@ -216,7 +221,7 @@ public class PipeConnection {
         return flow.element;
     }
 
-    public Optional<Holder<Element>> getElement(boolean inbound) {
+    public Optional<Holder<ElementType>> getElement(boolean inbound) {
         if (!hasFlow()) {
             return Optional.empty();
         }
@@ -348,17 +353,21 @@ public class PipeConnection {
 
     @Override
     public String toString() {
-        return String.format("%s - P: [I: %s, O: %s], F: [%s]", blockFace.face().getName(), getInboundPressure(), getOutboundPressure(), flow == null ? "N" : flow.toString());
+        return String.format("PipeConnection {Side: %s, Pressure: [Inbound: %s, Outbound: %s], Flow: {%s}}", blockFace.face().getName(), getInboundPressure(), getOutboundPressure(), flow == null ? "None" : flow.toString());
+    }
+
+    public String toShortString() {
+        return String.format("%s - P: [I: %s, O: %s], F: {%s}", blockFace.face().getName(), getInboundPressure(), getOutboundPressure(), flow == null ? "N" : flow.toShortString());
     }
 
     private class Flow {
         private boolean inbound;
-        private Holder<Element> element;
+        private Holder<ElementType> element;
 
         private float progress;
         private boolean complete;
 
-        public Flow(boolean inbound, Holder<Element> element) {
+        public Flow(boolean inbound, Holder<ElementType> element) {
             this.inbound = inbound;
             this.element = element;
         }
@@ -382,7 +391,7 @@ public class PipeConnection {
 
             flowTag.putBoolean(TAG_INBOUND, inbound);
 
-            ElementalHelper.serializeToNbt(element, provider).ifPresent(tag -> flowTag.put(TAG_ELEMENT, tag));
+            ElementType.serializeToNbt(element, provider).ifPresent(tag -> flowTag.put(TAG_ELEMENT, tag));
 
             if (!complete) {
                 flowTag.putFloat(TAG_PROGRESS, progress);
@@ -394,7 +403,7 @@ public class PipeConnection {
         private void deserializeNBT(CompoundTag tag, HolderLookup.Provider provider) {
             inbound = tag.getBoolean(TAG_INBOUND);
 
-            element = ElementalHelper.deserializeFromNbt(tag.get(TAG_ELEMENT), provider).orElse(null);
+            element = ElementType.deserializeFromNbt(tag.get(TAG_ELEMENT), provider).orElse(null);
 
             if (tag.contains(TAG_PROGRESS)) {
                 progress = tag.getFloat(TAG_PROGRESS);
@@ -405,6 +414,10 @@ public class PipeConnection {
 
         @Override
         public String toString() {
+            return String.format("Element: %s, Inbound: %s, Progress: %s", element == null ? "NULL" : element.value().name().getString(), inbound, complete ? "COMPLETE" : progress);
+        }
+
+        public String toShortString() {
             return String.format("E: %s, I: %s, P: %s", element == null ? "NULL" : element.value().name().getString(), inbound, complete ? "c" : progress);
         }
     }

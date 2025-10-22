@@ -22,18 +22,21 @@ public class ModDataMapProvider extends DataMapProvider {
     protected void gather(@NotNull HolderLookup.Provider provider) {
         builder(ModDataMaps.ELEMENTAL_COMPOSITION)
                 .add(Items.WATER_BUCKET.builtInRegistryHolder(), ElementalComposition.builder(provider)
-                        .addElement(ModElements.WATER, 3)
-                        .addElement(ModElements.AETHER, 2)
+                        .add(ModElements.WATER, 3)
+                        .add(ModElements.AETHER, 2)
                         .build(), false)
                 .add(Items.SPONGE.builtInRegistryHolder(), ElementalComposition.builder(provider)
-                        .addElement(ModElements.WATER, 3)
+                        .add(ModElements.WATER, 3)
                         .build(), false)
                 .add(ItemTags.LOGS_THAT_BURN, ElementalComposition.builder(provider)
-                        .addElement(ModElements.EARTH, 32)
-                        .addElement(ModElements.WATER, 100)
+                        .add(ModElements.EARTH, 32)
+                        .add(ModElements.WATER, 100)
                         .build(), false)
                 .add(ItemTags.CRIMSON_STEMS, ElementalComposition.builder(provider)
-                        .addElement(ModElements.FIRE, 10)
+                        .add(ModElements.FIRE, 10)
+                        .build(), false)
+                .add(ItemTags.DIRT, ElementalComposition.builder(provider)
+                        .add(ModElements.EARTH, 25)
                         .build(), false);
 
     }

@@ -18,7 +18,7 @@ import java.util.function.Function;
 public class BlockElementStorageAccessor implements IElementStorageAccessor {
     private static final DynamicCommandExceptionType ERROR_NO_CAPABILITY = new DynamicCommandExceptionType(object -> Component.translatable("command.elementalamulets.no_block_storage", object));
 
-    public static final ElementStorageCommand.IElementStorageProvider PROVIDER = new ElementStorageCommand.IElementStorageProvider() {
+    public static final ElementStorageCommands.IElementStorageProvider PROVIDER = new ElementStorageCommands.IElementStorageProvider() {
         @Override
         public IElementStorageAccessor access(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
             var blockPos = BlockPosArgument.getLoadedBlockPos(context, "pos");

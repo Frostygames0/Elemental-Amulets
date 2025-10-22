@@ -1,7 +1,7 @@
 package frostygames0.elementalamulets.datagen.language;
 
 import frostygames0.elementalamulets.ElementalAmulets;
-import frostygames0.elementalamulets.element.Element;
+import frostygames0.elementalamulets.element.ElementType;
 import frostygames0.elementalamulets.initialization.ModBlocks;
 import frostygames0.elementalamulets.initialization.ModElements;
 import frostygames0.elementalamulets.initialization.ModItems;
@@ -51,10 +51,10 @@ public class EnglishLanguageProvider extends LanguageProvider {
     }
 
     private void addCommandsOutputs() {
-        addCommand("click_to_see_element", "Click to get information about the element!");
+        addCommand("click_to_see_element", "Click to get the information about the element!");
         addCommand("found_no_elements", "No elements registered! Something probably went wrong!");
         addCommand("found_n_elements", "%s elements registered:");
-        addCommand("no_registry_error", "Unable to find registry %s! Something went terribly wrong!");
+        addCommand("no_registry_error", "Unable to find the registry %s! Something went terribly wrong!");
         addCommand("no_element_error", "No such element: %s");
         addCommand("get_element.name", "Name: %s");
         addCommand("get_element.description", "Description: %s");
@@ -65,22 +65,27 @@ public class EnglishLanguageProvider extends LanguageProvider {
         addCommand("storage.add.success", "added %s x%s to");
 
         addCommand("storage.take.fail", "take %s from");
-        addCommand("storage.take.success", "Taken %s x%s from");
+        addCommand("storage.take.success", "taken %s x%s from");
 
-        addCommand("storage.block_success", "Successfully %s the storage at %s");
-        addCommand("storage.block_fail", "Unable to %s the storage at %s");
-        addCommand("storage.block_empty", "Storage at %s is empty!");
-        addCommand("storage.block_query", "Storage at %s %s");
+        addCommand("storage.block_success", "Successfully %s the storage at %s.");
+        addCommand("storage.block_fail", "Unable to %s the storage at %s.");
+        addCommand("storage.block_empty", "The storage at %s is empty!");
+        addCommand("storage.block_query", "The storage at %s %s");
 
-        addCommand("no_block_storage", "Target block has no element storage capability!");
+        addCommand("no_block_storage", "The target block at %s has no element storage capability!");
 
-        addCommand("storage.get.all_stored_element_types", "Element types stored in the storage: %s");
-        addCommand("storage.get.max_distinct_elements_stored", "Max distinct elements allowed by the storage: %s");
-        addCommand("storage.get.distinct_elements_amount", "Number of distinct elements stored in the storage: %s");
-        addCommand("storage.get.total_amount", "Total amount of all elements in the storage: %s");
-        addCommand("storage.get.max_capacity", "Max capacity of the storage: %s");
-        addCommand("storage.get.element", "contains %s x%s");
+        addCommand("storage.get.all_stored_element_types", "stores %s different element types inside.");
+        addCommand("storage.get.max_distinct_elements_stored", "allows %s distinct elements to be stored inside.");
+        addCommand("storage.get.distinct_elements_amount", "contains %s distinct elements");
+        addCommand("storage.get.total_amount", "has %s elements (regardless of their type) inside");
+        addCommand("storage.get.max_capacity", "has the max capacity of %s.");
+        addCommand("storage.get.element", "contains %s x%s.");
         addCommand("storage.get.element.none", "doesn't contain %s");
+        addCommand("storage.set.not_modifiable", "directly set contents of");
+        addCommand("storage.set.success", "set the contents of");
+
+        addCommandArgument("elemental_composition.invalid", "Invalid Elemental Composition: %s");
+
     }
 
     private void addGenericTooltips() {
@@ -103,23 +108,27 @@ public class EnglishLanguageProvider extends LanguageProvider {
     }
 
     private void addKeyMappings() {
-        addKeyMapping("show_composition", "Show Elemental Composition");
+        addKeyMapping("show_composition", "Show the elemental composition.");
     }
 
     private void addKeyMapping(String id, String name) {
         add("key.elementalamulets." + id, name);
     }
 
-    private void addElement(ResourceKey<Element> key, String name) {
-        add(Element.getNameTranslationKey(key.location()), name);
+    private void addElement(ResourceKey<ElementType> key, String name) {
+        add(ElementType.getNameTranslationKey(key.location()), name);
     }
 
-    private void addElement(ResourceKey<Element> key, String name, String description) {
+    private void addElement(ResourceKey<ElementType> key, String name, String description) {
         addElement(key, name);
-        add(Element.getDescriptionTranslationKey(key.location()), description);
+        add(ElementType.getDescriptionTranslationKey(key.location()), description);
     }
 
     private void addCommand(String name, String description) {
         add("command.elementalamulets." + name, description);
+    }
+
+    private void addCommandArgument(String name, String description) {
+        add("argument.elementalamulets." + name, description);
     }
 }

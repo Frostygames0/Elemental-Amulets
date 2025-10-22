@@ -1,9 +1,9 @@
 {
   "color": -2412851,
   "composition": [
-    "elementalamulets:fire",
     "elementalamulets:water",
     "elementalamulets:earth",
+    "elementalamulets:fire",
     "elementalamulets:air"
   ],
   "description": {

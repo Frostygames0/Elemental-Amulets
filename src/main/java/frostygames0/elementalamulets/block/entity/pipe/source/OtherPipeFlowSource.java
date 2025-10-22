@@ -2,7 +2,7 @@ package frostygames0.elementalamulets.block.entity.pipe.source;
 
 import frostygames0.elementalamulets.block.entity.pipe.BaseElementalPipeBlockEntity;
 import frostygames0.elementalamulets.block.entity.pipe.PipeHelper;
-import frostygames0.elementalamulets.element.Element;
+import frostygames0.elementalamulets.element.ElementType;
 import frostygames0.elementalamulets.util.BlockFace;
 import net.minecraft.core.Holder;
 import net.minecraft.world.level.Level;
@@ -29,7 +29,7 @@ public class OtherPipeFlowSource extends FlowSource {
     }
 
     @Override
-    public @Nullable Holder<Element> getElement() {
+    public @Nullable Holder<ElementType> getElement() {
         if (pipeCache == null || pipeCache.get() == null) {
             return null;
         }

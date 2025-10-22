@@ -40,6 +40,7 @@ public class AbstractElementalExtractorScreen<T extends AbstractElementalExtract
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.render(graphics, mouseX, mouseY, partialTick);
+
         renderTooltip(graphics, mouseX, mouseY);
     }
 

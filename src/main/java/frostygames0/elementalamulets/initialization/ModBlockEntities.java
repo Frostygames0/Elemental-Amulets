@@ -5,6 +5,7 @@ import frostygames0.elementalamulets.block.entity.SimpleStorageBlockEntity;
 import frostygames0.elementalamulets.block.entity.extractor.PrimitiveElementalExtractorBlockEntity;
 import frostygames0.elementalamulets.block.entity.pipe.ElementalPipeBlockEntity;
 import frostygames0.elementalamulets.block.entity.pipe.PressurizerPipeBlockEntity;
+import frostygames0.elementalamulets.pipes.NewPipeBlockEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
@@ -29,6 +30,9 @@ public final class ModBlockEntities {
 
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SimpleStorageBlockEntity>> SIMPLE_STORAGE =
             BLOCK_ENTITY_TYPES.register("simple_storage", () -> new BlockEntityType<>(SimpleStorageBlockEntity::new, Set.of(ModBlocks.SIMPLE_STORAGE.get())));
+
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<NewPipeBlockEntity>> NEW_PIPE =
+            BLOCK_ENTITY_TYPES.register("new_pipe", () -> new BlockEntityType<>(NewPipeBlockEntity::new, Set.of(ModBlocks.NEW_PIPE.get())));
 
     public static void register(IEventBus bus) {
         BLOCK_ENTITY_TYPES.register(bus);

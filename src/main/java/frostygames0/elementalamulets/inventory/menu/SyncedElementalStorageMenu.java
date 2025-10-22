@@ -40,7 +40,7 @@ public abstract class SyncedElementalStorageMenu extends AbstractContainerMenu {
     }
 
     // I'd recommend to override this if your storage doesn't implement modifiable, and you don't want an exception
-    public void setStorage(ElementalComposition storage) {
+    public void syncStorageContents(ElementalComposition storage) {
         ((IElementStorageModifiable) this.storage).setStored(storage);
     }
 

@@ -28,14 +28,15 @@ public class PrimitiveElementalExtractorMenu extends AbstractElementalExtractorM
 
     private final ContainerData additionalContainerData;
 
-    public PrimitiveElementalExtractorMenu(int containerId, Inventory playerInventory,
-                                           IItemHandler baseInventory, IItemHandler additionalInventory,
-                                           ContainerData baseContainerData, ContainerData additionalContainerData,
-                                           IElementStorage storage, ContainerLevelAccess access) {
+    protected PrimitiveElementalExtractorMenu(int containerId, Inventory playerInventory,
+                                              IItemHandler baseInventory, IItemHandler additionalInventory,
+                                              ContainerData baseContainerData, ContainerData additionalContainerData,
+                                              IElementStorage storage, ContainerLevelAccess access) {
         super(ModMenuTypes.PRIMITIVE_ELEMENTAL_EXTRACTOR.get(), containerId, playerInventory,
                 baseInventory, storage, access, baseContainerData, createAdditionalSlots(additionalInventory));
 
         this.additionalContainerData = additionalContainerData;
+
         addDataSlots(this.additionalContainerData);
     }
 

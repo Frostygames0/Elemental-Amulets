@@ -1,6 +1,6 @@
 package frostygames0.elementalamulets.block.entity.pipe.source;
 
-import frostygames0.elementalamulets.element.Element;
+import frostygames0.elementalamulets.element.ElementType;
 import net.minecraft.core.Holder;
 import org.jetbrains.annotations.Nullable;
 
@@ -15,7 +15,7 @@ public class OpenFlowSource extends FlowSource {
     }
 
     @Override
-    public @Nullable Holder<Element> getElement() {
+    public @Nullable Holder<ElementType> getElement() {
         return null;
     }
 }

@@ -1,6 +1,7 @@
 package frostygames0.elementalamulets.block.entity.pipe;
 
-import frostygames0.elementalamulets.element.Element;
+import frostygames0.elementalamulets.element.ElementType;
+import frostygames0.elementalamulets.pipes.PipeNode;
 import frostygames0.elementalamulets.util.BlockFace;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -15,6 +16,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.IdentityHashMap;
 import java.util.Map;
@@ -31,6 +33,9 @@ public abstract class BaseElementalPipeBlockEntity extends BlockEntity {
 
     protected Map<Direction, PipeConnection> interfaces;
     private TickPhase phase;
+
+    @Nullable
+    private PipeNode node;
 
     protected BaseElementalPipeBlockEntity(BlockEntityType<?> blockEntityType, BlockPos pos, BlockState blockState) {
         super(blockEntityType, pos, blockState);
@@ -72,8 +77,8 @@ public abstract class BaseElementalPipeBlockEntity extends BlockEntity {
         }
 
         if (isOnServer) {
-            Holder<Element> availableFlow = null;
-            Holder<Element> collidingFlow = null;
+            Holder<ElementType> availableFlow = null;
+            Holder<ElementType> collidingFlow = null;
 
             for (PipeConnection connection : connections) {
                 var elementInFlowOptional = connection.getElement(true);
@@ -105,7 +110,7 @@ public abstract class BaseElementalPipeBlockEntity extends BlockEntity {
 
             var sendUpdate = false;
             for (PipeConnection connection : connections) {
-                Holder<Element> internalElement = singleSource != connection ? availableFlow : null;
+                Holder<ElementType> internalElement = singleSource != connection ? availableFlow : null;
                 sendUpdate |= connection.manageFlows(level, internalElement);
             }
 
@@ -115,7 +120,7 @@ public abstract class BaseElementalPipeBlockEntity extends BlockEntity {
         }
 
         for (PipeConnection connection : connections) {
-            connection.tickFlow(level, worldPosition);
+            connection.tickFlow(level);
         }
     }
 
@@ -130,7 +135,7 @@ public abstract class BaseElementalPipeBlockEntity extends BlockEntity {
         }
     }
 
-    public Optional<Holder<Element>> getElement(Direction side, boolean inbound) {
+    public Optional<Holder<ElementType>> getElement(Direction side, boolean inbound) {
         setupConnectionsIfNotSetup();
         if (!interfaces.containsKey(side)) {
             return Optional.empty();

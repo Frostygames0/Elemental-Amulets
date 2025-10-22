@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "elementalamulets:block/simple_storage",
+    "side": "elementalamulets:block/simple_storage_side10"
+  }
+}

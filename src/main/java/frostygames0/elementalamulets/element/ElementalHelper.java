@@ -9,17 +9,14 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.NbtOps;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -28,31 +25,27 @@ public final class ElementalHelper {
     private ElementalHelper() {
     }
 
-    public static ElementalComposition simplifyToPrimordials(Holder<Element> elementHolder) {
-        var map = new HashMap<Holder<Element>, Integer>();
+    public static ElementalComposition simplifyToPrimordials(Holder<ElementType> elementHolder) {
+        return simplifyToPrimordialsMutable(elementHolder).toImmutable();
+    }
+
+    private static ElementalComposition.Mutable simplifyToPrimordialsMutable(Holder<ElementType> elementHolder) {
+        var mutable = ElementalComposition.mutable();
 
         var element = elementHolder.value();
 
         if (element.isPrimordial()) {
-            map.putIfAbsent(elementHolder, 0);
-            map.put(elementHolder, map.get(elementHolder) + 1);
+            mutable.add(elementHolder, 1);
         } else {
             var composition = element.composition();
 
             for (var compositionElementHolder : composition) {
-                var map2 = simplifyToPrimordials(compositionElementHolder).elementAmounts();
-
-                for (var entry : map2.entrySet()) {
-                    var holder = entry.getKey();
-                    var amount = entry.getValue();
-
-                    map.putIfAbsent(holder, 0);
-                    map.put(holder, map.get(holder) + amount);
-                }
+                var mutable2 = simplifyToPrimordialsMutable(compositionElementHolder);
+                mutable.merge(mutable2);
             }
         }
 
-        return new ElementalComposition(map);
+        return mutable;
     }
 
     public static boolean hasElementalComposition(ItemStack stack) {
@@ -60,18 +53,18 @@ public final class ElementalHelper {
     }
 
     public static Optional<ElementalComposition> getStackElementalComposition(ItemStack stack) {
-        var dataMap = stack.getItemHolder().getData(ModDataMaps.ELEMENTAL_COMPOSITION);
-        var dataComponent = stack.get(ModDataComponents.ELEMENTAL_COMPOSITION);
+        var dataMapComposition = stack.getItemHolder().getData(ModDataMaps.ELEMENTAL_COMPOSITION);
+        var dataComponentComposition = stack.get(ModDataComponents.ELEMENTAL_COMPOSITION);
 
-        if (dataMap != null) {
-            if (dataComponent != null) {
-                return Optional.of(dataMap.merge(dataComponent));
+        if (dataMapComposition != null) {
+            if (dataComponentComposition != null) {
+                return Optional.of(dataMapComposition.merge(dataComponentComposition));
             }
 
-            return Optional.of(dataMap);
+            return Optional.of(dataMapComposition);
         }
 
-        return dataComponent != null && !dataComponent.isEmpty() ? Optional.of(dataComponent) : Optional.empty();
+        return dataComponentComposition != null && !dataComponentComposition.isEmpty() ? Optional.of(dataComponentComposition) : Optional.empty();
     }
 
     public static boolean isStackAnEmptyElementumShard(ItemStack stack) {
@@ -82,7 +75,7 @@ public final class ElementalHelper {
         return stack.is(ModItems.ELEMENTUM_SHARD);
     }
 
-    public static ItemStack createShardWithElement(Holder<Element> elementHolder) {
+    public static ItemStack createShardWithElement(Holder<ElementType> elementHolder) {
         var stack = new ItemStack(ModItems.ELEMENTUM_SHARD.get());
         stack.set(ModDataComponents.ELEMENTAL_COMPOSITION, ElementalComposition.fromSingle(elementHolder, 1));
         return stack;
@@ -92,11 +85,11 @@ public final class ElementalHelper {
         return player.isCreative() || player.getOffhandItem().is(ModItems.RING_OF_ELEMENTAL_SENSE);
     }
 
-    public static boolean hasCompositionCycle(Holder<Element> element) {
+    public static boolean hasCompositionCycle(Holder<ElementType> element) {
         return hasCompositionCycle(element, new HashSet<>(), new HashSet<>());
     }
 
-    private static boolean hasCompositionCycle(Holder<Element> current, Set<Holder<Element>> visited, Set<Holder<Element>> recursionStack) {
+    private static boolean hasCompositionCycle(Holder<ElementType> current, Set<Holder<ElementType>> visited, Set<Holder<ElementType>> recursionStack) {
         visited.add(current);
         recursionStack.add(current);
 
@@ -114,20 +107,20 @@ public final class ElementalHelper {
         return false;
     }
 
-    public static Optional<Holder<Element>> deserializeFromNbt(Tag tag, HolderLookup.Provider provider) {
-        return Element.CODEC.parse(provider.createSerializationContext(NbtOps.INSTANCE), tag).resultOrPartial();
-    }
+    public static Optional<IElementStorage> getElementStorage(@Nullable Level level, @Nullable BlockPos blockPos, @Nullable Direction side) {
+        if (level == null || blockPos == null) {
+            return Optional.empty();
+        }
 
-    public static Optional<Tag> serializeToNbt(Holder<Element> element, HolderLookup.Provider provider) {
-        return Element.CODEC.encodeStart(provider.createSerializationContext(NbtOps.INSTANCE), element).resultOrPartial();
-    }
-
-    public static Optional<IElementStorage> getElementStorage(Level level, BlockPos blockPos, @Nullable Direction side) {
         var cap = level.getCapability(ModCapabilities.ELEMENT_STORAGE_BLOCK, blockPos, side);
         return cap == null ? Optional.empty() : Optional.of(cap);
     }
 
-    public static Optional<IElementStorage> getElementStorage(BlockGetter level, BlockPos blockPos, @Nullable Direction side) {
+    public static Optional<IElementStorage> getElementStorage(@Nullable BlockGetter level, @Nullable BlockPos blockPos, @Nullable Direction side) {
+        if (level == null || blockPos == null) {
+            return Optional.empty();
+        }
+
         var blockEntity = level.getBlockEntity(blockPos);
         if (blockEntity == null || blockEntity.getLevel() == null) {
             return Optional.empty();
@@ -136,22 +129,23 @@ public final class ElementalHelper {
         return getElementStorage(blockEntity.getLevel(), blockPos, side);
     }
 
-    public static boolean hasElementStorage(BlockGetter level, BlockPos blockPos, @Nullable Direction side) {
+    public static boolean hasElementStorage(@Nullable BlockGetter level, @Nullable BlockPos blockPos, @Nullable Direction side) {
         return getElementStorage(level, blockPos, side).isPresent();
     }
 
-    public static boolean hasElementStorage(Level level, BlockPos blockPos, @Nullable Direction side) {
+    @Contract()
+    public static boolean hasElementStorage(@Nullable Level level, @Nullable BlockPos blockPos, @Nullable Direction side) {
         return getElementStorage(level, blockPos, side).isPresent();
     }
 
-    public static MutableComponent createFancyElementComponent(Holder<Element> holderElement) {
-        return Component.empty().append(holderElement.value().colorizeNameMutable()).withStyle(style -> style.withClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, String.format("/elementalamulets elements get %s", holderElement.getKey().location()))))
+    public static MutableComponent createFancyElementComponent(Holder<ElementType> holderElement) {
+        return Component.empty().append(holderElement.value().colorizedName()).withStyle(style -> style.withClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, String.format("/elementalamulets elements get %s", holderElement.getKey().location()))))
                 .append(" ")
                 .append(ComponentUtils.wrapInSquareBrackets(Component.literal(holderElement.getKey().location().toString()))
                         .withStyle(ChatFormatting.GRAY));
     }
 
-    public static Component createFancyElementComponentForCommand(Holder<Element> element) {
+    public static Component createFancyElementComponentForCommand(Holder<ElementType> element) {
         return createFancyElementComponent(element)
                 .withStyle(style ->
                         style.withClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, String.format("/elementalamulets elements get %s", element.getKey().location())))

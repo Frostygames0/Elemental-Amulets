@@ -2,14 +2,9 @@ package frostygames0.elementalamulets.client.gui;
 
 import frostygames0.elementalamulets.element.storage.IElementStorage;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.ComponentPath;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.AbstractWidget;
-import net.minecraft.client.gui.narration.NarrationElementOutput;
-import net.minecraft.client.gui.navigation.FocusNavigationEvent;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -19,7 +14,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
 
-public class ElementStorageBarWidget extends AbstractWidget {
+public class ElementStorageBarWidget extends NonInteractiveWidget {
     private final ResourceLocation overlay;
     private final Font font;
     private final IElementStorage storage;
@@ -31,25 +26,6 @@ public class ElementStorageBarWidget extends AbstractWidget {
         this.storage = storage;
         this.font = font;
         this.horizontal = horizontal;
-    }
-
-    @Override
-    public void playDownSound(SoundManager soundManager) {
-    }
-
-    @Override
-    public boolean isActive() {
-        return false;
-    }
-
-    @Nullable
-    @Override
-    public ComponentPath nextFocusPath(FocusNavigationEvent focusNavigationEvent) {
-        return null;
-    }
-
-    @Override
-    protected void updateWidgetNarration(NarrationElementOutput narrationElementOutput) {
     }
 
     @Override
@@ -65,7 +41,8 @@ public class ElementStorageBarWidget extends AbstractWidget {
         int x = getX();
         int y = getY();
 
-        for (var entry : storage.getStored().elementAmounts().entrySet()) {
+        // TODO Do something about this also!
+        for (var entry : storage.getStored().getEntries()) {
             var color = entry.getKey().value().color();
             var amount = entry.getValue();
 

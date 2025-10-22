@@ -1,7 +1,52 @@
 {
   "variants": {
-    "": {
+    "fill=0": {
       "model": "elementalamulets:block/simple_storage"
+    },
+    "fill=1": {
+      "model": "elementalamulets:block/simple_storage_side1"
+    },
+    "fill=10": {
+      "model": "elementalamulets:block/simple_storage_side10"
+    },
+    "fill=11": {
+      "model": "elementalamulets:block/simple_storage_side11"
+    },
+    "fill=12": {
+      "model": "elementalamulets:block/simple_storage_side12"
+    },
+    "fill=13": {
+      "model": "elementalamulets:block/simple_storage_side13"
+    },
+    "fill=14": {
+      "model": "elementalamulets:block/simple_storage_side14"
+    },
+    "fill=15": {
+      "model": "elementalamulets:block/simple_storage_side15"
+    },
+    "fill=2": {
+      "model": "elementalamulets:block/simple_storage_side2"
+    },
+    "fill=3": {
+      "model": "elementalamulets:block/simple_storage_side3"
+    },
+    "fill=4": {
+      "model": "elementalamulets:block/simple_storage_side4"
+    },
+    "fill=5": {
+      "model": "elementalamulets:block/simple_storage_side5"
+    },
+    "fill=6": {
+      "model": "elementalamulets:block/simple_storage_side6"
+    },
+    "fill=7": {
+      "model": "elementalamulets:block/simple_storage_side7"
+    },
+    "fill=8": {
+      "model": "elementalamulets:block/simple_storage_side8"
+    },
+    "fill=9": {
+      "model": "elementalamulets:block/simple_storage_side9"
     }
   }
 }

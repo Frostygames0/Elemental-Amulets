@@ -1,7 +1,8 @@
 package frostygames0.elementalamulets.datagen.model;
 
 import frostygames0.elementalamulets.ElementalAmulets;
-import frostygames0.elementalamulets.client.item.ElementalCompositionTintSource;
+import frostygames0.elementalamulets.block.SimpleStorageBlock;
+import frostygames0.elementalamulets.client.color.item.ElementalCompositionTintSource;
 import frostygames0.elementalamulets.initialization.ModBlocks;
 import frostygames0.elementalamulets.initialization.ModItems;
 import net.minecraft.client.color.item.ItemTintSource;
@@ -19,6 +20,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.client.model.generators.template.ExtendedModelTemplateBuilder;
 
 import java.util.Optional;
+import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
 public class ModModelProvider extends ModelProvider {
@@ -37,14 +39,13 @@ public class ModModelProvider extends ModelProvider {
         blockModels.createTrivialCube(ModBlocks.ELEMENTUM_CRYSTAL_ORE.get());
         blockModels.createTrivialCube(ModBlocks.ELEMENTUM_CRYSTAL_DEEPSLATE_ORE.get());
         generatePipe(blockModels, ModBlocks.ELEMENTAL_PIPE.get());
-        blockModels.createTrivialCube(ModBlocks.SIMPLE_STORAGE.get());
         generateFullBlockPipe(blockModels, ModBlocks.PRESSURIZER_PIPE.get());
+        generateSimpleStorage(blockModels, ModBlocks.SIMPLE_STORAGE.get());
     }
 
     private static void registerItemModels(ItemModelGenerators itemModels) {
         generateTintedFlatItem(itemModels, ModItems.ELEMENTUM_SHARD, new ElementalCompositionTintSource());
         generateFlatItem(itemModels, ModItems.RING_OF_ELEMENTAL_SENSE.get());
-        generatePipeItem(itemModels, ModBlocks.ELEMENTAL_PIPE.get());
     }
 
     private static void generateFlatItem(ItemModelGenerators itemModels, Item item) {
@@ -54,6 +55,13 @@ public class ModModelProvider extends ModelProvider {
     private static void generateTintedFlatItem(ItemModelGenerators itemModelGenerators, Supplier<? extends Item> item, ItemTintSource... sources) {
         var model = itemModelGenerators.createFlatItemModel(item.get(), ModelTemplates.FLAT_ITEM);
         itemModelGenerators.itemModelOutput.accept(item.get(), ItemModelUtils.tintedModel(model, sources));
+    }
+
+    private static void generateSimpleStorage(BlockModelGenerators blockModelGenerators, Block block) {
+        blockModelGenerators.blockStateOutput.accept(MultiVariantGenerator.multiVariant(block)
+                .with(PropertyDispatch.property(SimpleStorageBlock.FILL).generate(fillValue ->
+                        Variant.variant().with(VariantProperties.MODEL, blockModelGenerators.createSuffixedVariant(block, fillValue == 0 ? "" : "_side" + fillValue, ModelTemplates.CUBE_COLUMN,
+                                suffixedTexture -> TextureMapping.column(TextureMapping.getBlockTexture(block, "_side" + fillValue), TextureMapping.getBlockTexture(block)))))));
     }
 
     private static void generateFullBlockPipe(BlockModelGenerators blockModels, Block block) {
@@ -117,11 +125,8 @@ public class ModModelProvider extends ModelProvider {
                 MultiPartGenerator.multiPart(block)
                         .with(Variant.variant().with(VariantProperties.MODEL, connectionsModel))
                         .with(Variant.variant().with(VariantProperties.MODEL, centerModel)));
-    }
 
-    private static void generatePipeItem(ItemModelGenerators itemModels, Block block) {
-        var model = createPipeItemModel(itemModels, block);
-        itemModels.itemModelOutput.accept(block.asItem(), ItemModelUtils.plainModel(model));
+        blockModels.itemModelOutput.accept(block.asItem(), ItemModelUtils.plainModel(createPipeItemModel(blockModels.modelOutput, block)));
     }
 
     private static ResourceLocation createPipeConnectionsModel(BlockModelGenerators blockModels, Block block) {
@@ -132,8 +137,8 @@ public class ModModelProvider extends ModelProvider {
         return Templates.PIPE_CENTER.createWithSuffix(block, "_center", new TextureMapping().put(TextureSlot.TEXTURE, ModelLocationUtils.getModelLocation(block)), blockModels.modelOutput);
     }
 
-    private static ResourceLocation createPipeItemModel(ItemModelGenerators itemModels, Block block) {
-        return Templates.PIPE_ITEM.create(block.asItem(), new TextureMapping().put(TextureSlot.TEXTURE, ModelLocationUtils.getModelLocation(block)), itemModels.modelOutput);
+    private static ResourceLocation createPipeItemModel(BiConsumer<ResourceLocation, ModelInstance> modelOutput, Block block) {
+        return Templates.PIPE_ITEM.create(block.asItem(), new TextureMapping().put(TextureSlot.TEXTURE, ModelLocationUtils.getModelLocation(block)), modelOutput);
     }
 
     private static class Templates {

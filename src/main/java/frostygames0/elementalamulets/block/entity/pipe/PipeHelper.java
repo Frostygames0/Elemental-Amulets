@@ -1,9 +1,9 @@
 package frostygames0.elementalamulets.block.entity.pipe;
 
+import com.mojang.datafixers.util.Pair;
 import frostygames0.elementalamulets.block.pipe.ElementalPipeBlock;
 import frostygames0.elementalamulets.block.pipe.PressurizerPipeBlock;
 import frostygames0.elementalamulets.element.ElementalHelper;
-import frostygames0.elementalamulets.util.MutablePair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
@@ -22,15 +22,15 @@ public final class PipeHelper {
     }
 
     public static void propagateChangedPipe(LevelAccessor world, BlockPos pipePos, BlockState pipeState) {
-        List<MutablePair<Integer, BlockPos>> frontier = new ArrayList<>();
+        List<Pair<Integer, BlockPos>> frontier = new ArrayList<>();
         Set<BlockPos> visited = new HashSet<>();
-        Set<MutablePair<PressurizerPipeBlockEntity, Direction>> discoveredPressurizers = new HashSet<>();
+        Set<Pair<PressurizerPipeBlockEntity, Direction>> discoveredPressurizers = new HashSet<>();
 
-        frontier.add(MutablePair.of(0, pipePos));
+        frontier.add(Pair.of(0, pipePos));
 
         // Visit all connected pumps to update their network
         while (!frontier.isEmpty()) {
-            MutablePair<Integer, BlockPos> pair = frontier.removeFirst();
+            Pair<Integer, BlockPos> pair = frontier.removeFirst();
             BlockPos currentPos = pair.getSecond();
             if (visited.contains(currentPos)) {
                 continue;
@@ -58,7 +58,7 @@ public final class PipeHelper {
                             continue;
                         }
 
-                        discoveredPressurizers.add(MutablePair.of(pressurizerPipe, direction.getOpposite()));
+                        discoveredPressurizers.add(Pair.of(pressurizerPipe, direction.getOpposite()));
                         continue;
                     }
                 }
@@ -78,7 +78,7 @@ public final class PipeHelper {
                     continue;
                 }
                 if (targetPipe.canHaveFlowToward(direction.getOpposite())) {
-                    frontier.add(MutablePair.of(distance + 1, target));
+                    frontier.add(Pair.of(distance + 1, target));
                 }
             }
         }
@@ -193,5 +193,4 @@ public final class PipeHelper {
         return connectedState.canBeReplaced() && connectedState.getDestroySpeed(getter, connectedPos) != -1
                 || connectedState.hasProperty(BlockStateProperties.WATERLOGGED);
     }
-
 }

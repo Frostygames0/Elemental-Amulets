@@ -1,37 +1,27 @@
 package frostygames0.elementalamulets.element.storage.single;
 
-import frostygames0.elementalamulets.element.Element;
+import frostygames0.elementalamulets.element.ElementType;
 import frostygames0.elementalamulets.element.ElementalComposition;
-import frostygames0.elementalamulets.element.storage.IElementStorageModifiable;
-import frostygames0.elementalamulets.element.storage.OperationMode;
+import frostygames0.elementalamulets.element.storage.ElementStorage;
 import net.minecraft.core.Holder;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
-import net.neoforged.neoforge.common.util.INBTSerializable;
 
-public class SingleElementStorage implements ISingleElementStorage, IElementStorageModifiable, INBTSerializable<CompoundTag> {
-    private final int maxCapacity;
-
-    private Holder<Element> element;
+@Deprecated
+public class SingleElementStorage extends ElementStorage implements ISingleElementStorage {
+    private Holder<ElementType> element;
     private int amount;
 
     public SingleElementStorage(int maxCapacity) {
-        this.maxCapacity = maxCapacity;
-    }
-
-    @Override
-    public ElementalComposition getStored() {
-        return ElementalComposition.fromSingle(element, amount);
+        super(maxCapacity, 1);
     }
 
     @Override
     public void setStored(ElementalComposition composition) {
-        if (composition.elementAmounts().size() > 1) {
+        if (composition.size() > 1) {
             throw new IllegalArgumentException("Provided composition contains more than one element!");
         }
 
-        var entry = composition.elementAmounts().entrySet().stream().findAny().orElse(null);
+        var entry = composition.getEntries().getFirst();
         element = entry == null ? null : entry.getKey();
         amount = entry == null ? 0 : entry.getValue();
 
@@ -39,13 +29,13 @@ public class SingleElementStorage implements ISingleElementStorage, IElementStor
     }
 
     @Override
-    public int add(int amount, OperationMode operationMode) {
+    public int add(int amount, Operation operation) {
         if (amount <= 0) {
             return 0;
         }
 
-        int toAdd = Mth.clamp(maxCapacity - this.amount, 0, amount);
-        if (operationMode == OperationMode.PERFORM) {
+        int toAdd = Mth.clamp(getMaxCapacity() - this.amount, 0, amount);
+        if (operation == Operation.PERFORM) {
             this.amount += amount;
         }
 
@@ -53,14 +43,14 @@ public class SingleElementStorage implements ISingleElementStorage, IElementStor
     }
 
     @Override
-    public int take(int amount, OperationMode operationMode) {
+    public int take(int amount, Operation operation) {
         if (amount <= 0) {
             return 0;
         }
 
         int taken = Math.min(this.amount, amount);
 
-        if (operationMode == OperationMode.PERFORM) {
+        if (operation == Operation.PERFORM) {
             this.amount -= taken;
             onChanged();
         }
@@ -69,7 +59,7 @@ public class SingleElementStorage implements ISingleElementStorage, IElementStor
     }
 
     @Override
-    public Holder<Element> getStoredElement() {
+    public Holder<ElementType> getStoredElement() {
         return element;
     }
 
@@ -79,41 +69,25 @@ public class SingleElementStorage implements ISingleElementStorage, IElementStor
     }
 
     @Override
-    public int addElement(Holder<Element> element, int amount, OperationMode operationMode) {
+    public int addElement(Holder<ElementType> element, int amount, Operation operation) {
         if (!canAddElement(element)) {
             return 0;
         }
 
-        return add(amount, operationMode);
+        return add(amount, operation);
     }
 
     @Override
-    public int takeElement(Holder<Element> element, int amount, OperationMode operationMode) {
+    public int takeElement(Holder<ElementType> element, int amount, Operation operation) {
         if (!canTakeElement(element)) {
             return 0;
         }
 
-        return take(amount, operationMode);
-    }
-
-    @Override
-    public int getMaxCapacity() {
-        return maxCapacity;
+        return take(amount, operation);
     }
 
     @Override
     public int getTotalAmount() {
         return amount;
-    }
-
-    @Override
-    public CompoundTag serializeNBT(HolderLookup.Provider provider) {
-        return ElementalComposition.toNbtTag(provider, getStored()).orElse(new CompoundTag());
-    }
-
-    @Override
-    public void deserializeNBT(HolderLookup.Provider provider, CompoundTag nbt) {
-        ElementalComposition.fromNbtTag(provider, nbt)
-                .ifPresent(this::setStored);
     }
 }

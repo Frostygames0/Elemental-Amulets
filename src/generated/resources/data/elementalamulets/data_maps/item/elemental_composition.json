@@ -3,6 +3,9 @@
     "#minecraft:crimson_stems": {
       "elementalamulets:fire": 10
     },
+    "#minecraft:dirt": {
+      "elementalamulets:earth": 25
+    },
     "#minecraft:logs_that_burn": {
       "elementalamulets:earth": 32,
       "elementalamulets:water": 100

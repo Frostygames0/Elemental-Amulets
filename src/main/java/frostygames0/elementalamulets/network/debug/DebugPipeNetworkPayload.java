@@ -1,6 +1,7 @@
 package frostygames0.elementalamulets.network.debug;
 
 import frostygames0.elementalamulets.ElementalAmulets;
+import frostygames0.elementalamulets.block.entity.pipe.PipeNetwork;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -18,13 +19,13 @@ public record DebugPipeNetworkPayload(
             CustomPacketPayload.codec(DebugPipeNetworkPayload::write, DebugPipeNetworkPayload::new);
 
     private DebugPipeNetworkPayload(FriendlyByteBuf buffer) {
-        this(new PipeNetworkInfo(buffer.readBoolean(), buffer.readBlockPos(), buffer.readList(BlockPos.STREAM_CODEC)));
+        this(new PipeNetworkInfo(buffer.readBoolean(), buffer.readBlockPos(), null));
     }
 
     private void write(FriendlyByteBuf buffer) {
         buffer.writeBoolean(networkInfo.removal);
         buffer.writeBlockPos(networkInfo.startingPos);
-        buffer.writeCollection(networkInfo.targets, BlockPos.STREAM_CODEC);
+        //buffer.writeCollection(networkInfo.targets, BlockPos.STREAM_CODEC);
     }
 
     @Override
@@ -37,6 +38,7 @@ public record DebugPipeNetworkPayload(
         return TYPE;
     }
 
-    public record PipeNetworkInfo(boolean removal, BlockPos startingPos, List<BlockPos> targets) implements IDebugInfo {
+    public record PipeNetworkInfo(boolean removal, BlockPos startingPos,
+                                  List<PipeNetwork.TransferTarget> targets) implements IDebugInfo {
     }
 }

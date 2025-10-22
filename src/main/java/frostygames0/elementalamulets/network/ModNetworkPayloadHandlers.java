@@ -1,6 +1,6 @@
 package frostygames0.elementalamulets.network;
 
-import frostygames0.elementalamulets.client.ClientPacketHandler;
+import frostygames0.elementalamulets.client.ClientPayloadHandler;
 import frostygames0.elementalamulets.network.debug.DebugPipeNetworkPayload;
 import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
@@ -16,7 +16,7 @@ public final class ModNetworkPayloadHandlers {
         registrar.playToClient(
                 ClientboundElementStorageMenuPayload.TYPE,
                 ClientboundElementStorageMenuPayload.STREAM_CODEC,
-                ClientPacketHandler::handleSyncElementStorageWithClientMenu);
+                ClientPayloadHandler::handle);
 
         registerDebugInfoPayloads(registrar);
     }
@@ -26,6 +26,6 @@ public final class ModNetworkPayloadHandlers {
             return;
         }
 
-        registrar.playToClient(DebugPipeNetworkPayload.TYPE, DebugPipeNetworkPayload.STREAM_CODEC, ClientPacketHandler::handleCustomDebugInfo);
+        registrar.playToClient(DebugPipeNetworkPayload.TYPE, DebugPipeNetworkPayload.STREAM_CODEC, ClientPayloadHandler::handle);
     }
 }

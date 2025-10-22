@@ -2,7 +2,7 @@ package frostygames0.elementalamulets.command;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.builder.ArgumentBuilder;
-import frostygames0.elementalamulets.element.Element;
+import frostygames0.elementalamulets.element.ElementType;
 import frostygames0.elementalamulets.element.ElementalHelper;
 import frostygames0.elementalamulets.initialization.ModElements;
 import net.minecraft.ChatFormatting;
@@ -39,12 +39,14 @@ public class ElementsCommand {
                         .executes(ctx -> getElementInfo(ctx.getSource(), CommandHelper.getElement(ctx, "element"))));
     }
 
-    private static int getElementInfo(CommandSourceStack source, Holder<Element> element) {
+    private static int getElementInfo(CommandSourceStack source, Holder<ElementType> element) {
         var value = element.value();
 
         source.sendSuccess(() -> Component.literal(String.format("[%s]", element.getRegisteredName())).withStyle(ChatFormatting.GOLD), false);
-        source.sendSuccess(() -> Component.literal(" ").append(Component.translatable("command.elementalamulets.get_element.name", value.colorizeNameMutable())), false);
-        source.sendSuccess(() -> Component.literal(" ").append(Component.translatable("command.elementalamulets.get_element.description", value.description().orElse(CommonComponents.GUI_NO))), false);
+        source.sendSuccess(() -> Component.literal(" ").append(Component.translatable("command.elementalamulets.get_element.name", value.colorizedName())), false);
+
+        value.description().ifPresent(component -> source.sendSuccess(() -> Component.literal(" ").append(Component.translatable("command.elementalamulets.get_element.description", component)), false));
+
         source.sendSuccess(() -> Component.literal(" ").append(Component.translatable("command.elementalamulets.get_element.is_primordial", value.isPrimordial() ? CommonComponents.GUI_YES : CommonComponents.GUI_NO)), false);
 
         var composition = value.composition();
@@ -56,7 +58,7 @@ public class ElementsCommand {
         return Command.SINGLE_SUCCESS;
     }
 
-    private static int listAllElements(CommandSourceStack source, Registry<Element> registry) {
+    private static int listAllElements(CommandSourceStack source, Registry<ElementType> registry) {
         var elements = registry.listElements().collect(Collectors.toSet());
         if (elements.isEmpty()) {
             source.sendFailure(FOUND_NO_ELEMENTS);
@@ -72,7 +74,7 @@ public class ElementsCommand {
         return elements.size();
     }
 
-    private static <T extends Holder<Element>> void printSuccessPrettyElementsToSource(CommandSourceStack source, Iterable<T> elements) {
+    private static <T extends Holder<ElementType>> void printSuccessPrettyElementsToSource(CommandSourceStack source, Iterable<T> elements) {
         for (var element : elements) {
             source.sendSuccess(() -> Component.literal(" - ").append(ElementalHelper.createFancyElementComponentForCommand(element)).withStyle(ChatFormatting.GRAY), false);
         }

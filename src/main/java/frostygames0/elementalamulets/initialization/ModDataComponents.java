@@ -16,7 +16,7 @@ public final class ModDataComponents {
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<ElementalComposition>> ELEMENTAL_COMPOSITION =
             DATA_COMPONENTS.registerComponentType("elemental_composition", builder -> builder
-                    .persistent(ElementalComposition.CODEC)
+                    .persistent(ElementalComposition.NBT_CODEC)
                     .networkSynchronized(ElementalComposition.STREAM_CODEC)
                     .cacheEncoding());
 

@@ -7,16 +7,23 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
 public class SimpleStorageBlock extends BaseEntityBlock {
+    public static final Property<Integer> FILL = IntegerProperty.create("fill", 0, 15);
+
     public static final MapCodec<SimpleStorageBlock> CODEC = simpleCodec(SimpleStorageBlock::new);
 
     public SimpleStorageBlock(Properties properties) {
         super(properties);
+        registerDefaultState(stateDefinition.any().setValue(FILL, 0));
     }
 
     @Override
@@ -36,5 +43,10 @@ public class SimpleStorageBlock extends BaseEntityBlock {
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new SimpleStorageBlockEntity(pos, state);
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(FILL);
     }
 }

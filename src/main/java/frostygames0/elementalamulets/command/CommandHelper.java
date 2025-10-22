@@ -3,7 +3,7 @@ package frostygames0.elementalamulets.command;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
-import frostygames0.elementalamulets.element.Element;
+import frostygames0.elementalamulets.element.ElementType;
 import frostygames0.elementalamulets.initialization.ModElements;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.Holder;
@@ -16,7 +16,7 @@ public class CommandHelper {
     public static final DynamicCommandExceptionType REGISTRY_NOT_FOUND_ERROR = new DynamicCommandExceptionType(object -> Component.translatable("command.elementalamulets.no_registry_error", object));
     public static final DynamicCommandExceptionType ELEMENT_NOT_FOUND_ERROR = new DynamicCommandExceptionType(object -> Component.translatable("command.elementalamulets.no_element_error", object));
 
-    public static Holder<Element> getElement(CommandContext<CommandSourceStack> context, String argument) throws CommandSyntaxException {
+    public static Holder<ElementType> getElement(CommandContext<CommandSourceStack> context, String argument) throws CommandSyntaxException {
         var elementsRegistry = getRegistry(context, ModElements.ELEMENTS);
         var elementKey = CommandUtils.getResourceKey(context, argument, ModElements.ELEMENTS).orElseThrow(() -> ELEMENT_NOT_FOUND_ERROR.create(argument));
 

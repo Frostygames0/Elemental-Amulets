@@ -1,12 +1,15 @@
 package frostygames0.elementalamulets.block.entity;
 
+import frostygames0.elementalamulets.block.SimpleStorageBlock;
 import frostygames0.elementalamulets.element.storage.ElementStorage;
 import frostygames0.elementalamulets.element.storage.IElementStorage;
 import frostygames0.elementalamulets.element.storage.IElementStorageProvider;
 import frostygames0.elementalamulets.initialization.ModBlockEntities;
 import frostygames0.elementalamulets.initialization.ModBlocks;
 import frostygames0.elementalamulets.inventory.menu.SimpleStorageMenu;
+import frostygames0.elementalamulets.util.MathUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -27,6 +30,7 @@ public class SimpleStorageBlockEntity extends BlockEntity implements IElementSto
         @Override
         public void onChanged() {
             setChanged();
+            updateFillState();
         }
     };
 
@@ -34,10 +38,17 @@ public class SimpleStorageBlockEntity extends BlockEntity implements IElementSto
         super(ModBlockEntities.SIMPLE_STORAGE.get(), pos, blockState);
     }
 
+    private void updateFillState() {
+        if (hasLevel() && !level.isClientSide) {
+            var updatedState = getBlockState().setValue(SimpleStorageBlock.FILL, MathUtils.calculateClamp(storage.getTotalAmount(), storage.getMaxCapacity(), 15));
+            level.setBlockAndUpdate(worldPosition, updatedState);
+        }
+    }
+
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
-        storage.deserializeNBT(registries, tag.getCompound(TAG_STORAGE));
+        storage.deserializeNBT(registries, tag.getList(TAG_STORAGE, CompoundTag.TAG_COMPOUND));
     }
 
     @Override
@@ -47,7 +58,7 @@ public class SimpleStorageBlockEntity extends BlockEntity implements IElementSto
     }
 
     @Override
-    public IElementStorage getElementStorage() {
+    public IElementStorage getElementStorage(@Nullable Direction side) {
         return storage;
     }
 

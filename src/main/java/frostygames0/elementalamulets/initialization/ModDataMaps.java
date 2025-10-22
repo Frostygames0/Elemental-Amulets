@@ -15,11 +15,11 @@ public final class ModDataMaps {
     public static final DataMapType<Item, ElementalComposition> ELEMENTAL_COMPOSITION = AdvancedDataMapType.builder(
                     ElementalAmulets.id("elemental_composition"),
                     Registries.ITEM,
-                    ElementalComposition.CODEC)
+                    ElementalComposition.JSON_CODEC)
             .merger((registry, key1,
                      value1, key2, value2)
-                    -> value1.merge(value2))
-            .synced(ElementalComposition.CODEC, true)
+                    -> value1.merge(value2).toImmutable())
+            .synced(ElementalComposition.NBT_CODEC, true)
             .build();
 
     public static void onRegisterDataMaps(RegisterDataMapTypesEvent event) {

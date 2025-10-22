@@ -41,7 +41,11 @@ public final class ModItems {
     public static final DeferredItem<BlockItem> SIMPLE_STORAGE =
             ITEMS.registerSimpleBlockItem(ModBlocks.SIMPLE_STORAGE);
 
+    public static final DeferredItem<BlockItem> NEW_PIPE = ITEMS.registerSimpleBlockItem(ModBlocks.NEW_PIPE);
+
     public static void register(IEventBus bus) {
+        ITEMS.addAlias(ElementalAmulets.id("penis_smazhka"), ELEMENTUM_SHARD.getId());
+
         ITEMS.register(bus);
     }
 }

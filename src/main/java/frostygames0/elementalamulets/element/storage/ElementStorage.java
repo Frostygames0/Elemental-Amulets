@@ -1,23 +1,23 @@
 package frostygames0.elementalamulets.element.storage;
 
-import com.google.common.collect.ImmutableSet;
-import frostygames0.elementalamulets.element.Element;
+import com.google.common.base.Preconditions;
+import frostygames0.elementalamulets.element.ElementType;
 import frostygames0.elementalamulets.element.ElementalComposition;
-import it.unimi.dsi.fastutil.objects.Object2IntArrayMap;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.Mth;
 import net.neoforged.neoforge.common.util.INBTSerializable;
 
+import java.util.Collection;
 import java.util.Set;
 import java.util.function.Consumer;
 
-public class ElementStorage implements IElementStorage, IElementStorageModifiable, INBTSerializable<CompoundTag> {
+public class ElementStorage implements IElementStorage, IElementStorageModifiable, INBTSerializable<ListTag> {
     private final int maxCapacity;
     private final int maxDistinctElements;
 
-    private final Object2IntArrayMap<Holder<Element>> storage = new Object2IntArrayMap<>();
+    private ElementalComposition.Mutable storage = ElementalComposition.mutable();
 
     public ElementStorage(int maxCapacity) {
         this(maxCapacity, Integer.MAX_VALUE);
@@ -30,35 +30,34 @@ public class ElementStorage implements IElementStorage, IElementStorageModifiabl
 
     @Override
     public ElementalComposition getStored() {
-        return new ElementalComposition(storage);
+        return storage.toImmutable();
     }
 
     @Override
     public void setStored(ElementalComposition elementalComposition) {
-        verifyStorage(elementalComposition);
+        Preconditions.checkArgument(elementalComposition.size() <= maxDistinctElements,
+                "Provided composition contains more distinct elements than this storage can contain!");
+        Preconditions.checkArgument(elementalComposition.getTotalAmount() <= maxCapacity,
+                "Provided composition's size is bigger than max capacity of this storage!");
 
-        update(storage -> {
-            storage.clear();
-            storage.putAll(elementalComposition.elementAmounts());
-        });
-    }
-
-    private void update(Consumer<Object2IntArrayMap<Holder<Element>>> storage) {
-        storage.accept(this.storage);
+        storage = elementalComposition.toMutableCopy();
         onChanged();
     }
 
-    private void verifyStorage(ElementalComposition composition) {
-        if (composition.elementAmounts().size() > maxDistinctElements) {
-            throw new IllegalStateException("Provided composition contains more distinct elements than this storage can contain!");
-        }
-        if (composition.getTotalAmount() > maxCapacity) {
-            throw new IllegalStateException("Provided composition's size is bigger than max capacity of this storage!");
-        }
+    private void updateStorageAndNotify(Consumer<ElementalComposition.Mutable> consumer) {
+        consumer.accept(storage);
+        onChanged();
+    }
+
+    protected void onChanged() {
+    }
+
+    private int clampAddAmount(Holder<ElementType> element, int amount) {
+        return Mth.clamp(maxCapacity - getTotalAmount(), 0, amount);
     }
 
     @Override
-    public int addElement(Holder<Element> element, int amount, OperationMode operationMode) {
+    public int addElement(Holder<ElementType> element, int amount, Operation operation) {
         if (amount <= 0) {
             return 0;
         }
@@ -67,22 +66,41 @@ public class ElementStorage implements IElementStorage, IElementStorageModifiabl
             return 0;
         }
 
-        int elementAdded = Mth.clamp(maxCapacity - getTotalAmount(), 0, amount);
-        if (operationMode == OperationMode.PERFORM) {
-            //setStored(this.storage.merge(ElementalComposition.fromSingle(element, elementAdded)));
+        int elementAdded = clampAddAmount(element, amount);
 
-            if (storage.containsKey(element)) {
-                update(storage -> storage.put(element, storage.getInt(element) + elementAdded)); // TODO This is broken
-            } else {
-                update(storage -> storage.putIfAbsent(element, elementAdded));
-            }
+        if (operation == Operation.PERFORM) {
+            updateStorageAndNotify(storage -> storage.add(element, elementAdded));
         }
 
         return elementAdded;
     }
 
     @Override
-    public int takeElement(Holder<Element> element, int amount, OperationMode operationMode) {
+    public ElementalComposition addComposition(ElementalComposition composition, Operation operation) {
+        if (!canAddComposition(composition)) {
+            return ElementalComposition.EMPTY;
+        }
+
+        var toAdd = composition.toImmutable().applyToAmounts(this::clampAddAmount);
+
+        if (toAdd.isEmpty()) {
+            return ElementalComposition.EMPTY;
+        }
+
+        if (operation == Operation.PERFORM) {
+            updateStorageAndNotify(storage -> storage.merge(toAdd));
+        }
+
+        return toAdd;
+    }
+
+    private int clampTakeAmount(Holder<ElementType> element, int amount) {
+        var currentAmount = getElementAmount(element);
+        return Math.min(currentAmount, amount);
+    }
+
+    @Override
+    public int takeElement(Holder<ElementType> element, int amount, Operation operation) {
         if (amount <= 0) {
             return 0;
         }
@@ -91,36 +109,61 @@ public class ElementStorage implements IElementStorage, IElementStorageModifiabl
             return 0;
         }
 
-        var currentAmount = getElementAmount(element);
-        int elementTaken = Math.min(currentAmount, amount);
-
-        if (operationMode == OperationMode.PERFORM && elementTaken != 0) {
-            if (currentAmount - elementTaken == 0) {
-                update(storage -> storage.removeInt(element));
-            } else {
-                update(storage -> storage.put(element, currentAmount - elementTaken));
-            }
+        int elementTaken = clampTakeAmount(element, amount);
+        if (elementTaken == 0) {
+            return 0;
         }
+
+        if (operation == Operation.PERFORM) {
+            updateStorageAndNotify(storage -> storage.reduce(element, elementTaken));
+        }
+
         return elementTaken;
     }
 
     @Override
-    public boolean canAddElement(Holder<Element> element) {
-        if (storage.containsKey(element)) {
-            return true;
+    public ElementalComposition takeComposition(ElementalComposition composition, Operation operation) {
+        if (!canTakeComposition(composition)) {
+            return ElementalComposition.EMPTY;
         }
 
-        return (getDistinctElementsAmount() + 1) <= maxDistinctElements;
+        var toSubtract = composition.toImmutable().applyToAmounts(this::clampTakeAmount);
+
+        if (toSubtract.isEmpty()) {
+            return ElementalComposition.EMPTY;
+        }
+
+        if (operation == Operation.PERFORM) {
+            updateStorageAndNotify(storage -> storage.subtract(toSubtract));
+        }
+
+        return toSubtract;
     }
 
     @Override
-    public boolean canTakeElement(Holder<Element> element) {
-        return storage.containsKey(element);
+    public boolean canAddElement(Holder<ElementType> element) {
+        return storage.contains(element) || ((getDistinctElementsAmount() + 1) <= maxDistinctElements);
     }
 
     @Override
-    public Set<Holder<Element>> getAllStoredElementTypes() {
-        return ImmutableSet.copyOf(storage.keySet()); // To avoid concurrent modification error
+    public boolean canAddComposition(ElementalComposition composition) {
+        return composition.toImmutable().merge(storage).size() <= maxDistinctElements;
+    }
+
+    @Override
+    public boolean canTakeElement(Holder<ElementType> element) {
+        return storage.contains(element);
+    }
+
+    // TODO This all logic with canTake canAdd is honestly pretty flawed
+    @Override
+    public boolean canTakeComposition(ElementalComposition composition) {
+        return storage.containsElements(composition.getElements());
+    }
+
+    @Override
+    public Set<Holder<ElementType>> getAllStoredElementTypes() {
+        return storage.getElements();
     }
 
     @Override
@@ -140,27 +183,32 @@ public class ElementStorage implements IElementStorage, IElementStorageModifiabl
 
     @Override
     public int getTotalAmount() {
-        return storage.values().intStream().reduce(0, Integer::sum);
+        return storage.getTotalAmount();
     }
 
     @Override
-    public int getElementAmount(Holder<Element> element) {
-        return storage.getOrDefault(element, 0);
+    public int getElementAmount(Holder<ElementType> element) {
+        return storage.getAmount(element);
     }
 
     @Override
-    public boolean containsElement(Holder<Element> element) {
-        return storage.containsKey(element);
+    public boolean containsElement(Holder<ElementType> element) {
+        return storage.contains(element);
     }
 
     @Override
-    public CompoundTag serializeNBT(HolderLookup.Provider provider) {
-        return ElementalComposition.toNbtTag(provider, getStored()).orElse(new CompoundTag());
+    public boolean containsElements(Collection<Holder<ElementType>> elements) {
+        return storage.containsElements(elements);
     }
 
     @Override
-    public void deserializeNBT(HolderLookup.Provider provider, CompoundTag nbt) {
-        ElementalComposition.fromNbtTag(provider, nbt)
+    public ListTag serializeNBT(HolderLookup.Provider provider) {
+        return ElementalComposition.serializeToNbt(provider, getStored()).orElse(new ListTag());
+    }
+
+    @Override
+    public void deserializeNBT(HolderLookup.Provider provider, ListTag nbt) {
+        ElementalComposition.deserializeFromNbt(provider, nbt)
                 .ifPresent(this::setStored);
     }
 }

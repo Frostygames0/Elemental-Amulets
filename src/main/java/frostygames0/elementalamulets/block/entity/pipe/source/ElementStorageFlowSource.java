@@ -1,11 +1,10 @@
 package frostygames0.elementalamulets.block.entity.pipe.source;
 
-import frostygames0.elementalamulets.element.Element;
-import frostygames0.elementalamulets.element.ElementalHelper;
+import frostygames0.elementalamulets.element.ElementType;
 import frostygames0.elementalamulets.element.storage.IElementStorage;
 import frostygames0.elementalamulets.initialization.ModCapabilities;
 import frostygames0.elementalamulets.util.BlockFace;
-import frostygames0.elementalamulets.util.ICapabilityProvider;
+import frostygames0.elementalamulets.util.capability.ICapabilityProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -22,7 +21,7 @@ public class ElementStorageFlowSource extends FlowSource {
     public static final String TAG_DIRECTION = "Direction";
 
     private ICapabilityProvider<IElementStorage> capCache;
-    private Holder<Element> cachedElement;
+    private Holder<ElementType> cachedElement;
 
     public ElementStorageFlowSource(BlockFace face) {
         super(face);
@@ -44,7 +43,7 @@ public class ElementStorageFlowSource extends FlowSource {
             return;
         }
 
-        capCache = ICapabilityProvider.of(
+        capCache = ICapabilityProvider.wrap(
                 BlockCapabilityCache.create(
                         ModCapabilities.ELEMENT_STORAGE_BLOCK,
                         serverLevel,
@@ -61,7 +60,7 @@ public class ElementStorageFlowSource extends FlowSource {
     }
 
     @Override
-    public @Nullable Holder<Element> getElement() {
+    public @Nullable Holder<ElementType> getElement() {
         var storageSupplier = getElementStorageProvider();
         if (storageSupplier == null) {
             return null;
@@ -89,14 +88,14 @@ public class ElementStorageFlowSource extends FlowSource {
         sourceTag.putString(TAG_DIRECTION, face.face().getName());
 
         if (cachedElement != null) {
-            ElementalHelper.serializeToNbt(cachedElement, provider).ifPresent(tag -> sourceTag.put(TAG_ELEMENT, tag));
+            ElementType.serializeToNbt(cachedElement, provider).ifPresent(tag -> sourceTag.put(TAG_ELEMENT, tag));
         }
 
         return sourceTag;
     }
 
     public static ElementStorageFlowSource deserializeFromNBT(BlockPos blockPos, CompoundTag tag, HolderLookup.Provider provider) {
-        var element = ElementalHelper.deserializeFromNbt(tag.get(TAG_ELEMENT), provider).orElse(null);
+        var element = ElementType.deserializeFromNbt(tag.get(TAG_ELEMENT), provider).orElse(null);
         var direction = Direction.byName(tag.getString(TAG_DIRECTION));
         if (direction == null) {
             return null;

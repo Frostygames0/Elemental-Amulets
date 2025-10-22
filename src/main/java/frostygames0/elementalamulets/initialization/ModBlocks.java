@@ -5,6 +5,7 @@ import frostygames0.elementalamulets.block.SimpleStorageBlock;
 import frostygames0.elementalamulets.block.extractor.PrimitiveElementalExtractorBlock;
 import frostygames0.elementalamulets.block.pipe.ElementalPipeBlock;
 import frostygames0.elementalamulets.block.pipe.PressurizerPipeBlock;
+import frostygames0.elementalamulets.pipes.NewPipeBlock;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Blocks;
@@ -39,17 +40,31 @@ public final class ModBlocks {
     public static final DeferredBlock<ElementalPipeBlock> ELEMENTAL_PIPE =
             BLOCKS.registerBlock("elemental_pipe",
                     ElementalPipeBlock::new,
-                    BlockBehaviour.Properties.ofFullCopy(Blocks.CHAIN)
+                    BlockBehaviour.Properties.of()
+                            .requiresCorrectToolForDrops()
+                            .strength(5.0F, 6.0F)
+                            .sound(SoundType.CHAIN)
+                            .noOcclusion()
                             .mapColor(DyeColor.GRAY)
                             .sound(SoundType.COPPER_GRATE));
     public static final DeferredBlock<PressurizerPipeBlock> PRESSURIZER_PIPE =
             BLOCKS.registerBlock("pressurizer_pipe",
                     PressurizerPipeBlock::new,
-                    BlockBehaviour.Properties.ofFullCopy(Blocks.CHAIN)
+                    BlockBehaviour.Properties.of()
+                            .requiresCorrectToolForDrops()
+                            .strength(5.0F, 6.0F)
+                            .sound(SoundType.CHAIN)
+                            .noOcclusion()
                             .mapColor(DyeColor.GRAY)
                             .sound(SoundType.COPPER_GRATE));
 
-    public static final DeferredBlock<SimpleStorageBlock> SIMPLE_STORAGE = BLOCKS.registerBlock("simple_storage", SimpleStorageBlock::new);
+    public static final DeferredBlock<SimpleStorageBlock> SIMPLE_STORAGE =
+            BLOCKS.registerBlock("simple_storage",
+                    SimpleStorageBlock::new,
+                    BlockBehaviour.Properties.of().destroyTime(2f));
+
+    public static final DeferredBlock<NewPipeBlock> NEW_PIPE =
+            BLOCKS.registerBlock("new_pipe", NewPipeBlock::new);
 
     public static void register(IEventBus bus) {
         BLOCKS.register(bus);

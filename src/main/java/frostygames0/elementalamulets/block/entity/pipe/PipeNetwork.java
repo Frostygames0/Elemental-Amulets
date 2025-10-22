@@ -1,18 +1,17 @@
 package frostygames0.elementalamulets.block.entity.pipe;
 
+import com.mojang.datafixers.util.Pair;
 import com.mojang.logging.LogUtils;
 import frostygames0.elementalamulets.block.entity.pipe.source.FlowSource;
-import frostygames0.elementalamulets.element.Element;
+import frostygames0.elementalamulets.element.ElementType;
 import frostygames0.elementalamulets.element.storage.IElementStorage;
-import frostygames0.elementalamulets.element.storage.OperationMode;
 import frostygames0.elementalamulets.network.debug.ModDebugPackets;
 import frostygames0.elementalamulets.util.BlockFace;
-import frostygames0.elementalamulets.util.ICapabilityProvider;
-import frostygames0.elementalamulets.util.MutablePair;
-import frostygames0.elementalamulets.util.MutableTriple;
+import frostygames0.elementalamulets.util.capability.ICapabilityProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -31,14 +30,16 @@ public class PipeNetwork {
     private final BlockFace startBlockFace;
     private final Supplier<ICapabilityProvider<IElementStorage>> sourceSupplier;
 
-    private final List<MutableTriple<Integer, BlockFace, FlowSource>> targets = new ArrayList<>();
-    private final List<MutablePair<Integer, BlockFace>> queued = new ArrayList<>();
-    private final Set<MutableTriple<Integer, BlockFace, PipeConnection>> toVisit = new HashSet<>();
-    private final Set<BlockPos> visited = new HashSet<>();
-    private final Map<BlockPos, WeakReference<BaseElementalPipeBlockEntity>> cache = new HashMap<>();
+    private final List<TransferTarget> targets = new ArrayList<>();
+    private final List<QueuedBlockFace> queued = new ArrayList<>();
+    private final Set<ConnectionToVisit> toVisit = new HashSet<>();
+
+    private final Set<BlockPos> visitedPositions = new HashSet<>();
+
+    private final Map<BlockPos, WeakReference<BaseElementalPipeBlockEntity>> pipesCache = new HashMap<>();
 
     @Nullable
-    private Holder<Element> element = null;
+    private Holder<ElementType> element = null;
     @Nullable
     private ICapabilityProvider<IElementStorage> source;
 
@@ -58,12 +59,12 @@ public class PipeNetwork {
 
     public void reset() {
         toVisit.clear();
-        visited.clear();
+        visitedPositions.clear();
         targets.clear();
         queued.clear();
 
         element = null;
-        queued.add(MutablePair.of(1, startBlockFace));
+        queued.add(new QueuedBlockFace(1, startBlockFace));
         pauseBeforeFirstTick = 2;
     }
 
@@ -84,7 +85,6 @@ public class PipeNetwork {
         }
 
         setSourcesForTargetsIfNotSet();
-//        transferFromSourceToTargets();
         transfer();
     }
 
@@ -98,8 +98,8 @@ public class PipeNetwork {
             for (var iterator = queued.iterator(); iterator.hasNext(); ) {
                 var pair = iterator.next();
 
-                var distance = pair.getFirst();
-                var blockFace = pair.getSecond();
+                var distance = pair.distanceFromSource();
+                var blockFace = pair.blockFace();
 
                 if (!level.isLoaded(blockFace.pos())) {
                     continue;
@@ -107,22 +107,22 @@ public class PipeNetwork {
 
                 var pipeConnection = getPipeConnection(blockFace);
                 if (pipeConnection != null) {
-                    // TODO Remake speed algorithm to be based on distance
+                    // TODO Remake speed algorithm to be based on distanceFromSource
                     if (blockFace.equals(startBlockFace)) {
                         transferSpeed = (int) Math.max(1, pipeConnection.getInboundPressure() / 4f);
                     }
 
-                    toVisit.add(MutableTriple.of(distance, blockFace, pipeConnection));
+                    toVisit.add(new ConnectionToVisit(distance, blockFace, pipeConnection));
                 }
                 iterator.remove();
             }
 
             for (var iterator = toVisit.iterator(); iterator.hasNext(); ) {
-                var triple = iterator.next();
+                var connectionToVisit = iterator.next();
 
-                var distance = triple.getFirst();
-                var blockFace = triple.getSecond();
-                var pipeConnection = triple.getThird();
+                var distance = connectionToVisit.distanceFromSource();
+                var blockFace = connectionToVisit.blockFace();
+                var pipeConnection = connectionToVisit.pipeConnection();
 
                 // If connection has no flow, then we skip it (we will check it once again up to 16 times actually)
                 if (!pipeConnection.hasFlow()) {
@@ -201,8 +201,8 @@ public class PipeNetwork {
 
                     // If pipe has the source, and it's the endpoint - bingo we have found a target!
                     if (adjacentPipeConnection.hasSource() && adjacentPipeConnection.getSource().isEndpoint()) {
-                        targets.add(MutableTriple.of(distance, adjacentBlockFace, adjacentPipeConnection.getSource()));
-                        LOGGER.debug("Found target[{}] for network[{}] with distance: {}",
+                        targets.add(new TransferTarget(distance, adjacentBlockFace, adjacentPipeConnection.getSource()));
+                        LOGGER.debug("Found target[{}] for network[{}] with distanceFromSource: {}",
                                 adjacentBlockFace.pos().toShortString(),
                                 startBlockFace.pos().toShortString(),
                                 distance);
@@ -211,8 +211,8 @@ public class PipeNetwork {
                     }
 
                     // Add the connected position to our queue (so we can do the same thing again)
-                    if (visited.add(adjacentBlockFace.getConnectedPos())) {
-                        queued.add(MutablePair.of(distance + 1, adjacentBlockFace.getOpposite()));
+                    if (visitedPositions.add(adjacentBlockFace.getConnectedPos())) {
+                        queued.add(new QueuedBlockFace(distance + 1, adjacentBlockFace.getOpposite()));
                         shouldContinue = true;
                     }
                 }
@@ -228,11 +228,7 @@ public class PipeNetwork {
         }
     }
 
-    private void transferV2() {
-        if (level.getGameTime() % 20 != 0) {
-            return;
-        }
-
+    private void equalTransfer() {
         if (source == null) {
             return;
         }
@@ -242,26 +238,31 @@ public class PipeNetwork {
             return;
         }
 
+        var perTarget = 1;
+
         var amountTaken = 0;
-        if (sourceStorage.containsElement(element) && sourceStorage.canTakeElement(element)) {
-            amountTaken = sourceStorage.takeElement(element, targets.size(), OperationMode.SIMULATE);
+        if (sourceStorage.canTakeElement(element)) {
+            amountTaken = sourceStorage.takeElement(element, targets.size() * perTarget, IElementStorage.Operation.SIMULATE);
         }
 
         if (amountTaken == 0) {
             return;
         }
 
-        for (var target : targets) {
-            var targetSource = target.getThird();
+        float amountRemaining = amountTaken;
 
-            var storageProvider = targetSource.getElementStorageProvider();
-
+        var targetsByDistance = targets.stream().sorted((Comparator.comparingInt(target -> target.distanceFromSource))).toList();
+        for (var target : targetsByDistance) {
+            var toTransferAmount = Mth.floor(amountRemaining / targetsByDistance.size());
+            if (toTransferAmount == 0) {
+                continue;
+            }
 
         }
     }
 
     private void transfer() {
-        if (level.getGameTime() % (transferSpeed * 2L) != 0) {
+        if (level.getGameTime() % 20L != 0) {
             return;
         }
 
@@ -276,7 +277,7 @@ public class PipeNetwork {
 
         var amountTaken = 0;
         if (sourceStorage.containsElement(element) && sourceStorage.canTakeElement(element)) {
-            amountTaken = sourceStorage.takeElement(element, transferSpeed, OperationMode.SIMULATE);
+            amountTaken = sourceStorage.takeElement(element, targets.size(), IElementStorage.Operation.SIMULATE);
         }
 
         if (amountTaken == 0) {
@@ -288,7 +289,8 @@ public class PipeNetwork {
         var equalAmount = amountTaken / targets.size();
         var remainder = amountTaken % targets.size();
 
-        for (var target : targets) {
+        var targetsSortedByDistance = targets.stream().sorted(Comparator.comparingInt(target -> target.distanceFromSource)).toList();
+        for (var target : targetsSortedByDistance) {
             var amountToPut = equalAmount;
             if (remaining <= 0) {
                 break;
@@ -299,25 +301,25 @@ public class PipeNetwork {
                 remainder--;
             }
 
-            var targetSource = target.getThird();
+            var targetSource = target.flowSource;
 
             var storageProvider = targetSource.getElementStorageProvider();
 
             if (storageProvider != null) {
                 var targetStorage = storageProvider.getCapability();
                 if (targetStorage != null) {
-                    var putInsideTargetAmount = targetStorage.addElement(element, amountToPut, OperationMode.SIMULATE);
+                    var putInsideTargetAmount = targetStorage.addElement(element, amountToPut, IElementStorage.Operation.SIMULATE);
                     if (putInsideTargetAmount == 0) {
                         continue;
                     }
 
-                    targetStorage.addElement(element, putInsideTargetAmount, OperationMode.PERFORM);
-                    remaining -= sourceStorage.takeElement(element, putInsideTargetAmount, OperationMode.PERFORM);
+                    targetStorage.addElement(element, putInsideTargetAmount, IElementStorage.Operation.PERFORM);
+                    remaining -= sourceStorage.takeElement(element, putInsideTargetAmount, IElementStorage.Operation.PERFORM);
                     continue;
                 }
             }
 
-            remaining -= sourceStorage.takeElement(element, amountToPut, OperationMode.PERFORM);
+            remaining -= sourceStorage.takeElement(element, amountToPut, IElementStorage.Operation.PERFORM);
         }
     }
 
@@ -330,7 +332,7 @@ public class PipeNetwork {
         Map<IElementStorage, Integer> accumulatedFill = new IdentityHashMap<>();
 
         for (boolean simulate : PipeConnection.TRUE_AND_FALSE) {
-            var operation = simulate ? OperationMode.SIMULATE : OperationMode.PERFORM;
+            var operation = simulate ? IElementStorage.Operation.SIMULATE : IElementStorage.Operation.PERFORM;
 
             if (source == null) {
                 return;
@@ -341,12 +343,12 @@ public class PipeNetwork {
                 return;
             }
 
-            MutablePair<Holder<Element>, Integer> transfer = null;
+            Pair<Holder<ElementType>, Integer> transfer = null;
             if (sourceCap.containsElement(element)) {
                 if (sourceCap.canTakeElement(element)) {
                     var taken = sourceCap.takeElement(element, flowSpeed, operation);
                     if (taken > 0) {
-                        transfer = MutablePair.of(element, taken);
+                        transfer = Pair.of(element, taken);
                     }
                 }
             }
@@ -359,20 +361,20 @@ public class PipeNetwork {
                 flowSpeed = transfer.getSecond();
             }
 
-            List<MutableTriple<Integer, BlockFace, FlowSource>> availableOutputs = new ArrayList<>(targets);
+            List<TransferTarget> availableOutputs = new ArrayList<>(targets);
             while (!availableOutputs.isEmpty() && transfer.getSecond() > 0) {
                 int dividedTransfer = transfer.getSecond() / availableOutputs.size();
                 int remainder = transfer.getSecond() % availableOutputs.size();
 
                 for (var iterator = availableOutputs.iterator(); iterator.hasNext(); ) {
-                    var triple = iterator.next();
+                    var target = iterator.next();
                     int toTransfer = dividedTransfer;
                     if (remainder > 0) {
                         toTransfer++;
                         remainder--;
                     }
 
-                    var targetHandlerProvider = triple.getThird().getElementStorageProvider();
+                    var targetHandlerProvider = target.flowSource.getElementStorageProvider();
                     if (targetHandlerProvider == null) {
                         iterator.remove();
                         continue;
@@ -396,7 +398,7 @@ public class PipeNetwork {
                         fill -= simulatedTransfer - toTransfer;
                     }
 
-                    transfer = MutablePair.of(transfer.getFirst(), transfer.getSecond() - fill);
+                    transfer = Pair.of(transfer.getFirst(), transfer.getSecond() - fill);
                     if (fill < simulatedTransfer) {
                         iterator.remove();
                     }
@@ -418,26 +420,31 @@ public class PipeNetwork {
     }
 
     private void setSourcesForTargetsIfNotSet() {
-        for (var triple : targets) {
-            if (triple.getThird() != null && level.getGameTime() % 40 != 0) {
+        for (var target : targets) {
+            if (target.flowSource != null && level.getGameTime() % 40 != 0) {
                 continue;
             }
-            PipeConnection pipeConnection = getPipeConnection(triple.getSecond());
+
+            PipeConnection pipeConnection = getPipeConnection(target.blockFace);
             if (pipeConnection == null) {
                 continue;
             }
             var source = pipeConnection.getSource();
             if (source != null) {
                 if (source.isEndpoint()) {
-                    triple.setThird(source);
+                    target.flowSource = source;
                 }
             }
         }
     }
 
+    public void onProbablyRemoved() {
+        ModDebugPackets.sendPipeNetworkRemoved(startBlockFace);
+    }
+
     private PipeConnection getPipeConnection(BlockFace blockFace) {
         var pos = blockFace.pos();
-        var pipe = getPipeBlockEntity(pos);
+        var pipe = getPipeBE(pos);
         if (pipe == null) {
             return null;
         }
@@ -445,8 +452,8 @@ public class PipeNetwork {
         return pipe.getConnection(blockFace.face());
     }
 
-    private BaseElementalPipeBlockEntity getPipeBlockEntity(BlockPos blockPos) {
-        var weakReference = cache.get(blockPos);
+    private BaseElementalPipeBlockEntity getPipeBE(BlockPos blockPos) {
+        var weakReference = pipesCache.get(blockPos);
         var pipe = weakReference != null ? weakReference.get() : null;
 
         if (pipe != null && pipe.isRemoved()) {
@@ -455,9 +462,39 @@ public class PipeNetwork {
         if (pipe == null) {
             pipe = PipeHelper.getPipeBlockEntity(level, blockPos).orElse(null);
             if (pipe != null) {
-                cache.put(blockPos, new WeakReference<>(pipe));
+                pipesCache.put(blockPos, new WeakReference<>(pipe));
             }
         }
         return pipe;
+    }
+
+    private record ConnectionToVisit(int distanceFromSource, BlockFace blockFace, PipeConnection pipeConnection) {
+    }
+
+    private record QueuedBlockFace(int distanceFromSource, BlockFace blockFace) {
+    }
+
+    public static class TransferTarget {
+        private final int distanceFromSource;
+        private final BlockFace blockFace;
+        private FlowSource flowSource;
+
+        public TransferTarget(int distanceFromSource, BlockFace blockFace, FlowSource flowSource) {
+            this.distanceFromSource = distanceFromSource;
+            this.blockFace = blockFace;
+            this.flowSource = flowSource;
+        }
+
+        public int distanceFromSource() {
+            return distanceFromSource;
+        }
+
+        public BlockFace blockFace() {
+            return blockFace;
+        }
+
+        public FlowSource flowSource() {
+            return flowSource;
+        }
     }
 }

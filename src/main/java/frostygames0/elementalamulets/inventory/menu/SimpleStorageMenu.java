@@ -14,7 +14,7 @@ import net.minecraft.world.item.ItemStack;
 public class SimpleStorageMenu extends SyncedElementalStorageMenu {
     private final ContainerLevelAccess access;
 
-    public SimpleStorageMenu(int containerId, Inventory playerInventory, IElementStorage storage, ContainerLevelAccess access) {
+    private SimpleStorageMenu(int containerId, Inventory playerInventory, IElementStorage storage, ContainerLevelAccess access) {
         super(ModMenuTypes.SIMPLE_STORAGE_MENU.get(), containerId, playerInventory.player, storage);
         this.access = access;
 

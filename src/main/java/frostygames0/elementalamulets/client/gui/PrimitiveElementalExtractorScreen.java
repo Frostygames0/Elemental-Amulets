@@ -12,7 +12,7 @@ import net.minecraft.world.entity.player.Inventory;
 public class PrimitiveElementalExtractorScreen extends AbstractElementalExtractorScreen<PrimitiveElementalExtractorMenu> {
     private static final ResourceLocation BACKGROUND = ElementalAmulets.id("textures/gui/container/primitive_elemental_extractor.png");
 
-    private static final ResourceLocation BAR_OVERLAY = ElementalAmulets.id("element_storage_bar/bar_overlay");
+    private static final ResourceLocation BAR_OVERLAY = ElementalAmulets.id("container/elemental_extractor/bar_overlay");
     private static final ResourceLocation PROGRESS_ARROW = ElementalAmulets.id("container/elemental_extractor/progress_arrow");
     private static final ResourceLocation LIT_PROGRESS = ElementalAmulets.id("container/elemental_extractor/lit_progress");
 

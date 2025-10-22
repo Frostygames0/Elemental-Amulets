@@ -1,7 +1,7 @@
 package frostygames0.elementalamulets.datagen.model;
 
 import com.google.gson.JsonObject;
-import frostygames0.elementalamulets.client.model.PipeConnectionsModelLoader;
+import frostygames0.elementalamulets.client.renderer.block.model.PipeConnectionsModelLoader;
 import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.neoforged.neoforge.client.model.generators.template.CustomLoaderBuilder;

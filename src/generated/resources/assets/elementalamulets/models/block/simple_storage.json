@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/cube_column",
   "textures": {
-    "all": "elementalamulets:block/simple_storage"
+    "end": "elementalamulets:block/simple_storage",
+    "side": "elementalamulets:block/simple_storage_side0"
   }
 }

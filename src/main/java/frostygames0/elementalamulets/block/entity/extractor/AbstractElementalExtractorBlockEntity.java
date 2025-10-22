@@ -1,15 +1,17 @@
 package frostygames0.elementalamulets.block.entity.extractor;
 
-import frostygames0.elementalamulets.element.ElementalComposition;
 import frostygames0.elementalamulets.element.ElementalHelper;
 import frostygames0.elementalamulets.element.storage.ElementStorage;
 import frostygames0.elementalamulets.element.storage.IElementStorage;
 import frostygames0.elementalamulets.element.storage.IElementStorageProvider;
-import frostygames0.elementalamulets.element.storage.OperationMode;
-import frostygames0.elementalamulets.inventory.provider.IItemHandlerProvider;
+import frostygames0.elementalamulets.initialization.ModDataComponents;
+import frostygames0.elementalamulets.inventory.IItemHandlerProvider;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.MenuProvider;
@@ -19,11 +21,11 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import org.jetbrains.annotations.Nullable;
 
 // An elemental extractor with default logic, but it doesn't expose item handler capability or drops contents
 public abstract class AbstractElementalExtractorBlockEntity extends BlockEntity implements MenuProvider, IElementStorageProvider, IItemHandlerProvider {
@@ -43,7 +45,6 @@ public abstract class AbstractElementalExtractorBlockEntity extends BlockEntity 
     protected final ItemStackHandler baseInventory = new ItemStackHandler(BASE_INVENTORY_SIZE) {
         @Override
         protected void onContentsChanged(int slot) {
-            super.onContentsChanged(slot);
             if (slot == INPUT_SLOT) {
                 totalExtractionTime = calculateExtractionTime(getStackInSlot(slot));
             }
@@ -189,51 +190,24 @@ public abstract class AbstractElementalExtractorBlockEntity extends BlockEntity 
     }
 
     protected int calculateExtractionTime(ItemStack stack) {
-        var composition = ElementalHelper.getStackElementalComposition(stack);
-        return composition.map(elementalComposition -> elementalComposition.getTotalAmount() * 20).orElse(0);
+        return ElementalHelper.getStackElementalComposition(stack)
+                .map(elementalComposition -> elementalComposition.getTotalAmount() * 20)
+                .orElse(0);
     }
 
     private boolean canBeFullyExtractedFrom(ItemStack stack) {
-        if (!ElementalHelper.hasElementalComposition(stack)) {
-            return false;
-        }
-
-        var composition = ElementalHelper.getStackElementalComposition(stack);
-        return composition.filter(this::canInsertAllElementsOfStack).isPresent();
+        return ElementalHelper.getStackElementalComposition(stack)
+                .map(composition -> elementStorage.addComposition(composition, IElementStorage.Operation.SIMULATE).equals(composition))
+                .orElse(false);
     }
 
     private void insertCompositionOfStackIntoStorage(ItemStack stack) {
-        var composition = ElementalHelper.getStackElementalComposition(stack);
-        if (composition.isEmpty()) {
-            return;
-        }
-
-        for (var entry : composition.get().elementAmounts().entrySet()) {
-            var element = entry.getKey();
-            var amount = entry.getValue();
-            elementStorage.addElement(element, amount, OperationMode.PERFORM);
-        }
-    }
-
-    private boolean canInsertAllElementsOfStack(ElementalComposition composition) {
-        for (var entry : composition.elementAmounts().entrySet()) {
-            var element = entry.getKey();
-            var amount = entry.getValue();
-            if (!elementStorage.canAddElement(element)) {
-                return false;
-            }
-
-            int added = elementStorage.addElement(entry.getKey(), entry.getValue(), OperationMode.SIMULATE);
-            if (added != amount) {
-                return false;
-            }
-        }
-
-        return true;
+        ElementalHelper.getStackElementalComposition(stack)
+                .ifPresent(composition -> elementStorage.addComposition(composition, IElementStorage.Operation.PERFORM));
     }
 
     @Override
-    public IElementStorage getElementStorage() {
+    public IElementStorage getElementStorage(@Nullable Direction side) {
         return elementStorage;
     }
 
@@ -243,7 +217,7 @@ public abstract class AbstractElementalExtractorBlockEntity extends BlockEntity 
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
 
-        elementStorage.deserializeNBT(registries, tag.getCompound(TAG_ELEMENT_STORAGE));
+        elementStorage.deserializeNBT(registries, tag.getList(TAG_ELEMENT_STORAGE, Tag.TAG_COMPOUND));
         baseInventory.deserializeNBT(registries, tag.getCompound(TAG_BASE_INVENTORY));
         extractionTimer = tag.getInt(TAG_EXTRACTION_TIME);
         totalExtractionTime = tag.getInt(TAG_TOTAL_EXTRACTION_TIME);
@@ -261,6 +235,11 @@ public abstract class AbstractElementalExtractorBlockEntity extends BlockEntity 
         tag.putInt(TAG_TOTAL_EXTRACTION_TIME, totalExtractionTime);
         tag.putInt(TAG_LIT_TIME_REMAINING, litTimeRemaining);
         tag.putInt(TAG_TOTAL_LIT_TIME, totalLitTime);
+    }
+
+    @Override
+    protected void collectImplicitComponents(DataComponentMap.Builder components) {
+        components.set(ModDataComponents.ELEMENTAL_COMPOSITION, elementStorage.getStored());
     }
 
     @Override
